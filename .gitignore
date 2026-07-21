@@ -1,0 +1,13 @@
+# Konfigurasi preview lokal (tidak diperlukan di repo)
+.claude/
+
+# Dependensi
+node_modules/
+
+# File sistem / editor
+.DS_Store
+Thumbs.db
+*.log
+
+# Paket deploy (dibuat ulang saat diperlukan)
+*.zip
