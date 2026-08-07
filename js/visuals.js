@@ -30,6 +30,25 @@ function h(tag, attrs, children) {
 function sigmoid(x) {
   return 1 / (1 + Math.exp(-x));
 }
+/* Pembantu diagram generik */
+function vEsc(s) {
+  return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+function vWrap(text, maxChars) {
+  const words = String(text).split(" ");
+  const lines = [];
+  let cur = "";
+  words.forEach((w) => {
+    if (cur && (cur + " " + w).length > maxChars) { lines.push(cur); cur = w; }
+    else { cur = cur ? cur + " " + w : w; }
+  });
+  if (cur) lines.push(cur);
+  return lines.slice(0, 3);
+}
+function vFigure(caption, svgMarkup) {
+  const cap = caption ? `<figcaption>${vEsc(caption)}</figcaption>` : "";
+  return `<figure class="viz">${cap}${svgMarkup}</figure>`;
+}
 // Hash sederhana untuk DEMO (bukan kriptografi sungguhan) -> 16 karakter heksadesimal
 function demoHash(str) {
   let h1 = 0xdeadbeef,
@@ -115,6 +134,84 @@ const DIAGRAMS = {
       <text x="390" y="175" text-anchor="middle" class="vt-sm bad-t">👎 Untungkan pemodal besar</text>
     </svg>
   </figure>`,
+
+  /* ---------- Diagram generik (dipakai ulang lewat atribut data-*) ---------- */
+
+  /* <div data-diagram="flow" data-steps="A|B|C" data-caption="..."></div> */
+  flow: (ds) => {
+    const steps = (ds.steps || "").split("|").map((s) => s.trim()).filter(Boolean);
+    const n = Math.max(1, steps.length);
+    const W = 520, gap = 16;
+    const boxW = Math.max(64, Math.min(150, (W - 24 - gap * (n - 1)) / n));
+    const boxH = 68;
+    let x = (W - (boxW * n + gap * (n - 1))) / 2;
+    let body = "";
+    steps.forEach((s, i) => {
+      const lines = vWrap(s, Math.max(8, Math.floor(boxW / 5.4)));
+      const startY = 42 + boxH / 2 - (lines.length - 1) * 7 - 2;
+      body += `<rect x="${x}" y="42" width="${boxW}" height="${boxH}" rx="10" class="vbox accent"/>`;
+      lines.forEach((ln, li) => {
+        body += `<text x="${x + boxW / 2}" y="${startY + li * 14}" text-anchor="middle" class="vt-sm">${vEsc(ln)}</text>`;
+      });
+      if (i !== n - 1) body += `<text x="${x + boxW + gap / 2}" y="${42 + boxH / 2 + 5}" text-anchor="middle" class="vt">→</text>`;
+      x += boxW + gap;
+    });
+    return vFigure(ds.caption, `<svg viewBox="0 0 ${W} 132" class="viz-svg" role="img" aria-label="Diagram alur">${body}</svg>`);
+  },
+
+  /* <div data-diagram="vs" data-left="Judul::poin::poin" data-right="Judul::poin::poin"></div> */
+  vs: (ds) => {
+    const L = (ds.left || "").split("::").map((s) => s.trim()).filter(Boolean);
+    const R = (ds.right || "").split("::").map((s) => s.trim()).filter(Boolean);
+    const rows = Math.max(L.length, R.length);
+    const H = 54 + rows * 20;
+    const box = (x, arr, cls) => {
+      let s = `<rect x="${x}" y="26" width="222" height="${H - 40}" rx="12" class="vbox ${cls}"/>`;
+      arr.forEach((t, i) => {
+        const y = 52 + i * 20;
+        s += `<text x="${x + 111}" y="${y}" text-anchor="middle" class="${i === 0 ? "vt-bold" : "vt-sm"}">${vEsc(t)}</text>`;
+      });
+      return s;
+    };
+    const body = box(14, L, "accent") + `<text x="260" y="${H / 2 + 8}" text-anchor="middle" class="vt-bold">vs</text>` + box(284, R, "accent2");
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 ${H}" class="viz-svg" role="img" aria-label="Diagram perbandingan">${body}</svg>`);
+  },
+
+  /* <div data-diagram="layers" data-items="Paling atas|Tengah|Dasar"></div> */
+  layers: (ds) => {
+    const items = (ds.items || "").split("|").map((s) => s.trim()).filter(Boolean);
+    const n = Math.max(1, items.length);
+    const H = 26 + n * 44;
+    let body = "";
+    items.forEach((t, i) => {
+      const w = 200 + i * 70;
+      const x = (520 - w) / 2;
+      const y = 18 + i * 44;
+      body += `<rect x="${x}" y="${y}" width="${w}" height="36" rx="8" class="vbox ${i === 0 ? "ok" : "accent"}"/>`;
+      body += `<text x="260" y="${y + 23}" text-anchor="middle" class="vt-sm">${vEsc(t)}</text>`;
+    });
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 ${H}" class="viz-svg" role="img" aria-label="Diagram lapisan">${body}</svg>`);
+  },
+
+  /* <div data-diagram="scale" data-zones="Rawan|Abu-abu|Aman" data-marks="1,81|2,99"></div> */
+  scale: (ds) => {
+    const zones = (ds.zones || "").split("|").map((s) => s.trim()).filter(Boolean);
+    const marks = (ds.marks || "").split("|").map((s) => s.trim()).filter(Boolean);
+    const n = Math.max(1, zones.length);
+    const W = 520, pad = 20;
+    const segW = (W - pad * 2) / n;
+    const cls = ["bad", "accent", "ok"];
+    let body = "";
+    zones.forEach((z, i) => {
+      const x = pad + i * segW;
+      body += `<rect x="${x}" y="34" width="${segW}" height="40" rx="6" class="vbox ${cls[i] || "accent"}"/>`;
+      body += `<text x="${x + segW / 2}" y="${59}" text-anchor="middle" class="vt-sm">${vEsc(z)}</text>`;
+      if (i !== n - 1 && marks[i]) {
+        body += `<text x="${x + segW}" y="90" text-anchor="middle" class="vt-sm">${vEsc(marks[i])}</text>`;
+      }
+    });
+    return vFigure(ds.caption, `<svg viewBox="0 0 ${W} 104" class="viz-svg" role="img" aria-label="Diagram rentang">${body}</svg>`);
+  },
 
   /* Persamaan dasar akuntansi */
   "accounting-equation": () => `

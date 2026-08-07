@@ -6,6 +6,33 @@
    ============================================================ */
 
 const COURSES = [AI_COURSE, BLOCKCHAIN_COURSE, ACCOUNTING_COURSE];
+
+/* ---------- Urutan Belajar ----------
+   Modul ditulis di file data sesuai waktu pembuatannya. Daftar di bawah menata
+   ulang urutannya menjadi alur belajar yang logis:
+   konsep → fundamental → matematika → variasi → penerapan → alat → bangun → bisnis. */
+const MODULE_ORDER = [
+  // 🤖 AI
+  "ai-dasar", "ai-pemula", "ai-menengah", "ai-fundamental", "ai-matematika",
+  "ai-pendalaman", "ai-arsitektur", "ai-mahir", "ai-terapan", "ai-pelengkap",
+  "ai-lanjutan", "ai-proyek", "ai-ekonomi",
+  // ⛓️ Blockchain
+  "bc-dasar", "bc-pemula", "bc-menengah", "bc-fundamental", "bc-matematika",
+  "bc-kriptografi", "bc-mahir", "bc-pendalaman", "bc-terapan", "bc-lanjutan",
+  "bc-pelengkap", "bc-proyek", "bc-ekonomi",
+  // 📊 Akuntansi
+  "acc-dasar", "acc-pemula", "acc-menengah", "acc-pendalaman", "acc-mahir",
+  "acc-fundamental", "acc-matematika", "acc-terapan", "acc-audit",
+  "acc-lanjutan", "acc-kualitas", "acc-prospek", "acc-proyek", "acc-investasi",
+  "acc-makro",
+];
+(function urutkanModul() {
+  const pos = (id) => {
+    const i = MODULE_ORDER.indexOf(id);
+    return i === -1 ? 999 : i; // modul baru yang belum terdaftar diletakkan di akhir
+  };
+  COURSES.forEach((c) => c.modules.sort((a, b) => pos(a.id) - pos(b.id)));
+})();
 const STORE_KEY = "belajar_ai_blockchain_progress_v1";
 
 /* ---------- Penyimpanan Kemajuan ---------- */
@@ -64,6 +91,7 @@ const Progress = {
 
 /* ---------- Util ---------- */
 function allLessons(course) {
+  // course.modules sudah diurutkan sekali di awal oleh urutkanModul() (MODULE_ORDER)
   return course.modules.flatMap((m) => m.lessons);
 }
 function courseProgress(course) {
@@ -114,6 +142,66 @@ function stripHTML(html) {
   const d = document.createElement("div");
   d.innerHTML = html;
   return (d.textContent || "").replace(/\s+/g, " ").trim();
+}
+
+/* ---------- Tooltip Glosarium Otomatis ----------
+   Menandai istilah sulit di dalam materi agar bisa diklik & dilihat artinya,
+   tanpa perlu meninggalkan halaman pelajaran. */
+function escRegExp(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+const GLOSS_SKIP_TAGS = {
+  PRE: 1, CODE: 1, A: 1, TEXTAREA: 1, BUTTON: 1, SELECT: 1, OPTION: 1,
+  H1: 1, H2: 1, H3: 1, H4: 1, TH: 1,
+};
+function applyGlossary(root, maxTerms) {
+  if (typeof GLOSSARY === "undefined" || !root) return 0;
+  const limit = maxTerms || 12;
+  // Istilah terpanjang didahulukan agar "Free Cash Flow" menang atas "Cash Flow"
+  const terms = GLOSSARY.slice().sort((a, b) => b[0].length - a[0].length);
+  const used = new Set();
+  let count = 0;
+
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue || node.nodeValue.trim().length < 3) return NodeFilter.FILTER_REJECT;
+      let p = node.parentElement;
+      while (p && p !== root) {
+        if (GLOSS_SKIP_TAGS[p.tagName]) return NodeFilter.FILTER_REJECT;
+        if (p.classList && (p.classList.contains("gloss-term") || p.classList.contains("demo"))) return NodeFilter.FILTER_REJECT;
+        if (p.hasAttribute && (p.hasAttribute("data-demo") || p.hasAttribute("data-diagram"))) return NodeFilter.FILTER_REJECT;
+        p = p.parentElement;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+  const nodes = [];
+  let nd;
+  while ((nd = walker.nextNode())) nodes.push(nd);
+
+  nodes.forEach((node) => {
+    if (count >= limit) return;
+    for (let i = 0; i < terms.length && count < limit; i++) {
+      const term = terms[i][0];
+      const key = term.toLowerCase();
+      if (used.has(key) || !node.nodeValue) continue;
+      const re = new RegExp("(^|[^0-9A-Za-zÀ-ÿ-])(" + escRegExp(term) + ")(?![0-9A-Za-zÀ-ÿ-])", "i");
+      const m = re.exec(node.nodeValue);
+      if (!m) continue;
+      const tail = node.splitText(m.index + m[1].length);
+      tail.splitText(term.length);
+      const span = document.createElement("span");
+      span.className = "gloss-term";
+      span.title = term + " — " + terms[i][1];
+      span.dataset.term = term;
+      span.dataset.def = terms[i][1];
+      tail.parentNode.insertBefore(span, tail);
+      span.appendChild(tail);
+      used.add(key);
+      count++;
+    }
+  });
+  return count;
 }
 
 /* ---------- Narasi Suara (Text-to-Speech) ---------- */
@@ -319,10 +407,17 @@ function renderCourse(course) {
     </header>
   `));
 
+  wrap.appendChild(el(`
+    <p class="course-order-hint">📚 <b>Ikuti modul 1 → ${course.modules.length} secara berurutan.</b>
+    Materi disusun bertahap: konsep dasar → fundamental → matematika → penerapan → membangun.
+    Setiap modul memakai bekal dari modul sebelumnya.</p>
+  `));
+
   course.modules.forEach((m, mi) => {
     const mod = el(`<section class="module"></section>`);
     mod.appendChild(el(`
       <div class="module-head">
+        <span class="mod-num">Modul ${mi + 1} dari ${course.modules.length}</span>
         <span class="lvl-badge lvl-${m.level.toLowerCase()}">${esc(m.level)}</span>
         <h2>${esc(m.title)}</h2>
         <p>${esc(m.summary)}</p>
@@ -389,6 +484,14 @@ function renderLesson({ course, module, lesson }) {
     wrap.appendChild(ttsBtn);
   }
 
+  // Peta singkat SEBELUM materi: pembaca tahu dulu apa yang akan dipelajari
+  if (lesson.keyPoints && lesson.keyPoints.length) {
+    const pre = el(`<aside class="lesson-preview"><h3>🎯 Yang akan kamu pelajari</h3><ul></ul></aside>`);
+    const ulp = pre.querySelector("ul");
+    lesson.keyPoints.slice(0, 4).forEach((k) => ulp.appendChild(el(`<li>${esc(k)}</li>`)));
+    wrap.appendChild(pre);
+  }
+
   const body = el(`<article class="lesson-body"></article>`);
   body.innerHTML = lesson.content;
   wrap.appendChild(body);
@@ -396,12 +499,22 @@ function renderLesson({ course, module, lesson }) {
   // Isi diagram statis (SVG) pada penanda <div data-diagram="...">
   body.querySelectorAll("[data-diagram]").forEach((node) => {
     const fn = typeof DIAGRAMS !== "undefined" && DIAGRAMS[node.dataset.diagram];
-    if (fn) node.innerHTML = fn();
+    if (fn) node.innerHTML = fn(node.dataset); // dataset dipakai diagram generik (flow/vs/layers/scale)
   });
   // Pasang demo interaktif pada penanda <div data-demo="...">
   body.querySelectorAll("[data-demo]").forEach((node) => {
     const fn = typeof DEMOS !== "undefined" && DEMOS[node.dataset.demo];
     if (fn) fn(node);
+  });
+
+  // Tandai istilah sulit agar bisa diklik untuk melihat artinya
+  applyGlossary(body, 12);
+  body.addEventListener("click", (e) => {
+    const t = e.target.closest ? e.target.closest(".gloss-term") : null;
+    body.querySelectorAll(".gloss-pop").forEach((p) => p.remove());
+    if (!t) return;
+    e.stopPropagation();
+    t.appendChild(el(`<span class="gloss-pop"><b>${esc(t.dataset.term)}</b> — ${esc(t.dataset.def)}</span>`));
   });
 
   if (lesson.keyPoints && lesson.keyPoints.length) {
@@ -670,6 +783,208 @@ const GLOSSARY = [
   ["Merkle Tree", "Pohon hash yang meringkas semua transaksi blok jadi satu Merkle root."],
   ["Fungsi Hash", "Mengubah data apa pun jadi sidik jari berukuran tetap; satu arah & efek avalanche."],
   ["Gas", "Satuan kerja komputasi di blockchain; biaya = gas dipakai × harga gas."],
+  // --- Lanjutan (valuasi, tools, Web3) ---
+  ["PBV", "Price to Book Value — Harga Saham ÷ Nilai Buku per Saham; membandingkan harga dengan nilai buku."],
+  ["Nilai Buku", "Book Value — Total Ekuitas (Aset − Kewajiban); nilai bersih menurut catatan."],
+  ["PEG", "Price/Earnings to Growth — PER ÷ pertumbuhan laba (%); menilai harga relatif terhadap pertumbuhan."],
+  ["Enterprise Value", "EV = Kapitalisasi Pasar + Total Utang − Kas; harga mengambil alih perusahaan utuh."],
+  ["EV/EBITDA", "Valuasi netral struktur modal & pajak; Enterprise Value dibagi EBITDA."],
+  ["Quick Ratio", "Acid test — (Aset Lancar − Persediaan) ÷ Kewajiban Lancar; likuiditas versi ketat."],
+  ["CrewAI", "Framework untuk merakit & mengorkestrasi 'kru' beberapa agen AI berperan (multi-agent)."],
+  ["Multi-Agent", "Beberapa agen AI dengan peran berbeda yang berkolaborasi menyelesaikan tugas."],
+  ["Vector Database", "Basis data yang menyimpan embedding & mencari vektor termirip dengan cepat (infrastruktur RAG)."],
+  ["Fine-tuning", "Melatih ulang model dengan datamu untuk mengubah gaya/perilaku keluarannya."],
+  ["Hugging Face", "Pusat komunitas berisi ribuan model AI open-source & dataset."],
+  ["MCP", "Model Context Protocol — standar menghubungkan AI ke alat & data secara seragam & aman."],
+  ["Layer 2", "Jaringan di atas blockchain utama (L1) yang memproses transaksi murah & cepat, mewarisi keamanan L1."],
+  ["Rollup", "Teknik Layer 2 yang menggabungkan banyak transaksi lalu menyetor buktinya ke L1 (Optimistic / ZK)."],
+  ["Oracle", "Jembatan tepercaya yang membawa data dunia nyata (harga, cuaca) ke smart contract (mis. Chainlink)."],
+  ["DAO", "Decentralized Autonomous Organization — organisasi yang dikelola komunitas lewat voting token & smart contract."],
+  ["Zero-Knowledge Proof", "ZKP — membuktikan sesuatu benar tanpa mengungkap datanya; dipakai untuk privasi & ZK-Rollup."],
+  // --- Terapan (biaya, generatif, DeFi) ---
+  ["CapEx", "Capital Expenditure / Belanja Modal — uang untuk aset jangka panjang; dicatat sebagai aset & disusutkan."],
+  ["OpEx", "Operating Expenditure / Belanja Operasional — biaya menjalankan bisnis harian; langsung jadi beban."],
+  ["Overhead", "Biaya tidak langsung yang tak bisa dilacak ke satu produk (listrik pabrik, sewa, supervisor)."],
+  ["PPN", "Pajak Pertambahan Nilai — pajak konsumsi (umumnya 11%) yang dipungut dari pelanggan & disetor ke negara."],
+  ["PPh", "Pajak Penghasilan — pajak atas penghasilan/laba (PPh Final UMKM, PPh Badan, PPh 21)."],
+  ["Diffusion Model", "Model AI pembuat gambar: mengubah noise acak jadi gambar bertahap, diarahkan teks prompt."],
+  ["RLHF", "Reinforcement Learning from Human Feedback — melatih AI dengan peringkat manusia agar lebih membantu & aman."],
+  ["Alignment", "Menyelaraskan perilaku AI dengan nilai & niat manusia (aman & benar)."],
+  ["MLOps", "Praktik men-deploy, memantau, & memelihara model AI di produksi."],
+  ["Data Drift", "Pergeseran pola data seiring waktu yang membuat model lama makin tidak akurat."],
+  ["Sistem Rekomendasi", "AI yang memprediksi yang kamu suka (collaborative filtering & content-based)."],
+  ["AMM", "Automated Market Maker — DEX yang memakai rumus pada liquidity pool (x×y=k), bukan order book."],
+  ["Liquidity Pool", "Kolam pasangan token yang disetor LP; sumber likuiditas untuk pertukaran di AMM."],
+  ["Impermanent Loss", "Kerugian potensial Liquidity Provider saat harga token dalam pool bergerak jauh."],
+  ["Bridge", "Jembatan yang memindahkan aset/data antar-blockchain berbeda; sering jadi target peretasan besar."],
+  ["Depeg", "Saat stablecoin kehilangan patokan nilainya (mis. tak lagi ≈ 1 USD)."],
+  // --- Dasar & pendalaman ---
+  ["Rata-rata", "Mean — jumlahkan semua nilai lalu bagi banyaknya data."],
+  ["Peluang", "Kemungkinan sesuatu terjadi, dari 0% (mustahil) sampai 100% (pasti); dasar cara AI menjawab."],
+  ["Desentralisasi", "Kendali & data tersebar ke banyak pihak setara, bukan satu pusat."],
+  ["Kekayaan Bersih", "Ekuitas — bagian yang benar-benar milikmu = Aset − Utang."],
+  ["Decision Tree", "Pohon Keputusan — serangkaian pertanyaan ya/tidak yang menuntun ke keputusan."],
+  ["Random Forest", "Gabungan banyak Decision Tree (ensemble) agar lebih akurat & tahan overfitting."],
+  ["k-NN", "k-Nearest Neighbors — mengklasifikasi berdasarkan tetangga terdekat ('hal mirip berdekatan')."],
+  ["Clustering", "Mengelompokkan data yang saling mirip tanpa label (mis. k-Means); unsupervised."],
+  ["Halving", "Aturan Bitcoin: imbalan penambang dibagi dua tiap ~4 tahun, memperlambat pasokan baru."],
+  ["Mining", "Penambangan — lomba menebak angka (nonce) agar hash blok memenuhi syarat (Proof of Work)."],
+  ["Cold Wallet", "Dompet crypto offline (mis. hardware wallet); paling aman untuk simpanan besar."],
+  ["Neraca Saldo", "Trial balance — daftar saldo akun untuk memastikan total debit = total kredit."],
+  ["FIFO", "First In First Out — stok yang masuk duluan dianggap terjual duluan."],
+  ["LIFO", "Last In First Out — stok yang masuk terakhir dianggap terjual duluan (dilarang di PSAK/IFRS)."],
+  ["DCF", "Discounted Cash Flow — menilai bisnis dari total arus kas masa depan yang didiskon ke nilai sekarang."],
+  ["Nilai Waktu Uang", "Uang sekarang lebih berharga daripada uang di masa depan (bisa diinvestasikan & bertumbuh)."],
+  // --- Prospek & risiko masa depan ---
+  ["Altman Z-Score", "Model (1968) yang memperkirakan risiko KEBANGKRUTAN perusahaan ~2 tahun ke depan; di atas 2,99 aman, di bawah 1,81 rawan."],
+  ["Piotroski F-Score", "Checklist 9 poin kekuatan fundamental (profitabilitas, utang/likuiditas, efisiensi); 8–9 kuat, 0–3 lemah."],
+  ["Expected Value", "Nilai Harapan — jumlah dari (peluang × hasil) tiap skenario; rata-rata tertimbang semua kemungkinan."],
+  ["Analisis Skenario", "Menyusun beberapa versi masa depan (terbaik/tengah/terburuk) beserta peluangnya."],
+  ["Analisis Sensitivitas", "Menguji seberapa besar hasil berubah bila satu asumsi digeser; hasil yang mudah berubah = penilaian rapuh."],
+  ["Margin of Safety", "Ruang aman: (Nilai Wajar − Harga) ÷ Nilai Wajar × 100%; bantalan bila analisis meleset."],
+  // --- Kualitas bisnis & keunggulan kompetitif ---
+  ["Alokasi Modal", "Capital allocation — keputusan memakai kas perusahaan: ekspansi, R&D/iklan, akuisisi, atau buyback/dividen."],
+  ["Economic Moat", "Parit ekonomi — keunggulan yang melindungi laba dari pesaing (merek, network effect, switching cost, skala, paten)."],
+  ["Switching Cost", "Biaya/kerepotan pelanggan bila berpindah ke pesaing; salah satu jenis moat terkuat."],
+  ["Network Effect", "Makin banyak pengguna, makin bernilai produk bagi tiap pengguna (marketplace, media sosial)."],
+  ["Pricing Power", "Kemampuan menaikkan harga tanpa kehilangan pelanggan; tanda merek & parit yang kuat."],
+  ["Asset Light", "Bisnis yang butuh sedikit aset untuk tumbuh → return on capital tinggi & kas bebas besar."],
+  ["Share Buyback", "Perusahaan membeli kembali sahamnya; hanya menambah nilai bila harganya di bawah nilai wajar."],
+  ["Skin in the Game", "Manajemen ikut memiliki saham sehingga kepentingannya sejalan dengan pemegang saham lain."],
+  ["Risiko Konsentrasi", "Ketergantungan berlebihan pada satu pelanggan, pemasok, produk, atau regulasi."],
+  // --- Ekonomi AI & protokol (jembatan antar-jalur) ---
+  ["Biaya Inferensi", "Biaya komputasi tiap kali model AI dipakai; ini biaya variabel yang menipiskan margin produk AI."],
+  ["Thin Wrapper", "Aplikasi berupa lapisan tipis di atas API model orang lain tanpa keunggulan lain — mudah ditiru, tanpa moat."],
+  ["Build vs Buy", "Pilihan melatih/host model sendiri (CapEx) atau memakai API (OpEx)."],
+  ["Fee Protokol", "Pendapatan nyata sebuah protokol crypto dari biaya yang dibayar pengguna (gas, biaya swap, dll)."],
+  ["Treasury DAO", "Kas protokol yang dialokasikan lewat voting: pengembangan, grants, buyback-burn, atau bagi hasil."],
+  ["Buyback & Burn", "Protokol membeli tokennya lalu membakarnya (mengurangi pasokan) — padanan share buyback."],
+  ["Real Yield", "Imbal hasil yang didanai fee/pendapatan nyata, bukan dari mencetak token baru (emisi)."],
+  ["Emisi Token", "Pencetakan token baru sebagai insentif; setara penerbitan saham baru — mengencerkan kepemilikan (dilusi)."],
+  ["FDV", "Fully Diluted Valuation — nilai proyek bila SELURUH token sudah beredar; penanda tekanan pasokan masa depan."],
+  ["Mercenary Capital", "Pengguna/dana yang datang hanya karena insentif token & pergi saat insentif berhenti — bukan moat."],
+  // --- Dunia investasi & pengelolaan dana ---
+  ["Indeks", "Sekumpulan saham sebagai tolok ukur kinerja pasar (mis. IHSG, S&P 500)."],
+  ["Reksa Dana", "Dana patungan yang dikelola manajer investasi; dibeli/dijual pada harga akhir hari (NAB)."],
+  ["ETF", "Exchange Traded Fund — mirip reksa dana tapi diperdagangkan di bursa seperti saham; ETF indeks umumnya berbiaya rendah."],
+  ["Expense Ratio", "Biaya tahunan sebuah reksa dana/ETF; kecil di kertas, berdampak besar dalam jangka panjang."],
+  ["Pengelolaan Aktif", "Manajer memilih saham demi mengalahkan indeks; biayanya lebih tinggi."],
+  ["Pengelolaan Pasif", "Meniru indeks dengan biaya rendah; tidak berusaha mengalahkan pasar."],
+  ["Hedge Fund", "Dana kelolaan dengan kebebasan strategi luas (leverage, short, derivatif); hanya untuk investor terkualifikasi."],
+  ["2 dan 20", "Struktur biaya hedge fund: ~2% dari dana kelolaan per tahun + ~20% dari keuntungan."],
+  ["High-Water Mark", "Manajer baru boleh memungut performance fee setelah menutup kerugian sebelumnya."],
+  ["Private Equity", "Membeli perusahaan tertutup (sering lewat LBO), memperbaikinya, lalu menjual kembali."],
+  ["LBO", "Leveraged Buyout — akuisisi dibiayai utang besar; utangnya ditanggung perusahaan yang dibeli."],
+  ["Venture Capital", "Pendanaan startup tahap awal; hasilnya mengikuti power law (mayoritas gagal, satu pemenang besar)."],
+  ["Survivorship Bias", "Data hanya memuat yang 'selamat' — dana gagal sudah ditutup & hilang, membuat kinerja tampak lebih baik."],
+  ["Diversifikasi", "Menyebar dana ke banyak aset agar kegagalan satu tidak menghancurkan seluruh portofolio."],
+  // --- Pelengkap (suara, peramalan, regulasi, CBDC, RWA, GameFi) ---
+  ["ASR", "Automatic Speech Recognition — mengubah suara menjadi teks (speech-to-text)."],
+  ["TTS", "Text-to-Speech — mengubah teks menjadi suara."],
+  ["Voice Cloning", "Meniru suara seseorang dengan AI; berguna untuk dubbing, tapi rawan disalahgunakan untuk penipuan."],
+  ["Deret Waktu", "Time series — data yang terikat urutan waktu; unsurnya tren, musiman, & noise."],
+  ["Rata-rata Bergerak", "Moving average — meredam naik-turun acak untuk menyoroti arah tren."],
+  ["EU AI Act", "Regulasi AI Uni Eropa berbasis tingkat risiko: dilarang, risiko tinggi, terbatas, minimal."],
+  ["UU PDP", "Undang-Undang Perlindungan Data Pribadi di Indonesia yang mengatur pemakaian data orang."],
+  ["CBDC", "Central Bank Digital Currency — uang resmi negara dalam bentuk digital, diterbitkan bank sentral (terpusat)."],
+  ["Rupiah Digital", "CBDC Indonesia yang dikembangkan Bank Indonesia (dikenal lewat Proyek Garuda), dimulai dari sisi wholesale."],
+  ["RWA", "Real World Assets — tokenisasi aset nyata (properti, obligasi, emas) menjadi token di blockchain."],
+  ["Kepemilikan Pecahan", "Memecah aset besar jadi bagian kecil sehingga lebih terjangkau (mis. lewat tokenisasi)."],
+  ["GameFi", "Game dengan ekonomi token (play-to-earn); rawan runtuh bila hadiah didanai emisi & pemain baru."],
+  ["Token Sink", "Mekanisme menghabiskan/membakar token agar pasokan tidak membanjir & harga tidak jatuh."],
+  // --- Matematika ---
+  ["Vektor", "Deretan angka yang mewakili sesuatu; embedding adalah vektor makna."],
+  ["Dot Product", "Kalikan pasangan angka seposisi lalu jumlahkan; dasar perhitungan neuron & kemiripan."],
+  ["Cosine Similarity", "(a·b) ÷ (|a|×|b|) — mengukur kemiripan arah/makna dua vektor, nilainya −1 sampai 1."],
+  ["Turunan", "Kemiringan sebuah fungsi: seberapa cepat hasilnya berubah saat inputnya digeser sedikit."],
+  ["Chain Rule", "Aturan rantai (f(g(x)))' = f'(g(x))×g'(x); jantung backpropagation."],
+  ["Learning Rate", "α — besar langkah pada gradient descent; terlalu besar melompati, terlalu kecil lambat."],
+  ["Sigmoid", "σ(x) = 1 ÷ (1+e⁻ˣ); mengubah angka jadi nilai 0–1 (peluang)."],
+  ["ReLU", "max(0, x) — fungsi aktivasi paling umum di lapisan tersembunyi."],
+  ["Softmax", "eᶻⁱ ÷ Σeᶻʲ — mengubah skor mentah jadi peluang yang totalnya 100%."],
+  ["Cross-Entropy", "Fungsi loss untuk klasifikasi & LLM: −Σ y·log(ŷ)."],
+  ["MSE", "Mean Squared Error — rata-rata kuadrat selisih; loss untuk regresi."],
+  ["Teorema Bayes", "P(A|B) = P(B|A)×P(A) ÷ P(B) — memperbarui keyakinan setelah melihat bukti."],
+  ["Base Rate Fallacy", "Salah nalar saat kejadian langka: tes 99% akurat bisa menghasilkan positif yang mayoritas salah-alarm."],
+  ["Temperature", "Pembagi skor sebelum softmax pada LLM; rendah = konsisten, tinggi = bervariasi."],
+  ["CAGR", "(Akhir ÷ Awal)^(1/tahun) − 1 — pertumbuhan majemuk rata-rata per tahun."],
+  ["Future Value", "FV = PV × (1+r)ⁿ — nilai uang sekarang bila ditumbuhkan ke masa depan."],
+  ["Present Value", "PV = FV ÷ (1+r)ⁿ — nilai uang masa depan bila dibawa ke masa kini."],
+  ["Aturan 72", "Perkiraan cepat waktu uang berlipat ganda: 72 ÷ persen bunga."],
+  ["NPV", "Net Present Value = Σ[CFt ÷ (1+r)^t] − investasi awal; positif berarti layak."],
+  ["IRR", "Internal Rate of Return — tingkat diskon yang membuat NPV = 0."],
+  ["Anuitas", "Pembayaran tetap selama n periode; PV = PMT × [1−(1+r)⁻ⁿ] ÷ r (dasar cicilan)."],
+  ["Perpetuitas", "Pembayaran tetap selamanya; PV = PMT ÷ r."],
+  ["Gordon Growth", "PV = CF(1+g) ÷ (r−g) — dasar Terminal Value pada DCF; berbahaya bila g mendekati r."],
+  ["Modulo", "Sisa pembagian ('matematika jam'); dasar kriptografi kunci publik."],
+  ["Logaritma Diskret", "Masalah membalik g^x mod p untuk menemukan x — praktis mustahil, dasar keamanan kunci."],
+  ["Slippage", "Selisih harga awal dengan harga efektif yang didapat; membesar bila transaksi besar di kolam kecil."],
+  // --- Arsitektur ML/DL & Gen AI ---
+  ["Feature Engineering", "Mengolah data mentah jadi fitur bermakna; sering lebih berpengaruh daripada mengganti algoritma."],
+  ["Penskalaan", "Menyamakan rentang antar-fitur (mis. jadi 0–1) agar tidak ada fitur menang hanya karena angkanya besar."],
+  ["Validation Set", "Bagian data untuk menyetel model; test set hanya dipakai sekali di akhir sebagai ujian."],
+  ["Cross-Validation", "Data dibagi k bagian yang bergantian jadi penguji, hasilnya dirata-rata — penilaian lebih stabil."],
+  ["Hyperparameter", "Pengaturan yang ditentukan manusia sebelum training (learning rate, jumlah lapisan) — beda dari parameter yang dipelajari model."],
+  ["Regularisasi", "Teknik menghukum model yang terlalu rumit (L1/L2, dropout, early stopping) agar tidak menghafal."],
+  ["Dropout", "Mematikan sebagian neuron secara acak saat training agar model tidak bergantung pada satu jalur."],
+  ["Boosting", "Melatih model berurutan; tiap model memperbaiki kesalahan model sebelumnya (mis. XGBoost)."],
+  ["XGBoost", "Pustaka gradient boosting yang sangat akurat untuk data tabel; sering mengalahkan deep learning di data terstruktur."],
+  ["CNN", "Convolutional Neural Network — menggeser filter kecil ke seluruh gambar untuk mendeteksi pola bertingkat."],
+  ["Pooling", "Lapisan CNN yang merangkum & mengecilkan ukuran, mengambil nilai paling menonjol."],
+  ["Transfer Learning", "Memakai model yang sudah terlatih lalu menyetelnya untuk tugas baru — cukup sedikit data."],
+  ["RNN", "Recurrent Neural Network — memproses urutan sambil membawa ingatan; ingatannya memudar untuk jarak jauh."],
+  ["LSTM", "Varian RNN dengan gerbang pengatur apa yang diingat/dilupakan sehingga ingatan bertahan lebih lama."],
+  ["Attention", "Mekanisme yang memberi bobot: kata lain mana yang paling membantu memahami sebuah kata."],
+  ["GAN", "Generative Adversarial Network — generator (pemalsu) melawan discriminator (polisi) hingga hasilnya meyakinkan."],
+  ["Quantization", "Menyimpan angka model dengan presisi lebih rendah agar ukurannya menyusut & muat di perangkat kecil."],
+  ["Distillation", "Model besar (guru) melatih model kecil (murid) agar ringan dengan kemampuan mendekati gurunya."],
+  ["Mixture of Experts", "MoE — model dibagi jadi banyak 'ahli'; tiap permintaan hanya mengaktifkan sebagian."],
+  // --- Kriptografi & era kuantum ---
+  ["Kriptografi Simetris", "Satu kunci untuk mengunci & membuka (mis. AES) — cepat, tapi sulit mengirim kuncinya dengan aman."],
+  ["Kriptografi Asimetris", "Sepasang kunci publik-privat (mis. RSA, ECC) — memecahkan masalah pengiriman kunci."],
+  ["AES", "Advanced Encryption Standard — standar enkripsi simetris dunia (AES-128/256)."],
+  ["ECDSA", "Algoritma tanda tangan digital berbasis kurva eliptik yang dipakai Bitcoin & Ethereum."],
+  ["Nonce (ECDSA)", "Angka acak sekali pakai saat menandatangani; bila berulang/ditebak, kunci privat bisa dihitung."],
+  ["Schnorr", "Skema tanda tangan penerus ECDSA (Taproot) yang bisa digabung — lebih hemat & privat."],
+  ["Qubit", "Satuan komputer kuantum yang bisa berada dalam gabungan 0 dan 1 sekaligus (superposisi)."],
+  ["Algoritma Shor", "Algoritma kuantum yang memecahkan RSA & ECC secara total — kunci privat bisa dihitung dari kunci publik."],
+  ["Algoritma Grover", "Algoritma kuantum yang memangkas separuh kekuatan kriptografi simetris & hash — diatasi dengan memperbesar kunci."],
+  ["PQC", "Post-Quantum Cryptography — kriptografi tahan kuantum yang tetap berjalan di komputer biasa."],
+  ["ML-DSA", "Standar NIST (FIPS 204, dari Dilithium) untuk tanda tangan digital pasca-kuantum — calon pengganti ECDSA."],
+  ["Harvest Now Decrypt Later", "Menyimpan data terenkripsi hari ini untuk dibuka kemudian saat komputer kuantum matang."],
+  // --- Audit, biaya & kecurangan ---
+  ["Activity-Based Costing", "ABC — membagi overhead berdasarkan aktivitas & pemicu biaya yang benar-benar dipakai tiap produk."],
+  ["Cost Driver", "Pemicu biaya — ukuran yang menentukan besarnya biaya aktivitas (mis. jumlah penyetelan mesin)."],
+  ["Varians", "Selisih realisasi dengan anggaran; menguntungkan/merugikan tergantung jenis posnya."],
+  ["Anggaran Fleksibel", "Anggaran yang disesuaikan dulu ke tingkat aktivitas nyata sebelum dibandingkan dengan realisasi."],
+  ["Segitiga Kecurangan", "Fraud triangle — tekanan + kesempatan + pembenaran; kesempatan paling bisa dikendalikan perusahaan."],
+  ["Pemisahan Tugas", "Kontrol utama: yang menyetujui, mencatat, & memegang aset harus orang berbeda."],
+  ["Earnings Management", "Memanfaatkan celah aturan agar laba terlihat mulus — legal tapi menyesatkan."],
+  ["Hukum Benford", "Pada data alami, digit pertama '1' muncul ~30% dan '9' ~4,6%; penyimpangan jadi alat penyaring forensik."],
+  ["Materialitas", "Batas nilai salah saji yang dianggap cukup besar untuk memengaruhi keputusan pembaca laporan."],
+  ["Opini Auditor", "Pernyataan kewajaran laporan: wajar tanpa pengecualian, dengan pengecualian, tidak wajar, atau tidak menyatakan pendapat."],
+  // --- Ekonomi makro ---
+  ["Ekonomi Makro", "Cabang ekonomi yang melihat keseluruhan negara (PDB, inflasi, pengangguran), bukan satu perusahaan."],
+  ["PDB", "Produk Domestik Bruto — total nilai semua barang & jasa yang dihasilkan negara dalam satu periode."],
+  ["PDB Riil", "PDB yang sudah dibersihkan dari efek inflasi, menunjukkan pertumbuhan sesungguhnya."],
+  ["Inflasi", "Kenaikan harga barang & jasa secara umum; sisi lainnya, nilai uang menurun."],
+  ["Deflasi", "Penurunan harga secara umum; berbahaya karena orang menunda belanja sehingga ekonomi mandek."],
+  ["IHK", "Indeks Harga Konsumen — alat ukur inflasi di Indonesia yang dihitung BPS."],
+  ["Bunga Riil", "Bunga nominal dikurangi inflasi; bisa negatif walau saldo bertambah."],
+  ["Kebijakan Moneter", "Kebijakan bank sentral (BI) mengatur jumlah uang beredar & suku bunga demi stabilitas nilai rupiah."],
+  ["Suku Bunga Acuan", "BI-Rate — patokan bunga yang diikuti bunga kredit & deposito di seluruh sistem keuangan."],
+  ["Kebijakan Fiskal", "Kebijakan pemerintah soal pajak (penerimaan) & belanja negara, dituangkan dalam APBN."],
+  ["APBN", "Anggaran Pendapatan dan Belanja Negara — 'RAB'-nya sebuah negara."],
+  ["Defisit Anggaran", "Belanja negara melebihi penerimaan; selisihnya ditutup utang (di Indonesia dibatasi 3% PDB)."],
+  ["Tax Ratio", "(Penerimaan Pajak ÷ PDB) × 100% — porsi ekonomi yang berhasil dipungut jadi pajak."],
+  ["PNBP", "Penerimaan Negara Bukan Pajak — mis. sumber daya alam, dividen BUMN, layanan pemerintah."],
+  ["Kurs", "Nilai tukar — harga mata uang terhadap mata uang lain (mis. USD/IDR 16.000)."],
+  ["Depresiasi (Kurs)", "Mata uang melemah — butuh lebih banyak rupiah untuk 1 dolar."],
+  ["Currency Mismatch", "Utang dalam mata uang berbeda dari mata uang pemasukan — beban utang melonjak saat kurs bergerak."],
+  ["Hedging", "Lindung nilai — mengunci harga/kurs di masa depan untuk mengurangi risiko."],
+  ["Resesi", "Kemerosotan ekonomi; sering didefinisikan sebagai PDB riil menyusut dua kuartal berturut-turut."],
+  ["Bisnis Siklikal", "Bisnis yang naik-turun tajam mengikuti siklus ekonomi (properti, otomotif, barang mewah)."],
+  ["Bisnis Defensif", "Bisnis yang relatif stabil di segala kondisi (makanan pokok, obat, listrik)."],
 ];
 
 function renderGlossary() {
@@ -908,8 +1223,8 @@ function renderSidebar() {
     const open = curHash.includes("/course/" + c.id) || allLessons(c).some((l) => curHash === "/lesson/" + l.id);
     html += `<a class="side-link ${curHash === "/course/" + c.id ? "active" : ""}" href="#/course/${c.id}">${c.emoji} ${esc(c.title)} <small>${p.pct}%</small></a>`;
     if (open) {
-      c.modules.forEach((m) => {
-        html += `<div class="side-mod">${esc(m.level)}</div>`;
+      c.modules.forEach((m, mi) => {
+        html += `<div class="side-mod">${mi + 1}. ${esc(m.level)}</div>`;
         m.lessons.forEach((l) => {
           const done = Progress.isDone(l.id);
           const active = curHash === "/lesson/" + l.id;

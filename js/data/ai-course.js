@@ -12,6 +12,365 @@ const AI_COURSE = {
   description:
     "Jalur ini membawamu dari pertanyaan paling dasar 'Apa itu AI?' sampai mampu memahami cara kerja ChatGPT, membuat prompt yang baik, dan merancang aplikasi AI sederhana.",
   modules: [
+    /* ---------------- LEVEL DASAR (MULAI DARI NOL) ---------------- */
+    {
+      id: "ai-dasar",
+      level: "Dasar",
+      title: "Mulai dari Nol",
+      summary: "Sebelum AI: pahami data, pola, peluang, dan algoritma dengan bahasa sehari-hari.",
+      lessons: [
+        {
+          id: "ai-nol-1",
+          title: "Apa itu Data & Pola?",
+          duration: "7 menit",
+          content: `
+<p>Sebelum belajar AI, kita mulai dari dua kata paling dasar: <b>data</b> dan <b>pola</b>. Kalau paham ini, semua materi AI akan terasa jauh lebih mudah.</p>
+
+<div data-diagram="flow" data-steps="Data (fakta)|Temukan Pola|Menebak hal baru" data-caption="Inti cara kerja AI"></div>
+
+
+<h3>Data = kumpulan fakta</h3>
+<p><b>Data</b> hanyalah kumpulan fakta atau angka. Kamu sudah bertemu data setiap hari:</p>
+<ul>
+  <li>Daftar nilai ulanganmu: 80, 75, 90, 85</li>
+  <li>Suhu tiap hari minggu ini</li>
+  <li>Daftar belanja & harganya</li>
+</ul>
+
+<h3>Pola = keteraturan yang berulang</h3>
+<p><b>Pola</b> adalah sesuatu yang <b>berulang</b> atau bisa ditebak. Contoh:</p>
+<ul>
+  <li>Setiap pagi jam 7 jalanan macet.</li>
+  <li>Harga tiket naik menjelang Lebaran.</li>
+  <li>Kucing biasanya punya kumis & telinga runcing.</li>
+</ul>
+
+<div class="callout">
+<b>Inilah inti AI:</b> AI <b>menemukan pola dari data</b>, lalu memakai pola itu untuk <b>menebak</b>. Persis seperti kamu: setelah melihat 100 foto kucing, otakmu menangkap "pola kucing", sehingga bisa mengenali kucing baru yang belum pernah kamu lihat.
+</div>
+
+<div class="callout warn">
+<b>Ingat:</b> tanpa data, tidak ada yang bisa dipelajari. Data adalah "bahan mentah" — makin banyak & bagus datanya, makin pandai AI menemukan pola.
+</div>
+`,
+          keyPoints: [
+            "Data = kumpulan fakta atau angka (nilai, suhu, harga).",
+            "Pola = keteraturan yang berulang & bisa ditebak.",
+            "Inti AI: menemukan pola dari data lalu memakainya untuk menebak.",
+            "Tanpa data, tidak ada yang bisa dipelajari.",
+          ],
+          quiz: [
+            {
+              q: "Apa itu 'pola' dalam konteks ini?",
+              options: [
+                "Kumpulan angka acak",
+                "Sesuatu yang berulang atau bisa ditebak",
+                "Sebuah komputer",
+                "Nama aplikasi",
+              ],
+              answer: 1,
+              explain: "Pola adalah keteraturan berulang — inilah yang dicari AI dari data.",
+            },
+            {
+              q: "Apa yang menjadi 'bahan mentah' bagi AI untuk belajar?",
+              options: ["Listrik", "Data", "Internet cepat", "Layar besar"],
+              answer: 1,
+              explain: "AI belajar dari data; tanpa data tak ada yang bisa dipelajari.",
+            },
+          ],
+        },
+        {
+          id: "ai-nol-2",
+          title: "Peluang & Statistik Sederhana",
+          duration: "8 menit",
+          content: `
+<p>Rahasia kecil tentang AI: ia jarang benar-benar "yakin 100%". AI bekerja dengan <b>peluang</b> (kemungkinan). Mari pahami dengan angka sederhana.</p>
+
+<h3>Peluang = seberapa mungkin</h3>
+<p><b>Peluang</b> mengukur seberapa besar kemungkinan sesuatu terjadi, dari <b>0%</b> (mustahil) sampai <b>100%</b> (pasti).</p>
+
+<h4>Contoh paling sederhana: melempar koin</h4>
+<p>Sebuah koin punya <b>2 sisi</b>: sisi <b>angka</b> dan sisi <b>gambar</b>. Kalau dilempar, hasilnya hanya bisa salah satu dari <b>2 kemungkinan</b> itu. Karena kedua sisi <b>sama-sama mungkin</b> (tidak ada yang lebih berat atau lebih "disukai"), peluangnya terbagi rata.</p>
+
+<div class="callout">
+<b>Rumus peluang:</b><br>
+Peluang = <b>hasil yang diinginkan ÷ semua hasil yang mungkin</b>
+<br><br>Untuk "gambar":
+<ul>
+  <li>Hasil yang diinginkan = <b>1</b> (ada 1 sisi gambar)</li>
+  <li>Semua hasil yang mungkin = <b>2</b> (angka &amp; gambar)</li>
+</ul>
+Peluang = <b>1 ÷ 2 = 0,5 = 50%</b>. Dari situlah angka 50% berasal.
+</div>
+
+<h4>Contoh lain dengan rumus yang sama</h4>
+<table class="tbl">
+  <tr><th>Kasus</th><th>Hitungan</th><th>Peluang</th></tr>
+  <tr><td>Dadu muncul angka 3</td><td>1 ÷ 6</td><td>≈ 17%</td></tr>
+  <tr><td>Dadu muncul angka genap (2, 4, 6)</td><td>3 ÷ 6</td><td>50%</td></tr>
+  <tr><td>Namamu terpilih dari 20 siswa</td><td>1 ÷ 20</td><td>5%</td></tr>
+  <tr><td>Hujan saat langit mendung tebal</td><td>(perkiraan ahli)</td><td>≈ 80%</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Kesalahpahaman paling umum:</b> 50% <b>BUKAN</b> berarti pasti bergantian atau pasti separuh-separuh.
+<br><br>Kalau kamu melempar koin <b>10 kali</b>, hasilnya belum tentu tepat 5 gambar + 5 angka. Bisa 7-3, bisa 3-7 — dan itu <b>normal</b>. 50% artinya: kalau dilempar <b>sangat banyak</b> kali, perbandingannya akan <b>mendekati</b> setengah-setengah.
+</div>
+
+<h3>Coba sendiri — buktikan dengan simulasi 👇</h3>
+<div data-demo="js-playground">// Simulasi lempar koin - lihat sendiri apa arti "50%"
+function lempar(berapaKali) {
+  let gambar = 0;
+  let i = 0;
+  while (i !== berapaKali) {
+    if (Math.random() > 0.5) { gambar = gambar + 1; }
+    i = i + 1;
+  }
+  const persen = (gambar / berapaKali) * 100;
+  console.log(berapaKali + " lemparan  ->  gambar " + gambar + " kali (" + persen.toFixed(1) + "%)");
+}
+
+console.log("Peluang gambar = 50%. Tapi lihat hasil nyatanya:");
+lempar(10);
+lempar(100);
+lempar(1000);
+lempar(10000);
+
+console.log("-----");
+console.log("Makin banyak lemparan, makin mendekati 50%.");
+console.log("Lemparan sedikit bisa meleset jauh - itu WAJAR.");
+console.log("Jalankan berulang kali - hasilnya berbeda-beda tiap kali.");</div>
+
+<div class="callout warn">
+<b>Koin tidak punya ingatan.</b> Kalau sudah muncul gambar 5 kali berturut-turut, peluang lemparan ke-6 <b>tetap 50%</b> — bukan "sudah waktunya angka". Keliru berpikir begini punya nama: <b>gambler's fallacy</b>. Ingat baik-baik, karena ini akan sangat berguna saat kamu menilai saham atau crypto nanti.
+</div>
+
+<div class="callout">
+<b>Kaitannya ke AI:</b> saat AI berkata <i>"90% ini foto kucing"</i>, artinya ia <b>cukup yakin</b> tapi tidak mutlak. Angka itu disebut skor kepercayaan. Memahami ini membuatmu tidak menelan mentah-mentah jawaban AI.
+</div>
+
+<h3>Rata-rata (mean)</h3>
+<p>Rata-rata = <b>jumlahkan semua, lalu bagi jumlah datanya</b>. Contoh nilai 80, 90, 100:<br>
+(80 + 90 + 100) ÷ 3 = <b>90</b>. Rata-rata membantu meringkas banyak angka jadi satu.</p>
+
+<h3>Persentase (%)</h3>
+<p><b>Persen artinya "dari seratus".</b> Simbolnya <b>%</b>.</p>
+
+<div class="callout">
+<b>Cara membayangkannya:</b> apa pun yang kamu bicarakan, anggap <b>dipotong jadi 100 bagian sama besar</b>. Persen memberitahu <b>berapa bagian</b> yang sedang dibicarakan.
+<br><br>🍕 <b>Analogi pizza:</b> satu pizza dipotong jadi <b>100</b> potong kecil. Kalau kamu makan <b>25</b> potong, berarti kamu makan <b>25%</b> pizza itu.
+</div>
+
+<h4>Bagaimana kalau totalnya bukan 100?</h4>
+<p>Ini yang paling sering membingungkan. Jawabannya: kita <b>ubah dulu</b> seolah-olah totalnya 100.</p>
+
+<div class="callout">
+<b>Rumusnya:</b> (bagian ÷ total) × 100
+</div>
+
+<p><b>Contoh:</b> di kelas ada <b>20</b> siswa, <b>5</b> di antaranya laki-laki. Berapa persen laki-laki?</p>
+<pre class="code">Langkah 1 : bagian ÷ total   →  5 ÷ 20 = 0,25
+Langkah 2 : dikali 100       →  0,25 × 100 = 25
+Jawaban   : 25%</pre>
+<p>Artinya: <i>"seandainya kelas itu berisi 100 anak, kira-kira 25 anak akan laki-laki."</i></p>
+
+<h4>Angka persen yang sering dipakai</h4>
+<table class="tbl">
+  <tr><th>Persen</th><th>Artinya</th><th>Contoh</th></tr>
+  <tr><td><b>100%</b></td><td>Semuanya / utuh</td><td>Semua jawaban benar</td></tr>
+  <tr><td><b>75%</b></td><td>Tiga perempat</td><td>3 dari 4 bagian</td></tr>
+  <tr><td><b>50%</b></td><td>Setengah</td><td>Peluang koin muncul gambar</td></tr>
+  <tr><td><b>25%</b></td><td>Seperempat</td><td>1 dari 4 bagian</td></tr>
+  <tr><td><b>10%</b></td><td>Sepersepuluh</td><td>1 dari 10 bagian</td></tr>
+  <tr><td><b>0%</b></td><td>Tidak ada sama sekali</td><td>Tidak pernah terjadi</td></tr>
+</table>
+
+<h3>Coba sendiri — ubah angka jadi persen 👇</h3>
+<div data-demo="js-playground">// Persen = "dari seratus".  Rumus: (bagian / total) x 100
+const contoh = [
+  { bagian: 5,  total: 20, keterangan: "5 siswa laki-laki dari 20 siswa" },
+  { bagian: 45, total: 50, keterangan: "45 jawaban benar dari 50 soal" },
+  { bagian: 3,  total: 4,  keterangan: "3 potong kue dari 4 potong" }
+];
+
+contoh.forEach(function(c){
+  const persen = (c.bagian / c.total) * 100;
+  console.log(c.keterangan);
+  console.log("   (" + c.bagian + " / " + c.total + ") x 100 = " + persen + "%");
+});
+
+console.log("-----");
+console.log("Artinya: seandainya totalnya 100, sebanyak itulah bagiannya.");
+console.log("Ubah angkanya sesukamu, lalu jalankan lagi.");</div>
+
+<h4>Persen &amp; peluang itu sama saja</h4>
+<div class="callout">
+Keduanya cuma <b>cara menulis yang berbeda</b> untuk hal yang sama:
+<ul>
+  <li>Peluang <b>0,5</b> = <b>50%</b> (setengah)</li>
+  <li>Peluang <b>0,9</b> = <b>90%</b></li>
+  <li>Peluang <b>0,25</b> = <b>25%</b></li>
+</ul>
+Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desimal</b>.
+</div>
+
+<h4>Kenapa AI banyak memakai persen?</h4>
+<p>Karena persen membuat angka <b>mudah dibandingkan</b>, berapa pun jumlah datanya:</p>
+<ul>
+  <li><b>"Akurasi 90%"</b> → dari 100 tebakan, sekitar <b>90 benar</b> (dan 10 salah).</li>
+  <li><b>"90% ini foto kucing"</b> → AI cukup yakin, tapi masih ada <b>10% kemungkinan keliru</b>.</li>
+</ul>
+
+<div class="callout warn">
+<b>Ingat baik-baik:</b> nanti saat masuk rumus (di modul Matematika), persen <b>harus diubah jadi desimal</b> dulu — <b>10% ditulis 0,10</b>, bukan 10. Ini kesalahan paling sering terjadi.
+</div>
+`,
+          keyPoints: [
+            "AI bekerja dengan peluang (0% mustahil sampai 100% pasti), jarang yakin mutlak.",
+            "Rumus peluang = hasil yang diinginkan ÷ semua hasil yang mungkin. Koin: 1 ÷ 2 = 50%.",
+            "50% bukan berarti pasti separuh-separuh; baru mendekati bila dicoba sangat banyak kali.",
+            "Koin tidak punya ingatan — setelah 5 kali gambar, lemparan berikutnya tetap 50% (gambler's fallacy).",
+            "Skor kepercayaan AI (mis. '90% kucing') artinya cukup yakin, bukan pasti.",
+            "Rata-rata = jumlahkan semua lalu bagi banyaknya data.",
+            "Persen artinya 'dari seratus' — bayangkan sesuatu dipotong jadi 100 bagian.",
+            "Kalau total bukan 100, pakai rumus: (bagian ÷ total) × 100.",
+            "Persen & peluang itu sama: desimal × 100 = persen (0,5 = 50%).",
+            "Akurasi 90% berarti dari 100 tebakan, sekitar 90 benar.",
+            "Di dalam rumus nanti, persen harus ditulis desimal: 10% = 0,10.",
+          ],
+          practice: [
+            { type: "number", q: "Berapa rata-rata dari nilai 70, 80, dan 90?", answer: 80, tol: 0.5, hint: "Jumlahkan lalu bagi 3.", solution: "(70 + 80 + 90) ÷ 3 = 80." },
+            { type: "number", q: "Peluang muncul 'gambar' saat melempar satu koin adil? (dalam %)", answer: 50, tol: 0.5, hint: "Koin punya 2 sisi, gambar ada 1 → 1 ÷ 2.", solution: "1 ÷ 2 = 0,5 = 50%." },
+            { type: "number", q: "Dadu punya 6 sisi. Berapa peluang muncul angka 3? (dalam %, 1 desimal)", answer: 16.7, tol: 0.4, unit: "%", hint: "Ada 1 sisi bertuliskan 3, dari total 6 sisi → 1 ÷ 6.", solution: "1 ÷ 6 = 0,167 → 16,7%." },
+            { type: "number", q: "Berapa peluang dadu muncul angka GENAP (2, 4, atau 6)? (dalam %)", answer: 50, tol: 0.5, unit: "%", hint: "Ada 3 sisi genap dari total 6 sisi → 3 ÷ 6.", solution: "3 ÷ 6 = 0,5 = 50%." },
+            { type: "number", q: "Dari 20 siswa, 5 orang laki-laki. Berapa persen siswa laki-laki?", answer: 25, tol: 0.5, unit: "%", hint: "(bagian ÷ total) × 100 → (5 ÷ 20) × 100.", solution: "5 ÷ 20 = 0,25; 0,25 × 100 = 25%." },
+            { type: "number", q: "AI menjawab benar 45 dari 50 soal. Berapa persen akurasinya?", answer: 90, tol: 0.5, unit: "%", hint: "(45 ÷ 50) × 100.", solution: "45 ÷ 50 = 0,9; 0,9 × 100 = 90%." },
+            { type: "number", q: "Peluang 0,25 sama dengan berapa persen?", answer: 25, tol: 0.5, unit: "%", hint: "Desimal × 100 = persen.", solution: "0,25 × 100 = 25%." },
+          ],
+          quiz: [
+            {
+              q: "AI berkata '80% ini anjing'. Apa artinya?",
+              options: [
+                "Pasti anjing",
+                "Cukup yakin ini anjing, tapi tidak mutlak",
+                "Pasti bukan anjing",
+                "AI rusak",
+              ],
+              answer: 1,
+              explain: "Skor 80% = tingkat keyakinan, bukan kepastian mutlak.",
+            },
+            {
+              q: "Rata-rata dari 10 dan 20 adalah?",
+              options: ["10", "15", "20", "30"],
+              answer: 1,
+              explain: "(10 + 20) ÷ 2 = 15.",
+            },
+            {
+              q: "Dari mana angka 50% pada lemparan koin berasal?",
+              options: [
+                "Ditentukan secara acak",
+                "1 sisi gambar dibagi 2 sisi total (1 ÷ 2 = 0,5 = 50%)",
+                "Karena koin bulat",
+                "Hasil pengukuran berat koin",
+              ],
+              answer: 1,
+              explain:
+                "Peluang = hasil yang diinginkan ÷ semua hasil yang mungkin = 1 ÷ 2 = 50%.",
+            },
+            {
+              q: "Sebuah koin sudah muncul 'gambar' 5 kali berturut-turut. Berapa peluang lemparan ke-6 muncul gambar?",
+              options: [
+                "Lebih kecil, karena sudah waktunya angka",
+                "Tetap 50% — koin tidak punya ingatan",
+                "Lebih besar, karena sedang beruntung",
+                "0%",
+              ],
+              answer: 1,
+              explain:
+                "Setiap lemparan berdiri sendiri. Menyangka hasil lalu memengaruhi hasil berikutnya disebut gambler's fallacy.",
+            },
+            {
+              q: "Apa arti kata 'persen'?",
+              options: [
+                "Dari seribu",
+                "Dari seratus — bayangkan sesuatu dipotong jadi 100 bagian",
+                "Dari sepuluh",
+                "Angka acak",
+              ],
+              answer: 1,
+              explain:
+                "Persen berarti 'dari seratus'; 25% = 25 bagian dari 100 bagian.",
+            },
+            {
+              q: "Dari 50 soal, AI menjawab benar 45. Berapa persen akurasinya?",
+              options: ["45%", "90%", "50%", "95%"],
+              answer: 1,
+              explain: "(45 ÷ 50) × 100 = 90%.",
+            },
+          ],
+        },
+        {
+          id: "ai-nol-3",
+          title: "Apa itu Algoritma?",
+          duration: "7 menit",
+          content: `
+<p>Kata "algoritma" terdengar rumit, padahal kamu memakainya setiap hari.</p>
+
+<div class="callout">
+<b>Algoritma</b> = <b>urutan langkah</b> untuk menyelesaikan suatu tugas. Titik.
+</div>
+
+<h3>Algoritma di sekitarmu</h3>
+<ul>
+  <li><b>Resep masak</b> — langkah 1: rebus air, langkah 2: masukkan mi, langkah 3: tunggu 3 menit.</li>
+  <li><b>Petunjuk arah</b> — belok kiri, lurus 100m, belok kanan.</li>
+  <li><b>Membuat teh</b> — didihkan air → celup teh → tuang → aduk.</li>
+</ul>
+<p>Komputer bekerja dengan mengikuti algoritma — urutan langkah yang sangat jelas.</p>
+
+<h3>Hubungannya dengan AI</h3>
+<table class="tbl">
+  <tr><th>Program biasa</th><th>AI</th></tr>
+  <tr><td>Algoritma & aturannya <b>ditulis manusia</b></td><td>Algoritma yang <b>menemukan aturannya sendiri</b> dari data</td></tr>
+</table>
+
+<div class="callout">
+<b>Selamat! 🎓</b> Kamu sudah punya fondasi: <b>data</b> (bahan), <b>pola</b> (yang dicari), <b>peluang</b> (cara AI menjawab), dan <b>algoritma</b> (langkah-langkah). Sekarang lanjut ke modul <b>Pemula</b> — semua akan terasa lebih mudah!
+</div>
+`,
+          keyPoints: [
+            "Algoritma = urutan langkah untuk menyelesaikan tugas (resep, petunjuk arah).",
+            "Komputer bekerja dengan mengikuti algoritma yang jelas.",
+            "Program biasa: aturan ditulis manusia. AI: menemukan aturannya sendiri dari data.",
+          ],
+          quiz: [
+            {
+              q: "Apa itu algoritma?",
+              options: [
+                "Sejenis komputer",
+                "Urutan langkah untuk menyelesaikan tugas",
+                "Nama robot",
+                "Bahasa asing",
+              ],
+              answer: 1,
+              explain: "Algoritma adalah langkah-langkah jelas untuk menyelesaikan sesuatu.",
+            },
+            {
+              q: "Beda utama AI dari program biasa?",
+              options: [
+                "AI lebih murah",
+                "AI menemukan aturannya sendiri dari data, bukan aturan yang ditulis manusia",
+                "AI tidak butuh komputer",
+                "AI selalu benar",
+              ],
+              answer: 1,
+              explain: "AI belajar aturan dari data; program biasa mengikuti aturan tetap buatan manusia.",
+            },
+          ],
+        },
+      ],
+    },
+
     /* ---------------- LEVEL PEMULA ---------------- */
     {
       id: "ai-pemula",
@@ -190,6 +549,9 @@ const AI_COURSE = {
           content: `
 <p>Belajar pada AI disebut <b>training</b> (pelatihan). Ibarat siswa mengerjakan ribuan soal latihan sampai mahir.</p>
 
+<div data-diagram="flow" data-steps="Tebak|Bandingkan jawaban|Hitung kesalahan|Perbaiki bobot" data-caption="Siklus belajar AI (diulang jutaan kali)"></div>
+
+
 <h3>Siklus belajar AI (sederhana)</h3>
 <ol>
   <li><b>Tebak</b> — AI menebak jawaban dari sebuah contoh.</li>
@@ -254,6 +616,9 @@ const AI_COURSE = {
           duration: "10 menit",
           content: `
 <p><b>Machine Learning (ML)</b> adalah cabang AI yang fokus membuat mesin belajar dari data. Ada tiga gaya utama:</p>
+
+<div data-diagram="layers" data-items="Reinforcement (hadiah &amp; hukuman)|Unsupervised (tanpa label)|Supervised (dengan label)" data-caption="Tiga gaya belajar mesin"></div>
+
 
 <table class="tbl">
   <tr><th>Gaya</th><th>Cara belajar</th><th>Contoh</th></tr>
@@ -413,6 +778,9 @@ const AI_COURSE = {
           content: `
 <p>Model AI yang bagus harus pandai pada data <b>baru</b>, bukan hanya menghafal data latihan.</p>
 
+<div data-diagram="vs" data-left="UNDERFITTING::Model terlalu sederhana::Salah di data latih &amp; baru" data-right="OVERFITTING::Model menghafal::Bagus di latih, buruk di baru" data-caption="Dua penyakit model"></div>
+
+
 <h3>Overfitting (terlalu hafal)</h3>
 <p><b>Overfitting</b> terjadi saat model "menghafal" data latih sampai ke detail dan keributannya, tapi gagal pada data baru.</p>
 <div class="callout warn">
@@ -527,6 +895,9 @@ const AI_COURSE = {
           duration: "11 menit",
           content: `
 <p><b>Prompt</b> adalah instruksi/pertanyaan yang kamu berikan ke AI. Kualitas jawaban sangat bergantung pada kualitas prompt — ini keterampilan yang bisa dilatih.</p>
+
+<div data-diagram="flow" data-steps="Beri Peran|Konteks|Tugas Jelas|Format Keluaran" data-caption="Resep prompt yang baik"></div>
+
 
 <h3>Resep prompt yang baik</h3>
 <ol>
@@ -797,6 +1168,9 @@ const res = await client.messages.create({
           duration: "14 menit",
           content: `
 <p>LLM tidak tahu data <b>pribadi/internal</b>-mu (dokumen perusahaan, materi kursus) dan bisa <b>berhalusinasi</b>. <b>RAG</b> (Retrieval-Augmented Generation) memecahkan ini: AI menjawab berdasarkan dokumenmu sendiri.</p>
+
+<div data-diagram="flow" data-steps="Pecah Dokumen|Embedding|Simpan di Vector DB|Cari yang Relevan|Jawab" data-caption="Pipeline RAG"></div>
+
 
 <h3>Pipeline RAG (5 langkah)</h3>
 <ol>
@@ -1162,6 +1536,9 @@ console.log("RAG memilih dokumen dengan skor tertinggi sebagai konteks.");</div>
           content: `
 <p>Bagaimana kita tahu sebuah model AI itu "bagus"? Ternyata angka <b>akurasi</b> saja sering <b>menyesatkan</b>.</p>
 
+<div data-diagram="vs" data-left="PRECISION::Dari yang di-alarm positif::berapa % benar?" data-right="RECALL::Dari yang benar positif::berapa % tertangkap?" data-caption="Precision vs Recall"></div>
+
+
 <div class="callout warn">
 <b>Jebakan akurasi:</b> Untuk mendeteksi penyakit langka (1 dari 100 orang), model yang <b>selalu</b> menebak "sehat" mendapat akurasi <b>99%</b> — padahal tak berguna sama sekali (tak pernah menangkap yang sakit).
 </div>
@@ -1400,6 +1777,2250 @@ console.log("=> Konvergen menuju x = 3 (titik minimum). Itulah 'belajar'.");</di
               ],
               answer: 1,
               explain: "Data beragam menyulitkan model sekadar menghafal, mendorong generalisasi.",
+            },
+          ],
+        },
+      ],
+    },
+
+    /* ---------------- LEVEL LANJUTAN (EKOSISTEM & TREN) ---------------- */
+    {
+      id: "ai-lanjutan",
+      level: "Lanjutan",
+      title: "Ekosistem & Tren AI",
+      summary: "Alat & pola modern: multi-agent (CrewAI), vector database, fine-tuning vs RAG, dan lanskap tools.",
+      lessons: [
+        {
+          id: "ai-adv-1",
+          title: "Multi-Agent & CrewAI",
+          duration: "12 menit",
+          content: `
+<p>Sejauh ini kita memakai <b>satu</b> AI. Tapi tugas rumit sering lebih baik ditangani <b>beberapa agen AI yang bekerja sama</b> — seperti sebuah tim.</p>
+
+<h3>Ide multi-agent</h3>
+<p>Alih-alih satu AI melakukan semuanya, kamu beri <b>peran</b> berbeda ke beberapa agen, lalu mereka berkolaborasi. Contoh membuat artikel:</p>
+<ul>
+  <li><b>Agen Peneliti</b> — mengumpulkan fakta & sumber.</li>
+  <li><b>Agen Penulis</b> — menyusun draf dari hasil riset.</li>
+  <li><b>Agen Editor</b> — memeriksa & memperbaiki.</li>
+</ul>
+
+<h3>CrewAI</h3>
+<div class="callout">
+<b>CrewAI</b> adalah framework populer untuk merakit "kru" agen: kamu definisikan tiap agen (peran, tujuan, alat), lalu tugas-tugas dan alurnya. CrewAI mengorkestrasi mereka bekerja bersama secara otomatis. Alternatif: <b>AutoGen</b>, <b>LangGraph</b>, <b>Anthropic Agent SDK</b>.
+</div>
+
+<pre class="code">// Gambaran konsep (pseudo-code gaya CrewAI)
+peneliti = Agent(peran="Peneliti", tujuan="Cari fakta akurat", alat=[pencarian]);
+penulis  = Agent(peran="Penulis",  tujuan="Tulis artikel jelas");
+editor   = Agent(peran="Editor",   tujuan="Perbaiki & rapikan");
+
+crew = Crew(agen=[peneliti, penulis, editor], tugas=[riset, tulis, sunting]);
+hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
+
+<div class="callout warn">
+<b>Kapan dipakai?</b> Multi-agent kuat untuk tugas multi-langkah yang bisa dibagi peran. Tapi ia menambah biaya (banyak panggilan AI) & kompleksitas — untuk tugas sederhana, satu agen sudah cukup.
+</div>
+`,
+          keyPoints: [
+            "Sistem multi-agent memberi peran berbeda ke beberapa AI yang berkolaborasi (mis. Peneliti, Penulis, Editor).",
+            "CrewAI adalah framework untuk merakit & mengorkestrasi 'kru' agen (alternatif: AutoGen, LangGraph, Agent SDK).",
+            "Cocok untuk tugas multi-langkah yang bisa dibagi peran; menambah biaya & kompleksitas untuk hal sederhana.",
+          ],
+          quiz: [
+            {
+              q: "Apa inti dari sistem multi-agent?",
+              options: [
+                "Satu AI melakukan semua sendirian",
+                "Beberapa agen AI dengan peran berbeda berkolaborasi menyelesaikan tugas",
+                "Menambang crypto",
+                "Melatih model dari nol",
+              ],
+              answer: 1,
+              explain:
+                "Multi-agent membagi tugas ke beberapa agen berperan khusus yang bekerja sama.",
+            },
+            {
+              q: "Apa fungsi CrewAI?",
+              options: [
+                "Framework untuk merakit & mengorkestrasi tim agen AI",
+                "Dompet crypto",
+                "Bahasa pemrograman",
+                "Database SQL",
+              ],
+              answer: 0,
+              explain:
+                "CrewAI membantu mendefinisikan agen berperan + tugas, lalu menjalankannya bersama.",
+            },
+          ],
+        },
+        {
+          id: "ai-adv-2",
+          title: "Vector Database — Infrastruktur RAG",
+          duration: "11 menit",
+          content: `
+<p>Di modul fundamental kamu belajar RAG mencari dokumen lewat <b>kemiripan vektor</b>. Untuk jutaan dokumen, pencarian itu butuh mesin khusus: <b>vector database</b>.</p>
+
+<h3>Apa yang dilakukannya?</h3>
+<ul>
+  <li>Menyimpan <b>embedding</b> (vektor) dari ribuan/jutaan potongan teks.</li>
+  <li>Mencari vektor <b>paling mirip</b> dengan pertanyaan secara <b>sangat cepat</b> (pencarian tetangga terdekat / ANN).</li>
+</ul>
+
+<div class="callout">
+<b>Analogi:</b> vector database ibarat "perpustakaan yang menata buku berdasarkan MAKNA, bukan abjad" — sehingga saat kamu bertanya, ia langsung menuju rak yang paling relevan.
+</div>
+
+<h3>Pilihan populer</h3>
+<table class="tbl">
+  <tr><th>Nama</th><th>Catatan</th></tr>
+  <tr><td><b>Pinecone</b></td><td>Layanan cloud terkelola, mudah dipakai</td></tr>
+  <tr><td><b>Chroma</b></td><td>Ringan, cocok untuk mulai / lokal</td></tr>
+  <tr><td><b>Weaviate / Qdrant / Milvus</b></td><td>Open-source, skala besar</td></tr>
+  <tr><td><b>FAISS</b></td><td>Pustaka pencarian vektor dari Meta (bukan DB penuh)</td></tr>
+</table>
+
+<div class="callout">
+<b>💥 Dampak:</b> Vector database adalah <b>tulang punggung RAG produksi</b>. Tanpanya, pencarian semantik pada data besar akan sangat lambat. Ia mengubah demo RAG kecil menjadi sistem nyata berskala jutaan dokumen.
+</div>
+`,
+          keyPoints: [
+            "Vector database menyimpan embedding & mencari vektor paling mirip dengan sangat cepat (ANN).",
+            "Ia menata data berdasarkan makna, bukan abjad — inti pencarian semantik.",
+            "Pilihan: Pinecone, Chroma, Weaviate, Qdrant, Milvus, FAISS.",
+            "Dampak: tulang punggung RAG produksi berskala besar.",
+          ],
+          quiz: [
+            {
+              q: "Fungsi utama vector database?",
+              options: [
+                "Menyimpan gambar",
+                "Menyimpan embedding & mencari vektor paling mirip dengan cepat",
+                "Menambang koin",
+                "Menjalankan smart contract",
+              ],
+              answer: 1,
+              explain:
+                "Vector DB menyimpan & mencari vektor kemiripan makna secara efisien.",
+            },
+            {
+              q: "Mengapa vector database penting untuk RAG produksi?",
+              options: [
+                "Membuat AI lebih lambat",
+                "Memungkinkan pencarian semantik cepat pada data berskala besar",
+                "Mengganti model AI",
+                "Menghapus dokumen",
+              ],
+              answer: 1,
+              explain:
+                "Ia menjaga pencarian tetap cepat saat dokumen berjumlah jutaan.",
+            },
+          ],
+        },
+        {
+          id: "ai-adv-3",
+          title: "Fine-tuning vs RAG vs Prompting",
+          duration: "12 menit",
+          content: `
+<p>Ada tiga cara "menyesuaikan" LLM agar cocok dengan kebutuhanmu. Memilih yang tepat menghemat banyak biaya & usaha.</p>
+
+<table class="tbl">
+  <tr><th>Cara</th><th>Apa itu</th><th>Paling cocok untuk</th></tr>
+  <tr><td><b>Prompting</b></td><td>Merancang instruksi yang baik (termasuk few-shot)</td><td>Kebanyakan kasus; mulai dari sini — termurah & tercepat</td></tr>
+  <tr><td><b>RAG</b></td><td>Menyelipkan dokumen relevan ke prompt</td><td>Menjawab dari <b>pengetahuan/dokumen</b> milikmu yang sering berubah</td></tr>
+  <tr><td><b>Fine-tuning</b></td><td>Melatih ulang model dengan datamu agar mengubah "gaya/perilaku"</td><td>Mengubah <b>gaya/format</b> keluaran secara konsisten, atau tugas sangat khusus</td></tr>
+</table>
+
+<div class="callout">
+<b>Kunci memilih:</b>
+<ul>
+  <li>Butuh AI tahu <b>fakta/dokumen spesifik</b>? → <b>RAG</b> (bukan fine-tuning).</li>
+  <li>Butuh AI selalu menjawab dengan <b>format/gaya khusus</b>? → <b>Fine-tuning</b>.</li>
+  <li>Ragu? → <b>Mulai dari prompting</b>. Sering itu sudah cukup.</li>
+</ul>
+</div>
+
+<div class="callout warn">
+<b>Salah kaprah umum:</b> banyak orang buru-buru fine-tuning untuk "mengajari fakta baru". Itu <b>mahal & rapuh</b> (fakta berubah, model harus dilatih ulang). Untuk pengetahuan yang berubah, <b>RAG</b> hampir selalu pilihan lebih tepat.
+</div>
+`,
+          keyPoints: [
+            "Tiga cara menyesuaikan LLM: prompting (termurah), RAG (pengetahuan/dokumen), fine-tuning (gaya/perilaku).",
+            "Untuk fakta/dokumen yang berubah → RAG, bukan fine-tuning.",
+            "Untuk format/gaya konsisten atau tugas sangat khusus → fine-tuning.",
+            "Mulai selalu dari prompting; sering sudah cukup.",
+          ],
+          quiz: [
+            {
+              q: "Butuh AI menjawab berdasarkan dokumen internal yang sering berubah. Pilihan terbaik?",
+              options: ["Fine-tuning", "RAG", "Mengganti bahasa", "Menambah parameter"],
+              answer: 1,
+              explain:
+                "RAG menyodorkan dokumen terbaru saat dibutuhkan — cocok untuk pengetahuan yang berubah.",
+            },
+            {
+              q: "Kesalahan umum dalam menyesuaikan LLM?",
+              options: [
+                "Memakai prompting dulu",
+                "Buru-buru fine-tuning untuk mengajari fakta yang berubah (mahal & rapuh)",
+                "Memakai RAG untuk dokumen",
+                "Merancang prompt yang jelas",
+              ],
+              answer: 1,
+              explain:
+                "Fine-tuning untuk fakta berubah tidak efisien; RAG lebih tepat.",
+            },
+          ],
+        },
+        {
+          id: "ai-adv-4",
+          title: "Lanskap Tools & Tren AI",
+          duration: "11 menit",
+          content: `
+<p>Ekosistem AI berkembang cepat. Berikut peta singkat alat & tren penting agar kamu tidak tersesat.</p>
+
+<h3>Alat & platform</h3>
+<table class="tbl">
+  <tr><th>Kategori</th><th>Contoh</th></tr>
+  <tr><td>Framework aplikasi LLM</td><td>LangChain, LlamaIndex (fokus RAG), CrewAI (multi-agent)</td></tr>
+  <tr><td>Model & komunitas</td><td>Hugging Face (ribuan model open-source & dataset)</td></tr>
+  <tr><td>Vector database</td><td>Pinecone, Chroma, Weaviate, Qdrant</td></tr>
+  <tr><td>Penyedia model</td><td>Anthropic (Claude), OpenAI, Google, model open (Llama, Mistral)</td></tr>
+</table>
+
+<h3>Tren yang perlu diketahui</h3>
+<ul>
+  <li><b>Model vs open model</b> — model tertutup (API) sangat kuat & mudah; model open bisa dijalankan sendiri (privasi, kontrol).</li>
+  <li><b>Multimodal</b> — satu model memahami teks, gambar, suara, video sekaligus.</li>
+  <li><b>AI Agents</b> — AI yang merencanakan & memakai alat untuk menyelesaikan tugas, bukan sekadar menjawab.</li>
+  <li><b>MCP (Model Context Protocol)</b> — standar untuk menghubungkan AI ke alat & data secara aman & seragam.</li>
+</ul>
+
+<div class="callout">
+<b>Selamat! 🎓</b> Kamu kini mengenal ekosistem AI modern: multi-agent (CrewAI), vector database, kapan fine-tuning/RAG/prompting, dan lanskap tools. Bekal untuk memilih alat yang tepat saat membangun.
+</div>
+`,
+          keyPoints: [
+            "Framework: LangChain (umum), LlamaIndex (RAG), CrewAI (multi-agent).",
+            "Hugging Face = pusat model open-source & dataset; vector DB (Pinecone/Chroma/dll) untuk RAG.",
+            "Tren: model tertutup vs open, multimodal, AI agents, dan MCP untuk menghubungkan AI ke alat/data.",
+          ],
+          quiz: [
+            {
+              q: "Apa itu Hugging Face?",
+              options: [
+                "Dompet crypto",
+                "Pusat komunitas berisi ribuan model open-source & dataset AI",
+                "Vector database",
+                "Bahasa pemrograman",
+              ],
+              answer: 1,
+              explain: "Hugging Face adalah hub model & dataset open-source.",
+            },
+            {
+              q: "Apa yang dimaksud MCP (Model Context Protocol)?",
+              options: [
+                "Jenis koin",
+                "Standar untuk menghubungkan AI ke alat & data secara seragam & aman",
+                "Metrik akurasi",
+                "Nama model",
+              ],
+              answer: 1,
+              explain:
+                "MCP menstandarkan cara AI mengakses alat/data eksternal.",
+            },
+          ],
+        },
+      ],
+    },
+
+    /* ---------------- LEVEL TERAPAN (GENERATIF & PRODUKSI) ---------------- */
+    {
+      id: "ai-terapan",
+      level: "Terapan",
+      title: "AI Generatif & Terapan",
+      summary: "Topik penting yang melengkapi: AI gambar (diffusion), RLHF & alignment, sistem rekomendasi, dan MLOps.",
+      lessons: [
+        {
+          id: "ai-app-1",
+          title: "AI Generatif Gambar (Diffusion Models)",
+          duration: "12 menit",
+          content: `
+<p>AI generatif tidak hanya untuk teks. Alat seperti <b>DALL·E, Midjourney, & Stable Diffusion</b> membuat gambar dari deskripsi teks. Rahasianya: <b>diffusion model</b>.</p>
+
+<h3>Cara kerja (intuisi)</h3>
+<p>Bayangkan sebuah foto yang perlahan ditutupi "bintik-bintik" (noise) sampai jadi acak total. Diffusion model belajar melakukan <b>kebalikannya</b>:</p>
+<ol>
+  <li>Mulai dari <b>noise acak</b> (seperti layar TV rusak).</li>
+  <li>Model <b>menghapus noise sedikit demi sedikit</b> lewat banyak langkah.</li>
+  <li>Tiap langkah <b>diarahkan oleh teks prompt</b>-mu (mis. "kucing memakai topi").</li>
+  <li>Setelah puluhan langkah, muncul gambar yang jelas & sesuai deskripsi.</li>
+</ol>
+
+<div class="callout">
+<b>Analogi:</b> seperti pematung yang "menghapus" bagian tak perlu sampai patung muncul — tapi di sini yang dihapus adalah <b>noise</b>, dan panduannya adalah <b>kata-katamu</b>.
+</div>
+
+<h3>💥 Dampak</h3>
+<ul>
+  <li>👍 Alat kreatif dahsyat: desain, ilustrasi, prototipe cepat.</li>
+  <li>👎 Kekhawatiran nyata: <b>deepfake</b>, hak cipta (dilatih dari karya orang), dan dampak pada pekerjaan kreatif.</li>
+</ul>
+`,
+          keyPoints: [
+            "Diffusion model membuat gambar dengan menghapus noise acak sedikit demi sedikit, diarahkan oleh teks prompt.",
+            "Mulai dari noise → denoise bertahap → gambar jelas sesuai deskripsi.",
+            "Contoh: DALL·E, Midjourney, Stable Diffusion.",
+            "Dampak: alat kreatif kuat, tapi memunculkan isu deepfake, hak cipta, & pekerjaan.",
+          ],
+          quiz: [
+            {
+              q: "Bagaimana diffusion model membuat gambar?",
+              options: [
+                "Menyalin dari internet",
+                "Mulai dari noise acak lalu menghapus noise bertahap, diarahkan teks prompt",
+                "Menggambar piksel satu per satu berurutan",
+                "Memfoto layar",
+              ],
+              answer: 1,
+              explain:
+                "Diffusion mengubah noise menjadi gambar lewat proses denoising bertahap terpandu.",
+            },
+            {
+              q: "Kekhawatiran utama AI generatif gambar?",
+              options: [
+                "Terlalu lambat",
+                "Deepfake, hak cipta, dan dampak pada pekerjaan kreatif",
+                "Butuh internet",
+                "Tidak ada",
+              ],
+              answer: 1,
+              explain: "Kemampuannya menimbulkan isu etika: deepfake, hak cipta, & lapangan kerja.",
+            },
+          ],
+        },
+        {
+          id: "ai-app-2",
+          title: "RLHF & Alignment (Membuat AI Membantu & Aman)",
+          duration: "12 menit",
+          content: `
+<p>Ingat: LLM mentah hanya <b>menebak kata berikutnya</b> dari internet. Itu <b>tidak otomatis</b> membuatnya membantu, sopan, atau aman. Bagaimana ChatGPT/Claude jadi asisten yang baik? Lewat <b>RLHF</b> dan <b>alignment</b>.</p>
+
+<h3>RLHF (Reinforcement Learning from Human Feedback)</h3>
+<ol>
+  <li>Model menghasilkan beberapa jawaban.</li>
+  <li><b>Manusia memberi peringkat</b>: mana jawaban yang lebih baik/aman.</li>
+  <li>Peringkat itu melatih sebuah <b>"model penilai" (reward model)</b>.</li>
+  <li>LLM lalu <b>dilatih ulang</b> untuk memaksimalkan skor penilai → makin membantu & selaras.</li>
+</ol>
+
+<div class="callout">
+<b>Alignment</b> = menyelaraskan perilaku AI dengan <b>nilai & niat manusia</b>. Ini bukan soal "pintar", tapi soal "berperilaku benar & aman".
+</div>
+
+<p><b>Constitutional AI</b> (pendekatan Anthropic) menambahkan seperangkat prinsip/"konstitusi" agar AI bisa mengoreksi diri menuju jawaban yang lebih aman.</p>
+
+<h3>💥 Dampak</h3>
+<ul>
+  <li>Alignment adalah inti <b>keamanan AI</b> — makin kuat AI, makin penting.</li>
+  <li>Belum sempurna: masih ada <b>jailbreak</b> (mengakali aturan) & kadang <b>terlalu menolak</b> hal wajar.</li>
+</ul>
+`,
+          keyPoints: [
+            "LLM mentah tidak otomatis membantu/aman; RLHF & alignment memperbaikinya.",
+            "RLHF: manusia memberi peringkat jawaban → melatih reward model → LLM dilatih memaksimalkannya.",
+            "Alignment = menyelaraskan perilaku AI dengan nilai & niat manusia (aman & benar).",
+            "Dampak: inti keamanan AI; belum sempurna (jailbreak, penolakan berlebihan).",
+          ],
+          quiz: [
+            {
+              q: "Apa inti dari RLHF?",
+              options: [
+                "Menambah parameter",
+                "Memakai peringkat jawaban dari manusia untuk melatih model agar lebih membantu & aman",
+                "Menambang data",
+                "Mempercepat GPU",
+              ],
+              answer: 1,
+              explain:
+                "RLHF memakai umpan balik manusia untuk menyelaraskan perilaku model.",
+            },
+            {
+              q: "Apa yang dimaksud 'alignment' pada AI?",
+              options: [
+                "Menata teks rata kiri",
+                "Menyelaraskan perilaku AI dengan nilai & niat manusia (aman & benar)",
+                "Mempercepat jawaban",
+                "Menambah bahasa",
+              ],
+              answer: 1,
+              explain:
+                "Alignment memastikan AI berperilaku sesuai maksud & nilai manusia.",
+            },
+          ],
+        },
+        {
+          id: "ai-app-3",
+          title: "Sistem Rekomendasi",
+          duration: "11 menit",
+          content: `
+<p>Kenapa YouTube, TikTok, & Shopee seolah tahu apa yang kamu suka? Itu kerja <b>sistem rekomendasi</b> — salah satu penerapan AI paling bernilai secara bisnis.</p>
+
+<h3>Dua pendekatan utama</h3>
+<table class="tbl">
+  <tr><th>Pendekatan</th><th>Ide</th><th>Contoh</th></tr>
+  <tr><td><b>Collaborative Filtering</b></td><td>"Orang yang mirip denganmu menyukai ini"</td><td>Pengguna berselera mirip → saling merekomendasikan</td></tr>
+  <tr><td><b>Content-Based</b></td><td>"Barang mirip dengan yang kamu suka"</td><td>Suka film aksi → rekomendasikan film aksi lain</td></tr>
+</table>
+<p>Sistem nyata biasanya <b>hibrida</b> (gabungan keduanya) plus sinyal lain (waktu tonton, klik).</p>
+
+<div class="callout">
+<b>Umpan balik:</b> setiap klik & durasi tontonanmu jadi <b>data latih</b> yang terus menyempurnakan rekomendasi. Makin kamu pakai, makin ia "mengenalmu".
+</div>
+
+<h3>💥 Dampak</h3>
+<ul>
+  <li>👍 Sangat kuat untuk <b>keterlibatan (engagement)</b> & penjualan.</li>
+  <li>👎 Risiko: <b>filter bubble</b> (hanya melihat yang serupa), kecanduan, dan penguatan bias.</li>
+</ul>
+`,
+          keyPoints: [
+            "Sistem rekomendasi memprediksi yang kamu suka; penerapan AI bernilai bisnis tinggi.",
+            "Collaborative filtering = 'orang mirip suka ini'; content-based = 'barang mirip yang kamu suka'.",
+            "Sistem nyata hibrida + sinyal perilaku (klik, durasi) sebagai data latih.",
+            "Dampak: mendongkrak engagement/penjualan, tapi berisiko filter bubble, kecanduan, & bias.",
+          ],
+          practice: [
+            { type: "choice", q: "'Pengguna dengan selera mirip denganmu juga menyukai lagu ini' — ini pendekatan?", options: ["Content-based", "Collaborative filtering"], answer: 1, hint: "Berdasarkan kemiripan antar-pengguna atau antar-barang?", solution: "Berdasarkan pengguna serupa = collaborative filtering." },
+            { type: "choice", q: "'Kamu suka film horor, ini film horor lain yang mirip' — pendekatan?", options: ["Content-based", "Collaborative filtering"], answer: 0, hint: "Berdasarkan atribut barang yang mirip?", solution: "Berdasarkan kemiripan konten/atribut barang = content-based." },
+          ],
+          quiz: [
+            {
+              q: "Apa itu collaborative filtering?",
+              options: [
+                "Merekomendasikan barang mirip atributnya",
+                "Merekomendasikan berdasarkan selera pengguna lain yang mirip denganmu",
+                "Menyaring spam",
+                "Menghapus data",
+              ],
+              answer: 1,
+              explain:
+                "Collaborative filtering memakai kemiripan antar-pengguna untuk merekomendasikan.",
+            },
+            {
+              q: "Risiko sistem rekomendasi?",
+              options: [
+                "Membuat internet cepat",
+                "Filter bubble, kecanduan, & penguatan bias",
+                "Tidak ada risiko",
+                "Menurunkan penjualan",
+              ],
+              answer: 1,
+              explain: "Rekomendasi bisa mempersempit paparan & memperkuat kebiasaan/bias.",
+            },
+          ],
+        },
+        {
+          id: "ai-app-4",
+          title: "MLOps — Menjalankan AI di Produksi",
+          duration: "12 menit",
+          content: `
+<p>Membuat model yang bagus di laptop itu satu hal; menjalankannya <b>andal untuk jutaan pengguna</b> adalah hal lain. Di sinilah <b>MLOps</b> berperan.</p>
+
+<div data-diagram="flow" data-steps="Deploy|Monitor|Deteksi Drift|Latih Ulang" data-caption="Siklus MLOps"></div>
+
+
+<div class="callout">
+<b>MLOps</b> = praktik untuk <b>men-deploy, memantau, & memelihara</b> model AI di produksi (seperti DevOps, tapi untuk machine learning).
+</div>
+
+<h3>Perhatian utama</h3>
+<ul>
+  <li><b>Deployment</b> — menyajikan model agar bisa dipanggil aplikasi (API), cepat & stabil.</li>
+  <li><b>Monitoring</b> — pantau akurasi, latensi, & error secara terus-menerus.</li>
+  <li><b>Data/Model Drift</b> — dunia berubah, pola bergeser, sehingga model lama jadi <b>makin tidak akurat</b>. Harus terdeteksi.</li>
+  <li><b>Retraining</b> — melatih ulang model secara berkala dengan data baru.</li>
+  <li><b>Versioning & A/B testing</b> — kelola versi model & uji mana yang lebih baik.</li>
+</ul>
+
+<div class="callout warn">
+<b>Bahaya "drift":</b> Model deteksi penipuan yang hebat tahun lalu bisa gagal tahun ini karena pola penipuan berubah. Tanpa monitoring, kualitas <b>menurun diam-diam</b> tanpa ada yang sadar.
+</div>
+
+<h3>💥 Dampak</h3>
+<p>Tanpa MLOps, model AI <b>membusuk perlahan</b> di produksi. Dengan MLOps, kualitas terjaga, masalah cepat terdeteksi, dan model tetap relevan seiring waktu.</p>
+
+<div class="callout">
+<b>Selamat! 🎓</b> Kamu kini mengenal AI generatif gambar, cara AI dibuat aman (RLHF & alignment), sistem rekomendasi, dan menjalankan AI di produksi (MLOps) — melengkapi pemahamanmu dari konsep sampai penerapan nyata.
+</div>
+`,
+          keyPoints: [
+            "MLOps = praktik men-deploy, memantau, & memelihara model AI di produksi.",
+            "Perhatian: deployment, monitoring, data/model drift, retraining, versioning & A/B testing.",
+            "Data drift: dunia berubah → model lama makin tidak akurat; harus dipantau & dilatih ulang.",
+            "Dampak: tanpa MLOps model membusuk diam-diam; dengan MLOps kualitas & relevansi terjaga.",
+          ],
+          quiz: [
+            {
+              q: "Apa itu 'data/model drift'?",
+              options: [
+                "Model bergerak fisik",
+                "Pola dunia berubah sehingga model lama makin tidak akurat seiring waktu",
+                "Model menjadi lebih cepat",
+                "Data terhapus",
+              ],
+              answer: 1,
+              explain:
+                "Perubahan distribusi data membuat performa model menurun; perlu dipantau & dilatih ulang.",
+            },
+            {
+              q: "Kenapa MLOps penting?",
+              options: [
+                "Agar model tidak membusuk diam-diam di produksi & tetap andal/relevan",
+                "Agar model lebih besar",
+                "Agar gratis",
+                "Agar tidak perlu data",
+              ],
+              answer: 0,
+              explain:
+                "MLOps menjaga kualitas, mendeteksi masalah, & memelihara relevansi model.",
+            },
+          ],
+        },
+      ],
+    },
+
+    /* ---------------- LEVEL PENDALAMAN (ML KLASIK) ---------------- */
+    {
+      id: "ai-pendalaman",
+      level: "Pendalaman",
+      title: "Machine Learning Klasik",
+      summary: "Selain neural network: Decision Tree, Random Forest, k-NN & clustering — sering lebih pas untuk bisnis.",
+      lessons: [
+        {
+          id: "ai-deep-1",
+          title: "Decision Tree (Pohon Keputusan)",
+          duration: "10 menit",
+          content: `
+<p>Selama ini kita banyak membahas neural network. Padahal untuk banyak masalah bisnis, algoritma <b>klasik</b> yang lebih sederhana justru lebih pas. Yang paling mudah dipahami: <b>Decision Tree</b>.</p>
+
+<h3>Fundamental: ini cuma "20 pertanyaan"</h3>
+<p>Kamu pasti pernah main tebak-tebakan "20 pertanyaan": lewat serangkaian pertanyaan <b>ya/tidak</b>, kamu menyempit ke satu jawaban. <b>Decision Tree</b> bekerja persis begitu.</p>
+
+<div class="callout">
+<b>Contoh — menebak apakah pelanggan akan membeli:</b>
+<ul>
+  <li>Umur di atas 25? → <b>Ya</b></li>
+  <li>Penghasilan tinggi? → <b>Ya</b> → prediksi: <b>Beli</b> ✅</li>
+  <li>(kalau tidak) Pernah beli sebelumnya? → <b>Tidak</b> → prediksi: <b>Tidak beli</b></li>
+</ul>
+Model menyusun pertanyaan-pertanyaan ini <b>otomatis dari data</b>, memilih pertanyaan yang paling memisahkan hasil.
+</div>
+
+<h3>Kenapa disukai?</h3>
+<ul>
+  <li><b>Mudah dijelaskan</b> (bisa digambar sebagai pohon) — penting untuk bisnis & regulasi.</li>
+  <li>Cepat, tak butuh data raksasa.</li>
+  <li>Bekerja untuk klasifikasi (kategori) maupun angka.</li>
+</ul>
+
+<div class="callout warn">
+<b>Kelemahan:</b> satu pohon mudah <b>overfitting</b> (menghafal data latih). Solusinya ada di pelajaran berikutnya: gabungkan banyak pohon (Random Forest).
+</div>
+`,
+          keyPoints: [
+            "Decision Tree = serangkaian pertanyaan ya/tidak yang menuntun ke keputusan (seperti '20 pertanyaan').",
+            "Model menyusun pertanyaan otomatis dari data, memilih yang paling memisahkan hasil.",
+            "Kelebihan: mudah dijelaskan (interpretable), cepat, tak butuh data raksasa.",
+            "Kelemahan: satu pohon mudah overfitting.",
+          ],
+          quiz: [
+            {
+              q: "Bagaimana cara kerja Decision Tree?",
+              options: [
+                "Menebak acak",
+                "Serangkaian pertanyaan ya/tidak yang menuntun ke keputusan",
+                "Menyalin jawaban",
+                "Menambang data",
+              ],
+              answer: 1,
+              explain: "Decision tree memecah data lewat pertanyaan bertingkat menuju prediksi.",
+            },
+            {
+              q: "Kelebihan utama Decision Tree untuk bisnis?",
+              options: [
+                "Paling akurat selalu",
+                "Mudah dijelaskan/digambar (interpretable)",
+                "Butuh data raksasa",
+                "Tak bisa salah",
+              ],
+              answer: 1,
+              explain: "Keputusannya transparan & mudah dipahami manusia.",
+            },
+          ],
+        },
+        {
+          id: "ai-deep-2",
+          title: "Random Forest & Kekuatan 'Kerumunan'",
+          duration: "10 menit",
+          content: `
+<p>Satu Decision Tree mudah keliru. Solusinya memakai prinsip yang sudah kamu kenal: <b>kebijaksanaan orang banyak</b>.</p>
+
+<h3>Fundamental: tebakan gabungan lebih pintar</h3>
+<p>Kalau kamu bertanya "berapa jumlah permen di toples?" ke <b>satu</b> orang, tebakannya bisa jauh meleset. Tapi <b>rata-rata tebakan 100 orang</b> sering sangat dekat dengan jawaban benar. Itulah <b>ensemble</b> (penggabungan).</p>
+
+<div class="callout">
+<b>Random Forest</b> = "hutan" berisi <b>banyak Decision Tree</b>. Tiap pohon dilatih pada bagian data yang sedikit berbeda, lalu hasil semua pohon <b>digabung</b> (voting untuk kategori, atau dirata-rata untuk angka).
+</div>
+
+<h3>Kenapa jauh lebih baik?</h3>
+<ul>
+  <li>Kesalahan tiap pohon <b>saling meniadakan</b> saat digabung → lebih akurat.</li>
+  <li>Jauh lebih tahan <b>overfitting</b> daripada satu pohon.</li>
+  <li>Salah satu algoritma paling <b>andal & populer</b> untuk data tabel (spreadsheet) di dunia nyata.</li>
+</ul>
+
+<div class="callout">
+<b>Intinya:</b> banyak model "biasa" yang digabung sering mengalahkan satu model "canggih". Prinsip ensemble ini dipakai di mana-mana, dari deteksi penipuan sampai rekomendasi.
+</div>
+`,
+          keyPoints: [
+            "Random Forest = gabungan banyak Decision Tree (ensemble).",
+            "Prinsip 'kebijaksanaan orang banyak': tebakan gabungan lebih akurat & stabil.",
+            "Tiap pohon dilatih pada data sedikit berbeda; hasil digabung (voting/rata-rata).",
+            "Jauh lebih tahan overfitting; sangat andal untuk data tabel dunia nyata.",
+          ],
+          quiz: [
+            {
+              q: "Apa itu Random Forest?",
+              options: [
+                "Satu pohon keputusan besar",
+                "Gabungan banyak Decision Tree yang hasilnya digabung (ensemble)",
+                "Jenis neural network",
+                "Database",
+              ],
+              answer: 1,
+              explain: "Random Forest menggabungkan banyak pohon agar lebih akurat & stabil.",
+            },
+            {
+              q: "Kenapa menggabungkan banyak pohon lebih baik?",
+              options: [
+                "Lebih lambat",
+                "Kesalahan tiap pohon saling meniadakan → lebih akurat & tahan overfitting",
+                "Lebih mahal saja",
+                "Tidak ada bedanya",
+              ],
+              answer: 1,
+              explain: "Penggabungan meredam kesalahan individual (prinsip ensemble).",
+            },
+          ],
+        },
+        {
+          id: "ai-deep-3",
+          title: "k-NN & Clustering (k-Means)",
+          duration: "10 menit",
+          content: `
+<p>Dua algoritma klasik lagi yang intuitif — dan menutup gambaran "ML selain neural network".</p>
+
+<h3>k-NN: "Kamu mirip siapa?"</h3>
+<p><b>k-Nearest Neighbors</b> mengklasifikasikan sesuatu berdasarkan <b>tetangga terdekatnya</b>. Untuk menebak selera film seseorang, lihat beberapa orang yang paling mirip dengannya — kemungkinan seleranya serupa.</p>
+<div class="callout">
+<b>Prinsipnya:</b> "hal yang mirip cenderung berdekatan." Ambil <b>k</b> data paling mirip, lalu ikuti mayoritas mereka.
+</div>
+
+<h3>k-Means: mengelompokkan tanpa label</h3>
+<p><b>k-Means</b> adalah <b>clustering</b> (pengelompokan) — ini <b>unsupervised</b> (tanpa jawaban benar). Ia membagi data menjadi <b>k kelompok</b> yang anggotanya saling mirip.</p>
+<div class="callout">
+<b>Contoh nyata:</b> toko membagi pelanggan jadi 3 kelompok otomatis (mis. "hemat", "royal", "musiman") tanpa diberi tahu sebelumnya — lalu strategi pemasaran disesuaikan tiap kelompok.
+</div>
+
+<h3>Kapan pakai ML klasik vs neural network?</h3>
+<table class="tbl">
+  <tr><th>Pakai ML Klasik</th><th>Pakai Neural Network / Deep Learning</th></tr>
+  <tr><td>Data tabel (spreadsheet), data terbatas, butuh penjelasan</td><td>Data rumit: gambar, suara, teks panjang; data sangat besar</td></tr>
+</table>
+
+<div class="callout">
+<b>Selamat! 🎓</b> Kamu kini mengenal keluarga ML klasik: Decision Tree, Random Forest, k-NN, dan k-Means clustering — pelengkap penting di samping neural network.
+</div>
+`,
+          keyPoints: [
+            "k-NN mengklasifikasi berdasarkan tetangga terdekat ('hal mirip berdekatan').",
+            "k-Means = clustering (unsupervised): membagi data jadi k kelompok yang saling mirip, tanpa label.",
+            "Contoh clustering: segmentasi pelanggan otomatis.",
+            "ML klasik cocok untuk data tabel/terbatas & butuh penjelasan; neural network untuk data rumit & besar.",
+          ],
+          quiz: [
+            {
+              q: "Prinsip dasar k-NN?",
+              options: [
+                "Menebak acak",
+                "Hal yang mirip cenderung berdekatan — ikuti mayoritas tetangga terdekat",
+                "Menghafal semua data",
+                "Menambang koin",
+              ],
+              answer: 1,
+              explain: "k-NN mengklasifikasi berdasarkan kemiripan dengan tetangga terdekat.",
+            },
+            {
+              q: "k-Means clustering termasuk jenis pembelajaran?",
+              options: [
+                "Supervised (dengan label)",
+                "Unsupervised (tanpa label) — mengelompokkan sendiri",
+                "Reinforcement",
+                "Tidak belajar",
+              ],
+              answer: 1,
+              explain: "Clustering mengelompokkan data tanpa jawaban benar (unsupervised).",
+            },
+          ],
+        },
+      ],
+    },
+
+    /* ---------------- LEVEL EKONOMI (BISNIS AI) ---------------- */
+    {
+      id: "ai-ekonomi",
+      level: "Ekonomi",
+      title: "Ekonomi & Bisnis AI",
+      summary: "Menilai AI sebagai bisnis: unit economics inferensi, ROI & build-vs-buy, moat di era AI, & keusangan model.",
+      lessons: [
+        {
+          id: "ai-ek-1",
+          title: "Unit Economics Produk AI",
+          duration: "13 menit",
+          content: `
+<p>Kamu sudah bisa <b>membangun</b> aplikasi AI. Pertanyaan berikutnya yang menentukan hidup-matinya: <b>apakah tiap pengguna menghasilkan untung?</b> Ini pertemuan antara jalur AI dan jalur Akuntansi.</p>
+
+<h3>Fundamental: kenapa AI beda dari software biasa</h3>
+<table class="tbl">
+  <tr><th></th><th>Software biasa (SaaS)</th><th>Produk AI</th></tr>
+  <tr><td>Biaya melayani 1 pengguna tambahan</td><td>Hampir <b>nol</b></td><td><b>Ada &amp; nyata</b> — tiap permintaan memakai token/komputasi</td></tr>
+  <tr><td>Margin kotor</td><td>Sangat tebal</td><td>Lebih <b>tipis</b></td></tr>
+  <tr><td>Makin banyak dipakai</td><td>Makin untung</td><td>Biaya <b>ikut naik</b></td></tr>
+</table>
+
+<div class="callout warn">
+<b>Ini perbedaan paling penting:</b> di software biasa, pengguna ke-1.000 hampir gratis dilayani. Di produk AI, tiap pemakaian <b>membakar biaya inferensi</b>. Kalau harga langgananmu terlalu murah untuk pemakaian berat, <b>makin banyak pengguna justru makin rugi</b>.
+</div>
+
+<h3>Coba sendiri — hitung untung-rugi per pengguna 👇</h3>
+<div data-demo="js-playground">// Unit economics produk AI: apakah tiap pengguna menguntungkan?
+const hargaLangganan = 150000;   // Rp per pengguna per bulan
+const permintaanPerBulan = 300;  // rata-rata panggilan AI per pengguna
+const biayaPerPermintaan = 300;  // Rp biaya inferensi per panggilan
+
+const biayaAI = permintaanPerBulan * biayaPerPermintaan;
+const marginKotor = hargaLangganan - biayaAI;
+const persenMargin = marginKotor / hargaLangganan * 100;
+
+console.log("Pendapatan/pengguna : Rp" + hargaLangganan.toLocaleString("id-ID"));
+console.log("Biaya AI/pengguna   : Rp" + biayaAI.toLocaleString("id-ID"));
+console.log("Margin kotor        : Rp" + marginKotor.toLocaleString("id-ID") + " (" + persenMargin.toFixed(1) + "%)");
+
+if (marginKotor > 0) {
+  console.log("Menguntungkan per pengguna - menambah volume menambah laba.");
+} else {
+  console.log("RUGI per pengguna - makin banyak pengguna makin rugi!");
+}
+console.log("Coba ubah biayaPerPermintaan jadi 600, lalu jalankan lagi.");</div>
+
+<h3>Cara memperbaiki margin</h3>
+<ul>
+  <li><b>Prompt caching</b> — bagian prompt yang berulang jauh lebih murah.</li>
+  <li><b>Pilih model sesuai tugas</b> — tugas sederhana tak perlu model termahal.</li>
+  <li><b>Batasi pemakaian</b> — kuota/fair-use, atau harga bertingkat sesuai pemakaian.</li>
+  <li><b>Perpendek prompt &amp; keluaran</b> — token lebih sedikit, biaya turun.</li>
+</ul>
+
+<div class="callout">
+<b>Kaitkan ke akuntansi:</b> biaya inferensi ini adalah <b>biaya variabel</b>, dan (Harga − Biaya variabel) adalah <b>margin kontribusi</b> — konsep yang sudah kamu pelajari di jalur Akuntansi. Titik impas produk AI dihitung dengan rumus yang sama persis.
+</div>
+`,
+          keyPoints: [
+            "Beda utama produk AI vs software biasa: melayani pengguna tambahan memakan biaya inferensi nyata.",
+            "Margin kotor produk AI lebih tipis; harga terlalu murah untuk pemakaian berat = makin banyak pengguna makin rugi.",
+            "Perbaiki margin: prompt caching, pilih model sesuai tugas, batasi/tiering pemakaian, perpendek prompt & keluaran.",
+            "Biaya inferensi = biaya variabel; (Harga − biaya variabel) = margin kontribusi — sama seperti di akuntansi.",
+          ],
+          practice: [
+            { type: "number", q: "Harga langganan Rp150.000/bulan. Pengguna memakai 300 permintaan @Rp300. Berapa margin kotor per pengguna? (Rupiah)", answer: 60000, tol: 100, hint: "Biaya AI = 300 × 300, lalu Harga − Biaya.", solution: "Biaya = Rp90.000; 150.000 − 90.000 = Rp60.000." },
+            { type: "choice", q: "Biaya inferensi naik jadi Rp600/permintaan (300 permintaan) dengan harga tetap Rp150.000. Apa yang terjadi?", options: ["Margin tetap sama", "Rugi Rp30.000 per pengguna — makin banyak pengguna makin rugi", "Untung dua kali lipat", "Tidak berpengaruh"], answer: 1, hint: "300 × 600 = 180.000, bandingkan dengan harga 150.000.", solution: "Biaya Rp180.000 > harga Rp150.000 → rugi Rp30.000 tiap pengguna." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa margin kotor produk AI umumnya lebih tipis dari SaaS biasa?",
+              options: [
+                "Karena harganya selalu murah",
+                "Karena tiap pemakaian menimbulkan biaya inferensi/komputasi yang nyata",
+                "Karena tidak punya pelanggan",
+                "Karena pajaknya besar",
+              ],
+              answer: 1,
+              explain:
+                "Biaya per pemakaian membuat biaya naik seiring volume, menipiskan margin.",
+            },
+            {
+              q: "Biaya inferensi dalam istilah akuntansi termasuk?",
+              options: ["Biaya tetap", "Biaya variabel", "Aset", "Ekuitas"],
+              answer: 1,
+              explain: "Biaya inferensi naik-turun mengikuti volume pemakaian = biaya variabel.",
+            },
+          ],
+        },
+        {
+          id: "ai-ek-2",
+          title: "ROI Proyek AI & Build vs Buy",
+          duration: "12 menit",
+          content: `
+<p>Banyak perusahaan membangun AI karena <b>ikut tren</b>, bukan karena menghasilkan nilai. Cara menghindarinya: pakai <b>ROI</b> — alat yang sudah kamu pelajari di jalur Akuntansi.</p>
+
+<div data-diagram="vs" data-left="BUY - pakai API::Biaya awal kecil (OpEx)::Cepat mulai" data-right="BUILD - latih sendiri::Biaya besar di muka (CapEx)::Butuh volume besar" data-caption="Build vs Buy"></div>
+
+
+<div class="callout">
+<b>ROI proyek AI</b> = (Nilai yang dihasilkan − Biaya total) ÷ Biaya total × 100%.<br>
+"Nilai" bisa berupa: jam kerja yang dihemat, biaya layanan pelanggan yang turun, penjualan yang naik, atau kesalahan yang berkurang.
+</div>
+
+<h3>Biaya total sering diremehkan</h3>
+<p>Jangan hanya menghitung biaya API. Total biaya nyata meliputi:</p>
+<ul>
+  <li>Biaya API/inferensi (berjalan terus)</li>
+  <li>Waktu developer membangun &amp; mengintegrasikan</li>
+  <li><b>Pemeliharaan &amp; pemantauan</b> (MLOps) — sering terlupakan</li>
+  <li>Penyiapan data &amp; evaluasi kualitas</li>
+</ul>
+
+<h3>Build vs Buy — ini keputusan CapEx vs OpEx</h3>
+<table class="tbl">
+  <tr><th></th><th>Buy — pakai API (OpEx)</th><th>Build — latih/host sendiri (CapEx)</th></tr>
+  <tr><td>Biaya awal</td><td>Kecil</td><td>Besar (GPU, data, tim)</td></tr>
+  <tr><td>Biaya jalan</td><td>Bayar per pemakaian</td><td>Relatif tetap</td></tr>
+  <tr><td>Kecepatan mulai</td><td class="ok-cell">Cepat</td><td>Lambat</td></tr>
+  <tr><td>Cocok saat</td><td>Volume belum pasti, ingin cepat</td><td>Volume sangat besar &amp; stabil, atau data sensitif</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Aturan praktis:</b> <b>mulai dengan API (OpEx)</b>. Baru pertimbangkan membangun sendiri kalau volumenya sudah sangat besar &amp; stabil sehingga biaya per pemakaian melebihi biaya membangun — atau kalau data tak boleh keluar dari perusahaan. Membangun terlalu dini adalah pemborosan modal klasik.
+</div>
+`,
+          keyPoints: [
+            "ROI proyek AI = (Nilai dihasilkan − Biaya total) ÷ Biaya total × 100%; nilai bisa berupa jam hemat, biaya turun, penjualan naik.",
+            "Biaya total bukan hanya API: termasuk waktu developer, pemeliharaan/MLOps, dan penyiapan data.",
+            "Build vs Buy = keputusan CapEx vs OpEx: API (cepat, bayar per pakai) vs latih/host sendiri (mahal di muka).",
+            "Aturan praktis: mulai dari API; bangun sendiri hanya bila volume sangat besar & stabil atau data sensitif.",
+          ],
+          practice: [
+            { type: "number", q: "Proyek AI menghemat biaya Rp260jt setahun, total biayanya Rp200jt. Berapa ROI-nya? (%)", answer: 30, tol: 0.5, hint: "ROI = (Nilai − Biaya) ÷ Biaya × 100%.", solution: "(260 − 200) ÷ 200 × 100% = 30%." },
+            { type: "choice", q: "Startup baru ingin mencoba fitur AI, volumenya belum pasti. Pilihan paling bijak?", options: ["Latih model sendiri dari nol (CapEx besar)", "Pakai API dulu (OpEx), evaluasi, baru pertimbangkan bangun sendiri", "Beli GPU sebanyak-banyaknya", "Tidak usah pakai AI"], answer: 1, hint: "Mana yang risikonya kecil saat volume belum pasti?", solution: "Mulai dari API menjaga modal & fleksibilitas sampai volume terbukti." },
+          ],
+          quiz: [
+            {
+              q: "Komponen biaya proyek AI yang paling sering dilupakan?",
+              options: [
+                "Biaya API",
+                "Pemeliharaan & pemantauan (MLOps) serta waktu developer",
+                "Harga laptop",
+                "Biaya listrik kantor",
+              ],
+              answer: 1,
+              explain:
+                "Biaya berjalan (MLOps, integrasi, evaluasi) sering luput dari perhitungan ROI.",
+            },
+            {
+              q: "Memakai API AI dibanding melatih model sendiri, dalam istilah akuntansi adalah?",
+              options: [
+                "CapEx vs OpEx (API = OpEx, latih sendiri = CapEx)",
+                "Debit vs kredit",
+                "Aset vs utang",
+                "PPN vs PPh",
+              ],
+              answer: 0,
+              explain:
+                "API = biaya operasional per pemakaian; melatih/host sendiri = belanja modal di muka.",
+            },
+          ],
+        },
+        {
+          id: "ai-ek-3",
+          title: "Moat di Era AI — Apakah Model Itu Parit?",
+          duration: "12 menit",
+          content: `
+<p>Pertanyaan paling diperdebatkan di industri AI: <b>apa yang membuat sebuah perusahaan AI sulit ditiru?</b> Kita pakai kerangka <b>economic moat</b> dari jalur Akuntansi.</p>
+
+<div class="callout warn">
+<b>Kabar kurang enak:</b> <b>model itu sendiri jarang menjadi parit yang kuat.</b> Model terbaik hari ini bisa disusul beberapa bulan kemudian, dan model open-source terus mengejar. Keunggulan yang hanya berupa "model kami lebih pintar" biasanya <b>berumur pendek</b>.
+</div>
+
+<h3>Jebakan "thin wrapper"</h3>
+<p><b>Thin wrapper</b> = aplikasi yang hanya menempelkan antarmuka tipis di atas API model milik orang lain, tanpa keunggulan lain. Masalahnya: <b>siapa pun bisa membuat hal yang sama dalam hitungan minggu</b> — bahkan penyedia modelnya sendiri bisa menambahkan fitur itu.</p>
+
+<h3>Parit yang benar-benar bertahan di era AI</h3>
+<table class="tbl">
+  <tr><th>Parit</th><th>Kenapa kuat</th></tr>
+  <tr><td><b>Data eksklusif</b></td><td>Data milikmu sendiri yang tak dimiliki pesaing; makin dipakai makin kaya</td></tr>
+  <tr><td><b>Integrasi ke alur kerja</b></td><td>AI tertanam dalam proses harian pelanggan → susah dicabut</td></tr>
+  <tr><td><b>Switching cost</b></td><td>Riwayat, konfigurasi, & integrasi pelanggan sudah menumpuk di produkmu</td></tr>
+  <tr><td><b>Distribusi</b></td><td>Sudah punya jutaan pengguna/kanal penjualan — teknologi bagus tanpa distribusi sering kalah</td></tr>
+  <tr><td><b>Network effect</b></td><td>Makin banyak pengguna → produk makin baik bagi semua</td></tr>
+</table>
+
+<div class="callout">
+<b>Uji sederhana (dari pelajaran Moat):</b> <i>"Kalau pesaing bermodal raksasa meniru produkku bulan depan, apa yang tetap tidak bisa mereka salin?"</i> Kalau jawabannya <b>tidak ada</b> — kamu tidak punya parit, hanya fitur.
+</div>
+`,
+          keyPoints: [
+            "Model itu sendiri jarang menjadi moat kuat — keunggulan model cepat disusul.",
+            "'Thin wrapper' (antarmuka tipis di atas API orang lain) mudah ditiru siapa pun.",
+            "Parit yang bertahan: data eksklusif, integrasi alur kerja, switching cost, distribusi, & network effect.",
+            "Uji: apa yang tetap tak bisa disalin pesaing bermodal besar bulan depan?",
+          ],
+          practice: [
+            { type: "choice", q: "Aplikasi hanya menambahkan tampilan sederhana di atas API model pihak lain, tanpa data atau integrasi khusus. Ini disebut?", options: ["Network effect", "Thin wrapper (tanpa moat)", "Switching cost", "Data eksklusif"], answer: 1, hint: "Bisakah pesaing meniru dalam hitungan minggu?", solution: "Tanpa keunggulan lain, ini thin wrapper yang mudah ditiru." },
+            { type: "choice", q: "Manakah yang paling mungkin menjadi moat bertahan bagi perusahaan AI?", options: ["Memakai model terbaru bulan ini", "Data eksklusif + AI yang tertanam dalam alur kerja pelanggan", "Tampilan yang bagus", "Harga termurah sesaat"], answer: 1, hint: "Mana yang tidak bisa dibeli/disalin cepat oleh pesaing?", solution: "Data eksklusif & integrasi workflow menciptakan switching cost yang nyata." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa keunggulan 'model kami paling pintar' biasanya bukan moat kuat?",
+              options: [
+                "Karena model tidak penting",
+                "Karena pesaing & model open-source cepat menyusul, keunggulannya berumur pendek",
+                "Karena model mahal",
+                "Karena pengguna tidak peduli kualitas",
+              ],
+              answer: 1,
+              explain: "Kemajuan model bergerak sangat cepat sehingga keunggulan sulit dipertahankan.",
+            },
+            {
+              q: "Apa itu 'thin wrapper'?",
+              options: [
+                "Model AI berukuran kecil",
+                "Aplikasi berupa lapisan tipis di atas API orang lain tanpa keunggulan lain — mudah ditiru",
+                "Teknik menghemat token",
+                "Jenis vector database",
+              ],
+              answer: 1,
+              explain: "Thin wrapper tak punya parit karena bisa direplikasi dengan cepat.",
+            },
+          ],
+        },
+        {
+          id: "ai-ek-4",
+          title: "Keusangan Model & Alokasi Modal di AI",
+          duration: "12 menit",
+          content: `
+<p>Pelajaran penutup: bagaimana perusahaan AI sebaiknya <b>mengalokasikan modal</b>, mengingat satu sifat khas industri ini — <b>segalanya cepat usang</b>.</p>
+
+<h3>Fundamental: "aset" AI menyusut sangat cepat</h3>
+<div class="callout">
+<b>Ingat konsep penyusutan:</b> mesin pabrik disusutkan 5–10 tahun. Tapi model AI yang dilatih mahal-mahal bisa <b>tertinggal dalam hitungan bulan</b>. Artinya "masa manfaat"-nya sangat pendek — investasi besar di model bisa cepat kehilangan nilai.
+</div>
+
+<h3>Dampaknya pada keputusan modal</h3>
+<ul>
+  <li><b>Hati-hati investasi besar-di-muka</b> pada model yang cepat usang; utamakan fleksibilitas.</li>
+  <li><b>Investasi pada aset yang MENUA DENGAN BAIK</b>: data eksklusif, hubungan pelanggan, integrasi alur kerja, merek. Ini justru <b>makin bernilai</b> seiring waktu — kebalikan dari model.</li>
+  <li><b>Jaga agar bisa berpindah</b> penyedia model (hindari ketergantungan total pada satu vendor — ini <b>risiko konsentrasi</b>).</li>
+</ul>
+
+<h3>Rangkuman: menilai perusahaan AI sebagai bisnis</h3>
+<table class="tbl">
+  <tr><th>Pertanyaan</th><th>Alat dari jalur Akuntansi</th></tr>
+  <tr><td>Apakah tiap pengguna untung?</td><td>Unit economics &amp; margin kontribusi</td></tr>
+  <tr><td>Apakah proyeknya layak?</td><td>ROI &amp; titik impas</td></tr>
+  <tr><td>Bangun atau beli?</td><td>CapEx vs OpEx</td></tr>
+  <tr><td>Bisakah bertahan dari pesaing?</td><td>Economic moat</td></tr>
+  <tr><td>Apakah modalnya dipakai bijak?</td><td>Alokasi modal</td></tr>
+</table>
+
+<div class="callout">
+<b>Selamat! 🎓</b> Kamu baru saja <b>menyatukan dua jalur</b>: kemampuan teknis AI + kerangka bisnis akuntansi. Inilah kombinasi yang membedakan orang yang sekadar bisa membuat AI dengan orang yang bisa membangun <b>bisnis AI yang bertahan</b>.
+</div>
+`,
+          keyPoints: [
+            "Model AI cepat usang — 'masa manfaat'-nya sangat pendek dibanding aset biasa.",
+            "Hindari investasi besar-di-muka pada hal yang cepat usang; jaga fleksibilitas.",
+            "Investasikan pada aset yang menua dengan baik: data eksklusif, hubungan pelanggan, integrasi, merek.",
+            "Hindari ketergantungan total pada satu vendor model (risiko konsentrasi).",
+          ],
+          quiz: [
+            {
+              q: "Kenapa investasi besar pada model AI berisiko dari sisi alokasi modal?",
+              options: [
+                "Karena model tidak berguna",
+                "Karena model cepat usang — 'masa manfaat'-nya sangat pendek",
+                "Karena dilarang aturan",
+                "Karena tidak bisa dihitung",
+              ],
+              answer: 1,
+              explain:
+                "Kemajuan cepat membuat model mahal kehilangan keunggulan dalam hitungan bulan.",
+            },
+            {
+              q: "Manakah 'aset' AI yang justru menua dengan baik (makin bernilai)?",
+              options: [
+                "Model versi lama",
+                "Data eksklusif, hubungan pelanggan, & integrasi alur kerja",
+                "GPU generasi lama",
+                "Prompt lama",
+              ],
+              answer: 1,
+              explain:
+                "Data & posisi dalam alur kerja pelanggan menumpuk nilainya seiring waktu.",
+            },
+          ],
+        },
+      ],
+    },
+
+    /* ---------------- LEVEL PELENGKAP ---------------- */
+    {
+      id: "ai-pelengkap",
+      level: "Pelengkap",
+      title: "Suara, Peramalan & Regulasi AI",
+      summary: "Melengkapi peta AI: suara & multimodal, peramalan deret waktu, dan regulasi AI.",
+      lessons: [
+        {
+          id: "ai-pl-1",
+          title: "AI Suara & Multimodal",
+          duration: "12 menit",
+          content: `
+<p>Kita sudah membahas AI untuk <b>teks</b> (NLP), <b>gambar</b> (vision &amp; diffusion). Satu indra lagi yang belum: <b>suara</b>.</p>
+
+<h3>Fundamental: suara juga jadi angka</h3>
+<div class="callout">
+Suara adalah <b>getaran udara</b>. Mikrofon mengubahnya jadi gelombang, lalu komputer mencatatnya sebagai <b>deretan angka</b> (ribuan sampel per detik). Sering diubah lagi jadi <b>spektrogram</b> — semacam "foto" suara yang menunjukkan frekuensi dari waktu ke waktu. Setelah jadi gambar, AI bisa memprosesnya seperti memproses gambar biasa.
+</div>
+
+<h3>Tiga kemampuan utama</h3>
+<table class="tbl">
+  <tr><th>Kemampuan</th><th>Fungsi</th><th>Contoh pemakaian</th></tr>
+  <tr><td><b>ASR</b> (Speech-to-Text)</td><td>Suara → teks</td><td>Transkrip rapat, subtitle otomatis, perintah suara</td></tr>
+  <tr><td><b>TTS</b> (Text-to-Speech)</td><td>Teks → suara</td><td>Pembaca artikel, asisten suara, audiobook</td></tr>
+  <tr><td><b>Voice cloning</b></td><td>Meniru suara seseorang</td><td>Dubbing, pemulihan suara penyandang disabilitas</td></tr>
+</table>
+
+<h3>Multimodal: satu model, banyak indra</h3>
+<p>Model <b>multimodal</b> memahami teks, gambar, <b>dan</b> suara sekaligus. Kamu bisa memperlihatkan foto sambil bertanya lewat suara, dan ia menjawab dengan teks — mendekati cara manusia memakai banyak indra bersamaan.</p>
+
+<div class="callout warn">
+<b>⚠️ Bahaya nyata: penipuan suara.</b> Voice cloning kini butuh sampel suara sangat singkat. Modus yang marak: penipu meniru suara <b>anggota keluarga</b> lalu menelepon meminta uang darurat.
+<br><br><b>Cara melindungi diri:</b>
+<ul>
+  <li>Sepakati <b>kata sandi keluarga</b> untuk situasi darurat.</li>
+  <li><b>Tutup telepon, lalu telepon balik</b> ke nomor yang kamu simpan sendiri.</li>
+  <li>Curigai permintaan uang yang <b>mendesak &amp; rahasia</b> — itu pola khas penipuan.</li>
+</ul>
+</div>
+`,
+          keyPoints: [
+            "Suara diubah jadi deretan angka, lalu sering jadi spektrogram sehingga bisa diproses seperti gambar.",
+            "Tiga kemampuan: ASR (suara→teks), TTS (teks→suara), voice cloning (meniru suara).",
+            "Model multimodal memahami teks, gambar, & suara sekaligus.",
+            "Bahaya: penipuan suara tiruan; lindungi diri dengan kata sandi keluarga & menelepon balik ke nomor tersimpan.",
+          ],
+          quiz: [
+            {
+              q: "Apa itu ASR dalam AI suara?",
+              options: [
+                "Mengubah teks menjadi suara",
+                "Mengubah suara menjadi teks (speech-to-text)",
+                "Meniru suara orang",
+                "Menghapus noise",
+              ],
+              answer: 1,
+              explain: "ASR = Automatic Speech Recognition: suara → teks.",
+            },
+            {
+              q: "Cara paling aman menghadapi telepon 'keluarga' yang meminta uang mendesak?",
+              options: [
+                "Langsung transfer karena suaranya mirip",
+                "Tutup telepon lalu telepon balik ke nomor yang kamu simpan sendiri",
+                "Kirim setengahnya dulu",
+                "Balas lewat SMS",
+              ],
+              answer: 1,
+              explain:
+                "Suara bisa ditiru AI; verifikasi lewat kanal yang kamu kendalikan sendiri.",
+            },
+          ],
+        },
+        {
+          id: "ai-pl-2",
+          title: "Peramalan Deret Waktu (Time Series)",
+          duration: "12 menit",
+          content: `
+<p>Ini penerapan AI yang paling sering dipakai bisnis: <b>meramal angka masa depan</b> — penjualan bulan depan, permintaan barang, kebutuhan stok.</p>
+
+<div data-diagram="layers" data-items="Noise (acak)|Musiman (berulang)|Tren (arah panjang)" data-caption="Tiga unsur deret waktu"></div>
+
+
+<h3>Fundamental: data yang berurut waktu</h3>
+<p><b>Deret waktu (time series)</b> adalah data yang <b>terikat urutan waktu</b>: penjualan harian, suhu tiap jam, jumlah pengunjung tiap bulan. Bedanya dengan data biasa: <b>urutannya bermakna</b> — data kemarin memengaruhi data hari ini.</p>
+
+<h3>Tiga unsur dalam deret waktu</h3>
+<table class="tbl">
+  <tr><th>Unsur</th><th>Artinya</th><th>Contoh</th></tr>
+  <tr><td><b>Tren</b></td><td>Arah jangka panjang</td><td>Penjualan naik terus tiap tahun</td></tr>
+  <tr><td><b>Musiman</b> (seasonality)</td><td>Pola berulang</td><td>Ramai tiap akhir pekan / Lebaran</td></tr>
+  <tr><td><b>Noise</b></td><td>Naik-turun acak</td><td>Kejadian tak terduga sehari-hari</td></tr>
+</table>
+
+<div class="callout">
+<b>Inti peramalan:</b> pisahkan <b>pola</b> (tren + musiman) dari <b>keributan</b> (noise), lalu proyeksikan polanya ke depan.
+</div>
+
+<h3>Coba sendiri — ramalan sederhana 👇</h3>
+<div data-demo="js-playground">// Peramalan sederhana: rata-rata bergerak (moving average)
+const penjualan = [100, 120, 115, 130, 125, 140, 135, 150];
+const periode = 3;
+
+console.log("Data penjualan: " + penjualan.join(", "));
+
+const terakhir = penjualan.slice(penjualan.length - periode);
+let jumlah = 0;
+terakhir.forEach(function(v){ jumlah = jumlah + v; });
+const ramalan = jumlah / periode;
+
+console.log("Tiga data terakhir: " + terakhir.join(", "));
+console.log("Ramalan periode berikutnya = " + ramalan.toFixed(1));
+console.log("-----");
+console.log("Rata-rata bergerak meredam naik-turun acak & menyoroti arah tren.");
+console.log("Catatan: metode ini TIDAK bisa meramal kejutan mendadak.");</div>
+
+<h3>Metode dari sederhana ke canggih</h3>
+<ul>
+  <li><b>Rata-rata bergerak</b> — sederhana, bagus untuk melihat tren.</li>
+  <li><b>ARIMA / model statistik</b> — memodelkan tren &amp; musiman secara formal.</li>
+  <li><b>Model ML/deep learning</b> — menangkap pola rumit, butuh lebih banyak data.</li>
+</ul>
+
+<div class="callout warn">
+<b>Batas kejujuran:</b> peramalan hanya bisa memperpanjang <b>pola yang sudah ada</b>. Ia <b>tidak bisa</b> meramal kejutan (pandemi, krisis, teknologi baru). Karena itu ramalan sebaiknya disajikan sebagai <b>rentang kemungkinan</b> — persis prinsip di modul <i>Prospek</i> jalur Akuntansi.
+</div>
+`,
+          keyPoints: [
+            "Deret waktu = data yang terikat urutan waktu; urutannya bermakna.",
+            "Tiga unsur: tren (arah panjang), musiman (pola berulang), noise (acak).",
+            "Inti peramalan: pisahkan pola dari noise lalu proyeksikan ke depan.",
+            "Metode: rata-rata bergerak → ARIMA → model ML. Batas: tak bisa meramal kejutan; sajikan sebagai rentang.",
+          ],
+          practice: [
+            { type: "number", q: "Tiga data penjualan terakhir: 140, 135, 150. Berapa ramalan rata-rata bergerak untuk periode berikutnya? (1 desimal)", answer: 141.7, tol: 0.2, hint: "Jumlahkan lalu bagi 3.", solution: "(140 + 135 + 150) ÷ 3 = 141,67 ≈ 141,7." },
+            { type: "choice", q: "Penjualan toko selalu melonjak tiap menjelang Lebaran. Ini unsur apa dalam deret waktu?", options: ["Tren", "Musiman (seasonality)", "Noise", "Outlier"], answer: 1, hint: "Pola yang berulang pada waktu tertentu.", solution: "Pola berulang periodik = musiman (seasonality)." },
+          ],
+          quiz: [
+            {
+              q: "Apa yang membedakan data deret waktu dari data biasa?",
+              options: [
+                "Jumlahnya lebih banyak",
+                "Urutan waktunya bermakna — data sebelumnya memengaruhi data berikutnya",
+                "Selalu berupa angka bulat",
+                "Tidak ada bedanya",
+              ],
+              answer: 1,
+              explain: "Ketergantungan pada urutan waktu adalah ciri khas time series.",
+            },
+            {
+              q: "Apa batas utama peramalan deret waktu?",
+              options: [
+                "Terlalu mahal",
+                "Hanya bisa memperpanjang pola yang ada — tak bisa meramal kejutan mendadak",
+                "Butuh internet",
+                "Selalu salah",
+              ],
+              answer: 1,
+              explain:
+                "Kejadian tak terduga di luar pola historis tidak bisa diramalkan model.",
+            },
+          ],
+        },
+        {
+          id: "ai-pl-3",
+          title: "Regulasi AI",
+          duration: "12 menit",
+          content: `
+<p>Jalur blockchain sudah punya pelajaran regulasi. AI juga makin diatur — dan ini penting bagi siapa pun yang membangun produk AI.</p>
+
+<h3>Fundamental: kenapa AI perlu diatur?</h3>
+<p>Karena AI kini ikut mengambil keputusan yang <b>berdampak pada hidup orang</b>: seleksi kerja, persetujuan pinjaman, diagnosis medis, penegakan hukum. Kalau salah atau bias, kerugiannya nyata — dan korbannya sering tak tahu bahwa keputusannya dibuat mesin.</p>
+
+<h3>Pendekatan berbasis risiko</h3>
+<p>Regulasi modern (contoh paling dikenal: <b>EU AI Act</b>) tidak mengatur semua AI dengan cara sama, melainkan <b>menurut tingkat risikonya</b>:</p>
+<table class="tbl">
+  <tr><th>Tingkat</th><th>Contoh</th><th>Perlakuan</th></tr>
+  <tr><td><b>Dilarang</b></td><td>Manipulasi berbahaya, penilaian sosial warga (social scoring)</td><td>Tidak boleh sama sekali</td></tr>
+  <tr><td><b>Risiko tinggi</b></td><td>Seleksi kerja, kredit, medis, penegakan hukum</td><td>Wajib ketat: dokumentasi, uji bias, pengawasan manusia</td></tr>
+  <tr><td><b>Risiko terbatas</b></td><td>Chatbot</td><td>Wajib <b>transparan</b> (beri tahu pengguna bahwa ini AI)</td></tr>
+  <tr><td><b>Risiko minimal</b></td><td>Filter spam, AI di game</td><td>Bebas</td></tr>
+</table>
+
+<h3>Isu utama yang diatur</h3>
+<ul>
+  <li><b>Transparansi</b> — pengguna berhak tahu sedang berinteraksi dengan AI; konten buatan AI sebaiknya ditandai.</li>
+  <li><b>Data pribadi</b> — di Indonesia ada <b>UU Perlindungan Data Pribadi (PDP)</b> yang mengatur pemakaian data orang.</li>
+  <li><b>Bias &amp; keadilan</b> — AI berisiko tinggi wajib diuji agar tidak diskriminatif.</li>
+  <li><b>Hak cipta</b> — masih diperdebatkan di banyak negara: bolehkah melatih model dari karya berhak cipta?</li>
+  <li><b>Akuntabilitas</b> — harus jelas <b>siapa bertanggung jawab</b> bila AI merugikan.</li>
+</ul>
+
+<div class="callout">
+<b>Bagi kamu yang membangun aplikasi AI:</b> kabar baiknya, praktik yang baik &amp; kepatuhan biasanya sejalan — <b>beri tahu pengguna</b> bahwa ini AI, <b>lindungi data</b> mereka, <b>uji bias</b>, sediakan <b>pengawasan manusia</b> untuk keputusan penting, dan <b>simpan catatan</b>. Ini juga membuat produkmu lebih dipercaya.
+</div>
+
+<div class="callout warn">
+<b>Catatan:</b> regulasi AI <b>berkembang cepat</b> &amp; berbeda antarnegara. Materi ini gambaran umum untuk edukasi — untuk kepatuhan nyata, periksa aturan terbaru yang berlaku di wilayahmu.
+</div>
+`,
+          keyPoints: [
+            "AI diatur karena ikut mengambil keputusan berdampak nyata (kerja, kredit, medis, hukum).",
+            "Pendekatan berbasis risiko (mis. EU AI Act): dilarang / risiko tinggi / terbatas / minimal.",
+            "Isu utama: transparansi, data pribadi (UU PDP di Indonesia), bias, hak cipta, akuntabilitas.",
+            "Praktik baik = kepatuhan: beri tahu pengguna, lindungi data, uji bias, pengawasan manusia, simpan catatan.",
+          ],
+          quiz: [
+            {
+              q: "Apa inti pendekatan 'berbasis risiko' dalam regulasi AI?",
+              options: [
+                "Semua AI diperlakukan sama",
+                "Aturan disesuaikan tingkat risikonya: dilarang, risiko tinggi, terbatas, atau minimal",
+                "Semua AI dilarang",
+                "Hanya AI besar yang diatur",
+              ],
+              answer: 1,
+              explain:
+                "Makin besar potensi dampaknya pada manusia, makin ketat kewajibannya.",
+            },
+            {
+              q: "AI untuk seleksi kerja & persetujuan kredit umumnya masuk kategori?",
+              options: ["Risiko minimal", "Risiko tinggi (wajib dokumentasi, uji bias, pengawasan manusia)", "Dilarang total", "Tidak diatur"],
+              answer: 1,
+              explain:
+                "Keputusan yang memengaruhi hidup seseorang tergolong risiko tinggi.",
+            },
+          ],
+        },
+      ],
+    },
+
+    /* ---------------- LEVEL MATEMATIKA ---------------- */
+    {
+      id: "ai-matematika",
+      level: "Matematika",
+      title: "Matematika di Balik AI",
+      summary: "Rumus yang benar-benar dipakai: vektor & dot product, turunan & gradient descent, fungsi aktivasi & loss, probabilitas.",
+      lessons: [
+        {
+          id: "ai-mat-0",
+          title: "Membaca Simbol Matematika",
+          duration: "14 menit",
+          content: `
+<p>Sebelum menyentuh rumus apa pun, kita bereskan dulu hal yang sering bikin orang menyerah: <b>simbolnya</b>. Kalau kamu tahu artinya, rumus berubah dari "sihir menakutkan" jadi <b>kalimat biasa</b>.</p>
+
+<h3>1. Apa itu fungsi? Arti f dan f(x)</h3>
+<div class="callout">
+<b>Fungsi = mesin.</b> Kamu masukkan sesuatu, keluar sesuatu.
+<ul>
+  <li><b>f</b> = <b>nama</b> mesinnya. Cuma nama! Bisa juga dinamai g, h, atau apa saja.</li>
+  <li><b>x</b> = <b>bahan</b> yang dimasukkan (input).</li>
+  <li><b>f(x)</b> = <b>hasil</b> yang keluar (output). Dibaca <b>"f dari x"</b>.</li>
+</ul>
+<b>Penting:</b> f(x) <b>BUKAN</b> "f dikali x". Kurung di sini artinya "diberi masukan", bukan perkalian.
+</div>
+
+<p>Contoh: <b>f(x) = 2x + 1</b> artinya "mesin f: kalikan bahannya dengan 2, lalu tambah 1".</p>
+<pre class="code">f(3) = 2×3 + 1 = 7
+f(10) = 2×10 + 1 = 21</pre>
+
+<h3>Coba sendiri — lihat "mesin" bekerja 👇</h3>
+<div data-demo="js-playground">// Fungsi itu mesin: masukkan x, keluar f(x)
+function f(x) {
+  return 2 * x + 1;   // aturannya: kalikan 2, lalu tambah 1
+}
+
+[0, 1, 3, 5, 10].forEach(function(x){
+  console.log("f(" + x + ")  =  2 x " + x + " + 1  =  " + f(x));
+});
+
+console.log("-----");
+console.log("Huruf f cuma NAMA mesinnya, x adalah bahan yang dimasukkan.");
+console.log("Ubah aturannya jadi x * x lalu jalankan lagi - itu jadi mesin kuadrat.");</div>
+
+<h3>2. Tanda petik: f'(x) artinya turunan</h3>
+<div class="callout">
+<b>f'(x)</b> (dibaca "f aksen x") = <b>turunan</b> dari f. Ini <b>mesin lain</b> yang memberitahu <b>seberapa cepat</b> hasil f berubah. Tanda petik itu bukan perkalian atau pangkat — cuma penanda "ini turunannya".
+</div>
+
+<h3>3. Simbol penjumlahan: Σ</h3>
+<div class="callout">
+<b>Σ</b> (huruf Yunani "sigma" besar) artinya sederhana: <b>"jumlahkan semuanya"</b>.<br><br>
+Σ aᵢ artinya: jumlahkan seluruh anggota a. Kalau a = [2, 5, 7], maka Σ aᵢ = 2+5+7 = <b>14</b>.<br>
+Huruf kecil <b>i</b> di bawah cuma penanda urutan: a₁, a₂, a₃ = anggota ke-1, ke-2, ke-3.
+</div>
+
+<h3>4. Huruf Yunani yang sering muncul</h3>
+<table class="tbl">
+  <tr><th>Simbol</th><th>Dibaca</th><th>Biasanya berarti</th></tr>
+  <tr><td><b>Σ</b></td><td>sigma besar</td><td>Jumlahkan semua</td></tr>
+  <tr><td><b>σ</b></td><td>sigma kecil</td><td>Nama fungsi sigmoid (di AI)</td></tr>
+  <tr><td><b>α</b></td><td>alpha</td><td>Learning rate (besar langkah belajar)</td></tr>
+  <tr><td><b>θ</b></td><td>theta</td><td>Sudut, atau kumpulan parameter model</td></tr>
+  <tr><td><b>Δ</b></td><td>delta</td><td>Perubahan / selisih</td></tr>
+</table>
+<div class="callout warn">
+<b>Kenapa pakai huruf Yunani?</b> Bukan untuk menyulitkan — hanya karena huruf biasa (a, b, c, x, y) sudah terpakai untuk hal lain. Anggap saja seperti nama orang: σ hanyalah "nama panggilan" sebuah fungsi.
+</div>
+
+<h3>5. Simbol lain yang akan kamu temui</h3>
+<table class="tbl">
+  <tr><th>Simbol</th><th>Artinya</th><th>Contoh</th></tr>
+  <tr><td><b>xⁿ</b></td><td>x dipangkatkan n (dikali dirinya n kali)</td><td>2³ = 2×2×2 = 8</td></tr>
+  <tr><td><b>√x</b></td><td>akar: angka yang bila dikuadratkan jadi x</td><td>√25 = 5</td></tr>
+  <tr><td><b>e</b></td><td>bilangan tetap ≈ 2,718 (muncul di pertumbuhan alami)</td><td>e⁰ = 1</td></tr>
+  <tr><td><b>log</b></td><td>kebalikan pangkat: "berapa kali dikalikan?"</td><td>log₁₀(100) = 2</td></tr>
+  <tr><td><b>|a|</b></td><td>panjang (besar) dari a</td><td>|[3,4]| = 5</td></tr>
+  <tr><td><b>ŷ</b></td><td>"y topi" = <b>tebakan</b> model</td><td>y = jawaban benar, ŷ = tebakan</td></tr>
+  <tr><td><b>P(A)</b></td><td>peluang kejadian A</td><td>P(gambar) = 0,5</td></tr>
+  <tr><td><b>P(A|B)</b></td><td>peluang A <b>bila diketahui</b> B (garis tegak = "bila diketahui")</td><td>P(sakit | tes positif)</td></tr>
+  <tr><td><b>a · b</b></td><td>dot product (dijelaskan di pelajaran berikutnya)</td><td>—</td></tr>
+</table>
+
+<div class="callout">
+<b>Cara membaca rumus yang benar:</b> jangan baca sekaligus. Pecah jadi potongan, terjemahkan tiap simbol ke bahasa sehari-hari, lalu susun ulang jadi kalimat. Contoh:<br><br>
+<b>bobot_baru = bobot_lama − α × gradien</b><br>
+→ <i>"nilai baru = nilai lama, dikurangi (besar langkah × arah kesalahan)"</i>. Ternyata cuma kalimat biasa.
+</div>
+
+<div class="callout warn">
+<b>Bekal untuk pelajaran berikutnya:</b> kembalilah ke halaman ini kapan saja kalau bertemu simbol yang lupa artinya. Tidak ada yang perlu dihafal — cukup tahu di mana mencarinya.
+</div>
+`,
+          keyPoints: [
+            "Fungsi = mesin: f adalah namanya, x bahan masuk, f(x) hasil keluar. f(x) BUKAN f dikali x.",
+            "f'(x) (f aksen) = turunan, yaitu seberapa cepat hasil f berubah.",
+            "Σ (sigma besar) artinya 'jumlahkan semua'; huruf i cuma penanda urutan anggota.",
+            "Huruf Yunani hanyalah nama: α = learning rate, σ = fungsi sigmoid, Δ = perubahan.",
+            "ŷ = tebakan model, y = jawaban benar; P(A|B) = peluang A bila diketahui B.",
+            "Cara membaca rumus: pecah, terjemahkan tiap simbol, susun jadi kalimat biasa.",
+          ],
+          practice: [
+            { type: "number", q: "Jika f(x) = 2x + 1, berapa nilai f(4)?", answer: 9, tol: 0.1, hint: "Ganti x dengan 4: 2×4 + 1.", solution: "2×4 + 1 = 9." },
+            { type: "number", q: "Jika a = [2, 5, 7], berapa hasil Σ aᵢ (jumlahkan semua)?", answer: 14, tol: 0.1, hint: "Σ artinya jumlahkan semuanya.", solution: "2 + 5 + 7 = 14." },
+          ],
+          quiz: [
+            {
+              q: "Apa arti f(x)?",
+              options: [
+                "f dikalikan dengan x",
+                "Hasil dari mesin bernama f ketika diberi masukan x",
+                "f ditambah x",
+                "Sebuah angka tetap",
+              ],
+              answer: 1,
+              explain:
+                "Kurung di sini berarti 'diberi masukan', bukan perkalian. f adalah nama fungsinya.",
+            },
+            {
+              q: "Simbol Σ (sigma besar) artinya?",
+              options: [
+                "Kalikan semuanya",
+                "Jumlahkan semuanya",
+                "Bagi semuanya",
+                "Akar kuadrat",
+              ],
+              answer: 1,
+              explain: "Σ adalah perintah menjumlahkan seluruh anggota.",
+            },
+            {
+              q: "Apa arti tanda petik pada f'(x)?",
+              options: [
+                "f dikuadratkan",
+                "Penanda bahwa itu turunan dari f",
+                "f dikali x",
+                "Kesalahan penulisan",
+              ],
+              answer: 1,
+              explain: "Tanda aksen menandakan turunan — seberapa cepat f berubah.",
+            },
+          ],
+        },
+        {
+          id: "ai-mat-1",
+          title: "Vektor & Dot Product",
+          duration: "13 menit",
+          content: `
+<p>Semua yang dilakukan AI — mengenali gambar, memahami teks, mencari dokumen — pada akhirnya adalah <b>operasi pada vektor</b>. Mari pahami dari nol.</p>
+
+<h3>Fundamental: vektor itu cuma daftar angka</h3>
+<div class="callout">
+<b>Vektor</b> = deretan angka yang mewakili sesuatu. Contoh, sebuah rumah bisa diwakili vektor <b>[120, 3, 2]</b> = (luas 120 m², 3 kamar, 2 lantai). Di AI, sebuah kata atau kalimat diwakili vektor berisi ratusan angka — itulah <b>embedding</b>.
+</div>
+
+<h3>Dot product (hasil kali titik)</h3>
+<p>Cara mengalikan dua vektor: <b>kalikan pasangan angka di posisi yang sama, lalu jumlahkan</b>.</p>
+<pre class="code">a = [3, 4, 0]
+b = [4, 3, 0]
+
+a · b = (3×4) + (4×3) + (0×0)
+      = 12 + 12 + 0
+      = 24</pre>
+
+<h3>Panjang vektor (norm)</h3>
+<p>Memakai <b>Teorema Pythagoras</b> yang diperluas:</p>
+<pre class="code">|a| = akar( 3² + 4² + 0² ) = akar(25) = 5</pre>
+
+<h3>Cosine similarity — inti pencarian RAG</h3>
+<div class="callout">
+<b>Rumus:</b> cos(θ) = (a · b) ÷ (|a| × |b|)<br><br>
+Hasilnya antara <b>−1</b> (berlawanan) sampai <b>1</b> (searah/sangat mirip). Pembagian dengan panjang membuat <b>ukuran vektor tidak berpengaruh</b> — yang dinilai hanya <b>arah</b>, yaitu maknanya.
+</div>
+
+<h3>Coba sendiri — hitung langkah demi langkah 👇</h3>
+<div data-demo="js-playground">// Dot product & cosine similarity, langkah demi langkah
+const a = [3, 4, 0];
+const b = [4, 3, 0];
+
+let dot = 0;
+a.forEach(function(v, i){ dot = dot + v * b[i]; });
+
+let sumA = 0, sumB = 0;
+a.forEach(function(v){ sumA = sumA + v*v; });
+b.forEach(function(v){ sumB = sumB + v*v; });
+const panjangA = Math.sqrt(sumA);
+const panjangB = Math.sqrt(sumB);
+
+console.log("a . b (dot product) = " + dot);
+console.log("panjang a = " + panjangA.toFixed(3));
+console.log("panjang b = " + panjangB.toFixed(3));
+console.log("cosine = dot / (|a| x |b|) = " + (dot/(panjangA*panjangB)).toFixed(4));
+console.log("Mendekati 1 = sangat mirip maknanya.");</div>
+
+<div class="callout">
+<b>Kenapa penting:</b> satu <b>neuron</b> pada dasarnya menghitung dot product antara input dan bobotnya. Jadi rumus sederhana ini dijalankan <b>miliaran kali</b> di dalam sebuah LLM.
+</div>
+`,
+          keyPoints: [
+            "Vektor = deretan angka yang mewakili sesuatu; embedding adalah vektor makna.",
+            "Dot product: kalikan pasangan angka seposisi lalu jumlahkan.",
+            "Panjang vektor (norm) = akar dari jumlah kuadrat komponennya (Pythagoras).",
+            "Cosine similarity = dot product ÷ (panjang a × panjang b); menilai arah/makna, bukan ukuran.",
+            "Satu neuron pada dasarnya menghitung dot product input × bobot.",
+          ],
+          practice: [
+            { type: "number", q: "Hitung dot product dari a = [2, 3] dan b = [4, 5].", answer: 23, tol: 0.5, hint: "(2×4) + (3×5).", solution: "8 + 15 = 23." },
+            { type: "number", q: "Berapa panjang (norm) vektor [3, 4]?", answer: 5, tol: 0.1, hint: "Akar dari (3² + 4²).", solution: "akar(9+16) = akar(25) = 5." },
+          ],
+          quiz: [
+            {
+              q: "Bagaimana cara menghitung dot product dua vektor?",
+              options: [
+                "Jumlahkan semua angkanya",
+                "Kalikan pasangan angka di posisi sama, lalu jumlahkan hasilnya",
+                "Bagi satu dengan yang lain",
+                "Ambil yang terbesar",
+              ],
+              answer: 1,
+              explain: "Dot product = jumlah dari perkalian komponen seposisi.",
+            },
+            {
+              q: "Kenapa cosine similarity dibagi dengan panjang kedua vektor?",
+              options: [
+                "Agar hasilnya lebih besar",
+                "Agar ukuran vektor tidak berpengaruh — yang dinilai hanya arah (makna)",
+                "Agar lebih cepat dihitung",
+                "Tanpa alasan",
+              ],
+              answer: 1,
+              explain:
+                "Normalisasi membuat perbandingan murni soal arah, bukan besar vektornya.",
+            },
+          ],
+        },
+        {
+          id: "ai-mat-2",
+          title: "Turunan & Gradient Descent",
+          duration: "13 menit",
+          content: `
+<p>Di modul Fundamental kamu sudah menjalankan gradient descent. Sekarang kita bedah <b>matematikanya</b>.</p>
+
+<h3>Fundamental: turunan = kemiringan</h3>
+<div class="callout">
+<b>Turunan</b> menjawab: <i>"kalau x digeser sedikit, f(x) berubah seberapa cepat?"</i> Secara visual, itu <b>kemiringan garis singgung</b> di suatu titik. Kemiringan <b>positif</b> = naik ke kanan; <b>negatif</b> = turun; <b>nol</b> = datar (puncak atau lembah).
+</div>
+
+<h3>Aturan turunan yang dipakai AI</h3>
+<table class="tbl">
+  <tr><th>Fungsi</th><th>Turunannya</th></tr>
+  <tr><td>f(x) = x²</td><td>f'(x) = 2x</td></tr>
+  <tr><td>f(x) = xⁿ</td><td>f'(x) = n·xⁿ⁻¹</td></tr>
+  <tr><td>f(x) = c (konstanta)</td><td>f'(x) = 0</td></tr>
+</table>
+
+<h3>Aturan rantai (chain rule) — jantung backpropagation</h3>
+<div class="callout">
+Kalau sebuah nilai melewati <b>beberapa lapisan</b> fungsi, turunannya dikalikan berantai:<br>
+<b>(f(g(x)))' = f'(g(x)) × g'(x)</b><br><br>
+Inilah cara jaringan saraf mengetahui <b>berapa besar andil tiap bobot</b> terhadap kesalahan akhir, walau bobot itu berada jauh di lapisan awal. Proses itu disebut <b>backpropagation</b>.
+</div>
+
+<h3>Rumus gradient descent</h3>
+<div class="callout">
+<b>bobot_baru = bobot_lama − α × gradien</b><br><br>
+<ul>
+  <li><b>gradien</b> = arah yang membuat kesalahan <b>naik</b> → karena itu kita <b>kurangi</b> (tanda minus) agar turun.</li>
+  <li><b>α</b> (alpha) = <b>learning rate</b>, besar langkah.</li>
+</ul>
+</div>
+
+<h3>Contoh hitung tangan</h3>
+<pre class="code">f(x) = (x − 3)²         -> turunannya f'(x) = 2(x − 3)
+Mulai dari x = 0, α = 0,1
+
+Langkah 1: gradien = 2(0 − 3) = −6
+           x = 0 − 0,1 × (−6) = 0,6
+Langkah 2: gradien = 2(0,6 − 3) = −4,8
+           x = 0,6 − 0,1 × (−4,8) = 1,08
+... terus mendekati x = 3 (titik minimum)</pre>
+
+<div class="callout warn">
+<b>Peran learning rate (α):</b> terlalu <b>besar</b> → langkah melompati lembah, bisa gagal konvergen. Terlalu <b>kecil</b> → sangat lambat. Inilah salah satu "kenop" terpenting saat melatih model.
+</div>
+`,
+          keyPoints: [
+            "Turunan = kemiringan; menjawab seberapa cepat f(x) berubah saat x digeser sedikit.",
+            "Aturan dasar: (x²)' = 2x, (xⁿ)' = n·xⁿ⁻¹, (konstanta)' = 0.",
+            "Aturan rantai (f(g(x)))' = f'(g(x)) × g'(x) adalah jantung backpropagation.",
+            "Gradient descent: bobot_baru = bobot_lama − α × gradien; α = learning rate.",
+          ],
+          practice: [
+            { type: "number", q: "Jika f(x) = (x − 3)², berapa nilai turunannya saat x = 0? (rumus: 2(x−3))", answer: -6, tol: 0.1, hint: "Masukkan x = 0 ke 2(x − 3).", solution: "2(0 − 3) = −6." },
+            { type: "number", q: "Dengan gradien −6 dan learning rate 0,1, berapa x baru bila x lama = 0? (rumus: x − α×gradien)", answer: 0.6, tol: 0.05, hint: "0 − 0,1 × (−6).", solution: "0 + 0,6 = 0,6." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa rumus gradient descent memakai tanda MINUS?",
+              options: [
+                "Agar angkanya kecil",
+                "Karena gradien menunjuk arah kesalahan NAIK, jadi kita bergerak berlawanan agar turun",
+                "Karena tradisi",
+                "Agar lebih cepat",
+              ],
+              answer: 1,
+              explain: "Bergerak berlawanan gradien menurunkan nilai loss.",
+            },
+            {
+              q: "Aturan rantai (chain rule) dipakai untuk apa di neural network?",
+              options: [
+                "Mengacak bobot",
+                "Menghitung andil tiap bobot terhadap kesalahan akhir (backpropagation)",
+                "Menyimpan data",
+                "Mempercepat GPU",
+              ],
+              answer: 1,
+              explain:
+                "Chain rule menyebarkan turunan mundur melewati lapisan-lapisan jaringan.",
+            },
+          ],
+        },
+        {
+          id: "ai-mat-3",
+          title: "Fungsi Aktivasi & Fungsi Loss",
+          duration: "13 menit",
+          content: `
+<p>Dua keluarga rumus yang muncul di hampir semua model: <b>aktivasi</b> (mengolah sinyal neuron) dan <b>loss</b> (mengukur kesalahan).</p>
+
+<h3>Kenapa perlu fungsi aktivasi?</h3>
+<div class="callout warn">
+Tanpa aktivasi, menumpuk banyak lapisan itu <b>sia-sia</b> — gabungan operasi linear tetaplah linear, sehingga 100 lapisan sama saja dengan 1 lapisan. Fungsi aktivasi menambahkan <b>ketaklinieran</b>, sehingga jaringan bisa menangkap pola rumit.
+</div>
+
+<table class="tbl">
+  <tr><th>Fungsi</th><th>Rumus</th><th>Keluaran</th><th>Dipakai untuk</th></tr>
+  <tr><td><b>Sigmoid</b></td><td>σ(x) = 1 ÷ (1 + e⁻ˣ)</td><td>0 sampai 1</td><td>Peluang (ya/tidak)</td></tr>
+  <tr><td><b>ReLU</b></td><td>max(0, x)</td><td>0 atau x</td><td>Lapisan tersembunyi (paling umum)</td></tr>
+  <tr><td><b>Softmax</b></td><td>eᶻⁱ ÷ Σeᶻʲ</td><td>Peluang total 100%</td><td>Memilih 1 dari banyak kelas</td></tr>
+</table>
+
+<h3>Coba sendiri — hitung softmax 👇</h3>
+<div data-demo="js-playground">// Softmax: mengubah skor mentah menjadi peluang
+const skor = [2.0, 1.0, 0.1];
+
+let jumlah = 0;
+const eksp = skor.map(function(s){ const e = Math.exp(s); jumlah = jumlah + e; return e; });
+
+eksp.forEach(function(e, i){
+  console.log("skor " + skor[i] + " -> peluang " + (e/jumlah*100).toFixed(1) + "%");
+});
+console.log("-----");
+console.log("Totalnya selalu 100% - itulah gunanya softmax.");
+console.log("Perhatikan: selisih skor kecil bisa jadi selisih peluang besar (efek eksponensial).");</div>
+
+<h3>Fungsi loss — mengukur kesalahan</h3>
+<table class="tbl">
+  <tr><th>Loss</th><th>Rumus</th><th>Untuk</th></tr>
+  <tr><td><b>MSE</b> (Mean Squared Error)</td><td>(1/n) × Σ(y − ŷ)²</td><td>Regresi (menebak angka)</td></tr>
+  <tr><td><b>Cross-Entropy</b></td><td>− Σ y × log(ŷ)</td><td>Klasifikasi (menebak kategori) &amp; LLM</td></tr>
+</table>
+<p>Keterangan: <b>y</b> = jawaban benar, <b>ŷ</b> = tebakan model, <b>n</b> = jumlah data.</p>
+
+<div class="callout">
+<b>Kenapa MSE dikuadratkan?</b> Dua alasan: (1) agar kesalahan positif &amp; negatif tidak saling menghapus, dan (2) agar kesalahan <b>besar dihukum lebih berat</b> — meleset 10 dianggap 100× lebih buruk daripada meleset 1.
+</div>
+
+<div class="callout warn">
+<b>Kaitan ke LLM:</b> saat model bahasa "menebak kata berikutnya", ia menghasilkan skor untuk tiap kemungkinan token, mengubahnya jadi peluang lewat <b>softmax</b>, lalu dilatih dengan <b>cross-entropy</b> agar peluang token yang benar makin tinggi.
+</div>
+`,
+          keyPoints: [
+            "Tanpa fungsi aktivasi, menumpuk lapisan sia-sia karena gabungan linear tetap linear.",
+            "Sigmoid (0–1) untuk peluang; ReLU = max(0,x) paling umum di lapisan tersembunyi; softmax membuat total peluang 100%.",
+            "MSE = rata-rata kuadrat selisih (regresi); cross-entropy = −Σ y·log(ŷ) (klasifikasi & LLM).",
+            "MSE dikuadratkan agar error tak saling menghapus & kesalahan besar dihukum lebih berat.",
+          ],
+          practice: [
+            { type: "number", q: "Berapa hasil ReLU dari −5? (rumus: max(0, x))", answer: 0, tol: 0.01, hint: "max(0, −5).", solution: "ReLU membuang nilai negatif → 0." },
+            { type: "number", q: "Jawaban benar y = 10, tebakan model ŷ = 7. Berapa kesalahan kuadratnya (y − ŷ)²?", answer: 9, tol: 0.1, hint: "(10 − 7)².", solution: "3² = 9." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa neural network butuh fungsi aktivasi?",
+              options: [
+                "Agar lebih cepat",
+                "Menambahkan ketaklinieran — tanpa itu, banyak lapisan sama saja dengan satu lapisan",
+                "Agar hemat memori",
+                "Agar bisa dicetak",
+              ],
+              answer: 1,
+              explain:
+                "Gabungan operasi linear tetap linear; aktivasi memungkinkan pola rumit dipelajari.",
+            },
+            {
+              q: "Fungsi apa yang mengubah skor mentah menjadi peluang bertotal 100%?",
+              options: ["ReLU", "Softmax", "MSE", "Turunan"],
+              answer: 1,
+              explain: "Softmax menormalkan skor menjadi distribusi peluang.",
+            },
+          ],
+        },
+        {
+          id: "ai-mat-4",
+          title: "Probabilitas untuk AI",
+          duration: "13 menit",
+          content: `
+<p>AI berpikir dalam <b>peluang</b>. Ini rumus-rumus yang membuatnya bekerja — dan yang menjelaskan kesalahan penalaran paling umum tentang AI.</p>
+
+<h3>Dua aturan dasar</h3>
+<table class="tbl">
+  <tr><th>Aturan</th><th>Rumus</th><th>Contoh</th></tr>
+  <tr><td><b>Perkalian</b> (kejadian bebas)</td><td>P(A dan B) = P(A) × P(B)</td><td>Dua koin sama-sama gambar: ½ × ½ = ¼</td></tr>
+  <tr><td><b>Penjumlahan</b> (saling lepas)</td><td>P(A atau B) = P(A) + P(B)</td><td>Dadu keluar 1 atau 2: ⅙ + ⅙ = ⅓</td></tr>
+</table>
+
+<h3>Teorema Bayes — memperbarui keyakinan</h3>
+<div class="callout">
+<b>P(A|B) = P(B|A) × P(A) ÷ P(B)</b><br><br>
+Dibaca: "peluang A <b>bila diketahui</b> B". Ini rumus untuk <b>memperbarui keyakinan</b> setelah melihat bukti baru.
+</div>
+
+<h3>Contoh penting: kenapa akurasi menipu</h3>
+<p>Sebuah tes penyakit punya akurasi <b>99%</b>. Penyakitnya langka: hanya <b>1 dari 1.000</b> orang. Kamu dites <b>positif</b>. Berapa peluang kamu benar-benar sakit?</p>
+<pre class="code">Bayangkan 1.000 orang dites:
+  Benar-benar sakit  : 1 orang    -> hasil positif (benar)      = 1
+  Sehat              : 999 orang  -> 1% salah positif           = ~10
+
+Total hasil positif = 1 + 10 = 11
+Peluang benar sakit = 1 / 11 = sekitar 9%</pre>
+
+<div class="callout warn">
+<b>Hanya ~9%</b> — padahal tesnya "99% akurat"! Ini disebut <b>base rate fallacy</b>: saat kejadiannya <b>langka</b>, hasil positif lebih sering berasal dari salah-alarm. Inilah alasan matematis mengapa <b>precision</b> &amp; <b>recall</b> lebih berguna daripada akurasi (lihat modul Fundamental).
+</div>
+
+<h3>Temperature pada LLM</h3>
+<p>Saat LLM memilih kata berikutnya, skor tiap token dibagi dulu dengan <b>temperature (T)</b> sebelum masuk softmax:</p>
+<ul>
+  <li><b>T rendah</b> (mis. 0,2) → perbedaan peluang menajam → jawaban <b>konsisten &amp; aman</b>.</li>
+  <li><b>T tinggi</b> (mis. 1,2) → peluang lebih merata → jawaban <b>lebih bervariasi &amp; kreatif</b> (juga lebih berisiko keliru).</li>
+</ul>
+
+<div class="callout">
+<b>Selamat! 🎓</b> Kamu kini melihat mesin matematis di balik AI: <b>vektor</b> (mewakili makna), <b>turunan</b> (cara belajar), <b>aktivasi &amp; loss</b> (cara berpikir &amp; menilai diri), serta <b>probabilitas</b> (cara menjawab).
+</div>
+`,
+          keyPoints: [
+            "Aturan perkalian: P(A dan B) = P(A)×P(B); aturan penjumlahan: P(A atau B) = P(A)+P(B).",
+            "Teorema Bayes: P(A|B) = P(B|A)×P(A) ÷ P(B) — memperbarui keyakinan setelah melihat bukti.",
+            "Base rate fallacy: pada kejadian langka, hasil positif dari tes 99% akurat bisa hanya ~9% benar.",
+            "Temperature pada LLM: rendah = konsisten, tinggi = bervariasi/kreatif.",
+          ],
+          practice: [
+            { type: "number", q: "Peluang dua koin adil sama-sama muncul 'gambar'? (dalam %)", answer: 25, tol: 0.5, hint: "P(A) × P(B) = 0,5 × 0,5.", solution: "0,5 × 0,5 = 0,25 = 25%." },
+            { type: "choice", q: "Tes 99% akurat untuk penyakit yang menimpa 1 dari 1.000 orang. Kamu positif. Peluang benar-benar sakit paling mendekati?", options: ["99%", "Sekitar 9%", "50%", "1%"], answer: 1, hint: "Bandingkan 1 positif benar dengan ~10 salah-alarm.", solution: "1 ÷ 11 ≈ 9% — inilah base rate fallacy." },
+          ],
+          quiz: [
+            {
+              q: "Apa gunanya Teorema Bayes?",
+              options: [
+                "Menghitung rata-rata",
+                "Memperbarui keyakinan (peluang) setelah melihat bukti baru",
+                "Mengurutkan data",
+                "Mempercepat training",
+              ],
+              answer: 1,
+              explain: "Bayes menggabungkan keyakinan awal dengan bukti baru.",
+            },
+            {
+              q: "Apa efek menaikkan 'temperature' pada LLM?",
+              options: [
+                "Jawaban makin konsisten",
+                "Jawaban makin bervariasi/kreatif (dan lebih berisiko keliru)",
+                "Model jadi lebih cepat",
+                "Tidak berpengaruh",
+              ],
+              answer: 1,
+              explain:
+                "Temperature tinggi meratakan peluang sehingga pilihan kata lebih beragam.",
+            },
+          ],
+        },
+      ],
+    },
+
+    /* ---------------- LEVEL ARSITEKTUR (ML, DL & GEN AI MENDALAM) ---------------- */
+    {
+      id: "ai-arsitektur",
+      level: "Arsitektur",
+      title: "Arsitektur ML, Deep Learning & Gen AI",
+      summary: "Menyelam ke mesinnya: persiapan data, melatih model dengan benar, boosting, CNN, Transformer, dan cara kerja AI generatif.",
+      lessons: [
+        {
+          id: "ai-ars-1",
+          title: "Feature Engineering & Persiapan Data",
+          duration: "13 menit",
+          content: `
+<p>Ada pepatah di kalangan praktisi: <b>"80% pekerjaan machine learning adalah menyiapkan data."</b> Bagian inilah yang paling menentukan hasil — tapi paling jarang dibahas.</p>
+
+<h3>Fundamental: apa itu "fitur"?</h3>
+<div class="callout">
+<b>Fitur (feature)</b> = <b>satu kolom informasi</b> yang dipakai model untuk menebak. Kalau data adalah tabel, tiap <b>kolom</b> adalah satu fitur.
+<br><br><b>Contoh — memprediksi harga rumah:</b>
+<ul>
+  <li>Fitur: luas tanah, jumlah kamar, jarak ke pusat kota, umur bangunan</li>
+  <li>Target (yang ditebak): harga</li>
+</ul>
+</div>
+
+<h3>Feature engineering = membuat fitur yang lebih berguna</h3>
+<p><b>Feature engineering</b> adalah mengolah data mentah menjadi fitur yang lebih mudah "dimengerti" model. Ini sering <b>lebih berpengaruh daripada mengganti algoritma</b>.</p>
+
+<table class="tbl">
+  <tr><th>Data mentah</th><th>Fitur hasil olahan</th><th>Kenapa lebih berguna</th></tr>
+  <tr><td>Tanggal lahir: 2000-05-14</td><td><b>Umur</b>: 26</td><td>Model butuh angka bermakna, bukan tanggal</td></tr>
+  <tr><td>Tanggal transaksi</td><td><b>Hari apa</b> (Senin–Minggu)</td><td>Menangkap pola akhir pekan</td></tr>
+  <tr><td>Panjang &amp; lebar tanah</td><td><b>Luas</b> = panjang × lebar</td><td>Satu angka yang lebih langsung berhubungan dengan harga</td></tr>
+  <tr><td>Alamat lengkap</td><td><b>Jarak ke pusat kota</b> (km)</td><td>Teks alamat tak bisa dihitung; jarak bisa</td></tr>
+</table>
+
+<h3>Membersihkan data (data cleaning)</h3>
+<ul>
+  <li><b>Data kosong (missing)</b> — isi dengan rata-rata/median, atau buang barisnya.</li>
+  <li><b>Pencilan (outlier)</b> — nilai ekstrem yang aneh (mis. umur 999). Periksa: salah input atau memang nyata?</li>
+  <li><b>Duplikat</b> — baris yang sama berulang bisa membuat model bias.</li>
+  <li><b>Data kategori</b> — teks seperti "merah/biru/hijau" harus diubah jadi angka (disebut <b>encoding</b>).</li>
+</ul>
+
+<h3>Penskalaan (scaling) — sering terlupakan</h3>
+<div class="callout warn">
+<b>Masalahnya:</b> misal ada fitur "umur" (0–100) dan "penghasilan" (0–100.000.000). Banyak algoritma akan menganggap penghasilan <b>jauh lebih penting</b> semata karena <b>angkanya besar</b> — padahal belum tentu.
+<br><br><b>Solusinya:</b> <b>penskalaan</b> — semua fitur disamakan rentangnya (mis. dijadikan 0–1) agar dibandingkan dengan adil.
+</div>
+
+<h3>Coba sendiri — lihat efek penskalaan 👇</h3>
+<div data-demo="js-playground">// Penskalaan Min-Max: ubah semua nilai ke rentang 0 sampai 1
+// Rumus: (nilai - terkecil) / (terbesar - terkecil)
+
+function skala(daftar, nama) {
+  let min = daftar[0];
+  let max = daftar[0];
+  daftar.forEach(function(v){
+    if (v > max) { max = v; }
+    if (min > v) { min = v; }
+  });
+  const hasil = daftar.map(function(v){
+    return ((v - min) / (max - min)).toFixed(2);
+  });
+  console.log(nama);
+  console.log("   asli   : " + daftar.join(", "));
+  console.log("   diskala: " + hasil.join(", "));
+}
+
+skala([25, 40, 35, 60], "Umur (tahun)");
+skala([5000000, 12000000, 8000000, 30000000], "Penghasilan (Rp)");
+
+console.log("-----");
+console.log("Setelah diskala, keduanya sama-sama 0 sampai 1.");
+console.log("Model jadi menilai keduanya adil, bukan karena angkanya besar.");</div>
+
+<div class="callout">
+<b>Prinsip emas:</b> <i>"Garbage in, garbage out."</i> Model tercanggih pun akan gagal kalau datanya buruk. Sebaliknya, data &amp; fitur yang baik bisa membuat algoritma sederhana bekerja sangat bagus.
+</div>
+`,
+          keyPoints: [
+            "Fitur (feature) = satu kolom informasi yang dipakai model untuk menebak.",
+            "Feature engineering = mengolah data mentah jadi fitur bermakna; sering lebih berpengaruh daripada mengganti algoritma.",
+            "Data cleaning: tangani data kosong, pencilan, duplikat, dan ubah kategori jadi angka (encoding).",
+            "Penskalaan menyamakan rentang antar-fitur agar tidak ada fitur yang 'menang' hanya karena angkanya besar.",
+            "Garbage in, garbage out — data buruk mengalahkan algoritma canggih.",
+          ],
+          practice: [
+            { type: "number", q: "Penskalaan Min-Max: nilai 35, terkecil 25, terbesar 60. Berapa hasilnya? (2 desimal)", answer: 0.29, tol: 0.02, hint: "(nilai − min) ÷ (max − min) = (35 − 25) ÷ (60 − 25).", solution: "10 ÷ 35 = 0,29." },
+            { type: "choice", q: "Data punya fitur 'umur' (0–100) dan 'penghasilan' (0–100 juta). Apa masalahnya bila tanpa penskalaan?", options: ["Tidak ada masalah", "Model bisa menganggap penghasilan jauh lebih penting hanya karena angkanya besar", "Model jadi lebih cepat", "Data jadi hilang"], answer: 1, hint: "Algoritma melihat besaran angka.", solution: "Skala yang timpang membuat fitur berangka besar mendominasi secara tidak adil." },
+          ],
+          quiz: [
+            {
+              q: "Apa itu 'fitur' (feature) dalam machine learning?",
+              options: [
+                "Fitur aplikasi seperti tombol",
+                "Satu kolom informasi yang dipakai model untuk menebak",
+                "Nama algoritma",
+                "Jumlah data",
+              ],
+              answer: 1,
+              explain: "Fitur adalah variabel/kolom masukan yang dipakai model.",
+            },
+            {
+              q: "Kenapa feature engineering penting?",
+              options: [
+                "Membuat data lebih banyak",
+                "Fitur yang baik sering lebih berpengaruh pada hasil daripada mengganti algoritma",
+                "Mempercepat internet",
+                "Menghapus kebutuhan data",
+              ],
+              answer: 1,
+              explain:
+                "Kualitas representasi data sangat menentukan performa model.",
+            },
+          ],
+        },
+        {
+          id: "ai-ars-2",
+          title: "Melatih Model dengan Benar",
+          duration: "13 menit",
+          content: `
+<p>Kamu sudah tahu soal <b>overfitting</b> (model menghafal). Sekarang kita bahas <b>cara kerja yang benar</b> agar hasilnya bisa dipercaya.</p>
+
+<h3>Tiga bagian data (bukan dua!)</h3>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Porsi umum</th><th>Fungsinya</th></tr>
+  <tr><td><b>Training</b></td><td>~60–70%</td><td>Model <b>belajar</b> dari sini</td></tr>
+  <tr><td><b>Validation</b></td><td>~15–20%</td><td>Untuk <b>menyetel</b> model &amp; memilih pengaturan terbaik</td></tr>
+  <tr><td><b>Test</b></td><td>~15–20%</td><td>Ujian <b>terakhir</b> — hanya dipakai SEKALI di akhir</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Kenapa perlu validation terpisah?</b> Kalau kamu menyetel model berulang kali sambil melihat nilai <b>test</b>, kamu <b>diam-diam "membocorkan"</b> jawaban ujian ke dalam model. Nilainya jadi terlihat bagus padahal menipu. Karena itu: setel pakai <b>validation</b>, dan sentuh <b>test</b> hanya di akhir.
+</div>
+
+<h3>Cross-validation: memakai data secara hemat</h3>
+<p>Kalau datamu sedikit, membaginya tiga bagian terasa boros. Solusinya <b>k-fold cross-validation</b>:</p>
+<ol>
+  <li>Data dibagi jadi <b>k bagian</b> sama besar (misal k = 5).</li>
+  <li>Latih dengan 4 bagian, uji dengan 1 bagian.</li>
+  <li>Ulangi 5 kali, <b>bergantian</b> bagian mana yang jadi penguji.</li>
+  <li>Ambil <b>rata-rata</b> hasilnya.</li>
+</ol>
+<div class="callout">
+<b>Keuntungannya:</b> semua data pernah dipakai untuk melatih <b>dan</b> menguji, sehingga penilaiannya lebih stabil &amp; tidak bergantung pada kebetulan pembagian.
+</div>
+
+<h3>Hyperparameter — "pengaturan" model</h3>
+<div class="callout">
+<b>Bedakan dua hal ini:</b>
+<ul>
+  <li><b>Parameter</b> — angka yang <b>dipelajari model sendiri</b> saat training (bobot).</li>
+  <li><b>Hyperparameter</b> — pengaturan yang <b>kamu tentukan sebelum</b> training: learning rate, jumlah lapisan, kedalaman pohon, jumlah tetangga di k-NN.</li>
+</ul>
+Mencari kombinasi terbaiknya disebut <b>hyperparameter tuning</b> (dicoba satu per satu, atau dicari otomatis).
+</div>
+
+<h3>Regularisasi — mengerem hafalan</h3>
+<p><b>Regularisasi</b> adalah cara <b>menghukum model yang terlalu rumit</b>, agar tidak menghafal:</p>
+<ul>
+  <li><b>L1 &amp; L2</b> — menambah "denda" bila bobot model terlalu besar, sehingga model dipaksa lebih sederhana.</li>
+  <li><b>Dropout</b> (khusus neural network) — saat training, sebagian neuron <b>dimatikan acak</b>. Model jadi tidak bergantung pada satu jalur saja.</li>
+  <li><b>Early stopping</b> — hentikan training saat nilai validation mulai memburuk.</li>
+</ul>
+
+<div class="callout warn">
+<b>Data timpang (imbalanced):</b> kalau 99% data adalah "normal" dan 1% "penipuan", model bisa menebak "normal" terus dan terlihat 99% akurat — padahal tak berguna. Solusinya: pakai metrik <b>precision/recall</b> (bukan akurasi), perbanyak contoh kelas minoritas, atau beri bobot lebih besar pada kelas langka.
+</div>
+`,
+          keyPoints: [
+            "Data dibagi tiga: training (belajar), validation (menyetel), test (ujian akhir sekali pakai).",
+            "Menyetel model sambil melihat nilai test = membocorkan jawaban; nilainya jadi menipu.",
+            "k-fold cross-validation: data dibagi k bagian, bergantian jadi penguji, hasilnya dirata-rata — lebih hemat & stabil.",
+            "Parameter dipelajari model; hyperparameter ditentukan manusia sebelum training (learning rate, jumlah lapisan).",
+            "Regularisasi (L1/L2, dropout, early stopping) mencegah model menghafal.",
+            "Data timpang: pakai precision/recall, bukan akurasi.",
+          ],
+          practice: [
+            { type: "choice", q: "Kamu menyetel model berkali-kali sambil melihat nilai pada data TEST. Apa masalahnya?", options: ["Tidak ada masalah", "Jawaban ujian 'bocor' ke model — nilainya jadi menipu", "Model jadi lambat", "Data jadi rusak"], answer: 1, hint: "Test seharusnya dipakai berapa kali?", solution: "Test hanya boleh dipakai sekali di akhir; penyetelan memakai validation." },
+            { type: "number", q: "Pada 5-fold cross-validation, berapa kali proses latih-uji dilakukan?", answer: 5, tol: 0.1, unit: "kali", hint: "Sebanyak jumlah fold-nya.", solution: "k = 5 → dilakukan 5 kali, bergantian bagian penguji." },
+          ],
+          quiz: [
+            {
+              q: "Apa beda parameter dan hyperparameter?",
+              options: [
+                "Sama saja",
+                "Parameter dipelajari model sendiri; hyperparameter ditentukan manusia sebelum training",
+                "Hyperparameter lebih kecil",
+                "Parameter hanya untuk neural network",
+              ],
+              answer: 1,
+              explain:
+                "Bobot = parameter (dipelajari); learning rate & jumlah lapisan = hyperparameter (disetel manusia).",
+            },
+            {
+              q: "Apa fungsi 'dropout' pada neural network?",
+              options: [
+                "Menghapus data",
+                "Mematikan sebagian neuron secara acak saat training agar model tidak menghafal",
+                "Mempercepat internet",
+                "Menambah lapisan",
+              ],
+              answer: 1,
+              explain:
+                "Dropout mencegah ketergantungan pada jalur tertentu, mengurangi overfitting.",
+            },
+          ],
+        },
+        {
+          id: "ai-ars-3",
+          title: "Boosting & XGBoost",
+          duration: "12 menit",
+          content: `
+<p>Kamu sudah kenal <b>Random Forest</b> (banyak pohon bekerja bersama). Sekarang saudara dekatnya yang sering <b>lebih kuat</b> untuk data tabel: <b>boosting</b>.</p>
+
+<h3>Dua cara menggabungkan model</h3>
+<table class="tbl">
+  <tr><th></th><th>Bagging (Random Forest)</th><th>Boosting (XGBoost dkk)</th></tr>
+  <tr><td>Cara kerja</td><td>Banyak pohon dilatih <b>bersamaan &amp; mandiri</b></td><td>Pohon dilatih <b>berurutan</b>, saling memperbaiki</td></tr>
+  <tr><td>Fokus tiap model</td><td>Bagian data acak</td><td><b>Kesalahan</b> model sebelumnya</td></tr>
+  <tr><td>Penggabungan</td><td>Voting / rata-rata</td><td>Dijumlahkan bertahap</td></tr>
+  <tr><td>Sifat</td><td>Stabil, sulit overfit</td><td>Sering <b>lebih akurat</b>, tapi perlu disetel hati-hati</td></tr>
+</table>
+
+<div class="callout">
+<b>Analogi boosting:</b> bayangkan sekelompok siswa mengerjakan soal bergiliran. Siswa ke-2 <b>fokus pada soal yang salah</b> dijawab siswa ke-1. Siswa ke-3 fokus pada yang masih salah setelah keduanya. Begitu seterusnya — tiap orang <b>menambal kelemahan</b> sebelumnya.
+</div>
+
+<h3>Cara kerja gradient boosting</h3>
+<ol>
+  <li>Buat pohon pertama yang sederhana → hasilnya masih banyak salah.</li>
+  <li>Hitung <b>sisa kesalahan</b>-nya (residual).</li>
+  <li>Latih pohon berikutnya untuk <b>menebak kesalahan itu</b>.</li>
+  <li>Tambahkan hasilnya (dengan porsi kecil, diatur <b>learning rate</b>).</li>
+  <li>Ulangi puluhan hingga ratusan kali → kesalahan makin mengecil.</li>
+</ol>
+
+<h3>Kenapa XGBoost begitu populer?</h3>
+<ul>
+  <li>Sangat <b>akurat</b> untuk data tabel/spreadsheet — sering jadi juara di kompetisi data.</li>
+  <li>Cepat &amp; efisien; punya <b>regularisasi bawaan</b> agar tak mudah overfit.</li>
+  <li>Bisa menangani data kosong secara otomatis.</li>
+</ul>
+<p>Saudaranya: <b>LightGBM</b> &amp; <b>CatBoost</b> — ide sama, dengan optimasi berbeda.</p>
+
+<div class="callout warn">
+<b>Penting untuk diingat:</b> untuk data <b>tabel</b> (angka &amp; kategori di spreadsheet), <b>boosting sering mengalahkan deep learning</b>. Deep learning unggul untuk data <b>tak terstruktur</b>: gambar, suara, teks panjang. Pilih alat sesuai jenis datanya, bukan sesuai yang sedang tren.
+</div>
+`,
+          keyPoints: [
+            "Bagging (Random Forest): pohon dilatih bersamaan & mandiri, lalu di-voting.",
+            "Boosting: pohon dilatih berurutan, tiap pohon memperbaiki kesalahan pohon sebelumnya.",
+            "Gradient boosting menebak sisa kesalahan (residual) berulang kali dengan porsi kecil (learning rate).",
+            "XGBoost/LightGBM/CatBoost sangat akurat untuk data tabel & punya regularisasi bawaan.",
+            "Untuk data tabel, boosting sering mengalahkan deep learning; deep learning unggul di gambar/suara/teks.",
+          ],
+          quiz: [
+            {
+              q: "Apa perbedaan inti boosting dibanding bagging?",
+              options: [
+                "Boosting memakai lebih sedikit data",
+                "Pada boosting, tiap model dilatih berurutan untuk memperbaiki kesalahan model sebelumnya",
+                "Boosting tidak memakai pohon",
+                "Tidak ada perbedaan",
+              ],
+              answer: 1,
+              explain:
+                "Bagging paralel & mandiri; boosting berurutan & saling menambal kesalahan.",
+            },
+            {
+              q: "Untuk data tabel (spreadsheet), pendekatan mana yang sering paling unggul?",
+              options: [
+                "Deep learning selalu",
+                "Boosting (mis. XGBoost)",
+                "Tidak ada yang cocok",
+                "Hanya k-NN",
+              ],
+              answer: 1,
+              explain:
+                "Boosting sangat kuat pada data terstruktur; deep learning unggul di data tak terstruktur.",
+            },
+          ],
+        },
+        {
+          id: "ai-ars-4",
+          title: "CNN — Cara AI Melihat Gambar",
+          duration: "14 menit",
+          content: `
+<p>Kamu sudah tahu komputer melihat gambar sebagai <b>angka piksel</b>. Tapi bagaimana ia mengenali "ini kucing"? Jawabannya: <b>CNN</b> (Convolutional Neural Network).</p>
+
+<h3>Masalahnya dulu</h3>
+<div class="callout warn">
+Foto 1000×1000 piksel = <b>1 juta angka</b>. Kalau semuanya disambungkan ke neural network biasa, jumlah koneksinya meledak — terlalu berat, dan model gagal mengenali objek yang <b>bergeser posisi</b>.
+</div>
+
+<h3>Ide cerdas CNN: geser "kaca pembesar"</h3>
+<div class="callout">
+Alih-alih melihat seluruh gambar sekaligus, CNN memakai <b>filter</b> (jendela kecil, mis. 3×3 piksel) yang <b>digeser ke seluruh permukaan gambar</b> — seperti memindai dengan kaca pembesar. Tiap filter mencari <b>satu pola sederhana</b>: garis tegak, garis miring, tepi, atau perubahan warna.
+</div>
+
+<h3>Tiga lapisan utama</h3>
+<table class="tbl">
+  <tr><th>Lapisan</th><th>Tugasnya</th><th>Analogi</th></tr>
+  <tr><td><b>Convolution</b></td><td>Menggeser filter untuk mendeteksi pola</td><td>Memindai dengan kaca pembesar</td></tr>
+  <tr><td><b>Activation (ReLU)</b></td><td>Membuang nilai negatif (jadikan 0)</td><td>Menyaring: "yang lemah diabaikan"</td></tr>
+  <tr><td><b>Pooling</b></td><td>Merangkum &amp; mengecilkan ukuran</td><td>Meringkas: ambil yang paling menonjol</td></tr>
+</table>
+
+<h3>Hierarki: dari garis jadi wajah</h3>
+<p>Inilah bagian paling elegan. Lapisan CNN bertumpuk, dan tiap tingkat mengenali hal yang <b>makin rumit</b>:</p>
+<ol>
+  <li><b>Lapisan awal</b> → garis, tepi, sudut</li>
+  <li><b>Lapisan tengah</b> → bentuk: lingkaran, mata, hidung, telinga</li>
+  <li><b>Lapisan akhir</b> → objek utuh: wajah kucing</li>
+</ol>
+<div class="callout">
+<b>Yang menakjubkan:</b> tidak ada manusia yang mengajari "ini mata, ini hidung". CNN <b>menemukan sendiri</b> hierarki itu dari ribuan contoh gambar.
+</div>
+
+<h3>Transfer learning — jalan pintas yang sangat berguna</h3>
+<div class="callout">
+Melatih CNN dari nol butuh jutaan gambar &amp; komputer mahal. <b>Transfer learning</b> memakai model yang <b>sudah dilatih</b> orang lain (mis. dilatih atas jutaan foto umum), lalu <b>disetel ulang sedikit</b> untuk tugasmu.
+<br><br><b>Analogi:</b> daripada mengajari orang melihat dari bayi, kamu ambil orang yang <b>sudah bisa melihat</b>, lalu cukup ajari <b>"ini namanya penyakit daun A, ini B"</b>. Jauh lebih cepat &amp; butuh sedikit contoh.
+</div>
+<p>Karena itu kamu bisa membuat pengenal gambar khusus (mis. penyakit tanaman) hanya dengan <b>ratusan foto</b>, bukan jutaan.</p>
+`,
+          keyPoints: [
+            "CNN memakai filter (jendela kecil) yang digeser ke seluruh gambar untuk mendeteksi pola.",
+            "Tiga lapisan: convolution (deteksi pola), ReLU (buang nilai negatif), pooling (merangkum & mengecilkan).",
+            "Lapisan bertumpuk membentuk hierarki: garis → bentuk (mata/hidung) → objek utuh — ditemukan sendiri oleh model.",
+            "Transfer learning memakai model terlatih lalu menyetelnya untuk tugas baru — cukup ratusan contoh, bukan jutaan.",
+          ],
+          practice: [
+            { type: "choice", q: "Apa fungsi lapisan 'pooling' pada CNN?", options: ["Menambah ukuran gambar", "Merangkum & mengecilkan ukuran, mengambil yang paling menonjol", "Mengubah warna", "Menyimpan data"], answer: 1, hint: "Meringkas informasi.", solution: "Pooling merangkum area menjadi nilai ringkas sehingga ukuran mengecil." },
+            { type: "choice", q: "Kamu ingin membuat pengenal penyakit daun tapi hanya punya 500 foto. Pendekatan terbaik?", options: ["Latih CNN dari nol", "Transfer learning dari model yang sudah terlatih", "Menyerah", "Pakai k-NN saja"], answer: 1, hint: "Data sedikit, tapi ada model terlatih yang bisa dipinjam.", solution: "Transfer learning memungkinkan hasil bagus dengan data terbatas." },
+          ],
+          quiz: [
+            {
+              q: "Apa ide inti CNN?",
+              options: [
+                "Melihat seluruh gambar sekaligus",
+                "Menggeser filter kecil ke seluruh gambar untuk mendeteksi pola",
+                "Menghapus piksel",
+                "Mengubah gambar jadi teks",
+              ],
+              answer: 1,
+              explain:
+                "Filter yang digeser membuat CNN efisien & tetap mengenali objek yang bergeser posisi.",
+            },
+            {
+              q: "Apa keuntungan transfer learning?",
+              options: [
+                "Butuh lebih banyak data",
+                "Bisa mencapai hasil bagus dengan data & komputasi jauh lebih sedikit",
+                "Menghapus kebutuhan model",
+                "Membuat model lebih lambat",
+              ],
+              answer: 1,
+              explain:
+                "Memanfaatkan pengetahuan model terlatih menghemat data, waktu, & biaya.",
+            },
+          ],
+        },
+        {
+          id: "ai-ars-5",
+          title: "RNN, LSTM & Transformer (Attention)",
+          duration: "14 menit",
+          content: `
+<p>CNN hebat untuk gambar. Tapi bagaimana dengan <b>urutan</b> — kalimat, musik, harga harian? Di sinilah arsitektur berbeda dibutuhkan.</p>
+
+<h3>Masalah data berurutan</h3>
+<p>Dalam kalimat <i>"Saya lahir di Bandung, jadi bahasa ibu saya adalah ___"</i>, untuk menebak kata terakhir model harus <b>mengingat</b> kata "Bandung" yang jauh di depan. Model biasa tidak punya ingatan.</p>
+
+<h3>RNN — punya ingatan, tapi pelupa</h3>
+<div class="callout">
+<b>RNN</b> (Recurrent Neural Network) memproses kata <b>satu per satu</b> sambil membawa "catatan ingatan" ke kata berikutnya.
+<br><br><b>Masalahnya:</b> ingatannya <b>memudar</b> untuk jarak jauh — disebut <b>vanishing gradient</b>. Ibarat main "bisik berantai": pesan makin kabur setelah melewati banyak orang.
+</div>
+
+<h3>LSTM — ingatan dengan gerbang</h3>
+<p><b>LSTM</b> (Long Short-Term Memory) memperbaiki RNN dengan menambahkan <b>gerbang (gate)</b> yang mengatur:</p>
+<ul>
+  <li>Apa yang <b>diingat</b></li>
+  <li>Apa yang <b>dilupakan</b></li>
+  <li>Apa yang <b>dikeluarkan</b></li>
+</ul>
+<p>Hasilnya ingatan bertahan jauh lebih lama. Tapi tetap ada kelemahan besar: <b>harus diproses berurutan</b>, jadi lambat dan sulit dipercepat.</p>
+
+<h3>Transformer — terobosannya (2017)</h3>
+<div class="callout">
+<b>Ide revolusionernya:</b> buang pemrosesan berurutan. <b>Lihat SEMUA kata sekaligus</b>, lalu biarkan model menentukan sendiri <b>kata mana yang penting diperhatikan</b>. Mekanisme ini disebut <b>attention</b> (perhatian).
+</div>
+
+<h3>Attention — dijelaskan sederhana</h3>
+<p>Untuk tiap kata, model bertanya: <b>"kata lain mana yang paling membantu memahami kata ini?"</b> lalu memberi <b>bobot perhatian</b>.</p>
+<pre class="code">Kalimat : "Kucing itu tidak mau makan karena dia sakit"
+Saat memproses kata "dia":
+   perhatian ke "Kucing"  ->  tinggi   (0,7)
+   perhatian ke "makan"   ->  sedang   (0,2)
+   perhatian ke "tidak"   ->  rendah   (0,1)
+Kesimpulan model: "dia" merujuk pada "Kucing".</pre>
+
+<table class="tbl">
+  <tr><th></th><th>RNN / LSTM</th><th>Transformer</th></tr>
+  <tr><td>Cara memproses</td><td>Satu per satu (berurutan)</td><td><b>Semua sekaligus</b> (paralel)</td></tr>
+  <tr><td>Ingatan jarak jauh</td><td>Terbatas</td><td>Sangat baik</td></tr>
+  <tr><td>Kecepatan latih</td><td>Lambat</td><td><b>Jauh lebih cepat</b> (bisa dibagi ke banyak GPU)</td></tr>
+</table>
+
+<div class="callout">
+<b>Inilah kenapa LLM bisa ada.</b> Karena Transformer bisa dilatih secara paralel dalam skala raksasa, barulah mungkin membuat model dengan ratusan miliar parameter seperti Claude &amp; GPT. Semua LLM modern memakai arsitektur ini.
+</div>
+
+<div class="callout warn">
+<b>Harganya:</b> attention membandingkan <b>setiap kata dengan setiap kata lain</b>. Kalau teks 2× lebih panjang, perhitungannya sekitar <b>4× lebih berat</b>. Inilah alasan context window panjang itu mahal.
+</div>
+`,
+          keyPoints: [
+            "RNN memproses berurutan sambil membawa ingatan, tapi ingatannya memudar (vanishing gradient).",
+            "LSTM menambahkan gerbang untuk mengatur apa yang diingat/dilupakan — ingatan bertahan lebih lama.",
+            "Transformer (2017) melihat semua kata sekaligus & memakai attention untuk menentukan kata mana yang penting.",
+            "Attention memberi bobot perhatian antar-kata (mis. 'dia' → 'Kucing').",
+            "Transformer bisa dilatih paralel → memungkinkan LLM raksasa; tapi biayanya naik ~kuadrat terhadap panjang teks.",
+          ],
+          practice: [
+            { type: "choice", q: "Apa kelemahan utama RNN untuk kalimat panjang?", options: ["Terlalu cepat", "Ingatannya memudar untuk jarak jauh (vanishing gradient)", "Tidak bisa membaca teks", "Butuh gambar"], answer: 1, hint: "Seperti permainan bisik berantai.", solution: "Informasi jauh di depan makin kabur saat melewati banyak langkah." },
+            { type: "choice", q: "Apa keunggulan utama Transformer dibanding LSTM?", options: ["Lebih kecil ukurannya", "Memproses semua kata sekaligus (paralel) sehingga jauh lebih cepat dilatih", "Tidak butuh data", "Tidak memakai attention"], answer: 1, hint: "Kenapa LLM raksasa jadi mungkin?", solution: "Pemrosesan paralel memungkinkan pelatihan skala sangat besar." },
+          ],
+          quiz: [
+            {
+              q: "Apa yang dilakukan mekanisme 'attention'?",
+              options: [
+                "Menghapus kata yang tidak penting",
+                "Memberi bobot: kata lain mana yang paling membantu memahami kata ini",
+                "Menerjemahkan bahasa",
+                "Mengurutkan kata",
+              ],
+              answer: 1,
+              explain:
+                "Attention menimbang keterkaitan antar-kata sehingga konteks tertangkap.",
+            },
+            {
+              q: "Kenapa context window yang panjang itu mahal?",
+              options: [
+                "Karena butuh internet cepat",
+                "Attention membandingkan setiap kata dengan setiap kata lain — biaya naik ~kuadrat",
+                "Karena teks disimpan permanen",
+                "Karena modelnya bertambah besar",
+              ],
+              answer: 1,
+              explain:
+                "Jumlah perbandingan tumbuh kuadratik terhadap panjang teks.",
+            },
+          ],
+        },
+        {
+          id: "ai-ars-6",
+          title: "Gen AI Mendalam: GAN, Diffusion & LLM",
+          duration: "14 menit",
+          content: `
+<p>Penutup modul: membandingkan <b>tiga keluarga besar</b> AI generatif, dan trik yang membuatnya bisa dijalankan.</p>
+
+<h3>Tiga cara AI "mencipta"</h3>
+<table class="tbl">
+  <tr><th>Keluarga</th><th>Cara kerja</th><th>Dipakai untuk</th></tr>
+  <tr><td><b>Autoregressive</b> (LLM)</td><td>Menebak <b>token berikutnya</b>, berulang</td><td>Teks, kode</td></tr>
+  <tr><td><b>Diffusion</b></td><td>Menghapus <b>noise</b> bertahap sampai muncul gambar</td><td>Gambar, video, audio</td></tr>
+  <tr><td><b>GAN</b></td><td><b>Dua model beradu</b>: pemalsu vs pendeteksi</td><td>Gambar (lebih tua, kini banyak digantikan diffusion)</td></tr>
+</table>
+
+<h3>GAN — kucing-kucingan pemalsu &amp; polisi</h3>
+<div class="callout">
+<b>GAN</b> (Generative Adversarial Network) melatih <b>dua model sekaligus</b> yang saling bermusuhan:
+<ul>
+  <li><b>Generator</b> = <b>pemalsu uang</b> — berusaha membuat gambar palsu yang meyakinkan.</li>
+  <li><b>Discriminator</b> = <b>polisi</b> — berusaha membedakan mana asli, mana palsu.</li>
+</ul>
+Keduanya berlatih bersamaan: pemalsu makin pintar memalsukan, polisi makin jeli mendeteksi. Setelah ribuan putaran, <b>hasil pemalsu jadi sangat meyakinkan</b>.
+</div>
+<p><b>Kelemahannya:</b> pelatihannya <b>tidak stabil</b> (sering gagal menyatu), sehingga untuk gambar kini banyak digantikan <b>diffusion</b> yang lebih stabil &amp; berkualitas.</p>
+
+<h3>Mengendalikan keluaran LLM</h3>
+<table class="tbl">
+  <tr><th>Pengaturan</th><th>Fungsinya</th></tr>
+  <tr><td><b>Temperature</b></td><td>Rendah = aman &amp; konsisten; tinggi = kreatif &amp; berisiko ngawur</td></tr>
+  <tr><td><b>Top-p</b> (nucleus)</td><td>Hanya memilih dari kandidat kata teratas yang jumlah peluangnya mencapai p</td></tr>
+  <tr><td><b>Max tokens</b></td><td>Batas panjang jawaban</td></tr>
+</table>
+
+<h3>Trik agar model raksasa bisa dijalankan</h3>
+<ul>
+  <li><b>Quantization</b> — menyimpan angka model dengan <b>presisi lebih rendah</b> (mis. dari 16-bit jadi 4-bit). Ukuran menyusut drastis, kualitas turun sedikit. Inilah yang membuat model besar bisa jalan di laptop.</li>
+  <li><b>Distillation</b> — model besar (<i>guru</i>) "mengajari" model kecil (<i>murid</i>). Murid jadi jauh lebih ringan dengan kemampuan mendekati gurunya.</li>
+  <li><b>Mixture of Experts (MoE)</b> — model dibagi jadi banyak "ahli"; tiap permintaan <b>hanya mengaktifkan sebagian</b>. Total parameter besar, tapi biaya per permintaan tetap wajar.</li>
+</ul>
+
+<div class="callout">
+<b>Selamat! 🎓</b> Kamu kini memahami arsitektur di balik AI modern: dari menyiapkan data, melatih dengan benar, boosting, CNN untuk gambar, Transformer untuk teks, sampai cara kerja AI generatif — lengkap dengan trik yang membuatnya bisa dipakai di dunia nyata.
+</div>
+`,
+          keyPoints: [
+            "Tiga keluarga gen AI: autoregressive (LLM, tebak token berikutnya), diffusion (hapus noise), GAN (dua model beradu).",
+            "GAN = generator (pemalsu) vs discriminator (polisi) yang saling melatih; pelatihannya tidak stabil.",
+            "Keluaran LLM diatur temperature (kreativitas), top-p (pilihan kandidat), max tokens (panjang).",
+            "Quantization menurunkan presisi angka agar model muat di perangkat kecil.",
+            "Distillation: model besar mengajari model kecil. MoE: hanya sebagian 'ahli' aktif tiap permintaan.",
+          ],
+          practice: [
+            { type: "choice", q: "Pada GAN, apa peran 'discriminator'?", options: ["Membuat gambar palsu", "Membedakan mana gambar asli & mana palsu", "Menyimpan data", "Mempercepat training"], answer: 1, hint: "Perannya seperti polisi.", solution: "Discriminator menilai keaslian, memaksa generator terus membaik." },
+            { type: "choice", q: "Kamu ingin menjalankan model besar di laptop biasa. Teknik yang paling membantu?", options: ["Menambah parameter", "Quantization (menurunkan presisi angka)", "Menaikkan temperature", "Memperpanjang prompt"], answer: 1, hint: "Bagaimana mengecilkan ukuran model?", solution: "Quantization memangkas ukuran memori dengan penurunan kualitas kecil." },
+          ],
+          quiz: [
+            {
+              q: "Apa inti cara kerja GAN?",
+              options: [
+                "Menghapus noise bertahap",
+                "Dua model beradu: generator memalsukan, discriminator mendeteksi",
+                "Menebak kata berikutnya",
+                "Mengelompokkan data",
+              ],
+              answer: 1,
+              explain:
+                "Persaingan generator vs discriminator membuat hasil palsu makin meyakinkan.",
+            },
+            {
+              q: "Apa itu Mixture of Experts (MoE)?",
+              options: [
+                "Menggabungkan banyak perusahaan AI",
+                "Model dibagi jadi banyak 'ahli'; tiap permintaan hanya mengaktifkan sebagian",
+                "Melatih dengan banyak data",
+                "Menggabungkan gambar & teks",
+              ],
+              answer: 1,
+              explain:
+                "MoE memberi kapasitas besar tanpa mengaktifkan seluruh parameter tiap permintaan.",
             },
           ],
         },

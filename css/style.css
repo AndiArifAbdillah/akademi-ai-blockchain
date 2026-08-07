@@ -129,6 +129,8 @@ a:hover { text-decoration: underline; }
 .course-head small { color: var(--muted); }
 
 .module { margin-bottom: 26px; }
+.mod-num { display: inline-block; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); padding: 3px 10px; border-radius: 99px; margin-right: 6px; }
+.course-order-hint { background: var(--surface-2); border-left: 4px solid var(--primary); border-radius: 10px; padding: 12px 16px; font-size: .9rem; color: var(--muted); margin: 0 0 22px; }
 .module-head h2 { margin: 6px 0 2px; font-size: 1.25rem; }
 .module-head p { color: var(--muted); margin: 0 0 12px; font-size: .92rem; }
 .lvl-badge { display: inline-block; font-size: .72rem; font-weight: 800; padding: 3px 10px; border-radius: 99px; text-transform: uppercase; letter-spacing: .05em; }
@@ -137,12 +139,79 @@ a:hover { text-decoration: underline; }
 .lvl-mahir { background: #ede9fe; color: #6d28d9; }
 .lvl-proyek { background: #dbeafe; color: #1d4ed8; }
 .lvl-fundamental { background: #fce7f3; color: #be185d; }
+.lvl-lanjutan { background: #ccfbf1; color: #0f766e; }
+.lvl-terapan { background: #ffedd5; color: #c2410c; }
+.lvl-dasar { background: #e2e8f0; color: #475569; }
+.lvl-pendalaman { background: #ffe4e6; color: #be123c; }
+.lvl-prospek { background: #e0e7ff; color: #4338ca; }
+.lvl-kualitas { background: #d1fae5; color: #047857; }
+.lvl-ekonomi { background: #fef9c3; color: #a16207; }
+.lvl-investasi { background: #cffafe; color: #0e7490; }
+/* Kotak "Yang akan kamu pelajari" (peta sebelum materi) */
+.lesson-preview {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin: 0 0 22px;
+}
+.lesson-preview h3 { margin: 0 0 6px; font-size: 1rem; }
+.lesson-preview ul { margin: 0; padding-left: 20px; }
+.lesson-preview li { margin: 4px 0; font-size: .92rem; color: var(--muted); }
+
+/* Istilah glosarium yang bisa diklik di dalam materi */
+.gloss-term {
+  position: relative;
+  border-bottom: 2px dotted var(--primary);
+  cursor: help;
+}
+.gloss-term:hover { background: rgba(99, 102, 241, .12); border-radius: 3px; }
+.gloss-pop {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  z-index: 40;
+  width: max-content;
+  max-width: min(340px, 78vw);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+  padding: 10px 13px;
+  font-size: .87rem;
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: normal;
+  box-shadow: 0 8px 26px rgba(20, 25, 60, .22);
+}
+
+.lvl-arsitektur { background: #ede9fe; color: #5b21b6; }
+.lvl-kriptografi { background: #dcfce7; color: #166534; }
+.lvl-audit { background: #fee2e2; color: #b91c1c; }
+.lvl-makro { background: #e0f2fe; color: #075985; }
+.lvl-pelengkap { background: #ede9fe; color: #7c3aed; }
+.lvl-matematika { background: #fee2e2; color: #b91c1c; }
 @media (prefers-color-scheme: dark) {
   .lvl-pemula { background: #14331f; color: #4ade80; }
   .lvl-menengah { background: #3a2c0c; color: #fbbf24; }
   .lvl-mahir { background: #2a2247; color: #a78bfa; }
   .lvl-proyek { background: #14233f; color: #60a5fa; }
   .lvl-fundamental { background: #3a1526; color: #f472b6; }
+  .lvl-lanjutan { background: #0f2e2a; color: #2dd4bf; }
+  .lvl-terapan { background: #3a2213; color: #fb923c; }
+  .lvl-dasar { background: #1e2733; color: #94a3b8; }
+  .lvl-pendalaman { background: #3a1620; color: #fb7185; }
+  .lvl-prospek { background: #1e1f45; color: #a5b4fc; }
+  .lvl-kualitas { background: #0d2e22; color: #34d399; }
+  .lvl-ekonomi { background: #33290c; color: #facc15; }
+  .lvl-investasi { background: #0c2b31; color: #22d3ee; }
+  .lvl-pelengkap { background: #241d3d; color: #c4b5fd; }
+  .lvl-matematika { background: #3d1717; color: #f87171; }
+  .lvl-arsitektur { background: #241a45; color: #c4b5fd; }
+  .lvl-kriptografi { background: #0f2a18; color: #86efac; }
+  .lvl-audit { background: #3a1414; color: #fca5a5; }
+  .lvl-makro { background: #0c2537; color: #7dd3fc; }
 }
 
 .lesson-list { list-style: none; margin: 0; padding: 0; }
