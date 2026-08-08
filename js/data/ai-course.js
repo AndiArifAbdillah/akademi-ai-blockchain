@@ -3004,6 +3004,583 @@ console.log("Catatan: metode ini TIDAK bisa meramal kejutan mendadak.");</div>
       ],
     },
 
+    /* ---------------- LEVEL PERKAKAS ---------------- */
+    {
+      id: "ai-tools",
+      level: "Perkakas",
+      title: "Alat & Bahasa Pemrograman AI",
+      summary: "Alat yang benar-benar dipakai praktisi: kenapa Python, pustaka wajib (NumPy, pandas, scikit-learn), PyTorch & Hugging Face, dan cara menyiapkan komputermu.",
+      lessons: [
+        {
+          id: "ai-tl-1",
+          title: "Bahasa Pemrograman untuk AI",
+          duration: "13 menit",
+          content: `
+<p>Sampai di sini kamu sudah paham <b>cara berpikir</b> AI. Sekarang pertanyaan praktisnya: kalau mau benar-benar membuatnya, <b>bahasa apa yang diketik</b>?</p>
+
+<h3>Fundamental: bahasa pemrograman itu apa?</h3>
+<div class="callout">
+Komputer hanya mengerti angka 0 dan 1. <b>Bahasa pemrograman</b> adalah bahasa perantara — kamu menulis perintah yang bisa dibaca manusia, lalu ada penerjemah yang mengubahnya jadi 0 dan 1.<br><br>
+Seperti bahasa manusia, ada banyak bahasa pemrograman, dan masing-masing punya "kepribadian": ada yang cepat tapi ribet, ada yang mudah tapi lambat.
+</div>
+
+<h3>Jawabannya: Python</h3>
+<p>Untuk AI, satu bahasa mendominasi hampir mutlak: <b>Python</b>. Riset, startup, perusahaan besar — hampir semua memakainya.</p>
+
+<div class="callout warn">
+<b>Yang mengejutkan:</b> Python justru termasuk bahasa yang <b>lambat</b>. Jadi kenapa menang?<br><br>
+Karena kecepatan bukan penentunya. Bagian berat (perkalian matriks, pelatihan model) sudah ditulis ulang dalam <b>C++ &amp; CUDA</b> di balik layar. Python hanya bertugas <b>memberi perintah</b>. Ibarat kamu bicara bahasa Indonesia kepada koki, tapi kokinya memasak dengan alat profesional — bahasamu tidak memperlambat masakannya.
+</div>
+
+<p>Yang membuat Python menang:</p>
+<ul>
+  <li><b>Pustaka terlengkap.</b> Hampir semua alat AI dibuat untuk Python lebih dulu.</li>
+  <li><b>Sintaks dekat dengan matematika.</b> Rumus di jurnal bisa diketik hampir apa adanya.</li>
+  <li><b>Komunitas terbesar.</b> Kalau error, hampir pasti sudah ada yang bertanya dan dijawab.</li>
+</ul>
+
+<h3>Lihat bedanya sendiri</h3>
+<p>Tugas yang sama — menjumlahkan hasil kali dua deret angka (<i>dot product</i>, operasi paling sering di AI):</p>
+
+<p><b>Python + NumPy:</b></p>
+<pre class="code">import numpy as np
+
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+print(np.dot(a, b))     # hasil: 32</pre>
+
+<p><b>JavaScript (tanpa pustaka khusus):</b></p>
+<pre class="code">const a = [1, 2, 3];
+const b = [4, 5, 6];
+let hasil = 0;
+for (let i = 0; i !== a.length; i++) {
+  hasil = hasil + a[i] * b[i];
+}
+console.log(hasil);     // hasil: 32</pre>
+
+<p>Keduanya benar. Tapi versi Python <b>membaca seperti rumus matematikanya</b> — dan bedanya makin terasa saat datanya jutaan angka, bukan tiga.</p>
+
+<h3>Peta lengkap: siapa mengerjakan apa</h3>
+<table class="tbl">
+  <tr><th>Bahasa</th><th>Perannya di AI</th><th>Perlu kamu pelajari?</th></tr>
+  <tr><td><b>Python</b></td><td>Bahasa utama: melatih model, olah data, semua pustaka AI</td><td>⭐ <b>Wajib</b></td></tr>
+  <tr><td><b>SQL</b></td><td>Mengambil data dari database — dan AI selalu butuh data</td><td>⭐ <b>Wajib</b></td></tr>
+  <tr><td><b>JavaScript / TypeScript</b></td><td>Membangun <i>produk</i>-nya: chatbot, aplikasi web yang memanggil API AI</td><td>⭐ Sangat berguna</td></tr>
+  <tr><td><b>C++ / CUDA</b></td><td>Mesin di balik layar — PyTorch sendiri ditulis dengan ini</td><td>Nanti saja</td></tr>
+  <tr><td><b>Rust</b></td><td>Alat inferensi cepat generasi baru</td><td>Opsional</td></tr>
+  <tr><td><b>R</b></td><td>Statistik &amp; riset akademik</td><td>Opsional</td></tr>
+</table>
+
+<h3>Bahasa vs pustaka vs kerangka kerja</h3>
+<p>Tiga istilah ini sering tertukar. Pakai analogi dapur:</p>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Analogi</th><th>Contoh</th></tr>
+  <tr><td><b>Bahasa</b></td><td>Bahasa yang kamu pakai bicara ke koki</td><td>Python</td></tr>
+  <tr><td><b>Pustaka</b> (library)</td><td>Bumbu jadi — tinggal pakai, kamu yang atur resep</td><td>NumPy, pandas</td></tr>
+  <tr><td><b>Kerangka kerja</b> (framework)</td><td>Dapur lengkap dengan alurnya — kamu ikut aturannya</td><td>PyTorch, TensorFlow</td></tr>
+</table>
+
+<h3>Urutan belajar yang saya sarankan</h3>
+<ol>
+  <li><b>Python dasar</b> — variabel, list, perulangan, fungsi. Cukup 2-3 minggu.</li>
+  <li><b>pandas</b> — mengolah data tabel. <i>Bonus: ini juga alat terbaik untuk menganalisis laporan keuangan.</i></li>
+  <li><b>scikit-learn</b> — model machine learning pertamamu.</li>
+  <li><b>PyTorch</b> — barulah masuk deep learning.</li>
+</ol>
+
+<div class="callout">
+<b>💡 Kabar baik:</b> playground di platform ini memakai <b>JavaScript</b>, jadi kamu sudah berlatih logika pemrograman sejak pelajaran pertama — perulangan, kondisi, fungsi. Konsepnya <b>sama persis</b> di Python, hanya cara menulisnya sedikit berbeda. Kamu tidak mulai dari nol.
+</div>
+`,
+          keyPoints: [
+            "Bahasa pemrograman = bahasa perantara antara manusia dan komputer.",
+            "Python adalah bahasa utama AI — bukan karena cepat, tapi karena pustakanya terlengkap dan sintaksnya dekat dengan matematika.",
+            "Python lambat, tapi bagian beratnya dijalankan C++/CUDA di balik layar, jadi tidak memperlambat.",
+            "SQL wajib juga: AI selalu butuh data, dan data ada di database.",
+            "JavaScript/TypeScript untuk membangun produknya (aplikasi web, chatbot).",
+            "Bahasa = cara bicara; pustaka = bumbu jadi; kerangka kerja = dapur lengkap beserta aturannya.",
+            "Urutan belajar: Python dasar → pandas → scikit-learn → PyTorch.",
+          ],
+          quiz: [
+            {
+              q: "Kenapa Python mendominasi AI padahal termasuk bahasa yang lambat?",
+              options: [
+                "Karena Python sebenarnya paling cepat",
+                "Karena pustakanya terlengkap, dan bagian berat dijalankan C++/CUDA di balik layar",
+                "Karena hanya Python yang bisa mengakses GPU",
+                "Karena bahasa lain tidak bisa menghitung",
+              ],
+              answer: 1,
+              explain:
+                "Python hanya memberi perintah; perhitungan beratnya dieksekusi kode C++/CUDA yang sangat cepat.",
+            },
+            {
+              q: "Apa beda pustaka (library) dan kerangka kerja (framework)?",
+              options: [
+                "Tidak ada bedanya",
+                "Pustaka = kode siap pakai yang kamu atur sendiri alurnya; kerangka kerja = menyediakan alur, kamu ikut aturannya",
+                "Pustaka selalu berbayar",
+                "Kerangka kerja hanya untuk web",
+              ],
+              answer: 1,
+              explain:
+                "Pustaka seperti bumbu jadi (kamu yang meracik); kerangka kerja seperti dapur lengkap dengan alur kerjanya.",
+            },
+            {
+              q: "Selain Python, bahasa mana yang paling wajib dikuasai praktisi AI?",
+              options: [
+                "R",
+                "SQL — karena data untuk melatih AI hampir selalu ada di database",
+                "C++",
+                "Assembly",
+              ],
+              answer: 1,
+              explain:
+                "Tanpa kemampuan mengambil data, model secanggih apa pun tidak punya bahan.",
+            },
+          ],
+        },
+        {
+          id: "ai-tl-2",
+          title: "Pustaka Wajib: NumPy, pandas & scikit-learn",
+          duration: "14 menit",
+          content: `
+<p>Python sendirian tidak bisa apa-apa untuk AI. Kekuatannya datang dari <b>pustaka</b>. Ini tiga yang paling wajib — dan urutannya bukan kebetulan.</p>
+
+<h3>1. NumPy — fondasi semua perhitungan</h3>
+<p><b>NumPy</b> memberi Python kemampuan menghitung <b>banyak angka sekaligus</b>. Ini disebut <i>vectorization</i>.</p>
+
+<pre class="code">import numpy as np
+
+harga = np.array([25000, 30000, 27000])
+unit  = np.array([120, 150, 95])
+
+omzet = harga * unit          # dikali semua sekaligus, tanpa perulangan
+print(omzet)                  # [3000000 4500000 2565000]
+print(omzet.sum())            # 10065000</pre>
+
+<div class="callout">
+<b>Perhatikan baris <code>harga * unit</code>.</b> Tidak ada perulangan sama sekali. NumPy mengerjakan ketiganya serentak — dan bisa <b>puluhan kali lebih cepat</b> daripada perulangan biasa saat datanya besar. Semua model AI berdiri di atas kemampuan ini.
+</div>
+
+<h3>2. pandas — mengolah data tabel</h3>
+<p><b>pandas</b> membuat Python bisa bekerja dengan <b>tabel</b> (seperti Excel, tapi bisa jutaan baris dan bisa diotomatiskan). Objek utamanya bernama <b>DataFrame</b>.</p>
+
+<pre class="code">import pandas as pd
+
+df = pd.read_csv("penjualan.csv")     # baca file
+df["omzet"] = df["unit"] * df["harga"] # bikin kolom baru
+print(df["omzet"].sum())               # jumlahkan
+print(df.groupby("cabang").sum())      # ringkas per cabang</pre>
+
+<div class="callout warn">
+<b>📊 Penting untukmu.</b> pandas bukan hanya alat AI — ini juga <b>alat terbaik untuk menganalisis laporan keuangan</b>. Menghitung rasio ratusan perusahaan, membandingkan P/E antar-pesaing, melacak arus kas bertahun-tahun — semua yang kamu pelajari di jalur Akuntansi bisa diotomatiskan di sini. Satu pustaka, dua jalur belajar sekaligus.
+</div>
+
+<h3>Coba rasakan cara berpikirnya</h3>
+<p>Playground ini memakai JavaScript, tapi <b>pola pikirnya sama persis</b> dengan pandas: ada tabel, kamu bikin kolom baru, lalu meringkasnya. Ubah angkanya lalu jalankan lagi:</p>
+
+<div data-demo="js-playground">// Cara berpikir pandas: tabel -> kolom baru -> ringkasan
+const penjualan = [
+  { bulan: "Jan", unit: 120, harga: 25000 },
+  { bulan: "Feb", unit: 150, harga: 25000 },
+  { bulan: "Mar", unit: 95,  harga: 27000 },
+  { bulan: "Apr", unit: 210, harga: 27000 }
+];
+
+// Di pandas cukup satu baris:  df["omzet"] = df["unit"] * df["harga"]
+penjualan.forEach(function (r) {
+  r.omzet = r.unit * r.harga;
+});
+
+penjualan.forEach(function (r) {
+  console.log(r.bulan + "  unit " + r.unit + "   omzet Rp" + r.omzet.toLocaleString("id-ID"));
+});
+
+// Di pandas:  df["omzet"].sum()  dan  df["omzet"].mean()
+const total = penjualan.reduce(function (a, r) { return a + r.omzet; }, 0);
+const rata = total / penjualan.length;
+
+console.log("--------------------------------------");
+console.log("Total omzet     : Rp" + total.toLocaleString("id-ID"));
+console.log("Rata-rata /bulan: Rp" + Math.round(rata).toLocaleString("id-ID"));</div>
+
+<h3>3. scikit-learn — machine learning siap pakai</h3>
+<p>Semua model ML klasik yang kamu pelajari di modul <i>Machine Learning Klasik</i> — Decision Tree, Random Forest, k-NN, clustering — sudah tersedia jadi di <b>scikit-learn</b>, dengan pola pemakaian yang selalu sama:</p>
+
+<pre class="code">from sklearn.ensemble import RandomForestClassifier
+
+model = RandomForestClassifier()   # 1. pilih model
+model.fit(X_train, y_train)        # 2. latih dengan data
+hasil = model.predict(X_test)      # 3. ramalkan data baru</pre>
+
+<div class="callout">
+<b>Pola tiga langkah ini berlaku untuk hampir semua model di scikit-learn.</b> Ganti <code>RandomForestClassifier</code> dengan model lain, sisanya tetap sama. Sekali paham polanya, kamu bisa mencoba puluhan model tanpa belajar ulang.
+</div>
+
+<h3>Pustaka pendukung lain</h3>
+<table class="tbl">
+  <tr><th>Pustaka</th><th>Gunanya</th></tr>
+  <tr><td><b>matplotlib</b> / <b>seaborn</b></td><td>Membuat grafik — melihat data sebelum memodelkannya</td></tr>
+  <tr><td><b>SciPy</b></td><td>Statistik &amp; matematika lanjutan</td></tr>
+  <tr><td><b>OpenCV</b></td><td>Mengolah gambar &amp; video</td></tr>
+  <tr><td><b>NLTK</b> / <b>spaCy</b></td><td>Mengolah teks bahasa manusia</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Jangan terjebak "belajar semua pustaka".</b> Kuasai <b>pandas</b> dulu sampai lancar — itu 80% pekerjaan nyata seorang praktisi AI. Melatih model sering hanya 20% sisanya. Pemula sering terbalik: buru-buru ke model, padahal datanya belum rapi.
+</div>
+`,
+          keyPoints: [
+            "NumPy = menghitung banyak angka sekaligus (vectorization), fondasi semua perhitungan AI.",
+            "pandas = mengolah tabel data (DataFrame); seperti Excel tapi jutaan baris dan bisa diotomatiskan.",
+            "pandas juga alat terbaik menganalisis laporan keuangan — menyambung jalur AI dan Akuntansi.",
+            "scikit-learn = model ML klasik siap pakai dengan pola tetap: pilih model → fit → predict.",
+            "Pendukung: matplotlib (grafik), SciPy (statistik), OpenCV (gambar), spaCy/NLTK (teks).",
+            "Prioritas belajar: kuasai pandas dulu — mengolah data adalah 80% pekerjaan nyata, melatih model hanya 20%.",
+          ],
+          practice: [
+            { type: "number", q: "Dengan NumPy: harga = [10, 20, 30] dikali unit = [2, 3, 4], lalu dijumlahkan (.sum()). Berapa hasilnya?", answer: 200, tol: 0.1, hint: "Kalikan berpasangan dulu: 10×2, 20×3, 30×4 — baru dijumlahkan.", solution: "20 + 60 + 120 = 200." },
+          ],
+          quiz: [
+            {
+              q: "Apa keunggulan utama NumPy dibanding perulangan Python biasa?",
+              options: [
+                "Menulisnya lebih panjang",
+                "Menghitung banyak angka sekaligus (vectorization), jauh lebih cepat untuk data besar",
+                "Bisa membuat grafik",
+                "Bisa membaca file CSV",
+              ],
+              answer: 1,
+              explain:
+                "Operasi seperti harga * unit dikerjakan serentak oleh kode C di balik layar, tanpa perulangan Python yang lambat.",
+            },
+            {
+              q: "Objek utama di pandas untuk menyimpan tabel data disebut?",
+              options: ["Array", "DataFrame", "Tensor", "Matrix"],
+              answer: 1,
+              explain:
+                "DataFrame adalah tabel berbaris dan berkolom — inti dari pandas.",
+            },
+            {
+              q: "Pola pemakaian model di scikit-learn adalah?",
+              options: [
+                "predict → fit → import",
+                "Pilih model → .fit(data latih) → .predict(data baru)",
+                "Harus menulis rumusnya sendiri",
+                "Berbeda-beda untuk tiap model",
+              ],
+              answer: 1,
+              explain:
+                "Pola tiga langkah ini konsisten untuk hampir semua model, sehingga mudah mencoba banyak model.",
+            },
+            {
+              q: "Menurut praktik nyata, porsi terbesar pekerjaan praktisi AI adalah?",
+              options: [
+                "Melatih model",
+                "Mengolah & merapikan data",
+                "Membuat grafik",
+                "Memilih bahasa pemrograman",
+              ],
+              answer: 1,
+              explain:
+                "Sekitar 80% waktu habis untuk menyiapkan data. Model secanggih apa pun gagal jika datanya berantakan.",
+            },
+          ],
+        },
+        {
+          id: "ai-tl-3",
+          title: "PyTorch, Hugging Face & Memakai API",
+          duration: "13 menit",
+          content: `
+<p>scikit-learn cukup untuk ML klasik. Tapi untuk <b>deep learning</b> dan <b>AI generatif</b>, alatnya berbeda. Ada tiga jalur, dan memilih yang tepat menghemat berbulan-bulan.</p>
+
+<h3>1. PyTorch — membangun model dari nol</h3>
+<p><b>PyTorch</b> adalah kerangka kerja deep learning paling populer (dipakai Meta, OpenAI, dan mayoritas riset). Tiga kemampuan intinya:</p>
+<table class="tbl">
+  <tr><th>Kemampuan</th><th>Artinya</th></tr>
+  <tr><td><b>Tensor</b></td><td>Seperti array NumPy, tapi bisa dipindah ke <b>GPU</b> agar ratusan kali lebih cepat</td></tr>
+  <tr><td><b>Autograd</b></td><td>Menghitung <b>gradient</b> otomatis — kamu tak perlu menurunkan rumus sendiri</td></tr>
+  <tr><td><b>nn.Module</b></td><td>Menyusun lapisan neural network seperti menumpuk balok</td></tr>
+</table>
+
+<div class="callout">
+<b>Ingat gradient descent</b> dari modul Matematika? Menurunkan rumusnya secara manual itu melelahkan dan rawan salah. <b>Autograd</b> mengerjakannya otomatis — inilah alasan utama deep learning modern bisa berkembang secepat ini.
+</div>
+
+<p><b>TensorFlow</b> adalah pesaingnya (dari Google). Keduanya sanggup melakukan hal yang sama; PyTorch kini lebih dominan di riset dan lebih mudah dipelajari.</p>
+
+<h3>2. Hugging Face — memakai model yang sudah jadi</h3>
+<p>Melatih model bahasa dari nol butuh biaya miliaran rupiah. Untungnya hampir tidak pernah perlu. <b>Hugging Face</b> adalah gudang berisi <b>ratusan ribu model siap pakai</b> yang bisa diunduh gratis.</p>
+
+<pre class="code">from transformers import pipeline
+
+analis = pipeline("sentiment-analysis")
+print(analis("Pelayanannya ramah dan cepat"))
+# [{'label': 'POSITIVE', 'score': 0.99}]</pre>
+
+<p>Tiga baris, dan kamu sudah punya AI analisis sentimen. Apa yang sebenarnya terjadi di balik layar? Playground berikut memperagakan versi mini-nya:</p>
+
+<div data-demo="js-playground">// Versi mini dari pipeline("sentiment-analysis")
+// Model asli belajar dari jutaan kalimat. Ini pakai kamus kecil saja.
+const positif = ["bagus", "puas", "cepat", "ramah", "murah", "mantap"];
+const negatif = ["buruk", "lambat", "kecewa", "rusak", "mahal", "jelek"];
+
+function analisa(kalimat) {
+  const kata = kalimat.toLowerCase().split(" ");
+  let skor = 0;
+  kata.forEach(function (k) {
+    if (positif.indexOf(k) !== -1) { skor = skor + 1; }
+    if (negatif.indexOf(k) !== -1) { skor = skor - 1; }
+  });
+  let label = "NETRAL ";
+  if (skor > 0) { label = "POSITIF"; }
+  else if (skor !== 0) { label = "NEGATIF"; }
+  return label + " (skor " + skor + ")";
+}
+
+const ulasan = [
+  "pelayanan ramah dan cepat",
+  "barang rusak dan pengiriman lambat",
+  "harganya murah tapi kualitasnya jelek",
+  "paket sudah sampai"
+];
+
+ulasan.forEach(function (u) {
+  console.log(analisa(u) + "   ==  " + u);
+});</div>
+
+<div class="callout warn">
+<b>Perhatikan dua baris terakhir hasilnya.</b><br>
+"harganya murah tapi kualitasnya jelek" dinilai <b>NETRAL</b> — padahal jelas keluhan. Kamus kecil kita tidak paham kata <b>"tapi"</b> membalikkan makna.<br><br>
+Di sinilah model sungguhan menang: ia belajar <b>konteks</b>, bukan sekadar menghitung kata. Itu perbedaan antara aturan buatan tangan dan machine learning.
+</div>
+
+<h3>3. Memakai API — tanpa model sendiri sama sekali</h3>
+<p>Untuk model terbesar (Claude, GPT), kamu tidak mengunduhnya. Kamu <b>mengirim pertanyaan lewat internet</b> dan menerima jawaban. Ini yang dipakai mayoritas aplikasi AI hari ini.</p>
+
+<h3>Memilih di antara tiga jalur</h3>
+<table class="tbl">
+  <tr><th></th><th>Panggil API</th><th>Hugging Face</th><th>Latih sendiri (PyTorch)</th></tr>
+  <tr><td><b>Biaya awal</b></td><td>Nyaris nol</td><td>Rendah</td><td>Sangat tinggi</td></tr>
+  <tr><td><b>Waktu</b></td><td>Menit</td><td>Jam</td><td>Minggu-bulan</td></tr>
+  <tr><td><b>Butuh GPU?</b></td><td>Tidak</td><td>Sebaiknya</td><td>Wajib</td></tr>
+  <tr><td><b>Data rahasia aman?</b></td><td>Keluar ke pihak lain</td><td>Tetap di servermu</td><td>Tetap di servermu</td></tr>
+  <tr><td><b>Cocok untuk</b></td><td>Hampir semua aplikasi</td><td>Tugas khusus / data sensitif</td><td>Riset &amp; kebutuhan unik</td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Saran jujur:</b> mulailah dari <b>memanggil API</b>. Sebagian besar produk AI yang sukses tidak melatih model sendiri — nilainya ada pada <b>masalah yang dipecahkan</b>, bukan pada modelnya. Melatih model dari nol adalah pilihan terakhir, bukan pertama.
+</div>
+`,
+          keyPoints: [
+            "PyTorch = kerangka deep learning utama: tensor (bisa ke GPU), autograd (gradient otomatis), nn.Module (menyusun lapisan).",
+            "Autograd menghapus keharusan menurunkan rumus gradient secara manual.",
+            "TensorFlow adalah pesaing setara; PyTorch lebih dominan di riset dan lebih mudah dipelajari.",
+            "Hugging Face = gudang ratusan ribu model siap pakai; pipeline() memberi hasil dalam 3 baris.",
+            "Memanggil API (Claude, GPT) = jalur tercepat, tanpa GPU, tapi data keluar ke pihak lain.",
+            "Model sungguhan menang atas aturan buatan tangan karena memahami konteks, bukan menghitung kata.",
+            "Mulailah dari API; melatih model sendiri adalah pilihan terakhir, bukan pertama.",
+          ],
+          quiz: [
+            {
+              q: "Apa fungsi autograd di PyTorch?",
+              options: [
+                "Mengunduh model otomatis",
+                "Menghitung gradient secara otomatis sehingga tak perlu menurunkan rumus manual",
+                "Membuat grafik",
+                "Mempercepat internet",
+              ],
+              answer: 1,
+              explain:
+                "Autograd otomatis melacak semua operasi dan menghitung turunannya — inti dari pelatihan neural network.",
+            },
+            {
+              q: "Kapan memakai Hugging Face lebih tepat daripada memanggil API?",
+              options: [
+                "Selalu, tanpa kecuali",
+                "Saat datanya sensitif/rahasia dan tidak boleh keluar dari servermu",
+                "Saat ingin hasil paling cepat tanpa persiapan",
+                "Saat tidak punya komputer",
+              ],
+              answer: 1,
+              explain:
+                "Model Hugging Face berjalan di infrastrukturmu sendiri, sehingga data tidak dikirim ke pihak ketiga.",
+            },
+            {
+              q: "Di playground, kalimat 'harganya murah tapi kualitasnya jelek' dinilai NETRAL. Kenapa?",
+              options: [
+                "Karena kalimatnya memang netral",
+                "Karena kamus kata tidak memahami konteks — kata 'tapi' membalikkan makna",
+                "Karena ada kesalahan hitung",
+                "Karena kalimatnya terlalu panjang",
+              ],
+              answer: 1,
+              explain:
+                "Menghitung kata positif dikurangi negatif menghasilkan nol. Model sungguhan memahami struktur kalimat, bukan sekadar jumlah kata.",
+            },
+            {
+              q: "Untuk membangun produk AI pertamamu, jalur yang paling disarankan?",
+              options: [
+                "Latih model sendiri dari nol dengan PyTorch",
+                "Panggil API model besar — tercepat, termurah, tanpa GPU",
+                "Beli GPU dulu",
+                "Tulis model dalam C++",
+              ],
+              answer: 1,
+              explain:
+                "Nilai produk ada pada masalah yang dipecahkan. Melatih model sendiri mahal dan jarang diperlukan di awal.",
+            },
+          ],
+        },
+        {
+          id: "ai-tl-4",
+          title: "Menyiapkan Komputermu untuk Mulai",
+          duration: "12 menit",
+          content: `
+<p>Teori tanpa praktik cepat menguap. Pelajaran ini murni praktis: <b>bagaimana benar-benar mulai mengetik kode AI hari ini</b>.</p>
+
+<h3>Jalan tercepat: Google Colab (tanpa instal apa pun)</h3>
+<div class="callout">
+<b>Google Colab</b> adalah Python yang berjalan <b>di browser</b>, gratis, lengkap dengan <b>GPU gratis</b>. Semua pustaka utama (NumPy, pandas, PyTorch) sudah terpasang. Kamu hanya butuh akun Google.<br><br>
+Buka <b>colab.research.google.com</b> → "Notebook baru" → ketik kode → tekan <b>Shift+Enter</b>. Selesai.
+</div>
+
+<p>Untuk belajar, ini pilihan terbaik. Kamu melewati bagian tersulit bagi pemula: proses pemasangan yang sering gagal dan bikin menyerah sebelum mulai.</p>
+
+<h3>Kode pertamamu di Colab</h3>
+<pre class="code">import pandas as pd
+
+df = pd.DataFrame({
+    "produk": ["Kopi", "Teh", "Roti"],
+    "unit":   [120, 80, 45],
+    "harga":  [25000, 15000, 12000],
+})
+
+df["omzet"] = df["unit"] * df["harga"]
+print(df)
+print("Total omzet:", df["omzet"].sum())</pre>
+
+<p>Tiga produk, satu kolom baru, satu ringkasan — persis pola yang kamu coba di playground pelajaran sebelumnya. Kalau ini jalan, lingkunganmu sudah siap.</p>
+
+<h3>Kalau ingin memasang di komputer sendiri</h3>
+<table class="tbl">
+  <tr><th>Langkah</th><th>Yang dilakukan</th></tr>
+  <tr><td>1. Pasang Python</td><td>Unduh dari <b>python.org</b>. Di Windows, <b>centang "Add Python to PATH"</b> saat memasang — ini penyebab error paling umum kalau terlewat.</td></tr>
+  <tr><td>2. Pasang editor</td><td><b>VS Code</b> — gratis, dan ekstensi Python-nya sangat membantu.</td></tr>
+  <tr><td>3. Buat virtual environment</td><td>Ruang terpisah untuk tiap proyek (penjelasan di bawah).</td></tr>
+  <tr><td>4. Pasang pustaka</td><td>Lewat <b>pip</b>, alat pengunduh pustaka bawaan Python.</td></tr>
+</table>
+
+<pre class="code"># membuat & mengaktifkan virtual environment
+python -m venv env
+
+# Windows:
+env\\Scripts\\activate
+# Mac / Linux:
+source env/bin/activate
+
+# memasang pustaka
+pip install numpy pandas scikit-learn matplotlib jupyter</pre>
+
+<h3>Kenapa virtual environment itu penting?</h3>
+<div class="callout warn">
+Proyek A butuh pustaka versi 1.0, proyek B butuh versi 2.0. Kalau semua dipasang di satu tempat, keduanya <b>bertabrakan</b> dan salah satu rusak.<br><br>
+<b>Virtual environment</b> memberi tiap proyek lemari sendiri. Analogi: seperti memisahkan uang usaha dari uang pribadi — begitu tercampur, semuanya jadi kacau. Pemula sering melewatkan langkah ini, lalu bingung kenapa proyek lamanya tiba-tiba rusak.
+</div>
+
+<h3>Notebook vs skrip: pakai yang mana?</h3>
+<table class="tbl">
+  <tr><th></th><th>Notebook (.ipynb)</th><th>Skrip (.py)</th></tr>
+  <tr><td><b>Cara jalan</b></td><td>Per potongan, hasilnya langsung terlihat</td><td>Seluruh berkas sekaligus</td></tr>
+  <tr><td><b>Terbaik untuk</b></td><td>Menjelajah data, bereksperimen, belajar</td><td>Aplikasi yang dipakai sungguhan</td></tr>
+  <tr><td><b>Kelemahan</b></td><td>Berantakan jika sudah besar; sulit dilacak Git</td><td>Kurang enak untuk coba-coba</td></tr>
+</table>
+<p>Praktik lazimnya: <b>bereksperimen di notebook</b>, lalu setelah berhasil, <b>rapikan jadi skrip .py</b>.</p>
+
+<h3>Butuh GPU?</h3>
+<ul>
+  <li><b>Belajar &amp; ML klasik</b> — tidak perlu. Laptop biasa cukup.</li>
+  <li><b>Deep learning ringan</b> — GPU gratis Colab sudah memadai.</li>
+  <li><b>Melatih model besar</b> — sewa GPU di cloud. <b>Jangan beli GPU mahal di awal</b>; sewa dulu sampai yakin benar-benar butuh.</li>
+</ul>
+
+<h3>Rencana 30 hari pertama</h3>
+<table class="tbl">
+  <tr><th>Minggu</th><th>Fokus</th><th>Bukti berhasil</th></tr>
+  <tr><td>1</td><td>Python dasar di Colab</td><td>Bisa menulis fungsi &amp; perulangan sendiri</td></tr>
+  <tr><td>2</td><td>pandas</td><td>Bisa membaca CSV dan meringkasnya per kategori</td></tr>
+  <tr><td>3</td><td>matplotlib + statistik dasar</td><td>Bisa membuat grafik dari data sendiri</td></tr>
+  <tr><td>4</td><td>scikit-learn</td><td>Satu model prediksi sederhana yang jalan</td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Kunci yang sering diabaikan:</b> pakai <b>datamu sendiri</b> — catatan keuangan, data penjualan, apa pun yang kamu pedulikan. Belajar dengan data yang kamu mengerti membuat hasilnya bermakna, dan kamu langsung tahu kalau hasilnya keliru. Itu jauh lebih cepat daripada mengikuti tutorial dengan data asing.
+</div>
+`,
+          keyPoints: [
+            "Google Colab = Python di browser, gratis + GPU gratis, semua pustaka sudah terpasang — jalan tercepat untuk pemula.",
+            "Pasang lokal: Python (centang 'Add to PATH' di Windows) → VS Code → virtual environment → pip install.",
+            "Virtual environment memberi tiap proyek lemari sendiri agar versi pustaka tidak bertabrakan.",
+            "Notebook untuk menjelajah & belajar; skrip .py untuk aplikasi sungguhan.",
+            "GPU tidak perlu untuk belajar dan ML klasik; sewa dulu, jangan beli mahal di awal.",
+            "Rencana 30 hari: Python dasar → pandas → grafik → scikit-learn.",
+            "Belajar memakai data yang kamu pedulikan sendiri jauh lebih cepat melekat daripada data tutorial.",
+          ],
+          quiz: [
+            {
+              q: "Cara tercepat mulai menulis kode AI tanpa memasang apa pun?",
+              options: [
+                "Beli GPU dulu",
+                "Google Colab — Python di browser, gratis, pustaka sudah lengkap",
+                "Pasang Linux",
+                "Belajar C++ dulu",
+              ],
+              answer: 1,
+              explain:
+                "Colab melewati proses pemasangan yang sering menggagalkan pemula sebelum sempat mulai.",
+            },
+            {
+              q: "Kenapa perlu virtual environment?",
+              options: [
+                "Agar kode berjalan lebih cepat",
+                "Agar tiap proyek punya versi pustakanya sendiri dan tidak bertabrakan",
+                "Agar hemat listrik",
+                "Wajib dari Python",
+              ],
+              answer: 1,
+              explain:
+                "Proyek berbeda sering butuh versi pustaka berbeda; venv memisahkannya seperti memisahkan uang usaha dan pribadi.",
+            },
+            {
+              q: "Saat memasang Python di Windows, kesalahan paling umum pemula adalah?",
+              options: [
+                "Memasang versi terbaru",
+                "Lupa mencentang 'Add Python to PATH'",
+                "Memasang di drive D",
+                "Memakai VS Code",
+              ],
+              answer: 1,
+              explain:
+                "Tanpa PATH, perintah python tidak dikenali di terminal — sumber error paling sering bagi pemula Windows.",
+            },
+            {
+              q: "Praktik lazim penggunaan notebook dan skrip .py?",
+              options: [
+                "Selalu pakai notebook",
+                "Bereksperimen di notebook, lalu rapikan jadi skrip .py untuk dipakai sungguhan",
+                "Selalu pakai .py",
+                "Keduanya tidak boleh dicampur",
+              ],
+              answer: 1,
+              explain:
+                "Notebook unggul untuk menjelajah; skrip lebih rapi, mudah diuji, dan mudah dilacak Git untuk produksi.",
+            },
+          ],
+        },
+      ],
+    },
+
     /* ---------------- LEVEL MATEMATIKA ---------------- */
     {
       id: "ai-matematika",

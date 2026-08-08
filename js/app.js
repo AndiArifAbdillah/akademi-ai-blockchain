@@ -15,7 +15,7 @@ const MODULE_ORDER = [
   // 🤖 AI
   "ai-dasar", "ai-pemula", "ai-menengah", "ai-fundamental", "ai-matematika",
   "ai-pendalaman", "ai-arsitektur", "ai-mahir", "ai-terapan", "ai-pelengkap",
-  "ai-lanjutan", "ai-proyek", "ai-ekonomi",
+  "ai-tools", "ai-lanjutan", "ai-proyek", "ai-ekonomi",
   // ⛓️ Blockchain
   "bc-dasar", "bc-pemula", "bc-menengah", "bc-fundamental", "bc-matematika",
   "bc-kriptografi", "bc-mahir", "bc-pendalaman", "bc-terapan", "bc-lanjutan",

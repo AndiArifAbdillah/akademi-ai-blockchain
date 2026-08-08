@@ -1891,6 +1891,216 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
           ],
         },
         {
+          id: "acc-adv-5",
+          title: "Valuasi Relatif & Multiples",
+          duration: "14 menit",
+          content: `
+<p>Kamu sudah belajar PER, PBV, PEG, dan EV/EBITDA satu per satu. Sekarang kita satukan: semuanya adalah <b>multiples</b>, dan cara memakainya punya aturan main sendiri yang disebut <b>valuasi relatif</b>.</p>
+
+<h3>1. Apa itu "multiple"?</h3>
+<p><b>Multiple = kelipatan.</b> Ini rasio antara <b>harga</b> dengan suatu <b>ukuran kinerja</b> perusahaan.</p>
+
+<div class="callout">
+🏪 <b>Analogi warung.</b> Ada warung yang labanya <b>Rp100 juta/tahun</b>. Penjualnya minta <b>Rp1,5 miliar</b>.<br><br>
+Multiple-nya = 1.500 ÷ 100 = <b>15×</b><br><br>
+Artinya kamu membayar <b>15 kali lipat laba setahun</b>. Cara cepat membacanya: <i>"kalau labanya tetap segitu, butuh ±15 tahun untuk balik modal."</i>
+</div>
+
+<p>Itulah <b>P/E multiple</b> (Price-to-Earnings) — yang di Indonesia biasa disebut <b>PER</b>. Rumusnya: Harga saham ÷ Laba per saham (EPS).</p>
+
+<h3>2. Kenapa disebut "multiples" (jamak)?</h3>
+<p>Karena P/E hanya salah satu. Ada banyak jenis, dan masing-masing punya situasi terbaiknya:</p>
+
+<table>
+<tr><th>Multiple</th><th>Rumus</th><th>Paling cocok saat</th></tr>
+<tr><td><b>P/E</b> (PER)</td><td>Harga ÷ Laba per saham</td><td>Perusahaan sudah <b>untung stabil</b></td></tr>
+<tr><td><b>PBV</b> (P/B)</td><td>Harga ÷ Nilai buku per saham</td><td>Perusahaan <b>padat aset</b> (bank, properti)</td></tr>
+<tr><td><b>P/S</b></td><td>Harga ÷ Pendapatan per saham</td><td>Perusahaan <b>belum untung</b> (startup)</td></tr>
+<tr><td><b>EV/EBITDA</b></td><td>Enterprise Value ÷ EBITDA</td><td>Ada <b>utang besar</b> / bandingkan lintas negara</td></tr>
+<tr><td><b>PEG</b></td><td>PER ÷ pertumbuhan laba (%)</td><td>Perusahaan <b>tumbuh cepat</b></td></tr>
+</table>
+
+<div class="callout warn">
+<b>Aturan penting:</b> pilih multiple yang <b>penyebutnya masuk akal</b> untuk perusahaan itu. Menghitung P/E untuk perusahaan yang sedang rugi itu sia-sia — labanya negatif, rasionya tak bisa dibaca.
+</div>
+
+<h3>3. Inti metodenya: membandingkan</h3>
+<p>Multiple <b>tidak berarti apa-apa kalau berdiri sendiri</b>. "P/E-nya 15" itu belum informasi — 15 itu mahal atau murah? Jawabannya baru muncul setelah dibandingkan dengan tiga hal:</p>
+<ol>
+  <li><b>Pesaing sejenis</b> (peer comparison) — perusahaan lain di industri yang sama.</li>
+  <li><b>Rata-rata industri</b> — norma di sektor itu.</li>
+  <li><b>Sejarahnya sendiri</b> — biasanya perusahaan ini diperdagangkan di P/E berapa?</li>
+</ol>
+
+<p>Inilah yang disebut <b>valuasi relatif</b>: menilai sesuatu dengan membandingkannya ke pembanding, bukan menghitung nilainya dari nol.</p>
+
+<table>
+<tr><th></th><th>Multiples (relatif)</th><th>DCF (absolut)</th></tr>
+<tr><td><b>Cara kerja</b></td><td>Bandingkan dengan pasar</td><td>Hitung nilai dari arus kas, dari nol</td></tr>
+<tr><td><b>Kecepatan</b></td><td>Cepat & mudah</td><td>Rumit, butuh banyak asumsi</td></tr>
+<tr><td><b>Kelemahan</b></td><td>Kalau <b>seluruh pasar</b> sedang mahal, semuanya terlihat "wajar"</td><td>Hasilnya sangat bergantung asumsi</td></tr>
+</table>
+
+<div class="callout">
+<b>Analogi rumah.</b> Valuasi relatif = "rumah sebelah yang seukuran laku Rp800 juta, jadi rumah ini kira-kira segitu." DCF = "rumah ini bisa disewakan Rp5 juta/bulan selama 20 tahun, mari hitung nilainya." Keduanya berguna — <b>pakai berdua</b> agar saling mengoreksi.
+</div>
+
+<h3>4. Coba sendiri: bandingkan dengan pesaing</h3>
+<p>Ini cara analis sungguhan memakai multiple. Ubah angkanya lalu jalankan lagi:</p>
+
+<div data-demo="js-playground">// Langkah 1: hitung P/E tiap pesaing sejenis
+const pesaing = [
+  { nama: "Pesaing A", harga: 4500, eps: 300 },
+  { nama: "Pesaing B", harga: 6000, eps: 375 },
+  { nama: "Pesaing C", harga: 3200, eps: 200 }
+];
+
+let totalPE = 0;
+pesaing.forEach(function (p) {
+  const pe = p.harga / p.eps;
+  totalPE = totalPE + pe;
+  console.log(p.nama + ": harga " + p.harga + ", EPS " + p.eps + "  ->  P/E " + pe.toFixed(1));
+});
+
+const rataPE = totalPE / pesaing.length;
+console.log("--------------------------------------");
+console.log("Rata-rata P/E industri = " + rataPE.toFixed(1));
+
+// Langkah 2: nilai perusahaan yang kita incar
+const targetHarga = 3000;
+const targetEPS = 250;
+const targetPE = targetHarga / targetEPS;
+const hargaSetaraIndustri = rataPE * targetEPS;
+
+console.log("");
+console.log("Perusahaan target: harga " + targetHarga + ", EPS " + targetEPS);
+console.log("  P/E-nya                        = " + targetPE.toFixed(1));
+console.log("  Harga jika dihargai spt industri = " + Math.round(hargaSetaraIndustri));
+
+if (targetPE > rataPE) {
+  console.log("  -> Lebih MAHAL dari rata-rata industri");
+} else {
+  console.log("  -> Lebih MURAH dari rata-rata industri");
+  console.log("     TAPI: cari tahu KENAPA sebelum membeli!");
+}</div>
+
+<div class="callout warn">
+<b>Perhatikan baris terakhir.</b> Program tidak berkata "murah, beli!" — ia berkata "cari tahu kenapa". Itu sikap yang benar. Pasar jarang salah tanpa alasan.
+</div>
+
+<h3>5. Trailing vs Forward P/E</h3>
+<p>Angka "laba" yang dipakai bisa dua macam, dan hasilnya bisa jauh berbeda:</p>
+<ul>
+  <li><b>Trailing P/E</b> → memakai laba <b>12 bulan terakhir</b>. Ini <b>fakta</b>, sudah terjadi.</li>
+  <li><b>Forward P/E</b> → memakai <b>perkiraan</b> laba tahun depan. Ini <b>ramalan</b>, bisa meleset.</li>
+</ul>
+
+<div class="callout">
+⚠️ Kalau ada yang berkata <i>"P/E-nya cuma 8, murah banget!"</i>, tanyakan dulu: <b>trailing atau forward?</b> Forward P/E yang rendah sering datang dari ramalan laba yang optimistis. Kalau ramalannya meleset, "murah"-nya ikut hilang.
+</div>
+
+<h3>6. Kenapa multiple berbeda-beda antar perusahaan?</h3>
+<p>Perbedaan multiple bukan selalu berarti salah harga. Multiple yang lebih tinggi <b>pantas</b> diberikan jika perusahaan punya:</p>
+<ul>
+  <li><b>Pertumbuhan lebih cepat</b> — laba tahun depan akan jauh lebih besar.</li>
+  <li><b>Risiko lebih rendah</b> — labanya stabil, tidak naik-turun tajam.</li>
+  <li><b>Moat (keunggulan kompetitif)</b> yang kuat — labanya bisa bertahan lama.</li>
+  <li><b>Kebutuhan modal rendah</b> — tumbuh tanpa terus-menerus menyuntik uang.</li>
+</ul>
+<p>Itu sebabnya industri berbeda punya norma berbeda: perusahaan teknologi biasanya ber-P/E lebih tinggi dari perbankan, dan itu <b>wajar</b>, bukan tanda kemahalan.</p>
+
+<h3>7. Lima jebakan yang wajib diwaspadai 🚩</h3>
+<ol>
+  <li><b>P/E rendah ≠ murah.</b> Bisa jadi <i>value trap</i> — pasar sudah tahu bisnisnya sedang menurun, dan labanya akan menyusut. Yang murah hari ini jadi mahal tahun depan.</li>
+  <li><b>P/E tinggi ≠ mahal.</b> Kalau tumbuh sangat cepat, itu bisa wajar. Di situlah <b>PEG</b> berguna.</li>
+  <li><b>Laba bisa "dipoles".</b> Ingat <i>earnings management</i> — kalau labanya tidak jujur, multiple-nya ikut menyesatkan. Selalu cek arus kas operasi.</li>
+  <li><b>Jangan bandingkan lintas industri.</b> P/E bank vs P/E perusahaan teknologi itu apel vs jeruk.</li>
+  <li><b>Laba satu kali (one-off) merusak rasio.</b> Kalau perusahaan menjual gedung tahun lalu, labanya melonjak sementara dan P/E terlihat sangat rendah — padahal bisnis intinya biasa saja.</li>
+</ol>
+
+<div class="callout">
+<b>💡 Cara pakai yang benar.</b> Multiple menjawab <i>"berapa harga yang dibayar pasar"</i>, <b>bukan</b> <i>"berapa nilai sebenarnya"</i>. Gunakan sebagai <b>penyaring cepat</b> untuk mempersempit pilihan — lalu dalami dengan kualitas bisnis (moat, manajemen, alokasi modal) dan arus kasnya sebelum memutuskan.
+</div>
+`,
+          keyPoints: [
+            "Multiple = kelipatan: rasio harga terhadap ukuran kinerja (laba, nilai buku, pendapatan, EBITDA).",
+            "P/E 15 berarti membayar 15 kali lipat laba setahun (kasarnya, ±15 tahun balik modal).",
+            "Valuasi relatif = menilai dengan membandingkan ke pesaing sejenis, rata-rata industri, dan sejarahnya sendiri.",
+            "Multiple sendirian tak berarti apa-apa — angkanya baru bermakna setelah ada pembanding.",
+            "Trailing P/E memakai laba yang sudah terjadi; forward P/E memakai ramalan yang bisa meleset.",
+            "Multiple tinggi bisa pantas jika pertumbuhan cepat, risiko rendah, atau moat kuat.",
+            "Jebakan utama: value trap (P/E rendah karena bisnis memburuk), laba yang dipoles, laba one-off, dan membandingkan lintas industri.",
+            "Multiple menjawab 'berapa harga pasar', bukan 'berapa nilai sebenarnya' — pakai bersama DCF & analisis kualitas bisnis.",
+          ],
+          practice: [
+            { type: "number", q: "Harga saham Rp1.500, laba per saham (EPS) Rp100. Berapa P/E multiple-nya?", answer: 15, tol: 0.1, hint: "P/E = Harga ÷ EPS.", solution: "1.500 ÷ 100 = 15× — artinya membayar 15 kali lipat laba setahun." },
+            { type: "number", q: "Rata-rata P/E industri adalah 20. Perusahaan X punya EPS Rp250. Berapa harga sahamnya jika dihargai setara industri?", answer: 5000, tol: 1, hint: "Harga = P/E industri × EPS.", solution: "20 × 250 = Rp5.000 per saham." },
+            { type: "number", q: "Perusahaan punya EV Rp600 miliar dan EBITDA Rp75 miliar. Berapa multiple EV/EBITDA-nya?", answer: 8, tol: 0.1, hint: "Bagi EV dengan EBITDA.", solution: "600 ÷ 75 = 8× " },
+          ],
+          quiz: [
+            {
+              q: "P/E multiple sebuah saham adalah 12. Apa artinya?",
+              options: [
+                "Harganya akan naik 12%",
+                "Kamu membayar 12 kali lipat laba setahun perusahaan itu",
+                "Perusahaan tumbuh 12% per tahun",
+                "Perusahaan punya 12 miliar kas",
+              ],
+              answer: 1,
+              explain:
+                "Multiple = kelipatan. P/E 12 berarti harga yang dibayar setara 12 tahun laba (jika labanya tetap).",
+            },
+            {
+              q: "Sebuah saham punya P/E 5, jauh di bawah rata-rata industri 18. Sikap paling tepat?",
+              options: [
+                "Langsung beli, jelas murah",
+                "Selidiki dulu kenapa — bisa jadi value trap karena bisnisnya sedang menurun",
+                "Abaikan, P/E tidak berguna",
+                "Bandingkan dengan perusahaan teknologi",
+              ],
+              answer: 1,
+              explain:
+                "P/E rendah sering punya alasan: laba akan menyusut, ada masalah bisnis, atau laba lalu terdongkrak untung one-off. Murah di kertas belum tentu murah sesungguhnya.",
+            },
+            {
+              q: "Apa beda trailing P/E dan forward P/E?",
+              options: [
+                "Trailing memakai laba 12 bulan terakhir (fakta); forward memakai ramalan laba ke depan",
+                "Trailing untuk saham, forward untuk obligasi",
+                "Tidak ada bedanya",
+                "Forward selalu lebih akurat",
+              ],
+              answer: 0,
+              explain:
+                "Forward P/E bergantung pada ramalan yang bisa meleset — selalu tanyakan versi mana yang sedang dibicarakan.",
+            },
+            {
+              q: "Perusahaan sedang merugi (laba negatif). Multiple mana yang paling masuk akal dipakai?",
+              options: [
+                "P/E, karena paling populer",
+                "PEG",
+                "P/S (Harga ÷ Pendapatan), karena pendapatan tetap positif",
+                "Tidak ada multiple yang bisa dipakai",
+              ],
+              answer: 2,
+              explain:
+                "P/E tak bisa dibaca saat laba negatif. P/S memakai pendapatan yang tetap positif, sehingga masih bisa dibandingkan antar perusahaan.",
+            },
+            {
+              q: "Kelemahan mendasar valuasi relatif (multiples) dibanding DCF?",
+              options: [
+                "Terlalu rumit dihitung",
+                "Kalau seluruh pasar sedang mahal, semua saham terlihat 'wajar' padahal mahal",
+                "Tidak bisa dipakai untuk saham",
+                "Selalu memberi hasil yang salah",
+              ],
+              answer: 1,
+              explain:
+                "Multiples menilai relatif terhadap pasar. Jika seluruh pasar sedang overvalued, perbandingannya ikut bergeser — DCF tidak terpengaruh sentimen karena menghitung dari arus kas.",
+            },
+          ],
+        },
+        {
           id: "acc-adv-4",
           title: "Rasio Likuiditas & Efisiensi",
           duration: "12 menit",

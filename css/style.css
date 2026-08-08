@@ -192,6 +192,7 @@ a:hover { text-decoration: underline; }
 .lvl-makro { background: #e0f2fe; color: #075985; }
 .lvl-pelengkap { background: #ede9fe; color: #7c3aed; }
 .lvl-matematika { background: #fee2e2; color: #b91c1c; }
+.lvl-perkakas { background: #ecfccb; color: #4d7c0f; }
 @media (prefers-color-scheme: dark) {
   .lvl-pemula { background: #14331f; color: #4ade80; }
   .lvl-menengah { background: #3a2c0c; color: #fbbf24; }
@@ -212,6 +213,7 @@ a:hover { text-decoration: underline; }
   .lvl-kriptografi { background: #0f2a18; color: #86efac; }
   .lvl-audit { background: #3a1414; color: #fca5a5; }
   .lvl-makro { background: #0c2537; color: #7dd3fc; }
+  .lvl-perkakas { background: #1f2b0e; color: #a3e635; }
 }
 
 .lesson-list { list-style: none; margin: 0; padding: 0; }
