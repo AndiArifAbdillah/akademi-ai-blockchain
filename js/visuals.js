@@ -233,6 +233,265 @@ const DIAGRAMS = {
       <text x="370" y="130" text-anchor="middle" class="vt-bold">EKUITAS <tspan class="vt-sm">(Modal)</tspan></text>
     </svg>
   </figure>`,
+
+  /* ---------- Generator generik tambahan ---------- */
+
+  /* Pohon keputusan 2 tingkat.
+     <div data-diagram="tree" data-nodes="Berbulu?::Menggonggong?::Bisa terbang?"
+          data-leaves="Anjing|Kucing|Burung|Ikan"></div> */
+  tree: (ds) => {
+    const q = (ds.nodes || "").split("::").map((s) => s.trim()).filter(Boolean);
+    const leaves = (ds.leaves || "").split("|").map((s) => s.trim()).filter(Boolean);
+    const yes = ds.yes || "Ya";
+    const no = ds.no || "Tidak";
+    const lw = 110, lgap = 26;
+    const lx = (i) => 1 + i * (lw + lgap);
+    const lc = (i) => lx(i) + lw / 2;
+    let body = "";
+    // daun
+    leaves.slice(0, 4).forEach((t, i) => {
+      body += `<rect x="${lx(i)}" y="164" width="${lw}" height="38" rx="9" class="vbox ok"/>`;
+      vWrap(t, 16).forEach((ln, li) => {
+        body += `<text x="${lc(i)}" y="${(leaves[i] && vWrap(t, 16).length > 1 ? 181 : 188) + li * 13}" text-anchor="middle" class="vt-sm">${vEsc(ln)}</text>`;
+      });
+    });
+    // simpul tingkat 2
+    const midC = [(lc(0) + lc(1)) / 2, (lc(2) + lc(3)) / 2];
+    [q[1], q[2]].forEach((t, i) => {
+      if (!t) return;
+      body += `<rect x="${midC[i] - 75}" y="86" width="150" height="38" rx="9" class="vbox accent"/>`;
+      body += `<text x="${midC[i]}" y="110" text-anchor="middle" class="vt-sm">${vEsc(t)}</text>`;
+      body += `<line x1="${midC[i]}" y1="124" x2="${lc(i * 2)}" y2="164" class="vline"/>`;
+      body += `<line x1="${midC[i]}" y1="124" x2="${lc(i * 2 + 1)}" y2="164" class="vline"/>`;
+      body += `<text x="${(midC[i] + lc(i * 2)) / 2 - 12}" y="150" text-anchor="middle" class="vt-xs">${vEsc(yes)}</text>`;
+      body += `<text x="${(midC[i] + lc(i * 2 + 1)) / 2 + 12}" y="150" text-anchor="middle" class="vt-xs">${vEsc(no)}</text>`;
+    });
+    // akar
+    const rootC = (midC[0] + midC[1]) / 2;
+    body += `<line x1="${rootC}" y1="46" x2="${midC[0]}" y2="86" class="vline"/>`;
+    body += `<line x1="${rootC}" y1="46" x2="${midC[1]}" y2="86" class="vline"/>`;
+    body += `<text x="${(rootC + midC[0]) / 2 - 12}" y="72" text-anchor="middle" class="vt-xs">${vEsc(yes)}</text>`;
+    body += `<text x="${(rootC + midC[1]) / 2 + 12}" y="72" text-anchor="middle" class="vt-xs">${vEsc(no)}</text>`;
+    body += `<rect x="${rootC - 80}" y="8" width="160" height="38" rx="9" class="vbox accent2"/>`;
+    body += `<text x="${rootC}" y="32" text-anchor="middle" class="vt-bold" style="font-size:12px">${vEsc(q[0] || "Pertanyaan")}</text>`;
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 212" class="viz-svg" role="img" aria-label="Diagram pohon keputusan">${body}</svg>`);
+  },
+
+  /* Siklus berulang. <div data-diagram="cycle" data-steps="A|B|C|D"></div> */
+  cycle: (ds) => {
+    const steps = (ds.steps || "").split("|").map((s) => s.trim()).filter(Boolean);
+    const n = Math.max(1, steps.length);
+    const cx = 260, cy = 132, R = 92;
+    let body = `<circle cx="${cx}" cy="${cy}" r="${R}" class="vring"/>`;
+    steps.forEach((s, i) => {
+      const a = (-90 + (i * 360) / n) * (Math.PI / 180);
+      const x = cx + R * Math.cos(a), y = cy + R * Math.sin(a);
+      const lines = vWrap(s, 15);
+      body += `<rect x="${x - 62}" y="${y - 20}" width="124" height="40" rx="10" class="vbox accent"/>`;
+      lines.forEach((ln, li) => {
+        body += `<text x="${x}" y="${y + 4 - (lines.length - 1) * 6 + li * 12}" text-anchor="middle" class="vt-xs">${vEsc(ln)}</text>`;
+      });
+      // panah di antara dua langkah
+      const am = (-90 + ((i + 0.5) * 360) / n) * (Math.PI / 180);
+      const ax = cx + R * Math.cos(am), ay = cy + R * Math.sin(am);
+      const deg = (am * 180) / Math.PI + 90;
+      body += `<path d="M -7 -6 L 7 0 L -7 6 Z" class="varrow" transform="translate(${ax.toFixed(1)},${ay.toFixed(1)}) rotate(${deg.toFixed(1)})"/>`;
+    });
+    if (ds.center) body += `<text x="${cx}" y="${cy + 4}" text-anchor="middle" class="vt-bold" style="font-size:12px">${vEsc(ds.center)}</text>`;
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 270" class="viz-svg" role="img" aria-label="Diagram siklus">${body}</svg>`);
+  },
+
+  /* Garis waktu. <div data-diagram="timeline" data-events="2009::Bitcoin lahir|2012::Halving 1"></div> */
+  timeline: (ds) => {
+    const ev = (ds.events || "").split("|").map((s) => s.split("::").map((t) => t.trim())).filter((a) => a[0]);
+    const n = Math.max(1, ev.length);
+    const pad = 46, W = 520;
+    const step = n > 1 ? (W - pad * 2) / (n - 1) : 0;
+    let body = `<line x1="${pad - 20}" y1="86" x2="${W - pad + 20}" y2="86" class="vaxis"/>`;
+    ev.forEach((e, i) => {
+      const x = pad + i * step;
+      const atas = i % 2 === 0;
+      body += `<circle cx="${x}" cy="86" r="7" class="vdot"/>`;
+      body += `<text x="${x}" y="${atas ? 74 : 106}" text-anchor="middle" class="vt-bold" style="font-size:12px">${vEsc(e[0])}</text>`;
+      vWrap(e[1] || "", 16).forEach((ln, li) => {
+        body += `<text x="${x}" y="${(atas ? 40 : 122) + li * 12}" text-anchor="middle" class="vt-xs">${vEsc(ln)}</text>`;
+      });
+    });
+    return vFigure(ds.caption, `<svg viewBox="0 0 ${W} 160" class="viz-svg" role="img" aria-label="Garis waktu">${body}</svg>`);
+  },
+
+  /* Kuadran 2x2. <div data-diagram="matrix" data-xlabel="Risiko" data-ylabel="Imbal hasil"
+       data-cells="Kiri-atas|Kanan-atas|Kiri-bawah|Kanan-bawah"></div> */
+  matrix: (ds) => {
+    const c = (ds.cells || "").split("|").map((s) => s.trim());
+    const cls = ["accent", "ok", "bad", "accent2"];
+    let body = "";
+    const bx = [56, 288], by = [24, 122];
+    for (let i = 0; i < 4; i++) {
+      const x = bx[i % 2], y = by[Math.floor(i / 2)];
+      body += `<rect x="${x}" y="${y}" width="176" height="90" rx="10" class="vbox ${cls[i]}"/>`;
+      vWrap(c[i] || "", 20).forEach((ln, li) => {
+        body += `<text x="${x + 88}" y="${y + 48 - (vWrap(c[i] || "", 20).length - 1) * 7 + li * 14}" text-anchor="middle" class="vt-xs">${vEsc(ln)}</text>`;
+      });
+    }
+    if (ds.ylabel) body += `<text x="16" y="118" text-anchor="middle" class="vt-sm" transform="rotate(-90 16 118)">${vEsc(ds.ylabel)} →</text>`;
+    if (ds.xlabel) body += `<text x="260" y="234" text-anchor="middle" class="vt-sm">${vEsc(ds.xlabel)} →</text>`;
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 244" class="viz-svg" role="img" aria-label="Diagram kuadran">${body}</svg>`);
+  },
+
+  /* Grafik batang. <div data-diagram="bar" data-bars="Perusahaan A:15|Perusahaan B:22" data-unit="x"></div> */
+  bar: (ds) => {
+    const items = (ds.bars || "").split("|").map((s) => {
+      const i = s.lastIndexOf(":");
+      let label = s.slice(0, i).trim();
+      // jaga agar label tidak meluber keluar bingkai (ruang label ~130px @11px)
+      if (label.length > 24) label = label.slice(0, 23).trimEnd() + "…";
+      return { label: label, val: parseFloat(s.slice(i + 1)) || 0 };
+    }).filter((d) => d.label);
+    const unit = ds.unit || "";
+    const max = Math.max(1, ...items.map((d) => Math.abs(d.val)));
+    const labW = 130, barX = labW + 10, barMax = 300;
+    const H = 16 + items.length * 34;
+    let body = "";
+    items.forEach((d, i) => {
+      const y = 12 + i * 34;
+      const w = Math.max(2, (Math.abs(d.val) / max) * barMax);
+      body += `<text x="${labW}" y="${y + 17}" text-anchor="end" class="vt-xs">${vEsc(d.label)}</text>`;
+      body += `<rect x="${barX}" y="${y}" width="${w.toFixed(1)}" height="24" rx="5" class="vfill ${d.val < 0 ? "neg" : ""}"/>`;
+      body += `<text x="${barX + w + 8}" y="${y + 17}" class="vt-xs">${vEsc(d.val + unit)}</text>`;
+    });
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 ${H}" class="viz-svg" role="img" aria-label="Grafik batang">${body}</svg>`);
+  },
+
+  /* Jaringan pusat-cabang. <div data-diagram="network" data-center="Blockchain" data-nodes="A|B|C|D|E"></div> */
+  network: (ds) => {
+    const nodes = (ds.nodes || "").split("|").map((s) => s.trim()).filter(Boolean);
+    const n = Math.max(1, nodes.length);
+    const cx = 260, cy = 128, R = 96;
+    const punyaPusat = !!ds.center;
+    let lines = "", boxes = "";
+    const pos = nodes.map((_, i) => {
+      const a = (-90 + (i * 360) / n) * (Math.PI / 180);
+      return [cx + R * Math.cos(a) * 1.55, cy + R * Math.sin(a)];
+    });
+    if (punyaPusat) {
+      pos.forEach((p) => (lines += `<line x1="${cx}" y1="${cy}" x2="${p[0].toFixed(1)}" y2="${p[1].toFixed(1)}" class="vline"/>`));
+    } else {
+      for (let i = 0; i < pos.length; i++)
+        for (let j = i + 1; j < pos.length; j++)
+          lines += `<line x1="${pos[i][0].toFixed(1)}" y1="${pos[i][1].toFixed(1)}" x2="${pos[j][0].toFixed(1)}" y2="${pos[j][1].toFixed(1)}" class="vline dim"/>`;
+    }
+    pos.forEach((p, i) => {
+      boxes += `<rect x="${(p[0] - 52).toFixed(1)}" y="${(p[1] - 17).toFixed(1)}" width="104" height="34" rx="17" class="vbox accent"/>`;
+      boxes += `<text x="${p[0].toFixed(1)}" y="${(p[1] + 4).toFixed(1)}" text-anchor="middle" class="vt-xs">${vEsc(nodes[i])}</text>`;
+    });
+    let center = "";
+    if (punyaPusat) {
+      center = `<circle cx="${cx}" cy="${cy}" r="42" class="vbox accent2"/><text x="${cx}" y="${cy + 4}" text-anchor="middle" class="vt-xs">${vEsc(ds.center)}</text>`;
+    }
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 256" class="viz-svg" role="img" aria-label="Diagram jaringan">${lines}${center}${boxes}</svg>`);
+  },
+
+  /* Proporsi bertumpuk. <div data-diagram="stack" data-parts="Bahan:40|Gaji:30|Sewa:20|Lain:10"></div> */
+  stack: (ds) => {
+    const parts = (ds.parts || "").split("|").map((s) => {
+      const i = s.lastIndexOf(":");
+      return { label: s.slice(0, i).trim(), val: parseFloat(s.slice(i + 1)) || 0 };
+    }).filter((d) => d.label);
+    const total = parts.reduce((a, d) => a + d.val, 0) || 1;
+    const W = 480, X0 = 20;
+    const cls = ["accent", "accent2", "ok", "bad", "accent"];
+    let bar = "", legend = "";
+    let x = X0;
+    parts.forEach((d, i) => {
+      const w = (d.val / total) * W;
+      bar += `<rect x="${x.toFixed(1)}" y="26" width="${w.toFixed(1)}" height="44" class="vfill s${i % 5}"/>`;
+      if (w > 34) bar += `<text x="${(x + w / 2).toFixed(1)}" y="53" text-anchor="middle" class="vt-xs" style="fill:#fff">${((d.val / total) * 100).toFixed(0)}%</text>`;
+      const ly = 92 + Math.floor(i / 2) * 22, lxp = 24 + (i % 2) * 250;
+      legend += `<rect x="${lxp}" y="${ly - 9}" width="12" height="12" rx="3" class="vfill s${i % 5}"/>`;
+      legend += `<text x="${lxp + 19}" y="${ly + 1}" class="vt-xs">${vEsc(d.label)} — ${((d.val / total) * 100).toFixed(0)}%</text>`;
+      x += w;
+    });
+    const H = 92 + Math.ceil(parts.length / 2) * 22;
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 ${H}" class="viz-svg" role="img" aria-label="Diagram proporsi">${bar}${legend}</svg>`);
+  },
+
+  /* Tahapan berlabel. <div data-diagram="pipeline" data-stages="Judul::keterangan|Judul::keterangan"></div> */
+  pipeline: (ds) => {
+    const st = (ds.stages || "").split("|").map((s) => s.split("::").map((t) => t.trim())).filter((a) => a[0]);
+    const n = Math.max(1, st.length);
+    const W = 520, gap = 14;
+    const bw = (W - 20 - gap * (n - 1)) / n;
+    let body = "";
+    let x = 10;
+    st.forEach((s, i) => {
+      body += `<rect x="${x.toFixed(1)}" y="22" width="${bw.toFixed(1)}" height="46" rx="9" class="vbox accent"/>`;
+      body += `<text x="${(x + bw / 2).toFixed(1)}" y="50" text-anchor="middle" class="vt-bold" style="font-size:12px">${vEsc(s[0])}</text>`;
+      vWrap(s[1] || "", Math.max(10, Math.floor(bw / 5))).forEach((ln, li) => {
+        body += `<text x="${(x + bw / 2).toFixed(1)}" y="${86 + li * 13}" text-anchor="middle" class="vt-xs">${vEsc(ln)}</text>`;
+      });
+      if (i !== n - 1) body += `<text x="${(x + bw + gap / 2).toFixed(1)}" y="51" text-anchor="middle" class="vt">→</text>`;
+      x += bw + gap;
+    });
+    return vFigure(ds.caption, `<svg viewBox="0 0 ${W} 132" class="viz-svg" role="img" aria-label="Diagram tahapan">${body}</svg>`);
+  },
+
+  /* Banding 3 kolom. <div data-diagram="compare3" data-cols="Judul::a::b|Judul::a::b|Judul::a::b"></div> */
+  compare3: (ds) => {
+    const cols = (ds.cols || "").split("|").map((s) => s.split("::").map((t) => t.trim())).filter((a) => a[0]);
+    const n = Math.max(1, cols.length);
+    const rows = Math.max(...cols.map((c) => c.length), 1);
+    const H = 30 + rows * 20;
+    const cw = (520 - 20 - (n - 1) * 10) / n;
+    const cls = ["accent", "accent2", "ok"];
+    let body = "";
+    cols.forEach((c, i) => {
+      const x = 10 + i * (cw + 10);
+      body += `<rect x="${x.toFixed(1)}" y="12" width="${cw.toFixed(1)}" height="${H - 22}" rx="10" class="vbox ${cls[i % 3]}"/>`;
+      c.forEach((t, j) => {
+        body += `<text x="${(x + cw / 2).toFixed(1)}" y="${34 + j * 20}" text-anchor="middle" class="${j === 0 ? "vt-bold" : "vt-xs"}" style="${j === 0 ? "font-size:12px" : ""}">${vEsc(t)}</text>`;
+      });
+    });
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 ${H}" class="viz-svg" role="img" aria-label="Diagram perbandingan tiga kolom">${body}</svg>`);
+  },
+
+  /* Tanda tangan digital: kunci privat menandatangani, kunci publik memverifikasi */
+  sign: () => `
+  <figure class="viz">
+    <figcaption>Kunci privat membuat tanda tangan; siapa pun bisa memeriksanya dengan kunci publik — tanpa pernah melihat kunci privatnya.</figcaption>
+    <svg viewBox="0 0 520 236" class="viz-svg" role="img" aria-label="Alur tanda tangan digital">
+      <text x="130" y="16" text-anchor="middle" class="vt-bold" style="font-size:12px">PENGIRIM</text>
+      <text x="390" y="16" text-anchor="middle" class="vt-bold" style="font-size:12px">SIAPA PUN</text>
+      <line x1="260" y1="24" x2="260" y2="212" class="vline dim"/>
+
+      <rect x="34" y="30" width="192" height="34" rx="8" class="vbox"/>
+      <text x="130" y="52" text-anchor="middle" class="vt-xs">Pesan: "Kirim 2 BTC ke Budi"</text>
+
+      <rect x="34" y="84" width="192" height="34" rx="8" class="vbox bad"/>
+      <text x="130" y="106" text-anchor="middle" class="vt-xs">🔒 Kunci privat (rahasia)</text>
+
+      <text x="130" y="136" text-anchor="middle" class="vt-xs">tanda tangani ↓</text>
+
+      <rect x="34" y="146" width="192" height="34" rx="8" class="vbox accent2"/>
+      <text x="130" y="168" text-anchor="middle" class="vt-xs">✍️ Tanda tangan digital</text>
+
+      <path d="M 226 163 L 300 163" class="vline"/>
+      <path d="M -6 -5 L 6 0 L -6 5 Z" class="varrow" transform="translate(302,163)"/>
+
+      <rect x="300" y="30" width="186" height="34" rx="8" class="vbox"/>
+      <text x="393" y="52" text-anchor="middle" class="vt-xs">Pesan yang sama</text>
+
+      <rect x="300" y="84" width="186" height="34" rx="8" class="vbox ok"/>
+      <text x="393" y="106" text-anchor="middle" class="vt-xs">🔓 Kunci publik (terbuka)</text>
+
+      <text x="393" y="136" text-anchor="middle" class="vt-xs">periksa ↓</text>
+
+      <rect x="300" y="146" width="186" height="34" rx="8" class="vbox ok"/>
+      <text x="393" y="168" text-anchor="middle" class="vt-xs">✅ Asli &amp; belum diubah</text>
+
+      <text x="260" y="206" text-anchor="middle" class="vt-xs">Kunci privat tidak pernah dikirim ke mana pun</text>
+    </svg>
+  </figure>`,
 };
 
 /* ============================================================
@@ -804,6 +1063,401 @@ DEMOS["profit-calc"] = function (root) {
     out,
   ]);
   root.appendChild(box);
+  draw();
+};
+
+/* ---------- Demo: Pohon Keputusan (klasifikasi hewan) ---------- */
+DEMOS["decision-tree"] = function (root) {
+  const state = { berbulu: true, gonggong: true, terbang: false };
+  const viz = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+
+  function tombol(key, label) {
+    const b = h("button", { type: "button" });
+    b.onclick = () => { state[key] = !state[key]; sync(); draw(); };
+    function sync() {
+      b.textContent = (state[key] ? "✅ " : "⬜ ") + label;
+      b.className = "btn " + (state[key] ? "primary" : "ghost");
+    }
+    b.sync = sync;
+    sync();
+    return b;
+  }
+  const tb = [tombol("berbulu", "Berbulu"), tombol("gonggong", "Menggonggong"), tombol("terbang", "Bisa terbang")];
+  function sync() { tb.forEach((b) => b.sync()); }
+
+  function draw() {
+    const kiri = state.berbulu;
+    const cabang = kiri ? "n1" : "n2";
+    const daunIdx = kiri ? (state.gonggong ? 0 : 1) : (state.terbang ? 2 : 3);
+    const dipakai = kiri ? ["Berbulu?", "Menggonggong?"] : ["Berbulu?", "Bisa terbang?"];
+    const jawab = kiri ? [state.berbulu, state.gonggong] : [state.berbulu, state.terbang];
+    const namaDaun = ["Anjing 🐶", "Kucing 🐱", "Burung 🐦", "Ikan 🐟"];
+    const dc = [56, 192, 328, 464];
+    const on = (c) => (c ? " aktif" : "");
+    let s = `<svg viewBox="0 0 520 212" class="viz-svg">`;
+    s += `<line x1="260" y1="46" x2="124" y2="86" class="vline${on(kiri)}"/>`;
+    s += `<line x1="260" y1="46" x2="396" y2="86" class="vline${on(!kiri)}"/>`;
+    s += `<text x="180" y="72" text-anchor="middle" class="vt-xs">Ya</text>`;
+    s += `<text x="340" y="72" text-anchor="middle" class="vt-xs">Tidak</text>`;
+    [0, 1].forEach((i) => {
+      const aktif = kiri ? i === 0 : i === 1;
+      const cx = i === 0 ? 124 : 396;
+      const kiriDaun = i * 2, kananDaun = i * 2 + 1;
+      const pilihKiri = i === 0 ? state.gonggong : state.terbang;
+      s += `<line x1="${cx}" y1="124" x2="${dc[kiriDaun]}" y2="164" class="vline${on(aktif && pilihKiri)}"/>`;
+      s += `<line x1="${cx}" y1="124" x2="${dc[kananDaun]}" y2="164" class="vline${on(aktif && !pilihKiri)}"/>`;
+      s += `<rect x="${cx - 75}" y="86" width="150" height="38" rx="9" class="vbox accent${on(aktif)}"/>`;
+      s += `<text x="${cx}" y="110" text-anchor="middle" class="vt-xs">${i === 0 ? "Menggonggong?" : "Bisa terbang?"}</text>`;
+    });
+    namaDaun.forEach((t, i) => {
+      s += `<rect x="${dc[i] - 55}" y="164" width="110" height="38" rx="9" class="vbox ok${on(i === daunIdx)}"/>`;
+      s += `<text x="${dc[i]}" y="188" text-anchor="middle" class="vt-xs">${t}</text>`;
+    });
+    s += `<rect x="180" y="8" width="160" height="38" rx="9" class="vbox accent2 aktif"/>`;
+    s += `<text x="260" y="32" text-anchor="middle" class="vt-xs">Berbulu?</text>`;
+    s += `</svg>`;
+    viz.innerHTML = s;
+    out.innerHTML =
+      `<div class="dm-line teks"><span>Pertanyaan yang ditanyakan</span><b>${dipakai.map((q, i) => q + " → " + (jawab[i] ? "Ya" : "Tidak")).join("  |  ")}</b></div>` +
+      `<div class="dm-line"><span>Pertanyaan yang <i>dilewati</i></span><b>1 dari 3</b></div>` +
+      `<div class="dm-line big good"><span>Prediksi pohon</span><b>${namaDaun[daunIdx]}</b></div>`;
+  }
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🌳 <b>Demo: pohon keputusan bekerja</b>" }),
+    h("p", { class: "demo-hint", text: "Nyalakan/matikan ciri-cirinya, lalu lihat jalur mana yang menyala sampai ke jawaban. Perhatikan: pohon tidak pernah menanyakan semua ciri — itulah sebabnya ia cepat." }),
+    h("div", { class: "demo-controls" }, tb),
+    viz,
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: Double-spending (kenapa perlu blockchain) ---------- */
+DEMOS["double-spend"] = function (root) {
+  let pakaiBlockchain = true;
+  const out = h("div", { class: "dm-log" });
+  const sw = h("button", { class: "btn primary", type: "button" });
+  function syncSw() { sw.textContent = pakaiBlockchain ? "⛓️ Dengan blockchain" : "📄 Tanpa blockchain (file biasa)"; sw.className = "btn " + (pakaiBlockchain ? "primary" : "ghost"); }
+  sw.onclick = () => { pakaiBlockchain = !pakaiBlockchain; syncSw(); out.innerHTML = '<div class="dm-li">Mode diubah. Klik "Belanjakan koin yang sama 2×".</div>'; };
+  syncSw();
+
+  const jalan = h("button", { class: "btn ghost", type: "button", text: "💸 Belanjakan koin yang sama 2×" });
+  jalan.onclick = function () {
+    const baris = [];
+    const push = (t, k) => baris.push(`<div class="dm-li ${k || ""}">${t}</div>`);
+    push("Budi punya <b>1 koin</b>. Ia mengirimnya ke Toko A dan Toko B <b>pada detik yang sama</b>.");
+    if (!pakaiBlockchain) {
+      push("📄 Toko A memeriksa catatannya sendiri → saldo Budi 1 koin → <b>diterima</b>.", "ok");
+      push("📄 Toko B memeriksa catatannya sendiri → saldo Budi 1 koin → <b>diterima</b>.", "ok");
+      push("❌ <b>PENIPUAN BERHASIL.</b> Satu koin terpakai dua kali karena tidak ada catatan bersama. Inilah masalah <i>double-spending</i>.", "bad");
+    } else {
+      push("⛓️ Kedua transaksi masuk ke antrean jaringan (mempool).");
+      const menang = Math.random() < 0.5 ? "A" : "B";
+      const kalah = menang === "A" ? "B" : "A";
+      push(`⛏️ Penambang menyusun blok berikutnya. Transaksi ke <b>Toko ${menang}</b> masuk lebih dulu.`);
+      push(`✅ Transaksi ke Toko ${menang} <b>tercatat permanen</b> — koin Budi kini milik Toko ${menang}.`, "ok");
+      push(`🚫 Transaksi ke Toko ${kalah} <b>DITOLAK</b> — jaringan melihat koin itu sudah terpakai.`, "bad");
+      push("🎉 <b>Penipuan gagal.</b> Bukan karena ada polisi, tapi karena semua orang memegang catatan yang sama.", "ok");
+    }
+    out.innerHTML = baris.join("");
+  };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🪙 <b>Demo: masalah salinan digital (double-spending)</b>" }),
+    h("p", { class: "demo-hint", text: "Coba jalankan dua kali: sekali tanpa blockchain, sekali dengan blockchain. Bandingkan hasilnya." }),
+    h("div", { class: "demo-controls" }, [sw, jalan]),
+    out,
+  ]));
+  out.innerHTML = '<div class="dm-li">Klik "Belanjakan koin yang sama 2×" untuk mulai.</div>';
+};
+
+/* ---------- Demo: Simulasi penambangan (mining) ---------- */
+DEMOS["mining-sim"] = function (root) {
+  let diff = 2, running = false;
+  const data = "Blok #1 — Ani kirim 5 koin ke Budi";
+  const out = h("div", { class: "dm-out" });
+  const slider = h("input", { type: "range", min: "1", max: "4", value: "2", class: "dm-range" });
+  const dlabel = h("b", { text: "2 nol" });
+  slider.oninput = () => { diff = parseInt(slider.value, 10); dlabel.textContent = diff + " nol"; tampil("(siap)", 0, 0, 0, null); };
+
+  const btn = h("button", { class: "btn primary", type: "button", text: "⛏️ Tambang blok ini" });
+
+  function tampil(hsh, nonce, attempts, ms, ok) {
+    const perlu = Math.pow(16, diff);
+    out.innerHTML =
+      `<div class="dm-line"><span>Target</span><b>hash harus diawali ${"0".repeat(diff)}</b></div>` +
+      `<div class="dm-line"><span>Percobaan (nonce)</span><b>${attempts.toLocaleString("id-ID")}</b></div>` +
+      `<div class="dm-line"><span>Rata-rata dibutuhkan</span><b>~${perlu.toLocaleString("id-ID")} percobaan</b></div>` +
+      `<div class="dm-line"><span>Waktu</span><b>${(ms / 1000).toFixed(2)} detik</b></div>` +
+      `<div class="dm-hash ${ok === true ? "good" : ok === false ? "warn" : ""}">${hsh}</div>` +
+      (ok === true ? `<div class="dm-line big good"><span>✅ Blok ditemukan!</span><b>nonce = ${nonce.toLocaleString("id-ID")}</b></div>` : "");
+  }
+
+  btn.onclick = function () {
+    if (running) return;
+    running = true;
+    btn.disabled = true;
+    btn.textContent = "⏳ Menambang...";
+    let nonce = 0, attempts = 0;
+    const target = "0".repeat(diff);
+    const t0 = Date.now();
+    function chunk() {
+      let n = 0;
+      while (n < 4000) {
+        const hsh = demoHash(data + nonce);
+        attempts++;
+        if (hsh.slice(0, diff) === target) {
+          running = false;
+          btn.disabled = false;
+          btn.textContent = "⛏️ Tambang lagi";
+          tampil(hsh, nonce, attempts, Date.now() - t0, true);
+          return;
+        }
+        nonce++; n++;
+      }
+      tampil(demoHash(data + nonce), nonce, attempts, Date.now() - t0, false);
+      setTimeout(chunk, 0);
+    }
+    chunk();
+  };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "⛏️ <b>Demo: bagaimana penambangan sebenarnya bekerja</b>" }),
+    h("p", { class: "demo-hint", text: "Menambang bukan 'memecahkan teka-teki pintar' — ini menebak angka (nonce) berulang kali sampai hash-nya kebetulan diawali sejumlah nol. Naikkan kesulitan dan rasakan bedanya." }),
+    h("label", { class: "dm-row" }, [h("span", { text: "Kesulitan: " }), slider, dlabel]),
+    h("div", { class: "demo-controls" }, [btn]),
+    out,
+  ]));
+  tampil("(belum ditambang)", 0, 0, 0, null);
+};
+
+/* ---------- Demo: Zero-Knowledge Proof (gua Ali Baba) ---------- */
+DEMOS["zkp-cave"] = function (root) {
+  let ronde = 0, gagal = false, tahu = true;
+  const out = h("div", { class: "dm-log" });
+  const ring = h("div", { class: "dm-out" });
+
+  const sw = h("button", { class: "btn primary", type: "button" });
+  function syncSw() { sw.textContent = tahu ? "🔑 Pembuktinya ASLI (tahu kata sandi)" : "🎭 Pembuktinya PENIPU (tidak tahu)"; sw.className = "btn " + (tahu ? "primary" : "ghost"); }
+  sw.onclick = () => { tahu = !tahu; syncSw(); reset(); };
+  syncSw();
+
+  function ringkas() {
+    const peluang = Math.pow(0.5, ronde) * 100;
+    ring.innerHTML =
+      `<div class="dm-line"><span>Ronde dijalankan</span><b>${ronde}</b></div>` +
+      `<div class="dm-line"><span>Peluang penipu lolos semua</span><b>1 / ${Math.pow(2, ronde)} = ${peluang.toFixed(ronde > 6 ? 3 : 1)}%</b></div>` +
+      (gagal
+        ? `<div class="dm-line big bad"><span>🚨 Ketahuan!</span><b>Penipu gagal di ronde ${ronde}</b></div>`
+        : ronde >= 10
+        ? `<div class="dm-line big good"><span>✅ Terbukti</span><b>Praktis mustahil menebak ${ronde}× berturut-turut</b></div>`
+        : "");
+  }
+
+  const btn = h("button", { class: "btn ghost", type: "button", text: "▶ Jalankan 1 ronde" });
+  btn.onclick = function () {
+    if (gagal) return;
+    ronde++;
+    const minta = Math.random() < 0.5 ? "A" : "B";
+    let sukses;
+    if (tahu) sukses = true;
+    else sukses = Math.random() < 0.5;
+    const li = sukses
+      ? `<div class="dm-li ok">Ronde ${ronde}: penjaga minta keluar dari <b>lorong ${minta}</b> → ✅ berhasil</div>`
+      : `<div class="dm-li bad">Ronde ${ronde}: penjaga minta keluar dari <b>lorong ${minta}</b> → ❌ GAGAL, tertangkap!</div>`;
+    out.insertAdjacentHTML("afterbegin", li);
+    if (!sukses) { gagal = true; btn.disabled = true; }
+    ringkas();
+  };
+
+  function reset() {
+    ronde = 0; gagal = false; btn.disabled = false;
+    out.innerHTML = '<div class="dm-li">Belum ada ronde. Klik tombol di atas.</div>';
+    ringkas();
+  }
+  const rs = h("button", { class: "btn ghost", type: "button", text: "↺ Ulangi", onclick: reset });
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🕳️ <b>Demo: membuktikan tanpa membocorkan (Zero-Knowledge)</b>" }),
+    h("p", { class: "demo-hint", text: "Sebuah gua bercabang dua (lorong A dan B) yang tersambung oleh pintu berkata sandi. Pembukti masuk, lalu penjaga minta ia keluar dari lorong tertentu. Yang tahu kata sandi selalu bisa; penipu hanya bisa menebak 50:50. Kata sandinya sendiri tidak pernah diucapkan." }),
+    h("div", { class: "demo-controls" }, [sw, btn, rs]),
+    ring,
+    out,
+  ]));
+  reset();
+};
+
+/* ---------- Demo: Penjelajah rasio keuangan ---------- */
+DEMOS["ratio-explorer"] = function (root) {
+  const f = [
+    { k: "pendapatan", l: "Pendapatan", v: 500 },
+    { k: "labaBersih", l: "Laba bersih", v: 50 },
+    { k: "aset", l: "Total aset", v: 400 },
+    { k: "ekuitas", l: "Ekuitas (modal sendiri)", v: 250 },
+    { k: "utang", l: "Total utang", v: 150 },
+  ];
+  const s = {};
+  const rows = f.map((d) => {
+    s[d.k] = d.v;
+    const inp = h("input", { class: "pc-input", type: "number", value: String(d.v) });
+    inp.addEventListener("input", () => { s[d.k] = parseFloat(inp.value) || 0; draw(); });
+    return h("label", { class: "pc-row" }, [h("span", { text: d.l }), h("span", { class: "pc-inwrap" }, [h("span", { class: "pc-rp", text: "Rp" }), inp, h("span", { class: "pc-jt", text: "jt" })])]);
+  });
+  const out = h("div", { class: "dm-out" });
+
+  function nilai(x, baik, sedang) {
+    if (x >= baik) return "good";
+    if (x >= sedang) return "";
+    return "bad";
+  }
+  function draw() {
+    const margin = s.pendapatan ? (s.labaBersih / s.pendapatan) * 100 : 0;
+    const roe = s.ekuitas ? (s.labaBersih / s.ekuitas) * 100 : 0;
+    const roa = s.aset ? (s.labaBersih / s.aset) * 100 : 0;
+    const der = s.ekuitas ? s.utang / s.ekuitas : 0;
+    const perputaran = s.aset ? s.pendapatan / s.aset : 0;
+    const baris = (label, val, rumus, kelas) =>
+      `<div class="dm-line ${kelas}"><span>${label}<br><i class="dm-sub">${rumus}</i></span><b>${val}</b></div>`;
+    out.innerHTML =
+      baris("Margin laba bersih", margin.toFixed(1) + "%", "Laba bersih ÷ Pendapatan", nilai(margin, 10, 5)) +
+      baris("ROE", roe.toFixed(1) + "%", "Laba bersih ÷ Ekuitas", nilai(roe, 15, 8)) +
+      baris("ROA", roa.toFixed(1) + "%", "Laba bersih ÷ Total aset", nilai(roa, 8, 4)) +
+      baris("DER (utang ÷ modal)", der.toFixed(2) + "×", "Total utang ÷ Ekuitas", der <= 1 ? "good" : der <= 2 ? "" : "bad") +
+      baris("Perputaran aset", perputaran.toFixed(2) + "×", "Pendapatan ÷ Total aset", nilai(perputaran, 1, 0.5)) +
+      `<div class="dm-note">💡 <b>ROE lebih tinggi dari ROA</b> berarti perusahaan memakai utang untuk mengungkit hasil. Menguntungkan saat bisnis lancar — berbahaya saat penjualan turun. Coba naikkan utang &amp; turunkan ekuitas, lalu perhatikan ROE melonjak padahal labanya tidak berubah.</div>`;
+  }
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "📊 <b>Demo: penjelajah rasio keuangan</b>" }),
+    h("p", { class: "demo-hint", text: "Ubah angka laporan keuangan (dalam juta Rupiah) dan lihat kelima rasio bergerak. Hijau = sehat, merah = perlu diwaspadai." }),
+    h("div", { class: "pc-form" }, rows),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: Kalkulator ROI ---------- */
+DEMOS["roi-calc"] = function (root) {
+  const s = { modal: 100, hasil: 130, tahun: 2 };
+  function num(key, label, satuan) {
+    const inp = h("input", { class: "pc-input", type: "number", value: String(s[key]) });
+    inp.addEventListener("input", () => { s[key] = parseFloat(inp.value) || 0; draw(); });
+    return h("label", { class: "pc-row" }, [h("span", { text: label }), h("span", { class: "pc-inwrap" }, [inp, h("span", { class: "pc-jt", text: satuan })])]);
+  }
+  const out = h("div", { class: "dm-out" });
+  function draw() {
+    const untung = s.hasil - s.modal;
+    const roi = s.modal ? (untung / s.modal) * 100 : 0;
+    const tahunan = s.tahun > 0 && s.modal > 0 && s.hasil > 0 ? (Math.pow(s.hasil / s.modal, 1 / s.tahun) - 1) * 100 : 0;
+    const balik = untung > 0 && s.tahun > 0 ? s.modal / (untung / s.tahun) : Infinity;
+    out.innerHTML =
+      `<div class="dm-line"><span>Keuntungan bersih<br><i class="dm-sub">Hasil − Modal</i></span><b>Rp${untung.toFixed(0)} jt</b></div>` +
+      `<div class="dm-line ${roi >= 0 ? "good" : "bad"}"><span>ROI total<br><i class="dm-sub">Keuntungan ÷ Modal</i></span><b>${roi.toFixed(1)}%</b></div>` +
+      `<div class="dm-line big ${tahunan >= 10 ? "good" : tahunan >= 0 ? "" : "bad"}"><span>ROI per tahun<br><i class="dm-sub">yang sebenarnya penting</i></span><b>${tahunan.toFixed(1)}% / tahun</b></div>` +
+      `<div class="dm-line"><span>Balik modal (payback)</span><b>${isFinite(balik) ? balik.toFixed(1) + " tahun" : "tidak pernah"}</b></div>` +
+      `<div class="dm-note">⚠️ <b>Jebakan terbesar ROI:</b> angka total menyesatkan tanpa waktu. ROI 30% terdengar bagus — tapi 30% dalam 1 tahun jauh berbeda dari 30% dalam 10 tahun. Coba ubah jumlah tahunnya sambil membiarkan modal &amp; hasil tetap.</div>`;
+  }
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "💰 <b>Demo: kalkulator ROI</b>" }),
+    h("p", { class: "demo-hint", text: "Masukkan modal, hasil akhir, dan lamanya. Perhatikan bedanya ROI total dan ROI per tahun." }),
+    h("div", { class: "pc-form" }, [num("modal", "Modal awal", "jt"), num("hasil", "Nilai akhir", "jt"), num("tahun", "Lama investasi", "tahun")]),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: Diffusion (dari noise jadi gambar) ---------- */
+DEMOS["diffusion"] = function (root) {
+  const N = 16;
+  const POLA = [
+    "................", "....########....", "..##........##..", ".#............#.",
+    ".#............#.", "#....##..##....#", "#....##..##....#", "#..............#",
+    "#..............#", "#..#........#..#", "#...##....##...#", ".#....####....#.",
+    ".#............#.", "..##........##..", "....########....", "................",
+  ];
+  const target = [];
+  POLA.forEach((r) => { for (let i = 0; i < N; i++) target.push(r[i] === "#" ? 1 : 0); });
+  let thr = [], noise = [];
+  function acak() {
+    thr = []; noise = [];
+    for (let i = 0; i < N * N; i++) { thr.push(Math.random()); noise.push(Math.random() < 0.5 ? 1 : 0); }
+  }
+  acak();
+
+  const grid = h("div", { class: "dm-grid16" });
+  const cells = [];
+  for (let i = 0; i < N * N; i++) { const c = h("div", { class: "dm-px" }); cells.push(c); grid.appendChild(c); }
+
+  const slider = h("input", { type: "range", min: "0", max: "100", value: "0", class: "dm-range" });
+  const lbl = h("b", { text: "langkah 0 / 100" });
+  const out = h("div", { class: "dm-out" });
+
+  function draw() {
+    const t = parseInt(slider.value, 10) / 100;
+    lbl.textContent = "langkah " + slider.value + " / 100";
+    let bersih = 0;
+    for (let i = 0; i < N * N; i++) {
+      const sudah = t >= thr[i];
+      if (sudah) bersih++;
+      cells[i].className = "dm-px" + ((sudah ? target[i] : noise[i]) ? " on" : "") + (sudah ? " tenang" : "");
+    }
+    const pct = ((bersih / (N * N)) * 100).toFixed(0);
+    out.innerHTML =
+      `<div class="dm-line"><span>Piksel yang sudah dibersihkan</span><b>${pct}%</b></div>` +
+      `<div class="dm-note">${t === 0 ? "Ini titik awal: <b>noise murni</b> — sama sekali acak, tanpa informasi." : t >= 1 ? "Selesai. Gambar muncul <b>bukan karena digambar</b>, tapi karena noise dihapus bertahap." : "Model menebak: <i>bagian mana dari sini yang noise?</i> lalu menghapusnya sedikit — berulang kali."}</div>`;
+  }
+  slider.oninput = draw;
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🌫️ <b>Demo: bagaimana AI gambar (diffusion) bekerja</b>" }),
+    h("p", { class: "demo-hint", text: "Geser dari kiri ke kanan. Model tidak 'melukis' — ia mulai dari noise acak lalu menghapus noise sedikit demi sedikit sampai gambar muncul." }),
+    grid,
+    h("label", { class: "dm-row" }, [slider, lbl]),
+    h("div", { class: "demo-controls" }, [h("button", { class: "btn ghost", type: "button", text: "🎲 Acak ulang noise", onclick: () => { acak(); draw(); } })]),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: Struktur biaya & titik impas ---------- */
+DEMOS["cost-structure"] = function (root) {
+  const s = { tetap: 30, variabel: 15, harga: 25, volume: 3000 };
+  function num(key, label, satuan) {
+    const inp = h("input", { class: "pc-input", type: "number", value: String(s[key]) });
+    inp.addEventListener("input", () => { s[key] = parseFloat(inp.value) || 0; draw(); });
+    return h("label", { class: "pc-row" }, [h("span", { text: label }), h("span", { class: "pc-inwrap" }, [inp, h("span", { class: "pc-jt", text: satuan })])]);
+  }
+  const slider = h("input", { type: "range", min: "0", max: "8000", step: "100", value: "3000", class: "dm-range" });
+  const vlbl = h("b", { text: "3.000 unit" });
+  slider.oninput = () => { s.volume = parseInt(slider.value, 10); vlbl.textContent = s.volume.toLocaleString("id-ID") + " unit"; draw(); };
+  const out = h("div", { class: "dm-out" });
+
+  function draw() {
+    const marginUnit = s.harga - s.variabel;
+    const bep = marginUnit > 0 ? (s.tetap * 1000) / marginUnit : Infinity;
+    const omzet = (s.volume * s.harga) / 1000;
+    const biaya = s.tetap + (s.volume * s.variabel) / 1000;
+    const laba = omzet - biaya;
+    const maxV = Math.max(omzet, biaya, 1);
+    const bar = (label, val, cls) =>
+      `<div class="dm-bar"><span>${label}</span><div class="dm-track"><div class="dm-fill ${cls}" style="width:${Math.max(1, (val / maxV) * 100).toFixed(1)}%"></div></div><b>Rp${val.toFixed(0)} jt</b></div>`;
+    out.innerHTML =
+      `<div class="dm-line"><span>Margin kontribusi per unit<br><i class="dm-sub">Harga − Biaya variabel</i></span><b>Rp${marginUnit.toFixed(0)} rb</b></div>` +
+      `<div class="dm-line big ${isFinite(bep) ? "" : "bad"}"><span>Titik impas (BEP)<br><i class="dm-sub">Biaya tetap ÷ Margin per unit</i></span><b>${isFinite(bep) ? Math.ceil(bep).toLocaleString("id-ID") + " unit" : "tidak tercapai"}</b></div>` +
+      bar("Omzet", omzet, "ok") + bar("Total biaya", biaya, "bad") +
+      `<div class="dm-line big ${laba >= 0 ? "good" : "bad"}"><span>${laba >= 0 ? "Laba" : "Rugi"} pada ${s.volume.toLocaleString("id-ID")} unit</span><b>Rp${laba.toFixed(1)} jt</b></div>` +
+      `<div class="dm-note">💡 Di bawah BEP, <b>menjual lebih banyak tetap rugi</b> — biaya tetap belum tertutup. Di atas BEP, tiap unit tambahan menyumbang penuh Rp${marginUnit.toFixed(0)} rb ke laba. Itulah kenapa bisnis berbiaya tetap tinggi terasa berat di awal lalu melesat.</div>`;
+  }
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🏭 <b>Demo: biaya tetap, biaya variabel &amp; titik impas</b>" }),
+    h("p", { class: "demo-hint", text: "Atur biaya dan harga jual, lalu geser volume penjualan. Cari titik di mana rugi berubah jadi laba." }),
+    h("div", { class: "pc-form" }, [num("tetap", "Biaya tetap per bulan", "jt"), num("variabel", "Biaya variabel per unit", "rb"), num("harga", "Harga jual per unit", "rb")]),
+    h("label", { class: "dm-row" }, [h("span", { text: "Volume: " }), slider, vlbl]),
+    out,
+  ]));
   draw();
 };
 

@@ -26,6 +26,9 @@ const BLOCKCHAIN_COURSE = {
           content: `
 <p>Untuk memahami blockchain, kita harus mulai dari pertanyaan mendasar yang jarang dipikirkan: <b>kenapa uang bisa berfungsi?</b></p>
 
+<div data-diagram="timeline" data-events="Barter::tukar barang langsung|Emas::langka &amp; tahan lama|Uang kertas::dijamin negara|Uang digital::angka di server bank|Bitcoin::dijamin matematika" data-caption="Sejarah uang adalah sejarah siapa yang kita percaya"></div>
+
+
 <h3>Uang hanyalah kesepakatan</h3>
 <p>Selembar uang Rp100.000 sebenarnya cuma kertas. Ia berharga karena <b>semua orang sepakat & percaya</b> bahwa ia berharga. Uang berjalan di atas <b>kepercayaan</b>.</p>
 
@@ -78,6 +81,9 @@ const BLOCKCHAIN_COURSE = {
           content: `
 <p>Uang digital punya satu masalah besar yang tidak dimiliki uang tunai. Memahaminya adalah kunci mengerti kenapa blockchain jenius.</p>
 
+<div data-diagram="pipeline" data-stages="Berkas digital::mudah disalin|Salin dalam 1 detik::salinan identik|Kirim ke dua orang::keduanya merasa punya|Uang jadi tak berarti::bisa dibuat tanpa batas" data-caption="Kenapa uang digital tanpa catatan bersama pasti gagal"></div>
+
+
 <h3>File digital mudah disalin</h3>
 <p>Foto, lagu, dokumen — semua file digital bisa di-<b>copy-paste</b> tanpa batas, dan salinannya identik. Nah, kalau "uang digital" cuma sebuah file... apa yang mencegahmu <b>menyalinnya</b> dan membelanjakannya berkali-kali?</p>
 
@@ -91,6 +97,8 @@ const BLOCKCHAIN_COURSE = {
 <div class="callout">
 <b>Terobosan blockchain:</b> ia memecahkan double-spending <b>tanpa</b> pencatat pusat — dengan cara membuat <b>banyak komputer</b> memegang & menyepakati satu catatan bersama. Bagaimana caranya, kamu akan pelajari di modul berikutnya.
 </div>
+
+<div data-demo="double-spend"></div>
 `,
           keyPoints: [
             "File digital mudah disalin identik — masalah bagi 'uang digital'.",
@@ -199,6 +207,9 @@ const BLOCKCHAIN_COURSE = {
           duration: "9 menit",
           content: `
 <p><b>Blockchain</b> adalah buku besar digital (catatan transaksi) yang:</p>
+
+<div data-diagram="pipeline" data-stages="Transaksi::dikumpulkan dulu|Blok::dibungkus jadi satu|Hash::disegel dengan sidik jari|Dirantai::menunjuk ke blok sebelumnya" data-caption="Kenapa disebut blockchain: blok-blok yang saling mengunci"></div>
+
 <ul>
   <li><b>Tersebar</b> — salinannya dimiliki banyak komputer di seluruh dunia, bukan satu server.</li>
   <li><b>Tak bisa diubah</b> — sekali dicatat, sangat sulit dipalsukan.</li>
@@ -259,6 +270,9 @@ const BLOCKCHAIN_COURSE = {
           duration: "9 menit",
           content: `
 <p><b>Bitcoin</b> (2009) adalah aplikasi pertama blockchain dan cryptocurrency pertama. Diciptakan oleh sosok anonim bernama <b>Satoshi Nakamoto</b> setelah krisis keuangan 2008.</p>
+
+<div data-diagram="timeline" data-events="2008::Whitepaper Satoshi terbit|2009::Blok pertama ditambang|2010::10.000 BTC untuk 2 pizza|2017::Dikenal luas dunia|2024::Masuk portofolio institusi" data-caption="Perjalanan Bitcoin dari makalah 9 halaman jadi aset global"></div>
+
 
 <h3>Apa masalah yang dipecahkan?</h3>
 <p>Uang digital sebelumnya punya masalah <b>"double spending"</b> — file digital mudah disalin, jadi apa yang mencegah orang membelanjakan koin yang sama dua kali? Bitcoin memecahkannya lewat blockchain: setiap transaksi dicatat publik & diverifikasi jaringan.</p>
@@ -490,6 +504,9 @@ const BLOCKCHAIN_COURSE = {
           content: `
 <p><b>Smart contract</b> adalah program yang berjalan di blockchain dan otomatis mengeksekusi aturan saat syarat terpenuhi — tanpa perantara.</p>
 
+<div data-diagram="pipeline" data-stages="Syarat ditulis::menjadi kode program|Diunggah::ke blockchain, tak bisa diubah|Syarat dicek::otomatis oleh jaringan|Dana cair::tanpa perantara" data-caption="Smart contract = kesepakatan yang menjalankan dirinya sendiri"></div>
+
+
 <div class="callout">
 <b>Analogi mesin penjual otomatis (vending machine):</b> Masukkan uang yang cukup → pilih produk → mesin otomatis mengeluarkannya. Tidak butuh kasir. Smart contract bekerja seperti itu: "JIKA syarat X terpenuhi, MAKA lakukan Y", dan tak bisa dicurangi.
 </div>
@@ -551,6 +568,9 @@ const BLOCKCHAIN_COURSE = {
           content: `
 <p>Di atas Ethereum, siapa pun bisa membuat <b>token</b> sendiri lewat smart contract. Ada dua jenis besar:</p>
 
+<div data-diagram="compare3" data-cols="ERC-20::token biasa::semua unit sama nilainya|ERC-721::NFT::tiap unit unik|ERC-1155::campuran::hemat, cocok untuk game" data-caption="Tiga standar token yang paling sering ditemui"></div>
+
+
 <h3>1. Token "fungible" (ERC-20)</h3>
 <p><b>Fungible</b> = setiap unit sama nilainya & bisa ditukar (seperti uang: Rp1.000-mu sama dengan Rp1.000-ku). Contoh: stablecoin USDT, token proyek. Standarnya disebut <b>ERC-20</b>.</p>
 
@@ -602,6 +622,9 @@ const BLOCKCHAIN_COURSE = {
           duration: "10 menit",
           content: `
 <p><b>DeFi (Decentralized Finance)</b> adalah layanan keuangan — pinjam, simpan, tukar, bunga — yang berjalan lewat smart contract, tanpa bank atau perantara.</p>
+
+<div data-diagram="compare3" data-cols="Menabung::Bank: bunga ditentukan bank::DeFi: bunga ikut pasar|Meminjam::Bank: cek skor kredit::DeFi: wajib ada jaminan|Menukar::Bank: jam kerja::DeFi: 24 jam nonstop" data-caption="Tiga layanan bank yang ditiru DeFi — tanpa kantor dan tanpa petugas"></div>
+
 
 <h3>Layanan DeFi populer</h3>
 <ul>
@@ -796,6 +819,9 @@ contract Penyimpanan {
           content: `
 <p><b>Web3</b> adalah visi internet generasi baru yang terdesentralisasi, di mana pengguna memiliki data & asetnya sendiri.</p>
 
+<div data-diagram="pipeline" data-stages="Buka situs::antarmuka biasa|Hubungkan dompet::dompet jadi identitasmu|Tanda tangani::menyetujui aksi|Blockchain mencatat::tanpa akun &amp; kata sandi" data-caption="Di Web3, dompet menggantikan email dan kata sandi"></div>
+
+
 <table class="tbl">
   <tr><th></th><th>Web2 (sekarang)</th><th>Web3</th></tr>
   <tr><td>Kepemilikan data</td><td>Perusahaan (Google, dll)</td><td>Pengguna</td></tr>
@@ -851,6 +877,9 @@ contract Penyimpanan {
           duration: "10 menit",
           content: `
 <p>Dunia crypto penuh peluang sekaligus jebakan. Keamanan adalah tanggung jawabmu sendiri — tidak ada bank yang membatalkan transaksi.</p>
+
+<div data-diagram="layers" data-items="Jangan bagikan seed phrase|Pakai dompet hardware|Cek alamat kontrak resmi|Curigai imbal hasil pasti|Mulai dari nominal kecil" data-caption="Lima lapis pertahanan — yang paling atas tidak bisa ditawar"></div>
+
 
 <h3>Penipuan yang sering terjadi</h3>
 <ul>
@@ -925,6 +954,9 @@ contract Penyimpanan {
           duration: "11 menit",
           content: `
 <p>Sebelum menyentuh uang sungguhan, semua developer Web3 berlatih di <b>testnet</b> — jaringan uji coba yang gratis dan tanpa risiko.</p>
+
+<div data-diagram="pipeline" data-stages="Pasang MetaMask::ekstensi di browser|Simpan seed phrase::tulis di kertas, offline|Pilih jaringan uji::Sepolia testnet|Minta ETH uji::gratis dari faucet" data-caption="Empat langkah sebelum menyentuh uang sungguhan"></div>
+
 
 <h3>Langkah-langkah</h3>
 <ol>
@@ -1126,6 +1158,9 @@ console.log("Berhasil ditambah!");</pre>
           content: `
 <p>Di luar harga koin, blockchain dipakai untuk hal-hal nyata:</p>
 
+<div data-diagram="cycle" data-steps="Tulis kontrak|Uji di testnet|Audit keamanan|Rilis ke mainnet|Pantau &amp; tanggapi" data-center="tiap rilis" data-caption="Kontrak yang sudah rilis tidak bisa ditambal — urutan ini tidak boleh dilompati"></div>
+
+
 <h3>Penggunaan nyata</h3>
 <ul>
   <li><b>Pembayaran lintas negara</b> — kirim nilai cepat & murah tanpa bank perantara.</li>
@@ -1283,6 +1318,9 @@ console.log("Setelah blok 0 diubah, sah?", sah());</div>
           content: `
 <p>Blockchain berdiri di atas satu alat matematika: <b>fungsi hash kriptografis</b>. Ia mengubah data apa pun menjadi "sidik jari" digital berukuran tetap.</p>
 
+<div data-diagram="pipeline" data-stages="Masukan apa pun::1 huruf atau 1 buku|Fungsi hash::diaduk searah|Keluaran::panjangnya selalu sama|Ubah 1 huruf::hasil berubah total" data-caption="Empat sifat hash yang membuat blockchain mungkin"></div>
+
+
 <h3>Empat sifat kunci</h3>
 <ul>
   <li><b>Deterministik</b> — input sama selalu menghasilkan output sama.</li>
@@ -1342,6 +1380,9 @@ console.log("Ubah 1 huruf -> hash berubah total (efek avalanche).");</div>
           duration: "12 menit",
           content: `
 <p>Bagaimana kamu membuktikan "ini transaksiku" tanpa membocorkan rahasia? Jawabannya: <b>kriptografi kunci publik (asimetris)</b>.</p>
+
+<div data-diagram="sign" ></div>
+
 
 <h3>Sepasang kunci yang terhubung</h3>
 <ul>
@@ -1459,6 +1500,9 @@ console.log("Ubah 1 huruf -> hash berubah total (efek avalanche).");</div>
           duration: "11 menit",
           content: `
 <p>Ruang di dalam sebuah blok <b>terbatas</b>. Karena langka, ada mekanisme ekonomi untuk mengaturnya: <b>gas & fee</b>.</p>
+
+<div data-diagram="stack" data-parts="Base fee (dibakar):55|Priority fee (tip penambang):20|Sisa limit yang dikembalikan:25" data-caption="Ke mana perginya biaya gas yang kamu bayar"></div>
+
 
 <h3>Konsep</h3>
 <ul>
@@ -1596,6 +1640,9 @@ console.log("Ubah 1 huruf -> hash berubah total (efek avalanche).");</div>
           content: `
 <p>Ada kelemahan mendasar smart contract: ia <b>tidak bisa mengakses data di luar blockchain</b> (harga, cuaca, hasil pertandingan). Blockchain sengaja "tertutup" demi konsistensi.</p>
 
+<div data-diagram="pipeline" data-stages="Dunia nyata::harga, cuaca, skor|Oracle::beberapa sumber independen|Konsensus::ambil nilai tengah|Smart contract::baru bisa bertindak" data-caption="Blockchain buta terhadap dunia luar — oracle menjadi matanya"></div>
+
+
 <div class="callout warn">
 <b>Masalahnya:</b> banyak aplikasi butuh data dunia nyata. Asuransi panen butuh data cuaca; DeFi butuh harga aset terkini. Bagaimana smart contract mendapatkannya?
 </div>
@@ -1653,6 +1700,9 @@ console.log("Ubah 1 huruf -> hash berubah total (efek avalanche).");</div>
           duration: "11 menit",
           content: `
 <p><b>DAO (Decentralized Autonomous Organization)</b> adalah organisasi yang dikelola oleh <b>komunitas lewat aturan di smart contract</b> — bukan oleh bos atau dewan direksi tunggal.</p>
+
+<div data-diagram="network" data-center="Kas DAO" data-nodes="Anggota A|Anggota B|Anggota C|Anggota D|Anggota E|Anggota F" data-caption="Tidak ada direktur — setiap pemegang token ikut memutuskan penggunaan kas"></div>
+
 
 <h3>Cara kerja</h3>
 <ul>
@@ -1714,6 +1764,9 @@ console.log("Ubah 1 huruf -> hash berubah total (efek avalanche).");</div>
           content: `
 <p><b>Zero-Knowledge Proof (ZKP)</b> adalah salah satu terobosan kriptografi paling menakjubkan: <b>membuktikan sesuatu itu benar TANPA mengungkap datanya</b>.</p>
 
+<div data-diagram="pipeline" data-stages="Pembukti::memegang rahasia|Tantangan acak::diberikan pemeriksa|Jawaban benar::tanpa membuka rahasia|Diulang berkali-kali::peluang menipu menyusut" data-caption="Membuktikan tahu sesuatu, tanpa memberi tahu apa isinya"></div>
+
+
 <div class="callout">
 <b>Analogi "gua Ali Baba":</b> Kamu bisa membuktikan bahwa kamu tahu kata sandi sebuah pintu rahasia — dengan cara masuk lalu keluar dari sisi yang diminta — <b>tanpa pernah menyebutkan kata sandinya</b>. Verifikator yakin kamu tahu, tapi tak belajar apa sandinya.
 </div>
@@ -1737,6 +1790,8 @@ console.log("Ubah 1 huruf -> hash berubah total (efek avalanche).");</div>
 <div class="callout">
 <b>Selamat! 🎓</b> Kamu kini menguasai topik Web3 lanjutan: Layer 2, oracle, DAO, dan zero-knowledge proof — fondasi tren blockchain modern.
 </div>
+
+<div data-demo="zkp-cave"></div>
 `,
           keyPoints: [
             "Zero-Knowledge Proof membuktikan sesuatu benar tanpa mengungkap datanya.",
@@ -1787,6 +1842,9 @@ console.log("Ubah 1 huruf -> hash berubah total (efek avalanche).");</div>
           duration: "13 menit",
           content: `
 <p>Bursa saham memakai <b>order book</b> (mencocokkan pembeli & penjual). Bursa terdesentralisasi (DEX) seperti Uniswap memakai cara berbeda: <b>Automated Market Maker (AMM)</b>.</p>
+
+<div data-diagram="cycle" data-steps="Penyedia setor 2 aset|Rumus x*y=k tentukan harga|Penukar bertransaksi|Fee dibagi ke penyedia" data-center="AMM" data-caption="Tidak ada buku pesanan — harga ditentukan rumus, bukan tawar-menawar"></div>
+
 
 <h3>Liquidity Pool</h3>
 <p>Alih-alih pembeli & penjual, ada <b>kolam likuiditas</b> berisi pasangan token (mis. ETH & USDC) yang disetor <b>Liquidity Provider (LP)</b>. Kamu menukar langsung dengan kolam ini.</p>
@@ -1859,6 +1917,9 @@ console.log("Harga naik jadi ~ " + Math.round(yBaru / xBaru) + " USDC (slippage)
           content: `
 <p><b>Stablecoin</b> menjaga nilainya stabil (mis. 1 koin ≈ 1 USD) agar berguna untuk transaksi & tabungan. Tapi cara menjaga kestabilannya berbeda-beda — dan itu menentukan risikonya.</p>
 
+<div data-diagram="compare3" data-cols="Dijamin fiat::USDT, USDC::risiko: percaya penerbit|Dijamin kripto::DAI::risiko: jaminan ikut anjlok|Algoritmik::UST (sudah gagal)::risiko: spiral maut" data-caption="Tiga cara menjaga nilai tetap — dengan tiga jenis risiko berbeda"></div>
+
+
 <table class="tbl">
   <tr><th>Jenis</th><th>Cara dijamin</th><th>Contoh</th><th>Risiko utama</th></tr>
   <tr><td><b>Fiat-backed</b></td><td>Cadangan dolar sungguhan di bank</td><td>USDT, USDC</td><td>Transparansi & kepercayaan penerbit</td></tr>
@@ -1914,6 +1975,9 @@ console.log("Harga naik jadi ~ " + Math.round(yBaru / xBaru) + " USDC (slippage)
           duration: "11 menit",
           content: `
 <p>Ada banyak blockchain (Ethereum, Solana, BNB Chain, dll) yang <b>tidak saling bicara</b> secara alami. Bagaimana memindahkan aset dari satu chain ke chain lain? Lewat <b>bridge</b>.</p>
+
+<div data-diagram="pipeline" data-stages="Kunci aset::di rantai asal|Kirim bukti::ke rantai tujuan|Cetak versi terbungkus::misal wBTC|Tukar balik::bakar lalu buka kunci" data-caption="Aset tidak benar-benar berpindah — dikunci di sini, dicetak tiruannya di sana"></div>
+
 
 <h3>Cara kerja (umum)</h3>
 <ol>
@@ -1971,6 +2035,9 @@ console.log("Harga naik jadi ~ " + Math.round(yBaru / xBaru) + " USDC (slippage)
           duration: "11 menit",
           content: `
 <p>Crypto makin diatur pemerintah di seluruh dunia. Memahami regulasi & pajak penting agar tidak bermasalah secara hukum.</p>
+
+<div data-diagram="pipeline" data-stages="Transaksi di bursa::pajak dipotong otomatis|Catat semuanya::tanggal, jumlah, harga|Laporkan di SPT::sebagai harta &amp; penghasilan|Simpan bukti::minimal 5 tahun" data-caption="Tarif pajak kripto berubah-ubah; kewajiban mencatat tidak pernah berubah"></div>
+
 
 <h3>Di Indonesia (gambaran umum)</h3>
 <ul>
@@ -2041,6 +2108,9 @@ console.log("Harga naik jadi ~ " + Math.round(yBaru / xBaru) + " USDC (slippage)
           content: `
 <p>Kenapa Bitcoin sering disebut "emas digital"? Jawabannya ada pada <b>kebijakan moneter</b>-nya yang unik. Mari pahami dari dasar.</p>
 
+<div data-diagram="timeline" data-events="2009::50 BTC per blok|2012::25 BTC|2016::12,5 BTC|2020::6,25 BTC|2024::3,125 BTC" data-caption="Setiap ~4 tahun imbalan penambang dipotong separuh — inilah halving"></div>
+
+
 <h3>Fundamental: kelangkaan menciptakan nilai</h3>
 <p>Uang biasa (rupiah, dolar) bisa <b>dicetak lebih banyak</b> oleh bank sentral. Kalau dicetak berlebihan, nilainya turun (<b>inflasi</b>) — harga-harga naik. Bitcoin dirancang sebaliknya: <b>pasokannya dibatasi</b>.</p>
 
@@ -2095,6 +2165,9 @@ console.log("Harga naik jadi ~ " + Math.round(yBaru / xBaru) + " USDC (slippage)
           content: `
 <p>"Menambang Bitcoin" bukan menggali tanah. Mari pahami apa yang sebenarnya dilakukan komputer penambang, dari dasar.</p>
 
+<div data-diagram="cycle" data-steps="Kumpulkan transaksi|Tebak angka nonce|Hitung hash|Periksa jumlah nol" data-center="jutaan kali per detik" data-caption="Menambang bukan memecahkan teka-teki pintar — ini menebak berulang kali"></div>
+
+
 <h3>Fundamental: menambang = menebak angka</h3>
 <p>Ingat <b>fungsi hash</b> (sidik jari digital). Menambang pada dasarnya adalah <b>lomba menebak</b>: komputer mencoba jutaan angka (disebut <b>nonce</b>) sampai menemukan satu yang membuat hash blok memenuhi <b>syarat khusus</b> (mis. diawali sekian angka nol).</p>
 
@@ -2112,6 +2185,8 @@ console.log("Harga naik jadi ~ " + Math.round(yBaru / xBaru) + " USDC (slippage)
 <div class="callout">
 <b>💥 Kenapa ini mengamankan jaringan?</b> Untuk memalsukan riwayat, penyerang harus mengulang "kerja" komputasi lebih cepat dari seluruh jaringan jujur — praktis mustahil & sangat mahal. Biaya inilah yang menjaga Bitcoin aman.
 </div>
+
+<div data-demo="mining-sim"></div>
 `,
           keyPoints: [
             "Menambang = lomba menebak angka (nonce) sampai hash blok memenuhi syarat sulit.",
@@ -2150,6 +2225,9 @@ console.log("Harga naik jadi ~ " + Math.round(yBaru / xBaru) + " USDC (slippage)
           duration: "11 menit",
           content: `
 <p>Di crypto, <b>kamu adalah bankmu sendiri</b> — kebebasan besar sekaligus tanggung jawab besar. Memahami jenis dompet menentukan seberapa aman asetmu.</p>
+
+<div data-diagram="compare3" data-cols="Dompet panas::selalu tersambung internet::untuk belanja harian|Dompet dingin::offline, hardware::untuk simpanan besar|Titip di bursa::kunci dipegang bursa::bukan sepenuhnya milikmu" data-caption="Bukan kuncimu, bukan koinmu"></div>
+
 
 <h3>Custodial vs Non-Custodial (siapa pegang kunci?)</h3>
 <table class="tbl">
@@ -2223,6 +2301,9 @@ console.log("Harga naik jadi ~ " + Math.round(yBaru / xBaru) + " USDC (slippage)
           duration: "12 menit",
           content: `
 <p>Selama ini crypto sering dianggap "tak bisa dianalisis seperti bisnis". Sebagian benar — tapi <b>lebih banyak yang bisa</b> daripada yang orang kira. Mari pakai kacamata akuntansi.</p>
+
+<div data-diagram="compare3" data-cols="Pendapatan::fee dari pengguna::seperti omzet|Beban::insentif token::seperti biaya pemasaran|Laba protokol::fee − insentif::sering ternyata negatif" data-caption="Protokol punya 'laporan keuangan' — hanya namanya berbeda"></div>
+
 
 <h3>Fundamental: protokol juga menghasilkan uang</h3>
 <p>Banyak protokol memungut <b>biaya (fee)</b> dari penggunanya — persis seperti perusahaan memungut harga dari pelanggan:</p>
@@ -2703,6 +2784,9 @@ Artinya RWA <b>tetap membutuhkan kepercayaan pada pihak di dunia nyata</b> — t
           content: `
 <p>Kamu sudah tahu NFT itu token unik. Sekarang kita bahas <b>lebih dalam &amp; lebih jujur</b> — termasuk pelajaran mahal dari GameFi.</p>
 
+<div data-diagram="compare3" data-cols="Janjinya::kepemilikan digital sejati::game yang menghasilkan|Kenyataannya::sebagian besar nilainya nol::pemain berhenti, ekonomi runtuh|Yang bertahan::punya guna nyata::bukan sekadar spekulasi" data-caption="Menilai NFT &amp; GameFi apa adanya"></div>
+
+
 <h3>Sebenarnya kamu memiliki apa?</h3>
 <div class="callout warn">
 <b>Fakta yang sering disalahpahami:</b> gambar NFT biasanya <b>tidak disimpan di blockchain</b> (terlalu besar &amp; mahal). Yang tercatat di blockchain umumnya hanya <b>bukti kepemilikan + tautan</b> ke gambar yang disimpan di tempat lain. Kalau penyimpanannya mati, gambarnya bisa <b>hilang</b> — meski tokenmu tetap ada.
@@ -2979,6 +3063,9 @@ console.log("Di sini p cuma 23. Kripto nyata memakai angka ratusan digit.");</di
           content: `
 <p>Keamanan Bitcoin bukan sekadar gagasan — ia bisa <b>dihitung</b>. Mari lihat angkanya.</p>
 
+<div data-diagram="bar" data-bars="Punya 10% daya:10|Punya 30% daya:30|Punya 51% daya:51" data-unit="% blok" data-caption="Porsi blok yang ditemukan sebanding dengan porsi daya komputasi — di 51% penyerang bisa menulis ulang sejarah"></div>
+
+
 <h3>Fundamental: menambang = lotere berulang</h3>
 <div class="callout">
 Penambang mencoba angka acak (<b>nonce</b>) sampai hash blok memenuhi syarat. Kalau syaratnya "hash harus dimulai dengan <b>k bit nol</b>", maka:<br><br>
@@ -3163,6 +3250,9 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
           content: `
 <p>Kamu sudah tahu ada <b>kunci privat</b> &amp; <b>kunci publik</b>. Sekarang kita lihat gambaran utuhnya: sebenarnya ada <b>dua keluarga besar</b> kriptografi, dan keduanya dipakai bersamaan.</p>
 
+<div data-diagram="vs" data-left="SIMETRIS::Satu kunci, dua arah::Cepat &amp; ringan::Masalah: cara kirim kuncinya?" data-right="ASIMETRIS::Sepasang kunci::Lebih lambat::Kunci publik boleh disebar" data-caption="Dua keluarga besar kriptografi"></div>
+
+
 <h3>1. Kriptografi Simetris — satu kunci untuk semua</h3>
 <div class="callout">
 <b>Analogi gembok biasa:</b> satu kunci untuk <b>mengunci</b> dan <b>membuka</b>. Kalau aku mau mengirim kotak terkunci padamu, kamu butuh <b>salinan kunci yang sama</b>.
@@ -3240,6 +3330,9 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
           duration: "13 menit",
           content: `
 <p>Setiap kali kamu mengirim Bitcoin, yang sesungguhnya terjadi adalah <b>menandatangani</b> transaksi dengan <b>ECDSA</b>. Mari kita bedah.</p>
+
+<div data-diagram="pipeline" data-stages="Kunci privat::angka acak raksasa|Kurva eliptik::titik dasar dikalikan|Kunci publik::hasilnya, boleh disebar|Satu arah::mustahil dihitung balik" data-caption="Mudah dihitung maju, praktis mustahil dibalik — itulah dasar keamanannya"></div>
+
 
 <div class="callout">
 <b>ECDSA</b> = <b>E</b>lliptic <b>C</b>urve <b>D</b>igital <b>S</b>ignature <b>A</b>lgorithm — algoritma tanda tangan digital berbasis kurva eliptik.
@@ -3325,6 +3418,9 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
           duration: "14 menit",
           content: `
 <p>Seluruh keamanan crypto bertumpu pada satu asumsi: <b>ada soal matematika yang terlalu berat untuk dipecahkan komputer</b>. Komputer kuantum berpotensi mengubah asumsi itu — untuk sebagian soal.</p>
+
+<div data-diagram="timeline" data-events="Sekarang::kuantum masih terlalu kecil|Disadap::data dikumpulkan &amp; disimpan|Nanti::kuantum jadi cukup kuat|Dibongkar::data lama ikut terbuka" data-caption="Bahayanya bukan nanti — data yang disadap hari ini bisa dibuka kemudian"></div>
+
 
 <h3>Fundamental: apa bedanya komputer kuantum?</h3>
 <div class="callout">
@@ -3433,6 +3529,9 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
           content: `
 <p>Kalau RSA &amp; ECC bisa dipatahkan, apa penggantinya? Jawabannya: <b>Post-Quantum Cryptography (PQC)</b> — kriptografi yang dirancang tetap aman <b>bahkan terhadap komputer kuantum</b>.</p>
 
+<div data-diagram="compare3" data-cols="Berbasis kisi::Kyber, Dilithium::paling siap dipakai luas|Berbasis hash::SPHINCS+::paling dipercaya, lebih lambat|Berbasis kode::Classic McEliece::sangat aman, kunci besar" data-caption="Tiga pendekatan kriptografi tahan kuantum yang distandarkan NIST"></div>
+
+
 <div class="callout">
 <b>Idenya sederhana:</b> cari soal matematika yang <b>tetap berat</b> untuk komputer kuantum. Shor sangat hebat pada dua soal spesifik (faktorisasi &amp; logaritma diskret) — tapi tidak pada semua soal. PQC dibangun di atas soal-soal <b>jenis lain</b>.
 <br><br><b>Catatan penting:</b> PQC berjalan di komputer <b>biasa</b>. Kamu tidak butuh perangkat kuantum untuk memakainya.
@@ -3512,6 +3611,9 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
           duration: "13 menit",
           content: `
 <p>Kalau ECDSA harus diganti, bagaimana caranya mengganti sistem yang <b>menyimpan nilai triliunan rupiah</b>, <b>tidak punya bos</b>, dan <b>catatannya tak bisa diubah</b>? Ini tantangan yang benar-benar berat.</p>
+
+<div data-diagram="pipeline" data-stages="Inventaris::kriptografi apa yang dipakai|Hibrida::pasang lama &amp; baru bersamaan|Uji::pastikan semua tetap jalan|Pensiunkan::lepas algoritma lama" data-caption="Migrasi tidak bisa mendadak — inilah urutan yang dipakai di dunia nyata"></div>
+
 
 <h3>Kenapa jauh lebih sulit daripada di perusahaan biasa</h3>
 <table class="tbl">

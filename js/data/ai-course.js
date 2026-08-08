@@ -316,6 +316,9 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
           content: `
 <p>Kata "algoritma" terdengar rumit, padahal kamu memakainya setiap hari.</p>
 
+<div data-diagram="pipeline" data-stages="Masukan::bahan yang tersedia|Langkah berurutan::dikerjakan satu per satu|Percabangan::jika begini, maka begitu|Keluaran::hasil yang sama tiap kali" data-caption="Algoritma itu resep — masukan yang sama selalu memberi hasil yang sama"></div>
+
+
 <div class="callout">
 <b>Algoritma</b> = <b>urutan langkah</b> untuk menyelesaikan suatu tugas. Titik.
 </div>
@@ -449,6 +452,8 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
   <li><b>2022–sekarang</b> — Era AI generatif: ChatGPT, gambar dari teks, dll.</li>
 </ul>
 
+<div data-diagram="timeline" data-events="1950::Uji Turing diusulkan|1956::Istilah 'AI' lahir|1997::Deep Blue kalahkan juara catur|2012::Deep learning meledak|2022::ChatGPT dibuka ke publik" data-caption="Tujuh dekade AI — perhatikan jeda panjang di antara lompatannya"></div>
+
 <h3>Tiga tingkatan AI</h3>
 <table class="tbl">
   <tr><th>Jenis</th><th>Penjelasan</th><th>Status</th></tr>
@@ -494,6 +499,9 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
           duration: "8 menit",
           content: `
 <p>AI tidak bisa belajar tanpa <b>data</b>. Data adalah contoh-contoh yang dipelajari AI agar bisa menemukan pola.</p>
+
+<div data-diagram="pipeline" data-stages="Data mentah::berantakan, banyak kosong|Dibersihkan::isi yang kosong, buang ganda|Dibagi::latih 80% / uji 20%|Melatih model::belajar polanya" data-caption="Perjalanan data sebelum jadi model — 80% pekerjaan AI ada di dua kotak pertama"></div>
+
 
 <h3>Jenis data</h3>
 <ul>
@@ -675,6 +683,9 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
           content: `
 <p><b>Neural network</b> (jaringan saraf tiruan) terinspirasi cara kerja otak. Ia tersusun dari banyak "neuron" buatan yang terhubung berlapis-lapis.</p>
 
+<div data-diagram="pipeline" data-stages="Lapisan input::angka mentah masuk|Lapisan tersembunyi::mencari pola bertingkat|Fungsi aktivasi::menentukan sinyal diteruskan|Lapisan output::jawaban akhir" data-caption="Isyarat mengalir dari kiri ke kanan, satu lapisan pada satu waktu"></div>
+
+
 <h3>Strukturnya</h3>
 <ul>
   <li><b>Input layer</b> — menerima data (mis. piksel gambar).</li>
@@ -723,6 +734,9 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
           duration: "9 menit",
           content: `
 <p>Dua bidang AI paling populer:</p>
+
+<div data-diagram="compare3" data-cols="NLP::mengolah bahasa::teks diubah jadi angka|Computer Vision::mengolah gambar::piksel diubah jadi angka|Intinya sama::mencari pola::dari deretan angka" data-caption="Dua bidang berbeda, satu prinsip yang sama"></div>
+
 
 <h3>NLP (Natural Language Processing)</h3>
 <p>Membuat komputer memahami & menghasilkan <b>bahasa manusia</b>. Tantangannya: bahasa penuh ambiguitas dan konteks.</p>
@@ -840,6 +854,9 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
           content: `
 <p><b>LLM (Large Language Model)</b> seperti ChatGPT adalah neural network raksasa yang dilatih membaca sebagian besar teks di internet. Inti kerjanya mengejutkan sederhana:</p>
 
+<div data-diagram="pipeline" data-stages="Teks masuk::kalimat darimu|Tokenisasi::dipotong jadi kepingan|Embedding::tiap kepingan jadi angka|Prediksi::tebak kepingan berikutnya" data-caption="LLM tidak 'memahami' — ia menebak kelanjutan paling mungkin, berulang kali"></div>
+
+
 <div class="callout">
 <b>Tugas utamanya:</b> menebak <b>kata berikutnya</b> yang paling masuk akal. "Langit berwarna ___" → "biru". Dengan melakukan ini berulang, ia menyusun kalimat, paragraf, bahkan kode program.
 </div>
@@ -954,6 +971,9 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
           content: `
 <p>Kamu tidak perlu melatih model sendiri untuk membuat aplikasi AI. Cukup pakai model yang sudah ada lewat <b>API</b>.</p>
 
+<div data-diagram="pipeline" data-stages="Pertanyaan::dari pengguna|Cari dokumen::yang paling relevan|Sisipkan ke prompt::sebagai bahan bacaan|Model menjawab::berdasar dokumen itu" data-caption="Alur RAG: model diberi bahan bacaan dulu, baru diminta menjawab"></div>
+
+
 <h3>API = jembatan ke AI</h3>
 <p><b>API</b> (Application Programming Interface) memungkinkan aplikasimu mengirim prompt ke model AI (mis. Claude/GPT) dan menerima jawaban, lewat kode. Kamu fokus membangun produk, penyedia mengurus modelnya.</p>
 
@@ -1015,6 +1035,9 @@ tampilkan(jawaban);</pre>
           duration: "10 menit",
           content: `
 <p>AI berkuasa, maka tanggung jawab penggunaannya penting. Beberapa isu utama:</p>
+
+<div data-diagram="matrix" data-cells="Bias &amp; diskriminasi|Deepfake &amp; penipuan|Halusinasi jawaban|Hilangnya pekerjaan" data-xlabel="Makin sulit dicegah" data-ylabel="Makin besar dampaknya" data-caption="Empat risiko utama AI — yang di kanan tidak bisa diselesaikan oleh aturan teknis saja"></div>
+
 
 <h3>Tantangan etika</h3>
 <ul>
@@ -1312,6 +1335,9 @@ const res = await client.messages.create({
           content: `
 <p>Setelah merangkai semuanya manual, kamu akan sadar banyak bagian berulang: prompt template, memori, RAG, pemanggilan tool. <b>LangChain</b> adalah framework populer yang menyediakan "blok bangunan" siap pakai agar membangun aplikasi LLM jauh lebih cepat.</p>
 
+<div data-diagram="cycle" data-steps="Terima permintaan|Pilih alat yang cocok|Jalankan alat|Rangkai jawaban" data-center="orkestrasi" data-caption="Kerangka kerja seperti LangChain mengurus perpindahan antar-langkah ini"></div>
+
+
 <h3>Apa yang ditawarkan LangChain?</h3>
 <ul>
   <li><b>Model wrappers</b> — antarmuka seragam ke berbagai LLM (termasuk Claude).</li>
@@ -1386,6 +1412,9 @@ console.log(hasil.content);</pre>
           duration: "12 menit",
           content: `
 <p>Membuat demo itu mudah; membuatnya <b>siap produksi</b> butuh perhatian pada tiga hal: keamanan, biaya, dan kualitas.</p>
+
+<div data-diagram="cycle" data-steps="Pantau biaya &amp; mutu|Kumpulkan keluhan|Perbaiki prompt/model|Rilis versi baru" data-center="terus" data-caption="Aplikasi AI tidak pernah benar-benar selesai — ia dirawat dalam siklus"></div>
+
 
 <h3>🔒 Keamanan</h3>
 <ul>
@@ -1608,6 +1637,9 @@ console.log("RAG memilih dokumen dengan skor tertinggi sebagai konteks.");</div>
           content: `
 <p>Bagaimana persisnya model "belajar"? Inti matematikanya cuma dua: <b>loss</b> dan <b>gradient descent</b>.</p>
 
+<div data-diagram="cycle" data-steps="Model menebak|Hitung selisih (loss)|Cari arah menurun (gradient)|Geser bobot sedikit" data-center="ribuan kali" data-caption="Belajar = mengulang empat langkah ini sampai selisihnya cukup kecil"></div>
+
+
 <h3>Loss = ukuran kesalahan</h3>
 <p><b>Loss</b> (fungsi kerugian) mengubah "seberapa salah" model menjadi satu angka. Tujuan training: <b>membuat loss sekecil mungkin</b>.</p>
 
@@ -1732,6 +1764,9 @@ console.log("=> Konvergen menuju x = 3 (titik minimum). Itulah 'belajar'.");</di
           content: `
 <p>Tujuan sejati AI bukan pintar di data latihan, melainkan <b>generalisasi</b> — bekerja baik pada data <b>baru</b> yang belum pernah dilihat.</p>
 
+<div data-diagram="compare3" data-cols="Underfitting::model terlalu sederhana::salah di data latih DAN data baru|Pas (ideal)::kerumitan seimbang::baik di keduanya|Overfitting::model terlalu rumit::hafal data latih, gagal di data baru" data-caption="Tiga keadaan model — yang dikejar adalah yang tengah"></div>
+
+
 <h3>Dua penyakit model</h3>
 <table class="tbl">
   <tr><th></th><th>Bias tinggi (Underfitting)</th><th>Variance tinggi (Overfitting)</th></tr>
@@ -1797,6 +1832,9 @@ console.log("=> Konvergen menuju x = 3 (titik minimum). Itulah 'belajar'.");</di
           content: `
 <p>Sejauh ini kita memakai <b>satu</b> AI. Tapi tugas rumit sering lebih baik ditangani <b>beberapa agen AI yang bekerja sama</b> — seperti sebuah tim.</p>
 
+<div data-diagram="network" data-center="Satu tugas besar" data-nodes="Agen Peneliti|Agen Penulis|Agen Pemeriksa|Agen Perangkum" data-caption="Multi-agent: satu tugas besar dipecah ke beberapa agen dengan peran berbeda"></div>
+
+
 <h3>Ide multi-agent</h3>
 <p>Alih-alih satu AI melakukan semuanya, kamu beri <b>peran</b> berbeda ke beberapa agen, lalu mereka berkolaborasi. Contoh membuat artikel:</p>
 <ul>
@@ -1861,6 +1899,9 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
           content: `
 <p>Di modul fundamental kamu belajar RAG mencari dokumen lewat <b>kemiripan vektor</b>. Untuk jutaan dokumen, pencarian itu butuh mesin khusus: <b>vector database</b>.</p>
 
+<div data-diagram="pipeline" data-stages="Dokumen::dipotong kecil-kecil|Embedding::tiap potongan jadi vektor|Disimpan::di vector database|Dicari::yang paling mirip pertanyaan" data-caption="Vector database mencari berdasar kemiripan makna, bukan kecocokan kata"></div>
+
+
 <h3>Apa yang dilakukannya?</h3>
 <ul>
   <li>Menyimpan <b>embedding</b> (vektor) dari ribuan/jutaan potongan teks.</li>
@@ -1923,6 +1964,9 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
           duration: "12 menit",
           content: `
 <p>Ada tiga cara "menyesuaikan" LLM agar cocok dengan kebutuhanmu. Memilih yang tepat menghemat banyak biaya & usaha.</p>
+
+<div data-diagram="compare3" data-cols="Prompting::ubah cara bertanya::termurah, coba ini dulu|RAG::beri bahan bacaan::untuk data yang berubah|Fine-tuning::latih ulang model::untuk gaya &amp; format tetap" data-caption="Naik tingkat hanya kalau tingkat sebelumnya benar-benar tidak cukup"></div>
+
 
 <table class="tbl">
   <tr><th>Cara</th><th>Apa itu</th><th>Paling cocok untuk</th></tr>
@@ -2048,6 +2092,9 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
           content: `
 <p>AI generatif tidak hanya untuk teks. Alat seperti <b>DALL·E, Midjourney, & Stable Diffusion</b> membuat gambar dari deskripsi teks. Rahasianya: <b>diffusion model</b>.</p>
 
+<div data-diagram="pipeline" data-stages="Noise murni::acak total|Tebak noise::model menandai bagian acak|Hapus sedikit::gambar mulai terlihat|Ulangi 20-50x::sampai jernih" data-caption="Diffusion tidak melukis dari nol — ia menghapus keacakan sedikit demi sedikit"></div>
+
+
 <h3>Cara kerja (intuisi)</h3>
 <p>Bayangkan sebuah foto yang perlahan ditutupi "bintik-bintik" (noise) sampai jadi acak total. Diffusion model belajar melakukan <b>kebalikannya</b>:</p>
 <ol>
@@ -2066,6 +2113,8 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
   <li>👍 Alat kreatif dahsyat: desain, ilustrasi, prototipe cepat.</li>
   <li>👎 Kekhawatiran nyata: <b>deepfake</b>, hak cipta (dilatih dari karya orang), dan dampak pada pekerjaan kreatif.</li>
 </ul>
+
+<div data-demo="diffusion"></div>
 `,
           keyPoints: [
             "Diffusion model membuat gambar dengan menghapus noise acak sedikit demi sedikit, diarahkan oleh teks prompt.",
@@ -2105,6 +2154,9 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
           duration: "12 menit",
           content: `
 <p>Ingat: LLM mentah hanya <b>menebak kata berikutnya</b> dari internet. Itu <b>tidak otomatis</b> membuatnya membantu, sopan, atau aman. Bagaimana ChatGPT/Claude jadi asisten yang baik? Lewat <b>RLHF</b> dan <b>alignment</b>.</p>
+
+<div data-diagram="cycle" data-steps="Model menjawab|Manusia memberi nilai|Model penilai dilatih|Model utama diperbaiki" data-center="RLHF" data-caption="RLHF: manusia tidak menulis jawabannya, hanya menilai mana yang lebih baik"></div>
+
 
 <h3>RLHF (Reinforcement Learning from Human Feedback)</h3>
 <ol>
@@ -2165,6 +2217,9 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
           duration: "11 menit",
           content: `
 <p>Kenapa YouTube, TikTok, & Shopee seolah tahu apa yang kamu suka? Itu kerja <b>sistem rekomendasi</b> — salah satu penerapan AI paling bernilai secara bisnis.</p>
+
+<div data-diagram="compare3" data-cols="Berbasis konten::mirip yang kamu suka::aman tapi membosankan|Kolaboratif::orang mirip kamu suka ini::bisa memberi kejutan|Gabungan::dipakai layanan besar::ambil kelebihan keduanya" data-caption="Tiga cara sistem rekomendasi menebak seleramu"></div>
+
 
 <h3>Dua pendekatan utama</h3>
 <table class="tbl">
@@ -2304,6 +2359,9 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
           content: `
 <p>Selama ini kita banyak membahas neural network. Padahal untuk banyak masalah bisnis, algoritma <b>klasik</b> yang lebih sederhana justru lebih pas. Yang paling mudah dipahami: <b>Decision Tree</b>.</p>
 
+<div data-diagram="tree" data-nodes="Berbulu?::Menggonggong?::Bisa terbang?" data-leaves="Anjing|Kucing|Burung|Ikan" data-caption="Pohon keputusan: rangkaian pertanyaan ya/tidak sampai tiba di jawaban"></div>
+
+
 <h3>Fundamental: ini cuma "20 pertanyaan"</h3>
 <p>Kamu pasti pernah main tebak-tebakan "20 pertanyaan": lewat serangkaian pertanyaan <b>ya/tidak</b>, kamu menyempit ke satu jawaban. <b>Decision Tree</b> bekerja persis begitu.</p>
 
@@ -2327,6 +2385,8 @@ Model menyusun pertanyaan-pertanyaan ini <b>otomatis dari data</b>, memilih pert
 <div class="callout warn">
 <b>Kelemahan:</b> satu pohon mudah <b>overfitting</b> (menghafal data latih). Solusinya ada di pelajaran berikutnya: gabungkan banyak pohon (Random Forest).
 </div>
+
+<div data-demo="decision-tree"></div>
 `,
           keyPoints: [
             "Decision Tree = serangkaian pertanyaan ya/tidak yang menuntun ke keputusan (seperti '20 pertanyaan').",
@@ -2365,6 +2425,9 @@ Model menyusun pertanyaan-pertanyaan ini <b>otomatis dari data</b>, memilih pert
           duration: "10 menit",
           content: `
 <p>Satu Decision Tree mudah keliru. Solusinya memakai prinsip yang sudah kamu kenal: <b>kebijaksanaan orang banyak</b>.</p>
+
+<div data-diagram="network" data-center="Suara terbanyak: Kucing" data-nodes="Pohon 1: Kucing|Pohon 2: Anjing|Pohon 3: Kucing|Pohon 4: Kucing|Pohon 5: Kucing" data-caption="Random Forest: tiap pohon memutuskan sendiri, jawaban akhir diambil dari suara terbanyak"></div>
+
 
 <h3>Fundamental: tebakan gabungan lebih pintar</h3>
 <p>Kalau kamu bertanya "berapa jumlah permen di toples?" ke <b>satu</b> orang, tebakannya bisa jauh meleset. Tapi <b>rata-rata tebakan 100 orang</b> sering sangat dekat dengan jawaban benar. Itulah <b>ensemble</b> (penggabungan).</p>
@@ -2421,6 +2484,9 @@ Model menyusun pertanyaan-pertanyaan ini <b>otomatis dari data</b>, memilih pert
           duration: "10 menit",
           content: `
 <p>Dua algoritma klasik lagi yang intuitif — dan menutup gambaran "ML selain neural network".</p>
+
+<div data-diagram="compare3" data-cols="k-NN::data sudah berlabel::tanya tetangga terdekat|k-Means::data tanpa label::kelompokkan yang mirip|Bedanya::terbimbing vs tidak::ada label atau tidak" data-caption="Sama-sama soal 'kedekatan', beda pada ada tidaknya label"></div>
+
 
 <h3>k-NN: "Kamu mirip siapa?"</h3>
 <p><b>k-Nearest Neighbors</b> mengklasifikasikan sesuatu berdasarkan <b>tetangga terdekatnya</b>. Untuk menebak selera film seseorang, lihat beberapa orang yang paling mirip dengannya — kemungkinan seleranya serupa.</p>
@@ -2491,6 +2557,9 @@ Model menyusun pertanyaan-pertanyaan ini <b>otomatis dari data</b>, memilih pert
           duration: "13 menit",
           content: `
 <p>Kamu sudah bisa <b>membangun</b> aplikasi AI. Pertanyaan berikutnya yang menentukan hidup-matinya: <b>apakah tiap pengguna menghasilkan untung?</b> Ini pertemuan antara jalur AI dan jalur Akuntansi.</p>
+
+<div data-diagram="stack" data-parts="Biaya token model:55|Vector DB &amp; penyimpanan:15|Server &amp; jaringan:15|Dukungan pengguna:15" data-caption="Contoh rincian biaya melayani satu pengguna produk AI — biaya token biasanya yang terbesar"></div>
+
 
 <h3>Fundamental: kenapa AI beda dari software biasa</h3>
 <table class="tbl">
@@ -3017,6 +3086,9 @@ console.log("Catatan: metode ini TIDAK bisa meramal kejutan mendadak.");</div>
           duration: "13 menit",
           content: `
 <p>Sampai di sini kamu sudah paham <b>cara berpikir</b> AI. Sekarang pertanyaan praktisnya: kalau mau benar-benar membuatnya, <b>bahasa apa yang diketik</b>?</p>
+
+<div data-diagram="compare3" data-cols="Bahasa::cara bicara ke komputer::Python|Pustaka::bumbu siap pakai::NumPy, pandas|Kerangka kerja::dapur beserta alurnya::PyTorch" data-caption="Tiga istilah yang sering tertukar"></div>
+
 
 <h3>Fundamental: bahasa pemrograman itu apa?</h3>
 <div class="callout">
@@ -4353,6 +4425,9 @@ Mencari kombinasi terbaiknya disebut <b>hyperparameter tuning</b> (dicoba satu p
           content: `
 <p>Kamu sudah tahu komputer melihat gambar sebagai <b>angka piksel</b>. Tapi bagaimana ia mengenali "ini kucing"? Jawabannya: <b>CNN</b> (Convolutional Neural Network).</p>
 
+<div data-diagram="pipeline" data-stages="Gambar::grid angka piksel|Filter konvolusi::mencari garis &amp; tepi|Pooling::diperkecil, diambil intinya|Klasifikasi::ini kucing" data-caption="CNN membangun pemahaman bertingkat: tepi jadi bentuk, bentuk jadi objek"></div>
+
+
 <h3>Masalahnya dulu</h3>
 <div class="callout warn">
 Foto 1000×1000 piksel = <b>1 juta angka</b>. Kalau semuanya disambungkan ke neural network biasa, jumlah koneksinya meledak — terlalu berat, dan model gagal mengenali objek yang <b>bergeser posisi</b>.
@@ -4432,6 +4507,9 @@ Melatih CNN dari nol butuh jutaan gambar &amp; komputer mahal. <b>Transfer learn
           duration: "14 menit",
           content: `
 <p>CNN hebat untuk gambar. Tapi bagaimana dengan <b>urutan</b> — kalimat, musik, harga harian? Di sinilah arsitektur berbeda dibutuhkan.</p>
+
+<div data-diagram="pipeline" data-stages="Token masuk::semua sekaligus|Attention::tiap kata melihat kata lain|Pembobotan::mana yang paling penting|Keluaran::makna yang kaya konteks" data-caption="Kunci Transformer: memproses seluruh kalimat serentak, bukan satu per satu"></div>
+
 
 <h3>Masalah data berurutan</h3>
 <p>Dalam kalimat <i>"Saya lahir di Bandung, jadi bahasa ibu saya adalah ___"</i>, untuk menebak kata terakhir model harus <b>mengingat</b> kata "Bandung" yang jauh di depan. Model biasa tidak punya ingatan.</p>

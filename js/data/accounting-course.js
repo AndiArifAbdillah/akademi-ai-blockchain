@@ -26,6 +26,9 @@ const ACCOUNTING_COURSE = {
           content: `
 <p>Akuntansi terdengar rumit, tapi fondasinya sesederhana yang kamu lakukan dengan uang jajan: <b>ada uang masuk, ada uang keluar</b>.</p>
 
+<div data-diagram="pipeline" data-stages="Uang masuk::penjualan, modal|Uang keluar::belanja, gaji, sewa|Selisih::masuk − keluar|Sisa kas::yang benar-benar ada" data-caption="Sesederhana ini dasarnya — semua akuntansi tumbuh dari sini"></div>
+
+
 <h3>Dua arah uang</h3>
 <ul>
   <li><b>Uang masuk (pemasukan)</b> — uang yang kamu terima: gaji, hasil jualan, uang saku.</li>
@@ -204,6 +207,9 @@ const ACCOUNTING_COURSE = {
           content: `
 <p><b>Akuntansi</b> adalah sistem untuk <b>mencatat, mengelompokkan, dan melaporkan</b> seluruh kegiatan keuangan sebuah bisnis. Sering disebut <b>"bahasa bisnis"</b> karena lewat angka-angka inilah bisnis "berbicara" tentang kondisinya.</p>
 
+<div data-diagram="pipeline" data-stages="Kejadian::jual, beli, bayar|Dicatat::dengan aturan baku|Diringkas::menjadi laporan|Dibaca::untuk mengambil keputusan" data-caption="Akuntansi adalah bahasa — ini alur menerjemahkannya"></div>
+
+
 <div class="callout">
 <b>Analogi sederhana:</b> Bayangkan akuntansi seperti <b>buku harian keuangan</b> warung. Setiap uang masuk dan keluar dicatat rapi, sehingga di akhir bulan kamu tahu: untung atau rugi? punya utang berapa? uang kas sisa berapa?
 </div>
@@ -325,6 +331,9 @@ const ACCOUNTING_COURSE = {
           duration: "9 menit",
           content: `
 <p>Setiap transaksi dicatat ke dalam <b>akun</b>. Semua akun masuk ke salah satu dari <b>lima jenis</b> berikut:</p>
+
+<div data-diagram="layers" data-items="Aset — yang dimiliki|Kewajiban — yang dipinjam|Ekuitas — bagian pemilik|Pendapatan — uang masuk dari usaha|Beban — biaya menjalankan usaha" data-caption="Lima jenis akun — semua transaksi pasti masuk salah satunya"></div>
+
 
 <table class="tbl">
   <tr><th>Jenis Akun</th><th>Arti</th><th>Contoh</th></tr>
@@ -745,6 +754,9 @@ const ACCOUNTING_COURSE = {
           content: `
 <p><b>Rasio keuangan</b> mengubah angka laporan menjadi indikator yang mudah dibandingkan. Tiga kelompok utama:</p>
 
+<div data-diagram="layers" data-items="Profitabilitas — apakah untung?|Likuiditas — sanggup bayar utang pendek?|Solvabilitas — sanggup bayar utang panjang?|Efisiensi — secepat apa aset berputar?" data-caption="Empat keluarga rasio — bacalah berurutan dari atas"></div>
+
+
 <h3>1. Likuiditas — sanggup bayar utang jangka pendek?</h3>
 <ul>
   <li><b>Current Ratio</b> = Aset Lancar ÷ Kewajiban Lancar. Nilai > 1 berarti aset lancar cukup menutup utang jangka pendek.</li>
@@ -768,6 +780,8 @@ const ACCOUNTING_COURSE = {
 <div class="callout warn">
 <b>Ingat:</b> rasio bermakna saat <b>dibandingkan</b> — dengan periode lalu, pesaing, atau rata-rata industri. Satu angka sendirian tidak banyak bercerita.
 </div>
+
+<div data-demo="ratio-explorer"></div>
 `,
           keyPoints: [
             "Likuiditas (current ratio) menilai kemampuan bayar utang jangka pendek.",
@@ -805,6 +819,9 @@ const ACCOUNTING_COURSE = {
           duration: "10 menit",
           content: `
 <p>Tiga konsep penting dalam akuntansi sehari-hari bisnis:</p>
+
+<div data-diagram="cycle" data-steps="Beli persediaan (kas keluar)|Jual (jadi piutang)|Tagih piutang|Kas masuk lagi" data-center="siklus kas" data-caption="Modal kerja adalah uang yang terus berputar — makin cepat berputar, makin sedikit modal dibutuhkan"></div>
+
 
 <h3>1. Penyusutan (Depresiasi)</h3>
 <p>Aset jangka panjang (mesin, kendaraan) kehilangan nilai seiring waktu. Biayanya <b>disebar</b> selama masa manfaatnya, bukan dibebankan sekaligus.</p>
@@ -855,6 +872,9 @@ const ACCOUNTING_COURSE = {
           duration: "11 menit",
           content: `
 <p>Akuntansi bukan sekadar mencatat masa lalu — ia alat untuk <b>mengambil keputusan</b>.</p>
+
+<div data-diagram="compare3" data-cols="Biaya relevan::berubah karena keputusan::WAJIB dihitung|Sunk cost::terlanjur keluar::ABAIKAN sepenuhnya|Biaya peluang::hilang karena memilih A::paling sering dilupakan" data-caption="Tiga jenis biaya saat mengambil keputusan"></div>
+
 
 <h3>Biaya tetap vs variabel</h3>
 <ul>
@@ -1050,6 +1070,9 @@ const ACCOUNTING_COURSE = {
           content: `
 <p>Proyek crypto tidak punya laporan keuangan klasik, tapi punya datanya sendiri yang bisa "dibaca" untuk menilai kesehatan & risiko.</p>
 
+<div data-diagram="compare3" data-cols="Perusahaan::Laporan diaudit::Laba &amp; arus kas|Proyek kripto::Data on-chain terbuka::Fee protokol &amp; TVL|Pertanyaannya sama::Uang masuk dari mana?::Bisa bertahan tidak?" data-caption="Bahasanya berbeda, pertanyaan intinya sama persis"></div>
+
+
 <h3>1. Tokenomics (ekonomi token)</h3>
 <ul>
   <li><b>Total/Max supply</b> — berapa banyak token akan ada? Pasokan tak terbatas berisiko inflasi.</li>
@@ -1112,6 +1135,9 @@ const ACCOUNTING_COURSE = {
           content: `
 <p>Banyak bisnis untung di atas kertas tapi tetap kolaps karena <b>salah mengelola kas</b>. Berikut praktik pengelolaan keuangan bisnis.</p>
 
+<div data-diagram="cycle" data-steps="Catat semua transaksi|Susun laporan bulanan|Bandingkan dengan anggaran|Perbaiki keputusan" data-center="tiap bulan" data-caption="Keuangan bisnis dikelola dalam putaran bulanan, bukan sekali setahun"></div>
+
+
 <h3>Kebiasaan wajib</h3>
 <ol>
   <li><b>Pisahkan uang pribadi & bisnis</b> — rekening berbeda. Ini fondasi semua pencatatan.</li>
@@ -1171,6 +1197,9 @@ const ACCOUNTING_COURSE = {
           duration: "13 menit",
           content: `
 <p>Akuntansi adalah alat untuk membangun bisnis yang sehat. Beberapa konsep kunci untuk pemilik bisnis:</p>
+
+<div data-diagram="pipeline" data-stages="Ide::masalah nyata milik siapa?|Uji pasar::adakah yang mau membayar?|Model bisnis::untung per transaksi|Skala::tumbuh tanpa biaya ikut meledak" data-caption="Empat saringan sebelum sebuah bisnis layak dibesarkan"></div>
+
 
 <h3>Model bisnis & unit economics</h3>
 <ul>
@@ -1331,6 +1360,9 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
           content: `
 <p><b>Laba Bersih (Net Profit)</b> adalah angka paling akhir di laporan laba rugi — sering disebut <b>"bottom line"</b>. Inilah sisa uang setelah SEMUA dikurangi.</p>
 
+<div data-diagram="pipeline" data-stages="Pendapatan::seluruh penjualan|− HPP::jadi laba kotor|− Beban operasi::jadi laba operasi|− Bunga &amp; pajak::jadi laba bersih" data-caption="Empat lapis pengurangan dari penjualan sampai laba bersih"></div>
+
+
 <div class="callout">
 <b>Rumus:</b> Laba Bersih = Pendapatan − Semua Beban − Bunga − Pajak.<br>
 <b>Net Margin</b> = Laba Bersih ÷ Pendapatan × 100% (berapa % penjualan yang jadi laba).
@@ -1468,6 +1500,8 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
 <div class="callout warn">
 <b>Keterbatasan:</b> ROI dasar <b>mengabaikan waktu</b> (untung 50% dalam 1 bulan ≠ dalam 5 tahun) dan <b>risiko</b>. Untuk proyek jangka panjang, lengkapi dengan analisis lain.
 </div>
+
+<div data-demo="roi-calc"></div>
 `,
           keyPoints: [
             "ROI = (Keuntungan − Biaya) ÷ Biaya × 100%; alat keputusan universal.",
@@ -1504,6 +1538,9 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
           duration: "12 menit",
           content: `
 <p>Tiga rasio "return" ini menjawab: <b>seberapa efisien perusahaan mengubah modal menjadi laba?</b></p>
+
+<div data-diagram="compare3" data-cols="ROA::laba ÷ seluruh aset::seberapa produktif asetnya|ROE::laba ÷ modal sendiri::hasil untuk pemilik|ROIC::laba ÷ modal terpakai::paling jujur, abaikan utang" data-caption="Tiga ukuran efisiensi modal — penyebutnya yang membedakan"></div>
+
 
 <table class="tbl">
   <tr><th>Rasio</th><th>Rumus</th><th>Menjawab</th></tr>
@@ -1777,6 +1814,9 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
           content: `
 <p><b>PER (Price to Earnings Ratio)</b> = Harga ÷ EPS — sudah kita kenal. Masalahnya: PER <b>tidak memperhitungkan pertumbuhan</b>. Saham tumbuh cepat "pantas" lebih mahal daripada yang stagnan.</p>
 
+<div data-diagram="bar" data-bars="PER 10 / tumbuh 5%:2|PER 20 / tumbuh 20%:1|PER 30 / tumbuh 45%:0.67" data-unit=" PEG" data-caption="PER tinggi belum tentu mahal — PEG memperhitungkan pertumbuhannya. Makin kecil PEG, makin menarik."></div>
+
+
 <div class="callout">
 <b>PEG (Price/Earnings to Growth)</b> = PER ÷ Pertumbuhan laba tahunan (%). Ini menyeimbangkan harga dengan kecepatan pertumbuhan.
 </div>
@@ -1839,6 +1879,9 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
           content: `
 <p>Berapa "harga sesungguhnya" untuk mengambil alih seluruh perusahaan? Bukan sekadar harga sahamnya — melainkan <b>Enterprise Value</b>.</p>
 
+<div data-diagram="pipeline" data-stages="Kapitalisasi pasar::harga seluruh saham|+ Total utang::kamu ikut mewarisinya|− Kas::kamu ikut mendapatkannya|= Enterprise Value::harga ambil alih utuh" data-caption="Kenapa utang ditambah dan kas dikurangi"></div>
+
+
 <div class="callout">
 <b>Enterprise Value (EV)</b> = Kapitalisasi Pasar + Total Utang − Kas.<br>
 <i>Kenapa + utang & − kas? Kalau kamu membeli perusahaan, kamu mewarisi utangnya (menambah biaya) tapi juga mendapat kasnya (mengurangi biaya).</i>
@@ -1896,6 +1939,9 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
           duration: "14 menit",
           content: `
 <p>Kamu sudah belajar PER, PBV, PEG, dan EV/EBITDA satu per satu. Sekarang kita satukan: semuanya adalah <b>multiples</b>, dan cara memakainya punya aturan main sendiri yang disebut <b>valuasi relatif</b>.</p>
+
+<div data-diagram="bar" data-bars="Pesaing A:15|Pesaing B:16|Pesaing C:16|Rata-rata industri:15.7|Perusahaan target:12" data-unit="×" data-caption="Angka P/E baru bermakna setelah disandingkan dengan pembandingnya"></div>
+
 
 <h3>1. Apa itu "multiple"?</h3>
 <p><b>Multiple = kelipatan.</b> Ini rasio antara <b>harga</b> dengan suatu <b>ukuran kinerja</b> perusahaan.</p>
@@ -2107,6 +2153,9 @@ if (targetPE > rataPE) {
           content: `
 <p>Selain valuasi, kesehatan operasional dinilai lewat rasio <b>likuiditas</b> (kemampuan bayar jangka pendek) dan <b>efisiensi</b> (seberapa cepat aset berputar jadi uang).</p>
 
+<div data-diagram="layers" data-items="Rasio Kas — paling ketat|Quick Ratio — tanpa persediaan|Current Ratio — semua aset lancar" data-caption="Tiga tingkat ketatnya mengukur kemampuan bayar jangka pendek"></div>
+
+
 <h3>Likuiditas</h3>
 <table class="tbl">
   <tr><th>Rasio</th><th>Rumus</th><th>Arti</th></tr>
@@ -2249,6 +2298,9 @@ if (targetPE > rataPE) {
           content: `
 <p>Memahami dari mana biaya berasal membantumu menetapkan harga yang tepat & tahu produk mana yang benar-benar untung.</p>
 
+<div data-diagram="stack" data-parts="Bahan baku (variabel):40|Gaji tetap:25|Sewa &amp; listrik:15|Pemasaran:12|Lain-lain:8" data-caption="Contoh struktur biaya sebuah usaha — perhatikan mana yang ikut naik saat penjualan naik"></div>
+
+
 <h3>Berdasarkan keterlacakan ke produk</h3>
 <ul>
   <li><b>Biaya Langsung (Direct)</b> — bisa dilacak langsung ke satu produk: bahan baku, upah pekerja produksi.</li>
@@ -2271,6 +2323,8 @@ if (targetPE > rataPE) {
   <li><b>Profitabilitas produk</b>: setelah membagi overhead, mungkin ketahuan ada produk yang sebenarnya merugi.</li>
   <li><b>Kontrol biaya</b>: overhead adalah target utama efisiensi.</li>
 </ul>
+
+<div data-demo="cost-structure"></div>
 `,
           keyPoints: [
             "Biaya langsung bisa dilacak ke produk (bahan, upah produksi); overhead/tidak langsung tidak (listrik, sewa, supervisor).",
@@ -2311,6 +2365,9 @@ if (targetPE > rataPE) {
           duration: "12 menit",
           content: `
 <p>Pajak adalah kewajiban yang wajib dikelola dengan benar. Dua yang paling penting bagi bisnis di Indonesia: <b>PPN</b> dan <b>PPh</b>.</p>
+
+<div data-diagram="pipeline" data-stages="Pungut PPN::dari pembeli|Setor PPN::ke negara|Hitung laba::pendapatan − beban|Bayar PPh::atas laba" data-caption="PPN hanya numpang lewat; PPh diambil dari labamu sendiri"></div>
+
 
 <h3>PPN (Pajak Pertambahan Nilai)</h3>
 <ul>
@@ -2371,6 +2428,9 @@ if (targetPE > rataPE) {
           duration: "11 menit",
           content: `
 <p>Bagi banyak bisnis, <b>biaya karyawan adalah pengeluaran terbesar</b>. Dan biaya sesungguhnya <b>lebih dari sekadar gaji pokok</b>.</p>
+
+<div data-diagram="stack" data-parts="Gaji pokok:70|Tunjangan:15|BPJS &amp; jaminan:9|THR (dicicil bulanan):6" data-caption="Biaya karyawan bukan hanya gaji pokok — siapkan sekitar 1,3x dari angka yang dijanjikan"></div>
+
 
 <h3>Komponen biaya karyawan</h3>
 <ul>
@@ -2442,6 +2502,9 @@ if (targetPE > rataPE) {
           duration: "13 menit",
           content: `
 <p>Sekarang kita satukan semua yang sudah dipelajari dalam <b>satu contoh nyata</b> — dari transaksi mentah sampai laporan keuangan. Contoh: jasa desain <b>"Kreatif"</b> (angka dalam juta Rupiah).</p>
+
+<div data-diagram="cycle" data-steps="Transaksi|Jurnal|Buku besar|Neraca saldo|Laporan keuangan" data-center="tiap periode" data-caption="Siklus yang berulang setiap bulan, kuartal, dan tahun"></div>
+
 
 <h3>Langkah 1 — Transaksi</h3>
 <ol>
@@ -2655,6 +2718,9 @@ if (targetPE > rataPE) {
           duration: "10 menit",
           content: `
 <p>Sebelum belajar rumusnya, ada satu hal yang <b>wajib</b> dipahami — dan ini justru pelajaran terpenting di modul ini.</p>
+
+<div data-diagram="bar" data-bars="Buruk (peluang 20%):-30|Dasar (peluang 60%):15|Baik (peluang 20%):60" data-unit="%" data-caption="Bukan satu ramalan tunggal, tapi rentang kemungkinan beserta peluangnya"></div>
+
 
 <div class="callout warn">
 <b>Tidak ada rumus yang bisa menghitung "berapa % saham ini akan naik".</b> Masa depan dipengaruhi hal-hal tak terhitung: kondisi ekonomi, teknologi baru, keputusan manusia, keberuntungan. Siapa pun yang mengklaim punya rumus pasti — <b>patut dicurigai</b>.
@@ -2893,6 +2959,9 @@ console.log("Catatan: ini indikator risiko, BUKAN ramalan harga saham.");</div>
           duration: "13 menit",
           content: `
 <p>Karena masa depan tak pasti, cara paling jujur menilainya bukan satu angka, melainkan <b>beberapa kemungkinan</b>.</p>
+
+<div data-diagram="bar" data-bars="Skenario buruk (20%):-30|Skenario dasar (60%):15|Skenario baik (20%):60|Nilai harapan:15" data-unit="%" data-caption="Nilai harapan = rata-rata semua skenario, ditimbang peluangnya masing-masing"></div>
+
 
 <h3>1. Analisis Skenario</h3>
 <p>Buat <b>tiga versi</b> masa depan, bukan satu:</p>
@@ -3149,6 +3218,9 @@ Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kala
           content: `
 <p>Setelah tahu <b>ke mana</b> modal dialokasikan, pertanyaan berikutnya: <b>seberapa produktif modal itu bekerja?</b></p>
 
+<div data-diagram="pipeline" data-stages="Modal ditanam::pabrik, stok, sistem|Menghasilkan laba::dari modal itu|ROIC::laba ÷ modal terpakai|Di atas biaya modal?::barulah nilai tercipta" data-caption="Tumbuh saja tidak cukup — hasilnya harus melebihi biaya modalnya"></div>
+
+
 <div class="callout">
 <b>Fundamental:</b> bisnis pada dasarnya adalah <b>mesin yang mengubah modal menjadi laba</b>. Pertanyaan intinya sederhana: <b>tiap Rp1 modal menghasilkan berapa rupiah laba?</b> Itulah <b>return on capital</b> (lihat pelajaran ROE/ROA/ROIC).
 </div>
@@ -3367,6 +3439,9 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
           content: `
 <p>Bisnis bagus bisa dirusak manajemen buruk; bisnis biasa bisa diselamatkan manajemen hebat. Tapi bagaimana menilai manusia dengan "angka"? Ini yang dicari investor berpengalaman.</p>
 
+<div data-diagram="matrix" data-cells="Pintar tapi tak jujur — BAHAYA|Ideal — cari yang ini|Hindari sepenuhnya|Jujur tapi boros modal" data-xlabel="Makin jujur &amp; transparan" data-ylabel="Makin pandai alokasi modal" data-caption="Manajemen dinilai dari dua sumbu — pintar saja tidak cukup"></div>
+
+
 <h3>Ciri manajemen yang baik</h3>
 <ul>
   <li><b>Fokus &amp; disiplin</b> — tahu bisnis intinya, tidak tergoda melompat ke segala peluang.</li>
@@ -3431,6 +3506,9 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
           duration: "13 menit",
           content: `
 <p>Kita tutup dengan rangkuman praktis: ciri bisnis yang cenderung menang, dan jebakan yang sering menjatuhkan.</p>
+
+<div data-diagram="matrix" data-cells="Tumbuh tapi bakar uang — rapuh|Pemenang — tumbuh &amp; hasilkan kas|Menyusut &amp; merugi — jurang|Stabil tapi stagnan" data-xlabel="Makin besar arus kas bebas" data-ylabel="Makin cepat tumbuh" data-caption="Pertumbuhan tanpa kas adalah jebakan — perhatikan kuadran kiri atas"></div>
+
 
 <h3>✅ Pola bisnis pemenang</h3>
 <table class="tbl">
@@ -3514,6 +3592,9 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
           duration: "11 menit",
           content: `
 <p>Kamu sudah bisa <b>menilai</b> sebuah bisnis. Pertanyaan berikutnya: <b>siapa saja yang melakukan ini secara profesional</b>, dan bagaimana industrinya bekerja?</p>
+
+<div data-diagram="network" data-center="Uang investor" data-nodes="Reksa dana|Hedge fund|Private equity|Venture capital|Dana pensiun" data-caption="Semuanya mengelola uang orang lain — bedanya pada aturan main dan siapa yang boleh masuk"></div>
+
 
 <div class="callout">
 <b>Fundamental:</b> di dunia ini ada orang yang <b>punya uang</b> tapi tak punya waktu/keahlian mengelolanya, dan ada orang yang <b>punya keahlian</b> tapi tak punya cukup uang. Seluruh industri pengelolaan dana lahir dari pertemuan keduanya.
@@ -4082,6 +4163,9 @@ console.log("Rumusnya cuma berkata: uang sekarang dikali faktor pertumbuhan.");<
           content: `
 <p>Kita mulai dari yang paling dasar, lalu naik ke rumus pertumbuhan yang sering disalahhitung orang.</p>
 
+<div data-diagram="bar" data-bars="Kenaikan tahun 1:10|Kenaikan tahun 2:11|Kenaikan tahun 3:12.1" data-unit=" juta" data-caption="Modal Rp100 juta tumbuh 10% per tahun — persentasenya sama, tapi kenaikannya membesar. Itulah bunga berbunga."></div>
+
+
 <h3>Persen &amp; perubahan persen</h3>
 <div class="callout">
 <b>Persen</b> = per seratus. <b>Perubahan persen</b> = (Baru − Lama) ÷ Lama × 100%.<br>
@@ -4160,6 +4244,9 @@ console.log("Bukti: 100jt dikali 1,1487 sebanyak 5 kali = 200jt.");</div>
           duration: "13 menit",
           content: `
 <p>Ini rumus paling fundamental dalam keuangan — dasar dari DCF, kredit, tabungan, dan hampir semua keputusan investasi.</p>
+
+<div data-diagram="timeline" data-events="Sekarang::Rp100 juta|1 tahun::setara Rp110 jt|2 tahun::setara Rp121 jt|3 tahun::setara Rp133 jt" data-caption="Uang hari ini lebih berharga daripada nominal sama di masa depan (asumsi bunga 10%/tahun)"></div>
+
 
 <h3>Fundamental: uang punya "harga waktu"</h3>
 <div class="callout">
@@ -4570,6 +4657,9 @@ Inilah rumus <b>Terminal Value</b> pada DCF — cara menghitung nilai bisnis <b>
           duration: "13 menit",
           content: `
 <p>Pencatatan yang rapi tak ada artinya kalau <b>angkanya bisa dimanipulasi</b>. Di sinilah <b>pengendalian internal</b> berperan — dan ini relevan bahkan untuk usaha kecil.</p>
+
+<div data-diagram="compare3" data-cols="Tekanan::target mustahil, utang pribadi::motifnya|Kesempatan::pengawasan lemah::celahnya|Rasionalisasi::'nanti saya kembalikan'::pembenarannya" data-caption="Kecurangan butuh ketiganya sekaligus — hilangkan satu, kecurangan jauh lebih sulit"></div>
+
 
 <h3>Segitiga Kecurangan (Fraud Triangle)</h3>
 <p>Penelitian klasik menemukan kecurangan hampir selalu terjadi saat <b>tiga hal muncul bersamaan</b>:</p>
@@ -5048,6 +5138,9 @@ console.log("Ubah angka inflasi jadi 0.08 lalu jalankan lagi - lihat bedanya.");
           content: `
 <p>Siapa yang mengendalikan inflasi? <b>Bank sentral</b> — di Indonesia, <b>Bank Indonesia (BI)</b> — lewat <b>kebijakan moneter</b>.</p>
 
+<div data-diagram="cycle" data-steps="Inflasi naik|Bank sentral naikkan bunga|Pinjaman jadi mahal|Belanja &amp; harga melambat" data-center="moneter" data-caption="Suku bunga adalah rem dan gas perekonomian"></div>
+
+
 <div class="callout">
 <b>Kebijakan moneter</b> = kebijakan mengatur <b>jumlah uang beredar</b> dan <b>suku bunga</b> dalam perekonomian.
 <br><br><b>Tugas utama BI:</b> menjaga <b>stabilitas nilai rupiah</b> — artinya menjaga inflasi tetap terkendali dan nilai tukar relatif stabil.
@@ -5343,6 +5436,9 @@ console.log("Itu artinya B punya jauh lebih banyak dana untuk membangun.");</div
           duration: "13 menit",
           content: `
 <p>Penutup modul: ekonomi <b>tidak pernah bergerak lurus</b>. Ia bergerak dalam <b>siklus</b> — dan memahami posisimu dalam siklus itu sangat menentukan keputusan bisnis.</p>
+
+<div data-diagram="cycle" data-steps="Ekspansi|Puncak|Kontraksi|Dasar (trough)" data-center="berulang" data-caption="Ekonomi bergerak dalam siklus — strategi bisnis menyesuaikan posisi saat ini"></div>
+
 
 <h3>Empat fase siklus ekonomi</h3>
 <table class="tbl">

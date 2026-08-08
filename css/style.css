@@ -289,6 +289,10 @@ a:hover { text-decoration: underline; }
    VISUALISASI & DEMO INTERAKTIF
    ============================================================ */
 /* Diagram SVG */
+/* Tabel lebar digeser di dalam kotaknya sendiri, bukan menggeser seluruh halaman */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 18px 0; max-width: 100%; }
+.table-scroll > table { margin: 0; min-width: max-content; }
+
 .viz { margin: 22px 0; }
 .viz figcaption { text-align: center; color: var(--muted); font-size: .85rem; margin-bottom: 8px; }
 .viz-svg { width: 100%; height: auto; max-width: 520px; display: block; margin: 0 auto; }
@@ -303,6 +307,21 @@ a:hover { text-decoration: underline; }
 .ok-t { fill: var(--ok); } .bad-t { fill: var(--bad); }
 .vline { stroke: var(--muted); stroke-width: 2; }
 .vfill-text { fill: var(--muted); }
+/* dipakai generator diagram tambahan (tree, cycle, timeline, matrix, bar, network, stack, pipeline, compare3, sign) */
+.vline { fill: none; }
+.vline.dim { opacity: .35; stroke-dasharray: 5 5; stroke-width: 1.5; }
+.vt-xs { fill: var(--text); font-size: 11px; }
+.vring { fill: none; stroke: var(--border); stroke-width: 2; stroke-dasharray: 6 6; }
+.varrow { fill: var(--primary); stroke: none; }
+.vaxis { stroke: var(--border); stroke-width: 3; stroke-linecap: round; }
+.vdot { fill: var(--primary); stroke: var(--surface); stroke-width: 2; }
+.vfill { fill: var(--primary); }
+.vfill.neg { fill: var(--bad); }
+.vfill.s0 { fill: #6366f1; }
+.vfill.s1 { fill: #8b5cf6; }
+.vfill.s2 { fill: #16a34a; }
+.vfill.s3 { fill: #f59e0b; }
+.vfill.s4 { fill: #06b6d4; }
 
 /* Wadah demo */
 .demo { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: var(--radius); padding: 18px 20px; margin: 24px 0; box-shadow: var(--shadow); }
@@ -465,6 +484,45 @@ a:hover { text-decoration: underline; }
 .pc-net.good { background: rgba(16, 185, 129, .15); color: var(--ok); }
 .pc-net.bad { background: rgba(220, 38, 38, .12); color: var(--bad); }
 .pc-margin { font-size: .86rem; color: var(--muted); padding: 10px 0 6px; }
+
+/* ---- Demo interaktif generasi kedua (decision-tree, double-spend, mining-sim,
+        zkp-cave, ratio-explorer, roi-calc, diffusion, cost-structure) ---- */
+.dm-viz { margin: 14px 0 6px; }
+.dm-out { background: var(--surface-2); border-radius: 12px; padding: 6px 14px; margin-top: 12px; }
+.dm-line { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--border); font-size: .93rem; }
+.dm-line:last-child { border-bottom: none; }
+.dm-line b { text-align: right; white-space: nowrap; }
+.dm-line.teks b { white-space: normal; text-align: right; }
+.dm-line.big { font-size: 1.05rem; border-bottom: none; border-radius: 8px; padding: 12px; margin: 4px 0; background: var(--surface); }
+.dm-line.good { color: var(--ok); }
+.dm-line.bad { color: var(--bad); }
+.dm-line.big.good { background: rgba(16, 185, 129, .15); }
+.dm-line.big.bad { background: rgba(220, 38, 38, .12); }
+.dm-sub { color: var(--muted); font-size: .78rem; font-style: normal; }
+.dm-note { font-size: .86rem; color: var(--muted); padding: 12px 0 8px; line-height: 1.6; border-top: 1px dashed var(--border); margin-top: 6px; }
+.dm-log { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+.dm-li { background: var(--surface-2); border-left: 3px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: .9rem; line-height: 1.55; }
+.dm-li.ok { border-left-color: var(--ok); }
+.dm-li.bad { border-left-color: var(--bad); }
+.dm-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 12px 0 4px; font-size: .92rem; }
+.dm-range { flex: 1; min-width: 150px; accent-color: var(--primary); }
+.dm-hash { font-family: "Consolas", "Courier New", monospace; font-size: .9rem; word-break: break-all; background: var(--surface); border-radius: 8px; padding: 10px 12px; margin: 8px 0; border: 1px solid var(--border); }
+.dm-hash.good { color: var(--ok); border-color: var(--ok); }
+.dm-hash.warn { color: var(--muted); }
+.dm-grid16 { display: grid; grid-template-columns: repeat(16, 1fr); gap: 1px; max-width: 288px; margin: 14px auto 4px; aspect-ratio: 1; }
+.dm-px { background: var(--surface-2); border-radius: 1px; }
+.dm-px.on { background: var(--text); }
+.dm-px.tenang { transition: background .18s ease; }
+.dm-bar { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: .9rem; }
+.dm-bar span { flex: 0 0 88px; color: var(--muted); }
+.dm-bar b { flex: 0 0 76px; text-align: right; white-space: nowrap; }
+.dm-track { flex: 1; height: 18px; background: var(--surface); border-radius: 9px; overflow: hidden; }
+.dm-fill { height: 100%; border-radius: 9px; transition: width .18s ease; background: var(--primary); }
+.dm-fill.ok { background: var(--ok); }
+.dm-fill.bad { background: var(--bad); }
+/* penyorotan jalur pada diagram interaktif */
+.vline.aktif { stroke: var(--primary); stroke-width: 3.5; opacity: 1; }
+.vbox.aktif { fill: color-mix(in srgb, var(--primary) 18%, var(--surface-2)); stroke-width: 3; }
 
 /* ============================================================
    PLAYGROUND & PENCARIAN

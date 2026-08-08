@@ -506,6 +506,15 @@ function renderLesson({ course, module, lesson }) {
     const fn = typeof DEMOS !== "undefined" && DEMOS[node.dataset.demo];
     if (fn) fn(node);
   });
+  // Tabel lebar dibungkus agar bisa digeser sendiri di layar HP,
+  // sehingga halamannya tidak ikut meleber ke samping.
+  body.querySelectorAll("table").forEach((tbl) => {
+    if (tbl.parentElement && tbl.parentElement.classList.contains("table-scroll")) return;
+    const box = document.createElement("div");
+    box.className = "table-scroll";
+    tbl.parentNode.insertBefore(box, tbl);
+    box.appendChild(tbl);
+  });
 
   // Tandai istilah sulit agar bisa diklik untuk melihat artinya
   applyGlossary(body, 12);
