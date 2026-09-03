@@ -2605,6 +2605,26 @@ console.log("Coba ubah biayaPerPermintaan jadi 600, lalu jalankan lagi.");</div>
 <div class="callout">
 <b>Kaitkan ke akuntansi:</b> biaya inferensi ini adalah <b>biaya variabel</b>, dan (Harga − Biaya variabel) adalah <b>margin kontribusi</b> — konsep yang sudah kamu pelajari di jalur Akuntansi. Titik impas produk AI dihitung dengan rumus yang sama persis.
 </div>
+
+<h3>Free Cash Flow versi produk AI</h3>
+<p>Margin kontribusi menjawab "untung per pengguna". Pertanyaan berikutnya lebih besar: <b>apakah bisnis ini menghasilkan kas bebas?</b> Ingat rumus <b>FCF</b> dari jalur Akuntansi — begini terjemahannya ke produk AI:</p>
+
+<table class="tbl">
+  <tr><th>Istilah akuntansi</th><th>Padanannya di produk AI</th></tr>
+  <tr><td>Arus kas operasi</td><td>Langganan yang dibayar − biaya token, server, dukungan pengguna</td></tr>
+  <tr><td><b>CapEx pemeliharaan</b></td><td>Biaya <b>wajib</b> agar produk tetap layak: memperbarui model saat versi lama usang, menjaga kualitas jawaban, mengganti API yang dihentikan</td></tr>
+  <tr><td><b>CapEx pertumbuhan</b></td><td>Membangun fitur baru, fine-tuning model khusus, memperluas ke bahasa/pasar baru</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Perangkap khas AI:</b> di bisnis biasa, mesin yang dibeli bertahan 10 tahun. Di AI, <b>model bisa usang dalam 12–18 bulan</b>. Artinya sebagian besar yang terlihat seperti "CapEx pertumbuhan" sebenarnya <b>CapEx pemeliharaan</b> — kamu tidak sedang maju, kamu sedang <b>berlari agar tidak tertinggal</b>.<br><br>
+Ini membuat banyak produk AI terlihat punya margin bagus tapi <b>FCF tipis bertahun-tahun</b>: kasnya habis terus-menerus hanya untuk tetap relevan.
+</div>
+
+<div class="callout">
+<b>Pertanyaan penyaring yang tajam:</b> <i>"Kalau kami berhenti mengembangkan produk ini hari ini, berapa lama ia masih laku?"</i><br><br>
+Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pendek jawabannya, makin besar bagian belanja yang sesungguhnya adalah pemeliharaan — dan makin kecil kas bebas yang benar-benar dimiliki pemilik.
+</div>
 `,
           keyPoints: [
             "Beda utama produk AI vs software biasa: melayani pengguna tambahan memakan biaya inferensi nyata.",

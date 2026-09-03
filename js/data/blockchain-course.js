@@ -2333,6 +2333,29 @@ console.log("Harga naik jadi ~ " + Math.round(yBaru / xBaru) + " USDC (slippage)
 <div class="callout warn">
 <b>Tapi hati-hati:</b> transparan bukan berarti mudah. Angka on-chain bisa <b>dipoles</b> — misalnya volume transaksi digelembungkan (<i>wash trading</i>) atau TVL naik karena insentif token sementara, bukan pemakaian tulus. Selalu tanya: <b>"apakah aktivitas ini akan tetap ada kalau insentifnya dihentikan?"</b>
 </div>
+
+<h3>Free Cash Flow versi protokol</h3>
+<p>Ingat rumus <b>FCF</b> di jalur Akuntansi: arus kas operasi dikurangi belanja modal. Protokol punya padanannya, hanya beda nama:</p>
+
+<table class="tbl">
+  <tr><th>Istilah akuntansi</th><th>Padanannya di protokol</th></tr>
+  <tr><td>Pendapatan</td><td><b>Fee</b> yang dibayar pengguna</td></tr>
+  <tr><td>Beban operasi</td><td>Bagian fee untuk penyedia likuiditas / validator</td></tr>
+  <tr><td><b>CapEx pemeliharaan</b></td><td><b>Emisi token</b> — insentif yang wajib terus dibayar agar likuiditas &amp; pengguna tidak kabur</td></tr>
+  <tr><td>= FCF protokol</td><td><b>Fee bersih − emisi token</b></td></tr>
+</table>
+
+<div class="callout warn">
+<b>💥 Di sinilah banyak protokol terbongkar.</b> Sebuah protokol bisa membanggakan "pendapatan fee $50 juta setahun" — terdengar hebat. Tapi kalau pada tahun yang sama ia membagikan <b>token senilai $120 juta</b> sebagai insentif, maka <b>FCF-nya minus $70 juta</b>.<br><br>
+Uangnya tidak keluar dari rekening bank, jadi tidak terasa. Tapi biayanya nyata: <b>ditanggung pemegang token lama</b> lewat pengenceran (dilusi). Ini persis seperti perusahaan yang terus menerbitkan saham baru untuk membiayai operasi — tanda bahaya yang kamu pelajari di materi <b>alokasi modal</b>.
+</div>
+
+<div class="callout">
+<b>Uji paling jujur untuk sebuah protokol:</b><br><br>
+<i>"Kalau emisi token dihentikan besok, apakah penggunanya bertahan?"</i><br><br>
+Kalau <b>ya</b> → fee-nya nyata, protokol ini benar-benar menghasilkan kas bebas.<br>
+Kalau <b>tidak</b> → yang selama ini dijual bukan layanan, melainkan <b>insentif</b>. Aktivitasnya akan menguap begitu subsidinya berhenti.
+</div>
 `,
           keyPoints: [
             "Banyak protokol menghasilkan pendapatan nyata berupa fee (gas L1/L2, biaya swap DEX, selisih bunga).",

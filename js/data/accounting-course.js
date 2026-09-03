@@ -1444,11 +1444,69 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
 <div class="callout">
 <b>Contoh:</b> Arus kas operasi Rp100jt, CapEx Rp30jt → FCF = 70jt. Inilah "uang bebas" yang bisa dipakai untuk apa pun tanpa mengganggu operasi.
 </div>
+
+<h3>Yang sering terlewat: dua jenis CapEx</h3>
+<p>Rumus di atas memperlakukan seluruh CapEx sama. Padahal ada <b>dua jenis yang sangat berbeda</b>:</p>
+
+<table class="tbl">
+  <tr><th>Jenis CapEx</th><th>Untuk apa</th><th>Sifatnya</th></tr>
+  <tr><td><b>Pemeliharaan</b><br><i>(maintenance)</i></td><td>Mengganti mesin aus, memperbarui sistem — sekadar agar bisnis tetap berjalan seperti sekarang</td><td class="bad-cell"><b>Wajib.</b> Tidak bisa dihentikan tanpa merusak bisnis</td></tr>
+  <tr><td><b>Pertumbuhan</b><br><i>(growth)</i></td><td>Membuka cabang baru, menambah kapasitas pabrik</td><td class="ok-cell"><b>Pilihan.</b> Bisa dihentikan kapan saja</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Kenapa ini penting sekali.</b> Perusahaan yang sedang berekspansi besar-besaran akan terlihat punya FCF <b>tipis atau negatif</b> — padahal itu karena ia <b>memilih</b> menanam uang untuk tumbuh, bukan karena bisnisnya lemah.<br><br>
+Bandingkan dua perusahaan dengan arus kas operasi sama-sama Rp500 M:<br>
+• Perusahaan A: CapEx Rp450 M, semuanya <b>pemeliharaan</b> → bisnis rakus modal, hasilnya benar-benar tipis.<br>
+• Perusahaan B: CapEx Rp450 M, tapi Rp100 M pemeliharaan dan Rp350 M <b>pertumbuhan</b> → sebenarnya menghasilkan Rp400 M kas bebas, yang <b>sengaja</b> diinvestasikan kembali.<br><br>
+FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
+</div>
+
+<h3>Owner earnings — versi Warren Buffett</h3>
+<div class="callout">
+<b>Owner earnings</b> = Arus Kas Operasi − CapEx <b>pemeliharaan saja</b><br><br>
+<i>Yaitu: berapa kas yang bisa diambil pemilik seandainya perusahaan berhenti tumbuh dan hanya mempertahankan keadaan sekarang.</i>
+</div>
+
+<div class="callout warn">
+🚩 <b>Tapi hati-hati.</b> Laporan keuangan biasanya <b>tidak memisahkan</b> keduanya — manajemen bisa menyebut CapEx pemeliharaan sebagai "pertumbuhan" agar angkanya terlihat bagus.<br><br>
+<b>Cara memeriksanya:</b> bandingkan CapEx dengan <b>beban penyusutan</b>. Penyusutan kira-kira mencerminkan aus-nya aset per tahun. Kalau CapEx bertahun-tahun jauh <b>di bawah</b> penyusutan, kemungkinan besar asetnya sedang dibiarkan menua — FCF-nya bagus hari ini, tapi tagihannya datang belakangan.
+</div>
+
+<h3>Dua rasio turunan yang sering dipakai</h3>
+<table class="tbl">
+  <tr><th>Rasio</th><th>Rumus</th><th>Menjawab</th></tr>
+  <tr><td><b>Margin FCF</b></td><td>FCF ÷ Pendapatan</td><td>Dari tiap Rp100 penjualan, berapa yang jadi kas bebas? Di atas <b>10%</b> umumnya sangat baik.</td></tr>
+  <tr><td><b>FCF Yield</b></td><td>FCF ÷ Kapitalisasi pasar</td><td>Kalau kamu membeli seluruh perusahaan hari ini, berapa persen kas bebas yang kamu terima per tahun?</td></tr>
+</table>
+
+<div class="callout">
+<b>FCF yield adalah kembarannya PER.</b> Ingat pelajaran <b>Valuasi Relatif &amp; Multiples</b>? PER melihat harga terhadap <b>laba</b>; FCF yield melihat kas bebas terhadap <b>harga</b> — dan karena memakai kas, ia lebih sulit dipoles. FCF yield 8% kira-kira setara "PER kas" sebesar 12,5×.
+</div>
+
+<h3>Coba sendiri</h3>
+<p>Kalkulator ini memisahkan kedua jenis CapEx sekaligus menghitung margin dan yield-nya. Ubah angkanya dan perhatikan selisih FCF standar vs owner earnings:</p>
+
+<div data-demo="fcf-calc"></div>
+
+<div class="callout warn">
+<b>Kapan FCF negatif itu wajar?</b> Perusahaan muda yang sedang membangun kapasitas hampir selalu ber-FCF negatif — dan itu <b>normal</b>. Yang harus ditanyakan bukan "positif atau negatif", tapi: <b>apakah uang yang ditanam itu menghasilkan return di atas biaya modalnya?</b> Kalau ya, FCF negatif hari ini adalah investasi. Kalau tidak, itu pembakaran uang.
+</div>
 `,
           keyPoints: [
             "FCF = Arus Kas Operasi − Belanja Modal (CapEx) = kas bebas yang benar-benar tersisa.",
             "FCF lebih sulit dimanipulasi daripada laba bersih; perusahaan bisa untung tapi FCF negatif.",
             "Dampak: FCF positif mendanai dividen, buyback, bayar utang, & ekspansi mandiri; FCF negatif = bergantung pendanaan luar.",
+            "CapEx pemeliharaan itu WAJIB (menjaga bisnis tetap jalan); CapEx pertumbuhan itu PILIHAN (memperbesar bisnis).",
+            "Owner earnings = Arus Kas Operasi − CapEx pemeliharaan saja; menunjukkan kas yang bisa diambil pemilik bila perusahaan berhenti tumbuh.",
+            "Laporan tidak memisahkan keduanya — periksa dengan membandingkan CapEx terhadap beban penyusutan.",
+            "Margin FCF = FCF ÷ Pendapatan (di atas 10% umumnya sangat baik); FCF Yield = FCF ÷ Kapitalisasi pasar.",
+            "FCF negatif wajar bagi perusahaan yang sedang tumbuh — yang penting apakah return-nya di atas biaya modal.",
+          ],
+          practice: [
+            { type: "number", q: "Arus kas operasi Rp500 M. CapEx pemeliharaan Rp150 M, CapEx pertumbuhan Rp200 M. Berapa FCF standarnya (dalam miliar)?", answer: 150, tol: 1, hint: "FCF standar mengurangi SELURUH CapEx.", solution: "500 − (150 + 200) = Rp150 M." },
+            { type: "number", q: "Dari angka yang sama, berapa owner earnings-nya (dalam miliar)?", answer: 350, tol: 1, hint: "Owner earnings hanya mengurangi CapEx pemeliharaan.", solution: "500 − 150 = Rp350 M. Selisih Rp200 M itu adalah investasi pertumbuhan yang sifatnya pilihan." },
+            { type: "number", q: "FCF Rp150 M, pendapatan Rp2.000 M. Berapa margin FCF-nya (dalam %)?", answer: 7.5, tol: 0.2, hint: "FCF ÷ Pendapatan × 100%.", solution: "150 ÷ 2.000 = 7,5%." },
           ],
           quiz: [
             {
@@ -1473,6 +1531,42 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
               answer: 1,
               explain:
                 "FCF mencerminkan uang tunai riil; laba bersih bisa dipengaruhi aturan akuntansi.",
+            },
+            {
+              q: "Apa beda CapEx pemeliharaan dan CapEx pertumbuhan?",
+              options: [
+                "Tidak ada bedanya, hanya istilah",
+                "Pemeliharaan wajib agar bisnis tetap berjalan seperti sekarang; pertumbuhan bersifat pilihan untuk memperbesar bisnis",
+                "Pemeliharaan lebih mahal",
+                "Pertumbuhan dicatat sebagai beban",
+              ],
+              answer: 1,
+              explain:
+                "Karena CapEx pertumbuhan bisa dihentikan kapan saja, ia tidak mengurangi kas yang sesungguhnya tersedia bagi pemilik.",
+            },
+            {
+              q: "Bagaimana cara memeriksa apakah CapEx pemeliharaan yang dilaporkan manajemen masuk akal?",
+              options: [
+                "Percaya saja pada angka yang disebutkan",
+                "Bandingkan CapEx dengan beban penyusutan — CapEx yang bertahun-tahun jauh di bawah penyusutan menandakan aset dibiarkan menua",
+                "Lihat harga sahamnya",
+                "Hitung laba bersihnya",
+              ],
+              answer: 1,
+              explain:
+                "Penyusutan kira-kira mencerminkan aus-nya aset per tahun, jadi bisa dipakai sebagai pembanding kasar.",
+            },
+            {
+              q: "Sebuah perusahaan muda punya FCF negatif karena membangun pabrik baru. Kesimpulan paling tepat?",
+              options: [
+                "Pasti perusahaan buruk, hindari",
+                "Belum tentu buruk — yang menentukan adalah apakah investasi itu menghasilkan return di atas biaya modalnya",
+                "FCF negatif selalu berarti manipulasi",
+                "Harus segera dijual",
+              ],
+              answer: 1,
+              explain:
+                "FCF negatif karena ekspansi adalah investasi bila return-nya memadai, dan pembakaran uang bila tidak.",
             },
           ],
         },
@@ -2660,8 +2754,30 @@ if (targetPE > rataPE) {
   <li>Jumlahkan semuanya → itulah <b>nilai wajar</b> bisnis menurut DCF.</li>
 </ol>
 
+<h3>"Arus kas" yang mana? Jawabannya: FCF</h3>
+<div class="callout">
+Selama ini kita menyebut "arus kas" secara umum. Sekarang kita sebut tepatnya: yang didiskon dalam DCF adalah <b>Free Cash Flow</b> — yang sudah kamu pelajari di modul <b>Metrik Keuangan</b>.<br><br>
+<b>Kenapa FCF, bukan laba bersih?</b> Karena laba bersih mengandung pos non-tunai (penyusutan) dan <b>belum</b> memperhitungkan uang yang harus dikeluarkan untuk menjaga aset (CapEx). Yang benar-benar bisa dinikmati pemilik adalah <b>kas yang tersisa setelah semua itu</b> — dan itulah FCF.
+</div>
+
 <div class="callout warn">
-<b>Hati-hati:</b> DCF hanya sebaik <b>asumsinya</b> ("sampah masuk, sampah keluar"). Ramalan arus kas & tingkat diskon yang meleset menghasilkan nilai yang salah. Ini alat, bukan ramalan pasti. Edukasi, bukan saran investasi.
+<b>Inilah mengapa dua pelajaran itu saling mengunci:</b><br>
+• <b>FCF</b> menjawab: <i>berapa kas yang benar-benar dihasilkan bisnis tiap tahun?</i><br>
+• <b>DCF</b> menjawab: <i>berapa nilai seluruh FCF masa depan itu, dinyatakan dalam rupiah hari ini?</i><br><br>
+Tanpa FCF, DCF tidak punya bahan. Tanpa DCF, FCF hanya angka tahunan tanpa kesimpulan nilai.
+</div>
+
+<h3>Tiga bahan yang menentukan hasilnya</h3>
+<table class="tbl">
+  <tr><th>Bahan</th><th>Dari mana</th><th>Kalau meleset</th></tr>
+  <tr><td><b>FCF tahun-tahun ke depan</b></td><td>Ramalan pertumbuhan</td><td>Salah sedikit di awal, salah jauh di akhir</td></tr>
+  <tr><td><b>Tingkat diskon</b></td><td><b>Biaya modal (WACC)</b> — dipelajari di modul Kualitas Bisnis</td><td>Beda 1% bisa mengubah nilai puluhan persen</td></tr>
+  <tr><td><b>Terminal value</b></td><td>Nilai bisnis setelah periode ramalan</td><td>Sering menyumbang <b>lebih dari separuh</b> hasil akhir</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Hati-hati:</b> DCF hanya sebaik <b>asumsinya</b> ("sampah masuk, sampah keluar"). Ramalan arus kas & tingkat diskon yang meleset menghasilkan nilai yang salah. Ini alat, bukan ramalan pasti. Edukasi, bukan saran investasi.<br><br>
+<b>Cara memakainya yang jujur:</b> jangan mencari satu angka "nilai wajar". Hitung <b>tiga skenario</b> (buruk / dasar / baik), lalu lihat rentangnya. Kalau harga pasar berada jauh di bawah <b>skenario buruk</b> sekalipun, barulah itu temuan yang menarik.
 </div>
 
 <div class="callout">
@@ -3144,24 +3260,57 @@ Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kala
           content: `
 <p>Angka memberitahu kita <b>seberapa sehat bisnis sekarang</b>. Tapi apakah bisnis ini akan tetap bagus <b>10 tahun lagi</b>? Itu pertanyaan <b>kualitatif</b> — dan modul ini menjawabnya. Kita mulai dari keputusan paling menentukan: <b>alokasi modal</b>.</p>
 
-<div data-diagram="flow" data-steps="Ekspansi (CapEx)|R&amp;D &amp; Iklan|Akuisisi|Buyback / Dividen" data-caption="Empat pilihan alokasi modal"></div>
+<div data-diagram="flow" data-steps="Reinvestasi|Akuisisi|Lunasi utang|Buyback|Dividen" data-caption="Lima pilihan alokasi modal — hanya ada ini"></div>
 
 
 <h3>Fundamental: uang sudah ada, mau diapakan?</h3>
 <p>Bayangkan bisnismu menghasilkan laba Rp1 miliar. Uang itu <b>harus</b> dipakai untuk sesuatu. Keputusan inilah yang, diulang bertahun-tahun, menentukan nasib perusahaan. Banyak CEO hebat memimpin operasi tapi <b>buruk</b> mengalokasikan modal.</p>
 
-<h3>Empat pilihan (hanya ada ini)</h3>
+<div class="callout">
+<b>Istilahnya: <i>capital allocator</i>.</b> Di dunia investasi, seorang CEO dinilai bukan terutama sebagai <b>operator</b> (yang mengurus penjualan &amp; produksi), melainkan sebagai <b>pengalokasi modal</b> — orang yang memutuskan ke mana uang perusahaan mengalir.<br><br>
+Alasannya masuk akal: operasi harian bisa didelegasikan ke manajer yang cakap. Tapi keputusan menaruh Rp1 triliun ke pabrik baru, akuisisi, atau buyback <b>tidak bisa didelegasikan</b> — dan akibatnya bertahan puluhan tahun.
+</div>
+
+<h3>Dari mana modalnya datang?</h3>
+<p>Sebelum bicara ke mana uang pergi, perlu tahu dari mana ia datang. Hanya ada <b>tiga sumber</b>:</p>
+<table class="tbl">
+  <tr><th>Sumber</th><th>Biayanya</th><th>Catatan</th></tr>
+  <tr><td><b>1. Kas dari operasi</b></td><td class="ok-cell">Paling murah</td><td>Uang hasil bisnis sendiri — tak menambah utang, tak mengencerkan kepemilikan</td></tr>
+  <tr><td><b>2. Berutang</b></td><td>Bunga (bisa mengurangi pajak)</td><td>Relatif murah, tapi wajib dibayar apa pun keadaannya. Menambah risiko</td></tr>
+  <tr><td><b>3. Menerbitkan saham baru</b></td><td>Paling mahal</td><td><b>Mengencerkan</b> kepemilikan pemegang saham lama</td></tr>
+</table>
+
+<div class="callout warn">
+<b>🚩 Tanda bahaya:</b> perusahaan yang <b>terus-menerus menerbitkan saham baru</b> untuk membiayai operasi sehari-hari. Artinya bisnisnya belum sanggup menghidupi dirinya sendiri, dan bagian kepemilikanmu menyusut tiap tahun. Periksa <b>jumlah saham beredar</b> selama 5 tahun terakhir — kalau naik terus tanpa akuisisi yang berarti, itu pertanda.
+</div>
+
+<h3>Lima pilihan memakai uang (hanya ada ini)</h3>
 <table class="tbl">
   <tr><th>Pilihan</th><th>Untuk apa</th><th>Catatan</th></tr>
-  <tr><td><b>1. Ekspansi (CapEx)</b></td><td>Buka cabang, tambah pabrik/kapasitas</td><td class="ok-cell">Terbaik <b>jika</b> return-nya tinggi</td></tr>
-  <tr><td><b>2. R&amp;D &amp; Iklan</b></td><td>Produk baru, membangun merek</td><td>Investasi tak berwujud, hasilnya jangka panjang</td></tr>
-  <tr><td><b>3. Akuisisi (M&amp;A)</b></td><td>Membeli perusahaan lain</td><td>Paling <b>berisiko</b> — lihat catatan di bawah</td></tr>
-  <tr><td><b>4. Buyback / Dividen</b></td><td>Mengembalikan uang ke pemilik</td><td>Tepat jika tak ada peluang tumbuh yang bagus</td></tr>
+  <tr><td><b>1. Reinvestasi</b><br><i>CapEx, R&amp;D, iklan</i></td><td>Buka cabang, tambah kapasitas, produk baru, bangun merek</td><td class="ok-cell">Terbaik <b>jika</b> return-nya di atas biaya modal</td></tr>
+  <tr><td><b>2. Akuisisi (M&amp;A)</b></td><td>Membeli perusahaan lain</td><td>Paling <b>berisiko</b> — lihat catatan di bawah</td></tr>
+  <tr><td><b>3. Melunasi utang</b></td><td>Mengurangi beban bunga &amp; risiko</td><td>Sering terlupakan. Sangat berharga saat bunga tinggi atau utang menumpuk</td></tr>
+  <tr><td><b>4. Buyback</b></td><td>Membeli kembali saham sendiri</td><td>Menguntungkan <b>hanya</b> jika saham di bawah nilai wajar</td></tr>
+  <tr><td><b>5. Dividen</b></td><td>Membagikan kas ke pemilik</td><td>Jujur &amp; sederhana. Tapi sekali dinaikkan, sulit diturunkan</td></tr>
 </table>
+
+<div class="callout">
+<b>Kenapa "melunasi utang" sering dilupakan?</b> Karena tidak terlihat heroik — tak ada pengumuman pabrik baru, tak ada berita akuisisi. Padahal saat suku bunga naik, mengurangi utang bisa mengangkat laba bersih <b>lebih pasti</b> daripada ekspansi mana pun, sekaligus memperkecil risiko kebangkrutan. Pilihan yang membosankan, tapi sering paling cerdas.
+</div>
+
+<h3>Ambang yang menentukan segalanya: biaya modal</h3>
+<div class="callout warn">
+Kelima pilihan di atas berputar pada <b>satu pertanyaan</b>:<br><br>
+<b>Apakah return-nya melebihi biaya modal perusahaan?</b><br><br>
+Kalau <b>ya</b> → reinvestasi menciptakan nilai.<br>
+Kalau <b>tidak</b> → uang itu lebih baik dikembalikan ke pemilik (buyback/dividen) atau dipakai melunasi utang.
+</div>
+<p>Inilah kesalahan paling mahal seorang CEO: <b>tumbuh demi tumbuh</b>. Membangun pabrik yang menghasilkan 7% padahal biaya modalnya 11% <b>terlihat</b> seperti kemajuan — pendapatan naik, perusahaan makin besar, beritanya bagus — tapi sesungguhnya <b>menghancurkan nilai pemilik</b> setiap tahun. Cara menghitung ambang ini dibahas di pelajaran berikutnya.</p>
 
 <h3>Urutan prioritas yang masuk akal</h3>
 <ol>
-  <li><b>Reinvestasi ke bisnis sendiri</b> — <i>jika</i> return atas modalnya tinggi & masih ada ruang tumbuh. Ini penggunaan terbaik.</li>
+  <li><b>Reinvestasi ke bisnis sendiri</b> — <i>jika</i> return atas modalnya di atas biaya modal & masih ada ruang tumbuh. Ini penggunaan terbaik.</li>
+  <li><b>Melunasi utang</b> — jika utangnya memberatkan atau bunganya sedang tinggi.</li>
   <li><b>Buyback</b> — jika tak ada peluang bagus <b>dan</b> harga saham sedang di bawah nilai wajar.</li>
   <li><b>Dividen</b> — jika tak ada peluang bagus dan saham tidak murah.</li>
   <li><b>M&amp;A</b> — paling akhir & paling hati-hati.</li>
@@ -3177,8 +3326,13 @@ Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kala
 `,
           keyPoints: [
             "Alokasi modal = keputusan memakai uang perusahaan; tugas terpenting CEO yang sering diabaikan.",
-            "Empat pilihan: ekspansi (CapEx), R&D/iklan, akuisisi (M&A), buyback/dividen.",
-            "Prioritas: reinvestasi bila return tinggi → buyback bila saham murah → dividen → M&A paling hati-hati.",
+            "CEO dinilai sebagai 'capital allocator', bukan sekadar operator — operasi bisa didelegasikan, alokasi modal tidak.",
+            "Tiga sumber modal: kas operasi (termurah), utang (wajib dibayar), menerbitkan saham (termahal, mengencerkan kepemilikan).",
+            "Lima pilihan memakai uang: reinvestasi, akuisisi, melunasi utang, buyback, dividen.",
+            "'Melunasi utang' paling sering dilupakan padahal sangat berharga saat bunga tinggi.",
+            "Ambang penentu semua keputusan: apakah return-nya di atas biaya modal? Kalau tidak, kembalikan uangnya ke pemilik.",
+            "Kesalahan termahal: tumbuh demi tumbuh — perusahaan membesar tapi nilai pemilik berkurang.",
+            "Prioritas: reinvestasi bila return di atas biaya modal → lunasi utang → buyback bila saham murah → dividen → M&A paling hati-hati.",
             "M&A besar sering gagal; bolt-on oleh operator disiplin bisa berhasil. Buyback hanya bernilai bila saham di bawah nilai wajar.",
           ],
           practice: [
@@ -3187,15 +3341,51 @@ Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kala
           ],
           quiz: [
             {
-              q: "Apa saja empat pilihan alokasi modal?",
+              q: "Apa saja lima pilihan alokasi modal?",
               options: [
-                "Gaji, sewa, listrik, pajak",
-                "Ekspansi (CapEx), R&D/iklan, akuisisi, buyback/dividen",
-                "Aset, utang, ekuitas, laba",
-                "Debit, kredit, jurnal, neraca",
+                "Gaji, sewa, listrik, pajak, bonus",
+                "Reinvestasi, akuisisi, melunasi utang, buyback, dividen",
+                "Aset, utang, ekuitas, laba, kas",
+                "Debit, kredit, jurnal, neraca, laporan",
               ],
               answer: 1,
-              explain: "Hanya ada empat cara utama memakai kas perusahaan.",
+              explain: "Hanya ada lima cara utama memakai kas perusahaan — dan 'melunasi utang' adalah yang paling sering dilupakan.",
+            },
+            {
+              q: "Kenapa CEO disebut 'capital allocator', bukan sekadar operator?",
+              options: [
+                "Karena istilah asing terdengar lebih keren",
+                "Karena operasi harian bisa didelegasikan, tapi keputusan ke mana modal besar dialirkan tidak bisa — dan efeknya bertahan puluhan tahun",
+                "Karena CEO tidak boleh mengurus operasi",
+                "Karena alokasi modal lebih mudah",
+              ],
+              answer: 1,
+              explain:
+                "Manajer yang cakap bisa menjalankan operasi. Keputusan alokasi modal melekat pada CEO dan menentukan nasib jangka panjang.",
+            },
+            {
+              q: "Perusahaan terus menerbitkan saham baru tiap tahun untuk membiayai operasi. Artinya?",
+              options: [
+                "Perusahaan sangat sehat karena banyak investor tertarik",
+                "Bisnisnya belum sanggup menghidupi dirinya sendiri, dan kepemilikan pemegang saham lama terus terencerkan",
+                "Itu cara normal semua perusahaan",
+                "Utangnya pasti nol",
+              ],
+              answer: 1,
+              explain:
+                "Menerbitkan saham adalah sumber modal termahal. Ketergantungan padanya untuk operasi harian adalah tanda bahaya.",
+            },
+            {
+              q: "Perusahaan membangun pabrik dengan return 7%, sementara biaya modalnya 11%. Apa yang sebenarnya terjadi?",
+              options: [
+                "Menciptakan nilai karena pendapatan naik",
+                "Menghancurkan nilai pemilik, meski perusahaan terlihat bertumbuh",
+                "Tidak berpengaruh apa pun",
+                "Menaikkan biaya modal",
+              ],
+              answer: 1,
+              explain:
+                "Inilah jebakan 'tumbuh demi tumbuh': ukuran bertambah, nilai bagi pemilik justru berkurang.",
             },
             {
               q: "Mengapa akuisisi besar (M&A) harus dicurigai?",
@@ -3208,6 +3398,152 @@ Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kala
               answer: 1,
               explain:
                 "Akuisisi besar-transformatif berisiko tinggi; bolt-on yang disiplin lebih sering berhasil.",
+            },
+          ],
+        },
+        {
+          id: "acc-kual-7",
+          title: "Biaya Modal & Ambang Kelayakan (Hurdle Rate)",
+          duration: "14 menit",
+          content: `
+<p>Pelajaran sebelumnya berakhir pada satu pertanyaan: <b>berapa hasil minimal agar sebuah keputusan layak?</b> Jawabannya bukan nol. Jawabannya adalah <b>biaya modal</b> — dan pelajaran ini menghitungnya dari nol.</p>
+
+<div data-diagram="pipeline" data-stages="Biaya utang::bunga setelah pajak|Biaya ekuitas::bebas risiko + premi|Ditimbang::sesuai porsinya|= WACC::ambang minimal" data-caption="Dari dua sumber modal menjadi satu angka ambang"></div>
+
+<h3>Fundamental: uang tidak pernah gratis</h3>
+<div class="callout">
+Banyak orang mengira kas yang sudah ada di perusahaan itu "gratis" — toh uangnya sudah di tangan. <b>Salah.</b><br><br>
+Uang itu milik <b>pemberi pinjaman</b> dan <b>pemegang saham</b>. Keduanya menyerahkan uangnya karena mengharapkan imbalan. Harapan itulah <b>biaya modal</b>: harga yang harus "dibayar" perusahaan atas uang yang dipakainya.
+</div>
+
+<p>Kalau perusahaan memakai uang itu untuk sesuatu yang menghasilkan <b>kurang</b> dari yang diharapkan pemiliknya, maka perusahaan <b>merugikan mereka</b> — meski laporan labanya tetap positif.</p>
+
+<h3>1. Biaya utang — yang paling mudah dilihat</h3>
+<div class="callout">
+<b>Biaya utang setelah pajak</b> = Bunga pinjaman × (1 − tarif pajak)
+</div>
+<p>Kenapa dikalikan (1 − pajak)? Karena <b>bunga mengurangi laba kena pajak</b>. Kalau bunga pinjaman 9% dan tarif pajak 22%, beban sesungguhnya bagi perusahaan hanya <b>9% × 0,78 = 7,02%</b>. Negara ikut menanggung sebagian — inilah yang disebut <i>tax shield</i>.</p>
+
+<h3>2. Biaya ekuitas — yang tak terlihat tapi lebih mahal</h3>
+<div class="callout warn">
+<b>Inilah yang paling sering diabaikan.</b> Utang punya tagihan yang jelas tiap bulan. Ekuitas <b>tidak mengirim tagihan</b> — tapi bukan berarti gratis.<br><br>
+Pemegang saham menanggung risiko <b>paling besar</b> (mereka dibayar paling akhir bila perusahaan bangkrut). Karena itu mereka menuntut imbalan <b>lebih tinggi</b> daripada pemberi pinjaman.
+</div>
+
+<div class="callout">
+<b>Versi sederhana:</b> Biaya ekuitas = Bunga bebas risiko + Premi risiko<br><br>
+<i>Bunga bebas risiko</i> = imbal hasil Surat Berharga Negara 10 tahun (dianggap paling aman).<br>
+<i>Premi risiko</i> = tambahan yang dituntut karena memegang saham, bukan obligasi negara.
+</div>
+
+<p>Contoh: SBN 10 tahun memberi 6,5% dan premi risiko ekuitas 5,5% → biaya ekuitas = <b>12%</b>. Artinya: jika perusahaan tidak sanggup menghasilkan 12% atas modal pemegang saham, mereka <b>lebih baik menaruh uangnya di tempat lain</b>.</p>
+
+<h3>3. WACC — menggabungkan keduanya</h3>
+<div class="callout">
+<b>WACC</b> (Weighted Average Cost of Capital) = rata-rata biaya modal, <b>ditimbang</b> sesuai porsi utang dan ekuitas.<br><br>
+WACC = (porsi utang × biaya utang setelah pajak) + (porsi ekuitas × biaya ekuitas)
+</div>
+
+<p>Inilah <b>hurdle rate</b> — ambang kelayakan. Setiap rupiah yang dialokasikan CEO harus melompati pagar ini.</p>
+
+<h3>Hitung sendiri</h3>
+<div data-demo="hurdle-rate"></div>
+
+<h3>Ukuran penciptaan nilai: spread ROIC − WACC</h3>
+<div class="callout">
+<b>ROIC − WACC = spread.</b><br><br>
+Spread <b>positif</b> → tiap rupiah yang ditanam menciptakan nilai. Makin besar spread dan makin lama bertahan, makin berharga perusahaannya.<br>
+Spread <b>negatif</b> → tiap rupiah yang ditanam menghancurkan nilai. Pertumbuhan justru memperburuk keadaan.
+</div>
+
+<div class="callout warn">
+<b>Ini pembalik cara pandang.</b> Kita terbiasa menganggap pertumbuhan selalu baik. Padahal:<br><br>
+• Perusahaan dengan spread <b>positif</b> → <b>tumbuh secepat mungkin</b> adalah strategi terbaik.<br>
+• Perusahaan dengan spread <b>negatif</b> → <b>berhenti tumbuh</b> dan kembalikan uang ke pemilik adalah strategi terbaik.<br><br>
+Perusahaan berspread negatif yang terus berekspansi sedang <b>menggali lubangnya sendiri lebih dalam</b> — dan biasanya dipuji media karena "agresif".
+</div>
+
+<h3>Kesalahan yang sering terjadi</h3>
+<table class="tbl">
+  <tr><th>Kesalahan</th><th>Kenapa keliru</th></tr>
+  <tr><td>"Kas menganggur itu gratis, pakai saja"</td><td>Kas milik pemegang saham; memakainya untuk proyek berhasil rendah tetap merugikan mereka</td></tr>
+  <tr><td>"Utang lebih murah, perbanyak saja"</td><td>Benar sampai titik tertentu. Utang berlebihan menaikkan risiko kebangkrutan, dan pemberi pinjaman akan menuntut bunga lebih tinggi</td></tr>
+  <tr><td>"Proyeknya untung, berarti layak"</td><td>Untung saja tidak cukup — harus untung <b>di atas biaya modal</b></td></tr>
+  <tr><td>Memakai satu WACC untuk semua proyek</td><td>Proyek berisiko tinggi seharusnya diberi ambang lebih tinggi</td></tr>
+</table>
+
+<div class="callout">
+<b>Hubungannya dengan DCF:</b> tingkat diskon yang dipakai dalam <b>DCF</b> pada dasarnya adalah WACC ini. Jadi angka yang baru kamu hitung punya dua kegunaan sekaligus: <b>menyaring keputusan alokasi modal</b>, dan <b>menilai harga wajar sebuah bisnis</b>.
+</div>
+
+<div class="callout warn">
+<b>Jujur soal ketepatannya:</b> biaya ekuitas <b>tidak bisa diukur pasti</b> — ia adalah harapan orang, bukan angka di laporan. Praktisi sungguhan memakai CAPM dengan <i>beta</i>, dan hasilnya pun tetap perkiraan. Karena itu jangan terpaku pada satu angka; pakai <b>rentang</b> (misalnya WACC 10–12%) dan lihat apakah kesimpulannya berubah.
+</div>
+`,
+          keyPoints: [
+            "Uang tidak pernah gratis — kas perusahaan milik pemberi pinjaman & pemegang saham yang mengharapkan imbalan.",
+            "Biaya utang setelah pajak = bunga × (1 − tarif pajak); bunga mengurangi pajak sehingga negara menanggung sebagian (tax shield).",
+            "Biaya ekuitas = bunga bebas risiko + premi risiko; lebih mahal dari utang karena pemegang saham dibayar paling akhir.",
+            "Biaya ekuitas tidak mengirim tagihan — itulah sebabnya paling sering diabaikan.",
+            "WACC = rata-rata tertimbang biaya utang & ekuitas = hurdle rate, ambang kelayakan setiap keputusan.",
+            "Spread = ROIC − WACC. Positif berarti menciptakan nilai; negatif berarti menghancurkan nilai.",
+            "Spread positif → tumbuh secepat mungkin. Spread negatif → berhenti tumbuh, kembalikan uang ke pemilik.",
+            "Tingkat diskon dalam DCF pada dasarnya adalah WACC ini.",
+            "Biaya ekuitas tak bisa diukur pasti — pakai rentang, jangan satu angka tunggal.",
+          ],
+          practice: [
+            { type: "number", q: "Bunga pinjaman 10%, tarif pajak 22%. Berapa biaya utang setelah pajak (dalam %)?", answer: 7.8, tol: 0.1, hint: "Bunga × (1 − tarif pajak).", solution: "10 × 0,78 = 7,8%." },
+            { type: "number", q: "Bunga bebas risiko 6%, premi risiko ekuitas 6%. Berapa biaya ekuitasnya (dalam %)?", answer: 12, tol: 0.1, hint: "Jumlahkan keduanya.", solution: "6 + 6 = 12%." },
+            { type: "number", q: "Porsi utang 40% dengan biaya 7,5%; porsi ekuitas 60% dengan biaya 12,5%. Berapa WACC-nya (dalam %)?", answer: 10.5, tol: 0.1, hint: "(0,4 × 7,5) + (0,6 × 12,5).", solution: "3 + 7,5 = 10,5%." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa biaya utang dikalikan (1 − tarif pajak)?",
+              options: [
+                "Karena bunga tidak perlu dibayar",
+                "Karena bunga mengurangi laba kena pajak, sehingga beban sesungguhnya lebih ringan (tax shield)",
+                "Karena pajak dibayar oleh pemberi pinjaman",
+                "Karena aturan akuntansi",
+              ],
+              answer: 1,
+              explain:
+                "Negara ikut menanggung sebagian beban bunga lewat pengurangan pajak.",
+            },
+            {
+              q: "Kenapa biaya ekuitas lebih tinggi daripada biaya utang?",
+              options: [
+                "Karena pemegang saham lebih kaya",
+                "Karena pemegang saham menanggung risiko terbesar — dibayar paling akhir bila perusahaan bangkrut",
+                "Karena ekuitas dikenai pajak lebih tinggi",
+                "Karena bank menetapkannya",
+              ],
+              answer: 1,
+              explain:
+                "Risiko lebih besar menuntut imbalan lebih besar. Itulah premi risiko ekuitas.",
+            },
+            {
+              q: "Perusahaan dengan spread ROIC − WACC yang NEGATIF sebaiknya?",
+              options: [
+                "Berekspansi secepat mungkin agar cepat besar",
+                "Berhenti tumbuh dan mengembalikan uang ke pemilik lewat dividen/buyback atau melunasi utang",
+                "Menerbitkan saham baru sebanyak-banyaknya",
+                "Menaikkan gaji manajemen",
+              ],
+              answer: 1,
+              explain:
+                "Setiap rupiah tambahan yang ditanam justru menghancurkan nilai. Tumbuh malah memperburuk keadaan.",
+            },
+            {
+              q: "Sebuah proyek diperkirakan menghasilkan return 9%, WACC perusahaan 11%. Kesimpulan?",
+              options: [
+                "Layak, karena hasilnya positif",
+                "Tidak layak — meski untung, hasilnya di bawah biaya modal sehingga menghancurkan nilai pemilik",
+                "Layak kalau proyeknya besar",
+                "Tergantung selera manajemen",
+              ],
+              answer: 1,
+              explain:
+                "Untung saja tidak cukup. Ambangnya adalah biaya modal, bukan nol.",
             },
           ],
         },
@@ -3573,6 +3909,688 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
               ],
               answer: 1,
               explain: "Utang rendah memberi daya tahan & fleksibilitas saat kondisi memburuk.",
+            },
+          ],
+        },
+      ],
+    },
+
+    /* ---------------- LEVEL PERBANKAN (MENILAI BANK & LEMBAGA KEUANGAN) ---------------- */
+    {
+      id: "acc-bank",
+      level: "Perbankan",
+      title: "Menganalisis Bank & Lembaga Keuangan",
+      summary: "Bank tidak bisa dinilai dengan alat biasa. Pelajari CASA & biaya dana, NIM, LDR, NPL & CKPN, CAR, sampai cara menilai sahamnya.",
+      lessons: [
+        {
+          id: "acc-bank-1",
+          title: "Kenapa Bank Tidak Bisa Dinilai seperti Perusahaan Biasa",
+          duration: "13 menit",
+          content: `
+<p>Semua alat yang sudah kamu kuasai — Free Cash Flow, DER, EV/EBITDA — <b>gagal total</b> saat dipakai menilai bank. Bukan karena alatnya salah, tapi karena bisnis bank memang berbeda secara mendasar. Pelajaran ini menjelaskan kenapa.</p>
+
+<div data-diagram="compare3" data-cols="Perusahaan biasa::Bahan baku: barang::Utang = beban|Bank::Bahan baku: UANG TITIPAN::Utang = bahan baku|Akibatnya::Rasio utang tak berarti::Butuh alat sendiri" data-caption="Satu perbedaan ini mengubah seluruh cara menilainya"></div>
+
+<h3>Fundamental: apa yang sebenarnya dijual bank?</h3>
+<div class="callout">
+Bank tidak menjual barang. Ia <b>meminjam uang dari banyak orang dengan bunga rendah</b>, lalu <b>meminjamkannya kembali dengan bunga lebih tinggi</b>. Selisihnya adalah keuntungannya.<br><br>
+Jadi bagi bank, <b>uang adalah bahan baku sekaligus barang dagangan</b>.
+</div>
+
+<p>Uang titipan nasabah itu punya nama resmi: <b>DPK — Dana Pihak Ketiga</b>. Dalam neraca bank, DPK dicatat sebagai <b>kewajiban</b> (utang bank kepada nasabah), karena memang suatu saat harus dikembalikan.</p>
+
+<h3>Di sinilah alat lama patah</h3>
+<table class="tbl">
+  <tr><th>Alat</th><th>Kenapa gagal untuk bank</th></tr>
+  <tr><td><b>DER</b> (utang ÷ modal)</td><td>DER bank bisa <b>8–12×</b> dan itu <b>normal</b>. Di perusahaan biasa angka segitu berarti nyaris bangkrut. Bagi bank, "utang" itu justru bahan bakunya.</td></tr>
+  <tr><td><b>Free Cash Flow</b></td><td>Bank tidak punya CapEx pabrik. Arus kasnya naik-turun mengikuti penyaluran kredit &amp; penarikan dana — bukan cerminan kesehatan.</td></tr>
+  <tr><td><b>EV/EBITDA</b></td><td>Enterprise Value = kapitalisasi + utang − kas. Untuk bank, "utang" dan "kas" adalah <b>operasi intinya</b>, jadi rumusnya kehilangan makna.</td></tr>
+  <tr><td><b>Perputaran persediaan</b></td><td>Tidak ada persediaan.</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Kesalahan paling umum pemula:</b> melihat DER bank 9× lalu menyimpulkan "bank ini sangat berisiko, hindari". Padahal itu justru struktur normal perbankan. Yang benar-benar mengukur risiko bank adalah <b>CAR</b> dan <b>NPL</b> — dua hal yang akan kita pelajari nanti.
+</div>
+
+<h3>Lalu alat apa yang dipakai?</h3>
+<table class="tbl">
+  <tr><th>Ukuran</th><th>Menjawab pertanyaan</th></tr>
+  <tr><td><b>CASA</b></td><td>Seberapa <b>murah</b> bahan bakunya?</td></tr>
+  <tr><td><b>NIM</b></td><td>Seberapa lebar <b>margin</b>-nya?</td></tr>
+  <tr><td><b>LDR</b></td><td>Seberapa agresif dananya <b>disalurkan</b>?</td></tr>
+  <tr><td><b>NPL &amp; CKPN</b></td><td>Seberapa banyak kredit yang <b>macet</b>?</td></tr>
+  <tr><td><b>CAR</b></td><td>Seberapa tebal <b>bantalan modal</b>-nya?</td></tr>
+  <tr><td><b>PBV &amp; ROE</b></td><td>Sahamnya <b>mahal atau murah</b>?</td></tr>
+</table>
+
+<h3>Kenapa bank diatur sangat ketat</h3>
+<p>Kalau sebuah pabrik bangkrut, yang rugi pemilik dan karyawannya. Kalau sebuah <b>bank</b> bangkrut, <b>uang tabungan ribuan orang ikut hilang</b> — dan kepanikan bisa menular ke bank lain (<i>bank run</i>). Itu sebabnya bank diawasi ketat oleh <b>OJK</b>, dan simpanan nasabah dijamin <b>LPS</b> sampai batas tertentu.</p>
+
+<div class="callout">
+<b>Konsekuensinya bagi kita sebagai penganalisis:</b> bank tidak bebas menentukan seberapa besar risiko yang diambil. Ada batas modal minimum, batas pemberian kredit, dan kewajiban mencadangkan kerugian. Aturan ini <b>membatasi keuntungan</b>, tapi juga membuat bank yang sehat jadi <b>sangat sulit disaingi pendatang baru</b>.
+</div>
+`,
+          keyPoints: [
+            "Bank meminjam murah lalu meminjamkan lebih mahal; uang adalah bahan baku sekaligus barang dagangannya.",
+            "DPK (Dana Pihak Ketiga) = uang titipan nasabah, dicatat sebagai kewajiban di neraca bank.",
+            "DER bank 8–12× itu normal, bukan tanda bahaya — 'utang' bagi bank adalah bahan baku.",
+            "FCF, EV/EBITDA, dan perputaran persediaan tidak berlaku untuk bank.",
+            "Alat yang benar: CASA (biaya bahan baku), NIM (margin), LDR (penyaluran), NPL & CKPN (kredit macet), CAR (bantalan modal), PBV & ROE (valuasi).",
+            "Bank diatur ketat karena kegagalannya menular; aturan itu membatasi laba tapi juga menghambat pendatang baru.",
+          ],
+          quiz: [
+            {
+              q: "Kenapa DER sebuah bank bisa 9× dan tetap dianggap normal?",
+              options: [
+                "Karena bank boleh melanggar aturan",
+                "Karena 'utang' bank adalah dana nasabah — bahan baku bisnisnya, bukan beban seperti di perusahaan biasa",
+                "Karena bank tidak pernah bangkrut",
+                "Karena DER dihitung berbeda",
+              ],
+              answer: 1,
+              explain:
+                "Bank hidup dari menghimpun dana. Dana itu tercatat sebagai kewajiban, sehingga rasio utangnya secara alami sangat tinggi.",
+            },
+            {
+              q: "Kenapa Free Cash Flow tidak cocok untuk menilai bank?",
+              options: [
+                "Karena bank tidak punya laba",
+                "Karena bank tidak punya CapEx pabrik, dan arus kasnya mengikuti kredit & penarikan dana, bukan kesehatan bisnis",
+                "Karena FCF selalu negatif untuk bank",
+                "Karena bank tidak membuat laporan arus kas",
+              ],
+              answer: 1,
+              explain:
+                "FCF dirancang untuk bisnis yang membeli aset tetap. Arus kas bank naik-turun karena aktivitas intinya sendiri.",
+            },
+            {
+              q: "Kenapa bank diawasi jauh lebih ketat daripada perusahaan biasa?",
+              options: [
+                "Karena banknya terlalu kaya",
+                "Karena kegagalan bank menghilangkan tabungan masyarakat dan bisa menular ke bank lain",
+                "Karena bank tidak membayar pajak",
+                "Karena bank milik negara",
+              ],
+              answer: 1,
+              explain:
+                "Risiko sistemik inilah alasan adanya OJK, batas modal minimum, dan penjaminan LPS.",
+            },
+          ],
+        },
+        {
+          id: "acc-bank-2",
+          title: "CASA & Biaya Dana — Jantung Keunggulan Bank",
+          duration: "15 menit",
+          content: `
+<p>Kalau hanya boleh melihat <b>satu angka</b> untuk menilai kualitas sebuah bank, banyak analis akan memilih <b>CASA</b>. Pelajaran ini menjelaskan kenapa.</p>
+
+<div data-diagram="stack" data-parts="Giro (bunga ~0-2%):25|Tabungan (bunga ~1-2%):40|Deposito (bunga ~4-7%):35" data-caption="Contoh komposisi DPK. Dua kotak pertama adalah CASA — dana murah."></div>
+
+<h3>Fundamental: tidak semua titipan sama harganya</h3>
+<p><b>CASA</b> singkatan dari <b>Current Account Saving Account</b> — dalam bahasa Indonesia: <b>Giro + Tabungan</b>.</p>
+
+<table class="tbl">
+  <tr><th>Jenis</th><th>Bunga yang dibayar bank</th><th>Sifatnya</th></tr>
+  <tr><td><b>Giro</b> <i>(current account)</i></td><td class="ok-cell">Hampir nol</td><td>Rekening transaksi bisnis, uang keluar-masuk terus</td></tr>
+  <tr><td><b>Tabungan</b> <i>(saving account)</i></td><td class="ok-cell">Rendah</td><td>Rekening harian orang biasa</td></tr>
+  <tr><td><b>Deposito</b> <i>(time deposit)</i></td><td><b>Tinggi</b></td><td>Uang dikunci beberapa bulan, nasabah mengejar bunga</td></tr>
+</table>
+
+<div class="callout">
+🏪 <b>Analogi warung.</b> Giro &amp; tabungan itu <b>bahan baku murah</b>; deposito itu <b>bahan baku mahal</b>. Dua warung menjual dengan harga jual sama — yang bahan bakunya lebih murah, untungnya lebih besar. Sesederhana itu.
+</div>
+
+<h3>Rumusnya</h3>
+<div class="callout">
+<b>Rasio CASA</b> = (Giro + Tabungan) ÷ Total DPK × 100%<br><br>
+<i>Contoh:</i> DPK Rp100 T = giro Rp25 T + tabungan Rp40 T + deposito Rp35 T<br>
+<b>CASA = 65 ÷ 100 = 65%</b>
+</div>
+
+<p>Angka pasangannya adalah <b>biaya dana</b> (<i>cost of funds</i>): rata-rata bunga yang dibayar bank atas seluruh DPK-nya. Makin tinggi CASA, makin rendah biaya dana.</p>
+
+<h3>Coba sendiri</h3>
+<p>Kalkulator ini menghubungkan komposisi dana → biaya dana → NIM. Ubah angkanya dan rasakan hubungannya:</p>
+
+<div data-demo="casa-nim"></div>
+
+<h3>🏰 CASA sebenarnya adalah moat</h3>
+<p>Ingat pelajaran <b>Economic Moat</b>? CASA tinggi adalah salah satu parit paling nyata di dunia bisnis, karena <b>sangat sulit ditiru</b>. Sumbernya:</p>
+<ul>
+  <li><b>Jaringan cabang &amp; ATM</b> yang luas — butuh puluhan tahun dan modal besar.</li>
+  <li><b>Rekening payroll</b> — gaji karyawan otomatis masuk tiap bulan. Nasabah malas pindah.</li>
+  <li><b>Ekosistem transaksi</b> — orang menaruh uang di situ karena <b>bertransaksi</b> di situ, bukan karena mengejar bunga.</li>
+  <li><b>Kepercayaan</b> yang dibangun puluhan tahun.</li>
+</ul>
+
+<div class="callout warn">
+<b>Kenapa pesaing sulit mengejar:</b> bank lain bisa saja menaikkan bunga deposito untuk menarik dana besar-besaran. Tapi itu <b>dana mahal</b> — biaya dananya naik, NIM-nya tergerus. Menarik <b>dana murah</b> butuh ekosistem &amp; kebiasaan nasabah, bukan sekadar promo. Inilah <i>switching cost</i> dalam wujud paling nyata.
+</div>
+
+<h3>🚩 Tiga hal yang wajib diwaspadai</h3>
+<ol>
+  <li><b>CASA turun saat suku bunga naik.</b> Ketika bunga deposito jadi menarik, nasabah memindahkan uangnya ke sana. Perhatikan <b>trennya beberapa kuartal</b>, jangan satu titik.</li>
+  <li><b>Kualitas CASA berbeda-beda.</b> Giro dari segelintir korporasi besar mudah kabur sekaligus. Tabungan dari jutaan nasabah ritel jauh lebih <b>lengket</b> — walau nominal CASA-nya sama.</li>
+  <li><b>CASA tinggi tapi saldo per rekening kecil.</b> Sering terjadi pada bank digital yang bakar promo: jumlah rekening banyak, dananya tipis, dan nasabah pergi begitu promonya berhenti.</li>
+</ol>
+
+<div class="callout">
+<b>Hubungannya dengan valuasi:</b> CASA tinggi → biaya dana rendah → NIM lebar → <b>ROE tinggi</b>. Dan seperti akan kita lihat di pelajaran terakhir modul ini, ROE tinggi itulah yang membuat sebuah bank pantas dihargai <b>PBV mahal</b>. Rantainya lurus dari CASA sampai harga saham.
+</div>
+`,
+          keyPoints: [
+            "CASA = Current Account Saving Account = Giro + Tabungan = dana murah bank.",
+            "Rasio CASA = (Giro + Tabungan) ÷ Total DPK × 100%.",
+            "Deposito adalah dana mahal; makin besar porsinya, makin tinggi biaya dana bank.",
+            "CASA tinggi → biaya dana rendah → NIM lebar → ROE tinggi → PBV dihargai mahal.",
+            "CASA adalah moat: bersumber dari jaringan, rekening payroll, ekosistem transaksi, dan kepercayaan — sulit ditiru dengan promo.",
+            "Waspadai: CASA turun saat bunga naik, giro korporasi lebih mudah kabur daripada tabungan ritel, dan CASA bank digital sering bersaldo tipis.",
+          ],
+          practice: [
+            { type: "number", q: "DPK sebuah bank Rp200 T: giro Rp40 T, tabungan Rp90 T, deposito Rp70 T. Berapa rasio CASA-nya (dalam %)?", answer: 65, tol: 0.5, hint: "(Giro + Tabungan) ÷ DPK × 100%.", solution: "(40 + 90) ÷ 200 = 130 ÷ 200 = 65%." },
+            { type: "number", q: "Bank membayar bunga total Rp5 T atas DPK Rp150 T. Berapa biaya dananya (dalam %)?", answer: 3.33, tol: 0.1, hint: "Beban bunga ÷ DPK × 100%.", solution: "5 ÷ 150 = 3,33%." },
+          ],
+          quiz: [
+            {
+              q: "CASA adalah singkatan dari?",
+              options: [
+                "Cash And Saving Assets",
+                "Current Account Saving Account — yaitu Giro + Tabungan",
+                "Capital Adequacy Saving Account",
+                "Credit And Security Analysis",
+              ],
+              answer: 1,
+              explain: "CASA menggabungkan dua jenis simpanan berbunga rendah: giro dan tabungan.",
+            },
+            {
+              q: "Kenapa bank berebut CASA, bukan sekadar mengejar DPK sebesar-besarnya?",
+              options: [
+                "Karena CASA lebih mudah dihitung",
+                "Karena CASA adalah dana murah — biaya dananya rendah sehingga NIM lebih lebar",
+                "Karena CASA dijamin pemerintah",
+                "Karena deposito dilarang",
+              ],
+              answer: 1,
+              explain:
+                "Menghimpun dana lewat deposito itu mudah (tinggal naikkan bunga), tapi mahal. Dana murah yang sulit didapat.",
+            },
+            {
+              q: "Sebuah bank digital melaporkan CASA 90%. Apa yang perlu diperiksa lebih dulu?",
+              options: [
+                "Tidak perlu diperiksa, 90% pasti bagus",
+                "Saldo rata-rata per rekening & apakah nasabah bertahan setelah promo berhenti",
+                "Jumlah karyawannya",
+                "Warna logonya",
+              ],
+              answer: 1,
+              explain:
+                "CASA tinggi dengan saldo tipis dan nasabah yang datang karena promo tidak memberi keunggulan biaya yang tahan lama.",
+            },
+            {
+              q: "Saat Bank Indonesia menaikkan suku bunga secara agresif, apa yang biasanya terjadi pada CASA?",
+              options: [
+                "Naik, karena orang menabung lebih banyak",
+                "Cenderung turun, karena nasabah memindahkan dana ke deposito yang bunganya jadi menarik",
+                "Tidak berubah sama sekali",
+                "Berubah jadi modal bank",
+              ],
+              answer: 1,
+              explain:
+                "Inilah sebabnya tren CASA perlu dibaca bersama siklus suku bunga, bukan dinilai dari satu kuartal.",
+            },
+          ],
+        },
+        {
+          id: "acc-bank-3",
+          title: "NIM, LDR & Efisiensi Bank",
+          duration: "13 menit",
+          content: `
+<p>CASA memberi tahu seberapa murah bahan bakunya. Sekarang tiga ukuran berikutnya: seberapa <b>lebar</b> marginnya, seberapa <b>agresif</b> penyalurannya, dan seberapa <b>hemat</b> operasinya.</p>
+
+<div data-diagram="pipeline" data-stages="Himpun dana::bayar bunga rendah|Salurkan kredit::tagih bunga tinggi|Selisihnya::laba bunga bersih|Dibagi aset produktif::= NIM" data-caption="Dari menghimpun dana sampai jadi NIM"></div>
+
+<h3>1. NIM — Net Interest Margin</h3>
+<div class="callout">
+<b>NIM</b> = (Pendapatan bunga − Beban bunga) ÷ Aset produktif × 100%<br>
+<i>Ini adalah "margin kotor"-nya sebuah bank.</i>
+</div>
+<p>Bank di Indonesia umumnya ber-NIM sekitar <b>4–6%</b> — relatif tinggi dibanding banyak negara lain. NIM dipengaruhi dua sisi: <b>biaya dana</b> (turun kalau CASA tinggi) dan <b>imbal hasil kredit</b> (naik kalau menyalurkan ke segmen berisiko lebih tinggi seperti mikro dan konsumer).</p>
+
+<div class="callout warn">
+<b>⚠️ NIM tinggi belum tentu kabar baik.</b> Bank yang menyalurkan kredit mikro bisa ber-NIM 8%, tapi kredit macetnya juga jauh lebih besar. <b>NIM tinggi + NPL tinggi</b> artinya bank itu dibayar mahal karena menanggung risiko besar — bukan karena unggul. Selalu baca NIM bersama NPL.
+</div>
+
+<h3>2. LDR — Loan to Deposit Ratio</h3>
+<div class="callout">
+<b>LDR</b> = Total Kredit ÷ Total DPK × 100%<br>
+<i>Seberapa besar dana titipan yang sudah disalurkan menjadi kredit.</i>
+</div>
+
+<table class="tbl">
+  <tr><th>LDR</th><th>Artinya</th></tr>
+  <tr><td><b>Terlalu rendah</b> (&lt; 70%)</td><td>Banyak dana menganggur — bank membayar bunga tapi tidak menghasilkan. Boros.</td></tr>
+  <tr><td class="ok-cell"><b>Sehat</b> (± 80–92%)</td><td>Dana bekerja optimal, likuiditas masih aman.</td></tr>
+  <tr><td><b>Terlalu tinggi</b> (&gt; 95%)</td><td>Rawan. Kalau banyak nasabah menarik dana bersamaan, bank kesulitan membayar.</td></tr>
+</table>
+
+<p>Regulator memantau rasio ini justru karena bank punya godaan alami untuk menyalurkan sebanyak mungkin demi laba — sampai lupa menyisakan bantalan likuiditas.</p>
+
+<h3>3. BOPO / CIR — ukuran efisiensi</h3>
+<div class="callout">
+<b>BOPO</b> = Beban Operasional ÷ Pendapatan Operasional × 100%<br>
+Versi internasionalnya disebut <b>CIR</b> (Cost to Income Ratio).<br><br>
+<b>Makin kecil makin baik</b> — kebalikan dari kebanyakan rasio yang sudah kamu pelajari.
+</div>
+<p>BOPO di bawah <b>±70%</b> umumnya dianggap efisien. Angka ini mengukur berapa banyak biaya (gaji, cabang, teknologi) yang dihabiskan untuk menghasilkan setiap rupiah pendapatan.</p>
+
+<div class="callout">
+<b>Kenapa bank berlomba ke digital:</b> satu cabang fisik butuh gedung, sewa, dan belasan karyawan. Aplikasi mobile melayani jutaan nasabah dengan biaya tambahan mendekati nol. Itulah mengapa BOPO bank yang berhasil bertransformasi digital turun tajam — dan kenapa transformasi ini jadi pertaruhan besar industri.
+</div>
+
+<h3>Membaca ketiganya bersamaan</h3>
+<table class="tbl">
+  <tr><th>Pola</th><th>Kemungkinan artinya</th></tr>
+  <tr><td class="ok-cell">NIM lebar + BOPO rendah + NPL rendah</td><td>Bank berkualitas tinggi. Inilah yang dihargai mahal pasar.</td></tr>
+  <tr><td>NIM lebar + NPL tinggi</td><td>Dibayar mahal karena menanggung risiko besar, bukan karena unggul.</td></tr>
+  <tr><td>NIM tipis + BOPO tinggi</td><td>Terjepit dari dua sisi. Sulit menghasilkan ROE yang layak.</td></tr>
+  <tr><td>LDR sangat tinggi + CASA rendah</td><td>Rawan: pendanaan mahal <b>dan</b> likuiditas tipis.</td></tr>
+</table>
+`,
+          keyPoints: [
+            "NIM = (Pendapatan bunga − Beban bunga) ÷ Aset produktif — 'margin kotor' sebuah bank; di Indonesia umumnya 4–6%.",
+            "NIM tinggi bisa berarti menanggung risiko lebih besar (kredit mikro) — selalu baca bersama NPL.",
+            "LDR = Kredit ÷ DPK; terlalu rendah berarti dana menganggur, terlalu tinggi berarti likuiditas rawan. Sehat sekitar 80–92%.",
+            "BOPO (atau CIR) = Beban operasional ÷ Pendapatan operasional; makin KECIL makin efisien, di bawah ~70% dianggap baik.",
+            "Digitalisasi menurunkan BOPO karena melayani nasabah tambahan hampir tanpa biaya tambahan.",
+            "Kombinasi terbaik: NIM lebar + BOPO rendah + NPL rendah.",
+          ],
+          practice: [
+            { type: "number", q: "Kredit Rp170 T, DPK Rp200 T. Berapa LDR-nya (dalam %)?", answer: 85, tol: 0.5, hint: "Kredit ÷ DPK × 100%.", solution: "170 ÷ 200 = 85%." },
+            { type: "number", q: "Beban operasional Rp42 M, pendapatan operasional Rp60 M. Berapa BOPO-nya (dalam %)?", answer: 70, tol: 0.5, hint: "Beban ÷ Pendapatan × 100%.", solution: "42 ÷ 60 = 70%." },
+          ],
+          quiz: [
+            {
+              q: "Bank A ber-NIM 8%, jauh di atas rata-rata industri 5%. Apa yang harus dicek pertama?",
+              options: [
+                "Langsung simpulkan Bank A paling unggul",
+                "Cek NPL-nya — NIM tinggi sering datang dari kredit berisiko tinggi seperti mikro",
+                "Cek jumlah cabangnya",
+                "Cek nama direkturnya",
+              ],
+              answer: 1,
+              explain:
+                "Imbal hasil tinggi hampir selalu berpasangan dengan risiko tinggi. NIM tanpa NPL adalah setengah cerita.",
+            },
+            {
+              q: "LDR sebuah bank hanya 62%. Apa masalahnya?",
+              options: [
+                "Tidak ada masalah, makin rendah makin aman",
+                "Banyak dana menganggur — bank tetap membayar bunga tapi dana itu tidak menghasilkan optimal",
+                "Bank itu pasti bangkrut",
+                "Artinya CASA-nya tinggi",
+              ],
+              answer: 1,
+              explain:
+                "Dana menganggur menekan profitabilitas. Aman berlebihan juga ada biayanya.",
+            },
+            {
+              q: "BOPO turun dari 80% menjadi 68%. Artinya?",
+              options: [
+                "Bank jadi kurang efisien",
+                "Bank jadi lebih efisien — biaya yang dibutuhkan per rupiah pendapatan berkurang",
+                "Labanya pasti turun",
+                "NPL-nya naik",
+              ],
+              answer: 1,
+              explain:
+                "BOPO adalah rasio biaya: makin kecil makin baik. Turunnya BOPO biasanya langsung mengangkat laba.",
+            },
+          ],
+        },
+        {
+          id: "acc-bank-4",
+          title: "NPL & CKPN — Kualitas Kredit",
+          duration: "14 menit",
+          content: `
+<p>Bank bisa punya CASA bagus, NIM lebar, dan BOPO rendah — lalu tetap <b>hancur</b> karena satu hal: kreditnya tidak kembali. Inilah risiko terbesar perbankan.</p>
+
+<div data-diagram="scale" data-zones="Lancar|Dalam perhatian|Macet (NPL)" data-marks="1 hari telat|90 hari telat" data-caption="Perjalanan sebuah kredit dari lancar sampai dianggap macet"></div>
+
+<h3>Fundamental: kapan kredit disebut "macet"?</h3>
+<div class="callout">
+<b>NPL — Non Performing Loan</b> adalah kredit yang menunggak pembayaran <b>lebih dari 90 hari</b>.<br><br>
+<b>Rasio NPL</b> = Kredit bermasalah ÷ Total kredit × 100%
+</div>
+
+<p>Bank menggolongkan kredit dalam lima tingkat: <b>Lancar</b> → <b>Dalam Perhatian Khusus</b> → <b>Kurang Lancar</b> → <b>Diragukan</b> → <b>Macet</b>. Tiga yang terakhir dihitung sebagai NPL.</p>
+
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th></tr>
+  <tr><td><b>NPL Gross</b></td><td>Kredit bermasalah sebelum dikurangi cadangan. Angka apa adanya.</td></tr>
+  <tr><td><b>NPL Net</b></td><td>Setelah dikurangi cadangan. Lebih kecil — dan lebih sering dipamerkan bank.</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Selalu lihat NPL Gross.</b> Ini pola yang perlu kamu kenali: ketika sebuah bank hanya menonjolkan "NPL net 0,8%" tanpa menyebut gross-nya, periksa sendiri di laporannya. Batas yang diawasi regulator adalah <b>NPL gross 5%</b>.
+</div>
+
+<h3>CKPN — bantalan kerugian</h3>
+<div class="callout">
+<b>CKPN</b> (Cadangan Kerugian Penurunan Nilai) adalah <b>uang yang disisihkan bank</b> untuk menutup kredit yang diperkirakan tidak kembali.<br><br>
+CKPN dicatat sebagai <b>beban</b> — jadi menambah cadangan berarti <b>langsung menekan laba</b>.
+</div>
+
+<p>Ukuran kecukupannya disebut <b>coverage ratio</b>:</p>
+<div class="callout">
+<b>Coverage ratio</b> = CKPN ÷ Kredit bermasalah × 100%<br>
+Di atas <b>100%</b> berarti seluruh kredit bermasalah sudah dicadangkan penuh — posisi konservatif dan aman.
+</div>
+
+<h3>💥 Di sinilah kecurangan sering bersembunyi</h3>
+<p>Ingat modul <b>Audit &amp; Deteksi Kecurangan</b>? CKPN adalah salah satu pos paling mudah dimainkan di seluruh laporan keuangan, karena besarnya <b>bergantung pada penilaian manajemen</b>.</p>
+
+<table class="tbl">
+  <tr><th>Trik</th><th>Efek jangka pendek</th><th>Akibatnya nanti</th></tr>
+  <tr><td>Mencadangkan terlalu sedikit</td><td>Laba terlihat besar</td><td>Saat kredit benar-benar macet, kerugian meledak sekaligus</td></tr>
+  <tr><td><b>Restrukturisasi</b> kredit bermasalah</td><td>NPL turun di atas kertas</td><td>Masalahnya hanya ditunda, bukan hilang</td></tr>
+  <tr><td>Menghapusbukukan (<i>write-off</i>) besar-besaran</td><td>Rasio NPL langsung cantik</td><td>Modal tergerus diam-diam</td></tr>
+</table>
+
+<div class="callout warn">
+<b>🚩 Tanda bahaya yang paling sering terlewat:</b> NPL <b>turun</b> sementara <b>kredit direstrukturisasi melonjak</b>. Artinya kredit bermasalah tidak sembuh — hanya dipindahkan ke kategori lain dengan mengubah syarat pembayarannya. Angka NPL-nya membaik, kenyataannya tidak.
+</div>
+
+<h3>Cara membacanya yang benar</h3>
+<ol>
+  <li>Lihat <b>NPL gross</b>, bukan net.</li>
+  <li>Bandingkan dengan <b>rata-rata industri</b> dan dengan <b>sejarah bank itu sendiri</b>.</li>
+  <li>Cek <b>coverage ratio</b> — apakah cadangannya memadai?</li>
+  <li>Cek <b>kredit restrukturisasi</b> — apakah NPL turun karena sembuh atau karena dipindahkan?</li>
+  <li>Perhatikan <b>di sektor mana</b> kreditnya menumpuk. Konsentrasi pada satu industri yang sedang lesu adalah risiko besar.</li>
+</ol>
+
+<div class="callout">
+<b>Kenapa ini menentukan hidup-mati bank:</b> dengan DER sekitar 9×, modal bank hanya sekitar <b>10%</b> dari asetnya. Artinya, kalau <b>10% kreditnya</b> benar-benar hilang, <b>seluruh modalnya habis</b>. Itu sebabnya NPL yang naik dari 2% ke 5% terdengar kecil, tapi sebenarnya sangat serius.
+</div>
+`,
+          keyPoints: [
+            "NPL = kredit menunggak lebih dari 90 hari; rasio NPL = kredit bermasalah ÷ total kredit.",
+            "Selalu pakai NPL Gross (sebelum cadangan), bukan NPL Net yang lebih enak dipandang. Batas pengawasan regulator 5%.",
+            "CKPN = cadangan kerugian kredit; dicatat sebagai beban sehingga menambahnya langsung menekan laba.",
+            "Coverage ratio = CKPN ÷ kredit bermasalah; di atas 100% berarti tercadangkan penuh.",
+            "Trik yang sering dipakai: mencadangkan terlalu sedikit, merestrukturisasi kredit bermasalah, dan write-off besar-besaran.",
+            "Tanda bahaya utama: NPL turun tapi kredit restrukturisasi melonjak — masalah ditunda, bukan selesai.",
+            "Karena modal bank hanya ~10% dari aset, kehilangan 10% kredit bisa menghabiskan seluruh modalnya.",
+          ],
+          practice: [
+            { type: "number", q: "Total kredit Rp500 T, kredit bermasalah Rp15 T. Berapa NPL gross-nya (dalam %)?", answer: 3, tol: 0.1, hint: "Kredit bermasalah ÷ Total kredit × 100%.", solution: "15 ÷ 500 = 3%." },
+            { type: "number", q: "Kredit bermasalah Rp15 T, CKPN Rp18 T. Berapa coverage ratio-nya (dalam %)?", answer: 120, tol: 1, hint: "CKPN ÷ Kredit bermasalah × 100%.", solution: "18 ÷ 15 = 120% — tercadangkan penuh, posisi konservatif." },
+          ],
+          quiz: [
+            {
+              q: "Sebuah kredit disebut NPL bila menunggak lebih dari?",
+              options: ["7 hari", "30 hari", "90 hari", "1 tahun"],
+              answer: 2,
+              explain: "Ambang 90 hari adalah standar yang dipakai secara umum di perbankan.",
+            },
+            {
+              q: "Kenapa menambah CKPN langsung menekan laba bank?",
+              options: [
+                "Karena CKPN adalah pembagian dividen",
+                "Karena CKPN dicatat sebagai beban pada laporan laba rugi",
+                "Karena CKPN mengurangi DPK",
+                "Karena CKPN dibayarkan ke regulator",
+              ],
+              answer: 1,
+              explain:
+                "Mencadangkan berarti mengakui kerugian lebih awal — jujur, tapi menyakitkan bagi laba tahun berjalan.",
+            },
+            {
+              q: "NPL sebuah bank turun dari 4% ke 2%, tapi kredit restrukturisasi melonjak tajam. Kesimpulan yang paling tepat?",
+              options: [
+                "Bank berhasil menyembuhkan kreditnya",
+                "Kredit bermasalah kemungkinan hanya dipindahkan kategorinya, bukan benar-benar sembuh",
+                "NPL memang selalu turun tiap tahun",
+                "Coverage ratio pasti naik",
+              ],
+              answer: 1,
+              explain:
+                "Restrukturisasi mengubah syarat pembayaran sehingga kredit keluar dari hitungan NPL, padahal risikonya masih ada.",
+            },
+            {
+              q: "Kenapa kenaikan NPL dari 2% ke 5% dianggap sangat serius, padahal angkanya terlihat kecil?",
+              options: [
+                "Karena regulator tidak suka angka ganjil",
+                "Karena modal bank hanya sekitar 10% dari asetnya, sehingga kerugian kredit cepat menggerus modal",
+                "Karena NPL memengaruhi CASA",
+                "Karena nasabah akan protes",
+              ],
+              answer: 1,
+              explain:
+                "Dengan leverage sekitar 9×, kerugian kecil pada aset menjadi kerugian besar pada modal.",
+            },
+          ],
+        },
+        {
+          id: "acc-bank-5",
+          title: "CAR & Permodalan Bank",
+          duration: "12 menit",
+          content: `
+<p>Kalau NPL adalah ukuran <b>seberapa besar lukanya</b>, maka <b>CAR</b> adalah ukuran <b>seberapa kuat bank menahan luka itu</b>.</p>
+
+<div data-diagram="layers" data-items="Modal inti (CET1) — penyerap kerugian pertama|Modal pelengkap — lapisan berikutnya|Aset tertimbang risiko (ATMR) — yang harus ditopang" data-caption="Struktur permodalan bank"></div>
+
+<h3>Fundamental: kenapa bank wajib punya modal minimum?</h3>
+<div class="callout">
+Bank beroperasi dengan uang orang lain. <b>Modal sendiri</b> adalah bantalan yang menyerap kerugian <b>lebih dulu</b>, sebelum uang nasabah tersentuh.<br><br>
+Tanpa aturan modal minimum, bank punya godaan untuk beroperasi dengan modal setipis mungkin — untung besar saat lancar, tapi nasabah yang menanggung saat gagal.
+</div>
+
+<h3>Rumusnya</h3>
+<div class="callout">
+<b>CAR</b> (Capital Adequacy Ratio) = Modal ÷ <b>ATMR</b> × 100%
+</div>
+
+<p><b>ATMR</b> = Aset Tertimbang Menurut Risiko. Ini bagian yang menarik: <b>tidak semua aset dihitung sama</b>.</p>
+
+<table class="tbl">
+  <tr><th>Jenis aset</th><th>Bobot risiko (ilustrasi)</th><th>Alasannya</th></tr>
+  <tr><td>Surat berharga negara</td><td class="ok-cell">0%</td><td>Dianggap hampir tanpa risiko gagal bayar</td></tr>
+  <tr><td>Kredit pemilikan rumah</td><td>±35%</td><td>Ada agunan berupa rumah</td></tr>
+  <tr><td>Kredit korporasi</td><td>±100%</td><td>Risiko penuh</td></tr>
+  <tr><td>Kredit tanpa agunan</td><td>Lebih tinggi lagi</td><td>Tidak ada yang bisa disita</td></tr>
+</table>
+
+<div class="callout">
+<b>Konsekuensi penting:</b> dua bank dengan total aset sama bisa punya ATMR sangat berbeda. Bank yang banyak memegang surat berharga negara butuh modal jauh lebih sedikit daripada bank yang agresif menyalurkan kredit tanpa agunan. Inilah cara regulator memaksa bank menakar risikonya sendiri.
+</div>
+
+<h3>Berapa yang wajib?</h3>
+<p>Ketentuan <b>Basel III</b> — kerangka internasional yang juga diadopsi Indonesia — mensyaratkan CAR minimum sekitar <b>8%</b>, ditambah beberapa lapisan penyangga tambahan sehingga dalam praktiknya menjadi lebih tinggi. Bank-bank besar Indonesia umumnya menjaga CAR jauh di atas ketentuan, sering di kisaran <b>20%-an</b>.</p>
+
+<div class="callout warn">
+<b>⚠️ CAR terlalu tinggi juga bukan pujian.</b> Modal menganggur tidak menghasilkan. CAR 30% berarti bank menyimpan bantalan yang jauh melebihi kebutuhan — aman, tapi <b>ROE-nya tertekan</b> karena modal besar dibagi laba yang sama. Ini contoh nyata pelajaran <b>alokasi modal</b>: kalau modal berlebih tak bisa dipakai produktif, sebaiknya dikembalikan ke pemegang saham lewat dividen.
+</div>
+
+<h3>Tiga rasio, tiga pertanyaan berbeda</h3>
+<table class="tbl">
+  <tr><th>Rasio</th><th>Menjawab</th></tr>
+  <tr><td><b>NPL</b></td><td>Berapa besar kredit yang bermasalah?</td></tr>
+  <tr><td><b>Coverage ratio</b></td><td>Sudah dicadangkan berapa banyak?</td></tr>
+  <tr><td><b>CAR</b></td><td>Kalau cadangan itu <b>tidak cukup</b>, sanggupkah modalnya menahan sisanya?</td></tr>
+</table>
+
+<div class="callout">
+<b>Cara memakai bertingkat:</b> mulai dari NPL (ada masalah tidak?), lalu coverage (sudah disiapkan?), lalu CAR (kalau meleset, kuat bertahan?). Ketiganya bersama-sama menjawab pertanyaan sederhana: <b>apakah bank ini sanggup melewati krisis?</b>
+</div>
+`,
+          keyPoints: [
+            "CAR = Modal ÷ ATMR × 100%; mengukur ketebalan bantalan modal bank.",
+            "ATMR = Aset Tertimbang Menurut Risiko — aset berisiko rendah (SBN) berbobot kecil, kredit tanpa agunan berbobot besar.",
+            "Modal menyerap kerugian lebih dulu sebelum dana nasabah tersentuh; itulah alasan adanya modal minimum.",
+            "Basel III mensyaratkan CAR minimum sekitar 8% plus penyangga; bank besar Indonesia umumnya jauh di atas itu.",
+            "CAR terlalu tinggi menekan ROE karena modal menganggur — hubungkan dengan pelajaran alokasi modal.",
+            "Urutan membaca: NPL (ada masalah?) → coverage (sudah dicadangkan?) → CAR (kuat menahan sisanya?).",
+          ],
+          practice: [
+            { type: "number", q: "Modal bank Rp40 T, ATMR Rp200 T. Berapa CAR-nya (dalam %)?", answer: 20, tol: 0.5, hint: "Modal ÷ ATMR × 100%.", solution: "40 ÷ 200 = 20% — jauh di atas ketentuan minimum." },
+          ],
+          quiz: [
+            {
+              q: "Apa yang dimaksud ATMR dalam rumus CAR?",
+              options: [
+                "Total aset apa adanya",
+                "Aset Tertimbang Menurut Risiko — tiap aset diberi bobot sesuai tingkat risikonya",
+                "Aset lancar saja",
+                "Aset milik nasabah",
+              ],
+              answer: 1,
+              explain:
+                "Surat berharga negara berbobot mendekati nol, sedangkan kredit tanpa agunan berbobot tinggi.",
+            },
+            {
+              q: "Kenapa CAR yang terlalu tinggi bukan selalu pujian?",
+              options: [
+                "Karena melanggar aturan",
+                "Karena modal menganggur tidak menghasilkan sehingga ROE tertekan",
+                "Karena membuat NPL naik",
+                "Karena mengurangi CASA",
+              ],
+              answer: 1,
+              explain:
+                "Ini persoalan alokasi modal: modal berlebih yang tak bisa dipakai produktif sebaiknya dikembalikan ke pemegang saham.",
+            },
+            {
+              q: "Urutan yang paling masuk akal saat menilai ketahanan sebuah bank?",
+              options: [
+                "CAR → NPL → coverage",
+                "NPL (ada masalah?) → coverage (sudah dicadangkan?) → CAR (kuat menahan sisanya?)",
+                "Coverage → CAR → CASA",
+                "Cukup lihat CAR saja",
+              ],
+              answer: 1,
+              explain:
+                "Mulai dari besarnya masalah, lalu kesiapan cadangan, baru ketahanan modal sebagai benteng terakhir.",
+            },
+          ],
+        },
+        {
+          id: "acc-bank-6",
+          title: "Menilai Saham Bank: PBV & ROE",
+          duration: "13 menit",
+          content: `
+<p>Pelajaran penutup: setelah tahu cara membaca kesehatan bank, bagaimana menilai <b>sahamnya mahal atau murah</b>? Jawabannya bukan PER atau EV/EBITDA — melainkan pasangan <b>PBV dan ROE</b>.</p>
+
+<div data-diagram="pipeline" data-stages="CASA tinggi::dana murah|Biaya dana rendah::NIM lebar|BOPO rendah::laba besar|ROE tinggi::PBV pantas mahal" data-caption="Rantai dari bahan baku murah sampai harga saham"></div>
+
+<h3>Kenapa PBV, bukan PER?</h3>
+<p>Ingat pelajaran <b>PBV &amp; Nilai Buku</b>: PBV cocok untuk perusahaan yang <b>nilainya melekat pada asetnya</b>. Bagi bank, hampir seluruh asetnya berupa <b>uang dan tagihan</b> — bukan mesin yang sulit ditaksir. Nilai bukunya karena itu relatif <b>bermakna dan bisa dipercaya</b>.</p>
+
+<p>Sebaliknya, laba bank bisa berayun tajam hanya karena keputusan <b>pencadangan (CKPN)</b>. Satu tahun mencadangkan besar, PER melonjak; tahun berikutnya mencadangkan sedikit, PER terlihat murah — padahal bisnisnya sama saja. Nilai buku jauh lebih stabil.</p>
+
+<h3>Aturan yang menghubungkan keduanya</h3>
+<div class="callout">
+<b>PBV yang pantas ditentukan terutama oleh ROE.</b><br><br>
+Kalau <b>ROE = biaya ekuitas</b> → PBV wajar ≈ <b>1×</b><br>
+Kalau <b>ROE &gt; biaya ekuitas</b> → PBV pantas <b>di atas 1×</b><br>
+Kalau <b>ROE &lt; biaya ekuitas</b> → PBV pantas <b>di bawah 1×</b>
+</div>
+
+<p>Logikanya sederhana: bank yang bisa menghasilkan 20% dari setiap rupiah modal pantas dihargai lebih mahal daripada modalnya, karena modal itu <b>menghasilkan lebih banyak</b> di tangan bank tersebut. Bank yang hanya menghasilkan 5% — di bawah biaya ekuitasnya — sebenarnya <b>menghancurkan nilai</b>, dan pasar wajar menghargainya di bawah nilai buku.</p>
+
+<table class="tbl">
+  <tr><th>Profil bank</th><th>ROE</th><th>PBV yang lazim</th></tr>
+  <tr><td class="ok-cell">CASA sangat tinggi, NPL rendah, BOPO efisien</td><td>±20%+</td><td>Premium, bisa jauh di atas 2×</td></tr>
+  <tr><td>Bank besar yang solid</td><td>±13–18%</td><td>Sekitar 1–2×</td></tr>
+  <tr><td>Bank kecil, biaya dana mahal</td><td>±5–8%</td><td>Sering di bawah 1×</td></tr>
+</table>
+
+<div class="callout warn">
+<b>🚩 Jebakan "bank murah".</b> Ini penerapan langsung dari <i>value trap</i> yang kamu pelajari di <b>Valuasi Relatif &amp; Multiples</b>. Bank dengan PBV 0,5× terlihat sangat murah — tapi tanyakan dulu: <b>kenapa</b>?<br><br>
+Biasanya jawabannya: ROE-nya rendah karena biaya dananya mahal (CASA rendah), atau NPL-nya bermasalah. Murahnya <b>pantas</b>. Dan celakanya, kalau kredit macetnya terus bertambah, nilai bukunya sendiri akan menyusut — sehingga PBV yang tadinya 0,5× ternyata tidak semurah kelihatannya.
+</div>
+
+<h3>Daftar periksa sebelum menilai saham bank</h3>
+<ol>
+  <li><b>CASA</b> — trennya naik atau turun beberapa kuartal terakhir?</li>
+  <li><b>NIM</b> — stabil? Kalau tinggi, apakah karena efisien atau karena berisiko?</li>
+  <li><b>BOPO</b> — membaik seiring digitalisasi?</li>
+  <li><b>NPL gross</b> — di bawah rata-rata industri? Kredit restrukturisasinya bagaimana?</li>
+  <li><b>Coverage ratio</b> — memadai?</li>
+  <li><b>CAR</b> — kuat, tapi tidak berlebihan sampai menekan ROE?</li>
+  <li><b>ROE</b> — konsisten di atas biaya ekuitas?</li>
+  <li><b>PBV</b> — dibandingkan bank sejenis <b>dan</b> sejarahnya sendiri.</li>
+</ol>
+
+<div class="callout">
+<b>Menutup modul ini:</b> perhatikan bahwa hampir semua alat di daftar itu <b>tidak ada di modul-modul sebelumnya</b>. Itulah inti pelajarannya — menilai perusahaan bukan soal menghafal satu set rasio, tapi memahami <b>bagaimana bisnisnya menghasilkan uang</b>, lalu memilih alat yang sesuai. Asuransi, properti, dan pertambangan juga punya kebiasaan ukurannya sendiri.
+</div>
+
+<div class="callout warn">
+<b>Catatan penting:</b> semua angka di modul ini adalah <b>kisaran ilustrasi</b> untuk memahami konsep, bukan patokan baku. Ketentuan regulator dan kondisi industri berubah dari waktu ke waktu — selalu rujuk laporan keuangan terbaru bank yang bersangkutan serta publikasi <b>OJK</b> dan <b>Bank Indonesia</b>. Materi ini untuk edukasi, bukan saran investasi.
+</div>
+`,
+          keyPoints: [
+            "Saham bank dinilai dengan PBV & ROE, bukan PER atau EV/EBITDA.",
+            "PBV cocok karena aset bank berupa uang & tagihan sehingga nilai bukunya bermakna; laba bank berayun karena keputusan pencadangan.",
+            "ROE = biaya ekuitas → PBV wajar ≈ 1×; ROE lebih tinggi → PBV pantas di atas 1×; ROE lebih rendah → pantas di bawah 1×.",
+            "Bank ber-ROE di bawah biaya ekuitasnya sebenarnya menghancurkan nilai.",
+            "Jebakan bank 'murah': PBV rendah biasanya karena ROE rendah atau NPL bermasalah — dan nilai bukunya sendiri bisa menyusut.",
+            "Rantainya: CASA tinggi → biaya dana rendah → NIM lebar → ROE tinggi → PBV pantas mahal.",
+            "Pelajaran besarnya: pilih alat sesuai cara bisnis menghasilkan uang, jangan hafal satu set rasio untuk semua industri.",
+          ],
+          practice: [
+            { type: "number", q: "Sebuah bank punya ekuitas Rp50 T dan laba bersih Rp9 T. Berapa ROE-nya (dalam %)?", answer: 18, tol: 0.5, hint: "Laba bersih ÷ Ekuitas × 100%.", solution: "9 ÷ 50 = 18% — tergolong bank yang solid." },
+            { type: "number", q: "Kapitalisasi pasar bank Rp120 T, nilai buku ekuitasnya Rp60 T. Berapa PBV-nya (dalam kali)?", answer: 2, tol: 0.05, hint: "Kapitalisasi pasar ÷ Nilai buku ekuitas.", solution: "120 ÷ 60 = 2,0× — dihargai dua kali nilai bukunya." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa PBV lebih dipakai daripada PER untuk menilai bank?",
+              options: [
+                "Karena PER dilarang untuk bank",
+                "Karena aset bank berupa uang & tagihan sehingga nilai bukunya bermakna, sementara laba bank berayun karena keputusan pencadangan",
+                "Karena PBV selalu lebih kecil",
+                "Karena bank tidak punya laba",
+              ],
+              answer: 1,
+              explain:
+                "Nilai buku bank relatif stabil dan bisa dipercaya; labanya jauh lebih mudah berayun karena CKPN.",
+            },
+            {
+              q: "Bank dengan ROE 6% sementara biaya ekuitasnya 11%. PBV yang pantas?",
+              options: [
+                "Di atas 2×",
+                "Di bawah 1× — karena modal menghasilkan lebih sedikit daripada biayanya, artinya menghancurkan nilai",
+                "Tepat 1,5×",
+                "Tidak bisa dinilai",
+              ],
+              answer: 1,
+              explain:
+                "Kalau modal menghasilkan di bawah biayanya, pasar wajar menghargainya di bawah nilai buku.",
+            },
+            {
+              q: "Sebuah bank diperdagangkan di PBV 0,45×. Langkah paling tepat?",
+              options: [
+                "Langsung beli karena sangat murah",
+                "Selidiki dulu ROE, CASA, dan NPL-nya — murahnya mungkin pantas, dan nilai bukunya sendiri bisa menyusut",
+                "Abaikan, PBV tidak berguna",
+                "Bandingkan dengan perusahaan teknologi",
+              ],
+              answer: 1,
+              explain:
+                "Ini value trap versi perbankan. PBV rendah hampir selalu punya alasan yang perlu ditemukan lebih dulu.",
+            },
+            {
+              q: "Pelajaran paling besar dari modul perbankan ini adalah?",
+              options: [
+                "Semua perusahaan dinilai dengan rasio yang sama",
+                "Pilih alat ukur sesuai cara bisnis itu menghasilkan uang — bukan menghafal satu set rasio untuk semua industri",
+                "Bank selalu lebih baik dari perusahaan biasa",
+                "Rasio keuangan tidak berguna",
+              ],
+              answer: 1,
+              explain:
+                "Asuransi, properti, dan pertambangan pun punya ukuran khasnya sendiri.",
             },
           ],
         },
@@ -4018,6 +5036,151 @@ Hedge fund &amp; private equity <b>umumnya tidak bisa diakses</b> masyarakat umu
               answer: 1,
               explain:
                 "Janji hasil pasti + tekanan waktu adalah pola klasik penipuan investasi.",
+            },
+          ],
+        },
+        {
+          id: "acc-inv-7",
+          title: "Capital Allocator Institusional — Siapa yang Mendanai Para Manajer",
+          duration: "14 menit",
+          content: `
+<p>Sepanjang modul ini kita melihat industri dari sisi <b>manajer</b>: hedge fund, private equity, venture capital. Sekarang kita balik kameranya. <b>Dari mana uang mereka datang?</b> Jawabannya: dari sekelompok pihak yang disebut <b>capital allocator</b>.</p>
+
+<div data-diagram="network" data-center="Capital allocator" data-nodes="Dana pensiun|Dana abadi kampus|Perusahaan asuransi|Family office|Dana kekayaan negara" data-caption="Pemilik uang sesungguhnya — mereka tidak mengelola sendiri, tapi memilih siapa yang mengelola"></div>
+
+<div class="callout warn">
+<b>Satu istilah, dua arti — jangan tertukar.</b><br><br>
+1. <b>CEO sebagai capital allocator</b> — memutuskan ke mana kas <i>perusahaannya</i> mengalir (dibahas di modul <b>Kualitas Bisnis</b>).<br>
+2. <b>Allocator institusional</b> — lembaga yang memutuskan <i>manajer mana</i> yang dipercaya mengelola dananya. Inilah yang dibahas di pelajaran ini.<br><br>
+Keduanya mengerjakan hal yang sama secara prinsip — <b>menaruh modal di tempat terbaiknya</b> — hanya pada lapisan yang berbeda.
+</div>
+
+<h3>Fundamental: rantai uang yang jarang terlihat</h3>
+<p>Ketika membaca berita "private equity X mengakuisisi perusahaan Y", uang itu <b>bukan milik</b> private equity tersebut. Rantainya begini:</p>
+
+<div data-diagram="pipeline" data-stages="Orang biasa::iuran pensiun, premi asuransi|Allocator::dana pensiun, asuransi|Manajer::PE, hedge fund, reksa dana|Perusahaan::yang akhirnya dibeli" data-caption="Uangmu mungkin ada di ujung rantai ini tanpa kamu sadari"></div>
+
+<div class="callout">
+<b>Ini menyangkut kamu langsung.</b> Kalau kamu bekerja dan iuran <b>BPJS Ketenagakerjaan</b> atau dana pensiun dipotong dari gajimu, maka <b>kamu adalah bagian dari rantai ini</b>. Uangmu dikelola oleh sebuah allocator, yang memilihkan ke mana ia diinvestasikan.
+</div>
+
+<h3>Siapa saja mereka</h3>
+<table class="tbl">
+  <tr><th>Jenis</th><th>Sumber uangnya</th><th>Ciri khas</th></tr>
+  <tr><td><b>Dana pensiun</b></td><td>Iuran pekerja &amp; pemberi kerja</td><td>Kewajiban sangat panjang (puluhan tahun); paling konservatif</td></tr>
+  <tr><td><b>Dana abadi</b> <i>(endowment)</i></td><td>Sumbangan alumni ke universitas</td><td>Jangka waktu <b>tak terbatas</b> — paling berani mengambil aset tak likuid</td></tr>
+  <tr><td><b>Asuransi</b></td><td>Premi nasabah</td><td>Harus siap membayar klaim kapan saja; diatur sangat ketat</td></tr>
+  <tr><td><b>Family office</b></td><td>Kekayaan satu keluarga kaya</td><td>Paling bebas aturan; sangat beragam gayanya</td></tr>
+  <tr><td><b>Dana kekayaan negara</b><br><i>(sovereign wealth fund)</i></td><td>Surplus negara / hasil sumber daya alam</td><td>Sangat besar; sering punya tujuan strategis, bukan hanya untung</td></tr>
+</table>
+
+<h3>Istilah yang wajib dikenal: LP dan GP</h3>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Siapa</th><th>Perannya</th></tr>
+  <tr><td><b>LP</b> — Limited Partner</td><td>Allocator (dana pensiun, endowment, dll.)</td><td><b>Menyetor uang.</b> Tidak ikut mengelola, tanggung jawabnya terbatas pada uang yang disetor</td></tr>
+  <tr><td><b>GP</b> — General Partner</td><td>Manajer (PE, VC, hedge fund)</td><td><b>Mengelola uang</b> &amp; mengambil keputusan investasi. Menerima management fee + bagi hasil</td></tr>
+</table>
+
+<div class="callout">
+<b>Kenapa struktur ini ada?</b> LP punya <b>uang</b> tapi tidak punya waktu dan keahlian untuk menilai ratusan perusahaan. GP punya <b>keahlian</b> tapi tidak punya uang sebanyak itu. Keduanya saling melengkapi — dengan harga: fee.
+</div>
+
+<h3>Pekerjaan seorang allocator sebenarnya apa?</h3>
+<p>Mereka <b>tidak</b> memilih saham. Pekerjaan mereka satu tingkat di atas itu:</p>
+<ol>
+  <li><b>Menentukan alokasi aset</b> — berapa persen ke saham, obligasi, properti, aset alternatif. Riset menunjukkan <b>keputusan inilah</b>, bukan pemilihan saham, yang menentukan sebagian besar hasil jangka panjang.</li>
+  <li><b>Memilih manajer</b> — dari ribuan GP, siapa yang benar-benar punya keahlian dan bukan sekadar beruntung?</li>
+  <li><b>Menegosiasikan syarat</b> — fee, kunci waktu, transparansi.</li>
+  <li><b>Memantau &amp; memutuskan berhenti</b> — kapan menarik dana dari manajer yang memburuk.</li>
+</ol>
+
+<div class="callout warn">
+<b>Tantangan terberatnya: membedakan keahlian dari keberuntungan.</b><br><br>
+Manajer dengan hasil bagus 3 tahun berturut-turut mungkin memang hebat — atau mungkin hanya kebetulan gaya investasinya sedang cocok dengan pasar. Membedakannya butuh data <b>puluhan tahun</b>, sementara keputusannya harus diambil <b>sekarang</b>. Ini masalah yang secara mendasar <b>tidak bisa diselesaikan dengan pasti</b>.
+</div>
+
+<h3>Pola yang mereka hadapi</h3>
+<table class="tbl">
+  <tr><th>Masalah</th><th>Penjelasan</th></tr>
+  <tr><td><b>Mengejar performa</b></td><td>Allocator cenderung masuk ke manajer <b>setelah</b> hasilnya bagus — yaitu tepat saat gayanya mulai kehilangan momentum. Membeli mahal, menjual murah, pada tingkat institusi</td></tr>
+  <tr><td><b>Risiko karier</b></td><td>Memilih manajer terkenal yang lalu rugi bisa dimaafkan. Memilih manajer tak dikenal yang lalu rugi bisa menghilangkan pekerjaan. Akibatnya banyak allocator memilih yang <b>aman secara politis</b>, bukan yang terbaik</td></tr>
+  <tr><td><b>Beban fee bertingkat</b></td><td>Kamu bayar fee ke dana pensiun, dana pensiun bayar fee ke GP, GP kadang menaruh di fund lain. Tiap lapis memotong hasilmu</td></tr>
+</table>
+
+<h3>💡 Kenapa ini berguna bagi kamu</h3>
+<div class="callout">
+Kamu mungkin tidak akan pernah menjadi LP sebuah private equity. Tapi kamu <b>sudah</b> menjadi capital allocator untuk uangmu sendiri — dan menghadapi persoalan yang <b>persis sama</b>:<br><br>
+• Berapa porsi ke tabungan, emas, saham, properti? <b>(alokasi aset)</b><br>
+• Reksa dana mana yang dipilih? <b>(memilih manajer)</b><br>
+• Berapa biaya yang dipotong tiap tahun? <b>(fee)</b><br>
+• Apakah hasil bagus manajer itu keahlian atau keberuntungan? <b>(pertanyaan abadi)</b><br><br>
+Bedanya hanya nol di belakang angkanya.
+</div>
+
+<div class="callout warn">
+<b>Pelajaran paling praktis dari dunia allocator:</b> karena membedakan keahlian dari keberuntungan itu sangat sulit dan fee terus menggerus hasil, banyak allocator besar — termasuk sejumlah dana pensiun terbesar dunia — akhirnya memindahkan sebagian besar dananya ke <b>indeks berbiaya rendah</b>. Bukan karena menyerah, tapi karena setelah puluhan tahun data terkumpul, itulah kesimpulan yang paling jujur untuk sebagian besar kasus.<br><br>
+<i>Materi ini untuk edukasi, bukan saran investasi.</i>
+</div>
+`,
+          keyPoints: [
+            "Capital allocator institusional = lembaga pemilik uang yang memilih manajer, bukan memilih saham sendiri.",
+            "Jangan tertukar: CEO sebagai capital allocator mengatur kas perusahaannya; allocator institusional memilih manajer dana.",
+            "Jenisnya: dana pensiun, dana abadi (endowment), asuransi, family office, dana kekayaan negara.",
+            "LP (Limited Partner) menyetor uang; GP (General Partner) mengelolanya dan menerima fee + bagi hasil.",
+            "Pekerjaan allocator: menentukan alokasi aset, memilih manajer, menegosiasikan syarat, memantau & memutuskan berhenti.",
+            "Alokasi aset menentukan sebagian besar hasil jangka panjang — lebih besar pengaruhnya daripada pemilihan saham.",
+            "Tantangan terberat: membedakan keahlian dari keberuntungan, yang butuh data puluhan tahun.",
+            "Pola bermasalah: mengejar performa masa lalu, risiko karier, dan fee bertingkat.",
+            "Kamu sudah menjadi capital allocator untuk uangmu sendiri — persoalannya sama, hanya beda nol di belakang angkanya.",
+          ],
+          quiz: [
+            {
+              q: "Dalam struktur dana investasi, siapa itu LP (Limited Partner)?",
+              options: [
+                "Manajer yang mengelola dana dan memilih investasi",
+                "Pihak yang menyetor uang (dana pensiun, endowment) tanpa ikut mengelola",
+                "Regulator yang mengawasi",
+                "Perusahaan yang diakuisisi",
+              ],
+              answer: 1,
+              explain:
+                "LP menyediakan modal; GP (General Partner) yang mengelola dan mengambil keputusan investasi.",
+            },
+            {
+              q: "Apa yang membedakan dana abadi (endowment) dari dana pensiun?",
+              options: [
+                "Endowment tidak boleh berinvestasi",
+                "Endowment punya jangka waktu tak terbatas sehingga lebih berani memegang aset tak likuid",
+                "Endowment hanya untuk pemerintah",
+                "Tidak ada bedanya",
+              ],
+              answer: 1,
+              explain:
+                "Dana pensiun punya kewajiban membayar pada waktu tertentu; endowment secara prinsip berlangsung selamanya.",
+            },
+            {
+              q: "Kenapa allocator sering 'mengejar performa' dan itu merugikan?",
+              options: [
+                "Karena mereka malas",
+                "Karena mereka masuk setelah hasil manajer bagus — yaitu tepat saat gaya investasinya mulai kehilangan momentum",
+                "Karena dilarang regulator",
+                "Karena feenya terlalu murah",
+              ],
+              answer: 1,
+              explain:
+                "Ini versi institusional dari 'beli mahal, jual murah'.",
+            },
+            {
+              q: "Apa keputusan yang paling menentukan hasil jangka panjang seorang allocator?",
+              options: [
+                "Memilih saham individual terbaik",
+                "Menentukan alokasi aset — berapa porsi ke saham, obligasi, properti, dan aset alternatif",
+                "Memilih kantor yang bagus",
+                "Menentukan besarnya fee",
+              ],
+              answer: 1,
+              explain:
+                "Riset menunjukkan alokasi aset berpengaruh jauh lebih besar daripada pemilihan surat berharga individual.",
             },
           ],
         },

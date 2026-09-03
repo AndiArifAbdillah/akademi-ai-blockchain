@@ -1461,6 +1461,167 @@ DEMOS["cost-structure"] = function (root) {
   draw();
 };
 
+/* ---------- Pembantu: baris input angka untuk demo kalkulator ---------- */
+function dmAngka(state, key, label, satuan, onUbah) {
+  const inp = h("input", { class: "pc-input", type: "number", step: "any", value: String(state[key]) });
+  inp.addEventListener("input", () => {
+    state[key] = parseFloat(inp.value);
+    if (isNaN(state[key])) state[key] = 0;
+    onUbah();
+  });
+  return h("label", { class: "pc-row" }, [
+    h("span", { html: label }),
+    h("span", { class: "pc-inwrap" }, [inp, h("span", { class: "pc-jt", text: satuan })]),
+  ]);
+}
+
+/* ---------- Demo: CASA, biaya dana & NIM sebuah bank ---------- */
+DEMOS["casa-nim"] = function (root) {
+  const s = {
+    giro: 25, bungaGiro: 1,
+    tabungan: 40, bungaTab: 1.5,
+    deposito: 35, bungaDep: 5.5,
+    bungaKredit: 10, ldr: 85,
+  };
+  const IMBAL_SB = 5; // asumsi: dana yang tidak disalurkan jadi kredit ditaruh di surat berharga
+  const out = h("div", { class: "dm-out" });
+
+  function draw() {
+    const dpk = s.giro + s.tabungan + s.deposito;
+    if (dpk <= 0) { out.innerHTML = '<div class="dm-note">Masukkan jumlah dana dulu.</div>'; return; }
+    const casa = ((s.giro + s.tabungan) / dpk) * 100;
+    const bebanBunga = (s.giro * s.bungaGiro + s.tabungan * s.bungaTab + s.deposito * s.bungaDep) / 100;
+    const biayaDana = (bebanBunga / dpk) * 100;
+    const kredit = dpk * (s.ldr / 100);
+    const suratBerharga = dpk - kredit;
+    const pendapatan = (kredit * s.bungaKredit) / 100 + (suratBerharga * IMBAL_SB) / 100;
+    const nim = ((pendapatan - bebanBunga) / dpk) * 100;
+    const labaBunga = pendapatan - bebanBunga;
+
+    const warnaCasa = casa >= 65 ? "good" : casa >= 50 ? "" : "bad";
+    const warnaNim = nim >= 5 ? "good" : nim >= 3.5 ? "" : "bad";
+    const baris = (l, v, sub, k) =>
+      `<div class="dm-line ${k || ""}"><span>${l}${sub ? '<br><i class="dm-sub">' + sub + "</i>" : ""}</span><b>${v}</b></div>`;
+
+    out.innerHTML =
+      baris("Total DPK", "Rp" + dpk.toFixed(1) + " T", "Giro + Tabungan + Deposito") +
+      baris("Rasio CASA", casa.toFixed(1) + "%", "(Giro + Tabungan) ÷ DPK", warnaCasa) +
+      baris("Biaya dana (cost of funds)", biayaDana.toFixed(2) + "%", "Beban bunga ÷ DPK", biayaDana <= 3 ? "good" : biayaDana <= 4.5 ? "" : "bad") +
+      `<div class="dm-bar"><span>Kredit</span><div class="dm-track"><div class="dm-fill ok" style="width:${s.ldr.toFixed(0)}%"></div></div><b>Rp${kredit.toFixed(1)} T</b></div>` +
+      `<div class="dm-bar"><span>Surat berharga</span><div class="dm-track"><div class="dm-fill" style="width:${(100 - s.ldr).toFixed(0)}%"></div></div><b>Rp${suratBerharga.toFixed(1)} T</b></div>` +
+      baris("Laba bunga bersih", "Rp" + labaBunga.toFixed(2) + " T", "Pendapatan bunga − Beban bunga") +
+      baris("NIM (Net Interest Margin)", nim.toFixed(2) + "%", "Laba bunga bersih ÷ Aset produktif", "big " + warnaNim) +
+      `<div class="dm-note">💡 <b>Coba ini:</b> pindahkan Rp25 T dari <b>Tabungan</b> ke <b>Deposito</b>. Jumlah dananya sama persis, tapi CASA anjlok, biaya dana melonjak, dan NIM ikut turun — padahal bank itu tidak melakukan kesalahan apa pun. Itulah kenapa CASA sangat diperebutkan.<br><br><i>Asumsi penyederhanaan: dana yang tidak disalurkan jadi kredit ditempatkan di surat berharga dengan imbal hasil ${IMBAL_SB}%.</i></div>`;
+  }
+
+  const kolom = [
+    dmAngka(s, "giro", "Giro <i class='dm-sub'>(murah)</i>", "T", draw),
+    dmAngka(s, "bungaGiro", "&nbsp;&nbsp;↳ bunga giro", "%", draw),
+    dmAngka(s, "tabungan", "Tabungan <i class='dm-sub'>(murah)</i>", "T", draw),
+    dmAngka(s, "bungaTab", "&nbsp;&nbsp;↳ bunga tabungan", "%", draw),
+    dmAngka(s, "deposito", "Deposito <i class='dm-sub'>(mahal)</i>", "T", draw),
+    dmAngka(s, "bungaDep", "&nbsp;&nbsp;↳ bunga deposito", "%", draw),
+    dmAngka(s, "bungaKredit", "Bunga kredit yang ditagih", "%", draw),
+    dmAngka(s, "ldr", "LDR (kredit ÷ DPK)", "%", draw),
+  ];
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🏦 <b>Demo: CASA, biaya dana &amp; NIM sebuah bank</b>" }),
+    h("p", { class: "demo-hint", text: "Angka dalam triliun Rupiah. Ubah komposisi dananya dan lihat bagaimana biaya dana serta NIM bergerak — inilah yang sebenarnya dinilai analis saat melihat bank." }),
+    h("div", { class: "pc-form" }, kolom),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: Free Cash Flow, owner earnings, margin & yield ---------- */
+DEMOS["fcf-calc"] = function (root) {
+  const s = { opcf: 500, capexRawat: 150, capexTumbuh: 200, pendapatan: 2000, kapitalisasi: 6000 };
+  const out = h("div", { class: "dm-out" });
+
+  function draw() {
+    const capexTotal = s.capexRawat + s.capexTumbuh;
+    const fcf = s.opcf - capexTotal;
+    const owner = s.opcf - s.capexRawat;
+    const marginFcf = s.pendapatan ? (fcf / s.pendapatan) * 100 : 0;
+    const marginOwner = s.pendapatan ? (owner / s.pendapatan) * 100 : 0;
+    const yieldFcf = s.kapitalisasi ? (fcf / s.kapitalisasi) * 100 : 0;
+    const yieldOwner = s.kapitalisasi ? (owner / s.kapitalisasi) * 100 : 0;
+    const baris = (l, v, sub, k) =>
+      `<div class="dm-line ${k || ""}"><span>${l}${sub ? '<br><i class="dm-sub">' + sub + "</i>" : ""}</span><b>${v}</b></div>`;
+    const rp = (x) => "Rp" + Math.round(x).toLocaleString("id-ID") + " M";
+
+    out.innerHTML =
+      baris("CapEx total", rp(capexTotal), "Pemeliharaan + Pertumbuhan") +
+      baris("FCF (cara standar)", rp(fcf), "Arus kas operasi − CapEx total", "big " + (fcf >= 0 ? "good" : "bad")) +
+      baris("Owner earnings", rp(owner), "Arus kas operasi − CapEx pemeliharaan saja", "big " + (owner >= 0 ? "good" : "bad")) +
+      baris("Margin FCF", marginFcf.toFixed(1) + "%", "FCF ÷ Pendapatan", marginFcf >= 10 ? "good" : marginFcf >= 5 ? "" : "bad") +
+      baris("Margin owner earnings", marginOwner.toFixed(1) + "%", "Owner earnings ÷ Pendapatan") +
+      baris("FCF yield", yieldFcf.toFixed(2) + "%", "FCF ÷ Kapitalisasi pasar", yieldFcf >= 6 ? "good" : yieldFcf >= 3 ? "" : "bad") +
+      baris("Owner earnings yield", yieldOwner.toFixed(2) + "%", "Owner earnings ÷ Kapitalisasi pasar") +
+      `<div class="dm-note">💡 <b>Perhatikan selisih dua angka besar di atas.</b> Perusahaan yang sedang berekspansi terlihat <b>tipis</b> pada FCF standar, padahal CapEx pertumbuhan itu <b>pilihan</b> — bisa dihentikan kapan saja. Owner earnings menunjukkan kas yang benar-benar bisa diambil pemilik jika perusahaan berhenti tumbuh.<br><br>⚠️ <b>Tapi hati-hati:</b> manajemen bisa menyebut CapEx pemeliharaan sebagai "pertumbuhan" agar angkanya terlihat bagus. Bandingkan CapEx dengan <b>beban penyusutan</b> — kalau CapEx pemeliharaan jauh di bawah penyusutan bertahun-tahun, kemungkinan asetnya sedang dibiarkan menua.</div>`;
+  }
+
+  const kolom = [
+    dmAngka(s, "opcf", "Arus kas operasi", "M", draw),
+    dmAngka(s, "capexRawat", "CapEx <b>pemeliharaan</b>", "M", draw),
+    dmAngka(s, "capexTumbuh", "CapEx <b>pertumbuhan</b>", "M", draw),
+    dmAngka(s, "pendapatan", "Pendapatan", "M", draw),
+    dmAngka(s, "kapitalisasi", "Kapitalisasi pasar", "M", draw),
+  ];
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "💵 <b>Demo: kalkulator Free Cash Flow</b>" }),
+    h("p", { class: "demo-hint", text: "Angka dalam miliar Rupiah. Pisahkan CapEx pemeliharaan (wajib, sekadar menjaga aset) dari CapEx pertumbuhan (pilihan, untuk memperbesar bisnis) — lalu lihat betapa berbedanya kesimpulannya." }),
+    h("div", { class: "pc-form" }, kolom),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: Biaya modal (WACC) & hurdle rate ---------- */
+DEMOS["hurdle-rate"] = function (root) {
+  const s = { bebasRisiko: 6.5, premiRisiko: 5.5, bungaUtang: 9, pajak: 22, porsiUtang: 30, roicProyek: 14 };
+  const out = h("div", { class: "dm-out" });
+
+  function draw() {
+    const pUtang = Math.min(100, Math.max(0, s.porsiUtang));
+    const pEkuitas = 100 - pUtang;
+    const biayaEkuitas = s.bebasRisiko + s.premiRisiko;
+    const utangSetelahPajak = s.bungaUtang * (1 - s.pajak / 100);
+    const wacc = (pUtang / 100) * utangSetelahPajak + (pEkuitas / 100) * biayaEkuitas;
+    const spread = s.roicProyek - wacc;
+    const baris = (l, v, sub, k) =>
+      `<div class="dm-line ${k || ""}"><span>${l}${sub ? '<br><i class="dm-sub">' + sub + "</i>" : ""}</span><b>${v}</b></div>`;
+
+    out.innerHTML =
+      baris("Biaya ekuitas", biayaEkuitas.toFixed(2) + "%", "Bunga bebas risiko + premi risiko") +
+      baris("Biaya utang setelah pajak", utangSetelahPajak.toFixed(2) + "%", "Bunga × (1 − tarif pajak)") +
+      baris("Bauran modal", pUtang + "% utang / " + pEkuitas + "% ekuitas", "penimbang WACC") +
+      baris("WACC — ambang minimal (hurdle rate)", wacc.toFixed(2) + "%", "Rata-rata tertimbang biaya modal", "big") +
+      baris("ROIC proyek", s.roicProyek.toFixed(2) + "%", "Hasil yang diharapkan dari proyek") +
+      `<div class="dm-line big ${spread > 0 ? "good" : "bad"}"><span>${spread > 0 ? "✅ MENCIPTAKAN nilai" : "❌ MENGHANCURKAN nilai"}<br><i class="dm-sub">ROIC − WACC</i></span><b>${spread > 0 ? "+" : ""}${spread.toFixed(2)}%</b></div>` +
+      `<div class="dm-note">💡 <b>Inilah ambang yang sering dilupakan.</b> Proyek dengan hasil 14% terdengar bagus — tapi kalau biaya modalnya 15%, proyek itu <b>merugikan pemilik</b> meski laporan labanya positif.<br><br>Coba naikkan <b>porsi utang</b>: WACC turun karena bunga utang bisa mengurangi pajak. Tapi utang berlebihan menaikkan risiko kebangkrutan — dan pada titik tertentu pemberi pinjaman menuntut bunga lebih tinggi. Jangan tergoda mengejar WACC serendah-rendahnya.<br><br><i>Catatan: ini versi sederhana. Biaya ekuitas sungguhan biasanya memakai CAPM dengan beta.</i></div>`;
+  }
+
+  const kolom = [
+    dmAngka(s, "bebasRisiko", "Bunga bebas risiko <i class='dm-sub'>(SBN 10 th)</i>", "%", draw),
+    dmAngka(s, "premiRisiko", "Premi risiko ekuitas", "%", draw),
+    dmAngka(s, "bungaUtang", "Bunga pinjaman", "%", draw),
+    dmAngka(s, "pajak", "Tarif pajak", "%", draw),
+    dmAngka(s, "porsiUtang", "Porsi utang dalam modal", "%", draw),
+    dmAngka(s, "roicProyek", "ROIC proyek yang dinilai", "%", draw),
+  ];
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🎯 <b>Demo: biaya modal &amp; ambang kelayakan (hurdle rate)</b>" }),
+    h("p", { class: "demo-hint", text: "Berapa hasil minimal yang harus dicapai sebuah proyek agar layak dijalankan? Jawabannya bukan nol — melainkan biaya modalnya sendiri." }),
+    h("div", { class: "pc-form" }, kolom),
+    out,
+  ]));
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

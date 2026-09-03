@@ -193,6 +193,7 @@ a:hover { text-decoration: underline; }
 .lvl-pelengkap { background: #ede9fe; color: #7c3aed; }
 .lvl-matematika { background: #fee2e2; color: #b91c1c; }
 .lvl-perkakas { background: #ecfccb; color: #4d7c0f; }
+.lvl-perbankan { background: #fae8ff; color: #a21caf; }
 @media (prefers-color-scheme: dark) {
   .lvl-pemula { background: #14331f; color: #4ade80; }
   .lvl-menengah { background: #3a2c0c; color: #fbbf24; }
@@ -214,6 +215,7 @@ a:hover { text-decoration: underline; }
   .lvl-audit { background: #3a1414; color: #fca5a5; }
   .lvl-makro { background: #0c2537; color: #7dd3fc; }
   .lvl-perkakas { background: #1f2b0e; color: #a3e635; }
+  .lvl-perbankan { background: #2e0f33; color: #f0abfc; }
 }
 
 .lesson-list { list-style: none; margin: 0; padding: 0; }
@@ -447,6 +449,7 @@ a:hover { text-decoration: underline; }
 
 /* ---------- Akuntansi: highlight tabel debit/kredit ---------- */
 .tbl td.ok-cell { background: rgba(16, 185, 129, .14); color: var(--ok); font-weight: 700; }
+.tbl td.bad-cell { background: rgba(220, 38, 38, .12); color: var(--bad); font-weight: 700; }
 
 /* Equation simulator */
 .eqs-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 6px 0 10px; }

@@ -23,7 +23,7 @@ const MODULE_ORDER = [
   // 📊 Akuntansi
   "acc-dasar", "acc-pemula", "acc-menengah", "acc-pendalaman", "acc-mahir",
   "acc-fundamental", "acc-matematika", "acc-terapan", "acc-audit",
-  "acc-lanjutan", "acc-kualitas", "acc-prospek", "acc-proyek", "acc-investasi",
+  "acc-lanjutan", "acc-kualitas", "acc-bank", "acc-prospek", "acc-proyek", "acc-investasi",
   "acc-makro",
 ];
 (function urutkanModul() {
