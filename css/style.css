@@ -582,3 +582,54 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
   .hero h1 { font-size: 1.6rem; }
   .course-head { flex-direction: column; }
 }
+
+/* ============================================================
+   PWA — banner pasang aplikasi & penanda offline
+   ============================================================ */
+.pwa-banner {
+  position: fixed;
+  left: 50%;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 900;
+  width: calc(100% - 28px);
+  max-width: 430px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 12px 34px rgba(15, 20, 50, .26);
+  /* Hanya opacity yang dianimasikan. Kalau animasi sempat tersendat
+     (tab di latar belakang), posisinya tetap benar — tidak tergeser. */
+  animation: pwaMuncul .3s ease;
+}
+@keyframes pwaMuncul { from { opacity: 0; } to { opacity: 1; } }
+.pwa-ikon { font-size: 1.6rem; line-height: 1; }
+.pwa-teks { flex: 1; min-width: 150px; font-size: .86rem; line-height: 1.5; color: var(--muted); }
+.pwa-teks b { color: var(--text); font-size: .95rem; }
+.pwa-aksi { display: flex; gap: 8px; margin-left: auto; }
+.pwa-aksi .btn { padding: 8px 14px; font-size: .88rem; }
+
+.pwa-offline {
+  position: fixed;
+  left: 50%;
+  top: calc(10px + env(safe-area-inset-top, 0px));
+  transform: translateX(-50%);
+  z-index: 950;
+  max-width: calc(100% - 24px);
+  padding: 8px 15px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: .8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: var(--shadow);
+}
