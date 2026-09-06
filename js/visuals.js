@@ -1622,6 +1622,134 @@ DEMOS["hurdle-rate"] = function (root) {
   draw();
 };
 
+/* ---------- Demo: Kuartet Anscombe (kenapa data WAJIB digambar) ---------- */
+DEMOS["anscombe"] = function (root) {
+  const X1 = [10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5];
+  const SET = [
+    { nama: "Data I", x: X1, y: [8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68] },
+    { nama: "Data II", x: X1, y: [9.14, 8.14, 8.74, 8.77, 9.26, 8.1, 6.13, 3.1, 9.13, 7.26, 4.74] },
+    { nama: "Data III", x: X1, y: [7.46, 6.77, 12.74, 7.11, 7.81, 8.84, 6.08, 5.39, 8.15, 6.42, 5.73] },
+    { nama: "Data IV", x: [8, 8, 8, 8, 8, 8, 8, 19, 8, 8, 8], y: [6.58, 5.76, 7.71, 8.84, 8.47, 7.04, 5.25, 12.5, 5.56, 7.91, 6.89] },
+  ];
+  let garis = true;
+
+  function statistik(d) {
+    const n = d.x.length;
+    const mx = d.x.reduce((a, b) => a + b, 0) / n;
+    const my = d.y.reduce((a, b) => a + b, 0) / n;
+    let sxy = 0, sxx = 0, syy = 0;
+    for (let i = 0; i < n; i++) {
+      sxy += (d.x[i] - mx) * (d.y[i] - my);
+      sxx += (d.x[i] - mx) * (d.x[i] - mx);
+      syy += (d.y[i] - my) * (d.y[i] - my);
+    }
+    const kemiringan = sxy / sxx;
+    return { mx: mx, my: my, r: sxy / Math.sqrt(sxx * syy), b: kemiringan, a: my - kemiringan * mx };
+  }
+
+  const petak = h("div", { class: "dm-quad" });
+  const tabel = h("div", { class: "dm-out" });
+
+  function gambar() {
+    petak.innerHTML = SET.map((d) => {
+      const s = statistik(d);
+      const px = (v) => (14 + ((v - 2) / 18) * 104).toFixed(1);
+      const py = (v) => (92 - ((v - 2) / 11) * 78).toFixed(1);
+      let titik = "";
+      for (let i = 0; i < d.x.length; i++) titik += '<circle cx="' + px(d.x[i]) + '" cy="' + py(d.y[i]) + '" r="3.4" class="vdot"/>';
+      const gx1 = 3, gx2 = 20;
+      const g = garis
+        ? '<line x1="' + px(gx1) + '" y1="' + py(s.a + s.b * gx1) + '" x2="' + px(gx2) + '" y2="' + py(s.a + s.b * gx2) + '" class="vline aktif"/>'
+        : "";
+      return (
+        '<figure class="dm-mini"><figcaption>' + d.nama + "</figcaption>" +
+        '<svg viewBox="0 0 128 100" class="viz-svg">' +
+        '<line x1="12" y1="92" x2="126" y2="92" class="vaxis"/><line x1="12" y1="6" x2="12" y2="92" class="vaxis"/>' +
+        g + titik + "</svg></figure>"
+      );
+    }).join("");
+
+    const s = SET.map(statistik);
+    // kelas "teks" agar isinya boleh membungkus — tanpa itu baris ini
+    // melebar melewati layar HP
+    const baris = (label, ambil) =>
+      '<div class="dm-line teks"><span>' + label + "</span><b>" + s.map(ambil).join(" · ") + "</b></div>";
+    tabel.innerHTML =
+      baris("Rata-rata x", (v) => v.mx.toFixed(2)) +
+      baris("Rata-rata y", (v) => v.my.toFixed(2)) +
+      baris("Korelasi", (v) => v.r.toFixed(3)) +
+      baris("Garis regresi", (v) => "y=" + v.a.toFixed(2) + "+" + v.b.toFixed(2) + "x") +
+      '<div class="dm-note">😲 <b>Keempat kumpulan data ini punya statistik yang nyaris sama persis</b> — rata-rata, korelasi, dan garis regresinya identik. Tapi bentuknya benar-benar berbeda: satu lurus, satu melengkung, satu punya pencilan tunggal, satu bahkan hanya berupa garis tegak.<br><br>Kalau kamu hanya melihat angka ringkasannya, kamu akan menyimpulkan keempatnya sama. <b>Inilah alasan data wajib digambar sebelum dimodelkan</b> — dan alasan matplotlib &amp; seaborn ada.</div>';
+  }
+
+  const tg = h("button", { class: "btn ghost", type: "button" });
+  function sync() { tg.textContent = garis ? "📉 Sembunyikan garis regresi" : "📈 Tampilkan garis regresi"; }
+  tg.onclick = () => { garis = !garis; sync(); gambar(); };
+  sync();
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "👀 <b>Demo: kenapa data wajib digambar dulu</b>" }),
+    h("p", { class: "demo-hint", text: "Empat kumpulan data di bawah ini punya statistik ringkasan yang sama. Perhatikan bentuknya." }),
+    petak,
+    h("div", { class: "demo-controls" }, [tg]),
+    tabel,
+  ]));
+  gambar();
+};
+
+/* ---------- Demo: kenapa fitur harus diskalakan ---------- */
+DEMOS["skala-fitur"] = function (root) {
+  // dua karyawan contoh yang sudah berlabel
+  const A = { nama: "Karyawan A", gaji: 8, peng: 1, label: "Junior" };
+  const B = { nama: "Karyawan B", gaji: 12, peng: 12, label: "Senior" };
+  const RG = [5, 20], RP = [0, 15]; // rentang untuk penskalaan
+  const s = { gaji: 8.3, peng: 11 };
+  const out = h("div", { class: "dm-out" });
+
+  function jarak(dx, dy) { return Math.sqrt(dx * dx + dy * dy); }
+
+  function draw() {
+    // TANPA skala — gaji dalam rupiah penuh, pengalaman dalam tahun
+    const gA = Math.abs(s.gaji - A.gaji) * 1000000, pA = Math.abs(s.peng - A.peng);
+    const gB = Math.abs(s.gaji - B.gaji) * 1000000, pB = Math.abs(s.peng - B.peng);
+    const dA = jarak(gA, pA), dB = jarak(gB, pB);
+    const tanpaSkala = dA < dB ? A : B;
+
+    // DENGAN skala min-max 0..1
+    const sk = (v, r) => (v - r[0]) / (r[1] - r[0]);
+    const qg = sk(s.gaji, RG), qp = sk(s.peng, RP);
+    const dAs = jarak(qg - sk(A.gaji, RG), qp - sk(A.peng, RP));
+    const dBs = jarak(qg - sk(B.gaji, RG), qp - sk(B.peng, RP));
+    const denganSkala = dAs < dBs ? A : B;
+
+    const beda = tanpaSkala.label !== denganSkala.label;
+    out.innerHTML =
+      '<div class="dm-line"><span>Yang dinilai</span><b>Gaji Rp' + s.gaji.toFixed(1) + " jt, pengalaman " + s.peng + " th</b></div>" +
+      '<div class="dm-line"><span>TANPA penskalaan<br><i class="dm-sub">jarak ke A ' + Math.round(dA).toLocaleString("id-ID") + " &nbsp;vs&nbsp; ke B " + Math.round(dB).toLocaleString("id-ID") + '</i></span><b class="' + (beda ? "dm-merah" : "") + '">' + tanpaSkala.label + "</b></div>" +
+      '<div class="dm-line good"><span>DENGAN penskalaan<br><i class="dm-sub">jarak ke A ' + dAs.toFixed(3) + " &nbsp;vs&nbsp; ke B " + dBs.toFixed(3) + "</i></span><b>" + denganSkala.label + "</b></div>" +
+      (beda
+        ? '<div class="dm-line big bad"><span>⚠️ Jawabannya BERBEDA</span><b>' + tanpaSkala.label + " → " + denganSkala.label + "</b></div>"
+        : '<div class="dm-line big good"><span>✅ Jawabannya sama</span><b>' + denganSkala.label + "</b></div>") +
+      '<div class="dm-note">Gaji diukur dalam <b>jutaan</b>, pengalaman dalam <b>satuan tahun</b>. Tanpa penskalaan, selisih gaji Rp300.000 sudah <b>ratusan ribu kali lebih besar</b> daripada selisih 10 tahun pengalaman — sehingga model jarak seperti k-NN praktis <b>hanya melihat gaji</b> dan mengabaikan pengalaman sepenuhnya.<br><br>Di scikit-learn ini diperbaiki dengan <b>StandardScaler</b> atau <b>MinMaxScaler</b>, dan wajib dipasang di dalam <b>Pipeline</b> agar tidak bocor ke data uji.<br><br><i>Acuan: A = Junior (gaji 8 jt, 1 th) · B = Senior (gaji 12 jt, 12 th).</i></div>';
+  }
+
+  const sg = h("input", { type: "range", min: "5", max: "20", step: "0.1", value: "8.3", class: "dm-range" });
+  const lg = h("b", { text: "Rp8,3 jt" });
+  sg.oninput = () => { s.gaji = parseFloat(sg.value); lg.textContent = "Rp" + s.gaji.toFixed(1).replace(".", ",") + " jt"; draw(); };
+  const sp = h("input", { type: "range", min: "0", max: "15", step: "1", value: "11", class: "dm-range" });
+  const lp = h("b", { text: "11 tahun" });
+  sp.oninput = () => { s.peng = parseInt(sp.value, 10); lp.textContent = s.peng + " tahun"; draw(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "⚖️ <b>Demo: kenapa fitur harus diskalakan dulu</b>" }),
+    h("p", { class: "demo-hint", text: "Model menebak Junior/Senior dengan mencari karyawan termirip (k-NN). Geser nilainya dan perhatikan: tanpa penskalaan, jawabannya bisa keliru." }),
+    h("label", { class: "dm-row" }, [h("span", { text: "Gaji: " }), sg, lg]),
+    h("label", { class: "dm-row" }, [h("span", { text: "Pengalaman: " }), sp, lp]),
+    out,
+  ]));
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

@@ -3670,6 +3670,582 @@ Proyek A butuh pustaka versi 1.0, proyek B butuh versi 2.0. Kalau semua dipasang
             },
           ],
         },
+        {
+          id: "ai-tl-5",
+          title: "scikit-learn Mendalam — Alur Kerja yang Sebenarnya",
+          duration: "16 menit",
+          content: `
+<p>Di pelajaran sebelumnya kamu melihat pola tiga langkah scikit-learn: <b>pilih model → fit → predict</b>. Itu benar, tapi itu baru <b>bagian tengah</b>. Alur kerja sesungguhnya punya langkah-langkah sebelum dan sesudahnya — dan di situlah pemula paling sering tersandung.</p>
+
+<div data-diagram="pipeline" data-stages="Pisahkan data::latih vs uji|Siapkan fitur::skala &amp; encoding|Latih model::fit|Ukur::pada data uji" data-caption="Alur kerja scikit-learn yang lengkap — tiga langkah terkenal itu hanya kotak ketiga"></div>
+
+<h3>Kenapa satu pustaka bisa memuat puluhan model?</h3>
+<div class="callout">
+Kekuatan terbesar scikit-learn bukan modelnya, melainkan <b>keseragaman antarmukanya</b>. Semua benda di dalamnya hanya punya tiga kata kerja:<br><br>
+<b>.fit()</b> — belajar dari data<br>
+<b>.predict()</b> — meramalkan data baru<br>
+<b>.transform()</b> — mengubah data (misalnya menskalakan)<br><br>
+Sekali paham tiga kata kerja ini, kamu bisa memakai <b>seluruh</b> pustakanya — model, penskala, pemilih fitur — tanpa belajar ulang.
+</div>
+
+<h3>Langkah 1: pisahkan data lebih dulu</h3>
+<p>Ini langkah yang paling sering dilewati pemula, dan akibatnya paling fatal.</p>
+
+<pre class="code">from sklearn.model_selection import train_test_split
+
+X_latih, X_uji, y_latih, y_uji = train_test_split(
+    X, y, test_size=0.2, random_state=42)</pre>
+
+<div class="callout warn">
+<b>⚠️ Kenapa wajib dipisah?</b> Menguji model dengan data yang dipakai melatihnya sama seperti <b>memberi ujian dengan soal yang bocor</b>. Nilainya pasti bagus, tapi tidak berarti apa-apa.<br><br>
+<b>Data uji harus disentuh sekali saja</b> — di paling akhir. Kalau kamu berkali-kali mengubah model sampai nilainya di data uji bagus, kamu sedang menyontek secara tidak sadar: data uji itu pelan-pelan berubah menjadi data latih.
+</div>
+
+<p><i>random_state=42</i> membuat pembagiannya selalu sama tiap kali dijalankan — agar hasilmu bisa diulang orang lain. Angkanya bebas, 42 hanya kebiasaan.</p>
+
+<h3>Langkah 2: siapkan fiturnya</h3>
+<p>Model tidak bisa langsung memakan data mentah. Dua penyiapan paling umum:</p>
+
+<table class="tbl">
+  <tr><th>Masalah</th><th>Alat di scikit-learn</th><th>Fungsinya</th></tr>
+  <tr><td>Skala antar-kolom sangat berbeda</td><td><b>StandardScaler</b> / <b>MinMaxScaler</b></td><td>Menyamakan rentang agar tak ada kolom yang mendominasi</td></tr>
+  <tr><td>Kolom berisi teks kategori</td><td><b>OneHotEncoder</b></td><td>Mengubah "Jakarta/Bandung" jadi angka</td></tr>
+  <tr><td>Ada nilai kosong</td><td><b>SimpleImputer</b></td><td>Mengisi yang kosong dengan rata-rata/median</td></tr>
+</table>
+
+<h3>Rasakan sendiri kenapa penskalaan penting</h3>
+
+<div data-demo="skala-fitur"></div>
+
+<h3>Langkah 3: Pipeline — dan kenapa ini wajib</h3>
+<div class="callout">
+<b>Pipeline</b> merangkai penyiapan data dan model menjadi <b>satu kesatuan</b>:
+</div>
+
+<pre class="code">from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+
+pipa = Pipeline([
+    ("skala", StandardScaler()),
+    ("model", RandomForestClassifier()),
+])
+
+pipa.fit(X_latih, y_latih)
+print(pipa.score(X_uji, y_uji))</pre>
+
+<div class="callout warn">
+<b>🚩 Pipeline bukan sekadar kerapian — ia mencegah kebocoran data.</b><br><br>
+Kalau kamu menskalakan <b>seluruh</b> data sebelum memisahkannya, maka rata-rata yang dipakai penskala <b>sudah mengandung informasi dari data uji</b>. Modelmu jadi terlihat lebih pintar dari kenyataannya, lalu mengecewakan saat dipakai sungguhan.<br><br>
+Pipeline menghitung ulang penskalaan <b>hanya dari data latih</b> di setiap lipatan. Inilah alasan sesungguhnya ia dipakai praktisi.
+</div>
+
+<h3>Langkah 4: ukur dengan jujur</h3>
+<p>Sekali membagi data bisa membuatmu beruntung atau sial. <b>Cross-validation</b> membagi berkali-kali lalu merata-ratakan:</p>
+
+<pre class="code">from sklearn.model_selection import cross_val_score
+
+skor = cross_val_score(pipa, X, y, cv=5)
+print(skor.mean(), skor.std())</pre>
+
+<p>Yang penting bukan hanya rata-ratanya, tapi juga <b>simpangannya</b>. Rata-rata 85% dengan simpangan 2% jauh lebih dipercaya daripada rata-rata 85% dengan simpangan 15%.</p>
+
+<div class="callout warn">
+<b>⚠️ Jebakan akurasi.</b> Bayangkan mendeteksi penipuan kartu kredit di mana hanya <b>1 dari 1.000</b> transaksi yang menipu. Model yang selalu menjawab "tidak menipu" mendapat akurasi <b>99,9%</b> — dan sama sekali tidak berguna.<br><br>
+Karena itu pakai <b>precision</b> (dari yang ditandai menipu, berapa yang benar?) dan <b>recall</b> (dari semua penipuan, berapa yang tertangkap?). Di scikit-learn keduanya langsung tersedia:
+</div>
+
+<pre class="code">from sklearn.metrics import confusion_matrix, classification_report
+
+y_tebak = pipa.predict(X_uji)
+print(confusion_matrix(y_uji, y_tebak))
+print(classification_report(y_uji, y_tebak))</pre>
+
+<h3>Model mana yang dipilih?</h3>
+<table class="tbl">
+  <tr><th>Situasi</th><th>Mulai dari</th></tr>
+  <tr><td>Data tabel, ingin cepat &amp; kuat</td><td class="ok-cell"><b>RandomForestClassifier</b> — hampir selalu titik awal yang baik</td></tr>
+  <tr><td>Butuh hasil terbaik pada data tabel</td><td><b>GradientBoosting</b> / XGBoost</td></tr>
+  <tr><td>Ingin model yang bisa dijelaskan</td><td><b>LogisticRegression</b> atau <b>DecisionTree</b></td></tr>
+  <tr><td>Meramalkan angka, bukan kategori</td><td>Versi <b>Regressor</b>-nya (RandomForestRegressor, dll.)</td></tr>
+  <tr><td>Data tanpa label</td><td><b>KMeans</b> untuk pengelompokan</td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Urutan kerja yang disarankan:</b> mulai dari model paling sederhana sebagai <b>pembanding dasar</b> (baseline). Kalau LogisticRegression sudah memberi 88%, dan model rumit hanya memberi 89%, pilih yang sederhana — lebih cepat, lebih mudah dijelaskan, lebih sedikit yang bisa rusak.
+</div>
+`,
+          keyPoints: [
+            "Seluruh scikit-learn hanya punya tiga kata kerja: .fit() belajar, .predict() meramal, .transform() mengubah data.",
+            "Selalu pisahkan data latih & uji lebih dulu dengan train_test_split; data uji hanya disentuh sekali di akhir.",
+            "Penyiapan fitur: StandardScaler/MinMaxScaler (skala), OneHotEncoder (kategori), SimpleImputer (nilai kosong).",
+            "Pipeline merangkai penyiapan + model jadi satu — fungsinya mencegah kebocoran data, bukan sekadar kerapian.",
+            "Menskalakan seluruh data sebelum memisahkannya membuat model terlihat lebih pintar dari kenyataannya.",
+            "cross_val_score membagi berkali-kali; perhatikan simpangannya, bukan hanya rata-ratanya.",
+            "Jebakan akurasi: pada data timpang, akurasi 99,9% bisa berarti model tak berguna — pakai precision & recall.",
+            "Mulai dari model sederhana sebagai pembanding dasar; pilih yang rumit hanya bila selisihnya berarti.",
+          ],
+          practice: [
+            { type: "choice", q: "Kamu menskalakan SELURUH data (latih + uji) lalu memisahkannya. Apa yang terjadi?", options: ["Tidak apa-apa, malah lebih rapi", "Terjadi kebocoran data — model terlihat lebih baik dari kenyataannya", "Model jadi lebih lambat", "Data uji jadi rusak"], answer: 1, hint: "Rata-rata yang dipakai penskala berasal dari data mana?", solution: "Rata-rata penskala ikut mengandung informasi data uji. Pakai Pipeline agar penskalaan hanya dihitung dari data latih." },
+            { type: "choice", q: "Deteksi penyakit langka: 1 dari 1.000 orang sakit. Model selalu menjawab 'sehat'. Berapa akurasinya, dan apakah berguna?", options: ["50%, tidak berguna", "99,9%, tapi sama sekali tidak berguna", "0%, tidak berguna", "99,9%, sangat berguna"], answer: 1, hint: "Hitung berapa persen tebakan yang kebetulan benar.", solution: "999 dari 1.000 tebakan benar = 99,9%, tapi recall-nya nol — tidak satu pun pasien terdeteksi." },
+          ],
+          quiz: [
+            {
+              q: "Apa fungsi sesungguhnya dari Pipeline di scikit-learn?",
+              options: [
+                "Sekadar membuat kode terlihat rapi",
+                "Mencegah kebocoran data dengan memastikan penyiapan fitur hanya dihitung dari data latih",
+                "Mempercepat pelatihan model",
+                "Mengganti kebutuhan train_test_split",
+              ],
+              answer: 1,
+              explain:
+                "Kerapian hanya bonus. Manfaat utamanya adalah kejujuran pengukuran.",
+            },
+            {
+              q: "Kenapa data uji hanya boleh disentuh sekali di akhir?",
+              options: [
+                "Karena aturan scikit-learn",
+                "Karena kalau berkali-kali dipakai menyetel model, data uji perlahan berubah fungsinya menjadi data latih",
+                "Karena data uji lebih kecil",
+                "Karena akan menghapus data latih",
+              ],
+              answer: 1,
+              explain:
+                "Menyetel model berulang kali berdasarkan nilai data uji adalah bentuk menyontek yang tidak disadari.",
+            },
+            {
+              q: "cross_val_score memberi rata-rata 85% dengan simpangan 15%. Apa artinya?",
+              options: [
+                "Model sangat andal",
+                "Hasilnya sangat bergantung pada pembagian data — belum bisa dipercaya",
+                "Model pasti overfitting",
+                "Datanya terlalu banyak",
+              ],
+              answer: 1,
+              explain:
+                "Simpangan besar berarti hasilnya tidak stabil; rata-rata saja menyesatkan.",
+            },
+            {
+              q: "Tiga kata kerja utama di seluruh scikit-learn adalah?",
+              options: [
+                "load, save, run",
+                "fit, predict, transform",
+                "train, test, deploy",
+                "import, export, compile",
+              ],
+              answer: 1,
+              explain:
+                "Keseragaman inilah yang membuat puluhan model bisa dipakai tanpa belajar ulang.",
+            },
+          ],
+        },
+        {
+          id: "ai-tl-6",
+          title: "Visualisasi Data: matplotlib & seaborn",
+          duration: "15 menit",
+          content: `
+<p>Sebelum melatih model apa pun, ada satu langkah yang tidak boleh dilewati: <b>lihat datanya</b>. Pelajaran ini menunjukkan kenapa — dengan bukti yang sulit dibantah.</p>
+
+<h3>Bukti: statistik bisa berbohong</h3>
+
+<div data-demo="anscombe"></div>
+
+<div class="callout warn">
+<b>Inilah <i>Kuartet Anscombe</i></b>, dibuat tahun 1973 justru untuk membuktikan satu hal: <b>angka ringkasan tidak cukup</b>. Kalau kamu langsung melatih model tanpa melihat gambarnya, kamu tidak akan tahu bahwa data ke-4 sebenarnya hanya berupa garis tegak dengan satu pencilan — dan model regresimu akan menyesatkan.
+</div>
+
+<h3>Dua pustaka, dua tingkat</h3>
+<div data-diagram="compare3" data-cols="matplotlib::mesin dasarnya::atur tiap detail sendiri|seaborn::dibangun DI ATAS matplotlib::satu baris untuk grafik umum|Plotly::grafik interaktif::bisa di-zoom &amp; hover" data-caption="Ketiganya saling melengkapi, bukan bersaing"></div>
+
+<div class="callout">
+<b>Poin yang sering salah dipahami:</b> seaborn <b>bukan pengganti</b> matplotlib — ia dibangun <b>di atasnya</b>. Kamu memakai seaborn untuk membuat grafiknya cepat, lalu memakai matplotlib untuk merapikan judul, ukuran, dan warnanya. Keduanya dipakai <b>bersamaan</b>.
+</div>
+
+<h3>Bandingkan sendiri</h3>
+<p>Membuat grafik sebaran dengan warna per kategori — <b>matplotlib murni</b>:</p>
+<pre class="code">import matplotlib.pyplot as plt
+
+for divisi in df["divisi"].unique():
+    bagian = df[df["divisi"] == divisi]
+    plt.scatter(bagian["pengalaman"], bagian["gaji"], label=divisi)
+plt.xlabel("Pengalaman")
+plt.ylabel("Gaji")
+plt.legend()
+plt.show()</pre>
+
+<p>Hal yang sama dengan <b>seaborn</b>:</p>
+<pre class="code">import seaborn as sns
+
+sns.scatterplot(data=df, x="pengalaman", y="gaji", hue="divisi")</pre>
+
+<p>Satu baris, dan sudah otomatis punya warna, legenda, serta label sumbu. Itulah alasan seaborn ada.</p>
+
+<h3>Grafik mana untuk pertanyaan apa</h3>
+<table class="tbl">
+  <tr><th>Pertanyaanmu</th><th>Grafiknya</th><th>Perintah seaborn</th></tr>
+  <tr><td>Bagaimana sebaran satu kolom?</td><td>Histogram</td><td><b>sns.histplot</b></td></tr>
+  <tr><td>Adakah pencilan? Bandingkan antar-kelompok</td><td>Box plot</td><td><b>sns.boxplot</b></td></tr>
+  <tr><td>Adakah hubungan antara dua kolom?</td><td>Scatter plot</td><td><b>sns.scatterplot</b></td></tr>
+  <tr><td>Kolom mana saling berkaitan?</td><td>Heatmap korelasi</td><td><b>sns.heatmap(df.corr())</b></td></tr>
+  <tr><td>Ingin melihat semua pasangan sekaligus</td><td>Pair plot</td><td><b>sns.pairplot</b></td></tr>
+  <tr><td>Berapa banyak tiap kategori?</td><td>Count plot</td><td><b>sns.countplot</b></td></tr>
+  <tr><td>Bagaimana perubahan sepanjang waktu?</td><td>Line plot</td><td><b>sns.lineplot</b></td></tr>
+</table>
+
+<div class="callout">
+<b>Tiga grafik pertama yang selalu saya sarankan</b> saat menerima data baru:<br><br>
+1. <b>histplot</b> tiap kolom angka — melihat sebaran &amp; kemencengan.<br>
+2. <b>boxplot</b> — memburu pencilan yang bisa merusak model.<br>
+3. <b>heatmap korelasi</b> — menemukan kolom yang saling mengulang informasi.<br><br>
+Tiga grafik ini sering menemukan masalah data lebih cepat daripada berjam-jam mengutak-atik model.
+</div>
+
+<h3>🚩 Kesalahan visualisasi yang sering terjadi</h3>
+<table class="tbl">
+  <tr><th>Kesalahan</th><th>Kenapa menyesatkan</th></tr>
+  <tr><td>Sumbu Y tidak mulai dari nol pada diagram batang</td><td>Selisih kecil terlihat dramatis. Untuk batang, mulailah dari nol</td></tr>
+  <tr><td>Diagram lingkaran (pie) dengan banyak potongan</td><td>Mata manusia buruk membandingkan sudut. Pakai diagram batang</td></tr>
+  <tr><td>Terlalu banyak warna</td><td>Di atas ±7 kategori, warna berhenti membantu</td></tr>
+  <tr><td>Scatter dengan ribuan titik bertumpuk</td><td>Pakai transparansi (<i>alpha</i>) atau hexbin agar kepadatannya terlihat</td></tr>
+  <tr><td>Grafik tanpa label sumbu &amp; satuan</td><td>Pembaca tak tahu yang dilihatnya. Selalu beri label</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Ingat tujuannya.</b> Visualisasi saat menganalisis dan visualisasi saat menyajikan itu <b>berbeda</b>. Grafik untuk dirimu sendiri boleh jelek asal cepat — buat banyak, buang kebanyakan. Grafik untuk orang lain harus bersih, berlabel, dan hanya menyampaikan <b>satu pesan</b>.
+</div>
+`,
+          keyPoints: [
+            "Selalu gambar datanya sebelum memodelkan — Kuartet Anscombe membuktikan statistik ringkasan bisa menyembunyikan bentuk yang sangat berbeda.",
+            "seaborn dibangun DI ATAS matplotlib, bukan penggantinya; keduanya dipakai bersamaan.",
+            "seaborn memberi grafik umum dalam satu baris lengkap dengan warna, legenda, dan label.",
+            "Plotly untuk grafik interaktif yang bisa di-zoom dan di-hover.",
+            "Tiga grafik pertama untuk data baru: histplot (sebaran), boxplot (pencilan), heatmap korelasi (kolom yang saling mengulang).",
+            "Kesalahan umum: sumbu batang tidak dari nol, pie chart banyak potongan, terlalu banyak warna, titik bertumpuk tanpa transparansi.",
+            "Grafik untuk analisis boleh cepat & jelek; grafik untuk orang lain harus bersih dan menyampaikan satu pesan.",
+          ],
+          quiz: [
+            {
+              q: "Apa pelajaran utama dari Kuartet Anscombe?",
+              options: [
+                "Statistik ringkasan selalu cukup",
+                "Kumpulan data dengan statistik yang sama persis bisa berbentuk sangat berbeda — jadi data wajib digambar",
+                "Regresi linear selalu salah",
+                "Korelasi tidak pernah berguna",
+              ],
+              answer: 1,
+              explain:
+                "Rata-rata, korelasi, dan garis regresi keempatnya identik, tapi bentuknya jauh berbeda.",
+            },
+            {
+              q: "Hubungan seaborn dan matplotlib adalah?",
+              options: [
+                "Bersaing, pilih salah satu",
+                "seaborn dibangun di atas matplotlib — dipakai bersamaan, seaborn untuk cepat, matplotlib untuk merapikan",
+                "matplotlib dibangun di atas seaborn",
+                "Keduanya tidak berhubungan",
+              ],
+              answer: 1,
+              explain:
+                "Objek yang dihasilkan seaborn tetap objek matplotlib, sehingga bisa disunting dengan perintah matplotlib.",
+            },
+            {
+              q: "Grafik apa yang paling tepat untuk memburu pencilan (outlier)?",
+              options: ["Pie chart", "Box plot", "Count plot", "Line plot"],
+              answer: 1,
+              explain:
+                "Box plot menampilkan median, kuartil, dan titik-titik di luar batas wajar sekaligus.",
+            },
+            {
+              q: "Kenapa diagram batang sebaiknya dimulai dari nol?",
+              options: [
+                "Karena lebih indah",
+                "Karena panjang batang dibaca sebagai besaran — memotong sumbu membuat selisih kecil terlihat dramatis",
+                "Karena aturan matplotlib",
+                "Karena mempercepat penggambaran",
+              ],
+              answer: 1,
+              explain:
+                "Ini salah satu cara paling umum grafik dipakai untuk menyesatkan pembaca.",
+            },
+          ],
+        },
+        {
+          id: "ai-tl-7",
+          title: "TensorFlow & Keras — dan Kapan Memilihnya",
+          duration: "14 menit",
+          content: `
+<p>Di pelajaran PyTorch kita menyebut TensorFlow sekilas sebagai "pesaingnya". Sekarang kita bahas serius: apa itu TensorFlow, apa itu Keras, dan <b>kapan sebaiknya memilih yang mana</b>.</p>
+
+<div data-diagram="layers" data-items="Keras — antarmuka ramah manusia|TensorFlow — mesin perhitungan|CPU / GPU / TPU — perangkat kerasnya" data-caption="Keras adalah wajah ramah di atas mesin TensorFlow"></div>
+
+<h3>Fundamental: Keras itu apa?</h3>
+<div class="callout">
+<b>TensorFlow</b> adalah mesin perhitungannya — kuat, tapi kalau ditulis langsung, kodenya panjang dan berliku.<br><br>
+<b>Keras</b> adalah <b>antarmuka ramah</b> di atasnya. Sejak 2019 Keras menjadi cara resmi memakai TensorFlow, sehingga dalam praktik sehari-hari <b>"memakai TensorFlow" berarti "menulis Keras"</b>.
+</div>
+
+<h3>Membuat neural network dalam 6 baris</h3>
+<pre class="code">from tensorflow import keras
+
+model = keras.Sequential([
+    keras.layers.Dense(64, activation="relu"),
+    keras.layers.Dense(32, activation="relu"),
+    keras.layers.Dense(1, activation="sigmoid"),
+])
+
+model.compile(optimizer="adam",
+              loss="binary_crossentropy",
+              metrics=["accuracy"])
+
+model.fit(X_latih, y_latih, epochs=10, validation_split=0.2)</pre>
+
+<p>Perhatikan betapa dekatnya kode ini dengan cara kita <b>menggambarkan</b> jaringannya: tiga lapisan bertumpuk, lalu latih. Inilah kekuatan Keras — dan alasan ia sangat baik untuk belajar.</p>
+
+<table class="tbl">
+  <tr><th>Bagian</th><th>Artinya</th></tr>
+  <tr><td><b>Sequential</b></td><td>Lapisan disusun berurutan, satu demi satu</td></tr>
+  <tr><td><b>Dense(64)</b></td><td>Lapisan penuh berisi 64 neuron</td></tr>
+  <tr><td><b>activation</b></td><td>Fungsi aktivasi — sudah kamu pelajari di modul Matematika</td></tr>
+  <tr><td><b>compile</b></td><td>Menentukan cara belajar: pengoptimal, fungsi loss, ukuran keberhasilan</td></tr>
+  <tr><td><b>epochs=10</b></td><td>Seluruh data dilewati 10 kali</td></tr>
+  <tr><td><b>validation_split</b></td><td>20% data latih disisihkan untuk memantau overfitting</td></tr>
+</table>
+
+<h3>TensorFlow vs PyTorch — jujur</h3>
+<table class="tbl">
+  <tr><th></th><th>PyTorch</th><th>TensorFlow / Keras</th></tr>
+  <tr><td><b>Riset &amp; makalah baru</b></td><td class="ok-cell">Mendominasi</td><td>Makin jarang</td></tr>
+  <tr><td><b>Mudah dipelajari</b></td><td>Sedang</td><td class="ok-cell">Keras paling ramah pemula</td></tr>
+  <tr><td><b>Menyusun model tak lazim</b></td><td class="ok-cell">Lebih leluasa</td><td>Lebih kaku</td></tr>
+  <tr><td><b>Jalan di HP</b></td><td>Bisa (ExecuTorch)</td><td class="ok-cell"><b>TF Lite</b> — sangat matang</td></tr>
+  <tr><td><b>Jalan di browser</b></td><td>Terbatas</td><td class="ok-cell"><b>TensorFlow.js</b></td></tr>
+  <tr><td><b>Melayani di server</b></td><td>TorchServe</td><td class="ok-cell"><b>TF Serving</b> — sangat mapan</td></tr>
+</table>
+
+<div class="callout">
+<b>Ini inti perbedaannya:</b> PyTorch unggul di tahap <b>membuat</b>, TensorFlow unggul di tahap <b>menyebarkan</b>. Kalau modelmu harus berjalan di dalam aplikasi HP atau langsung di browser pengguna, ekosistem TensorFlow masih paling matang.
+</div>
+
+<h3>Kabar terbaru: Keras kini tidak terikat TensorFlow</h3>
+<div class="callout warn">
+Sejak <b>Keras 3</b>, Keras bisa berjalan di atas <b>TensorFlow, JAX, maupun PyTorch</b>. Artinya kamu bisa menulis dengan gaya Keras yang ramah, tapi mesin di baliknya bebas dipilih.<br><br>
+Konsekuensinya: pertanyaan "TensorFlow atau PyTorch?" kini <b>tidak sepenting dulu</b>. Yang benar-benar penting adalah memahami <b>konsepnya</b> — lapisan, loss, pengoptimal, epoch — karena konsep itu sama di semua kerangka kerja.
+</div>
+
+<h3>Jadi pilih yang mana?</h3>
+<table class="tbl">
+  <tr><th>Kalau kamu...</th><th>Pilih</th></tr>
+  <tr><td>Baru belajar deep learning</td><td class="ok-cell"><b>Keras</b> — paling cepat sampai ke model pertama yang jalan</td></tr>
+  <tr><td>Ingin mengikuti riset &amp; kode terbaru</td><td><b>PyTorch</b> — mayoritas makalah memakainya</td></tr>
+  <tr><td>Modelnya harus jalan di HP atau browser</td><td><b>TensorFlow</b> (TF Lite / TF.js)</td></tr>
+  <tr><td>Datanya berupa tabel biasa</td><td class="ok-cell"><b>Tidak perlu keduanya</b> — pakai scikit-learn atau XGBoost</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Peringatan yang paling sering diabaikan:</b> untuk data tabel — yang paling sering ditemui di dunia kerja — <b>deep learning biasanya kalah</b> dari Random Forest atau XGBoost. Lebih lambat, butuh lebih banyak data, lebih sulit dijelaskan, dan hasilnya sering lebih buruk. Pakai deep learning untuk <b>gambar, teks, dan suara</b>; untuk tabel, mulailah dari yang sederhana.
+</div>
+`,
+          keyPoints: [
+            "TensorFlow adalah mesin perhitungan; Keras adalah antarmuka ramah di atasnya — dalam praktik, memakai TensorFlow berarti menulis Keras.",
+            "Keras Sequential menyusun lapisan berurutan; compile menentukan pengoptimal, loss, dan ukuran keberhasilan; fit melatih.",
+            "epochs = berapa kali seluruh data dilewati; validation_split menyisihkan sebagian data latih untuk memantau overfitting.",
+            "PyTorch unggul di tahap membuat (riset, model tak lazim); TensorFlow unggul di tahap menyebarkan (TF Lite di HP, TF.js di browser, TF Serving).",
+            "Keras 3 bisa berjalan di atas TensorFlow, JAX, atau PyTorch — sehingga pilihan kerangka kerja tidak lagi sepenting dulu.",
+            "Yang penting dikuasai adalah konsepnya (lapisan, loss, pengoptimal, epoch) karena sama di semua kerangka kerja.",
+            "Untuk data tabel, deep learning biasanya KALAH dari Random Forest/XGBoost — pakai deep learning untuk gambar, teks, dan suara.",
+          ],
+          quiz: [
+            {
+              q: "Hubungan Keras dan TensorFlow adalah?",
+              options: [
+                "Keras pesaing TensorFlow",
+                "Keras adalah antarmuka ramah di atas mesin TensorFlow — dalam praktik, memakai TensorFlow berarti menulis Keras",
+                "TensorFlow dibangun di atas Keras",
+                "Keras hanya untuk membuat grafik",
+              ],
+              answer: 1,
+              explain:
+                "Sejak 2019 Keras menjadi cara resmi memakai TensorFlow.",
+            },
+            {
+              q: "Di bagian mana ekosistem TensorFlow masih unggul dibanding PyTorch?",
+              options: [
+                "Riset dan makalah terbaru",
+                "Menyebarkan model ke HP (TF Lite) dan browser (TensorFlow.js)",
+                "Menyusun model yang tidak lazim",
+                "Kecepatan pelatihan",
+              ],
+              answer: 1,
+              explain:
+                "PyTorch unggul di tahap membuat; TensorFlow unggul di tahap menyebarkan.",
+            },
+            {
+              q: "Datamu berupa tabel penjualan biasa dengan 20 kolom. Sebaiknya mulai dari?",
+              options: [
+                "Deep learning dengan Keras",
+                "Random Forest atau XGBoost — untuk data tabel, deep learning biasanya kalah",
+                "TensorFlow.js",
+                "Model bahasa besar",
+              ],
+              answer: 1,
+              explain:
+                "Deep learning menang untuk gambar, teks, dan suara — bukan untuk tabel.",
+            },
+            {
+              q: "Apa arti epochs=10 pada model.fit()?",
+              options: [
+                "Model dibuat 10 kali",
+                "Seluruh data latih dilewati sebanyak 10 kali",
+                "Ada 10 lapisan",
+                "Data dibagi menjadi 10 bagian",
+              ],
+              answer: 1,
+              explain:
+                "Satu epoch berarti satu kali putaran penuh melewati seluruh data latih.",
+            },
+          ],
+        },
+        {
+          id: "ai-tl-8",
+          title: "Peta Pustaka Lain — Apa Lagi yang Perlu Diketahui",
+          duration: "13 menit",
+          content: `
+<p>Sampai di sini kamu sudah mengenal pustaka inti. Tapi ekosistem Python untuk AI sangat luas, dan pemula sering bingung <b>apa lagi yang ada di luar sana</b>. Pelajaran ini memberi <b>peta</b> — bukan untuk dihafal, tapi agar kamu tahu ke mana mencari saat membutuhkannya.</p>
+
+<div data-diagram="network" data-center="Python untuk AI" data-nodes="Data &amp; model|Visualisasi|Teks &amp; gambar|Berbagi hasil|Pemantauan" data-caption="Lima kelompok kebutuhan — tiap kelompok punya pustaka andalannya"></div>
+
+<h3>1. Model yang lebih kuat untuk data tabel</h3>
+<table class="tbl">
+  <tr><th>Pustaka</th><th>Untuk apa</th></tr>
+  <tr><td><b>XGBoost</b></td><td>Boosting — sering menjadi <b>juara</b> pada data tabel. Sudah kamu kenal konsepnya di modul Arsitektur</td></tr>
+  <tr><td><b>LightGBM</b></td><td>Mirip XGBoost tapi jauh lebih cepat pada data besar</td></tr>
+  <tr><td><b>CatBoost</b></td><td>Paling nyaman bila banyak kolom kategori (tak perlu encoding manual)</td></tr>
+</table>
+
+<div class="callout">
+<b>Kabar baiknya:</b> ketiganya memakai pola <b>fit / predict</b> yang sama persis dengan scikit-learn, dan bisa dipasang langsung ke dalam <b>Pipeline</b>. Jadi kamu tidak belajar dari nol.
+</div>
+
+<h3>2. Statistik yang menjelaskan, bukan sekadar meramal</h3>
+<table class="tbl">
+  <tr><th>Pustaka</th><th>Untuk apa</th></tr>
+  <tr><td><b>SciPy</b></td><td>Uji statistik (uji-t, chi-square), optimasi, pengolahan sinyal</td></tr>
+  <tr><td><b>statsmodels</b></td><td>Regresi dengan <b>nilai-p</b> dan selang kepercayaan — untuk menjawab "apakah pengaruh ini nyata?"</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Bedanya penting.</b> scikit-learn menjawab <i>"berapa ramalannya?"</i>; statsmodels menjawab <i>"apakah hubungan ini bermakna secara statistik, dan seberapa yakin kita?"</i>.<br><br>
+Untuk skripsi, penelitian, atau keputusan bisnis yang perlu dipertanggungjawabkan, <b>statsmodels</b> sering justru yang kamu butuhkan — bukan model prediksi tercanggih.
+</div>
+
+<h3>3. Gambar, teks, dan suara</h3>
+<table class="tbl">
+  <tr><th>Pustaka</th><th>Untuk apa</th></tr>
+  <tr><td><b>OpenCV</b></td><td>Mengolah gambar &amp; video: memotong, mengubah ukuran, mendeteksi tepi, membaca kamera</td></tr>
+  <tr><td><b>Pillow</b></td><td>Operasi gambar sederhana — lebih ringan dari OpenCV</td></tr>
+  <tr><td><b>spaCy</b></td><td>Pengolahan teks untuk <b>produksi</b>: cepat, siap pakai, mendukung banyak bahasa</td></tr>
+  <tr><td><b>NLTK</b></td><td>Pengolahan teks untuk <b>belajar &amp; riset</b>: lengkap secara akademis, lebih lambat</td></tr>
+  <tr><td><b>librosa</b></td><td>Menganalisis suara &amp; musik</td></tr>
+</table>
+
+<h3>4. Membagikan hasil kerjamu</h3>
+<p>Ini bagian yang paling sering dilewatkan pemula. Model yang hanya hidup di notebook <b>tidak berguna bagi siapa pun</b>.</p>
+
+<table class="tbl">
+  <tr><th>Pustaka</th><th>Untuk apa</th><th>Cocok untuk</th></tr>
+  <tr><td><b>Streamlit</b></td><td>Menyulap skrip Python jadi aplikasi web</td><td class="ok-cell">Paling mudah — beberapa baris jadi antarmuka</td></tr>
+  <tr><td><b>Gradio</b></td><td>Antarmuka cepat untuk mencoba model</td><td>Demo model AI, terhubung ke Hugging Face</td></tr>
+  <tr><td><b>FastAPI</b></td><td>Membuat <b>API</b> agar model bisa dipanggil aplikasi lain</td><td>Saat model dipakai oleh sistem lain, bukan manusia</td></tr>
+  <tr><td><b>Plotly / Dash</b></td><td>Grafik interaktif &amp; dasbor</td><td>Laporan yang bisa diklik &amp; disaring</td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Saran praktis:</b> setelah model pertamamu jalan, luangkan satu jam membungkusnya dengan <b>Streamlit</b>. Perbedaan antara "saya bisa melatih model" dan "saya bisa menunjukkan aplikasi yang berjalan" sangat besar — baik untuk portofolio maupun untuk memahami apa yang sesungguhnya kamu buat.
+</div>
+
+<h3>5. Merapikan pekerjaan</h3>
+<table class="tbl">
+  <tr><th>Pustaka</th><th>Untuk apa</th></tr>
+  <tr><td><b>MLflow</b></td><td>Mencatat tiap percobaan: parameter, hasil, dan versi modelnya</td></tr>
+  <tr><td><b>Weights &amp; Biases</b></td><td>Serupa, dengan tampilan pemantauan yang lebih kaya</td></tr>
+  <tr><td><b>joblib</b> / <b>pickle</b></td><td>Menyimpan model terlatih ke berkas agar bisa dipakai lagi</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Kenapa pencatatan percobaan penting:</b> setelah mencoba 30 kombinasi, kamu <b>pasti</b> lupa mana yang menghasilkan 89% dan dengan pengaturan apa. Awalnya cukup satu berkas spreadsheet; MLflow diperlukan ketika percobaanmu sudah puluhan.
+</div>
+
+<h3>⚠️ Jangan belajar semuanya</h3>
+<div class="callout warn">
+Daftar di atas mudah membuat kewalahan. Jangan terjebak <b>"belajar pustaka"</b> tanpa henti — itu terasa produktif padahal tidak.<br><br>
+<b>Urutan yang benar:</b> kuasai <b>pandas</b> dan <b>scikit-learn</b> sampai betul-betul lancar. Lalu ambil pustaka lain <b>hanya saat ada masalah nyata</b> yang membutuhkannya. Pustaka yang dipelajari karena kebutuhan akan melekat; yang dipelajari "untuk jaga-jaga" akan lupa dalam sebulan.
+</div>
+
+<div class="callout">
+<b>Penutup modul Perkakas.</b> Kamu kini tahu bahasa apa yang dipakai, pustaka mana untuk apa, cara kerja scikit-learn yang lengkap, cara melihat data sebelum memodelkannya, kapan memilih Keras atau PyTorch, dan ke mana mencari saat kebutuhanmu di luar itu semua. Langkah berikutnya bukan membaca lagi — melainkan <b>membuka Colab dan mencobanya dengan datamu sendiri</b>.
+</div>
+`,
+          keyPoints: [
+            "Data tabel: XGBoost (sering juara), LightGBM (cepat untuk data besar), CatBoost (nyaman untuk kolom kategori) — semuanya memakai pola fit/predict yang sama dengan scikit-learn.",
+            "SciPy untuk uji statistik; statsmodels untuk regresi dengan nilai-p & selang kepercayaan.",
+            "scikit-learn menjawab 'berapa ramalannya'; statsmodels menjawab 'apakah hubungan ini bermakna' — untuk skripsi & keputusan bisnis, sering statsmodels yang dibutuhkan.",
+            "Gambar: OpenCV (lengkap) & Pillow (ringan). Teks: spaCy (produksi) & NLTK (belajar/riset). Suara: librosa.",
+            "Membagikan hasil: Streamlit (paling mudah), Gradio (demo model), FastAPI (dipanggil sistem lain), Plotly/Dash (dasbor interaktif).",
+            "Merapikan: MLflow & Weights and Biases untuk mencatat percobaan; joblib/pickle untuk menyimpan model terlatih.",
+            "Jangan belajar semua pustaka — kuasai pandas & scikit-learn dulu, lalu ambil yang lain hanya saat ada masalah nyata.",
+          ],
+          quiz: [
+            {
+              q: "Kamu perlu tahu apakah pengaruh sebuah variabel bermakna secara statistik (dengan nilai-p) untuk skripsimu. Pustaka apa?",
+              options: [
+                "scikit-learn",
+                "statsmodels",
+                "Streamlit",
+                "OpenCV",
+              ],
+              answer: 1,
+              explain:
+                "scikit-learn dirancang untuk meramal, bukan untuk menjelaskan kebermaknaan statistik.",
+            },
+            {
+              q: "Apa beda spaCy dan NLTK?",
+              options: [
+                "Tidak ada bedanya",
+                "spaCy cepat & siap pakai untuk produksi; NLTK lebih lengkap secara akademis untuk belajar & riset",
+                "spaCy hanya untuk bahasa Indonesia",
+                "NLTK lebih baru dan lebih cepat",
+              ],
+              answer: 1,
+              explain:
+                "Keduanya untuk teks, tapi ditujukan untuk kebutuhan yang berbeda.",
+            },
+            {
+              q: "Model sudah jadi dan ingin ditunjukkan ke orang lain lewat halaman web sederhana. Pilihan tercepat?",
+              options: [
+                "FastAPI",
+                "Streamlit",
+                "MLflow",
+                "SciPy",
+              ],
+              answer: 1,
+              explain:
+                "Streamlit mengubah skrip Python jadi aplikasi web dalam beberapa baris. FastAPI dipakai bila yang memanggil adalah sistem lain, bukan manusia.",
+            },
+            {
+              q: "Saran paling penting dalam mempelajari pustaka Python?",
+              options: [
+                "Pelajari semuanya sekaligus agar siap",
+                "Kuasai pandas & scikit-learn dulu, lalu ambil pustaka lain hanya saat ada masalah nyata yang membutuhkannya",
+                "Cukup hafalkan namanya",
+                "Hindari pustaka, tulis semua sendiri",
+              ],
+              answer: 1,
+              explain:
+                "Pustaka yang dipelajari karena kebutuhan akan melekat; yang dipelajari 'untuk jaga-jaga' cepat terlupa.",
+            },
+          ],
+        },
       ],
     },
 
