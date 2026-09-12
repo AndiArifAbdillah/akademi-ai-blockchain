@@ -4399,5 +4399,190 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
         },
       ],
     },
+    /* ---------------- LEVEL ARAH (MASA DEPAN) ---------------- */
+    {
+      id: "bc-arah",
+      level: "Arah",
+      title: "Masa Depan Crypto & Blockchain",
+      summary: "Apa yang sudah jelas arahnya, apa yang sudah terbukti mati, dan apa yang masih benar-benar terbuka.",
+      lessons: [
+        {
+          id: "bc-arah-1",
+          title: "Yang Sudah Terlihat — dan Yang Sudah Mati",
+          duration: "14 menit",
+          content: `
+<p>Bidang ini penuh ramalan berlebihan. Cara paling jujur membacanya adalah memisahkan tiga hal: apa yang <b>sudah berjalan</b>, apa yang <b>sudah terbukti gagal</b>, dan apa yang <b>masih terbuka</b>. Pelajaran ini membahas dua yang pertama.</p>
+
+<div data-diagram="compare3" data-cols="Sudah berjalan::Stablecoin::Regulasi &amp; kustodi|Sudah mati::Mania ICO::Mayoritas NFT|Masih terbuka::Peran Bitcoin::Nasib DeFi" data-caption="Membaca lanskap kripto dengan jujur"></div>
+
+<h3>Yang arahnya sudah jelas</h3>
+<table class="tbl">
+  <tr><th>Perkembangan</th><th>Kenapa ini nyata</th></tr>
+  <tr><td><b>Regulasi tiba</b></td><td>Kerangka aturan aset kripto sudah berlaku di beberapa wilayah dan terus disusun di banyak negara. Di Indonesia pengawasannya berpindah ke OJK</td></tr>
+  <tr><td><b>Stablecoin jadi rel pembayaran</b></td><td>Volume pemakaiannya untuk pengiriman uang lintas negara sudah besar dan tumbuh — ini kegunaan yang <b>benar-benar dipakai orang</b></td></tr>
+  <tr><td><b>Kustodi institusional</b></td><td>Lembaga keuangan besar kini menyediakan penyimpanan dan produk investasi aset kripto</td></tr>
+  <tr><td><b>Biaya transaksi turun</b></td><td>Layer 2 membuat biaya yang dulu berdolar-dolar menjadi sen</td></tr>
+  <tr><td><b>Tokenisasi aset nyata</b></td><td>Surat utang negara dan reksa dana pasar uang mulai diterbitkan dalam bentuk token oleh lembaga mapan</td></tr>
+</table>
+
+<div class="callout">
+<b>Perhatikan pola dari daftar di atas:</b> yang bertahan adalah hal-hal yang <b>menyelesaikan masalah nyata</b> — mengirim uang lintas negara dengan murah, menyimpan aset dengan aman, menurunkan biaya. Bukan yang paling menarik diberitakan.
+</div>
+
+<h3>🪦 Yang sudah terbukti mati</h3>
+<p>Ini bagian yang jarang dibahas, padahal paling banyak pelajarannya:</p>
+
+<table class="tbl">
+  <tr><th>Gelombang</th><th>Apa yang terjadi</th></tr>
+  <tr><td><b>Mania ICO (2017)</b></td><td>Ribuan proyek menggalang dana dengan proposal saja. Sebagian besar tidak menghasilkan produk apa pun</td></tr>
+  <tr><td><b>Mayoritas NFT (2021)</b></td><td>Harga koleksi gambar runtuh setelah pembeli baru berhenti berdatangan</td></tr>
+  <tr><td><b>Sebagian besar GameFi</b></td><td>Ekonominya membayar pemain lama dari uang pemain baru — runtuh saat pertumbuhan berhenti</td></tr>
+  <tr><td><b>Stablecoin algoritmik</b></td><td>Beberapa runtuh total dalam hitungan hari ketika kepercayaan hilang</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Satu pola menyatukan keempatnya:</b> nilainya bergantung pada <b>datangnya pembeli baru</b>, bukan pada orang yang membayar untuk sebuah kegunaan. Itu pertanyaan penyaring paling ampuh yang bisa kamu pakai:<br><br>
+<b>"Siapa yang membayar, untuk manfaat apa, dan apakah ia tetap membayar bila harga tokennya turun?"</b>
+</div>
+
+<h3>Kenapa ini penting bagi kamu</h3>
+<p>Gelombang berikutnya akan datang dengan nama baru dan istilah baru. Yang tidak berubah adalah cara mengujinya. Kalau sebuah proyek tidak bisa menjawab pertanyaan penyaring di atas, sejarah menyarankan kehati-hatian — sehebat apa pun teknologinya terdengar.</p>
+
+<div class="callout warn">
+<b>Catatan:</b> aturan dan lanskap di bidang ini berubah cepat. Rujuk ketentuan terbaru dari OJK dan Bank Indonesia. Materi ini untuk edukasi, bukan saran investasi.
+</div>
+`,
+          keyPoints: [
+            "Yang arahnya jelas: regulasi tiba, stablecoin jadi rel pembayaran, kustodi institusional, biaya turun lewat L2, tokenisasi aset nyata.",
+            "Pola yang bertahan: hal yang menyelesaikan masalah nyata, bukan yang paling menarik diberitakan.",
+            "Yang sudah terbukti mati: mania ICO 2017, mayoritas NFT 2021, sebagian besar GameFi, dan stablecoin algoritmik.",
+            "Keempatnya punya satu kesamaan: nilainya bergantung pada datangnya pembeli baru, bukan pengguna yang membayar untuk kegunaan.",
+            "Pertanyaan penyaring: siapa yang membayar, untuk manfaat apa, dan apakah tetap membayar bila harga token turun?",
+            "Gelombang berikutnya akan berganti nama, tapi cara mengujinya tetap sama.",
+          ],
+          quiz: [
+            {
+              q: "Apa kesamaan mania ICO, mayoritas NFT, dan GameFi yang runtuh?",
+              options: [
+                "Nilainya bergantung pada datangnya pembeli baru, bukan pengguna yang membayar",
+                "Semuanya dilarang oleh regulator sehingga terpaksa dihentikan",
+                "Semuanya memakai blockchain yang ternyata mengandung celah keamanan",
+                "Semuanya gagal karena biaya transaksinya terlalu mahal bagi pengguna",
+              ],
+              answer: 0,
+              explain: "Begitu aliran pembeli baru berhenti, tidak ada pendapatan nyata yang menopangnya.",
+            },
+            {
+              q: "Manakah kegunaan kripto yang sudah terbukti dipakai luas?",
+              options: [
+                "Stablecoin sebagai rel pengiriman uang lintas negara yang murah",
+                "Koleksi gambar digital sebagai penyimpan nilai jangka panjang",
+                "Permainan berbasis token sebagai sumber penghasilan utama pemainnya",
+                "Stablecoin algoritmik sebagai pengganti mata uang negara",
+              ],
+              answer: 0,
+              explain: "Volumenya besar dan tumbuh karena menyelesaikan masalah nyata: biaya dan kecepatan kiriman uang.",
+            },
+            {
+              q: "Pertanyaan penyaring paling ampuh untuk menilai proyek kripto baru?",
+              options: [
+                "Siapa yang membayar, untuk manfaat apa, dan apakah tetap bayar bila harga turun",
+                "Berapa banyak pengikut proyek itu di media sosial dalam sebulan terakhir",
+                "Seberapa terkenal investor besar yang sudah menaruh dana di dalamnya",
+                "Seberapa canggih teknologi blockchain yang dipakai proyek tersebut",
+              ],
+              answer: 0,
+              explain: "Pertanyaan ini memisahkan kegunaan nyata dari aliran dana yang hanya bergantung pembeli baru.",
+            },
+          ],
+        },
+        {
+          id: "bc-arah-2",
+          title: "Yang Masih Benar-Benar Terbuka",
+          duration: "12 menit",
+          content: `
+<p>Setelah memisahkan yang sudah jelas dan yang sudah mati, tersisa pertanyaan-pertanyaan yang <b>jujurnya belum terjawab</b>. Siapa pun yang menyatakan sudah tahu jawabannya sedang menebak.</p>
+
+<h3>Empat pertanyaan terbuka</h3>
+<table class="tbl">
+  <tr><th>Pertanyaan</th><th>Kenapa belum terjawab</th></tr>
+  <tr><td><b>Apakah Bitcoin jadi penyimpan nilai mapan?</b></td><td>Sejarahnya masih terlalu pendek untuk menyimpulkan perilakunya lintas siklus ekonomi</td></tr>
+  <tr><td><b>CBDC atau stablecoin swasta?</b></td><td>Bergantung keputusan politik tiap negara, bukan pada keunggulan teknis</td></tr>
+  <tr><td><b>Bisakah DeFi hidup di bawah regulasi?</b></td><td>Ketegangan mendasar: aturan menuntut pihak yang bertanggung jawab, DeFi dirancang tanpa itu</td></tr>
+  <tr><td><b>Kapan kuantum jadi ancaman nyata?</b></td><td>Perkiraannya sangat beragam — seperti kamu pelajari di modul Kriptografi</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Perhatikan:</b> tiga dari empat pertanyaan itu <b>bukan pertanyaan teknis</b>. Jawabannya ditentukan regulasi, politik, dan kebiasaan manusia. Ini pelajaran penting: nasib sebuah teknologi sering ditentukan di luar teknologinya.
+</div>
+
+<h3>Dua skenario yang sama masuk akalnya</h3>
+<table class="tbl">
+  <tr><th>Skenario "menyatu"</th><th>Skenario "menyempit"</th></tr>
+  <tr><td>Blockchain jadi infrastruktur di balik layar — dipakai bank dan perusahaan tanpa penggunanya sadar, seperti protokol internet</td><td>Pemakaiannya mengerucut ke beberapa hal saja: stablecoin, tokenisasi aset, dan penyimpan nilai — sisanya menyusut</td></tr>
+  <tr><td>Ditandai oleh: makin banyak lembaga mapan memakainya diam-diam</td><td>Ditandai oleh: jumlah proyek berkurang, tapi yang bertahan makin dalam pemakaiannya</td></tr>
+</table>
+<p>Keduanya bisa terjadi bersamaan. Yang <b>tidak</b> didukung bukti adalah skenario "semua akan berjalan di blockchain" — yang sudah lebih dari satu dekade dijanjikan tanpa terwujud.</p>
+
+<h3>🧭 Cara menyikapinya</h3>
+<div class="callout">
+• <b>Pisahkan teknologi dari asetnya.</b> Blockchain bisa berguna tanpa membuat token tertentu jadi investasi yang baik.<br>
+• <b>Perhatikan pemakaian, bukan harga.</b> Jumlah pengguna yang membayar fee lebih memberi tahu daripada grafik harga.<br>
+• <b>Ikuti regulasinya.</b> Karena tiga dari empat pertanyaan terbuka ditentukan di sana.<br>
+• <b>Curigai kepastian.</b> Di bidang yang belum berumur dua puluh tahun, keyakinan mutlak adalah tanda bahaya.
+</div>
+
+<div class="callout warn">
+<b>Penutup jalur Blockchain.</b> Kamu sudah belajar dari cara kerja hash sampai forensik, dari DeFi sampai ekonomi protokol. Yang paling berharga dari semuanya bukan hafalan istilah, melainkan kemampuan bertanya: <b>"masalah apa yang sebenarnya diselesaikan, dan siapa yang mau membayar untuk itu?"</b><br><br>
+<i>Materi ini untuk edukasi, bukan saran investasi.</i>
+</div>
+`,
+          keyPoints: [
+            "Empat pertanyaan yang belum terjawab: peran Bitcoin, CBDC vs stablecoin, DeFi di bawah regulasi, dan waktu datangnya ancaman kuantum.",
+            "Tiga dari empat pertanyaan itu bukan pertanyaan teknis — jawabannya ditentukan regulasi, politik, dan kebiasaan manusia.",
+            "Dua skenario sama masuk akalnya: blockchain jadi infrastruktur di balik layar, atau pemakaiannya mengerucut ke beberapa hal saja.",
+            "Skenario 'semua akan berjalan di blockchain' sudah lebih dari satu dekade dijanjikan tanpa terwujud.",
+            "Pisahkan teknologi dari asetnya: blockchain bisa berguna tanpa membuat token tertentu jadi investasi yang baik.",
+            "Perhatikan jumlah pengguna yang membayar fee, bukan grafik harga.",
+          ],
+          quiz: [
+            {
+              q: "Kenapa nasib CBDC dan DeFi disebut bukan pertanyaan teknis?",
+              options: [
+                "Karena jawabannya ditentukan regulasi, politik, dan kebiasaan manusia",
+                "Karena teknologinya sudah selesai sehingga tidak ada lagi yang dikembangkan",
+                "Karena keduanya tidak memakai blockchain dalam pengertian sesungguhnya",
+                "Karena tidak ada ahli teknis yang bersedia membahasnya secara terbuka",
+              ],
+              answer: 0,
+              explain: "Nasib sebuah teknologi sering ditentukan di luar teknologinya sendiri.",
+            },
+            {
+              q: "Skenario mana yang TIDAK didukung bukti sejauh ini?",
+              options: [
+                "Bahwa hampir semua sistem akan berpindah berjalan di atas blockchain",
+                "Bahwa blockchain jadi infrastruktur di balik layar tanpa disadari pengguna",
+                "Bahwa pemakaiannya mengerucut ke stablecoin dan tokenisasi aset",
+                "Bahwa kedua skenario tersebut berlangsung secara bersamaan",
+              ],
+              answer: 0,
+              explain: "Janji itu sudah lebih dari satu dekade disampaikan tanpa terwujud.",
+            },
+            {
+              q: "Ukuran mana yang lebih memberi tahu tentang kesehatan sebuah protokol?",
+              options: [
+                "Jumlah pengguna yang benar-benar membayar fee untuk memakainya",
+                "Pergerakan harga tokennya dalam tiga bulan terakhir",
+                "Banyaknya pemberitaan media tentang proyek tersebut",
+                "Jumlah pengikut akun resminya di media sosial",
+              ],
+              answer: 0,
+              explain: "Harga bisa digerakkan spekulasi; fee yang dibayar menunjukkan kegunaan nyata.",
+            },
+          ],
+        },
+      ],
+    },
+
   ],
 };

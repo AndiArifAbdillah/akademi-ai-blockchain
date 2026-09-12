@@ -15,16 +15,16 @@ const MODULE_ORDER = [
   // 🤖 AI
   "ai-dasar", "ai-pemula", "ai-menengah", "ai-fundamental", "ai-matematika",
   "ai-pendalaman", "ai-arsitektur", "ai-mahir", "ai-terapan", "ai-pelengkap",
-  "ai-tools", "ai-lanjutan", "ai-proyek", "ai-ekonomi",
+  "ai-tools", "ai-lanjutan", "ai-proyek", "ai-ekonomi", "ai-arah",
   // ⛓️ Blockchain
   "bc-dasar", "bc-pemula", "bc-menengah", "bc-fundamental", "bc-matematika",
   "bc-kriptografi", "bc-mahir", "bc-pendalaman", "bc-forensik", "bc-terapan", "bc-lanjutan",
-  "bc-pelengkap", "bc-proyek", "bc-ekonomi",
+  "bc-pelengkap", "bc-proyek", "bc-ekonomi", "bc-arah",
   // 📊 Akuntansi
   "acc-dasar", "acc-pemula", "acc-menengah", "acc-pendalaman", "acc-mahir",
   "acc-fundamental", "acc-matematika", "acc-terapan", "acc-audit",
   "acc-lanjutan", "acc-kualitas", "acc-bank", "acc-prospek", "acc-proyek", "acc-investasi",
-  "acc-makro",
+  "acc-makro", "acc-arah",
 ];
 (function urutkanModul() {
   const pos = (id) => {

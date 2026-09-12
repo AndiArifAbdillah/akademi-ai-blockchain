@@ -6696,5 +6696,199 @@ console.log("Itu artinya B punya jauh lebih banyak dana untuk membangun.");</div
         },
       ],
     },
+    /* ---------------- LEVEL ARAH (MASA DEPAN) ---------------- */
+    {
+      id: "acc-arah",
+      level: "Arah",
+      title: "Masa Depan Akuntansi & Pekerjaan Keuangan",
+      summary: "Pekerjaan apa yang menyusut, apa yang tumbuh, dan keterampilan mana yang justru makin bernilai saat mesin makin pintar.",
+      lessons: [
+        {
+          id: "acc-arah-1",
+          title: "Pekerjaan yang Menyusut, Pekerjaan yang Tumbuh",
+          duration: "14 menit",
+          content: `
+<p>Akuntansi sering disebut bidang yang paling terancam otomatisasi. Itu <b>separuh benar</b> — dan separuh yang keliru justru bagian terpentingnya.</p>
+
+<div data-diagram="matrix" data-cells="Mencatat &amp; mencocokkan|Menyusun estimasi|Memasukkan data manual|Menjelaskan &amp; memutuskan" data-xlabel="Makin butuh pertimbangan" data-ylabel="Makin bernilai bagi perusahaan" data-caption="Yang di kiri cepat diotomatiskan; yang di kanan justru makin dicari"></div>
+
+<h3>Yang memang menyusut</h3>
+<table class="tbl">
+  <tr><th>Pekerjaan</th><th>Yang menggantikannya</th></tr>
+  <tr><td><b>Memasukkan data dari struk &amp; faktur</b></td><td>Pemindaian otomatis dan sambungan langsung ke rekening bank</td></tr>
+  <tr><td><b>Mencocokkan rekening (rekonsiliasi)</b></td><td>Pencocokan otomatis; manusia hanya menangani yang tidak cocok</td></tr>
+  <tr><td><b>Menyusun laporan rutin</b></td><td>Laporan yang tersusun sendiri dari data yang masuk</td></tr>
+  <tr><td><b>Mengambil sampel untuk audit</b></td><td>Pemeriksaan seluruh populasi data, bukan lagi contoh acak</td></tr>
+</table>
+
+<div class="callout warn">
+Perhatikan kesamaannya: semuanya <b>berulang, punya aturan jelas, dan benar-salahnya bisa dipastikan</b>. Itulah ciri pekerjaan yang paling cepat diotomatiskan — di bidang apa pun, bukan hanya akuntansi.
+</div>
+
+<h3>Yang justru sulit digantikan</h3>
+<table class="tbl">
+  <tr><th>Pekerjaan</th><th>Kenapa sulit</th></tr>
+  <tr><td><b>Menyusun estimasi</b></td><td>Berapa cadangan piutang tak tertagih? Umur ekonomis mesin? Ini <b>pertimbangan</b>, bukan perhitungan — dan justru di sinilah kecurangan bersembunyi</td></tr>
+  <tr><td><b>Membaca niat</b></td><td>Mesin melihat angka ganjil; manusia memahami <b>kenapa</b> seseorang melakukannya</td></tr>
+  <tr><td><b>Menjelaskan ke pengambil keputusan</b></td><td>Menerjemahkan angka jadi keputusan bisnis, lengkap dengan asumsi dan batasnya</td></tr>
+  <tr><td><b>Memikul tanggung jawab</b></td><td>Saat laporan salah, harus ada <b>orang</b> yang bertanggung jawab. Mesin tidak bisa memikulnya</td></tr>
+</table>
+
+<div class="callout">
+<b>Poin yang sering terlewat:</b> otomatisasi menghapus pekerjaan <b>menyiapkan</b> angka, tapi justru <b>menambah</b> kebutuhan orang yang bisa <b>menilai</b> angka. Ketika laporan tersusun sendiri dalam hitungan detik, pertanyaannya bergeser dari "berapa angkanya?" menjadi "<b>apakah angka ini bisa dipercaya, dan apa artinya?</b>"
+</div>
+
+<h3>Peran yang tumbuh</h3>
+<ul>
+  <li><b>Analis keuangan &amp; penasihat bisnis</b> — menerjemahkan angka menjadi keputusan.</li>
+  <li><b>Pengendalian internal &amp; audit berkelanjutan</b> — merancang sistem yang mencegah kesalahan, bukan mencarinya setelah terjadi.</li>
+  <li><b>Akuntansi forensik</b> — memburu kecurangan yang makin canggih.</li>
+  <li><b>Pelaporan keberlanjutan</b> — bidang baru dengan standar yang sedang terbentuk.</li>
+  <li><b>Akuntan yang menguasai data</b> — paling langka, karena menggabungkan dua bidang yang jarang dikuasai satu orang.</li>
+</ul>
+
+<div class="callout warn">
+<b>Arah lain yang sudah berjalan:</b> pelaporan pajak dan faktur elektronik membuat sebagian data perusahaan mengalir <b>langsung ke otoritas</b>, nyaris seketika. Akibatnya, ruang untuk "merapikan angka belakangan" makin sempit — dan kerapian pencatatan sejak awal makin menentukan.
+</div>
+`,
+          keyPoints: [
+            "Yang menyusut: memasukkan data, rekonsiliasi, menyusun laporan rutin, dan pengambilan sampel audit.",
+            "Cirinya sama: berulang, beraturan jelas, dan benar-salahnya bisa dipastikan.",
+            "Yang sulit digantikan: menyusun estimasi, membaca niat, menjelaskan ke pengambil keputusan, dan memikul tanggung jawab.",
+            "Estimasi adalah pertimbangan, bukan perhitungan — dan di situlah kecurangan bersembunyi.",
+            "Otomatisasi menghapus pekerjaan menyiapkan angka, tapi menambah kebutuhan orang yang bisa menilai angka.",
+            "Peran yang tumbuh: analis & penasihat, pengendalian internal, forensik, pelaporan keberlanjutan, dan akuntan yang menguasai data.",
+            "Pelaporan elektronik membuat data mengalir hampir seketika ke otoritas, sehingga kerapian sejak awal makin menentukan.",
+          ],
+          quiz: [
+            {
+              q: "Apa ciri pekerjaan akuntansi yang paling cepat diotomatiskan?",
+              options: [
+                "Berulang, beraturan jelas, dan benar-salahnya bisa dipastikan",
+                "Membutuhkan pertimbangan atas asumsi yang tidak bisa dipastikan",
+                "Melibatkan tanggung jawab hukum bila hasilnya ternyata keliru",
+                "Memerlukan penjelasan lisan kepada pemangku kepentingan",
+              ],
+              answer: 0,
+              explain: "Ciri ini berlaku di bidang apa pun, bukan hanya akuntansi.",
+            },
+            {
+              q: "Kenapa menyusun estimasi sulit digantikan mesin?",
+              options: [
+                "Karena estimasi adalah pertimbangan atas ketidakpastian, bukan perhitungan",
+                "Karena perhitungan estimasi terlalu rumit untuk dijalankan komputer",
+                "Karena standar akuntansi melarang estimasi dihitung oleh perangkat lunak",
+                "Karena data yang dibutuhkan estimasi tidak pernah tersedia digital",
+              ],
+              answer: 0,
+              explain: "Justru karena bersandar pada pertimbangan, di sinilah kecurangan paling sering bersembunyi.",
+            },
+            {
+              q: "Bagaimana otomatisasi mengubah pertanyaan utama pekerjaan akuntansi?",
+              options: [
+                "Dari 'berapa angkanya' menjadi 'apakah angka ini bisa dipercaya dan apa artinya'",
+                "Dari 'apa artinya angka ini' menjadi 'bagaimana cara menghitungnya'",
+                "Dari 'siapa yang bertanggung jawab' menjadi 'perangkat lunak apa yang dipakai'",
+                "Pertanyaannya tidak berubah, hanya alatnya yang berganti",
+              ],
+              answer: 0,
+              explain: "Ketika laporan tersusun sendiri, nilai bergeser ke kemampuan menilai dan menjelaskan.",
+            },
+          ],
+        },
+        {
+          id: "acc-arah-2",
+          title: "Keterampilan yang Bertahan",
+          duration: "12 menit",
+          content: `
+<p>Pelajaran penutup seluruh platform ini. Pertanyaannya sederhana: dari semua yang sudah kamu pelajari, <b>mana yang masih berguna sepuluh tahun lagi?</b></p>
+
+<div data-diagram="compare3" data-cols="Cepat usang::Cara pakai aplikasi::Aturan yang berubah|Bertahan lama::Cara berpikir angka::Menilai kualitas bisnis|Makin langka::Gabungan bidang::Kemampuan menjelaskan" data-caption="Tiga lapisan keterampilan dengan umur simpan yang jauh berbeda"></div>
+
+<h3>Yang cepat usang</h3>
+<p>Cara memakai satu aplikasi tertentu, tarif pajak tahun ini, format laporan yang berlaku sekarang. Semua ini <b>perlu diketahui</b>, tapi jangan dijadikan inti keahlianmu — semuanya berganti.</p>
+
+<h3>Yang bertahan puluhan tahun</h3>
+<table class="tbl">
+  <tr><th>Keterampilan</th><th>Kenapa bertahan</th></tr>
+  <tr><td><b>Membaca laporan keuangan</b></td><td>Bentuknya berubah, logikanya tidak. Aset tetap sama dengan kewajiban tambah ekuitas</td></tr>
+  <tr><td><b>Membedakan laba dari kas</b></td><td>Perusahaan masih akan bangkrut karena kehabisan kas meski laporannya untung</td></tr>
+  <tr><td><b>Menilai kualitas bisnis</b></td><td>Moat, alokasi modal, dan return on capital sudah bertahan puluhan tahun</td></tr>
+  <tr><td><b>Berpikir dalam kemungkinan</b></td><td>Ketidakpastian tidak akan hilang; yang berubah hanya bentuknya</td></tr>
+  <tr><td><b>Mencium yang janggal</b></td><td>Cara mencurangi laporan berganti wajah, polanya berulang</td></tr>
+</table>
+
+<h3>💎 Yang makin langka: gabungannya</h3>
+<div class="callout">
+Banyak orang menguasai <b>satu</b> dari tiga hal ini. Sangat sedikit yang menguasai <b>ketiganya</b>:<br><br>
+<b>1. Paham angka</b> — bisa membaca laporan dan tahu mana yang mencurigakan.<br>
+<b>2. Bisa mengolah data</b> — pandas, SQL, dan cukup paham AI untuk tahu kapan ia bisa dipercaya.<br>
+<b>3. Bisa menjelaskan</b> — menerjemahkan temuan jadi keputusan yang bisa diambil orang lain.<br><br>
+Itulah yang sebenarnya kamu bangun sepanjang platform ini, tanpa disebut secara terang-terangan.
+</div>
+
+<p>Perhatikan betapa seringnya ketiga jalur saling bertemu di materi yang sudah kamu lewati: <b>pandas</b> untuk laporan keuangan, <b>FCF</b> untuk menilai produk AI dan protokol kripto, <b>alokasi modal</b> untuk treasury DAO, <b>audit</b> untuk forensik blockchain. Persimpangan itu bukan kebetulan — di situlah keahlian yang sulit ditiru terbentuk.</p>
+
+<h3>🧭 Cara tetap relevan</h3>
+<div class="callout">
+• <b>Pelajari yang mendasar lebih dalam, yang berubah secukupnya.</b> Satu jam memahami arus kas lebih bernilai daripada satu jam menghafal menu aplikasi.<br>
+• <b>Jadilah orang yang memverifikasi.</b> Saat mesin menghasilkan laporan dalam detik, yang langka adalah orang yang tahu kapan laporan itu salah.<br>
+• <b>Pakai alat barunya, jangan dihindari.</b> Yang tergantikan bukan orang yang memakai AI, melainkan yang menolak memakainya sementara pesaingnya memakai.<br>
+• <b>Bangun rekam jejak.</b> Kepercayaan menumpuk seiring waktu dan tidak bisa disalin siapa pun.
+</div>
+
+<div class="callout warn">
+<b>Penutup.</b> Tidak ada yang tahu persis seperti apa bidang ini sepuluh tahun lagi — dan siapa pun yang mengaku tahu sedang menebak. Tapi ada yang bisa dipastikan: <b>orang yang paham angka, bisa mengolah data, dan mampu menjelaskan temuannya akan tetap dibutuhkan</b> dalam skenario mana pun.<br><br>
+Itu bukan ramalan. Itu hanya konsekuensi dari kenyataan bahwa keputusan tetap harus diambil manusia, dan keputusan yang baik butuh orang yang mengerti.
+</div>
+`,
+          keyPoints: [
+            "Cepat usang: cara memakai satu aplikasi, tarif pajak tahun berjalan, format laporan yang berlaku sekarang.",
+            "Bertahan lama: membaca laporan keuangan, membedakan laba dari kas, menilai kualitas bisnis, berpikir probabilistik, mencium yang janggal.",
+            "Yang makin langka adalah GABUNGAN: paham angka + bisa mengolah data + bisa menjelaskan.",
+            "Ketiga jalur platform ini sengaja bertemu: pandas untuk laporan keuangan, FCF untuk produk AI & protokol, alokasi modal untuk treasury DAO, audit untuk forensik blockchain.",
+            "Pelajari yang mendasar lebih dalam dan yang berubah secukupnya.",
+            "Yang tergantikan bukan orang yang memakai AI, melainkan yang menolak memakainya sementara pesaingnya memakai.",
+            "Kepercayaan dan rekam jejak menumpuk seiring waktu dan tidak bisa disalin siapa pun.",
+          ],
+          quiz: [
+            {
+              q: "Manakah keterampilan yang paling cepat usang?",
+              options: [
+                "Menguasai menu dan tombol satu aplikasi akuntansi tertentu",
+                "Membedakan laba di laporan dari kas yang benar-benar ada",
+                "Menilai kualitas sebuah bisnis lewat moat dan alokasi modalnya",
+                "Mengenali pola yang janggal pada laporan keuangan",
+              ],
+              answer: 0,
+              explain: "Aplikasi berganti; logika arus kas dan kualitas bisnis bertahan puluhan tahun.",
+            },
+            {
+              q: "Apa kombinasi yang disebut paling langka di pasar kerja?",
+              options: [
+                "Paham angka, bisa mengolah data, dan mampu menjelaskan temuannya",
+                "Menguasai banyak aplikasi akuntansi dari berbagai penyedia sekaligus",
+                "Hafal seluruh standar akuntansi beserta nomor pasalnya",
+                "Mampu bekerja sangat cepat dalam memasukkan data transaksi",
+              ],
+              answer: 0,
+              explain: "Banyak orang menguasai satu dari ketiganya; sangat sedikit yang menguasai ketiganya sekaligus.",
+            },
+            {
+              q: "Menurut pelajaran ini, siapa yang paling berisiko tergantikan?",
+              options: [
+                "Orang yang menolak memakai alat baru sementara pesaingnya memakainya",
+                "Orang yang memakai AI untuk mempercepat pekerjaannya sehari-hari",
+                "Orang yang mendalami konsep dasar alih-alih menghafal aplikasi",
+                "Orang yang membangun rekam jejak dan kepercayaan bertahun-tahun",
+              ],
+              answer: 0,
+              explain: "Yang menggantikan bukan mesinnya, melainkan orang lain yang memakai mesin itu.",
+            },
+          ],
+        },
+      ],
+    },
+
   ],
 };

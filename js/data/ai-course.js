@@ -63,12 +63,12 @@ const AI_COURSE = {
             {
               q: "Apa itu 'pola' dalam konteks ini?",
               options: [
-                "Kumpulan angka acak",
-                "Sesuatu yang berulang atau bisa ditebak",
-                "Sebuah komputer",
-                "Nama aplikasi",
+                "Sesuatu yang berulang sehingga bisa ditebak kelanjutannya",
+                "Sesuatu yang muncul acak tanpa aturan yang bisa dikenali",
+                "Sesuatu yang hanya terjadi satu kali lalu tidak pernah lagi",
+                "Sesuatu yang hanya bisa dilihat dengan bantuan komputer",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Pola adalah keteraturan berulang — inilah yang dicari AI dari data.",
             },
             {
@@ -251,12 +251,12 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             {
               q: "AI berkata '80% ini anjing'. Apa artinya?",
               options: [
-                "Pasti anjing",
-                "Cukup yakin ini anjing, tapi tidak mutlak",
-                "Pasti bukan anjing",
-                "AI rusak",
+                "Cukup yakin ini anjing, tetapi masih ada kemungkinan keliru",
+                "Pasti anjing, karena angkanya sudah di atas setengah",
+                "Ada 80 anjing di dalam gambar yang sedang diperiksa",
+                "Model sudah benar 80 kali dari seluruh percobaannya",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Skor 80% = tingkat keyakinan, bukan kepastian mutlak.",
             },
             {
@@ -268,36 +268,36 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             {
               q: "Dari mana angka 50% pada lemparan koin berasal?",
               options: [
-                "Ditentukan secara acak",
-                "1 sisi gambar dibagi 2 sisi total (1 ÷ 2 = 0,5 = 50%)",
-                "Karena koin bulat",
-                "Hasil pengukuran berat koin",
+                "1 sisi gambar dibagi 2 sisi total, yaitu 1 ÷ 2 = 0,5",
+                "Rata-rata hasil 100 lemparan koin yang pernah dicatat",
+                "Setengah dari berat koin yang dipakai saat melempar",
+                "Hasil pengukuran para ahli statistik di laboratorium",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Peluang = hasil yang diinginkan ÷ semua hasil yang mungkin = 1 ÷ 2 = 50%.",
             },
             {
               q: "Sebuah koin sudah muncul 'gambar' 5 kali berturut-turut. Berapa peluang lemparan ke-6 muncul gambar?",
               options: [
-                "Lebih kecil, karena sudah waktunya angka",
-                "Tetap 50% — koin tidak punya ingatan",
-                "Lebih besar, karena sedang beruntung",
-                "0%",
+                "Tetap 50%, karena koin tidak menyimpan ingatan apa pun",
+                "Lebih kecil dari 50%, karena giliran angka sudah terlalu lama",
+                "Lebih besar dari 50%, karena polanya sedang berpihak pada gambar",
+                "Tidak bisa dihitung sebelum tahu hasil lemparan sebelumnya",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Setiap lemparan berdiri sendiri. Menyangka hasil lalu memengaruhi hasil berikutnya disebut gambler's fallacy.",
             },
             {
               q: "Apa arti kata 'persen'?",
               options: [
-                "Dari seribu",
-                "Dari seratus — bayangkan sesuatu dipotong jadi 100 bagian",
-                "Dari sepuluh",
-                "Angka acak",
+                "Dari seratus — bayangkan sesuatu dipotong menjadi 100 bagian",
+                "Dari sepuluh — bayangkan sesuatu dipotong menjadi 10 bagian",
+                "Dari seribu — bayangkan sesuatu dipotong menjadi 1.000 bagian",
+                "Sebutan lain untuk bilangan pecahan yang memakai koma",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Persen berarti 'dari seratus'; 25% = 25 bagian dari 100 bagian.",
             },
@@ -350,23 +350,23 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             {
               q: "Apa itu algoritma?",
               options: [
-                "Sejenis komputer",
-                "Urutan langkah untuk menyelesaikan tugas",
-                "Nama robot",
-                "Bahasa asing",
+                "Urutan langkah yang pasti untuk menyelesaikan sebuah tugas",
+                "Program komputer yang mampu memperbaiki dirinya sendiri",
+                "Rumus matematika yang hanya dipahami ahli pemrograman",
+                "Perangkat keras khusus untuk menjalankan perhitungan berat",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Algoritma adalah langkah-langkah jelas untuk menyelesaikan sesuatu.",
             },
             {
               q: "Beda utama AI dari program biasa?",
               options: [
-                "AI lebih murah",
-                "AI menemukan aturannya sendiri dari data, bukan aturan yang ditulis manusia",
-                "AI tidak butuh komputer",
-                "AI selalu benar",
+                "AI menemukan aturannya sendiri dari data, bukan ditulis manusia",
+                "AI menjalankan aturan yang sama persis, hanya jauh lebih cepat",
+                "AI bisa bekerja tanpa perlu diberi contoh data sama sekali",
+                "AI menulis ulang kode programnya setiap kali dijalankan",
               ],
-              answer: 1,
+              answer: 0,
               explain: "AI belajar aturan dari data; program biasa mengikuti aturan tetap buatan manusia.",
             },
           ],
@@ -718,12 +718,12 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             {
               q: "Apa arti 'deep' pada deep learning?",
               options: [
-                "Datanya rahasia",
-                "Jaringan punya banyak lapisan tersembunyi",
-                "Komputernya mahal",
-                "Belajarnya lama",
+                "Jaringannya punya banyak lapisan tersembunyi yang bertumpuk",
+                "Modelnya dilatih memakai data yang jumlahnya sangat besar",
+                "Perhitungannya dijalankan jauh di dalam pusat data raksasa",
+                "Hasilnya jauh lebih akurat dibanding metode lainnya",
               ],
-              answer: 1,
+              answer: 0,
               explain: "'Deep' merujuk pada banyaknya hidden layer.",
             },
           ],
@@ -775,12 +775,12 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             {
               q: "Bagaimana komputer 'melihat' gambar?",
               options: [
-                "Seperti mata manusia",
-                "Sebagai deretan angka (nilai piksel)",
-                "Sebagai suara",
-                "Tidak bisa sama sekali",
+                "Sebagai deretan angka yang mewakili nilai tiap pikselnya",
+                "Sebagai bentuk dan garis seperti yang dilihat mata manusia",
+                "Sebagai berkas gambar utuh yang dibaca sekaligus apa adanya",
+                "Sebagai kumpulan kata yang menjelaskan isi gambar itu",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Gambar direpresentasikan sebagai angka piksel.",
             },
           ],
@@ -826,12 +826,12 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             {
               q: "Untuk apa 'test set'?",
               options: [
-                "Untuk melatih model",
-                "Untuk menguji model pada data yang belum pernah dilihat",
-                "Untuk menyimpan cadangan",
-                "Untuk mempercepat training",
+                "Menguji model memakai data yang belum pernah ia lihat sebelumnya",
+                "Melatih model sekali lagi agar hasilnya menjadi lebih baik",
+                "Menyimpan cadangan data bila data latih hilang atau rusak",
+                "Mempercepat pelatihan dengan mengurangi jumlah data",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Test set mengukur kemampuan asli model pada data baru.",
             },
@@ -883,24 +883,24 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             {
               q: "Apa tugas inti sebuah LLM seperti ChatGPT?",
               options: [
-                "Mencari di Google",
-                "Menebak token/kata berikutnya yang paling masuk akal",
-                "Menyimpan semua fakta dunia",
-                "Menghitung angka",
+                "Menebak token berikutnya yang paling masuk akal, berulang kali",
+                "Mencari jawaban di internet lalu merangkumnya untuk pengguna",
+                "Mencocokkan pertanyaan dengan basis data jawaban yang tersimpan",
+                "Memahami maksud pengguna lalu menalar seperti manusia",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "LLM dilatih memprediksi token berikutnya; dari sinilah kemampuannya muncul.",
             },
             {
               q: "Apa itu 'halusinasi' pada LLM?",
               options: [
-                "Komputer rusak",
-                "LLM mengarang informasi yang terdengar benar padahal salah",
-                "Layar berkedip",
-                "Model terlalu lambat",
+                "Model mengarang informasi yang terdengar meyakinkan padahal keliru",
+                "Model menolak menjawab karena pertanyaannya dianggap berbahaya",
+                "Model mengulang jawaban yang sama persis berkali-kali",
+                "Model berhenti di tengah kalimat karena kehabisan token",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "LLM bisa menghasilkan informasi salah dengan meyakinkan; perlu verifikasi.",
             },
@@ -946,12 +946,12 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             {
               q: "Manakah prompt yang lebih baik?",
               options: [
-                "'Tulis sesuatu'",
-                "'Kamu editor. Ringkas teks ini jadi 3 poin untuk pemula'",
-                "'Bantu'",
-                "'Ekonomi'",
+                "'Kamu editor. Ringkas teks ini jadi 3 poin untuk pembaca pemula'",
+                "'Tolong ringkas teks berikut ini dengan sebaik-baiknya ya'",
+                "'Ringkas'",
+                "'Buatkan ringkasan yang bagus, menarik, dan enak dibaca'",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Prompt baik punya peran, tugas jelas, dan format keluaran.",
             },
@@ -1006,24 +1006,24 @@ tampilkan(jawaban);</pre>
             {
               q: "Apa fungsi API dalam aplikasi AI?",
               options: [
-                "Melatih model dari nol",
-                "Jembatan agar aplikasi bisa memakai model AI lewat kode",
-                "Menyimpan gambar",
-                "Mempercepat internet",
+                "Jembatan agar aplikasimu bisa memakai model AI lewat kode",
+                "Tempat menyimpan model AI di dalam komputer penggunanya",
+                "Program yang melatih model AI memakai data milikmu sendiri",
+                "Antarmuka grafis untuk mengobrol dengan model bahasa",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "API menghubungkan aplikasimu dengan model AI yang sudah ada.",
             },
             {
               q: "Tujuan utama RAG adalah?",
               options: [
-                "Membuat AI lebih lambat",
-                "Menjawab berdasarkan data/dokumen milikmu agar lebih akurat",
-                "Mengganti internet",
-                "Menghapus database",
+                "Menjawab berdasarkan dokumen milikmu agar lebih akurat",
+                "Melatih ulang model memakai seluruh dokumen perusahaan",
+                "Mempercepat jawaban dengan menyimpan hasil yang sering diminta",
+                "Menerjemahkan dokumen ke bahasa yang dipahami model",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "RAG menyuntikkan konteks relevan sehingga jawaban akurat & mengurangi halusinasi.",
             },
@@ -1070,24 +1070,24 @@ tampilkan(jawaban);</pre>
             {
               q: "Mengapa AI bisa menjadi bias?",
               options: [
-                "Karena komputer jahat",
-                "Karena mewarisi prasangka dari data latihnya",
-                "Karena internet lambat",
-                "Karena kekurangan listrik",
+                "Karena mewarisi prasangka yang sudah ada di dalam data latihnya",
+                "Karena algoritmanya sengaja dirancang memihak kelompok tertentu",
+                "Karena model rusak setelah dipakai terlalu lama tanpa perawatan",
+                "Karena pengguna memberi pertanyaan yang menjebak model",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Bias dalam data akan dipelajari & diperkuat oleh model.",
             },
             {
               q: "Apa itu 'AI Agent'?",
               options: [
-                "Penjual robot",
-                "AI yang tak hanya menjawab tapi melakukan tugas secara bertahap",
-                "Antivirus",
-                "Nama perusahaan",
+                "AI yang tak sekadar menjawab, tetapi menjalankan tugas bertahap",
+                "AI yang sudah mencapai kecerdasan setara manusia dewasa",
+                "AI yang berjalan di perangkat pengguna tanpa perlu internet",
+                "AI yang khusus dilatih untuk satu bidang pekerjaan saja",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "AI agent dapat merencanakan & mengeksekusi langkah-langkah untuk menyelesaikan tugas.",
             },
@@ -1162,24 +1162,24 @@ const res = await client.messages.create({
             {
               q: "Di mana API key seharusnya disimpan?",
               options: [
-                "Di kode frontend agar cepat",
-                "Di backend (server) milikmu, tidak pernah di browser",
-                "Di dalam URL",
-                "Di komentar kode",
+                "Di server milikmu sendiri, tidak pernah di dalam kode browser",
+                "Di dalam kode JavaScript halaman agar pemanggilannya lebih cepat",
+                "Di dalam berkas konfigurasi yang ikut diunggah ke repositori",
+                "Di dalam penyimpanan lokal browser milik masing-masing pengguna",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "API key di frontend bisa dicuri siapa saja. Selalu simpan & panggil dari backend.",
             },
             {
               q: "Mengapa kita mengirim seluruh riwayat percakapan tiap panggilan?",
               options: [
-                "Agar lebih mahal",
-                "Karena API bersifat stateless (tidak mengingat percakapan sebelumnya)",
-                "Agar lebih lambat",
-                "Tidak perlu, API ingat sendiri",
+                "Karena API tidak menyimpan ingatan percakapan sebelumnya",
+                "Karena riwayat percakapan dipakai untuk menagih biaya bulanan",
+                "Karena model perlu dilatih ulang pada setiap permintaan baru",
+                "Karena riwayat panjang membuat jawaban model lebih cepat",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "API tidak menyimpan state; riwayat dikirim ulang agar konteks percakapan terjaga.",
             },
@@ -1239,24 +1239,24 @@ const res = await client.messages.create({
             {
               q: "Apa fungsi 'embedding' dalam RAG?",
               options: [
-                "Mengecilkan ukuran file",
                 "Mengubah teks jadi vektor angka agar kemiripan makna bisa dicari",
-                "Mengenkripsi dokumen",
-                "Menerjemahkan bahasa",
+                "Memampatkan dokumen agar muat ke dalam jendela konteks model",
+                "Menerjemahkan dokumen ke bahasa Inggris sebelum diproses model",
+                "Mengenkripsi dokumen agar isinya aman saat dikirim ke model",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Embedding memetakan makna teks ke vektor sehingga potongan mirip bisa ditemukan.",
             },
             {
               q: "Mengapa RAG mengurangi halusinasi?",
               options: [
-                "Karena AI jadi lebih lambat",
-                "Karena AI menjawab berdasarkan dokumen relevan yang disodorkan, bukan tebakan ingatan",
-                "Karena memakai model lebih kecil",
-                "Karena mematikan internet",
+                "Karena model menjawab berdasar dokumen yang disodorkan, bukan ingatan",
+                "Karena model dilatih ulang memakai dokumen tiap kali ada pertanyaan",
+                "Karena jawaban model diperiksa manusia sebelum sampai ke pengguna",
+                "Karena model dibatasi hanya boleh menjawab dengan kalimat pendek",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Dengan konteks yang benar di prompt, jawaban menjadi ter-grounding pada sumber nyata.",
             },
@@ -1305,24 +1305,24 @@ const res = await client.messages.create({
             {
               q: "Empat pilar aplikasi AI yang baik adalah?",
               options: [
-                "Warna, font, gambar, suara",
-                "Persona, pengetahuan (RAG), memori, dan batasan (guardrails)",
-                "CPU, RAM, disk, jaringan",
-                "Harga, diskon, promo, iklan",
+                "Persona, pengetahuan (RAG), memori, dan batasan perilaku",
+                "Kecepatan, ketepatan, kemurahan, dan kemudahan pemakaian",
+                "Basis data, server, antarmuka, dan sistem pembayaran",
+                "Pelatihan, pengujian, penerapan, dan pemantauan",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Persona + pengetahuan + memori + guardrails adalah kerangka umum produk AI.",
             },
             {
               q: "Apa fungsi 'guardrails' pada AI Tutor?",
               options: [
-                "Mempercepat jawaban",
-                "Membatasi perilaku (mis. tetap pada topik, tidak langsung beri jawaban kuis)",
-                "Menyimpan password",
-                "Menambah warna",
+                "Membatasi perilaku, misalnya tetap pada topik dan tidak membocorkan kunci jawaban",
+                "Mempercepat jawaban dengan membatasi panjang keluaran model",
+                "Menyaring kata kasar dari pertanyaan yang diketik pengguna",
+                "Mencegah pengguna memakai aplikasi lebih dari batas hariannya",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Guardrails menjaga AI berperilaku sesuai tujuan & aman.",
             },
@@ -1383,22 +1383,22 @@ console.log(hasil.content);</pre>
             {
               q: "Apa kegunaan utama LangChain?",
               options: [
-                "Melatih model dari nol",
-                "Menyediakan blok bangunan siap pakai untuk membangun aplikasi LLM lebih cepat",
-                "Menambang Bitcoin",
-                "Mengedit gambar",
+                "Menyediakan blok bangunan siap pakai untuk merakit aplikasi LLM",
+                "Melatih model bahasa sendiri memakai data milik perusahaan",
+                "Menjalankan model bahasa secara lokal tanpa memerlukan GPU",
+                "Menghubungkan aplikasi ke basis data tanpa perlu menulis kueri",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "LangChain memberi komponen (chain, memory, retriever, agent) agar pengembangan lebih cepat.",
             },
             {
               q: "Kapan memakai SDK langsung mungkin lebih baik daripada LangChain?",
               options: [
-                "Untuk aplikasi sederhana yang tak butuh banyak orkestrasi",
-                "Selalu untuk semua kasus",
-                "Hanya untuk blockchain",
-                "Tidak pernah",
+                "Untuk aplikasi sederhana yang tidak butuh banyak orkestrasi",
+                "Untuk aplikasi besar dengan banyak agen dan alur bercabang",
+                "Untuk aplikasi yang harus berjalan sepenuhnya tanpa internet",
+                "Untuk aplikasi yang memerlukan pencarian dokumen berskala besar",
               ],
               answer: 0,
               explain:
@@ -1453,12 +1453,12 @@ console.log(hasil.content);</pre>
             {
               q: "Apa itu 'prompt injection'?",
               options: [
-                "Menyuntik vitamin ke komputer",
-                "Pengguna menyisipkan instruksi jahat untuk membajak perilaku AI",
-                "Mempercepat prompt",
-                "Menyimpan prompt di database",
+                "Pengguna menyisipkan perintah jahat untuk membajak perilaku AI",
+                "Penyerang membanjiri API dengan permintaan sampai layanan tumbang",
+                "Penyerang mencuri kunci API yang tertinggal di dalam kode halaman",
+                "Model menyisipkan data pelatihannya ke dalam jawaban pengguna",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Prompt injection mencoba mengganti/mengabaikan instruksi sistem lewat input pengguna.",
             },
@@ -1525,24 +1525,24 @@ console.log("RAG memilih dokumen dengan skor tertinggi sebagai konteks.");</div>
             {
               q: "Apa yang diukur cosine similarity dalam RAG?",
               options: [
-                "Panjang dokumen",
-                "Seberapa mirip makna dua vektor (skor 0–1)",
-                "Jumlah kata",
-                "Harga API",
+                "Seberapa mirip arah makna dua vektor, dengan skor antara 0 dan 1",
+                "Seberapa jauh jarak fisik dua dokumen di dalam basis data",
+                "Berapa banyak kata yang sama persis muncul di kedua dokumen",
+                "Seberapa panjang dokumen dibanding pertanyaan penggunanya",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Cosine similarity menilai kesamaan arah vektor = kemiripan makna teks.",
             },
             {
               q: "Dokumen mana yang dipilih RAG sebagai konteks?",
               options: [
-                "Yang paling panjang",
-                "Yang skor kemiripannya paling tinggi dengan pertanyaan",
-                "Yang paling baru",
-                "Yang dipilih acak",
+                "Yang skor kemiripan maknanya paling tinggi dengan pertanyaan",
+                "Yang paling baru ditambahkan ke dalam kumpulan dokumen",
+                "Yang paling pendek sehingga hemat pemakaian token",
+                "Yang paling sering dibuka oleh pengguna sebelumnya",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "RAG menyelipkan dokumen ber-skor tertinggi agar jawaban ter-grounding.",
             },
@@ -1608,24 +1608,24 @@ console.log("RAG memilih dokumen dengan skor tertinggi sebagai konteks.");</div>
             {
               q: "Mengapa akurasi 99% bisa menyesatkan?",
               options: [
-                "Karena terlalu rendah",
-                "Pada data timpang, menebak kelas mayoritas terus bisa 'akurat' tapi tak berguna",
-                "Karena akurasi selalu salah",
-                "Karena butuh internet",
+                "Pada data timpang, menebak kelas mayoritas terus pun terlihat akurat",
+                "Karena akurasi hanya dihitung dari data latih, bukan dari data uji",
+                "Karena akurasi selalu dibulatkan ke atas oleh pustaka penghitungnya",
+                "Karena 1% sisanya biasanya berisi data yang rusak atau salah label",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Pada kasus langka, model yang mengabaikan kelas minoritas tetap terlihat akurat.",
             },
             {
               q: "Precision menjawab pertanyaan?",
               options: [
-                "Berapa lama training",
-                "Dari yang diprediksi positif, berapa % yang benar",
-                "Berapa parameter model",
-                "Harga API",
+                "Dari yang ditandai positif oleh model, berapa persen yang benar",
+                "Dari seluruh kasus positif yang ada, berapa persen yang tertangkap",
+                "Dari seluruh tebakan model, berapa persen yang seluruhnya benar",
+                "Seberapa cepat model menghasilkan tebakan untuk satu data baru",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Precision = TP ÷ (TP+FP), mengukur keandalan prediksi positif.",
             },
           ],
@@ -1679,23 +1679,23 @@ console.log("=> Konvergen menuju x = 3 (titik minimum). Itulah 'belajar'.");</di
             {
               q: "Apa tujuan gradient descent?",
               options: [
-                "Memperbesar loss",
-                "Meminimalkan loss dengan melangkah berlawanan arah gradien",
-                "Menambah parameter",
-                "Mempercepat internet",
+                "Memperkecil loss dengan melangkah berlawanan arah gradiennya",
+                "Memperbesar loss agar model belajar dari kesalahan yang lebih banyak",
+                "Mencari nilai tertinggi dari fungsi loss di seluruh ruang parameter",
+                "Menghitung seberapa cepat model memproses satu batch data",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Ia menuruni permukaan loss menuju nilai terkecil.",
             },
             {
               q: "Apa efek learning rate yang terlalu besar?",
               options: [
-                "Training lebih akurat",
-                "Langkah melompati titik minimum (bisa gagal konvergen)",
-                "Tidak ada efek",
-                "Loss selalu nol",
+                "Langkahnya melompati titik terendah sehingga bisa gagal konvergen",
+                "Pelatihan berjalan sangat lambat karena langkahnya terlalu kecil",
+                "Model menghafal data latih sehingga gagal pada data yang baru",
+                "Gradiennya menjadi nol sehingga model berhenti belajar sama sekali",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Langkah terlalu besar bisa melewati/menjauhi minimum.",
             },
           ],
@@ -1736,23 +1736,23 @@ console.log("=> Konvergen menuju x = 3 (titik minimum). Itulah 'belajar'.");</di
             {
               q: "Apa yang dimaksud 'token' pada LLM?",
               options: [
-                "Koin crypto",
-                "Potongan kata yang menjadi dasar cara berpikir & penagihan biaya model",
-                "Parameter model",
-                "Kabel jaringan",
+                "Potongan kata yang jadi satuan berpikir sekaligus dasar penagihan",
+                "Satu kata utuh dalam kalimat, apa pun panjang dan bahasanya",
+                "Satu huruf tunggal yang diproses model satu per satu",
+                "Kode rahasia yang dipakai mengakses layanan model bahasa",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Model memproses & ditagih per token (input + output).",
             },
             {
               q: "Apa itu 'context window'?",
               options: [
-                "Jendela aplikasi",
-                "Berapa banyak token yang bisa 'diingat' model sekaligus",
-                "Kecepatan internet",
-                "Jumlah parameter",
+                "Berapa banyak token yang bisa dipegang model dalam satu percakapan",
+                "Berapa lama model menyimpan riwayat percakapan di servernya",
+                "Berapa banyak permintaan yang boleh dikirim dalam satu menit",
+                "Seberapa besar ukuran model diukur dari jumlah parameternya",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Context window membatasi banyaknya token yang diproses dalam satu waktu.",
             },
           ],
@@ -1798,19 +1798,24 @@ console.log("=> Konvergen menuju x = 3 (titik minimum). Itulah 'belajar'.");</di
           quiz: [
             {
               q: "Model sempurna di data latih tetapi buruk di data baru mengalami?",
-              options: ["Underfitting", "Overfitting (variance tinggi)", "Generalisasi", "Bias tinggi"],
-              answer: 1,
+              options: [
+                "Overfitting — model menghafal data latih dan gagal menyamaratakan",
+                "Underfitting — model terlalu sederhana untuk menangkap polanya",
+                "Kebocoran data — data uji ikut terpakai saat proses pelatihan",
+                "Model drift — pola dunia berubah setelah model selesai dilatih",
+              ],
+              answer: 0,
               explain: "Itu overfitting — model menghafal, gagal menggeneralisasi.",
             },
             {
               q: "Senjata utama melawan overfitting?",
               options: [
-                "Mengurangi data",
-                "Data latih yang banyak & berkualitas/beragam",
-                "Memperbesar learning rate",
-                "Menghapus evaluasi",
+                "Data latih yang lebih banyak, berkualitas, dan beragam",
+                "Menambah jumlah lapisan agar model bisa belajar lebih dalam",
+                "Melatih model jauh lebih lama sampai loss-nya mendekati nol",
+                "Memakai seluruh data untuk melatih tanpa menyisakan data uji",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Data beragam menyulitkan model sekadar menghafal, mendorong generalisasi.",
             },
           ],
@@ -1869,22 +1874,22 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
             {
               q: "Apa inti dari sistem multi-agent?",
               options: [
-                "Satu AI melakukan semua sendirian",
-                "Beberapa agen AI dengan peran berbeda berkolaborasi menyelesaikan tugas",
-                "Menambang crypto",
-                "Melatih model dari nol",
+                "Beberapa agen berperan berbeda saling bekerja sama menuntaskan tugas",
+                "Satu model besar dijalankan bersamaan di banyak komputer sekaligus",
+                "Beberapa model dibandingkan lalu dipilih yang jawabannya terbaik",
+                "Satu agen menjalankan tugas berulang sampai hasilnya memuaskan",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Multi-agent membagi tugas ke beberapa agen berperan khusus yang bekerja sama.",
             },
             {
               q: "Apa fungsi CrewAI?",
               options: [
-                "Framework untuk merakit & mengorkestrasi tim agen AI",
-                "Dompet crypto",
-                "Bahasa pemrograman",
-                "Database SQL",
+                "Kerangka kerja untuk merakit dan mengatur kerja sama tim agen AI",
+                "Model bahasa sumber terbuka yang bisa dijalankan di komputer sendiri",
+                "Layanan awan untuk melatih model AI tanpa perlu membeli GPU",
+                "Basis data khusus untuk menyimpan hasil percakapan agen AI",
               ],
               answer: 0,
               explain:
@@ -1935,24 +1940,24 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
             {
               q: "Fungsi utama vector database?",
               options: [
-                "Menyimpan gambar",
-                "Menyimpan embedding & mencari vektor paling mirip dengan cepat",
-                "Menambang koin",
-                "Menjalankan smart contract",
+                "Menyimpan embedding dan mencari vektor termirip dengan cepat",
+                "Menyimpan dokumen asli dalam bentuk teks agar mudah dibaca ulang",
+                "Mempercepat pelatihan model dengan menyimpan hasil antaranya",
+                "Mengurutkan dokumen berdasarkan tanggal pembuatannya",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Vector DB menyimpan & mencari vektor kemiripan makna secara efisien.",
             },
             {
               q: "Mengapa vector database penting untuk RAG produksi?",
               options: [
-                "Membuat AI lebih lambat",
-                "Memungkinkan pencarian semantik cepat pada data berskala besar",
-                "Mengganti model AI",
-                "Menghapus dokumen",
+                "Memungkinkan pencarian berdasar makna pada data berskala besar",
+                "Mengurangi biaya pemanggilan API karena jawaban ikut disimpan",
+                "Menjamin jawaban model selalu benar karena sumbernya terverifikasi",
+                "Menghapus dokumen lama secara otomatis agar tidak menumpuk",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Ia menjaga pencarian tetap cepat saat dokumen berjumlah jutaan.",
             },
@@ -2005,12 +2010,12 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
             {
               q: "Kesalahan umum dalam menyesuaikan LLM?",
               options: [
-                "Memakai prompting dulu",
-                "Buru-buru fine-tuning untuk mengajari fakta yang berubah (mahal & rapuh)",
-                "Memakai RAG untuk dokumen",
-                "Merancang prompt yang jelas",
+                "Buru-buru fine-tuning untuk mengajarkan fakta yang sering berubah",
+                "Memakai prompt yang terlalu panjang sehingga boros biaya token",
+                "Memilih model open-source padahal model berbayar lebih akurat",
+                "Menyimpan dokumen dalam vector database alih-alih berkas biasa",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Fine-tuning untuk fakta berubah tidak efisien; RAG lebih tepat.",
             },
@@ -2053,23 +2058,23 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
             {
               q: "Apa itu Hugging Face?",
               options: [
-                "Dompet crypto",
-                "Pusat komunitas berisi ribuan model open-source & dataset AI",
-                "Vector database",
-                "Bahasa pemrograman",
+                "Pusat komunitas berisi ribuan model dan dataset sumber terbuka",
+                "Penyedia layanan awan untuk menjalankan model berbayar milik sendiri",
+                "Kerangka kerja untuk melatih model bahasa dari awal sampai jadi",
+                "Basis data vektor yang dipakai menyimpan embedding dokumen",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Hugging Face adalah hub model & dataset open-source.",
             },
             {
               q: "Apa yang dimaksud MCP (Model Context Protocol)?",
               options: [
-                "Jenis koin",
-                "Standar untuk menghubungkan AI ke alat & data secara seragam & aman",
-                "Metrik akurasi",
-                "Nama model",
+                "Standar untuk menghubungkan AI ke alat dan data secara seragam",
+                "Protokol untuk memampatkan jendela konteks agar muat lebih banyak",
+                "Metrik untuk mengukur seberapa panjang ingatan sebuah model",
+                "Format berkas untuk menyimpan bobot model agar mudah dibagikan",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "MCP menstandarkan cara AI mengakses alat/data eksternal.",
             },
@@ -2126,24 +2131,24 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
             {
               q: "Bagaimana diffusion model membuat gambar?",
               options: [
-                "Menyalin dari internet",
-                "Mulai dari noise acak lalu menghapus noise bertahap, diarahkan teks prompt",
-                "Menggambar piksel satu per satu berurutan",
-                "Memfoto layar",
+                "Mulai dari noise acak lalu menghapusnya bertahap, diarahkan teks",
+                "Menggabungkan potongan gambar yang sudah ada di data latihnya",
+                "Menggambar garis demi garis meniru cara manusia melukis",
+                "Mencari gambar termirip di internet lalu menyuntingnya sedikit",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Diffusion mengubah noise menjadi gambar lewat proses denoising bertahap terpandu.",
             },
             {
               q: "Kekhawatiran utama AI generatif gambar?",
               options: [
-                "Terlalu lambat",
-                "Deepfake, hak cipta, dan dampak pada pekerjaan kreatif",
-                "Butuh internet",
-                "Tidak ada",
+                "Deepfake, sengketa hak cipta, dan dampak pada pekerja kreatif",
+                "Ukuran berkas gambar yang dihasilkan terlalu besar untuk disimpan",
+                "Proses pembuatannya terlalu lambat untuk dipakai sehari-hari",
+                "Hasilnya selalu bisa dikenali sebagai buatan mesin oleh siapa pun",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Kemampuannya menimbulkan isu etika: deepfake, hak cipta, & lapangan kerja.",
             },
           ],
@@ -2188,24 +2193,24 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
             {
               q: "Apa inti dari RLHF?",
               options: [
-                "Menambah parameter",
-                "Memakai peringkat jawaban dari manusia untuk melatih model agar lebih membantu & aman",
-                "Menambang data",
-                "Mempercepat GPU",
+                "Memakai peringkat jawaban dari manusia untuk melatih model",
+                "Melatih model memakai data yang seluruhnya dibuat oleh manusia",
+                "Membiarkan model memperbaiki dirinya sendiri tanpa campur tangan",
+                "Menyaring jawaban model dengan daftar kata terlarang",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "RLHF memakai umpan balik manusia untuk menyelaraskan perilaku model.",
             },
             {
               q: "Apa yang dimaksud 'alignment' pada AI?",
               options: [
-                "Menata teks rata kiri",
-                "Menyelaraskan perilaku AI dengan nilai & niat manusia (aman & benar)",
-                "Mempercepat jawaban",
-                "Menambah bahasa",
+                "Menyelaraskan perilaku AI dengan nilai dan niat manusia",
+                "Menyamakan hasil beberapa model agar jawabannya konsisten",
+                "Menyesuaikan ukuran model agar muat di perangkat pengguna",
+                "Menyelaraskan waktu pelatihan dengan anggaran yang tersedia",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Alignment memastikan AI berperilaku sesuai maksud & nilai manusia.",
             },
@@ -2253,24 +2258,24 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
             {
               q: "Apa itu collaborative filtering?",
               options: [
-                "Merekomendasikan barang mirip atributnya",
-                "Merekomendasikan berdasarkan selera pengguna lain yang mirip denganmu",
-                "Menyaring spam",
-                "Menghapus data",
+                "Merekomendasikan berdasar selera pengguna lain yang mirip denganmu",
+                "Merekomendasikan barang yang ciri-cirinya mirip dengan yang kamu suka",
+                "Merekomendasikan barang yang paling laris di seluruh platform",
+                "Merekomendasikan barang yang marginnya paling besar bagi penjual",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Collaborative filtering memakai kemiripan antar-pengguna untuk merekomendasikan.",
             },
             {
               q: "Risiko sistem rekomendasi?",
               options: [
-                "Membuat internet cepat",
-                "Filter bubble, kecanduan, & penguatan bias",
-                "Tidak ada risiko",
-                "Menurunkan penjualan",
+                "Filter bubble, kecanduan, dan penguatan bias yang sudah ada",
+                "Biaya komputasi yang membengkak seiring bertambahnya pengguna",
+                "Rekomendasi menjadi terlalu beragam sehingga membingungkan",
+                "Data pengguna menjadi terlalu sedikit untuk dianalisis",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Rekomendasi bisa mempersempit paparan & memperkuat kebiasaan/bias.",
             },
           ],
@@ -2319,22 +2324,22 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
             {
               q: "Apa itu 'data/model drift'?",
               options: [
-                "Model bergerak fisik",
-                "Pola dunia berubah sehingga model lama makin tidak akurat seiring waktu",
-                "Model menjadi lebih cepat",
-                "Data terhapus",
+                "Pola dunia berubah sehingga model lama makin melenceng seiring waktu",
+                "Data latih rusak karena kesalahan saat proses penyimpanan",
+                "Model kehilangan sebagian bobotnya setelah dipakai sangat lama",
+                "Pengguna memberi masukan yang sengaja menyesatkan model",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Perubahan distribusi data membuat performa model menurun; perlu dipantau & dilatih ulang.",
             },
             {
               q: "Kenapa MLOps penting?",
               options: [
-                "Agar model tidak membusuk diam-diam di produksi & tetap andal/relevan",
-                "Agar model lebih besar",
-                "Agar gratis",
-                "Agar tidak perlu data",
+                "Agar model tidak membusuk diam-diam setelah dipakai di produksi",
+                "Agar biaya pelatihan model bisa ditekan serendah mungkin",
+                "Agar model bisa dijalankan di perangkat dengan spesifikasi rendah",
+                "Agar data pengguna otomatis terhapus setelah jangka waktu tertentu",
               ],
               answer: 0,
               explain:
@@ -2398,23 +2403,23 @@ Model menyusun pertanyaan-pertanyaan ini <b>otomatis dari data</b>, memilih pert
             {
               q: "Bagaimana cara kerja Decision Tree?",
               options: [
-                "Menebak acak",
-                "Serangkaian pertanyaan ya/tidak yang menuntun ke keputusan",
-                "Menyalin jawaban",
-                "Menambang data",
+                "Serangkaian pertanyaan ya/tidak yang menuntun sampai ke keputusan",
+                "Menghitung jarak ke seluruh data lain lalu mengambil yang terdekat",
+                "Menggabungkan banyak model kecil menjadi satu keputusan bersama",
+                "Menyesuaikan bobot secara bertahap sampai kesalahannya kecil",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Decision tree memecah data lewat pertanyaan bertingkat menuju prediksi.",
             },
             {
               q: "Kelebihan utama Decision Tree untuk bisnis?",
               options: [
-                "Paling akurat selalu",
-                "Mudah dijelaskan/digambar (interpretable)",
-                "Butuh data raksasa",
-                "Tak bisa salah",
+                "Alurnya mudah digambar dan dijelaskan kepada orang non-teknis",
+                "Selalu memberi akurasi tertinggi dibanding metode lainnya",
+                "Tidak memerlukan data berlabel sehingga lebih hemat biaya",
+                "Berjalan paling cepat di antara seluruh algoritma yang ada",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Keputusannya transparan & mudah dipahami manusia.",
             },
           ],
@@ -2457,23 +2462,23 @@ Model menyusun pertanyaan-pertanyaan ini <b>otomatis dari data</b>, memilih pert
             {
               q: "Apa itu Random Forest?",
               options: [
-                "Satu pohon keputusan besar",
-                "Gabungan banyak Decision Tree yang hasilnya digabung (ensemble)",
-                "Jenis neural network",
-                "Database",
+                "Gabungan banyak pohon keputusan yang hasilnya dirata-ratakan",
+                "Satu pohon keputusan yang dibuat sangat dalam dan bercabang banyak",
+                "Pohon keputusan yang cabangnya dipangkas agar tidak terlalu rumit",
+                "Jaringan saraf yang strukturnya menyerupai percabangan pohon",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Random Forest menggabungkan banyak pohon agar lebih akurat & stabil.",
             },
             {
               q: "Kenapa menggabungkan banyak pohon lebih baik?",
               options: [
-                "Lebih lambat",
-                "Kesalahan tiap pohon saling meniadakan → lebih akurat & tahan overfitting",
-                "Lebih mahal saja",
-                "Tidak ada bedanya",
+                "Kesalahan tiap pohon saling meniadakan sehingga hasilnya lebih stabil",
+                "Waktu pelatihannya jadi jauh lebih singkat dibanding satu pohon",
+                "Hasilnya jadi lebih mudah dijelaskan kepada orang non-teknis",
+                "Kebutuhan datanya berkurang karena tiap pohon memakai data berbeda",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Penggabungan meredam kesalahan individual (prinsip ensemble).",
             },
           ],
@@ -2520,23 +2525,23 @@ Model menyusun pertanyaan-pertanyaan ini <b>otomatis dari data</b>, memilih pert
             {
               q: "Prinsip dasar k-NN?",
               options: [
-                "Menebak acak",
-                "Hal yang mirip cenderung berdekatan — ikuti mayoritas tetangga terdekat",
-                "Menghafal semua data",
-                "Menambang koin",
+                "Hal yang mirip cenderung berdekatan — ikuti mayoritas tetangganya",
+                "Data dikelompokkan lebih dulu sebelum labelnya ditentukan manusia",
+                "Setiap data diberi bobot sesuai seberapa sering ia muncul",
+                "Model membangun aturan bercabang dari ciri yang paling membedakan",
               ],
-              answer: 1,
+              answer: 0,
               explain: "k-NN mengklasifikasi berdasarkan kemiripan dengan tetangga terdekat.",
             },
             {
               q: "k-Means clustering termasuk jenis pembelajaran?",
               options: [
-                "Supervised (dengan label)",
-                "Unsupervised (tanpa label) — mengelompokkan sendiri",
-                "Reinforcement",
-                "Tidak belajar",
+                "Unsupervised — mengelompokkan sendiri tanpa memerlukan label",
+                "Supervised — memerlukan label yang sudah disiapkan manusia",
+                "Reinforcement — belajar dari hadiah dan hukuman berulang",
+                "Semi-supervised — memakai sebagian kecil data yang berlabel",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Clustering mengelompokkan data tanpa jawaban benar (unsupervised).",
             },
           ],
@@ -2640,12 +2645,12 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
             {
               q: "Kenapa margin kotor produk AI umumnya lebih tipis dari SaaS biasa?",
               options: [
-                "Karena harganya selalu murah",
-                "Karena tiap pemakaian menimbulkan biaya inferensi/komputasi yang nyata",
-                "Karena tidak punya pelanggan",
-                "Karena pajaknya besar",
+                "Karena tiap pemakaian menimbulkan biaya inferensi yang nyata",
+                "Karena harga langganan produk AI ditekan sangat rendah oleh persaingan",
+                "Karena biaya pemasaran produk AI jauh lebih besar daripada SaaS biasa",
+                "Karena produk AI wajib membayar lisensi kepada pemilik model",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Biaya per pemakaian membuat biaya naik seiring volume, menipiskan margin.",
             },
@@ -2708,22 +2713,22 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
             {
               q: "Komponen biaya proyek AI yang paling sering dilupakan?",
               options: [
-                "Biaya API",
-                "Pemeliharaan & pemantauan (MLOps) serta waktu developer",
-                "Harga laptop",
-                "Biaya listrik kantor",
+                "Pemeliharaan, pemantauan, dan waktu kerja pengembangnya",
+                "Biaya berlangganan API model yang dipakai setiap bulan",
+                "Harga perangkat keras GPU yang dibeli di awal proyek",
+                "Biaya menyimpan data pelatihan di layanan penyimpanan awan",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Biaya berjalan (MLOps, integrasi, evaluasi) sering luput dari perhitungan ROI.",
             },
             {
               q: "Memakai API AI dibanding melatih model sendiri, dalam istilah akuntansi adalah?",
               options: [
-                "CapEx vs OpEx (API = OpEx, latih sendiri = CapEx)",
-                "Debit vs kredit",
-                "Aset vs utang",
-                "PPN vs PPh",
+                "CapEx vs OpEx — melatih sendiri CapEx, memanggil API OpEx",
+                "Aset lancar vs aset tetap dalam penyusunan neraca perusahaan",
+                "Biaya tetap vs biaya variabel dalam menghitung titik impas",
+                "Beban pokok penjualan vs beban operasional pada laba rugi",
               ],
               answer: 0,
               explain:
@@ -2773,23 +2778,23 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
             {
               q: "Kenapa keunggulan 'model kami paling pintar' biasanya bukan moat kuat?",
               options: [
-                "Karena model tidak penting",
-                "Karena pesaing & model open-source cepat menyusul, keunggulannya berumur pendek",
-                "Karena model mahal",
-                "Karena pengguna tidak peduli kualitas",
+                "Karena pesaing dan model sumber terbuka cepat menyusul",
+                "Karena pengguna tidak pernah memedulikan kualitas jawaban model",
+                "Karena model paling pintar selalu jauh lebih mahal dijalankan",
+                "Karena regulator melarang mengklaim keunggulan atas model lain",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Kemajuan model bergerak sangat cepat sehingga keunggulan sulit dipertahankan.",
             },
             {
               q: "Apa itu 'thin wrapper'?",
               options: [
-                "Model AI berukuran kecil",
-                "Aplikasi berupa lapisan tipis di atas API orang lain tanpa keunggulan lain — mudah ditiru",
-                "Teknik menghemat token",
-                "Jenis vector database",
+                "Lapisan tipis di atas API orang lain tanpa keunggulan lain",
+                "Aplikasi yang sengaja dibuat ringan agar cepat dibuka di HP",
+                "Model kecil hasil pemampatan dari model yang jauh lebih besar",
+                "Layanan yang hanya meneruskan permintaan tanpa memungut biaya",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Thin wrapper tak punya parit karena bisa direplikasi dengan cepat.",
             },
           ],
@@ -2837,24 +2842,24 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
             {
               q: "Kenapa investasi besar pada model AI berisiko dari sisi alokasi modal?",
               options: [
-                "Karena model tidak berguna",
-                "Karena model cepat usang — 'masa manfaat'-nya sangat pendek",
-                "Karena dilarang aturan",
-                "Karena tidak bisa dihitung",
+                "Karena model cepat usang sehingga masa manfaatnya sangat pendek",
+                "Karena biaya melatih model tidak boleh dicatat sebagai aset",
+                "Karena hasil model sulit diukur sehingga ROI-nya tak bisa dihitung",
+                "Karena regulator melarang mencatat model sebagai aset tak berwujud",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Kemajuan cepat membuat model mahal kehilangan keunggulan dalam hitungan bulan.",
             },
             {
               q: "Manakah 'aset' AI yang justru menua dengan baik (makin bernilai)?",
               options: [
-                "Model versi lama",
-                "Data eksklusif, hubungan pelanggan, & integrasi alur kerja",
-                "GPU generasi lama",
-                "Prompt lama",
+                "Data eksklusif, hubungan pelanggan, dan integrasi ke alur kerja",
+                "Bobot model terbaru yang baru saja selesai dilatih ulang",
+                "Perangkat keras GPU yang dibeli untuk melatih model sendiri",
+                "Jumlah pengguna yang mencoba produk pada bulan pertama",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Data & posisi dalam alur kerja pelanggan menumpuk nilainya seiring waktu.",
             },
@@ -2913,23 +2918,23 @@ Suara adalah <b>getaran udara</b>. Mikrofon mengubahnya jadi gelombang, lalu kom
             {
               q: "Apa itu ASR dalam AI suara?",
               options: [
-                "Mengubah teks menjadi suara",
-                "Mengubah suara menjadi teks (speech-to-text)",
-                "Meniru suara orang",
-                "Menghapus noise",
+                "Mengubah suara menjadi teks yang bisa dibaca dan dicari",
+                "Mengubah teks menjadi suara yang terdengar seperti manusia",
+                "Meniru suara seseorang dari contoh rekaman yang pendek",
+                "Menyaring suara latar agar rekaman terdengar lebih jernih",
               ],
-              answer: 1,
+              answer: 0,
               explain: "ASR = Automatic Speech Recognition: suara → teks.",
             },
             {
               q: "Cara paling aman menghadapi telepon 'keluarga' yang meminta uang mendesak?",
               options: [
-                "Langsung transfer karena suaranya mirip",
-                "Tutup telepon lalu telepon balik ke nomor yang kamu simpan sendiri",
-                "Kirim setengahnya dulu",
-                "Balas lewat SMS",
+                "Tutup teleponnya, lalu telepon balik ke nomor yang kamu simpan",
+                "Minta penelepon menyebutkan data pribadi untuk membuktikan diri",
+                "Rekam percakapannya lalu bandingkan dengan suara aslinya",
+                "Kirim uang lebih dulu, baru dipastikan setelah keadaan aman",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Suara bisa ditiru AI; verifikasi lewat kanal yang kamu kendalikan sendiri.",
             },
@@ -3003,23 +3008,23 @@ console.log("Catatan: metode ini TIDAK bisa meramal kejutan mendadak.");</div>
             {
               q: "Apa yang membedakan data deret waktu dari data biasa?",
               options: [
-                "Jumlahnya lebih banyak",
-                "Urutan waktunya bermakna — data sebelumnya memengaruhi data berikutnya",
-                "Selalu berupa angka bulat",
-                "Tidak ada bedanya",
+                "Urutan waktunya bermakna — data sebelumnya memengaruhi berikutnya",
+                "Jumlah barisnya selalu jauh lebih banyak daripada data biasa",
+                "Nilainya selalu berupa angka, tidak pernah berupa kategori",
+                "Datanya tidak pernah memiliki nilai yang kosong atau hilang",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Ketergantungan pada urutan waktu adalah ciri khas time series.",
             },
             {
               q: "Apa batas utama peramalan deret waktu?",
               options: [
-                "Terlalu mahal",
-                "Hanya bisa memperpanjang pola yang ada — tak bisa meramal kejutan mendadak",
-                "Butuh internet",
-                "Selalu salah",
+                "Hanya bisa memperpanjang pola yang ada, bukan meramal kejutan",
+                "Membutuhkan data yang jumlahnya jauh lebih besar dari metode lain",
+                "Hanya bisa dipakai untuk data keuangan, bukan bidang lainnya",
+                "Hasilnya baru bisa dilihat setelah periode ramalannya berlalu",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Kejadian tak terduga di luar pola historis tidak bisa diramalkan model.",
             },
@@ -3072,19 +3077,24 @@ console.log("Catatan: metode ini TIDAK bisa meramal kejutan mendadak.");</div>
             {
               q: "Apa inti pendekatan 'berbasis risiko' dalam regulasi AI?",
               options: [
-                "Semua AI diperlakukan sama",
-                "Aturan disesuaikan tingkat risikonya: dilarang, risiko tinggi, terbatas, atau minimal",
-                "Semua AI dilarang",
-                "Hanya AI besar yang diatur",
+                "Aturannya disesuaikan tingkat risikonya, dari dilarang sampai minimal",
+                "Semua sistem AI diperlakukan sama tanpa memandang penggunaannya",
+                "Hanya perusahaan besar yang wajib mengikuti aturan yang berlaku",
+                "Aturan hanya berlaku setelah sistem AI terbukti merugikan seseorang",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Makin besar potensi dampaknya pada manusia, makin ketat kewajibannya.",
             },
             {
               q: "AI untuk seleksi kerja & persetujuan kredit umumnya masuk kategori?",
-              options: ["Risiko minimal", "Risiko tinggi (wajib dokumentasi, uji bias, pengawasan manusia)", "Dilarang total", "Tidak diatur"],
-              answer: 1,
+              options: [
+                "Risiko tinggi — wajib dokumentasi, uji bias, dan pengawasan manusia",
+                "Risiko minimal — cukup memberi tahu pengguna bahwa itu buatan AI",
+                "Dilarang sepenuhnya karena menyangkut hak dasar seseorang",
+                "Tidak diatur karena keputusan akhirnya tetap di tangan manusia",
+              ],
+              answer: 0,
               explain:
                 "Keputusan yang memengaruhi hidup seseorang tergolong risiko tinggi.",
             },
@@ -3197,36 +3207,36 @@ console.log(hasil);     // hasil: 32</pre>
             {
               q: "Kenapa Python mendominasi AI padahal termasuk bahasa yang lambat?",
               options: [
-                "Karena Python sebenarnya paling cepat",
-                "Karena pustakanya terlengkap, dan bagian berat dijalankan C++/CUDA di balik layar",
-                "Karena hanya Python yang bisa mengakses GPU",
-                "Karena bahasa lain tidak bisa menghitung",
+                "Karena pustakanya terlengkap dan bagian beratnya dijalankan C++",
+                "Karena Python sebenarnya bahasa tercepat untuk perhitungan angka",
+                "Karena hanya Python yang bisa mengakses kartu grafis secara langsung",
+                "Karena bahasa lain tidak menyediakan tipe data untuk matriks",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Python hanya memberi perintah; perhitungan beratnya dieksekusi kode C++/CUDA yang sangat cepat.",
             },
             {
               q: "Apa beda pustaka (library) dan kerangka kerja (framework)?",
               options: [
-                "Tidak ada bedanya",
-                "Pustaka = kode siap pakai yang kamu atur sendiri alurnya; kerangka kerja = menyediakan alur, kamu ikut aturannya",
-                "Pustaka selalu berbayar",
-                "Kerangka kerja hanya untuk web",
+                "Pustaka: kode siap pakai yang alurnya kamu atur; kerangka kerja: alurnya sudah ditentukan",
+                "Pustaka selalu gratis, sedangkan kerangka kerja selalu berbayar",
+                "Pustaka hanya untuk data, kerangka kerja hanya untuk tampilan",
+                "Pustaka ditulis Python, kerangka kerja ditulis bahasa C++",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Pustaka seperti bumbu jadi (kamu yang meracik); kerangka kerja seperti dapur lengkap dengan alur kerjanya.",
             },
             {
               q: "Selain Python, bahasa mana yang paling wajib dikuasai praktisi AI?",
               options: [
-                "R",
-                "SQL — karena data untuk melatih AI hampir selalu ada di database",
-                "C++",
-                "Assembly",
+                "SQL, karena data untuk melatih AI hampir selalu ada di database",
+                "R, karena paling lengkap untuk keperluan analisis statistik",
+                "C++, karena dibutuhkan untuk menulis operasi matriks sendiri",
+                "Java, karena paling banyak dipakai di perusahaan besar",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Tanpa kemampuan mengambil data, model secanggih apa pun tidak punya bahan.",
             },
@@ -3338,12 +3348,12 @@ hasil = model.predict(X_test)      # 3. ramalkan data baru</pre>
             {
               q: "Apa keunggulan utama NumPy dibanding perulangan Python biasa?",
               options: [
-                "Menulisnya lebih panjang",
-                "Menghitung banyak angka sekaligus (vectorization), jauh lebih cepat untuk data besar",
-                "Bisa membuat grafik",
-                "Bisa membaca file CSV",
+                "Menghitung banyak angka sekaligus, jauh lebih cepat untuk data besar",
+                "Menuliskan perulangan dengan sintaks yang jauh lebih ringkas",
+                "Menyimpan angka memakai memori yang jauh lebih sedikit",
+                "Menjalankan perhitungan langsung di kartu grafis tanpa pengaturan",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Operasi seperti harga * unit dikerjakan serentak oleh kode C di balik layar, tanpa perulangan Python yang lambat.",
             },
@@ -3357,12 +3367,12 @@ hasil = model.predict(X_test)      # 3. ramalkan data baru</pre>
             {
               q: "Pola pemakaian model di scikit-learn adalah?",
               options: [
-                "predict → fit → import",
-                "Pilih model → .fit(data latih) → .predict(data baru)",
-                "Harus menulis rumusnya sendiri",
-                "Berbeda-beda untuk tiap model",
+                "Pilih model, panggil .fit pada data latih, lalu .predict pada data baru",
+                "Muat data, panggil .train, lalu simpan hasilnya ke dalam berkas",
+                "Panggil .predict lebih dulu, baru .fit untuk memperbaiki hasilnya",
+                "Tiap model punya urutan pemanggilan yang berbeda-beda",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Pola tiga langkah ini konsisten untuk hampir semua model, sehingga mudah mencoba banyak model.",
             },
@@ -3478,48 +3488,48 @@ Di sinilah model sungguhan menang: ia belajar <b>konteks</b>, bukan sekadar meng
             {
               q: "Apa fungsi autograd di PyTorch?",
               options: [
-                "Mengunduh model otomatis",
-                "Menghitung gradient secara otomatis sehingga tak perlu menurunkan rumus manual",
-                "Membuat grafik",
-                "Mempercepat internet",
+                "Menghitung gradient otomatis sehingga rumusnya tak perlu diturunkan",
+                "Mengunduh dan menyiapkan model terlatih dari internet secara otomatis",
+                "Memindahkan perhitungan ke kartu grafis tanpa mengubah kode",
+                "Menyimpan riwayat pelatihan agar bisa diteruskan di lain waktu",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Autograd otomatis melacak semua operasi dan menghitung turunannya — inti dari pelatihan neural network.",
             },
             {
               q: "Kapan memakai Hugging Face lebih tepat daripada memanggil API?",
               options: [
-                "Selalu, tanpa kecuali",
-                "Saat datanya sensitif/rahasia dan tidak boleh keluar dari servermu",
-                "Saat ingin hasil paling cepat tanpa persiapan",
-                "Saat tidak punya komputer",
+                "Saat datanya sensitif dan tidak boleh keluar dari servermu sendiri",
+                "Saat ingin hasil paling cepat tanpa persiapan apa pun",
+                "Saat kamu tidak punya komputer dengan kartu grafis sama sekali",
+                "Saat modelnya harus selalu versi terbaru yang paling pintar",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Model Hugging Face berjalan di infrastrukturmu sendiri, sehingga data tidak dikirim ke pihak ketiga.",
             },
             {
               q: "Di playground, kalimat 'harganya murah tapi kualitasnya jelek' dinilai NETRAL. Kenapa?",
               options: [
-                "Karena kalimatnya memang netral",
-                "Karena kamus kata tidak memahami konteks — kata 'tapi' membalikkan makna",
-                "Karena ada kesalahan hitung",
-                "Karena kalimatnya terlalu panjang",
+                "Karena kamus kata tak paham konteks — kata 'tapi' membalikkan makna",
+                "Karena jumlah kata positif dan negatifnya kebetulan sama banyak",
+                "Karena kalimatnya terlalu panjang untuk diproses kamus sederhana",
+                "Karena kata 'murah' tidak terdaftar di dalam kamus yang dipakai",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Menghitung kata positif dikurangi negatif menghasilkan nol. Model sungguhan memahami struktur kalimat, bukan sekadar jumlah kata.",
             },
             {
               q: "Untuk membangun produk AI pertamamu, jalur yang paling disarankan?",
               options: [
-                "Latih model sendiri dari nol dengan PyTorch",
-                "Panggil API model besar — tercepat, termurah, tanpa GPU",
-                "Beli GPU dulu",
-                "Tulis model dalam C++",
+                "Panggil API model besar — tercepat, termurah, dan tanpa perlu GPU",
+                "Latih model sendiri dari nol agar sepenuhnya sesuai kebutuhanmu",
+                "Unduh model dari Hugging Face lalu jalankan di komputermu",
+                "Beli kartu grafis lebih dulu sebelum menulis baris kode pertama",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Nilai produk ada pada masalah yang dipecahkan. Melatih model sendiri mahal dan jarang diperlukan di awal.",
             },
@@ -3623,48 +3633,48 @@ Proyek A butuh pustaka versi 1.0, proyek B butuh versi 2.0. Kalau semua dipasang
             {
               q: "Cara tercepat mulai menulis kode AI tanpa memasang apa pun?",
               options: [
-                "Beli GPU dulu",
-                "Google Colab — Python di browser, gratis, pustaka sudah lengkap",
-                "Pasang Linux",
-                "Belajar C++ dulu",
+                "Google Colab — Python di browser, gratis, pustakanya sudah lengkap",
+                "Memasang Python dan seluruh pustakanya langsung di komputer",
+                "Menyewa server di layanan awan lalu memasang semuanya di sana",
+                "Memakai penyunting kode daring yang tidak memerlukan pendaftaran",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Colab melewati proses pemasangan yang sering menggagalkan pemula sebelum sempat mulai.",
             },
             {
               q: "Kenapa perlu virtual environment?",
               options: [
-                "Agar kode berjalan lebih cepat",
-                "Agar tiap proyek punya versi pustakanya sendiri dan tidak bertabrakan",
-                "Agar hemat listrik",
-                "Wajib dari Python",
+                "Agar tiap proyek punya versi pustakanya sendiri dan tak bertabrakan",
+                "Agar kode berjalan lebih cepat karena pustakanya lebih ringkas",
+                "Agar pustaka yang sudah dipasang bisa dipakai semua proyek sekaligus",
+                "Agar Python otomatis diperbarui ke versi terbaru setiap saat",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Proyek berbeda sering butuh versi pustaka berbeda; venv memisahkannya seperti memisahkan uang usaha dan pribadi.",
             },
             {
               q: "Saat memasang Python di Windows, kesalahan paling umum pemula adalah?",
               options: [
-                "Memasang versi terbaru",
-                "Lupa mencentang 'Add Python to PATH'",
-                "Memasang di drive D",
-                "Memakai VS Code",
+                "Lupa mencentang 'Add Python to PATH' saat proses pemasangan",
+                "Memasang versi Python terbaru padahal pustaka belum mendukungnya",
+                "Memasang Python di drive selain C sehingga jalurnya tidak terbaca",
+                "Memakai penyunting kode selain VS Code untuk menulis programnya",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Tanpa PATH, perintah python tidak dikenali di terminal — sumber error paling sering bagi pemula Windows.",
             },
             {
               q: "Praktik lazim penggunaan notebook dan skrip .py?",
               options: [
-                "Selalu pakai notebook",
-                "Bereksperimen di notebook, lalu rapikan jadi skrip .py untuk dipakai sungguhan",
-                "Selalu pakai .py",
-                "Keduanya tidak boleh dicampur",
+                "Bereksperimen di notebook, lalu dirapikan jadi skrip untuk dipakai",
+                "Selalu memakai notebook karena hasilnya langsung terlihat",
+                "Selalu memakai skrip karena lebih rapi dan mudah dilacak Git",
+                "Menulis di skrip lalu menyalinnya ke notebook saat akan dibagikan",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Notebook unggul untuk menjelajah; skrip lebih rapi, mudah diuji, dan mudah dilacak Git untuk produksi.",
             },
@@ -3793,36 +3803,36 @@ print(classification_report(y_uji, y_tebak))</pre>
             {
               q: "Apa fungsi sesungguhnya dari Pipeline di scikit-learn?",
               options: [
-                "Sekadar membuat kode terlihat rapi",
-                "Mencegah kebocoran data dengan memastikan penyiapan fitur hanya dihitung dari data latih",
-                "Mempercepat pelatihan model",
-                "Mengganti kebutuhan train_test_split",
+                "Mencegah kebocoran data karena penyiapan hanya dihitung dari data latih",
+                "Mempercepat pelatihan karena langkahnya dijalankan bersamaan",
+                "Mengurangi jumlah kode yang perlu ditulis sehingga lebih rapi",
+                "Menyimpan model terlatih agar bisa dipakai lagi di lain waktu",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Kerapian hanya bonus. Manfaat utamanya adalah kejujuran pengukuran.",
             },
             {
               q: "Kenapa data uji hanya boleh disentuh sekali di akhir?",
               options: [
-                "Karena aturan scikit-learn",
-                "Karena kalau berkali-kali dipakai menyetel model, data uji perlahan berubah fungsinya menjadi data latih",
-                "Karena data uji lebih kecil",
-                "Karena akan menghapus data latih",
+                "Karena dipakai berulang menyetel model membuatnya jadi data latih",
+                "Karena data uji akan rusak bila dibaca lebih dari satu kali",
+                "Karena pustaka scikit-learn membatasi pemakaiannya hanya sekali",
+                "Karena hasilnya akan selalu sama sehingga tak ada gunanya diulang",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Menyetel model berulang kali berdasarkan nilai data uji adalah bentuk menyontek yang tidak disadari.",
             },
             {
               q: "cross_val_score memberi rata-rata 85% dengan simpangan 15%. Apa artinya?",
               options: [
-                "Model sangat andal",
-                "Hasilnya sangat bergantung pada pembagian data — belum bisa dipercaya",
-                "Model pasti overfitting",
-                "Datanya terlalu banyak",
+                "Hasilnya sangat bergantung pembagian data sehingga belum bisa dipercaya",
+                "Model sudah sangat andal karena rata-ratanya cukup tinggi",
+                "Modelnya pasti mengalami overfitting pada data latihnya",
+                "Jumlah datanya terlalu banyak sehingga perlu dikurangi",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Simpangan besar berarti hasilnya tidak stabil; rata-rata saja menyesatkan.",
             },
@@ -3928,24 +3938,24 @@ Tiga grafik ini sering menemukan masalah data lebih cepat daripada berjam-jam me
             {
               q: "Apa pelajaran utama dari Kuartet Anscombe?",
               options: [
-                "Statistik ringkasan selalu cukup",
-                "Kumpulan data dengan statistik yang sama persis bisa berbentuk sangat berbeda — jadi data wajib digambar",
-                "Regresi linear selalu salah",
-                "Korelasi tidak pernah berguna",
+                "Data berstatistik sama persis bisa berbentuk sangat berbeda",
+                "Statistik ringkasan selalu cukup untuk memahami sebuah data",
+                "Regresi linear tidak pernah cocok dipakai pada data nyata",
+                "Korelasi yang tinggi selalu berarti ada hubungan sebab-akibat",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Rata-rata, korelasi, dan garis regresi keempatnya identik, tapi bentuknya jauh berbeda.",
             },
             {
               q: "Hubungan seaborn dan matplotlib adalah?",
               options: [
-                "Bersaing, pilih salah satu",
-                "seaborn dibangun di atas matplotlib — dipakai bersamaan, seaborn untuk cepat, matplotlib untuk merapikan",
-                "matplotlib dibangun di atas seaborn",
-                "Keduanya tidak berhubungan",
+                "seaborn dibangun di atas matplotlib, keduanya dipakai bersamaan",
+                "matplotlib dibangun di atas seaborn untuk keperluan lanjutan",
+                "Keduanya bersaing sehingga sebaiknya dipilih salah satu saja",
+                "Keduanya tidak berhubungan dan memakai format data berbeda",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Objek yang dihasilkan seaborn tetap objek matplotlib, sehingga bisa disunting dengan perintah matplotlib.",
             },
@@ -3959,12 +3969,12 @@ Tiga grafik ini sering menemukan masalah data lebih cepat daripada berjam-jam me
             {
               q: "Kenapa diagram batang sebaiknya dimulai dari nol?",
               options: [
-                "Karena lebih indah",
-                "Karena panjang batang dibaca sebagai besaran — memotong sumbu membuat selisih kecil terlihat dramatis",
-                "Karena aturan matplotlib",
-                "Karena mempercepat penggambaran",
+                "Karena panjang batang dibaca sebagai besaran, memotongnya menyesatkan",
+                "Karena pustaka penggambar mensyaratkan sumbu dimulai dari nol",
+                "Karena grafik jadi lebih indah bila seluruh batangnya terlihat",
+                "Karena nilai negatif tidak bisa digambarkan bila sumbunya dipotong",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Ini salah satu cara paling umum grafik dipakai untuk menyesatkan pembaca.",
             },
@@ -4059,48 +4069,48 @@ Konsekuensinya: pertanyaan "TensorFlow atau PyTorch?" kini <b>tidak sepenting du
             {
               q: "Hubungan Keras dan TensorFlow adalah?",
               options: [
-                "Keras pesaing TensorFlow",
-                "Keras adalah antarmuka ramah di atas mesin TensorFlow — dalam praktik, memakai TensorFlow berarti menulis Keras",
-                "TensorFlow dibangun di atas Keras",
-                "Keras hanya untuk membuat grafik",
+                "Keras antarmuka ramah di atas TensorFlow; memakai TF berarti menulis Keras",
+                "TensorFlow dibangun di atas Keras sebagai lapisan tambahan",
+                "Keras dan TensorFlow bersaing sehingga tak bisa dipakai bersama",
+                "Keras khusus untuk membuat grafik, TensorFlow untuk melatih model",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Sejak 2019 Keras menjadi cara resmi memakai TensorFlow.",
             },
             {
               q: "Di bagian mana ekosistem TensorFlow masih unggul dibanding PyTorch?",
               options: [
-                "Riset dan makalah terbaru",
-                "Menyebarkan model ke HP (TF Lite) dan browser (TensorFlow.js)",
-                "Menyusun model yang tidak lazim",
-                "Kecepatan pelatihan",
+                "Menyebarkan model ke HP lewat TF Lite dan ke browser lewat TF.js",
+                "Menyusun model dengan bentuk yang tidak lazim dan bercabang",
+                "Mengikuti kode dan makalah riset terbaru yang baru terbit",
+                "Kecepatan pelatihan pada kartu grafis kelas konsumen",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "PyTorch unggul di tahap membuat; TensorFlow unggul di tahap menyebarkan.",
             },
             {
               q: "Datamu berupa tabel penjualan biasa dengan 20 kolom. Sebaiknya mulai dari?",
               options: [
-                "Deep learning dengan Keras",
-                "Random Forest atau XGBoost — untuk data tabel, deep learning biasanya kalah",
-                "TensorFlow.js",
-                "Model bahasa besar",
+                "Random Forest atau XGBoost — untuk data tabel biasanya lebih unggul",
+                "Jaringan saraf dalam dengan Keras agar polanya tertangkap semua",
+                "Model bahasa besar yang diberi tabelnya lewat prompt",
+                "Clustering k-Means untuk mengelompokkan barisnya lebih dulu",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Deep learning menang untuk gambar, teks, dan suara — bukan untuk tabel.",
             },
             {
               q: "Apa arti epochs=10 pada model.fit()?",
               options: [
-                "Model dibuat 10 kali",
-                "Seluruh data latih dilewati sebanyak 10 kali",
-                "Ada 10 lapisan",
-                "Data dibagi menjadi 10 bagian",
+                "Seluruh data latih dilewati sebanyak sepuluh kali",
+                "Model dilatih memakai sepuluh potongan data yang berbeda",
+                "Jaringannya disusun dari sepuluh lapisan yang bertumpuk",
+                "Pelatihan dihentikan setelah sepuluh menit berjalan",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Satu epoch berarti satu kali putaran penuh melewati seluruh data latih.",
             },
@@ -4211,12 +4221,12 @@ Daftar di atas mudah membuat kewalahan. Jangan terjebak <b>"belajar pustaka"</b>
             {
               q: "Apa beda spaCy dan NLTK?",
               options: [
-                "Tidak ada bedanya",
-                "spaCy cepat & siap pakai untuk produksi; NLTK lebih lengkap secara akademis untuk belajar & riset",
-                "spaCy hanya untuk bahasa Indonesia",
-                "NLTK lebih baru dan lebih cepat",
+                "spaCy cepat dan siap produksi; NLTK lebih lengkap untuk riset",
+                "spaCy hanya mendukung bahasa Inggris, NLTK mendukung semua bahasa",
+                "NLTK jauh lebih baru dan menggantikan spaCy yang sudah usang",
+                "Keduanya sama saja, hanya berbeda nama pembuatnya",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Keduanya untuk teks, tapi ditujukan untuk kebutuhan yang berbeda.",
             },
@@ -4235,12 +4245,12 @@ Daftar di atas mudah membuat kewalahan. Jangan terjebak <b>"belajar pustaka"</b>
             {
               q: "Saran paling penting dalam mempelajari pustaka Python?",
               options: [
-                "Pelajari semuanya sekaligus agar siap",
-                "Kuasai pandas & scikit-learn dulu, lalu ambil pustaka lain hanya saat ada masalah nyata yang membutuhkannya",
-                "Cukup hafalkan namanya",
-                "Hindari pustaka, tulis semua sendiri",
+                "Kuasai pandas dan scikit-learn dulu, lainnya diambil saat dibutuhkan",
+                "Pelajari sebanyak mungkin pustaka sekaligus agar siap menghadapi apa pun",
+                "Cukup hafalkan nama dan kegunaan tiap pustaka tanpa perlu mencobanya",
+                "Hindari memakai pustaka dan tulis sendiri agar benar-benar paham",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Pustaka yang dipelajari karena kebutuhan akan melekat; yang dipelajari 'untuk jaga-jaga' cepat terlupa.",
             },
@@ -4357,12 +4367,12 @@ Huruf kecil <b>i</b> di bawah cuma penanda urutan: a₁, a₂, a₃ = anggota ke
             {
               q: "Apa arti f(x)?",
               options: [
-                "f dikalikan dengan x",
                 "Hasil dari mesin bernama f ketika diberi masukan x",
-                "f ditambah x",
-                "Sebuah angka tetap",
+                "Hasil perkalian antara bilangan f dengan bilangan x",
+                "Nama sebuah variabel baru yang terdiri dari f dan x",
+                "Fungsi f yang dipangkatkan dengan bilangan x",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Kurung di sini berarti 'diberi masukan', bukan perkalian. f adalah nama fungsinya.",
             },
@@ -4380,12 +4390,12 @@ Huruf kecil <b>i</b> di bawah cuma penanda urutan: a₁, a₂, a₃ = anggota ke
             {
               q: "Apa arti tanda petik pada f'(x)?",
               options: [
-                "f dikuadratkan",
-                "Penanda bahwa itu turunan dari f",
-                "f dikali x",
-                "Kesalahan penulisan",
+                "Penanda bahwa itu adalah turunan dari fungsi f",
+                "Penanda bahwa fungsi f sudah diubah nilainya",
+                "Penanda bahwa f adalah fungsi kebalikan dari yang asli",
+                "Penanda bahwa hasilnya harus dibaca dalam satuan menit",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Tanda aksen menandakan turunan — seberapa cepat f berubah.",
             },
           ],
@@ -4460,23 +4470,23 @@ console.log("Mendekati 1 = sangat mirip maknanya.");</div>
             {
               q: "Bagaimana cara menghitung dot product dua vektor?",
               options: [
-                "Jumlahkan semua angkanya",
-                "Kalikan pasangan angka di posisi sama, lalu jumlahkan hasilnya",
-                "Bagi satu dengan yang lain",
-                "Ambil yang terbesar",
+                "Kalikan pasangan angka pada posisi yang sama, lalu jumlahkan",
+                "Jumlahkan seluruh angka kedua vektor lalu kalikan hasilnya",
+                "Kurangkan tiap pasangan angka lalu ambil nilai mutlaknya",
+                "Bagi tiap angka vektor pertama dengan vektor kedua",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Dot product = jumlah dari perkalian komponen seposisi.",
             },
             {
               q: "Kenapa cosine similarity dibagi dengan panjang kedua vektor?",
               options: [
-                "Agar hasilnya lebih besar",
-                "Agar ukuran vektor tidak berpengaruh — yang dinilai hanya arah (makna)",
-                "Agar lebih cepat dihitung",
-                "Tanpa alasan",
+                "Agar ukuran vektor tidak berpengaruh, yang dinilai hanya arahnya",
+                "Agar hasilnya selalu berupa bilangan bulat yang mudah dibaca",
+                "Agar perhitungannya berjalan lebih cepat pada data besar",
+                "Agar vektor dengan panjang berbeda tetap bisa dijumlahkan",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Normalisasi membuat perbandingan murni soal arah, bukan besar vektornya.",
             },
@@ -4546,23 +4556,23 @@ Langkah 2: gradien = 2(0,6 − 3) = −4,8
             {
               q: "Kenapa rumus gradient descent memakai tanda MINUS?",
               options: [
-                "Agar angkanya kecil",
-                "Karena gradien menunjuk arah kesalahan NAIK, jadi kita bergerak berlawanan agar turun",
-                "Karena tradisi",
-                "Agar lebih cepat",
+                "Karena gradien menunjuk arah kesalahan NAIK, jadi kita berlawanan",
+                "Karena bobot model harus selalu bernilai negatif agar stabil",
+                "Karena tanda minus membuat langkahnya menjadi lebih kecil",
+                "Karena loss selalu bernilai negatif sehingga perlu dibalik",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Bergerak berlawanan gradien menurunkan nilai loss.",
             },
             {
               q: "Aturan rantai (chain rule) dipakai untuk apa di neural network?",
               options: [
-                "Mengacak bobot",
-                "Menghitung andil tiap bobot terhadap kesalahan akhir (backpropagation)",
-                "Menyimpan data",
-                "Mempercepat GPU",
+                "Menghitung andil tiap bobot terhadap kesalahan akhir",
+                "Menggabungkan beberapa lapisan menjadi satu lapisan tunggal",
+                "Menentukan jumlah lapisan yang sebaiknya dipakai model",
+                "Mengurutkan data latih agar polanya lebih mudah dipelajari",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Chain rule menyebarkan turunan mundur melewati lapisan-lapisan jaringan.",
             },
@@ -4631,12 +4641,12 @@ console.log("Perhatikan: selisih skor kecil bisa jadi selisih peluang besar (efe
             {
               q: "Kenapa neural network butuh fungsi aktivasi?",
               options: [
-                "Agar lebih cepat",
-                "Menambahkan ketaklinieran — tanpa itu, banyak lapisan sama saja dengan satu lapisan",
-                "Agar hemat memori",
-                "Agar bisa dicetak",
+                "Menambahkan ketaklinieran; tanpanya banyak lapisan sama saja satu",
+                "Mempercepat perhitungan dengan menyederhanakan angka besar",
+                "Mencegah bobot model bernilai negatif saat proses pelatihan",
+                "Menyamakan skala keluaran agar jumlahnya selalu tepat satu",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Gabungan operasi linear tetap linear; aktivasi memungkinkan pola rumit dipelajari.",
             },
@@ -4706,23 +4716,23 @@ Peluang benar sakit = 1 / 11 = sekitar 9%</pre>
             {
               q: "Apa gunanya Teorema Bayes?",
               options: [
-                "Menghitung rata-rata",
-                "Memperbarui keyakinan (peluang) setelah melihat bukti baru",
-                "Mengurutkan data",
-                "Mempercepat training",
+                "Memperbarui keyakinan setelah melihat bukti yang baru",
+                "Menghitung rata-rata dari sekumpulan peluang yang berbeda",
+                "Menentukan peluang dua kejadian terjadi secara bersamaan",
+                "Mengubah data kategori menjadi angka agar bisa dihitung",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Bayes menggabungkan keyakinan awal dengan bukti baru.",
             },
             {
               q: "Apa efek menaikkan 'temperature' pada LLM?",
               options: [
-                "Jawaban makin konsisten",
-                "Jawaban makin bervariasi/kreatif (dan lebih berisiko keliru)",
-                "Model jadi lebih cepat",
-                "Tidak berpengaruh",
+                "Jawabannya makin bervariasi dan kreatif, tapi lebih berisiko keliru",
+                "Jawabannya menjadi lebih panjang dan rinci dari sebelumnya",
+                "Model menjawab lebih cepat karena pencariannya dipersempit",
+                "Model menjadi lebih hemat token sehingga biayanya turun",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Temperature tinggi meratakan peluang sehingga pilihan kata lebih beragam.",
             },
@@ -4825,23 +4835,23 @@ console.log("Model jadi menilai keduanya adil, bukan karena angkanya besar.");</
             {
               q: "Apa itu 'fitur' (feature) dalam machine learning?",
               options: [
-                "Fitur aplikasi seperti tombol",
-                "Satu kolom informasi yang dipakai model untuk menebak",
-                "Nama algoritma",
-                "Jumlah data",
+                "Satu kolom informasi yang dipakai model sebagai bahan menebak",
+                "Satu baris data yang berisi contoh lengkap untuk dipelajari",
+                "Nilai yang ingin ditebak oleh model dari data yang diberikan",
+                "Kemampuan khusus yang dimiliki sebuah algoritma tertentu",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Fitur adalah variabel/kolom masukan yang dipakai model.",
             },
             {
               q: "Kenapa feature engineering penting?",
               options: [
-                "Membuat data lebih banyak",
-                "Fitur yang baik sering lebih berpengaruh pada hasil daripada mengganti algoritma",
-                "Mempercepat internet",
-                "Menghapus kebutuhan data",
+                "Fitur yang baik sering lebih berpengaruh daripada ganti algoritma",
+                "Fitur yang banyak selalu membuat model menjadi lebih akurat",
+                "Fitur menentukan seberapa cepat model bisa dilatih",
+                "Fitur harus selalu berjumlah sama dengan jumlah barisnya",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Kualitas representasi data sangat menentukan performa model.",
             },
@@ -4916,24 +4926,24 @@ Mencari kombinasi terbaiknya disebut <b>hyperparameter tuning</b> (dicoba satu p
             {
               q: "Apa beda parameter dan hyperparameter?",
               options: [
-                "Sama saja",
-                "Parameter dipelajari model sendiri; hyperparameter ditentukan manusia sebelum training",
-                "Hyperparameter lebih kecil",
-                "Parameter hanya untuk neural network",
+                "Parameter dipelajari model sendiri; hyperparameter ditentukan manusia",
+                "Parameter ditentukan manusia; hyperparameter dipelajari model sendiri",
+                "Parameter untuk data latih; hyperparameter untuk data uji",
+                "Keduanya sama, hanya berbeda penyebutan antar-pustaka",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Bobot = parameter (dipelajari); learning rate & jumlah lapisan = hyperparameter (disetel manusia).",
             },
             {
               q: "Apa fungsi 'dropout' pada neural network?",
               options: [
-                "Menghapus data",
-                "Mematikan sebagian neuron secara acak saat training agar model tidak menghafal",
-                "Mempercepat internet",
-                "Menambah lapisan",
+                "Mematikan sebagian neuron secara acak agar model tidak menghafal",
+                "Membuang data latih yang dianggap mengandung banyak kesalahan",
+                "Menghentikan pelatihan begitu loss berhenti membaik",
+                "Mengurangi jumlah lapisan agar modelnya menjadi lebih ringan",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Dropout mencegah ketergantungan pada jalur tertentu, mengurangi overfitting.",
             },
@@ -4991,12 +5001,12 @@ Mencari kombinasi terbaiknya disebut <b>hyperparameter tuning</b> (dicoba satu p
             {
               q: "Apa perbedaan inti boosting dibanding bagging?",
               options: [
-                "Boosting memakai lebih sedikit data",
-                "Pada boosting, tiap model dilatih berurutan untuk memperbaiki kesalahan model sebelumnya",
-                "Boosting tidak memakai pohon",
-                "Tidak ada perbedaan",
+                "Pada boosting tiap model dilatih berurutan memperbaiki yang sebelumnya",
+                "Pada boosting semua model dilatih bersamaan lalu hasilnya dirata-rata",
+                "Pada boosting hanya dipakai satu model tetapi dilatih berulang kali",
+                "Pada boosting data dibagi acak sedangkan bagging memakai data penuh",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Bagging paralel & mandiri; boosting berurutan & saling menambal kesalahan.",
             },
@@ -5074,24 +5084,24 @@ Melatih CNN dari nol butuh jutaan gambar &amp; komputer mahal. <b>Transfer learn
             {
               q: "Apa ide inti CNN?",
               options: [
-                "Melihat seluruh gambar sekaligus",
                 "Menggeser filter kecil ke seluruh gambar untuk mendeteksi pola",
-                "Menghapus piksel",
-                "Mengubah gambar jadi teks",
+                "Menghubungkan setiap piksel ke setiap neuron pada lapisan berikutnya",
+                "Memperkecil gambar lebih dulu agar perhitungannya menjadi ringan",
+                "Mengubah gambar menjadi teks lalu memprosesnya seperti kalimat",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Filter yang digeser membuat CNN efisien & tetap mengenali objek yang bergeser posisi.",
             },
             {
               q: "Apa keuntungan transfer learning?",
               options: [
-                "Butuh lebih banyak data",
-                "Bisa mencapai hasil bagus dengan data & komputasi jauh lebih sedikit",
-                "Menghapus kebutuhan model",
-                "Membuat model lebih lambat",
+                "Bisa mencapai hasil baik dengan data dan komputasi jauh lebih sedikit",
+                "Model yang dihasilkan berukuran jauh lebih kecil dan ringan",
+                "Modelnya tidak perlu diuji lagi karena sudah terbukti akurat",
+                "Hasilnya selalu lebih baik daripada melatih model dari nol",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Memanfaatkan pengetahuan model terlatih menghemat data, waktu, & biaya.",
             },
@@ -5169,24 +5179,24 @@ Kesimpulan model: "dia" merujuk pada "Kucing".</pre>
             {
               q: "Apa yang dilakukan mekanisme 'attention'?",
               options: [
-                "Menghapus kata yang tidak penting",
                 "Memberi bobot: kata lain mana yang paling membantu memahami kata ini",
-                "Menerjemahkan bahasa",
-                "Mengurutkan kata",
+                "Mengurutkan kata berdasar seberapa sering muncul di data latih",
+                "Menghapus kata yang dianggap tidak penting agar hemat token",
+                "Menerjemahkan tiap kata ke bentuk dasarnya sebelum diproses",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Attention menimbang keterkaitan antar-kata sehingga konteks tertangkap.",
             },
             {
               q: "Kenapa context window yang panjang itu mahal?",
               options: [
-                "Karena butuh internet cepat",
-                "Attention membandingkan setiap kata dengan setiap kata lain — biaya naik ~kuadrat",
-                "Karena teks disimpan permanen",
-                "Karena modelnya bertambah besar",
+                "Attention membandingkan tiap kata dengan semua kata, biayanya kuadrat",
+                "Model harus dilatih ulang setiap kali jendelanya diperpanjang",
+                "Teks yang panjang harus disimpan di basis data terpisah",
+                "Jendela panjang memerlukan kartu grafis dengan merek tertentu",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Jumlah perbandingan tumbuh kuadratik terhadap panjang teks.",
             },
@@ -5252,24 +5262,24 @@ Keduanya berlatih bersamaan: pemalsu makin pintar memalsukan, polisi makin jeli 
             {
               q: "Apa inti cara kerja GAN?",
               options: [
-                "Menghapus noise bertahap",
                 "Dua model beradu: generator memalsukan, discriminator mendeteksi",
-                "Menebak kata berikutnya",
-                "Mengelompokkan data",
+                "Satu model besar dilatih dua kali dengan data yang berbeda",
+                "Model menghapus noise secara bertahap sampai gambar muncul",
+                "Model menyalin gaya satu gambar ke isi gambar lainnya",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Persaingan generator vs discriminator membuat hasil palsu makin meyakinkan.",
             },
             {
               q: "Apa itu Mixture of Experts (MoE)?",
               options: [
-                "Menggabungkan banyak perusahaan AI",
-                "Model dibagi jadi banyak 'ahli'; tiap permintaan hanya mengaktifkan sebagian",
-                "Melatih dengan banyak data",
-                "Menggabungkan gambar & teks",
+                "Model dibagi jadi banyak ahli; tiap permintaan hanya mengaktifkan sebagian",
+                "Beberapa model berbeda dijalankan lalu jawabannya dipilih yang terbaik",
+                "Model besar dimampatkan menjadi model kecil yang lebih cepat",
+                "Model dilatih oleh beberapa tim ahli dari bidang yang berbeda",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "MoE memberi kapasitas besar tanpa mengaktifkan seluruh parameter tiap permintaan.",
             },
@@ -5277,5 +5287,210 @@ Keduanya berlatih bersamaan: pemalsu makin pintar memalsukan, polisi makin jeli 
         },
       ],
     },
+    /* ---------------- LEVEL ARAH (MASA DEPAN) ---------------- */
+    {
+      id: "ai-arah",
+      level: "Arah",
+      title: "Masa Depan AI",
+      summary: "Memisahkan yang arahnya sudah terlihat dari yang benar-benar tak diketahui siapa pun — dan cara membaca ramalan tanpa tertipu.",
+      lessons: [
+        {
+          id: "ai-arah-1",
+          title: "Arah yang Sudah Terlihat",
+          duration: "14 menit",
+          content: `
+<p>Bab ini bukan ramalan. Ini tentang hal-hal yang <b>arahnya sudah jelas dari data yang ada sekarang</b> — tren yang sudah berjalan bertahun-tahun dan tidak masuk akal berbalik mendadak.</p>
+
+<div data-diagram="pipeline" data-stages="Biaya turun::model makin murah|Model jadi komoditas::selisihnya menyempit|Nilai pindah::ke data &amp; alur kerja|Agen bekerja::bukan sekadar menjawab" data-caption="Empat pergeseran yang sudah berlangsung, bukan ramalan"></div>
+
+<h3>1. Biaya per pemakaian terus turun</h3>
+<div class="callout">
+Harga menjalankan model dengan kemampuan setara <b>turun sangat tajam</b> dari tahun ke tahun. Akibatnya bukan sekadar "lebih murah" — melainkan <b>sekelompok aplikasi yang dulu mustahil jadi masuk akal</b>.<br><br>
+Hal yang dua tahun lalu terlalu mahal untuk diproses satu per satu, kini bisa dijalankan pada jutaan dokumen.
+</div>
+<p>Bagi kamu: jangan buru-buru menyimpulkan sebuah ide "terlalu mahal". Hitung ulang setiap beberapa bulan — angkanya berubah.</p>
+
+<h3>2. Model menjadi komoditas</h3>
+<p>Selisih kemampuan antara model terbaik dan model peringkat kedua, ketiga, dan model sumber terbuka <b>makin menyempit</b>. Yang dulu jadi keunggulan besar, kini jadi pilihan biasa.</p>
+
+<div class="callout warn">
+<b>Akibatnya bagi bisnis:</b> "model kami paling pintar" hampir tidak pernah menjadi <b>parit yang tahan lama</b> — persis yang kamu pelajari di modul <b>Ekonomi &amp; Bisnis AI</b>. Nilai bergeser ke tempat lain: <b>data yang tidak dimiliki orang lain</b>, <b>integrasi ke alur kerja</b>, dan <b>kepercayaan pengguna</b>.
+</div>
+
+<h3>3. Dari menjawab menjadi mengerjakan</h3>
+<p>Pergeseran dari model yang <i>menjawab pertanyaan</i> ke <b>agen</b> yang <i>menjalankan tugas bertahap</i> sudah nyata: memakai alat, membaca berkas, memanggil layanan lain.</p>
+<p>Yang belum selesai adalah <b>keandalannya</b>. Agen yang benar 95% per langkah akan gagal lebih sering dari yang dibayangkan pada tugas 10 langkah — karena kesalahannya menumpuk. Inilah masalah teknis terbesar yang sedang dikerjakan banyak orang.</p>
+
+<h3>4. Model kecil di perangkat sendiri</h3>
+<p>Model yang cukup pintar tapi cukup kecil untuk berjalan di HP atau laptop makin banyak. Ini penting karena tiga alasan: <b>privasi</b> (data tak keluar perangkat), <b>biaya</b> (tak ada tagihan per pemakaian), dan <b>bisa jalan tanpa internet</b>.</p>
+
+<h3>5. Batas yang nyata</h3>
+<table class="tbl">
+  <tr><th>Batas</th><th>Kenapa penting</th></tr>
+  <tr><td><b>Energi &amp; chip</b></td><td>Melatih dan menjalankan model butuh listrik dan perangkat keras yang pasokannya terbatas</td></tr>
+  <tr><td><b>Data berkualitas</b></td><td>Teks berkualitas di internet tidak bertambah secepat kebutuhan model</td></tr>
+  <tr><td><b>Biaya salah</b></td><td>Di bidang seperti kesehatan dan hukum, kesalahan 1% pun bisa tidak dapat diterima</td></tr>
+</table>
+
+<h3>6. Regulasi sudah tiba</h3>
+<p>Aturan berbasis tingkat risiko — yang kamu pelajari di modul <b>Regulasi AI</b> — sudah berlaku di beberapa wilayah dan sedang disusun di banyak negara lain, termasuk Indonesia. Arahnya jelas: <b>penggunaan berisiko tinggi akan menuntut dokumentasi, uji bias, dan pengawasan manusia</b>.</p>
+
+<div class="callout">
+<b>Benang merah keenam poin di atas:</b> semuanya adalah tren yang <b>sudah bisa diukur hari ini</b>, bukan tebakan. Itulah yang membedakannya dari pelajaran berikutnya.
+</div>
+`,
+          keyPoints: [
+            "Biaya menjalankan model terus turun tajam, sehingga ide yang dulu terlalu mahal jadi masuk akal — hitung ulang berkala.",
+            "Model makin menjadi komoditas; selisih antara yang terbaik dan sisanya menyempit.",
+            "Nilai bergeser ke data eksklusif, integrasi alur kerja, dan kepercayaan pengguna — bukan ke modelnya.",
+            "Pergeseran dari menjawab ke mengerjakan (agen) sudah nyata; masalah terbesarnya keandalan karena kesalahan menumpuk antar-langkah.",
+            "Model kecil di perangkat sendiri tumbuh karena privasi, biaya, dan bisa jalan tanpa internet.",
+            "Batas nyata: pasokan energi & chip, ketersediaan data berkualitas, dan biaya kesalahan di bidang berisiko tinggi.",
+            "Regulasi berbasis tingkat risiko sudah berlaku di beberapa wilayah dan sedang disusun di banyak negara lain.",
+          ],
+          quiz: [
+            {
+              q: "Kenapa 'model kami paling pintar' jarang menjadi keunggulan yang tahan lama?",
+              options: [
+                "Karena selisih kemampuan antar-model terus menyempit sehingga cepat disusul",
+                "Karena pengguna tidak pernah bisa membedakan kualitas jawaban antar-model",
+                "Karena model terpintar selalu jauh lebih mahal sehingga tidak laku dijual",
+                "Karena regulator melarang perusahaan membandingkan modelnya dengan pesaing",
+              ],
+              answer: 0,
+              explain: "Nilai bergeser ke data eksklusif, integrasi alur kerja, dan kepercayaan — bukan ke modelnya sendiri.",
+            },
+            {
+              q: "Kenapa agen yang benar 95% per langkah tetap sering gagal pada tugas panjang?",
+              options: [
+                "Karena kesalahan menumpuk di sepanjang langkah sehingga peluang sukses menyusut",
+                "Karena agen melupakan langkah awal begitu jendela konteksnya penuh",
+                "Karena tiap langkah memerlukan izin pengguna yang sering tidak diberikan",
+                "Karena biaya tiap langkah bertambah sehingga agen berhenti di tengah jalan",
+              ],
+              answer: 0,
+              explain: "Keandalan per langkah yang tinggi belum cukup bila langkahnya banyak; inilah masalah teknis terbesar agen saat ini.",
+            },
+            {
+              q: "Apa keuntungan utama model kecil yang berjalan di perangkat sendiri?",
+              options: [
+                "Data tidak keluar perangkat, tanpa biaya per pemakaian, dan bisa jalan offline",
+                "Kemampuannya selalu melampaui model besar yang berjalan di pusat data",
+                "Tidak memerlukan pembaruan karena modelnya sudah lengkap sejak awal",
+                "Hasilnya dijamin bebas dari halusinasi karena ukurannya lebih kecil",
+              ],
+              answer: 0,
+              explain: "Privasi, biaya, dan ketersediaan tanpa internet — bukan soal mengalahkan model besar.",
+            },
+          ],
+        },
+        {
+          id: "ai-arah-2",
+          title: "Yang Tidak Ada yang Tahu — dan Cara Membaca Ramalan",
+          duration: "14 menit",
+          content: `
+<p>Pelajaran sebelumnya membahas yang arahnya terukur. Sekarang bagian yang lebih jujur: <b>hal-hal yang benar-benar tidak diketahui siapa pun</b> — termasuk oleh orang yang paling percaya diri menyatakannya.</p>
+
+<div data-diagram="matrix" data-cells="Ramalan berani, bukti tipis|Tren terukur, arah jelas|Tebakan liar|Fakta hari ini" data-xlabel="Makin kuat buktinya" data-ylabel="Makin jauh ke depan" data-caption="Kebanyakan pernyataan tentang masa depan AI berada di kuadran kiri atas"></div>
+
+<h3>Tiga hal yang tidak diketahui</h3>
+<table class="tbl">
+  <tr><th>Pertanyaan</th><th>Keadaan sebenarnya</th></tr>
+  <tr><td><b>Kapan AI setara manusia?</b></td><td>Perkiraan para ahli tersebar dari beberapa tahun sampai tidak pernah. Sebaran seluas itu artinya: <b>tidak ada yang tahu</b></td></tr>
+  <tr><td><b>Berapa pekerjaan yang hilang?</b></td><td>Setiap angka yang beredar adalah pemodelan dengan asumsi, bukan pengukuran</td></tr>
+  <tr><td><b>Apakah tren biaya berlanjut?</b></td><td>Turunnya biaya selama ini nyata, tapi tidak ada hukum alam yang menjamin kelanjutannya</td></tr>
+</table>
+
+<h3>Pelajaran dari ramalan yang meleset</h3>
+<div class="callout warn">
+Dua contoh yang layak diingat:<br><br>
+• <b>Mobil swakemudi.</b> Sekitar 2015–2016 banyak pihak menyatakan kendaraan tanpa sopir akan umum dalam beberapa tahun. Satu dekade kemudian, pemakaiannya masih terbatas pada wilayah tertentu.<br><br>
+• <b>Radiolog.</b> Pada 2016 muncul pernyataan terkenal bahwa sebaiknya berhenti melatih radiolog karena akan digantikan AI. Nyatanya AI menjadi <b>alat bantu</b>, dan kebutuhan radiolog tidak lenyap.<br><br>
+Keduanya dinyatakan oleh orang yang sangat kompeten. <b>Kompetensi tidak membuat seseorang bisa melihat masa depan.</b>
+</div>
+
+<h3>Polanya berulang: kemampuan ≠ penerapan</h3>
+<p>Jarak terbesar biasanya bukan pada <b>apakah teknologinya bisa</b>, melainkan pada hal-hal yang membosankan: keandalan pada kasus langka, tanggung jawab hukum bila salah, integrasi ke sistem lama, kebiasaan kerja, dan siapa yang mau membayar.</p>
+<p>Demo yang mengesankan berjarak sangat jauh dari pemakaian sehari-hari. Itulah yang berulang kali membuat ramalan meleset.</p>
+
+<h3>🧭 Cara membaca sebuah ramalan</h3>
+<table class="tbl">
+  <tr><th>Tanyakan</th><th>Kenapa</th></tr>
+  <tr><td><b>Siapa yang diuntungkan bila dipercaya?</b></td><td>Ramalan sering berfungsi sebagai penggalangan dana atau pemasaran</td></tr>
+  <tr><td><b>Ada tenggat waktunya?</b></td><td>Ramalan tanpa tanggal tidak bisa dinilai benar atau salah</td></tr>
+  <tr><td><b>Apa yang akan membuktikannya keliru?</b></td><td>Pernyataan yang tak bisa dibantah apa pun kenyataannya bukan ramalan, melainkan keyakinan</td></tr>
+  <tr><td><b>Rekam jejaknya bagaimana?</b></td><td>Periksa ramalannya lima tahun lalu — apakah terjadi?</td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Yang berguna dilakukan apa pun yang terjadi.</b> Karena arahnya tidak pasti, pilihan paling masuk akal adalah keterampilan yang berguna di <b>semua</b> skenario:<br><br>
+• <b>Pahami dasarnya</b>, bukan alatnya. Alat berganti tiap tahun; konsep loss, generalisasi, dan bias bertahan.<br>
+• <b>Jadilah orang yang bisa memverifikasi.</b> Saat mesin menghasilkan banyak, yang langka adalah orang yang bisa menilai mana yang benar.<br>
+• <b>Kuasai bidang nyata.</b> AI mempercepat orang yang tahu apa yang sedang ia kerjakan, dan menyesatkan yang tidak.<br>
+• <b>Bangun hal yang menumpuk</b>: data, hubungan, reputasi. Ini tidak usang saat modelnya berganti.
+</div>
+
+<div class="callout warn">
+<b>Penutup yang jujur:</b> siapa pun yang mengatakan ia tahu keadaan AI sepuluh tahun lagi — termasuk yang nadanya sangat yakin — sedang menebak. Yang bisa kamu kendalikan bukan arah teknologinya, melainkan <b>seberapa siap kamu menghadapi beberapa kemungkinan sekaligus</b>.
+</div>
+`,
+          keyPoints: [
+            "Sebaran perkiraan ahli yang sangat lebar tentang AI setara manusia menandakan tidak ada yang benar-benar tahu.",
+            "Angka jumlah pekerjaan yang hilang adalah hasil pemodelan berasumsi, bukan pengukuran.",
+            "Ramalan mobil swakemudi dan penggantian radiolog meleset meski dinyatakan orang yang kompeten.",
+            "Jarak terbesar biasanya bukan pada kemampuan teknologi, melainkan keandalan, tanggung jawab hukum, integrasi, dan kebiasaan kerja.",
+            "Cara menilai ramalan: siapa yang diuntungkan, adakah tenggatnya, apa yang bisa membuktikannya keliru, dan bagaimana rekam jejaknya.",
+            "Strategi yang berguna di semua skenario: kuasai dasar, jadi orang yang bisa memverifikasi, kuasai bidang nyata, bangun aset yang menumpuk.",
+          ],
+          quiz: [
+            {
+              q: "Apa arti sebaran perkiraan ahli yang sangat lebar soal kapan AI setara manusia?",
+              options: [
+                "Bahwa sesungguhnya tidak ada yang benar-benar tahu jawabannya",
+                "Bahwa rata-rata dari seluruh perkiraan itu pasti mendekati kebenaran",
+                "Bahwa ahli yang perkiraannya paling cepat adalah yang paling paham",
+                "Bahwa pertanyaan itu sudah terjawab tetapi hasilnya dirahasiakan",
+              ],
+              answer: 0,
+              explain: "Sebaran yang sangat lebar justru menandakan ketiadaan dasar yang kuat untuk menjawabnya.",
+            },
+            {
+              q: "Pelajaran utama dari ramalan 'radiolog akan digantikan AI' pada 2016?",
+              options: [
+                "Kompetensi seseorang tidak membuatnya mampu melihat masa depan",
+                "AI ternyata tidak berguna sama sekali di bidang pencitraan medis",
+                "Ramalan itu terbukti tepat, hanya saja terjadi lebih lambat",
+                "Radiolog memang berkurang drastis sesuai yang diperkirakan",
+              ],
+              answer: 0,
+              explain: "AI menjadi alat bantu, bukan pengganti. Yang dinyatakan pun orang yang sangat kompeten di bidangnya.",
+            },
+            {
+              q: "Pertanyaan mana yang paling tajam untuk menguji sebuah ramalan?",
+              options: [
+                "Apa yang akan membuktikan ramalan ini keliru, dan kapan batas waktunya",
+                "Berapa banyak orang terkenal yang ikut menyatakan hal serupa",
+                "Seberapa yakin nada bicara orang yang menyampaikannya",
+                "Seberapa besar perusahaan tempat orang itu bekerja saat ini",
+              ],
+              answer: 0,
+              explain: "Pernyataan yang tak bisa dibantah oleh kenyataan apa pun bukan ramalan, melainkan keyakinan.",
+            },
+            {
+              q: "Strategi mana yang berguna apa pun arah perkembangan AI nantinya?",
+              options: [
+                "Menguasai dasar konsepnya dan menjadi orang yang mampu memverifikasi hasil",
+                "Menghafal nama dan spesifikasi seluruh model terbaru yang dirilis",
+                "Menunggu sampai arahnya jelas baru mulai mempelajari bidang ini",
+                "Memilih satu alat tertentu lalu menguasainya sedalam mungkin",
+              ],
+              answer: 0,
+              explain: "Alat berganti tiap tahun; konsep dan kemampuan menilai kebenaran bertahan jauh lebih lama.",
+            },
+          ],
+        },
+      ],
+    },
+
   ],
 };

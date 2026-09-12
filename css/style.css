@@ -195,6 +195,7 @@ a:hover { text-decoration: underline; }
 .lvl-perkakas { background: #ecfccb; color: #4d7c0f; }
 .lvl-perbankan { background: #fae8ff; color: #a21caf; }
 .lvl-forensik { background: #ede9e4; color: #78350f; }
+.lvl-arah { background: #dbeafe; color: #1e40af; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .lvl-pemula { background: #14331f; color: #4ade80; }
   :root:not([data-theme="light"]) .lvl-menengah { background: #3a2c0c; color: #fbbf24; }
