@@ -17,7 +17,7 @@
   --radius: 14px;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0f1117;
     --surface: #171a23;
     --surface-2: #1f2430;
@@ -196,28 +196,28 @@ a:hover { text-decoration: underline; }
 .lvl-perbankan { background: #fae8ff; color: #a21caf; }
 .lvl-forensik { background: #ede9e4; color: #78350f; }
 @media (prefers-color-scheme: dark) {
-  .lvl-pemula { background: #14331f; color: #4ade80; }
-  .lvl-menengah { background: #3a2c0c; color: #fbbf24; }
-  .lvl-mahir { background: #2a2247; color: #a78bfa; }
-  .lvl-proyek { background: #14233f; color: #60a5fa; }
-  .lvl-fundamental { background: #3a1526; color: #f472b6; }
-  .lvl-lanjutan { background: #0f2e2a; color: #2dd4bf; }
-  .lvl-terapan { background: #3a2213; color: #fb923c; }
-  .lvl-dasar { background: #1e2733; color: #94a3b8; }
-  .lvl-pendalaman { background: #3a1620; color: #fb7185; }
-  .lvl-prospek { background: #1e1f45; color: #a5b4fc; }
-  .lvl-kualitas { background: #0d2e22; color: #34d399; }
-  .lvl-ekonomi { background: #33290c; color: #facc15; }
-  .lvl-investasi { background: #0c2b31; color: #22d3ee; }
-  .lvl-pelengkap { background: #241d3d; color: #c4b5fd; }
-  .lvl-matematika { background: #3d1717; color: #f87171; }
-  .lvl-arsitektur { background: #241a45; color: #c4b5fd; }
-  .lvl-kriptografi { background: #0f2a18; color: #86efac; }
-  .lvl-audit { background: #3a1414; color: #fca5a5; }
-  .lvl-makro { background: #0c2537; color: #7dd3fc; }
-  .lvl-perkakas { background: #1f2b0e; color: #a3e635; }
-  .lvl-perbankan { background: #2e0f33; color: #f0abfc; }
-  .lvl-forensik { background: #2b2520; color: #fbbf24; }
+  :root:not([data-theme="light"]) .lvl-pemula { background: #14331f; color: #4ade80; }
+  :root:not([data-theme="light"]) .lvl-menengah { background: #3a2c0c; color: #fbbf24; }
+  :root:not([data-theme="light"]) .lvl-mahir { background: #2a2247; color: #a78bfa; }
+  :root:not([data-theme="light"]) .lvl-proyek { background: #14233f; color: #60a5fa; }
+  :root:not([data-theme="light"]) .lvl-fundamental { background: #3a1526; color: #f472b6; }
+  :root:not([data-theme="light"]) .lvl-lanjutan { background: #0f2e2a; color: #2dd4bf; }
+  :root:not([data-theme="light"]) .lvl-terapan { background: #3a2213; color: #fb923c; }
+  :root:not([data-theme="light"]) .lvl-dasar { background: #1e2733; color: #94a3b8; }
+  :root:not([data-theme="light"]) .lvl-pendalaman { background: #3a1620; color: #fb7185; }
+  :root:not([data-theme="light"]) .lvl-prospek { background: #1e1f45; color: #a5b4fc; }
+  :root:not([data-theme="light"]) .lvl-kualitas { background: #0d2e22; color: #34d399; }
+  :root:not([data-theme="light"]) .lvl-ekonomi { background: #33290c; color: #facc15; }
+  :root:not([data-theme="light"]) .lvl-investasi { background: #0c2b31; color: #22d3ee; }
+  :root:not([data-theme="light"]) .lvl-pelengkap { background: #241d3d; color: #c4b5fd; }
+  :root:not([data-theme="light"]) .lvl-matematika { background: #3d1717; color: #f87171; }
+  :root:not([data-theme="light"]) .lvl-arsitektur { background: #241a45; color: #c4b5fd; }
+  :root:not([data-theme="light"]) .lvl-kriptografi { background: #0f2a18; color: #86efac; }
+  :root:not([data-theme="light"]) .lvl-audit { background: #3a1414; color: #fca5a5; }
+  :root:not([data-theme="light"]) .lvl-makro { background: #0c2537; color: #7dd3fc; }
+  :root:not([data-theme="light"]) .lvl-perkakas { background: #1f2b0e; color: #a3e635; }
+  :root:not([data-theme="light"]) .lvl-perbankan { background: #2e0f33; color: #f0abfc; }
+  :root:not([data-theme="light"]) .lvl-forensik { background: #2b2520; color: #fbbf24; }
 }
 
 .lesson-list { list-style: none; margin: 0; padding: 0; }
@@ -652,4 +652,128 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
   overflow: hidden;
   text-overflow: ellipsis;
   box-shadow: var(--shadow);
+}
+
+
+/* ---- Pilihan tema manual (menang atas preferensi sistem) ---- */
+:root[data-theme="dark"] { --bg: #0f1117;
+    --surface: #171a23;
+    --surface-2: #1f2430;
+    --text: #e7e9f0;
+    --muted: #9aa3b2;
+    --border: #2a3040;
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.35); }
+:root[data-theme="dark"] .lvl-pemula { background: #14331f; color: #4ade80; }
+:root[data-theme="dark"] .lvl-menengah { background: #3a2c0c; color: #fbbf24; }
+:root[data-theme="dark"] .lvl-mahir { background: #2a2247; color: #a78bfa; }
+:root[data-theme="dark"] .lvl-proyek { background: #14233f; color: #60a5fa; }
+:root[data-theme="dark"] .lvl-fundamental { background: #3a1526; color: #f472b6; }
+:root[data-theme="dark"] .lvl-lanjutan { background: #0f2e2a; color: #2dd4bf; }
+:root[data-theme="dark"] .lvl-terapan { background: #3a2213; color: #fb923c; }
+:root[data-theme="dark"] .lvl-dasar { background: #1e2733; color: #94a3b8; }
+:root[data-theme="dark"] .lvl-pendalaman { background: #3a1620; color: #fb7185; }
+:root[data-theme="dark"] .lvl-prospek { background: #1e1f45; color: #a5b4fc; }
+:root[data-theme="dark"] .lvl-kualitas { background: #0d2e22; color: #34d399; }
+:root[data-theme="dark"] .lvl-ekonomi { background: #33290c; color: #facc15; }
+:root[data-theme="dark"] .lvl-investasi { background: #0c2b31; color: #22d3ee; }
+:root[data-theme="dark"] .lvl-pelengkap { background: #241d3d; color: #c4b5fd; }
+:root[data-theme="dark"] .lvl-matematika { background: #3d1717; color: #f87171; }
+:root[data-theme="dark"] .lvl-arsitektur { background: #241a45; color: #c4b5fd; }
+:root[data-theme="dark"] .lvl-kriptografi { background: #0f2a18; color: #86efac; }
+:root[data-theme="dark"] .lvl-audit { background: #3a1414; color: #fca5a5; }
+:root[data-theme="dark"] .lvl-makro { background: #0c2537; color: #7dd3fc; }
+:root[data-theme="dark"] .lvl-perkakas { background: #1f2b0e; color: #a3e635; }
+:root[data-theme="dark"] .lvl-perbankan { background: #2e0f33; color: #f0abfc; }
+:root[data-theme="dark"] .lvl-forensik { background: #2b2520; color: #fbbf24; }
+
+/* ============================================================
+   LAPISAN TAMPILAN — aurora, cincin progres, bilah baca,
+   tombol tema, dan gerak-gerik kecil
+   ============================================================ */
+
+/* --- Bilah kemajuan membaca (muncul di halaman pelajaran) --- */
+.baca-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px;
+  z-index: 60; pointer-events: none; background: transparent;
+}
+.baca-progress i {
+  display: block; height: 100%; width: 0;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #f59e0b);
+  border-radius: 0 3px 3px 0;
+  transition: width .12s linear;
+}
+
+/* --- Tombol tema di topbar --- */
+#tema-toggle {
+  margin-left: auto; flex-shrink: 0;
+  background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--text); font-size: 1.05rem; line-height: 1;
+  border-radius: 10px; width: 40px; height: 40px; cursor: pointer;
+  transition: transform .15s, background .15s, border-color .15s;
+}
+#tema-toggle:hover { background: var(--bg); border-color: var(--primary); }
+#tema-toggle:active { transform: scale(.92); }
+
+/* --- Hero dengan latar aurora lembut --- */
+.hero { position: relative; isolation: isolate; overflow: hidden; border-radius: 22px; }
+.hero::before {
+  content: ""; position: absolute; inset: -40% -10%; z-index: -1;
+  background:
+    radial-gradient(38% 44% at 18% 28%, rgba(99, 102, 241, .30), transparent 68%),
+    radial-gradient(34% 40% at 82% 22%, rgba(245, 158, 11, .24), transparent 66%),
+    radial-gradient(42% 48% at 52% 82%, rgba(139, 92, 246, .22), transparent 70%);
+  filter: blur(26px);
+  animation: auroraGeser 22s ease-in-out infinite alternate;
+}
+@keyframes auroraGeser {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(3%, -2%, 0) scale(1.08); }
+  100% { transform: translate3d(-3%, 2%, 0) scale(1.03); }
+}
+.hero h1 { letter-spacing: -.02em; }
+
+/* --- Cincin progres --- */
+.ring-wrap { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; margin: 20px auto 4px; }
+.ring { width: 108px; height: 108px; flex-shrink: 0; }
+.ring circle { fill: none; stroke-width: 9; stroke-linecap: round; }
+.ring .ring-alur { stroke: var(--surface-2); }
+.ring .ring-isi { stroke: url(#ringGrad); transition: stroke-dashoffset 1s cubic-bezier(.22,1,.36,1); }
+.ring text { fill: var(--text); font-weight: 800; font-size: 21px; }
+.ring-info { text-align: left; font-size: .92rem; color: var(--muted); line-height: 1.7; }
+.ring-info b { color: var(--text); font-size: 1.05rem; }
+
+/* --- Kartu kursus: kilau saat disentuh --- */
+.course-card { position: relative; overflow: hidden; }
+.course-card::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 45%;
+  left: -60%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.16), transparent);
+  transition: left .55s ease;
+}
+.course-card:hover::after { left: 120%; }
+.course-card, .resume-card { transition: transform .18s cubic-bezier(.22,1,.36,1), box-shadow .18s; }
+
+/* --- Gerak-gerik kecil --- */
+.btn { transition: transform .12s, filter .15s, background .15s, border-color .15s; }
+.btn:active { transform: scale(.96); }
+.side-link, .side-lesson { transition: background .14s, color .14s, padding-left .14s; }
+.side-lesson:hover { padding-left: 26px; }
+.module { animation: masukHalus .35s cubic-bezier(.22,1,.36,1) both; }
+@keyframes masukHalus { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* --- Hormati pengguna yang mematikan animasi --- */
+@media (prefers-reduced-motion: reduce) {
+  .hero::before { animation: none; }
+  .module { animation: none; }
+  .course-card::after { display: none; }
+  .ring .ring-isi { transition: none; }
+  * { scroll-behavior: auto !important; }
+}
+
+/* --- Layar kecil --- */
+@media (max-width: 720px) {
+  .ring-wrap { gap: 14px; }
+  .ring { width: 92px; height: 92px; }
+  .ring-info { font-size: .86rem; }
+  .hero { border-radius: 16px; }
 }

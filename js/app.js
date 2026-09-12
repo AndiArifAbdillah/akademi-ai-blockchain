@@ -347,12 +347,37 @@ function renderHome() {
       <h1>Selamat datang di <span class="grad">Akademi AI &amp; Blockchain</span> 🎓</h1>
       <p class="lead">Belajar Kecerdasan Buatan dan Crypto &amp; Blockchain dari <b>dasar hingga mahir</b>,
       dengan bahasa Indonesia yang sederhana, contoh nyata, dan kuis di setiap pelajaran.</p>
-      <div class="overall">
-        <div class="overall-bar"><div class="overall-fill" style="width:${overall}%"></div></div>
-        <span>${totalDone}/${totalLessons} pelajaran selesai • ${overall}% total</span>
+      <div class="ring-wrap">
+        <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="${overall}% materi selesai">
+          <defs>
+            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#6366f1"/>
+              <stop offset="1" stop-color="#f59e0b"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-alur" cx="60" cy="60" r="50"/>
+          <circle class="ring-isi" cx="60" cy="60" r="50" transform="rotate(-90 60 60)"
+                  stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+          <text x="60" y="68" text-anchor="middle">${overall}%</text>
+        </svg>
+        <div class="ring-info">
+          <b>${totalDone} dari ${totalLessons} pelajaran</b><br>
+          ${totalDone === 0 ? "Belum ada yang diselesaikan — mulai dari mana saja." :
+            overall >= 100 ? "Semuanya selesai. Luar biasa! 🎉" :
+            "Terus lanjut, sedikit demi sedikit."}
+        </div>
       </div>
     </section>
   `));
+
+  // Isi cincin diisi sesaat setelah dipasang agar transisinya terlihat.
+  // Sengaja memakai setTimeout, bukan requestAnimationFrame: rAF tidak
+  // berjalan saat tab berada di latar belakang, sehingga cincinnya bisa
+  // tertinggal kosong padahal persentasenya sudah benar.
+  setTimeout(() => {
+    const isi = wrap.querySelector(".ring-isi");
+    if (isi) isi.style.strokeDashoffset = (314.16 * (1 - overall / 100)).toFixed(2);
+  }, 50);
 
   // Kartu "Lanjutkan Belajar" — tahu sampai mana progres belajarmu
   const resumeId = Progress.resumeLessonId();
