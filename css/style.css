@@ -194,6 +194,7 @@ a:hover { text-decoration: underline; }
 .lvl-matematika { background: #fee2e2; color: #b91c1c; }
 .lvl-perkakas { background: #ecfccb; color: #4d7c0f; }
 .lvl-perbankan { background: #fae8ff; color: #a21caf; }
+.lvl-forensik { background: #ede9e4; color: #78350f; }
 @media (prefers-color-scheme: dark) {
   .lvl-pemula { background: #14331f; color: #4ade80; }
   .lvl-menengah { background: #3a2c0c; color: #fbbf24; }
@@ -216,6 +217,7 @@ a:hover { text-decoration: underline; }
   .lvl-makro { background: #0c2537; color: #7dd3fc; }
   .lvl-perkakas { background: #1f2b0e; color: #a3e635; }
   .lvl-perbankan { background: #2e0f33; color: #f0abfc; }
+  .lvl-forensik { background: #2b2520; color: #fbbf24; }
 }
 
 .lesson-list { list-style: none; margin: 0; padding: 0; }
@@ -516,6 +518,16 @@ a:hover { text-decoration: underline; }
 .dm-px { background: var(--surface-2); border-radius: 1px; }
 .dm-px.on { background: var(--text); }
 .dm-px.tenang { transition: background .18s ease; }
+.dm-addr { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 10px; }
+.dm-chip { font-family: "Consolas", "Courier New", monospace; font-size: .82rem; padding: 7px 11px; border-radius: 9px; border: 2px solid var(--border); background: var(--surface-2); transition: border-color .2s, background .2s; }
+.dm-chip.s0 { border-color: #6366f1; }
+.dm-chip.s1 { border-color: #8b5cf6; }
+.dm-chip.s2 { border-color: #16a34a; }
+.dm-chip.s3 { border-color: #f59e0b; }
+.dm-chip.s4 { border-color: #06b6d4; }
+.dm-chip.tertandai { background: rgba(220, 38, 38, .12); border-color: var(--bad); font-weight: 700; }
+.dm-tag { display: inline-block; margin-left: 7px; font-family: inherit; font-size: .74rem; color: var(--bad); }
+.dm-tx { font-size: .8rem; color: var(--muted); line-height: 1.7; margin-bottom: 6px; }
 .dm-quad { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0 4px; }
 .dm-mini { margin: 0; background: var(--surface-2); border-radius: 10px; padding: 8px 6px 4px; }
 .dm-mini figcaption { text-align: center; font-size: .78rem; font-weight: 700; color: var(--muted); margin-bottom: 2px; }

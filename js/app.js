@@ -18,7 +18,7 @@ const MODULE_ORDER = [
   "ai-tools", "ai-lanjutan", "ai-proyek", "ai-ekonomi",
   // ⛓️ Blockchain
   "bc-dasar", "bc-pemula", "bc-menengah", "bc-fundamental", "bc-matematika",
-  "bc-kriptografi", "bc-mahir", "bc-pendalaman", "bc-terapan", "bc-lanjutan",
+  "bc-kriptografi", "bc-mahir", "bc-pendalaman", "bc-forensik", "bc-terapan", "bc-lanjutan",
   "bc-pelengkap", "bc-proyek", "bc-ekonomi",
   // 📊 Akuntansi
   "acc-dasar", "acc-pemula", "acc-menengah", "acc-pendalaman", "acc-mahir",
@@ -32,6 +32,40 @@ const MODULE_ORDER = [
     return i === -1 ? 999 : i; // modul baru yang belum terdaftar diletakkan di akhir
   };
   COURSES.forEach((c) => c.modules.sort((a, b) => pos(a.id) - pos(b.id)));
+})();
+
+/* Mengacak urutan pilihan jawaban kuis & latihan.
+   Masalah yang diperbaiki: dulu 93,7% jawaban benar berada di posisi ke-2
+   dan posisi ke-4 tidak pernah dipakai sama sekali — sehingga soal bisa
+   ditebak tanpa memahami materinya.
+   Pengacakan memakai benih tetap dari id pelajaran + nomor soal, jadi
+   urutannya konsisten setiap kali pelajaran yang sama dibuka. */
+(function acakPilihan() {
+  const benih = (s) => {
+    let h = 2166136261;
+    for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return (h >>> 0) || 1;
+  };
+  const pengacak = (n) => {
+    let x = n;
+    return () => { x ^= x << 13; x ^= x >>> 17; x ^= x << 5; x >>>= 0; return x / 4294967296; };
+  };
+  const kocok = (item, kunci) => {
+    if (!item || !Array.isArray(item.options) || typeof item.answer !== "number") return;
+    const lama = item.options.slice();
+    const urut = lama.map((_, i) => i);
+    const rnd = pengacak(benih(kunci));
+    for (let i = urut.length - 1; i > 0; i--) {
+      const j = Math.floor(rnd() * (i + 1));
+      const t = urut[i]; urut[i] = urut[j]; urut[j] = t;
+    }
+    item.options = urut.map((i) => lama[i]);
+    item.answer = urut.indexOf(item.answer); // posisi baru dari jawaban benar
+  };
+  COURSES.forEach((c) => c.modules.forEach((m) => m.lessons.forEach((l) => {
+    (l.quiz || []).forEach((q, i) => kocok(q, l.id + ":q" + i));
+    (l.practice || []).forEach((p, i) => { if (p.type === "choice") kocok(p, l.id + ":p" + i); });
+  })));
 })();
 const STORE_KEY = "belajar_ai_blockchain_progress_v1";
 

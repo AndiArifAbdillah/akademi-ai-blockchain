@@ -415,22 +415,22 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             {
               q: "Apa perbedaan utama AI dengan program biasa?",
               options: [
-                "AI lebih cepat menghitung angka",
-                "AI belajar pola dari data, bukan hanya mengikuti aturan tetap",
-                "AI tidak butuh komputer",
-                "AI selalu benar 100%",
+                "AI menyimpulkan sendiri aturannya dari contoh-contoh data yang diberikan",
+                "AI menjalankan aturan yang sama persis, hanya saja jauh lebih cepat",
+                "AI mampu bekerja tanpa perlu diberi data contoh sama sekali",
+                "AI menulis ulang kode programnya sendiri setiap kali dijalankan",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Inti AI adalah belajar dari data untuk menemukan pola, sehingga bisa menangani masalah yang sulit dibuat aturannya.",
             },
             {
               q: "Manakah contoh penggunaan AI sehari-hari?",
               options: [
-                "Rekomendasi video di YouTube",
-                "Menyalakan lampu dengan saklar",
-                "Menghitung 2 + 2 di kalkulator",
-                "Membuka pintu dengan kunci",
+                "Rekomendasi video yang berubah mengikuti apa yang sering kamu tonton",
+                "Alarm HP yang berbunyi tepat pada jam yang sudah kamu tetapkan",
+                "Kalkulator yang menjumlahkan angka mengikuti rumus yang baku",
+                "Lampu yang menyala otomatis saat sensor mendeteksi ada gerakan",
               ],
               answer: 0,
               explain:
@@ -482,12 +482,12 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             {
               q: "Apa itu Turing Test?",
               options: [
-                "Ujian kecepatan komputer",
-                "Uji apakah mesin bisa meniru percakapan manusia",
-                "Tes baterai robot",
-                "Lomba catur antar komputer",
+                "Uji apakah manusia masih bisa membedakan jawaban mesin dari jawaban manusia",
+                "Uji seberapa cepat sebuah mesin menyelesaikan perhitungan yang rumit",
+                "Uji apakah mesin mampu menjawab seluruh pertanyaan dengan benar",
+                "Uji apakah sebuah mesin sudah sadar akan keberadaan dirinya sendiri",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Turing Test menguji apakah respons mesin tak bisa dibedakan dari manusia.",
             },
@@ -527,24 +527,24 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             {
               q: "Apa arti 'garbage in, garbage out'?",
               options: [
-                "Komputer cepat panas",
-                "Data buruk menghasilkan AI yang buruk",
-                "AI butuh banyak listrik",
-                "Sampah harus didaur ulang",
+                "Model yang dilatih dengan data buruk akan menghasilkan keluaran yang buruk pula",
+                "Model perlu dibersihkan berkala agar data lama tidak menumpuk di dalamnya",
+                "Data yang sudah dipakai melatih sebaiknya langsung dihapus setelah selesai",
+                "Model yang besar menghasilkan lebih banyak keluaran yang tidak terpakai",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Jika data latih buruk/bias, prediksi AI ikut buruk/bias.",
             },
             {
               q: "Apa fungsi 'label' pada data?",
               options: [
-                "Mempercantik data",
-                "Memberi nama file",
-                "Memberi jawaban benar agar AI bisa belajar",
-                "Mengurangi ukuran data",
+                "Memberi jawaban yang benar sehingga model tahu pola apa yang harus ditiru",
+                "Menandai baris data yang rusak supaya bisa dibuang lebih dulu",
+                "Mengelompokkan data ke berkas-berkas terpisah sesuai jenisnya",
+                "Menyimpan catatan tentang siapa yang mengumpulkan data tersebut",
               ],
-              answer: 2,
+              answer: 0,
               explain:
                 "Label memberitahu AI hasil yang benar selama proses latihan.",
             },
@@ -590,12 +590,12 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             {
               q: "Apa yang dimaksud 'loss' / error dalam training AI?",
               options: [
-                "Kecepatan internet",
-                "Seberapa jauh tebakan AI meleset dari jawaban benar",
-                "Jumlah data yang hilang",
-                "Biaya listrik",
+                "Ukuran seberapa jauh tebakan model meleset dari jawaban yang sebenarnya",
+                "Jumlah data latih yang gagal terbaca selama proses pelatihan berlangsung",
+                "Bagian data yang sengaja disisihkan untuk menguji model di tahap akhir",
+                "Penurunan kecepatan model setiap kali ukuran datanya bertambah besar",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Loss mengukur besar kesalahan; AI berusaha menguranginya tiap iterasi.",
             },

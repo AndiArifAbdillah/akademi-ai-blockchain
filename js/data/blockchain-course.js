@@ -110,23 +110,23 @@ const BLOCKCHAIN_COURSE = {
             {
               q: "Apa itu masalah 'double-spending'?",
               options: [
-                "Membayar dua kali lipat harga",
-                "Membelanjakan uang digital yang sama lebih dari sekali dengan menyalinnya",
-                "Belanja terlalu banyak",
-                "Lupa password",
+                "Membelanjakan satu unit uang digital lebih dari sekali karena berkasnya bisa disalin",
+                "Mengirimkan uang kepada dua penerima berbeda di dalam satu transaksi yang sama",
+                "Tertagih dua kali untuk satu pembelian karena sistem mencatat transaksinya berulang",
+                "Menyalin aplikasi dompet ke HP lain sehingga saldo di dalamnya ikut tergandakan",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Karena file mudah disalin, uang digital bisa dibelanjakan berulang tanpa pencegah.",
             },
             {
               q: "Apa yang membuat blockchain istimewa dalam soal ini?",
               options: [
-                "Ia memakai satu bank besar",
-                "Ia mencegah double-spending tanpa pencatat pusat",
-                "Ia melarang uang digital",
-                "Ia menyalin uang lebih cepat",
+                "Semua peserta memegang catatan yang sama, sehingga percobaan kedua langsung tertolak",
+                "Setiap transaksi diperiksa oleh satu lembaga pusat yang dipercaya semua orang",
+                "Berkas uang digitalnya dibuat khusus agar secara teknis tidak mungkin disalin",
+                "Setiap koin diberi nomor seri yang dicek bank sebelum transaksinya disetujui",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Blockchain menyelesaikan double-spending lewat catatan bersama banyak komputer, tanpa pusat.",
             },
           ],
@@ -170,23 +170,23 @@ const BLOCKCHAIN_COURSE = {
             {
               q: "Apa keunggulan sistem terdesentralisasi?",
               options: [
-                "Lebih murah listrik",
-                "Banyak pihak memegang salinan, jadi lebih tahan gangguan & sulit dicurangi",
-                "Hanya satu orang yang mengatur",
-                "Lebih lambat",
+                "Catatannya dipegang banyak pihak, jadi tak ada satu titik yang bisa dimatikan atau dicurangi",
+                "Keputusan diambil lebih cepat karena tak perlu menunggu persetujuan banyak pihak",
+                "Biaya menjalankannya selalu lebih murah dibanding sistem yang terpusat",
+                "Seluruh datanya otomatis terenkripsi sehingga tidak bisa dibaca siapa pun",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Salinan tersebar membuatnya tahan banting & perubahan mudah ketahuan.",
             },
             {
               q: "Apa itu 'node' dalam blockchain?",
               options: [
-                "Sejenis koin",
-                "Komputer di jaringan yang menyimpan salinan catatan",
-                "Dompet fisik",
-                "Nama perusahaan",
+                "Komputer di jaringan yang menyimpan salinan catatan dan ikut memverifikasinya",
+                "Satuan terkecil dari sebuah koin, seperti sen pada mata uang biasa",
+                "Blok berisi kumpulan transaksi yang sedang menunggu untuk ditambang",
+                "Alamat dompet yang dipakai pengguna untuk menerima dan mengirim dana",
               ],
-              answer: 1,
+              answer: 0,
               explain: "Node adalah komputer peserta jaringan yang memegang catatan blockchain.",
             },
           ],
@@ -241,24 +241,24 @@ const BLOCKCHAIN_COURSE = {
             {
               q: "Apa ciri utama blockchain?",
               options: [
-                "Disimpan di satu server pusat",
-                "Tersebar di banyak komputer & sulit diubah",
-                "Hanya bisa diakses bank",
-                "Gratis tanpa batas",
+                "Catatannya disalin ke banyak komputer dan sangat sulit diubah setelah tercatat",
+                "Catatannya disimpan terenkripsi sehingga hanya pemiliknya yang bisa membaca",
+                "Catatannya disimpan di server khusus yang dijaga oleh lembaga terpercaya",
+                "Catatannya bisa dihapus kapan saja oleh pemilik akun yang bersangkutan",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Desentralisasi + sifat tak-bisa-diubah adalah inti blockchain.",
             },
             {
               q: "Mengapa data sulit dipalsukan di blockchain?",
               options: [
-                "Karena dijaga satpam",
-                "Karena banyak komputer punya salinan identik untuk dibandingkan",
-                "Karena pakai password panjang",
-                "Karena disimpan di flashdisk",
+                "Ribuan salinan identik saling dibandingkan, sehingga satu salinan palsu tertolak",
+                "Setiap data dikunci memakai kata sandi yang sangat panjang dan rumit",
+                "Hanya pengguna yang sudah terverifikasi yang diizinkan menulis catatan",
+                "Data lama otomatis dihapus sehingga tidak ada lagi yang bisa diubah",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Perubahan di satu salinan langsung berbeda dari mayoritas salinan lain.",
             },
@@ -301,12 +301,12 @@ const BLOCKCHAIN_COURSE = {
             {
               q: "Masalah utama apa yang dipecahkan Bitcoin?",
               options: [
-                "Internet lambat",
-                "Double spending (membelanjakan koin yang sama dua kali)",
-                "Baterai HP boros",
-                "Email spam",
+                "Cara mencegah satu koin digital dibelanjakan dua kali tanpa perlu perantara",
+                "Cara mengirim uang ke luar negeri dengan biaya yang jauh lebih murah",
+                "Cara menyembunyikan identitas pengirim dan penerima secara sepenuhnya",
+                "Cara menyimpan uang agar nilainya tidak tergerus oleh inflasi",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Blockchain Bitcoin mencegah koin yang sama dipakai dua kali.",
             },
@@ -352,8 +352,13 @@ const BLOCKCHAIN_COURSE = {
           quiz: [
             {
               q: "Kunci mana yang boleh dibagikan untuk menerima dana?",
-              options: ["Private key", "Seed phrase", "Public key / alamat", "Password email"],
-              answer: 2,
+              options: [
+                "Alamat dompet (public key)",
+                "Kunci privat (private key)",
+                "Frasa pemulihan (seed phrase)",
+                "Kata sandi aplikasi dompet",
+              ],
+              answer: 0,
               explain:
                 "Public key/alamat seperti nomor rekening — aman dibagikan.",
             },
@@ -2282,6 +2287,682 @@ console.log("Harga naik jadi ~ " + Math.round(yBaru / xBaru) + " USDC (slippage)
               ],
               answer: 1,
               explain: "Non-custodial berarti kunci ada padamu — kendali penuh, risiko penuh.",
+            },
+          ],
+        },
+      ],
+    },
+
+    /* ---------------- LEVEL FORENSIK (MELACAK ALIRAN DANA) ---------------- */
+    {
+      id: "bc-forensik",
+      level: "Forensik",
+      title: "Forensik Blockchain — Melacak Aliran Dana",
+      summary: "Kripto itu pseudonim, bukan anonim. Pelajari cara analis melacak dana curian, bagaimana alamat disatukan, di mana jejak bertemu identitas, dan batas hukumnya.",
+      lessons: [
+        {
+          id: "bc-for-1",
+          title: "Mitos Anonimitas — Pseudonim ≠ Anonim",
+          duration: "13 menit",
+          content: `
+<p>Ini salah satu kesalahpahaman paling berbahaya tentang kripto: banyak orang mengira transaksi blockchain itu <b>anonim</b>. Kenyataannya justru sebaliknya — untuk kebanyakan orang, <b>membayar dengan Bitcoin jauh lebih mudah dilacak daripada membayar tunai</b>.</p>
+
+<div data-diagram="compare3" data-cols="Uang tunai::Anonim::Tak ada catatan|Transfer bank::Teridentifikasi::Catatan dipegang bank|Bitcoin::Pseudonim::Catatan terbuka, permanen" data-caption="Kripto bukan berada di antara tunai dan bank — ia punya sifat tersendiri yang unik"></div>
+
+<h3>Fundamental: apa beda anonim dan pseudonim?</h3>
+<div class="callout">
+<b>Anonim</b> = tidak ada identitas sama sekali yang melekat. Seperti membayar tunai di warung: tak ada catatan siapa membeli apa.<br><br>
+<b>Pseudonim</b> = identitasmu diganti <b>nama samaran</b> yang tetap. Seperti menulis di forum dengan nama pena: selama tak ada yang tahu nama penanya milik siapa, kamu aman. Tapi begitu <b>satu tulisan saja</b> terhubung ke namamu, <b>seluruh tulisanmu</b> ikut terbongkar — termasuk yang bertahun-tahun lalu.
+</div>
+
+<p>Alamat Bitcoin adalah nama samaran itu. Blockchain tidak menyimpan namamu — tapi ia menyimpan <b>setiap transaksi yang pernah dilakukan alamat itu</b>, secara terbuka, permanen, dan bisa dibaca siapa saja tanpa izin.</p>
+
+<h3>Tiga sifat yang membuat pelacakan mungkin</h3>
+<table class="tbl">
+  <tr><th>Sifat</th><th>Akibatnya bagi privasi</th></tr>
+  <tr><td><b>Terbuka</b></td><td>Siapa pun bisa membaca seluruh riwayat transaksi, tanpa izin dan tanpa biaya</td></tr>
+  <tr><td><b>Permanen</b></td><td>Tidak bisa dihapus. Transaksi tahun 2013 masih bisa dianalisis hari ini dengan alat yang jauh lebih canggih</td></tr>
+  <tr><td><b>Terhubung</b></td><td>Tiap transaksi menunjuk ke transaksi sebelumnya — membentuk rantai yang bisa diikuti mundur</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Yang paling sering tidak disadari: privasi kripto bersifat <i>surut</i>.</b><br><br>
+Kalau kamu bocor hari ini, yang terbongkar bukan hanya transaksi hari ini — melainkan <b>seluruh riwayatmu sejak awal</b>. Dan kamu tidak bisa menariknya kembali, karena datanya sudah tersalin ke ribuan komputer di seluruh dunia.<br><br>
+Bandingkan dengan kebocoran data bank: setidaknya masih ada satu pihak yang bisa diminta menutup akses. Di blockchain, <b>tidak ada siapa pun yang bisa diminta menghapus</b>.
+</div>
+
+<h3>Kenapa ini justru kabar baik</h3>
+<p>Sifat terbuka ini sering dianggap kelemahan. Padahal ia adalah alasan kripto curian <b>sering berhasil dilacak dan dikembalikan</b> — sesuatu yang hampir mustahil dilakukan pada uang tunai hasil kejahatan.</p>
+
+<ul>
+  <li><b>Korban penipuan</b> bisa menunjukkan jejak dananya ke penegak hukum.</li>
+  <li><b>Bursa</b> bisa membekukan dana yang diketahui berasal dari peretasan.</li>
+  <li><b>Jurnalis &amp; peneliti</b> bisa menyelidiki aliran dana tanpa perlu akses istimewa.</li>
+</ul>
+
+<div class="callout">
+<b>Yang perlu kamu bawa dari pelajaran ini:</b><br><br>
+1. Jangan pernah menganggap transaksi kriptomu rahasia.<br>
+2. Kalau kamu jadi korban penipuan kripto, <b>jangan langsung menyerah</b> — dananya bisa ditelusuri. Catat alamat tujuannya dan laporkan.<br>
+3. Alamat yang pernah kamu pakai di tempat umum (donasi, jual-beli, media sosial) <b>selamanya terhubung</b> ke identitasmu.
+</div>
+`,
+          keyPoints: [
+            "Kripto itu pseudonim (bernama samaran tetap), bukan anonim (tanpa identitas sama sekali).",
+            "Blockchain tidak menyimpan namamu, tapi menyimpan seluruh transaksi alamatmu secara terbuka dan permanen.",
+            "Tiga sifat yang memungkinkan pelacakan: terbuka, permanen, dan saling terhubung.",
+            "Privasi kripto bersifat SURUT — satu kebocoran hari ini membongkar seluruh riwayat sejak awal.",
+            "Tidak ada pihak yang bisa diminta menghapus data blockchain, karena sudah tersalin ke ribuan komputer.",
+            "Sisi baiknya: dana curian sering bisa dilacak dan dikembalikan — hampir mustahil dilakukan pada uang tunai.",
+            "Kalau jadi korban penipuan, catat alamat tujuan dananya dan laporkan — jejaknya masih ada.",
+          ],
+          quiz: [
+            {
+              q: "Apa beda 'pseudonim' dan 'anonim' dalam konteks blockchain?",
+              options: [
+                "Pseudonim memakai nama samaran tetap yang bisa dihubungkan ke identitas asli bila bocor sekali saja",
+                "Pseudonim berarti transaksinya dienkripsi sehingga tidak ada yang bisa membacanya",
+                "Pseudonim berarti identitas pengguna disimpan bursa tapi tidak di blockchain",
+                "Pseudonim dan anonim sebenarnya dua istilah untuk hal yang sama",
+              ],
+              answer: 0,
+              explain:
+                "Nama samaran yang tetap justru berbahaya: sekali terhubung ke identitas, seluruh riwayatnya ikut terbuka.",
+            },
+            {
+              q: "Kenapa kebocoran privasi di blockchain disebut bersifat 'surut'?",
+              options: [
+                "Karena yang terbongkar bukan hanya transaksi baru, tapi seluruh riwayat alamat itu sejak awal",
+                "Karena data lama otomatis dihapus setelah beberapa tahun berlalu",
+                "Karena hanya transaksi setelah kebocoran yang bisa dilihat publik",
+                "Karena pengguna bisa meminta bursa menutup akses ke riwayatnya",
+              ],
+              answer: 0,
+              explain:
+                "Seluruh riwayat sudah tersimpan permanen dan terbuka; menghubungkannya ke identitas membuka semuanya sekaligus.",
+            },
+            {
+              q: "Dibanding uang tunai, melacak hasil kejahatan dalam Bitcoin umumnya?",
+              options: [
+                "Lebih mudah, karena seluruh jejak transaksinya tercatat terbuka dan permanen",
+                "Lebih sulit, karena tidak ada catatan apa pun yang bisa diperiksa",
+                "Sama saja, karena keduanya tidak meninggalkan jejak apa pun",
+                "Mustahil, karena alamat kripto tidak pernah bisa dihubungkan ke siapa pun",
+              ],
+              answer: 0,
+              explain:
+                "Uang tunai berpindah tanpa catatan; Bitcoin meninggalkan jejak permanen yang bisa dianalisis siapa saja.",
+            },
+          ],
+        },
+        {
+          id: "bc-for-2",
+          title: "Dasar Penelusuran On-Chain",
+          duration: "14 menit",
+          content: `
+<p>Sekarang kita masuk ke caranya. Penelusuran on-chain pada dasarnya adalah <b>mengikuti uang</b> — keahlian tertua dalam investigasi keuangan, hanya saja di sini seluruh buku besarnya terbuka untuk umum.</p>
+
+<div data-diagram="pipeline" data-stages="Alamat awal::titik mula, mis. alamat penipu|Ikuti keluarannya::ke mana dana berpindah|Petakan pola::lihat percabangan &amp; penggabungan|Cari titik cair::bursa, pedagang, layanan" data-caption="Empat langkah dasar penelusuran"></div>
+
+<h3>Alat kerjanya: block explorer</h3>
+<div class="callout">
+<b>Block explorer</b> adalah situs yang menampilkan isi blockchain dalam bentuk yang bisa dibaca manusia — seperti "mesin pencari" untuk blockchain. Gratis, terbuka, tanpa perlu mendaftar.<br><br>
+Untuk Bitcoin ada <i>mempool.space</i> dan <i>blockstream.info</i>; untuk Ethereum ada <i>Etherscan</i>. Cukup tempel sebuah alamat, dan seluruh riwayatnya muncul.
+</div>
+
+<p>Yang bisa kamu lihat dari sebuah alamat, tanpa izin siapa pun:</p>
+<ul>
+  <li>Saldo saat ini dan <b>seluruh</b> transaksi yang pernah terjadi</li>
+  <li>Waktu tiap transaksi, sampai ke detik</li>
+  <li>Alamat lawan transaksinya — pengirim maupun penerima</li>
+  <li>Jumlah persisnya, tanpa pembulatan</li>
+</ul>
+
+<h3>Dua model yang perlu dibedakan</h3>
+<table class="tbl">
+  <tr><th></th><th>Model UTXO (Bitcoin)</th><th>Model Akun (Ethereum)</th></tr>
+  <tr><td><b>Cara kerja</b></td><td>Seperti uang fisik: tiap "lembar" dibelanjakan utuh, sisanya kembali sebagai <b>kembalian</b></td><td>Seperti rekening bank: saldo bertambah dan berkurang</td></tr>
+  <tr><td><b>Ciri saat ditelusuri</b></td><td>Satu transaksi bisa punya <b>banyak masukan &amp; keluaran</b></td><td>Umumnya satu pengirim ke satu penerima</td></tr>
+  <tr><td><b>Celah privasinya</b></td><td>Alamat kembalian sering bisa ditebak</td><td>Alamat dipakai berulang, jadi riwayatnya menumpuk di satu tempat</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Kenapa "kembalian" penting bagi penyidik.</b> Di Bitcoin, kalau kamu punya 1 BTC dan mengirim 0,3 BTC, maka 0,7 BTC sisanya dikirim balik ke <b>alamat baru milikmu sendiri</b>. Penyidik yang bisa menebak mana keluaran "kembalian" dan mana yang "pembayaran" bisa terus mengikuti dompetmu melewati puluhan transaksi.
+</div>
+
+<h3>Coba sendiri: ikuti aliran dana</h3>
+
+<div data-demo="lacak-dana"></div>
+
+<h3>Pola yang dicari analis</h3>
+<table class="tbl">
+  <tr><th>Pola</th><th>Artinya</th></tr>
+  <tr><td><b>Peeling chain</b></td><td>Dana besar terus berpindah sambil sedikit demi sedikit dikupas — ciri khas upaya pencucian</td></tr>
+  <tr><td><b>Pemecahan (fan-out)</b></td><td>Satu alamat menyebar ke puluhan alamat sekaligus untuk mengaburkan jejak</td></tr>
+  <tr><td><b>Penggabungan (fan-in)</b></td><td>Banyak alamat menyatu ke satu tujuan — sering justru <b>membuka</b> kepemilikan bersama</td></tr>
+  <tr><td><b>Angka bulat &amp; waktu teratur</b></td><td>Perilaku manusia, bukan mesin — sering membocorkan zona waktu dan kebiasaan pelaku</td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Yang membuat penelusuran berhasil bukan kecanggihan alat, melainkan kesabaran.</b> Pelaku hanya perlu salah <b>sekali</b>: satu kali memakai ulang alamat, satu kali menggabungkan dana lama dengan dana baru, satu kali mencairkan di bursa yang meminta KTP. Penyidik punya waktu bertahun-tahun untuk menunggu kesalahan itu — dan datanya tidak akan pernah hilang.
+</div>
+`,
+          keyPoints: [
+            "Block explorer (mempool.space, Etherscan) menampilkan seluruh isi blockchain secara gratis dan terbuka.",
+            "Dari satu alamat bisa terlihat: saldo, seluruh riwayat transaksi, waktu, lawan transaksi, dan jumlah persisnya.",
+            "Model UTXO (Bitcoin) memakai 'kembalian' ke alamat baru; model akun (Ethereum) memakai saldo seperti rekening.",
+            "Menebak mana keluaran 'kembalian' memungkinkan penyidik mengikuti satu dompet melewati puluhan transaksi.",
+            "Pola yang dicari: peeling chain, fan-out (memecah), fan-in (menggabung), serta angka bulat & waktu teratur.",
+            "Fan-in justru sering membuka kepemilikan bersama, bukan menyembunyikannya.",
+            "Kunci keberhasilan penelusuran adalah kesabaran — pelaku hanya perlu salah sekali, dan datanya tak pernah hilang.",
+          ],
+          quiz: [
+            {
+              q: "Apa yang bisa dilihat siapa pun dari sebuah alamat Bitcoin lewat block explorer?",
+              options: [
+                "Seluruh riwayat transaksi, waktu, jumlah, dan alamat lawan transaksinya",
+                "Nama dan alamat rumah pemilik alamat tersebut",
+                "Hanya saldo saat ini, tanpa riwayat transaksi apa pun",
+                "Tidak ada, kecuali punya izin khusus dari pemilik alamat",
+              ],
+              answer: 0,
+              explain:
+                "Seluruh data itu terbuka tanpa izin dan tanpa biaya. Yang TIDAK ada di blockchain adalah nama pemiliknya.",
+            },
+            {
+              q: "Kenapa 'alamat kembalian' penting dalam penelusuran Bitcoin?",
+              options: [
+                "Karena bila penyidik bisa menebak mana keluaran kembalian, ia bisa terus mengikuti dompet yang sama",
+                "Karena alamat kembalian selalu dicatat atas nama pemiliknya di blockchain",
+                "Karena kembalian selalu dikirim ke bursa tempat pengguna terdaftar",
+                "Karena transaksi dengan kembalian tidak bisa ditelusuri sama sekali",
+              ],
+              answer: 0,
+              explain:
+                "Memisahkan 'pembayaran' dari 'kembalian' memungkinkan penyidik mengikuti dompet melewati banyak transaksi.",
+            },
+            {
+              q: "Pola 'peeling chain' menandakan apa?",
+              options: [
+                "Dana besar terus berpindah sambil sedikit demi sedikit dikupas — ciri khas upaya pencucian",
+                "Banyak alamat berbeda menggabungkan dananya ke dalam satu alamat tujuan",
+                "Transaksi yang gagal dan dikembalikan ke alamat pengirim semula",
+                "Pembayaran rutin bulanan dengan jumlah yang selalu sama persis",
+              ],
+              answer: 0,
+              explain:
+                "Pelaku memecah sedikit demi sedikit agar sulit diikuti, tapi polanya sendiri justru mudah dikenali.",
+            },
+            {
+              q: "Menurut pelajaran ini, apa yang paling menentukan keberhasilan penelusuran?",
+              options: [
+                "Kesabaran, karena pelaku hanya perlu salah sekali dan datanya tidak pernah hilang",
+                "Kemampuan memecahkan enkripsi yang melindungi transaksi blockchain",
+                "Akses istimewa ke basis data internal jaringan Bitcoin",
+                "Kecepatan bertindak, karena jejak transaksi hilang setelah beberapa bulan",
+              ],
+              answer: 0,
+              explain:
+                "Tidak ada enkripsi yang dipecahkan — datanya memang terbuka. Yang dibutuhkan adalah ketekunan menunggu kesalahan.",
+            },
+          ],
+        },
+        {
+          id: "bc-for-3",
+          title: "Heuristik Klasterisasi — Menyatukan Alamat",
+          duration: "14 menit",
+          content: `
+<p>Satu orang bisa memakai ratusan alamat. Kalau penyidik harus memeriksanya satu per satu, pekerjaannya mustahil. Di sinilah <b>klasterisasi</b> bekerja: menyatukan alamat-alamat yang ternyata dimiliki orang yang sama.</p>
+
+<h3>Aturan paling ampuh: kepemilikan masukan bersama</h3>
+<div class="callout">
+<b>Common Input Ownership Heuristic.</b> Kalau satu transaksi membelanjakan dana dari <b>beberapa alamat sekaligus</b>, maka pengirimnya harus memegang <b>kunci privat semua alamat itu</b>.<br><br>
+Alasannya sederhana: setiap masukan harus ditandatangani secara terpisah. Tak mungkin kamu menandatangani milik orang lain. Jadi alamat-alamat itu pasti <b>satu pemilik</b>.
+</div>
+
+<p>Ini bukan tebakan — ini konsekuensi langsung dari cara kerja tanda tangan digital yang sudah kamu pelajari. Dan efeknya besar sekali:</p>
+
+<div data-demo="klaster-alamat"></div>
+
+<h3>Kenapa ini disebut "heuristik", bukan "bukti"</h3>
+<div class="callout warn">
+Aturan ini <b>hampir selalu</b> benar, tapi ada pengecualiannya — misalnya <b>CoinJoin</b>, di mana banyak orang sengaja bergabung dalam satu transaksi untuk mematahkan aturan ini.<br><br>
+Karena itu analis menyebutnya <b>heuristik</b>: aturan praktis yang sangat berguna tapi <b>bukan bukti mutlak</b>. Dalam konteks hukum, perbedaan ini penting — hasil klasterisasi adalah <b>petunjuk untuk diselidiki</b>, bukan vonis.
+</div>
+
+<h3>Heuristik lain yang dipakai</h3>
+<table class="tbl">
+  <tr><th>Heuristik</th><th>Cara kerjanya</th><th>Keandalannya</th></tr>
+  <tr><td><b>Deteksi kembalian</b></td><td>Keluaran dengan banyak angka di belakang koma biasanya kembalian; yang bulat biasanya pembayaran</td><td>Sedang</td></tr>
+  <tr><td><b>Pemakaian ulang alamat</b></td><td>Alamat yang dipakai berkali-kali mengumpulkan riwayat di satu tempat</td><td class="ok-cell">Tinggi</td></tr>
+  <tr><td><b>Pola waktu</b></td><td>Transaksi selalu pada jam tertentu membocorkan zona waktu pelaku</td><td>Rendah, tapi mempersempit</td></tr>
+  <tr><td><b>Alamat yang sudah berlabel</b></td><td>Alamat bursa &amp; layanan besar sudah dikenal luas dan didokumentasikan publik</td><td class="ok-cell">Tinggi</td></tr>
+</table>
+
+<h3>Efek bola salju</h3>
+<div class="callout">
+Kekuatan sesungguhnya muncul saat heuristik-heuristik ini <b>digabungkan</b>. Satu alamat yang teridentifikasi akan menarik seluruh klasternya; klaster itu lalu terhubung ke klaster lain lewat transaksi; dan seterusnya.<br><br>
+Inilah cara perusahaan analitik blockchain membangun basis data berisi <b>miliaran alamat berlabel</b> — bukan dengan meretas apa pun, melainkan dengan menerapkan aturan-aturan sederhana ini pada data yang memang terbuka.
+</div>
+
+<div class="callout warn">
+<b>Pelajaran praktis untuk melindungi diri:</b><br><br>
+• <b>Jangan memakai ulang alamat.</b> Buat alamat baru untuk tiap transaksi — dompet modern melakukannya otomatis.<br>
+• <b>Jangan menggabungkan</b> dana dari sumber yang ingin kamu pisahkan dalam satu transaksi. Itu langsung mengikat keduanya selamanya.<br>
+• <b>Pisahkan dompet</b> untuk keperluan berbeda, dan jangan pernah menghubungkannya.<br>
+• Sadari bahwa alamat yang pernah kamu bagikan di media sosial <b>sudah permanen</b> terhubung ke identitasmu.
+</div>
+`,
+          keyPoints: [
+            "Klasterisasi menyatukan banyak alamat yang ternyata dimiliki orang yang sama.",
+            "Common Input Ownership Heuristic: satu transaksi yang membelanjakan dari beberapa alamat berarti pengirimnya memegang kunci privat semuanya.",
+            "Aturan ini konsekuensi langsung dari tanda tangan digital — tiap masukan harus ditandatangani terpisah.",
+            "Disebut heuristik, bukan bukti, karena ada pengecualian seperti CoinJoin; hasilnya petunjuk untuk diselidiki, bukan vonis.",
+            "Heuristik lain: deteksi kembalian, pemakaian ulang alamat, pola waktu, dan alamat berlabel yang sudah dikenal publik.",
+            "Efek bola salju: satu alamat teridentifikasi menarik seluruh klaster, lalu terhubung ke klaster lain.",
+            "Melindungi diri: jangan pakai ulang alamat, jangan gabungkan dana dari sumber berbeda, pisahkan dompet per keperluan.",
+          ],
+          quiz: [
+            {
+              q: "Kenapa alamat-alamat yang dipakai bersama dalam satu transaksi dianggap satu pemilik?",
+              options: [
+                "Karena setiap masukan harus ditandatangani terpisah, jadi pengirim memegang kunci privat semuanya",
+                "Karena blockchain mencatat nama pemilik di setiap masukan transaksi",
+                "Karena bursa mewajibkan semua alamat didaftarkan atas satu nama",
+                "Karena alamat yang berdekatan nomornya selalu dibuat oleh dompet yang sama",
+              ],
+              answer: 0,
+              explain:
+                "Mustahil menandatangani masukan milik orang lain, sehingga kepemilikan bersama bisa disimpulkan langsung.",
+            },
+            {
+              q: "Kenapa klasterisasi disebut 'heuristik' dan bukan 'bukti'?",
+              options: [
+                "Karena hampir selalu benar tapi punya pengecualian seperti CoinJoin, sehingga hasilnya petunjuk, bukan vonis",
+                "Karena hasilnya hanya benar bila jumlah alamatnya kurang dari sepuluh",
+                "Karena metodenya belum pernah diuji dalam kasus nyata mana pun",
+                "Karena hasilnya berubah-ubah setiap kali perhitungannya diulang",
+              ],
+              answer: 0,
+              explain:
+                "CoinJoin sengaja menggabungkan banyak pemilik dalam satu transaksi untuk mematahkan aturan ini.",
+            },
+            {
+              q: "Manakah kebiasaan yang paling merusak privasi kriptomu sendiri?",
+              options: [
+                "Memakai ulang satu alamat yang sama untuk banyak transaksi berbeda",
+                "Membuat alamat baru setiap kali menerima pembayaran dari orang lain",
+                "Menyimpan frasa pemulihan dompet secara offline di atas kertas",
+                "Memeriksa saldo dompet lewat block explorer secara berkala",
+              ],
+              answer: 0,
+              explain:
+                "Pemakaian ulang alamat menumpuk seluruh riwayat di satu tempat sehingga sangat mudah dianalisis.",
+            },
+          ],
+        },
+        {
+          id: "bc-for-4",
+          title: "Dari Alamat ke Identitas — Titik Temu Dunia Nyata",
+          duration: "15 menit",
+          content: `
+<p>Sampai di sini kita punya klaster alamat. Tapi klaster tetap hanya deretan angka. <b>Bagaimana ia berubah menjadi sebuah nama?</b> Jawabannya mungkin mengejutkan: <b>hampir tidak pernah lewat teknologi</b>.</p>
+
+<div data-diagram="pipeline" data-stages="Analisis on-chain::menghasilkan klaster alamat|Titik cair::klaster menyentuh bursa|Permintaan resmi::penegak hukum ke bursa|Identitas::dari data KYC bursa" data-caption="Langkah terakhir terjadi di luar blockchain, lewat jalur hukum"></div>
+
+<h3>Fundamental: blockchain tidak menyimpan identitas</h3>
+<div class="callout warn">
+Ini penting dan sering disalahpahami: <b>tidak ada cara teknis mengubah alamat menjadi nama</b>. Blockchain memang tidak pernah menyimpan data itu.<br><br>
+Identitas selalu datang dari <b>luar</b> blockchain — dari tempat dunia kripto bersentuhan dengan dunia yang diatur hukum. Titik sentuh itulah yang disebut <b>off-ramp</b>.
+</div>
+
+<h3>Di mana titik sentuhnya</h3>
+<table class="tbl">
+  <tr><th>Titik sentuh</th><th>Data identitas yang ada di sana</th></tr>
+  <tr><td><b>Bursa kripto</b></td><td>KTP, swafoto, rekening bank, nomor HP — wajib secara hukum</td></tr>
+  <tr><td><b>Penyedia dompet terpusat</b></td><td>Email, nomor HP, alamat IP</td></tr>
+  <tr><td><b>Pedagang yang menerima kripto</b></td><td>Alamat pengiriman barang, data pembayaran</td></tr>
+  <tr><td><b>Jaringan ATM kripto</b></td><td>Rekaman kamera, nomor HP</td></tr>
+  <tr><td><b>Postingan publik</b></td><td>Alamat yang pernah dibagikan sendiri di media sosial atau forum</td></tr>
+</table>
+
+<h3>Kenapa pelaku hampir selalu harus lewat sana</h3>
+<div class="callout">
+Kripto hasil kejahatan <b>tidak ada gunanya selama masih berupa kripto</b>. Pelaku tidak bisa membayar sewa, membeli mobil, atau menyekolahkan anak dengan Bitcoin di rekening yang tak bisa dicairkan.<br><br>
+Cepat atau lambat ia <b>harus mencairkannya</b> — dan hampir semua jalur pencairan yang bernilai besar melewati lembaga yang wajib memverifikasi identitas. Inilah <b>leher botol</b> yang membuat penelusuran berhasil.
+</div>
+
+<h3>Bagaimana identitas itu sebenarnya diperoleh</h3>
+<div class="callout warn">
+<b>Lewat proses hukum, bukan lewat peretasan.</b><br><br>
+Penyidik menyusun laporan analisis on-chain, lalu mengajukan <b>permintaan resmi</b> kepada bursa terkait. Bursa — yang tunduk pada hukum negaranya — menyerahkan data KYC pemilik akun penerima.<br><br>
+Analisis blockchain-nya sendiri bisa dilakukan siapa saja. Tapi <b>langkah terakhirnya butuh kewenangan hukum</b>, dan hanya penegak hukum atau pihak yang diberi wewenang yang bisa menempuhnya.
+</div>
+
+<p>Di Indonesia, jalur ini melibatkan <b>PPATK</b> (Pusat Pelaporan dan Analisis Transaksi Keuangan) yang menerima laporan transaksi mencurigakan, bersama <b>OJK</b> sebagai pengawas aset kripto dan kepolisian sebagai penyidik.</p>
+
+<h3>Travel Rule — aturan yang memperluas jangkauan</h3>
+<div class="callout">
+<b>Travel Rule</b> mewajibkan penyedia jasa aset kripto saling mengirimkan <b>data identitas pengirim dan penerima</b> saat mentransfer dana di atas ambang tertentu — mirip aturan yang sudah lama berlaku pada transfer bank antarnegara.<br><br>
+Akibatnya, identitas tidak lagi berhenti di satu bursa; ia <b>ikut berpindah</b> mengikuti dananya antar-lembaga.
+</div>
+
+<h3>⚠️ Batas yang harus kamu pahami</h3>
+<div class="callout warn">
+Materi ini mengajarkan <b>cara kerjanya</b>, bukan ajakan melakukannya sendiri. Beberapa batas yang tegas:<br><br>
+• <b>Analisis on-chain itu legal</b> — datanya publik, siapa pun boleh membacanya.<br>
+• <b>Meminta data identitas ke bursa butuh kewenangan hukum.</b> Orang biasa tidak bisa dan tidak boleh.<br>
+• <b>Membongkar identitas seseorang lalu menyebarkannya</b> berpotensi melanggar UU Perlindungan Data Pribadi dan UU ITE — terlepas dari benar tidaknya dugaanmu.<br>
+• Kalau kamu menjadi korban, jalurnya adalah <b>melapor</b>, bukan menyelidiki sendiri lalu menghakimi. Salah tuduh bisa berbalik menjadi masalah hukum bagimu.
+</div>
+
+<div class="callout">
+<b>Kalau kamu jadi korban penipuan kripto — yang berguna dilakukan:</b><br>
+1. <b>Catat alamat tujuan</b> dana beserta ID transaksinya. Ini bukti yang paling penting.<br>
+2. <b>Laporkan ke bursa</b> tempat kamu mengirim — banyak bursa punya kanal khusus dan bisa membekukan dana bila cepat.<br>
+3. <b>Laporkan ke kepolisian</b> dengan menyertakan data di atas.<br>
+4. <b>Jangan</b> memakai jasa "pemulihan dana" yang menjanjikan hasil pasti — itu biasanya penipuan tahap kedua terhadap korban yang sama.
+</div>
+`,
+          keyPoints: [
+            "Tidak ada cara teknis mengubah alamat menjadi nama — blockchain memang tidak menyimpan identitas.",
+            "Identitas selalu datang dari luar blockchain, di titik sentuh dengan dunia yang diatur hukum (off-ramp).",
+            "Titik sentuh utama: bursa kripto (KTP, rekening), dompet terpusat, pedagang, ATM kripto, dan alamat yang pernah dibagikan sendiri.",
+            "Pelaku hampir selalu harus mencairkan dananya, dan jalur pencairan besar melewati lembaga ber-KYC — inilah leher botolnya.",
+            "Identitas diperoleh lewat permintaan resmi berdasar proses hukum, bukan lewat peretasan.",
+            "Di Indonesia jalurnya melibatkan PPATK, OJK, dan kepolisian.",
+            "Travel Rule mewajibkan penyedia jasa kripto saling mengirim data identitas, sehingga identitas ikut berpindah mengikuti dana.",
+            "Analisis on-chain legal; meminta data identitas butuh kewenangan hukum; menyebarkan identitas orang bisa melanggar UU PDP & UU ITE.",
+            "Jadi korban: catat alamat & ID transaksi, lapor ke bursa dan polisi, dan waspadai jasa 'pemulihan dana' yang menjanjikan hasil pasti.",
+          ],
+          quiz: [
+            {
+              q: "Bagaimana sebuah alamat kripto akhirnya terhubung ke nama seseorang?",
+              options: [
+                "Lewat data KYC di titik sentuh seperti bursa, yang diminta melalui proses hukum resmi",
+                "Lewat pemecahan enkripsi yang melindungi alamat tersebut di blockchain",
+                "Lewat data identitas yang memang tersimpan di dalam blockchain itu sendiri",
+                "Lewat penelusuran alamat IP yang otomatis tercatat pada setiap transaksi",
+              ],
+              answer: 0,
+              explain:
+                "Blockchain tidak menyimpan identitas sama sekali. Identitas datang dari lembaga ber-KYC di luar blockchain.",
+            },
+            {
+              q: "Kenapa pelaku kejahatan hampir selalu akhirnya tersentuh lembaga ber-KYC?",
+              options: [
+                "Karena kripto tidak berguna sampai dicairkan, dan jalur pencairan besar wajib memverifikasi identitas",
+                "Karena setiap transaksi blockchain otomatis dilaporkan ke bursa terdekat",
+                "Karena dompet kripto mewajibkan pendaftaran identitas sebelum bisa dipakai",
+                "Karena jaringan Bitcoin memblokir transaksi dari alamat yang tak dikenal",
+              ],
+              answer: 0,
+              explain:
+                "Inilah leher botolnya: pelaku bisa memindahkan dana berkali-kali, tapi mencairkannya sulit dilakukan diam-diam.",
+            },
+            {
+              q: "Kamu berhasil menelusuri alamat penipu dan menduga kuat siapa pemiliknya. Langkah yang tepat?",
+              options: [
+                "Laporkan temuan itu ke bursa dan kepolisian, jangan menyebarkan identitasnya sendiri",
+                "Sebarkan identitas dan bukti temuanmu di media sosial agar orang lain waspada",
+                "Hubungi orang itu langsung dan minta dana dikembalikan dengan ancaman",
+                "Minta data KYC-nya langsung ke bursa sebagai pihak yang dirugikan",
+              ],
+              answer: 0,
+              explain:
+                "Menyebarkan identitas berpotensi melanggar UU PDP & UU ITE, dan salah tuduh bisa berbalik menjadi masalah hukum bagimu.",
+            },
+            {
+              q: "Apa yang diwajibkan oleh Travel Rule?",
+              options: [
+                "Penyedia jasa aset kripto saling mengirim data identitas pengirim & penerima pada transfer di atas ambang tertentu",
+                "Semua pengguna kripto melaporkan perjalanan ke luar negeri kepada otoritas pajak",
+                "Setiap transaksi kripto dicatat identitas pengirimnya langsung di dalam blockchain",
+                "Bursa membekukan seluruh dana yang berasal dari negara lain selama masa pemeriksaan",
+              ],
+              answer: 0,
+              explain:
+                "Aturannya mirip yang sudah lama berlaku pada transfer bank antarnegara, sehingga identitas ikut berpindah bersama dana.",
+            },
+          ],
+        },
+        {
+          id: "bc-for-5",
+          title: "Alat Pengaburan & Batasnya",
+          duration: "14 menit",
+          content: `
+<p>Kalau blockchain begitu mudah ditelusuri, tentu ada upaya melawannya. Pelajaran ini membahas alat-alat pengaburan jejak, seberapa jauh mereka bekerja, dan kenapa sebagian besar akhirnya <b>gagal</b>.</p>
+
+<div data-diagram="compare3" data-cols="Mixer terpusat::Dana dititipkan::Pengelola tahu segalanya|CoinJoin::Bergabung sukarela::Bisa dianalisis statistik|Koin privasi::Privasi di protokol::Sulit dicairkan" data-caption="Tiga pendekatan menyamarkan jejak — masing-masing dengan kelemahannya"></div>
+
+<h3>1. Mixer / tumbler</h3>
+<p>Layanan yang menerima kripto dari banyak orang, mengaduknya, lalu mengembalikan sejumlah yang sama dari kumpulan yang bercampur — sehingga jejak masuk dan keluar terputus.</p>
+
+<div class="callout warn">
+<b>Kenapa sering gagal:</b><br>
+• <b>Pengelolanya tahu segalanya.</b> Kamu menyerahkan kerahasiaanmu kepada pihak yang tak kamu kenal — dan catatan mereka bisa disita.<br>
+• <b>Jumlah dan waktu membocorkan.</b> Kalau 10,3 BTC masuk lalu 10,28 BTC keluar beberapa jam kemudian, kaitannya mudah diduga.<br>
+• <b>Memakainya sendiri menimbulkan kecurigaan.</b> Banyak bursa menolak atau menahan dana yang datang langsung dari mixer.<br>
+• Beberapa mixer besar telah <b>dikenai sanksi</b> di berbagai negara, sehingga menyentuhnya justru menandai dana tersebut.
+</div>
+
+<h3>2. CoinJoin</h3>
+<p>Berbeda dari mixer, di sini tidak ada penitipan. Banyak pengguna <b>bersama-sama membuat satu transaksi</b> dengan banyak masukan dan keluaran berjumlah seragam, sehingga tak jelas keluaran mana milik siapa. Inilah yang secara langsung mematahkan heuristik masukan bersama.</p>
+
+<div class="callout">
+Lebih aman karena <b>tidak ada yang memegang danamu</b>. Tapi tetap punya batas: jumlah peserta menentukan kekuatannya, dan analisis statistik jangka panjang bisa mempersempit kemungkinan — apalagi kalau pengguna kemudian menggabungkan kembali hasilnya secara ceroboh.
+</div>
+
+<h3>3. Koin privasi</h3>
+<table class="tbl">
+  <tr><th>Koin</th><th>Cara kerjanya</th><th>Catatan</th></tr>
+  <tr><td><b>Monero</b></td><td>Privasi wajib untuk semua transaksi: pengirim, penerima, dan jumlah disamarkan</td><td>Paling kuat, tapi banyak bursa besar tidak melayaninya</td></tr>
+  <tr><td><b>Zcash</b></td><td>Privasi opsional memakai zero-knowledge proof</td><td>Karena opsional, mayoritas transaksinya justru transparan</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Pelajaran dari Zcash:</b> privasi yang bersifat <b>pilihan</b> jauh lebih lemah daripada privasi yang <b>wajib</b>. Kalau hanya sedikit orang yang memakainya, memakai fitur itu sendiri sudah menjadi penanda yang mencurigakan — dan kumpulan orang yang bisa disamai jadi kecil.
+</div>
+
+<h3>4. Jembatan lintas rantai</h3>
+<p>Memindahkan aset antar-blockchain dulu cukup ampuh memutus jejak, karena penyidik harus mengikuti dua buku besar yang berbeda. Kini alat analisis <b>sudah mampu melacak lintas rantai</b>, sehingga keunggulannya banyak berkurang.</p>
+
+<h3>Kenapa pengaburan sering gagal pada akhirnya</h3>
+<table class="tbl">
+  <tr><th>Penyebab</th><th>Penjelasan</th></tr>
+  <tr><td><b>Kesalahan manusia</b></td><td>Cukup sekali menggabungkan dana "bersih" dengan dana "kotor", dan keduanya terikat selamanya</td></tr>
+  <tr><td><b>Masalah masuk &amp; keluar</b></td><td>Dana harus datang dari suatu tempat dan pergi ke suatu tempat — kedua ujungnya sering teridentifikasi</td></tr>
+  <tr><td><b>Waktu berpihak pada penyidik</b></td><td>Data tersimpan selamanya, sementara alat analisis terus membaik. Transaksi 2016 kini lebih mudah dianalisis daripada saat itu</td></tr>
+  <tr><td><b>Memakai alat itu sendiri mencolok</b></td><td>Di lautan transaksi biasa, yang berusaha bersembunyi justru menonjol</td></tr>
+</table>
+
+<div class="callout">
+<b>Catatan penting soal niat.</b> Alat privasi <b>bukan otomatis berarti kejahatan</b>. Ada alasan yang sangat sah untuk memakainya: pengusaha yang tak ingin pesaing melihat arus kasnya, jurnalis di negara represif, atau orang biasa yang sekadar tak ingin gajinya terbaca siapa pun karena pernah sekali membagikan alamat dompet.<br><br>
+Yang penting dipahami: <b>privasi finansial adalah kebutuhan wajar</b>, tapi di blockchain ia jauh lebih sulit dicapai daripada yang dibayangkan kebanyakan orang.
+</div>
+`,
+          keyPoints: [
+            "Mixer menitipkan dana ke pihak ketiga — pengelolanya tahu segalanya dan catatannya bisa disita.",
+            "Jumlah dan waktu yang berdekatan membocorkan kaitan masuk-keluar mixer.",
+            "CoinJoin tidak menitipkan dana; banyak pengguna membuat satu transaksi bersama dengan keluaran seragam.",
+            "Monero mewajibkan privasi untuk semua transaksi; Zcash membuatnya opsional sehingga mayoritas transaksinya tetap transparan.",
+            "Privasi yang bersifat pilihan jauh lebih lemah — memakainya sendiri menjadi penanda mencurigakan.",
+            "Jembatan lintas rantai dulu ampuh memutus jejak, kini banyak alat sudah bisa melacak lintas rantai.",
+            "Pengaburan gagal karena: kesalahan manusia, masalah ujung masuk & keluar, waktu berpihak pada penyidik, dan memakai alatnya sendiri mencolok.",
+            "Alat privasi bukan otomatis berarti kejahatan — privasi finansial adalah kebutuhan yang wajar.",
+          ],
+          quiz: [
+            {
+              q: "Apa kelemahan mendasar mixer terpusat?",
+              options: [
+                "Pengelolanya mengetahui seluruh kaitan masuk-keluar, dan catatannya bisa disita",
+                "Mixer hanya bisa memproses jumlah yang sangat kecil setiap harinya",
+                "Dana yang masuk ke mixer tidak pernah bisa dikeluarkan kembali",
+                "Mixer mengubah jenis koin sehingga nilainya selalu berkurang drastis",
+              ],
+              answer: 0,
+              explain:
+                "Kamu menyerahkan kerahasiaanmu kepada pihak yang tidak kamu kenal dan tidak bisa kamu kontrol.",
+            },
+            {
+              q: "Apa beda mendasar CoinJoin dari mixer terpusat?",
+              options: [
+                "CoinJoin tidak menitipkan dana — peserta bersama-sama membuat satu transaksi tanpa perantara",
+                "CoinJoin hanya bisa dipakai pada blockchain selain Bitcoin",
+                "CoinJoin menghapus seluruh riwayat transaksi peserta dari blockchain",
+                "CoinJoin membutuhkan verifikasi identitas sebelum peserta bisa bergabung",
+              ],
+              answer: 0,
+              explain:
+                "Tidak adanya penitipan menghilangkan risiko pengelola yang tahu segalanya.",
+            },
+            {
+              q: "Kenapa privasi opsional (seperti pada Zcash) lebih lemah daripada privasi wajib?",
+              options: [
+                "Karena bila hanya sedikit yang memakainya, memakai fitur itu sendiri sudah jadi penanda mencurigakan",
+                "Karena fitur opsional selalu mengandung celah keamanan yang belum diperbaiki",
+                "Karena privasi opsional membuat transaksinya jauh lebih lambat diproses",
+                "Karena bursa melarang semua koin yang punya fitur privasi opsional",
+              ],
+              answer: 0,
+              explain:
+                "Kumpulan orang yang bisa kamu samai menjadi kecil, sehingga justru mempersempit pencarian.",
+            },
+            {
+              q: "Menurut pelajaran ini, kenapa waktu berpihak pada penyidik?",
+              options: [
+                "Karena data tersimpan selamanya sementara alat analisis terus membaik dari tahun ke tahun",
+                "Karena pelaku biasanya menyerahkan diri setelah beberapa tahun berlalu",
+                "Karena transaksi lama otomatis dibuka penyamarannya setelah 10 tahun",
+                "Karena bursa wajib menyimpan data hanya selama lima tahun terakhir",
+              ],
+              answer: 0,
+              explain:
+                "Transaksi 2016 justru lebih mudah dianalisis hari ini daripada saat transaksi itu terjadi.",
+            },
+          ],
+        },
+        {
+          id: "bc-for-6",
+          title: "Hukum, Etika & Karier di Bidang Ini",
+          duration: "13 menit",
+          content: `
+<p>Penutup modul ini bukan tentang teknik, melainkan tentang <b>batas</b> — apa yang boleh, apa yang tidak, dan bagaimana keahlian ini menjadi pekerjaan yang sah.</p>
+
+<div data-diagram="matrix" data-cells="Melacak dana curian milik sendiri|Analis kepatuhan di bursa|Membongkar identitas orang lalu menyebarkannya|Riset akademik &amp; jurnalisme" data-xlabel="Makin jelas kewenangannya" data-ylabel="Makin besar dampaknya ke orang lain" data-caption="Dua sumbu yang menentukan: seberapa besar dampaknya, dan apakah kamu punya kewenangan"></div>
+
+<h3>Yang legal dan yang tidak</h3>
+<table class="tbl">
+  <tr><th>Kegiatan</th><th>Status</th></tr>
+  <tr><td>Membaca blockchain &amp; menganalisis pola</td><td class="ok-cell">Legal — datanya memang publik</td></tr>
+  <tr><td>Melacak ke mana dana yang kamu kirim berpindah</td><td class="ok-cell">Legal</td></tr>
+  <tr><td>Menerbitkan riset pola pencucian tanpa menyebut orang</td><td class="ok-cell">Legal &amp; bermanfaat</td></tr>
+  <tr><td>Meminta data KYC ke bursa tanpa kewenangan</td><td class="bad-cell">Tidak bisa &amp; tidak boleh</td></tr>
+  <tr><td>Menyebarkan identitas seseorang dari hasil analisismu</td><td class="bad-cell">Berpotensi melanggar UU PDP &amp; UU ITE</td></tr>
+  <tr><td>Mengancam atau memeras berdasarkan temuanmu</td><td class="bad-cell">Pidana</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Bahaya salah tuduh.</b> Klasterisasi adalah <b>heuristik</b>, bukan bukti. Alamat bisa dikendalikan bursa, bisa milik korban lain, bisa hasil CoinJoin, bisa dipakai bersama.<br><br>
+Menuduh orang berdasarkan analisis yang keliru bukan hanya merusak hidup orang tak bersalah — ia juga bisa berbalik menjadi perkara hukum bagi penuduhnya. Inilah kenapa langkah terakhir sengaja diserahkan kepada lembaga yang punya kewenangan dan prosedur pembuktian.
+</div>
+
+<h3>Kerangka di Indonesia</h3>
+<table class="tbl">
+  <tr><th>Lembaga / aturan</th><th>Perannya</th></tr>
+  <tr><td><b>PPATK</b></td><td>Menerima &amp; menganalisis laporan transaksi keuangan mencurigakan</td></tr>
+  <tr><td><b>OJK</b></td><td>Mengawasi perdagangan aset kripto dan penyelenggaranya</td></tr>
+  <tr><td><b>Kepolisian</b></td><td>Menyidik dugaan tindak pidana</td></tr>
+  <tr><td><b>UU PDP</b></td><td>Melindungi data pribadi — termasuk dari pembongkaran sepihak</td></tr>
+  <tr><td><b>UU ITE</b></td><td>Mengatur pencemaran nama baik &amp; penyebaran informasi elektronik</td></tr>
+</table>
+
+<div class="callout">
+<b>Catatan:</b> pembagian kewenangan dan aturan di sektor aset kripto Indonesia <b>berubah dari waktu ke waktu</b>. Selalu rujuk ketentuan terbaru dari OJK, PPATK, dan Kementerian Keuangan. Materi ini untuk edukasi, bukan nasihat hukum.
+</div>
+
+<h3>Ini keahlian yang dibayar</h3>
+<p>Forensik blockchain adalah bidang kerja nyata yang sedang tumbuh. Beberapa jalur yang terbuka:</p>
+
+<table class="tbl">
+  <tr><th>Peran</th><th>Pekerjaannya</th></tr>
+  <tr><td><b>Analis kepatuhan bursa</b></td><td>Menyaring transaksi mencurigakan, menjalankan kewajiban AML/KYC dan Travel Rule</td></tr>
+  <tr><td><b>Analis forensik</b></td><td>Menelusuri dana untuk penegak hukum, korban peretasan, atau perusahaan asuransi</td></tr>
+  <tr><td><b>Peneliti keamanan</b></td><td>Menganalisis peretasan protokol &amp; mengungkap pola penipuan</td></tr>
+  <tr><td><b>Jurnalis data</b></td><td>Menyelidiki aliran dana untuk kepentingan publik</td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Bekal yang sebenarnya dibutuhkan</b> ternyata sangat cocok dengan yang sudah kamu pelajari di platform ini:<br><br>
+• Paham cara kerja blockchain &amp; dompet <i>(modul Fundamental &amp; Pendalaman)</i><br>
+• Bisa mengolah data dalam jumlah besar — <b>pandas</b> <i>(modul Perkakas AI)</i><br>
+• Paham pencucian uang &amp; pengendalian internal <i>(modul Audit Akuntansi)</i><br>
+• Teliti, sabar, dan <b>berhati-hati dalam menyimpulkan</b><br><br>
+Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan orang hanya menguasai satu.
+</div>
+
+<div class="callout warn">
+<b>Penutup modul.</b> Pesan terpentingnya bukan "kripto bisa dilacak", melainkan: <b>privasi finansial itu rapuh, dan sebagian besar orang salah menilai seberapa rapuhnya</b>. Pahami itu untuk melindungi dirimu sendiri, dan hormati batasnya saat berhadapan dengan data orang lain.
+</div>
+`,
+          keyPoints: [
+            "Membaca & menganalisis blockchain itu legal karena datanya publik; meminta data KYC butuh kewenangan hukum.",
+            "Menyebarkan identitas seseorang dari hasil analisis berpotensi melanggar UU PDP & UU ITE.",
+            "Klasterisasi adalah heuristik, bukan bukti — alamat bisa milik bursa, korban lain, atau hasil CoinJoin.",
+            "Salah tuduh merusak hidup orang tak bersalah dan bisa berbalik jadi perkara hukum bagi penuduhnya.",
+            "Di Indonesia: PPATK (analisis transaksi mencurigakan), OJK (pengawas aset kripto), kepolisian (penyidikan).",
+            "Jalur karier: analis kepatuhan bursa, analis forensik, peneliti keamanan, jurnalis data.",
+            "Bekalnya memadukan tiga jalur di platform ini: blockchain, pengolahan data (pandas), dan audit/AML.",
+            "Pesan inti: privasi finansial itu rapuh dan sering dinilai terlalu tinggi — lindungi dirimu, hormati batas orang lain.",
+          ],
+          quiz: [
+            {
+              q: "Manakah kegiatan yang TIDAK boleh dilakukan orang biasa?",
+              options: [
+                "Meminta data KYC seseorang kepada bursa berdasarkan hasil analisis pribadi",
+                "Membaca riwayat transaksi sebuah alamat lewat block explorer publik",
+                "Menelusuri ke mana dana yang dikirimnya sendiri berpindah tangan",
+                "Menerbitkan riset pola pencucian dana tanpa menyebut nama siapa pun",
+              ],
+              answer: 0,
+              explain:
+                "Data KYC dilindungi dan hanya bisa diminta melalui proses hukum oleh pihak berwenang.",
+            },
+            {
+              q: "Kenapa hasil klasterisasi tidak boleh dipakai untuk menuduh seseorang secara terbuka?",
+              options: [
+                "Karena klasterisasi hanya heuristik — alamat bisa milik bursa, korban lain, atau hasil CoinJoin",
+                "Karena hasil klasterisasi selalu terbukti keliru dalam setiap kasus nyata",
+                "Karena data blockchain tidak boleh dibaca tanpa izin pemilik alamat",
+                "Karena klasterisasi hanya bisa dilakukan oleh perusahaan berlisensi khusus",
+              ],
+              answer: 0,
+              explain:
+                "Heuristik memberi petunjuk kuat, tapi pembuktian membutuhkan prosedur dan kewenangan tersendiri.",
+            },
+            {
+              q: "Lembaga mana di Indonesia yang menerima dan menganalisis laporan transaksi keuangan mencurigakan?",
+              options: [
+                "PPATK",
+                "Bank Indonesia",
+                "Kementerian Perdagangan",
+                "Badan Pusat Statistik",
+              ],
+              answer: 0,
+              explain:
+                "PPATK adalah unit intelijen keuangan Indonesia; OJK mengawasi perdagangan aset kriptonya.",
+            },
+            {
+              q: "Menurut pelajaran ini, apa pesan terpenting dari seluruh modul forensik?",
+              options: [
+                "Privasi finansial itu rapuh dan sering dinilai terlalu tinggi — pahami untuk melindungi diri, hormati batasnya",
+                "Semua pengguna alat privasi kripto patut dicurigai melakukan kejahatan",
+                "Kripto sepenuhnya anonim sehingga aman dipakai untuk apa pun",
+                "Siapa pun boleh menyelidiki dan mengumumkan identitas pemilik alamat kripto",
+              ],
+              answer: 0,
+              explain:
+                "Modul ini mengajarkan cara kerjanya agar kamu bisa melindungi diri, bukan agar membongkar orang lain.",
             },
           ],
         },

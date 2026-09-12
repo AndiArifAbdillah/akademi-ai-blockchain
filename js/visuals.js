@@ -438,7 +438,10 @@ const DIAGRAMS = {
 
   /* Banding 3 kolom. <div data-diagram="compare3" data-cols="Judul::a::b|Judul::a::b|Judul::a::b"></div> */
   compare3: (ds) => {
-    const cols = (ds.cols || "").split("|").map((s) => s.split("::").map((t) => t.trim())).filter((a) => a[0]);
+    const cols = (ds.cols || "").split("|").map((s) =>
+      // potong baris yang terlalu panjang agar tidak meluber keluar kolomnya
+      s.split("::").map((t) => { t = t.trim(); return t.length > 26 ? t.slice(0, 25).trimEnd() + "…" : t; })
+    ).filter((a) => a[0]);
     const n = Math.max(1, cols.length);
     const rows = Math.max(...cols.map((c) => c.length), 1);
     const H = 30 + rows * 20;
@@ -1748,6 +1751,130 @@ DEMOS["skala-fitur"] = function (root) {
     out,
   ]));
   draw();
+};
+
+/* ---------- Demo: menelusuri aliran dana (pola peeling chain) ---------- */
+DEMOS["lacak-dana"] = function (root) {
+  const AWAL = 100;
+  const LANGKAH = [
+    { kupas: 2.0, tujuan: "Bursa A", kyc: true },
+    { kupas: 1.5, tujuan: "Dompet pribadi", kyc: false },
+    { kupas: 3.0, tujuan: "Bursa B", kyc: true },
+    { kupas: 1.2, tujuan: "Layanan mixer", kyc: false },
+    { kupas: 2.5, tujuan: "Bursa C", kyc: true },
+    { kupas: 1.8, tujuan: "Dompet pribadi", kyc: false },
+    { kupas: 4.0, tujuan: "Bursa D", kyc: true },
+  ];
+  let hop = 0;
+  const log = h("div", { class: "dm-log" });
+  const ring = h("div", { class: "dm-out" });
+
+  function ringkas() {
+    const sisa = AWAL - LANGKAH.slice(0, hop).reduce((a, b) => a + b.kupas, 0);
+    const titik = LANGKAH.slice(0, hop).filter((x) => x.kyc).length;
+    ring.innerHTML =
+      '<div class="dm-line"><span>Hop yang sudah ditelusuri</span><b>' + hop + " dari " + LANGKAH.length + "</b></div>" +
+      '<div class="dm-line"><span>Dana yang masih bergerak</span><b>' + sisa.toFixed(1) + " BTC</b></div>" +
+      '<div class="dm-line ' + (titik ? "good" : "") + '"><span>Titik ber-KYC yang tersentuh<br><i class="dm-sub">tempat identitas bisa diminta lewat jalur hukum</i></span><b>' + titik + "</b></div>" +
+      (hop >= LANGKAH.length
+        ? '<div class="dm-line big good"><span>✅ Penelusuran selesai</span><b>' + titik + " titik identitas</b></div>" +
+          '<div class="dm-note">Perhatikan polanya: pelaku memindahkan dana berkali-kali, tapi <b>setiap kali ingin mencairkannya jadi rupiah, ia harus menyentuh bursa yang wajib memverifikasi identitas</b>.<br><br>Di sinilah penelusuran on-chain berhenti dan proses hukum dimulai — penyidik tidak "meretas" apa pun, mereka <b>mengirim permintaan resmi ke bursa</b>. Itulah kenapa blockchain yang terbuka justru sering memudahkan pelacakan, bukan menyulitkan.</div>'
+        : '<div class="dm-note">Pola ini disebut <b>peeling chain</b>: dana besar terus berpindah, sambil sedikit demi sedikit "dikupas" ke berbagai tujuan agar sulit diikuti. Klik terus untuk melihat ke mana ujungnya.</div>');
+  }
+
+  const btn = h("button", { class: "btn primary", type: "button", text: "🔍 Telusuri satu hop" });
+  btn.onclick = function () {
+    if (hop >= LANGKAH.length) return;
+    const L = LANGKAH[hop];
+    hop++;
+    const sisa = AWAL - LANGKAH.slice(0, hop).reduce((a, b) => a + b.kupas, 0);
+    log.insertAdjacentHTML("beforeend",
+      '<div class="dm-li ' + (L.kyc ? "ok" : "") + '"><b>Hop ' + hop + "</b> — " + L.kupas.toFixed(1) +
+      " BTC dikupas ke <b>" + L.tujuan + "</b>" + (L.kyc ? " 🪪 <i>(wajib KYC — identitas bisa diminta)</i>" : " <i>(belum teridentifikasi)</i>") +
+      "<br><span class='dm-sub'>Sisa " + sisa.toFixed(1) + " BTC lanjut ke alamat berikutnya</span></div>");
+    if (hop >= LANGKAH.length) { btn.disabled = true; btn.textContent = "Penelusuran selesai"; }
+    ringkas();
+  };
+  const rs = h("button", { class: "btn ghost", type: "button", text: "↺ Ulangi" });
+  rs.onclick = function () {
+    hop = 0; btn.disabled = false; btn.textContent = "🔍 Telusuri satu hop";
+    log.innerHTML = '<div class="dm-li">Dana hasil pencurian: <b>' + AWAL + " BTC</b>. Klik tombol di atas untuk mengikutinya.</div>";
+    ringkas();
+  };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🕵️ <b>Demo: mengikuti aliran dana curian</b>" }),
+    h("p", { class: "demo-hint", text: "Semua transaksi blockchain tercatat permanen dan terbuka. Ikuti ke mana dana bergerak, dan perhatikan di titik mana jejaknya bertemu dunia nyata." }),
+    h("div", { class: "demo-controls" }, [btn, rs]),
+    ring,
+    log,
+  ]));
+  rs.onclick();
+};
+
+/* ---------- Demo: heuristik klasterisasi alamat ---------- */
+DEMOS["klaster-alamat"] = function (root) {
+  const ALAMAT = ["1A3f…9k", "1B7c…2m", "1C4d…8p", "1D9e…5r", "1E2f…7t", "1F6g…3v", "1G8h…1w", "1H5j…4x"];
+  const TX = [
+    { nama: "Tx #1", masuk: [0, 1] },
+    { nama: "Tx #2", masuk: [1, 2] },
+    { nama: "Tx #3", masuk: [4, 5] },
+    { nama: "Tx #4", masuk: [5, 6] },
+    { nama: "Tx #5", masuk: [3] },
+    { nama: "Tx #6", masuk: [7] },
+  ];
+  let tahap = 0; // 0 = terpisah, 1 = sudah diklaster, 2 = sudah teridentifikasi
+  const petak = h("div", { class: "dm-addr" });
+  const ring = h("div", { class: "dm-out" });
+
+  function klaster() {
+    const induk = ALAMAT.map((_, i) => i);
+    const cari = (x) => (induk[x] === x ? x : (induk[x] = cari(induk[x])));
+    TX.forEach((t) => {
+      for (let i = 1; i < t.masuk.length; i++) induk[cari(t.masuk[i])] = cari(t.masuk[0]);
+    });
+    return ALAMAT.map((_, i) => cari(i));
+  }
+
+  function gambar() {
+    const k = tahap === 0 ? ALAMAT.map((_, i) => i) : klaster();
+    const warna = {}; let n = 0;
+    k.forEach((c) => { if (warna[c] === undefined) warna[c] = n++; });
+    const kenaLabel = tahap === 2 ? k[2] : -1; // alamat ke-3 menyetor ke bursa
+    petak.innerHTML = ALAMAT.map((a, i) =>
+      '<div class="dm-chip s' + (warna[k[i]] % 5) + (k[i] === kenaLabel ? " tertandai" : "") + '">' +
+      a + (k[i] === kenaLabel ? '<span class="dm-tag">🪪 Budi S.</span>' : "") + "</div>"
+    ).join("");
+
+    const jml = Object.keys(warna).length;
+    const anggota = k.filter((x) => x === k[2]).length;
+    ring.innerHTML =
+      '<div class="dm-line"><span>Alamat yang terlihat</span><b>' + ALAMAT.length + "</b></div>" +
+      '<div class="dm-line"><span>Pemilik berbeda yang tersisa</span><b>' + jml + "</b></div>" +
+      (tahap === 0
+        ? '<div class="dm-note">Awalnya tampak seperti <b>8 orang berbeda</b>. Blockchain tidak mencantumkan nama — hanya alamat.</div>'
+        : tahap === 1
+        ? '<div class="dm-note"><b>Heuristik kepemilikan masukan bersama:</b> bila satu transaksi membelanjakan dana dari beberapa alamat sekaligus, maka pengirimnya harus memegang kunci privat <b>semua</b> alamat itu — artinya alamat-alamat tersebut <b>satu pemilik</b>.<br><br>Hanya dengan aturan sederhana ini, 8 alamat menyusut menjadi <b>' + jml + " pemilik</b>. Tidak ada peretasan sama sekali — semua datanya memang terbuka.</div>"
+        : '<div class="dm-line big good"><span>🪪 Satu klaster teridentifikasi</span><b>' + anggota + " alamat sekaligus</b></div>" +
+          '<div class="dm-note">Cukup <b>satu</b> alamat dalam klaster itu menyetor ke bursa ber-KYC, dan <b>seluruh anggota klaster</b> ikut terhubung ke identitas yang sama — termasuk transaksi bertahun-tahun sebelumnya.<br><br>Inilah sebabnya privasi di blockchain bersifat <b>rapuh dan tidak bisa ditarik kembali</b>: satu kebocoran berlaku surut ke seluruh riwayat.</div>');
+  }
+
+  const b1 = h("button", { class: "btn primary", type: "button", text: "① Terapkan heuristik klaster" });
+  const b2 = h("button", { class: "btn ghost", type: "button", text: "② Satu alamat menyetor ke bursa" });
+  b1.onclick = () => { tahap = Math.max(tahap, 1); gambar(); };
+  b2.onclick = () => { tahap = 2; gambar(); };
+  const rs = h("button", { class: "btn ghost", type: "button", text: "↺ Ulangi" });
+  rs.onclick = () => { tahap = 0; gambar(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🧩 <b>Demo: bagaimana alamat-alamat disatukan</b>" }),
+    h("p", { class: "demo-hint", text: "Delapan alamat yang tampak tak berhubungan. Terapkan satu aturan sederhana, lalu lihat berapa banyak yang sebenarnya dimiliki orang yang sama." }),
+    petak,
+    h("div", { class: "dm-tx" }, [h("span", { html: "Transaksi yang terlihat di blockchain: " + TX.map((t) => "<b>" + t.nama + "</b> (dari " + t.masuk.map((i) => ALAMAT[i]).join(" + ") + ")").join(" · ") })]),
+    h("div", { class: "demo-controls" }, [b1, b2, rs]),
+    ring,
+  ]));
+  gambar();
 };
 
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */

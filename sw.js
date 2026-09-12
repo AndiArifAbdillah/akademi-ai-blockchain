@@ -9,7 +9,7 @@
    Tanpa itu, pengguna lama akan tetap melihat materi versi lama.
    ============================================================ */
 
-const VERSI = "akademi-v3";
+const VERSI = "akademi-v4";
 
 const BERKAS = [
   "./",
