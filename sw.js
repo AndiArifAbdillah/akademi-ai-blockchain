@@ -9,7 +9,7 @@
    Tanpa itu, pengguna lama akan tetap melihat materi versi lama.
    ============================================================ */
 
-const VERSI = "akademi-v6";
+const VERSI = "akademi-v7";
 
 const BERKAS = [
   "./",
@@ -21,6 +21,7 @@ const BERKAS = [
   "./js/data/accounting-course.js",
   "./js/visuals.js",
   "./js/app.js",
+  "./js/sesi.js",
   "./js/pwa.js",
   "./js/tampilan.js",
   "./icons/icon-192.png",

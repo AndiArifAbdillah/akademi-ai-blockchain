@@ -833,3 +833,60 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
   .kal-sel { width: 11px; height: 11px; }
   .dis-atur { font-size: .84rem; gap: 10px; }
 }
+
+/* ============================================================
+   SESI HARIAN, PERISAI & TONGGAK
+   ============================================================ */
+.dis-kabar { border-radius: 10px; padding: 11px 14px; font-size: .88rem; line-height: 1.6; margin: 10px 0; }
+.dis-kabar.rayakan { background: rgba(245, 158, 11, .14); border-left: 4px solid var(--warn); }
+.dis-kabar.selamat { background: rgba(99, 102, 241, .12); border-left: 4px solid var(--primary); }
+.dis-kabar.hadiah  { background: rgba(16, 185, 129, .13); border-left: 4px solid var(--ok); }
+
+.dis-alat { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 14px 0 4px; font-size: .88rem; }
+.dis-perisai, .dis-xp { color: var(--muted); }
+.dis-perisai b, .dis-xp b { color: var(--text); font-size: 1.05rem; }
+.dis-perisai small { font-size: .78rem; }
+.dis-sesi { margin-left: auto; }
+
+/* --- halaman sesi --- */
+.sesi, .sesi-kosong, .sesi-hasil { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 28px; box-shadow: var(--shadow); }
+.sesi-kosong, .sesi-hasil { text-align: center; }
+.sesi-ikon { font-size: 3rem; line-height: 1; margin-bottom: 6px; }
+.sesi-kosong h1, .sesi-hasil h1 { margin: 6px 0 10px; font-size: 1.6rem; }
+
+.sesi-atas { margin-bottom: 16px; }
+.sesi-hitung { font-size: .8rem; color: var(--muted); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.sesi-bar { height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; margin-top: 7px; }
+.sesi-bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #6366f1, #f59e0b); transition: width .4s cubic-bezier(.22,1,.36,1); }
+.sesi-asal { font-size: .82rem; color: var(--muted); margin: 0 0 4px; }
+.sesi-tanya { font-size: 1.22rem; margin: 0 0 18px; line-height: 1.5; }
+
+.sesi-pilihan { display: flex; flex-direction: column; gap: 9px; }
+.sesi-opsi {
+  text-align: left; padding: 14px 16px; border: 2px solid var(--border);
+  background: var(--surface-2); color: var(--text); border-radius: 12px;
+  font: inherit; font-size: .95rem; line-height: 1.5; cursor: pointer;
+  transition: border-color .15s, background .15s, transform .12s;
+}
+.sesi-opsi:hover:not(:disabled) { border-color: var(--primary); transform: translateX(3px); }
+.sesi-opsi:disabled { cursor: default; opacity: .75; }
+.sesi-opsi.tepat { border-color: var(--ok); background: rgba(16, 185, 129, .14); opacity: 1; font-weight: 600; }
+.sesi-opsi.keliru { border-color: var(--bad); background: rgba(220, 38, 38, .12); opacity: 1; }
+
+.sesi-balas { margin-top: 18px; padding: 15px 17px; border-radius: 12px; font-size: .92rem; line-height: 1.65; }
+.sesi-balas.ok { background: rgba(16, 185, 129, .12); border-left: 4px solid var(--ok); }
+.sesi-balas.no { background: rgba(220, 38, 38, .10); border-left: 4px solid var(--bad); }
+.sesi-jadwal { font-size: .82rem; color: var(--muted); margin-top: 7px; }
+.sesi-lanjut { margin-top: 14px; }
+
+.sesi-xp { font-size: 1.05rem; font-weight: 700; color: var(--warn); margin: 4px 0 10px; }
+.sesi-aksi { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+.btn.besar { padding: 12px 22px; font-size: .98rem; }
+.tonggak-rayakan { background: rgba(245, 158, 11, .15); border-radius: 12px; padding: 14px 16px; margin: 16px 0 4px; font-size: .93rem; line-height: 1.6; }
+
+@media (max-width: 720px) {
+  .sesi, .sesi-kosong, .sesi-hasil { padding: 20px 16px; }
+  .sesi-tanya { font-size: 1.08rem; }
+  .sesi-opsi { padding: 12px 13px; font-size: .9rem; }
+  .dis-sesi { margin-left: 0; width: 100%; text-align: center; }
+}

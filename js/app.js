@@ -83,6 +83,12 @@ const Progress = {
     if (!this.data.hari) this.data.hari = {};           // {"2026-09-13": {b:dibuka, s:selesai}}
     if (!this.data.target) this.data.target = 1;        // pelajaran diselesaikan per hari
     if (!this.data.runtunTerbaik) this.data.runtunTerbaik = 0;
+    if (!this.data.ulangan) this.data.ulangan = {};     // {"idPelajaran|nomor": {jatuh, tingkat}}
+    if (typeof this.data.perisai !== "number") this.data.perisai = 0;
+    if (!this.data.perisaiPakai) this.data.perisaiPakai = {}; // hari yang diselamatkan perisai
+    if (typeof this.data.perisaiDiberiPada !== "number") this.data.perisaiDiberiPada = 0;
+    if (!this.data.tonggak) this.data.tonggak = [];     // tonggak runtun yang sudah dirayakan
+    if (typeof this.data.xp !== "number") this.data.xp = 0;
   },
   save() {
     localStorage.setItem(STORE_KEY, JSON.stringify(this.data));
@@ -94,7 +100,11 @@ const Progress = {
     const baru = !this.data.completed[lessonId];
     this.data.completed[lessonId] = true;
     if (score) this.data.scores[lessonId] = score;
-    if (baru) this.catatHari("s"); // hanya dihitung sekali per pelajaran
+    if (baru) {
+      this.catatHari("s"); // hanya dihitung sekali per pelajaran
+      // Soal pelajaran ini masuk antrean ulangan berjarak, jatuh tempo besok.
+      if (typeof Ulangan !== "undefined") Ulangan.tanam(lessonId);
+    }
     this.save();
   },
   // Catat pelajaran terakhir yang dibuka + waktunya
@@ -128,12 +138,16 @@ const Progress = {
   // Runtun = jumlah hari berturut-turut dengan aktivitas.
   // Kalau hari ini belum ada aktivitas, hitungan dimulai dari kemarin —
   // supaya runtun tidak terlihat "putus" sebelum harinya berakhir.
+  // Hari dianggap "terisi" bila ada aktivitas ATAU diselamatkan perisai.
+  hariTerisi(d) {
+    const k = this.kunciHari(d);
+    return !!(this.data.hari || {})[k] || !!(this.data.perisaiPakai || {})[k];
+  },
   runtun() {
-    const hari = this.data.hari || {};
     const d = new Date();
-    if (!hari[this.kunciHari(d)]) d.setDate(d.getDate() - 1);
+    if (!this.hariTerisi(d)) d.setDate(d.getDate() - 1);
     let n = 0;
-    while (hari[this.kunciHari(d)]) {
+    while (this.hariTerisi(d)) {
       n++;
       d.setDate(d.getDate() - 1);
     }
@@ -167,10 +181,19 @@ const Progress = {
     if (!this.data.hari) this.data.hari = {};
     if (!this.data.target) this.data.target = 1;
     if (!this.data.runtunTerbaik) this.data.runtunTerbaik = 0;
+    if (!this.data.ulangan) this.data.ulangan = {};
+    if (typeof this.data.perisai !== "number") this.data.perisai = 0;
+    if (!this.data.perisaiPakai) this.data.perisaiPakai = {};
+    if (typeof this.data.perisaiDiberiPada !== "number") this.data.perisaiDiberiPada = 0;
+    if (!this.data.tonggak) this.data.tonggak = [];
+    if (typeof this.data.xp !== "number") this.data.xp = 0;
     this.save();
   },
   reset() {
-    this.data = { completed: {}, scores: {}, hari: {}, target: 1, runtunTerbaik: 0 };
+    this.data = {
+      completed: {}, scores: {}, hari: {}, target: 1, runtunTerbaik: 0,
+      ulangan: {}, perisai: 0, perisaiPakai: {}, perisaiDiberiPada: 0, tonggak: [], xp: 0,
+    };
     this.save();
   },
 };
@@ -370,6 +393,9 @@ function router() {
   } else if (hash.startsWith("/glossary")) {
     root.innerHTML = "";
     root.appendChild(renderGlossary());
+  } else if (hash.startsWith("/sesi")) {
+    root.innerHTML = "";
+    root.appendChild(renderSesi());
   } else if (hash.startsWith("/flashcards")) {
     root.innerHTML = "";
     root.appendChild(renderFlashcards());
@@ -417,6 +443,28 @@ function kartuDisiplin() {
     sel += `<i class="kal-sel t${tingkat}" title="${tgl} — ${ket}"></i>`;
   }
 
+  const perisai = Progress.data.perisai || 0;
+  const jatuhTempo = typeof Ulangan !== "undefined" ? Ulangan.ringkas().jatuhTempo : 0;
+  const tonggakPerisai = (Math.floor(runtun / 7) + 1) * 7;
+
+  // Kabar sekali-tampil: tonggak tercapai, perisai didapat, atau perisai terpakai.
+  let kabar = "";
+  const tCapai = typeof Tonggak !== "undefined" ? Tonggak.baru() : null;
+  if (tCapai) {
+    kabar += `<div class="dis-kabar rayakan">🎉 <b>Tonggak ${tCapai} hari tercapai!</b> ${Tonggak.PESAN[tCapai]}</div>`;
+    Tonggak.tandai(tCapai);
+  }
+  if (Progress.data.perisaiTerpakaiBaru) {
+    kabar += `<div class="dis-kabar selamat">🛡️ <b>Satu perisai terpakai.</b> Kemarin kamu absen, tapi runtunmu selamat. Perisai tersisa: ${perisai}.</div>`;
+    delete Progress.data.perisaiTerpakaiBaru;
+    Progress.save();
+  }
+  if (Progress.data.perisaiBaru) {
+    kabar += `<div class="dis-kabar hadiah">🛡️ <b>Kamu mendapat satu perisai!</b> Simpan untuk hari yang benar-benar sibuk.</div>`;
+    delete Progress.data.perisaiBaru;
+    Progress.save();
+  }
+
   const pesan = tercapai
     ? `🎉 <b>Target hari ini tercapai!</b> Sampai jumpa besok.`
     : runtun > 0
@@ -441,6 +489,14 @@ function kartuDisiplin() {
         </div>
       </div>
       <p class="dis-pesan">${pesan}</p>
+      ${kabar}
+      <div class="dis-alat">
+        <span class="dis-perisai" title="Perisai menyelamatkan runtunmu bila satu hari terlewat">
+          🛡️ <b>${perisai}</b> perisai${perisai < 2 ? ` <small>(berikutnya di hari ${tonggakPerisai})</small>` : ""}
+        </span>
+        <span class="dis-xp">⭐ <b>${Progress.data.xp || 0}</b> XP</span>
+        <a class="btn primary dis-sesi" href="#/sesi">⚡ Sesi Harian${jatuhTempo ? ` · ${jatuhTempo} soal` : ""}</a>
+      </div>
       <div class="kal" aria-label="Kalender aktivitas 12 minggu terakhir">${sel}</div>
       <div class="kal-ket">
         <span>12 minggu terakhir</span>
@@ -1462,6 +1518,8 @@ function renderSidebar() {
   });
   html += `<a class="side-link ${curHash.includes("/search") ? "active" : ""}" href="#/search">🔎 Cari Materi</a>`;
   html += `<a class="side-link ${curHash.includes("/playground") ? "active" : ""}" href="#/playground">🧪 Playground</a>`;
+  const jt = typeof Ulangan !== "undefined" ? Ulangan.ringkas().jatuhTempo : 0;
+  html += `<a class="side-link ${curHash.includes("/sesi") ? "active" : ""}" href="#/sesi">⚡ Sesi Harian${jt ? ` <small>${jt} siap</small>` : ""}</a>`;
   html += `<a class="side-link ${curHash.includes("/flashcards") ? "active" : ""}" href="#/flashcards">🃏 Flashcard</a>`;
   html += `<a class="side-link ${curHash.includes("/glossary") ? "active" : ""}" href="#/glossary">📖 Glosarium</a>`;
   html += `<div class="side-mod">Simpanan Kemajuan</div>`;
@@ -1528,6 +1586,9 @@ function init() {
       if (location.hash.startsWith("#/lesson/")) router();
     });
   }
+  // Perisai runtun diperiksa sekali saat aplikasi dibuka:
+  // memberi hadiah tiap 7 hari runtun, dan menyelamatkan satu hari yang terlewat.
+  if (typeof Perisai !== "undefined") Perisai.perbarui();
   window.addEventListener("hashchange", router);
   document.getElementById("menu-toggle").onclick = () => {
     document.getElementById("sidebar").classList.toggle("open");
