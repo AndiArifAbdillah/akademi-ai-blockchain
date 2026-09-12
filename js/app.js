@@ -80,6 +80,9 @@ const Progress = {
     }
     if (!this.data.completed) this.data.completed = {}; // {lessonId: true}
     if (!this.data.scores) this.data.scores = {};       // {lessonId: {correct,total}}
+    if (!this.data.hari) this.data.hari = {};           // {"2026-09-13": {b:dibuka, s:selesai}}
+    if (!this.data.target) this.data.target = 1;        // pelajaran diselesaikan per hari
+    if (!this.data.runtunTerbaik) this.data.runtunTerbaik = 0;
   },
   save() {
     localStorage.setItem(STORE_KEY, JSON.stringify(this.data));
@@ -88,14 +91,60 @@ const Progress = {
     return !!this.data.completed[lessonId];
   },
   markDone(lessonId, score) {
+    const baru = !this.data.completed[lessonId];
     this.data.completed[lessonId] = true;
     if (score) this.data.scores[lessonId] = score;
+    if (baru) this.catatHari("s"); // hanya dihitung sekali per pelajaran
     this.save();
   },
   // Catat pelajaran terakhir yang dibuka + waktunya
   touch(lessonId) {
     this.data.last = lessonId;
     this.data.lastAt = Date.now();
+    this.catatHari("b");
+    this.save();
+  },
+
+  /* ---------- Disiplin harian ---------- */
+  // Kunci tanggal memakai waktu LOKAL, bukan UTC, supaya pergantian hari
+  // terasa benar bagi pengguna (tengah malam di zona waktunya sendiri).
+  kunciHari(d) {
+    const t = d || new Date();
+    const p = (n) => String(n).padStart(2, "0");
+    return t.getFullYear() + "-" + p(t.getMonth() + 1) + "-" + p(t.getDate());
+  },
+  catatHari(jenis) {
+    if (!this.data.hari) this.data.hari = {};
+    const k = this.kunciHari();
+    const h = this.data.hari[k] || { b: 0, s: 0 };
+    h[jenis] = (h[jenis] || 0) + 1;
+    this.data.hari[k] = h;
+    const r = this.runtun();
+    if (r > (this.data.runtunTerbaik || 0)) this.data.runtunTerbaik = r;
+  },
+  aktivitasHari(d) {
+    return (this.data.hari || {})[this.kunciHari(d)] || null;
+  },
+  // Runtun = jumlah hari berturut-turut dengan aktivitas.
+  // Kalau hari ini belum ada aktivitas, hitungan dimulai dari kemarin —
+  // supaya runtun tidak terlihat "putus" sebelum harinya berakhir.
+  runtun() {
+    const hari = this.data.hari || {};
+    const d = new Date();
+    if (!hari[this.kunciHari(d)]) d.setDate(d.getDate() - 1);
+    let n = 0;
+    while (hari[this.kunciHari(d)]) {
+      n++;
+      d.setDate(d.getDate() - 1);
+    }
+    return n;
+  },
+  targetTercapai() {
+    const h = this.aktivitasHari();
+    return !!h && (h.s || 0) >= (this.data.target || 1);
+  },
+  setTarget(n) {
+    this.data.target = Math.max(1, Math.min(10, parseInt(n, 10) || 1));
     this.save();
   },
   // Tentukan pelajaran untuk tombol "Lanjutkan Belajar":
@@ -115,10 +164,13 @@ const Progress = {
     this.data = obj && typeof obj === "object" ? obj : {};
     if (!this.data.completed) this.data.completed = {};
     if (!this.data.scores) this.data.scores = {};
+    if (!this.data.hari) this.data.hari = {};
+    if (!this.data.target) this.data.target = 1;
+    if (!this.data.runtunTerbaik) this.data.runtunTerbaik = 0;
     this.save();
   },
   reset() {
-    this.data = { completed: {}, scores: {} };
+    this.data = { completed: {}, scores: {}, hari: {}, target: 1, runtunTerbaik: 0 };
     this.save();
   },
 };
@@ -335,6 +387,110 @@ function router() {
 }
 
 /* ---------- Halaman: Beranda ---------- */
+/* ---------- Kartu disiplin harian ----------
+   Menampilkan runtun (streak), capaian hari ini, rekor terbaik,
+   dan kalender aktivitas 12 minggu terakhir. */
+function kartuDisiplin() {
+  const target = Progress.data.target || 1;
+  const hariIni = Progress.aktivitasHari() || { b: 0, s: 0 };
+  const runtun = Progress.runtun();
+  const rekor = Math.max(Progress.data.runtunTerbaik || 0, Progress.runtun());
+  const tercapai = Progress.targetTercapai();
+  const sisa = Math.max(0, target - (hariIni.s || 0));
+
+  // --- kalender 12 minggu, dimulai hari Senin ---
+  const mulai = new Date();
+  mulai.setHours(0, 0, 0, 0);
+  mulai.setDate(mulai.getDate() - 83);
+  mulai.setDate(mulai.getDate() - ((mulai.getDay() + 6) % 7)); // mundur ke Senin
+  const akhir = new Date();
+  akhir.setHours(0, 0, 0, 0);
+  const NAMA_BULAN = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+  let sel = "";
+  for (let d = new Date(mulai); d <= akhir; d.setDate(d.getDate() + 1)) {
+    const a = Progress.aktivitasHari(d);
+    const s = a ? a.s || 0 : 0;
+    let tingkat = 0;
+    if (a) tingkat = s >= target * 2 ? 4 : s >= target ? 3 : s >= 1 ? 2 : 1;
+    const tgl = d.getDate() + " " + NAMA_BULAN[d.getMonth()];
+    const ket = !a ? "tidak belajar" : s > 0 ? s + " pelajaran selesai" : "membuka materi";
+    sel += `<i class="kal-sel t${tingkat}" title="${tgl} — ${ket}"></i>`;
+  }
+
+  const pesan = tercapai
+    ? `🎉 <b>Target hari ini tercapai!</b> Sampai jumpa besok.`
+    : runtun > 0
+    ? `Tinggal <b>${sisa} pelajaran</b> lagi untuk menjaga runtunmu hari ini.`
+    : `Selesaikan <b>${target} pelajaran</b> hari ini untuk memulai runtun.`;
+
+  const kartu = el(`
+    <section class="disiplin ${tercapai ? "selesai" : ""}">
+      <div class="dis-atas">
+        <div class="dis-api">
+          <span class="dis-emoji">${runtun > 0 ? "🔥" : "🌱"}</span>
+          <span class="dis-angka">${runtun}</span>
+          <span class="dis-label">hari berturut-turut</span>
+        </div>
+        <div class="dis-kanan">
+          <div class="dis-hari">
+            <span>Hari ini</span>
+            <b>${hariIni.s || 0} / ${target}</b>
+          </div>
+          <div class="dis-bar"><i style="width:${Math.min(100, ((hariIni.s || 0) / target) * 100)}%"></i></div>
+          <div class="dis-rekor">Rekor terpanjang: <b>${rekor} hari</b></div>
+        </div>
+      </div>
+      <p class="dis-pesan">${pesan}</p>
+      <div class="kal" aria-label="Kalender aktivitas 12 minggu terakhir">${sel}</div>
+      <div class="kal-ket">
+        <span>12 minggu terakhir</span>
+        <span class="kal-skala">Sedikit <i class="kal-sel t0"></i><i class="kal-sel t1"></i><i class="kal-sel t2"></i><i class="kal-sel t3"></i><i class="kal-sel t4"></i> Banyak</span>
+      </div>
+      <div class="dis-atur">
+        <label>Target harian
+          <select class="dis-target">
+            ${[1, 2, 3, 5].map((n) => `<option value="${n}" ${n === target ? "selected" : ""}>${n} pelajaran/hari</option>`).join("")}
+          </select>
+        </label>
+        <label>Ingatkan pukul <input type="time" class="dis-jam" value="19:00"></label>
+        <button class="btn ghost dis-ics" type="button">📅 Pasang pengingat</button>
+      </div>
+      <p class="dis-catatan">Pengingat dipasang sebagai acara harian berulang di aplikasi kalender HP-mu — cara yang paling andal, karena situs ini berjalan tanpa server.</p>
+    </section>
+  `);
+
+  kartu.querySelector(".dis-target").onchange = (e) => {
+    Progress.setTarget(e.target.value);
+    router();
+  };
+  kartu.querySelector(".dis-ics").onclick = () => {
+    const jam = (kartu.querySelector(".dis-jam").value || "19:00").split(":");
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    const p = (n) => String(n).padStart(2, "0");
+    const tgl = d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate());
+    const cap = new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+    const ics = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Akademi AI Blockchain//ID", "CALSCALE:GREGORIAN",
+      "BEGIN:VEVENT",
+      "UID:akademi-belajar-harian@akademi",
+      "DTSTAMP:" + cap,
+      "DTSTART:" + tgl + "T" + p(jam[0]) + p(jam[1]) + "00",
+      "RRULE:FREQ=DAILY",
+      "SUMMARY:Belajar di Akademi AI & Blockchain",
+      "DESCRIPTION:Buka aplikasinya dan selesaikan target hari ini.",
+      "BEGIN:VALARM", "TRIGGER:PT0M", "ACTION:DISPLAY", "DESCRIPTION:Waktunya belajar", "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR",
+    ].join("\r\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+    a.download = "pengingat-belajar-harian.ics";
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  };
+  return kartu;
+}
+
 function renderHome() {
   const wrap = el(`<div class="page"></div>`);
 
@@ -378,6 +534,9 @@ function renderHome() {
     const isi = wrap.querySelector(".ring-isi");
     if (isi) isi.style.strokeDashoffset = (314.16 * (1 - overall / 100)).toFixed(2);
   }, 50);
+
+  // Kartu disiplin harian — runtun, target hari ini, & kalender aktivitas
+  wrap.appendChild(kartuDisiplin());
 
   // Kartu "Lanjutkan Belajar" — tahu sampai mana progres belajarmu
   const resumeId = Progress.resumeLessonId();
