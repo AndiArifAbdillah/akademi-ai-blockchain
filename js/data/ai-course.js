@@ -947,9 +947,9 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
               q: "Manakah prompt yang lebih baik?",
               options: [
                 "'Kamu editor. Ringkas teks ini jadi 3 poin untuk pembaca pemula'",
-                "'Tolong ringkas teks berikut ini dengan sebaik-baiknya ya'",
-                "'Ringkas'",
-                "'Buatkan ringkasan yang bagus, menarik, dan enak dibaca'",
+                "'Tolong ringkas teks berikut ini dengan sebaik-baiknya ya, terima kasih'",
+                "'Ringkas teks di bawah ini secara singkat, padat, dan jelas sekali'",
+                "'Buatkan ringkasan yang bagus, menarik, dan enak dibaca semua orang'",
               ],
               answer: 0,
               explain:
@@ -1317,10 +1317,10 @@ const res = await client.messages.create({
             {
               q: "Apa fungsi 'guardrails' pada AI Tutor?",
               options: [
-                "Membatasi perilaku, misalnya tetap pada topik dan tidak membocorkan kunci jawaban",
-                "Mempercepat jawaban dengan membatasi panjang keluaran model",
-                "Menyaring kata kasar dari pertanyaan yang diketik pengguna",
-                "Mencegah pengguna memakai aplikasi lebih dari batas hariannya",
+                "Membatasi perilaku AI, misalnya tetap di topik & tak membocorkan jawaban",
+                "Mempercepat jawaban dengan membatasi panjang keluaran dari model",
+                "Menyaring kata kasar dari pertanyaan yang diketik oleh pengguna",
+                "Mencegah pengguna memakai aplikasi melebihi batas pemakaian harian",
               ],
               answer: 0,
               explain:
@@ -3219,10 +3219,10 @@ console.log(hasil);     // hasil: 32</pre>
             {
               q: "Apa beda pustaka (library) dan kerangka kerja (framework)?",
               options: [
-                "Pustaka: kode siap pakai yang alurnya kamu atur; kerangka kerja: alurnya sudah ditentukan",
-                "Pustaka selalu gratis, sedangkan kerangka kerja selalu berbayar",
-                "Pustaka hanya untuk data, kerangka kerja hanya untuk tampilan",
-                "Pustaka ditulis Python, kerangka kerja ditulis bahasa C++",
+                "Pustaka: kamu yang atur alurnya; kerangka kerja: alurnya sudah ditentukan",
+                "Pustaka selalu gratis dipakai, sedangkan kerangka kerja selalu berbayar",
+                "Pustaka khusus mengolah data, kerangka kerja khusus membuat tampilan",
+                "Pustaka ditulis dengan Python, kerangka kerja ditulis dengan bahasa C++",
               ],
               answer: 0,
               explain:
@@ -3827,10 +3827,10 @@ print(classification_report(y_uji, y_tebak))</pre>
             {
               q: "cross_val_score memberi rata-rata 85% dengan simpangan 15%. Apa artinya?",
               options: [
-                "Hasilnya sangat bergantung pembagian data sehingga belum bisa dipercaya",
-                "Model sudah sangat andal karena rata-ratanya cukup tinggi",
-                "Modelnya pasti mengalami overfitting pada data latihnya",
-                "Jumlah datanya terlalu banyak sehingga perlu dikurangi",
+                "Hasilnya sangat bergantung cara data dibagi, jadi belum bisa dipercaya",
+                "Model sudah sangat andal karena rata-rata akurasinya cukup tinggi",
+                "Model itu pasti mengalami overfitting berat pada data latihnya",
+                "Jumlah datanya terlalu banyak sehingga sebaiknya dikurangi dulu",
               ],
               answer: 0,
               explain:

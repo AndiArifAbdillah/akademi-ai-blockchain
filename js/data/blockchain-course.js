@@ -480,12 +480,12 @@ const BLOCKCHAIN_COURSE = {
             {
               q: "Perbedaan utama Ethereum dibanding Bitcoin?",
               options: [
-                "Ethereum lebih murah selalu",
-                "Ethereum bisa menjalankan program/smart contract",
-                "Ethereum tidak pakai blockchain",
-                "Ethereum dikontrol bank",
+                "Ethereum bisa menjalankan program (smart contract) di jaringannya",
+                "Ethereum selalu lebih murah biaya transaksinya daripada Bitcoin",
+                "Ethereum tidak memakai blockchain, melainkan basis data terpusat",
+                "Ethereum dikendalikan oleh konsorsium bank-bank internasional",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Kemampuan menjalankan smart contract adalah pembeda utama Ethereum.",
             },
@@ -2360,10 +2360,10 @@ Bandingkan dengan kebocoran data bank: setidaknya masih ada satu pihak yang bisa
             {
               q: "Apa beda 'pseudonim' dan 'anonim' dalam konteks blockchain?",
               options: [
-                "Pseudonim memakai nama samaran tetap yang bisa dihubungkan ke identitas asli bila bocor sekali saja",
-                "Pseudonim berarti transaksinya dienkripsi sehingga tidak ada yang bisa membacanya",
-                "Pseudonim berarti identitas pengguna disimpan bursa tapi tidak di blockchain",
-                "Pseudonim dan anonim sebenarnya dua istilah untuk hal yang sama",
+                "Pseudonim memakai nama samaran tetap yang bisa terhubung ke identitas asli",
+                "Pseudonim berarti transaksinya dienkripsi sehingga tak ada yang bisa membaca",
+                "Pseudonim berarti identitas disimpan bursa, tetapi tidak dicatat di blockchain",
+                "Pseudonim dan anonim sebenarnya dua istilah berbeda untuk hal yang sama",
               ],
               answer: 0,
               explain:
@@ -2372,10 +2372,10 @@ Bandingkan dengan kebocoran data bank: setidaknya masih ada satu pihak yang bisa
             {
               q: "Kenapa kebocoran privasi di blockchain disebut bersifat 'surut'?",
               options: [
-                "Karena yang terbongkar bukan hanya transaksi baru, tapi seluruh riwayat alamat itu sejak awal",
-                "Karena data lama otomatis dihapus setelah beberapa tahun berlalu",
-                "Karena hanya transaksi setelah kebocoran yang bisa dilihat publik",
-                "Karena pengguna bisa meminta bursa menutup akses ke riwayatnya",
+                "Yang terbongkar bukan hanya transaksi baru, tapi seluruh riwayat sejak awal",
+                "Data lama di blockchain otomatis dihapus setelah beberapa tahun berlalu",
+                "Hanya transaksi setelah kebocoran terjadi yang bisa dilihat oleh publik",
+                "Pengguna bisa meminta bursa menutup akses publik ke seluruh riwayatnya",
               ],
               answer: 0,
               explain:
@@ -2461,9 +2461,9 @@ Untuk Bitcoin ada <i>mempool.space</i> dan <i>blockstream.info</i>; untuk Ethere
               q: "Apa yang bisa dilihat siapa pun dari sebuah alamat Bitcoin lewat block explorer?",
               options: [
                 "Seluruh riwayat transaksi, waktu, jumlah, dan alamat lawan transaksinya",
-                "Nama dan alamat rumah pemilik alamat tersebut",
-                "Hanya saldo saat ini, tanpa riwayat transaksi apa pun",
-                "Tidak ada, kecuali punya izin khusus dari pemilik alamat",
+                "Nama lengkap dan alamat rumah pemilik alamat tersebut beserta KTP-nya",
+                "Hanya saldo saat ini, tanpa riwayat transaksi apa pun sebelumnya",
+                "Tidak ada apa pun, kecuali punya izin khusus dari pemilik alamat itu",
               ],
               answer: 0,
               explain:
@@ -2472,10 +2472,10 @@ Untuk Bitcoin ada <i>mempool.space</i> dan <i>blockstream.info</i>; untuk Ethere
             {
               q: "Kenapa 'alamat kembalian' penting dalam penelusuran Bitcoin?",
               options: [
-                "Karena bila penyidik bisa menebak mana keluaran kembalian, ia bisa terus mengikuti dompet yang sama",
-                "Karena alamat kembalian selalu dicatat atas nama pemiliknya di blockchain",
-                "Karena kembalian selalu dikirim ke bursa tempat pengguna terdaftar",
-                "Karena transaksi dengan kembalian tidak bisa ditelusuri sama sekali",
+                "Bila kembalian bisa ditebak, penyidik bisa terus mengikuti dompet yang sama",
+                "Alamat kembalian selalu dicatat atas nama pemiliknya di dalam blockchain",
+                "Kembalian selalu dikirim ke bursa tempat pengguna itu terdaftar sebelumnya",
+                "Transaksi yang punya kembalian sama sekali tidak bisa ditelusuri penyidik",
               ],
               answer: 0,
               explain:
@@ -2484,10 +2484,10 @@ Untuk Bitcoin ada <i>mempool.space</i> dan <i>blockstream.info</i>; untuk Ethere
             {
               q: "Pola 'peeling chain' menandakan apa?",
               options: [
-                "Dana besar terus berpindah sambil sedikit demi sedikit dikupas — ciri khas upaya pencucian",
+                "Dana besar terus berpindah sambil sedikit-sedikit dikupas — ciri pencucian",
                 "Banyak alamat berbeda menggabungkan dananya ke dalam satu alamat tujuan",
-                "Transaksi yang gagal dan dikembalikan ke alamat pengirim semula",
-                "Pembayaran rutin bulanan dengan jumlah yang selalu sama persis",
+                "Transaksi gagal yang dikembalikan lagi ke alamat pengirim semulanya",
+                "Pembayaran rutin bulanan dengan jumlah yang selalu sama persis setiap kali",
               ],
               answer: 0,
               explain:
@@ -2566,10 +2566,10 @@ Inilah cara perusahaan analitik blockchain membangun basis data berisi <b>miliar
             {
               q: "Kenapa alamat-alamat yang dipakai bersama dalam satu transaksi dianggap satu pemilik?",
               options: [
-                "Karena setiap masukan harus ditandatangani terpisah, jadi pengirim memegang kunci privat semuanya",
-                "Karena blockchain mencatat nama pemilik di setiap masukan transaksi",
-                "Karena bursa mewajibkan semua alamat didaftarkan atas satu nama",
-                "Karena alamat yang berdekatan nomornya selalu dibuat oleh dompet yang sama",
+                "Tiap masukan ditandatangani terpisah, jadi pengirim memegang semua kuncinya",
+                "Blockchain mencatat nama pemilik di setiap masukan transaksi yang dikirim",
+                "Bursa mewajibkan semua alamat milik seseorang didaftarkan atas satu nama",
+                "Alamat yang nomornya berdekatan selalu dibuat oleh dompet yang sama",
               ],
               answer: 0,
               explain:
@@ -2578,10 +2578,10 @@ Inilah cara perusahaan analitik blockchain membangun basis data berisi <b>miliar
             {
               q: "Kenapa klasterisasi disebut 'heuristik' dan bukan 'bukti'?",
               options: [
-                "Karena hampir selalu benar tapi punya pengecualian seperti CoinJoin, sehingga hasilnya petunjuk, bukan vonis",
-                "Karena hasilnya hanya benar bila jumlah alamatnya kurang dari sepuluh",
-                "Karena metodenya belum pernah diuji dalam kasus nyata mana pun",
-                "Karena hasilnya berubah-ubah setiap kali perhitungannya diulang",
+                "Hampir selalu benar, tapi ada pengecualian seperti CoinJoin — jadi petunjuk",
+                "Hasilnya hanya benar bila jumlah alamat yang dianalisis kurang dari sepuluh",
+                "Metodenya belum pernah sekali pun diuji dalam kasus nyata mana pun",
+                "Hasilnya selalu berubah-ubah setiap kali perhitungannya diulang kembali",
               ],
               answer: 0,
               explain:
@@ -2691,10 +2691,10 @@ Materi ini mengajarkan <b>cara kerjanya</b>, bukan ajakan melakukannya sendiri. 
             {
               q: "Kenapa pelaku kejahatan hampir selalu akhirnya tersentuh lembaga ber-KYC?",
               options: [
-                "Karena kripto tidak berguna sampai dicairkan, dan jalur pencairan besar wajib memverifikasi identitas",
-                "Karena setiap transaksi blockchain otomatis dilaporkan ke bursa terdekat",
-                "Karena dompet kripto mewajibkan pendaftaran identitas sebelum bisa dipakai",
-                "Karena jaringan Bitcoin memblokir transaksi dari alamat yang tak dikenal",
+                "Kripto baru berguna setelah dicairkan, dan jalur pencairannya wajib KYC",
+                "Setiap transaksi blockchain otomatis dilaporkan ke bursa yang terdekat",
+                "Dompet kripto mewajibkan pendaftaran identitas sebelum bisa dipakai",
+                "Jaringan Bitcoin memblokir transaksi yang datang dari alamat tak dikenal",
               ],
               answer: 0,
               explain:
@@ -2715,10 +2715,10 @@ Materi ini mengajarkan <b>cara kerjanya</b>, bukan ajakan melakukannya sendiri. 
             {
               q: "Apa yang diwajibkan oleh Travel Rule?",
               options: [
-                "Penyedia jasa aset kripto saling mengirim data identitas pengirim & penerima pada transfer di atas ambang tertentu",
-                "Semua pengguna kripto melaporkan perjalanan ke luar negeri kepada otoritas pajak",
-                "Setiap transaksi kripto dicatat identitas pengirimnya langsung di dalam blockchain",
-                "Bursa membekukan seluruh dana yang berasal dari negara lain selama masa pemeriksaan",
+                "Penyedia jasa kripto saling mengirim identitas pengirim & penerima transfer besar",
+                "Semua pengguna kripto wajib melaporkan perjalanan ke luar negeri pada pajak",
+                "Setiap transaksi kripto mencatat identitas pengirim langsung di blockchain",
+                "Bursa membekukan seluruh dana dari negara lain selama masa pemeriksaan",
               ],
               answer: 0,
               explain:
@@ -2807,10 +2807,10 @@ Yang penting dipahami: <b>privasi finansial adalah kebutuhan wajar</b>, tapi di 
             {
               q: "Apa beda mendasar CoinJoin dari mixer terpusat?",
               options: [
-                "CoinJoin tidak menitipkan dana — peserta bersama-sama membuat satu transaksi tanpa perantara",
-                "CoinJoin hanya bisa dipakai pada blockchain selain Bitcoin",
+                "CoinJoin tidak menitipkan dana — peserta membuat satu transaksi bersama",
+                "CoinJoin hanya bisa dipakai pada blockchain lain, bukan pada Bitcoin",
                 "CoinJoin menghapus seluruh riwayat transaksi peserta dari blockchain",
-                "CoinJoin membutuhkan verifikasi identitas sebelum peserta bisa bergabung",
+                "CoinJoin mewajibkan verifikasi identitas sebelum peserta boleh bergabung",
               ],
               answer: 0,
               explain:
@@ -2819,10 +2819,10 @@ Yang penting dipahami: <b>privasi finansial adalah kebutuhan wajar</b>, tapi di 
             {
               q: "Kenapa privasi opsional (seperti pada Zcash) lebih lemah daripada privasi wajib?",
               options: [
-                "Karena bila hanya sedikit yang memakainya, memakai fitur itu sendiri sudah jadi penanda mencurigakan",
-                "Karena fitur opsional selalu mengandung celah keamanan yang belum diperbaiki",
-                "Karena privasi opsional membuat transaksinya jauh lebih lambat diproses",
-                "Karena bursa melarang semua koin yang punya fitur privasi opsional",
+                "Bila hanya sedikit yang memakainya, memakai fitur itu sudah jadi penanda",
+                "Fitur opsional selalu mengandung celah keamanan yang belum diperbaiki",
+                "Privasi opsional membuat setiap transaksinya jauh lebih lambat diproses",
+                "Bursa di seluruh dunia melarang koin yang punya fitur privasi opsional",
               ],
               answer: 0,
               explain:
@@ -2831,10 +2831,10 @@ Yang penting dipahami: <b>privasi finansial adalah kebutuhan wajar</b>, tapi di 
             {
               q: "Menurut pelajaran ini, kenapa waktu berpihak pada penyidik?",
               options: [
-                "Karena data tersimpan selamanya sementara alat analisis terus membaik dari tahun ke tahun",
-                "Karena pelaku biasanya menyerahkan diri setelah beberapa tahun berlalu",
-                "Karena transaksi lama otomatis dibuka penyamarannya setelah 10 tahun",
-                "Karena bursa wajib menyimpan data hanya selama lima tahun terakhir",
+                "Data tersimpan selamanya, sementara alat analisis terus membaik tiap tahun",
+                "Pelaku biasanya menyerahkan diri setelah beberapa tahun lamanya berlalu",
+                "Transaksi lama otomatis dibuka penyamarannya setelah sepuluh tahun",
+                "Bursa hanya wajib menyimpan data pengguna selama lima tahun terakhir",
               ],
               answer: 0,
               explain:
@@ -2931,10 +2931,10 @@ Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan ora
             {
               q: "Kenapa hasil klasterisasi tidak boleh dipakai untuk menuduh seseorang secara terbuka?",
               options: [
-                "Karena klasterisasi hanya heuristik — alamat bisa milik bursa, korban lain, atau hasil CoinJoin",
-                "Karena hasil klasterisasi selalu terbukti keliru dalam setiap kasus nyata",
-                "Karena data blockchain tidak boleh dibaca tanpa izin pemilik alamat",
-                "Karena klasterisasi hanya bisa dilakukan oleh perusahaan berlisensi khusus",
+                "Klasterisasi hanya heuristik — alamatnya bisa milik bursa atau korban lain",
+                "Hasil klasterisasi selalu terbukti keliru dalam setiap kasus yang nyata",
+                "Data blockchain tidak boleh dibaca tanpa izin tertulis dari pemilik alamat",
+                "Klasterisasi hanya boleh dilakukan perusahaan yang punya lisensi khusus",
               ],
               answer: 0,
               explain:
@@ -2955,10 +2955,10 @@ Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan ora
             {
               q: "Menurut pelajaran ini, apa pesan terpenting dari seluruh modul forensik?",
               options: [
-                "Privasi finansial itu rapuh dan sering dinilai terlalu tinggi — pahami untuk melindungi diri, hormati batasnya",
-                "Semua pengguna alat privasi kripto patut dicurigai melakukan kejahatan",
-                "Kripto sepenuhnya anonim sehingga aman dipakai untuk apa pun",
-                "Siapa pun boleh menyelidiki dan mengumumkan identitas pemilik alamat kripto",
+                "Privasi finansial itu rapuh — pahami untuk melindungi diri, hormati batasnya",
+                "Semua pengguna alat privasi kripto patut dicurigai sedang berbuat kejahatan",
+                "Kripto sepenuhnya anonim sehingga aman dipakai untuk keperluan apa pun",
+                "Siapa pun boleh menyelidiki lalu mengumumkan identitas pemilik alamat kripto",
               ],
               answer: 0,
               explain:
@@ -4202,12 +4202,12 @@ Sepasang kunci yang sama, dua kegunaan yang berlawanan arah.
             {
               q: "Urutan yang benar dalam ECDSA adalah?",
               options: [
+                "Kunci privat → kunci publik → alamat",
                 "Alamat → kunci publik → kunci privat",
-                "Kunci privat → kunci publik → alamat (hasil hash)",
                 "Kunci publik → kunci privat → alamat",
-                "Semua dibuat bersamaan secara acak",
+                "Kunci publik → alamat → kunci privat",
               ],
-              answer: 1,
+              answer: 0,
               explain:
                 "Kunci privat menurunkan kunci publik, lalu kunci publik di-hash menjadi alamat.",
             },
@@ -4668,10 +4668,10 @@ Ini bukan kelalaian, melainkan pilihan rancangan. Blockchain memilih <b>keterbuk
             {
               q: "Apa pola pemakaian enkripsi dalam ekosistem kripto?",
               options: [
-                "Dipakai di tepi sistem — perangkat, sambungan, cadangan — sementara blockchainnya tetap terbuka",
-                "Dipakai pada seluruh transaksi di blockchain sehingga isinya tak terbaca publik",
-                "Dipakai hanya oleh bursa besar, sedangkan dompet pribadi tidak memakainya",
-                "Dipakai untuk menyembunyikan saldo alamat dari penelusuran block explorer",
+                "Di tepi sistem — perangkat, sambungan, cadangan — blockchainnya tetap terbuka",
+                "Pada seluruh transaksi di blockchain sehingga isinya tak terbaca oleh publik",
+                "Hanya oleh bursa besar, sedangkan dompet pribadi sama sekali tidak memakainya",
+                "Untuk menyembunyikan saldo setiap alamat dari penelusuran block explorer",
               ],
               answer: 0,
               explain: "Blockchain sengaja memilih keterbukaan yang bisa diverifikasi; privasi dikerjakan lewat cara lain seperti bukti tanpa pengetahuan.",
