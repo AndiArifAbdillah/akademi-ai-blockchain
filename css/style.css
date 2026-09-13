@@ -196,6 +196,7 @@ a:hover { text-decoration: underline; }
 .lvl-perbankan { background: #fae8ff; color: #a21caf; }
 .lvl-forensik { background: #ede9e4; color: #78350f; }
 .lvl-arah { background: #dbeafe; color: #1e40af; }
+.lvl-algoritma { background: #ffedd5; color: #9a3412; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .lvl-pemula { background: #14331f; color: #4ade80; }
   :root:not([data-theme="light"]) .lvl-menengah { background: #3a2c0c; color: #fbbf24; }
@@ -219,6 +220,8 @@ a:hover { text-decoration: underline; }
   :root:not([data-theme="light"]) .lvl-perkakas { background: #1f2b0e; color: #a3e635; }
   :root:not([data-theme="light"]) .lvl-perbankan { background: #2e0f33; color: #f0abfc; }
   :root:not([data-theme="light"]) .lvl-forensik { background: #2b2520; color: #fbbf24; }
+  :root:not([data-theme="light"]) .lvl-arah { background: #10203d; color: #93c5fd; }
+  :root:not([data-theme="light"]) .lvl-algoritma { background: #33190a; color: #fdba74; }
 }
 
 .lesson-list { list-style: none; margin: 0; padding: 0; }
@@ -686,6 +689,8 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
 :root[data-theme="dark"] .lvl-perkakas { background: #1f2b0e; color: #a3e635; }
 :root[data-theme="dark"] .lvl-perbankan { background: #2e0f33; color: #f0abfc; }
 :root[data-theme="dark"] .lvl-forensik { background: #2b2520; color: #fbbf24; }
+:root[data-theme="dark"] .lvl-arah { background: #10203d; color: #93c5fd; }
+:root[data-theme="dark"] .lvl-algoritma { background: #33190a; color: #fdba74; }
 
 /* ============================================================
    LAPISAN TAMPILAN — aurora, cincin progres, bilah baca,
@@ -910,3 +915,15 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
 .krip-warna i { flex: 1; height: 34px; border-radius: 8px; border: 1px solid var(--border); }
 .pc-input.lebar { width: 210px; text-align: left; }
 @media (max-width: 720px) { .pc-input.lebar { width: 100%; } .krip-hasil { font-size: .78rem; } }
+
+/* ---- Demo algoritma ML (regresi-linear, ambang-logistik, isolasi-anomali) ---- */
+.garis-terbaik { stroke: var(--ok); stroke-width: 2.5; stroke-dasharray: 7 5; fill: none; }
+.garis-ambang { stroke: var(--warn); stroke-width: 2; stroke-dasharray: 5 4; }
+.titik-pencilan { fill: var(--bad); stroke: var(--surface); stroke-width: 1.5; }
+.titik-lancar { fill: var(--ok); stroke: var(--surface); stroke-width: 1.5; }
+.cm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0 10px; }
+.cm-sel { border-radius: 10px; padding: 10px 12px; background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--border); }
+.cm-sel.ok { border-left-color: var(--ok); }
+.cm-sel.bad { border-left-color: var(--bad); }
+.cm-sel b { display: block; font-size: 1.35rem; line-height: 1.2; }
+.cm-sel span { font-size: .8rem; color: var(--muted); }

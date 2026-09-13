@@ -14,7 +14,7 @@ const COURSES = [AI_COURSE, BLOCKCHAIN_COURSE, ACCOUNTING_COURSE];
 const MODULE_ORDER = [
   // 🤖 AI
   "ai-dasar", "ai-pemula", "ai-menengah", "ai-fundamental", "ai-matematika",
-  "ai-pendalaman", "ai-arsitektur", "ai-mahir", "ai-terapan", "ai-pelengkap",
+  "ai-pendalaman", "ai-arsitektur", "ai-algoritma", "ai-mahir", "ai-terapan", "ai-pelengkap",
   "ai-tools", "ai-lanjutan", "ai-proyek", "ai-ekonomi", "ai-arah",
   // ⛓️ Blockchain
   "bc-dasar", "bc-pemula", "bc-menengah", "bc-fundamental", "bc-matematika",

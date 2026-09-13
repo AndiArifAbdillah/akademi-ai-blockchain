@@ -1999,6 +1999,286 @@ DEMOS["tukar-kunci"] = function (root) {
   draw();
 };
 
+/* ---------- Demo: regresi linear (cari garis terbaik) ---------- */
+DEMOS["regresi-linear"] = function (root) {
+  const X = [36, 45, 54, 60, 72, 80, 90, 100, 120, 140];
+  const Y = [520, 560, 650, 700, 760, 850, 900, 1000, 1150, 1330];
+  const PENCILAN = { x: 70, y: 1900 };
+  const s = { a: 5, b: 300, pencilan: false };
+  const kanvas = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+
+  const data = () => (s.pencilan ? { x: X.concat([PENCILAN.x]), y: Y.concat([PENCILAN.y]) } : { x: X, y: Y });
+  function kuadratTerkecil(d) {
+    const n = d.x.length;
+    const mx = d.x.reduce((p, q) => p + q, 0) / n;
+    const my = d.y.reduce((p, q) => p + q, 0) / n;
+    let sxy = 0, sxx = 0;
+    for (let i = 0; i < n; i++) { sxy += (d.x[i] - mx) * (d.y[i] - my); sxx += (d.x[i] - mx) * (d.x[i] - mx); }
+    const a = sxy / sxx;
+    return { a: a, b: my - a * mx };
+  }
+  function rmse(d, a, b) {
+    let t = 0;
+    for (let i = 0; i < d.x.length; i++) { const e = d.y[i] - (a * d.x[i] + b); t += e * e; }
+    return Math.sqrt(t / d.x.length);
+  }
+  const px = (x) => 40 + ((x - 20) / 140) * 460;
+  const py = (y) => 240 - (y / 2000) * 220;
+  // potong garis agar tetap di dalam area grafik (y antara 0 dan 2000)
+  // Kemiringan a selalu >= 0 di demo ini, jadi cukup cari rentang x
+  // tempat 0 <= a·x + b <= 2000, lalu irisan dengan rentang grafik 20..160.
+  function segmen(a, b) {
+    let x1 = 20, x2 = 160;
+    if (a > 0) {
+      x1 = Math.max(20, -b / a);
+      x2 = Math.min(160, (2000 - b) / a);
+    }
+    if (x1 > x2) x2 = x1; // garis sepenuhnya di luar area: jadikan titik
+    const yj = (x) => Math.min(2000, Math.max(0, a * x + b));
+    return [px(x1), py(yj(x1)), px(x2), py(yj(x2))].map((v) => v.toFixed(1));
+  }
+
+  function draw() {
+    const d = data();
+    const best = kuadratTerkecil(d);
+    const eKamu = rmse(d, s.a, s.b), eBest = rmse(d, best.a, best.b);
+    const g1 = segmen(best.a, best.b), g2 = segmen(s.a, s.b);
+    let g = '<svg viewBox="0 0 520 270" class="viz-svg" role="img" aria-label="Grafik regresi linear">';
+    g += '<line x1="40" y1="240" x2="505" y2="240" class="vaxis"/><line x1="40" y1="15" x2="40" y2="240" class="vaxis"/>';
+    g += '<text x="272" y="264" text-anchor="middle" class="vt-xs">Luas rumah (m²)</text>';
+    g += '<text x="14" y="128" text-anchor="middle" class="vt-xs" transform="rotate(-90 14 128)">Harga (juta)</text>';
+    for (let i = 0; i < d.x.length; i++) {
+      const yGaris = Math.min(2000, Math.max(0, s.a * d.x[i] + s.b));
+      g += '<line x1="' + px(d.x[i]).toFixed(1) + '" y1="' + py(d.y[i]).toFixed(1) + '" x2="' + px(d.x[i]).toFixed(1) + '" y2="' + py(yGaris).toFixed(1) + '" class="vline dim"/>';
+    }
+    g += '<line x1="' + g1[0] + '" y1="' + g1[1] + '" x2="' + g1[2] + '" y2="' + g1[3] + '" class="garis-terbaik"/>';
+    g += '<line x1="' + g2[0] + '" y1="' + g2[1] + '" x2="' + g2[2] + '" y2="' + g2[3] + '" class="vline aktif"/>';
+    for (let i = 0; i < d.x.length; i++) {
+      const pencil = s.pencilan && i === d.x.length - 1;
+      g += '<circle cx="' + px(d.x[i]).toFixed(1) + '" cy="' + py(d.y[i]).toFixed(1) + '" r="5" class="' + (pencil ? "titik-pencilan" : "vdot") + '"/>';
+    }
+    g += "</svg>";
+    kanvas.innerHTML = g;
+
+    const f = (v, n) => v.toLocaleString("id-ID", { maximumFractionDigits: n });
+    out.innerHTML =
+      '<div class="dm-line"><span>Garis kamu <i class="dm-sub">(biru tebal)</i><br><i class="dm-sub">harga = ' + f(s.a, 1) + " × luas + " + f(s.b, 0) + '</i></span><b>meleset ±Rp' + f(eKamu, 0) + " jt</b></div>" +
+      '<div class="dm-line good"><span>Garis terbaik <i class="dm-sub">(hijau putus-putus)</i><br><i class="dm-sub">harga = ' + f(best.a, 2) + " × luas + " + f(best.b, 0) + '</i></span><b>meleset ±Rp' + f(eBest, 0) + " jt</b></div>" +
+      '<div class="dm-line teks"><span>Arti kemiringannya</span><b>Tiap tambah 1 m², harga naik sekitar Rp' + f(best.a, 1) + " juta</b></div>" +
+      '<div class="dm-note">' +
+      (s.pencilan
+        ? "⚠️ <b>Satu pencilan saja</b> (rumah 70 m² seharga Rp1,9 miliar) menarik garis terbaik ke atas dan membuat tebakan untuk rumah-rumah lain ikut memburuk. Regresi linear sangat peka terhadap pencilan — karena selisih dikuadratkan, satu titik yang meleset jauh punya pengaruh sangat besar."
+        : "Geser kedua penggeser dan coba kalahkan garis hijau. Kamu tidak akan bisa: garis hijau adalah garis yang <b>jumlah kuadrat selisihnya paling kecil</b> — itulah arti 'garis terbaik' pada regresi linear. Garis putus-putus abu-abu menunjukkan seberapa jauh tiap titik dari garismu.") +
+      "</div>";
+  }
+
+  const slA = h("input", { type: "range", min: "0", max: "14", step: "0.1", value: String(s.a), class: "dm-range" });
+  const lbA = h("b", { text: "5,0" });
+  slA.oninput = () => { s.a = parseFloat(slA.value); lbA.textContent = s.a.toFixed(1).replace(".", ","); draw(); };
+  const slB = h("input", { type: "range", min: "-300", max: "900", step: "10", value: String(s.b), class: "dm-range" });
+  const lbB = h("b", { text: "300" });
+  slB.oninput = () => { s.b = parseInt(slB.value, 10); lbB.textContent = String(s.b); draw(); };
+
+  const tPas = h("button", { class: "btn primary", type: "button", text: "✨ Pasang garis terbaik" });
+  tPas.onclick = () => {
+    const best = kuadratTerkecil(data());
+    s.a = Math.round(best.a * 10) / 10; s.b = Math.round(best.b / 10) * 10;
+    slA.value = s.a; slB.value = s.b; lbA.textContent = s.a.toFixed(1).replace(".", ","); lbB.textContent = String(s.b);
+    draw();
+  };
+  const tPen = h("button", { class: "btn ghost", type: "button" });
+  const syncPen = () => { tPen.textContent = s.pencilan ? "↺ Hapus pencilan" : "⚠️ Tambah satu pencilan"; };
+  tPen.onclick = () => { s.pencilan = !s.pencilan; syncPen(); draw(); };
+  syncPen();
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "📈 <b>Demo: mencari garis terbaik</b>" }),
+    h("p", { class: "demo-hint", text: "Sepuluh rumah dengan luas dan harganya. Atur kemiringan dan titik awal garis biru agar sedekat mungkin dengan semua titik." }),
+    kanvas,
+    h("label", { class: "dm-row" }, [h("span", { text: "Kemiringan (a): " }), slA, lbA]),
+    h("label", { class: "dm-row" }, [h("span", { text: "Titik awal (b): " }), slB, lbB]),
+    h("div", { class: "demo-controls" }, [tPas, tPen]),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: regresi logistik & ambang keputusan ---------- */
+DEMOS["ambang-logistik"] = function (root) {
+  // [peluang gagal bayar menurut model, kenyataan: 1 = benar-benar gagal bayar]
+  const DATA = [[0.03, 0], [0.07, 0], [0.12, 0], [0.15, 0], [0.22, 1], [0.25, 0], [0.31, 0], [0.36, 0], [0.42, 1], [0.45, 0],
+    [0.51, 0], [0.55, 1], [0.61, 0], [0.66, 1], [0.72, 1], [0.78, 0], [0.83, 1], [0.88, 1], [0.93, 1], [0.97, 1]];
+  let ambang = 0.5;
+  const kanvas = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+  const px = (z) => 40 + ((z + 5) / 10) * 460;
+  const py = (p) => 230 - p * 210;
+  const logit = (p) => Math.log(p / (1 - p));
+
+  function draw() {
+    let tp = 0, fp = 0, fn = 0, tn = 0;
+    DATA.forEach((d) => {
+      const tebak = d[0] >= ambang ? 1 : 0;
+      if (tebak === 1 && d[1] === 1) tp++;
+      else if (tebak === 1 && d[1] === 0) fp++;
+      else if (tebak === 0 && d[1] === 1) fn++;
+      else tn++;
+    });
+    const presisi = tp + fp ? (tp / (tp + fp)) * 100 : 0;
+    const recall = tp + fn ? (tp / (tp + fn)) * 100 : 0;
+
+    let g = '<svg viewBox="0 0 520 262" class="viz-svg" role="img" aria-label="Kurva sigmoid dan ambang keputusan">';
+    g += '<line x1="40" y1="230" x2="505" y2="230" class="vaxis"/><line x1="40" y1="15" x2="40" y2="230" class="vaxis"/>';
+    let jalur = "";
+    for (let z = -5; z <= 5.001; z += 0.25) jalur += (z === -5 ? "M" : "L") + px(z).toFixed(1) + " " + py(1 / (1 + Math.exp(-z))).toFixed(1) + " ";
+    g += '<path d="' + jalur + '" class="vring"/>';
+    g += '<line x1="40" y1="' + py(ambang).toFixed(1) + '" x2="505" y2="' + py(ambang).toFixed(1) + '" class="garis-ambang"/>';
+    g += '<text x="500" y="' + (py(ambang) - 6).toFixed(1) + '" text-anchor="end" class="vt-xs">ambang ' + ambang.toFixed(2).replace(".", ",") + "</text>";
+    g += '<text x="272" y="254" text-anchor="middle" class="vt-xs">Skor risiko dari model (makin kanan makin berisiko)</text>';
+    g += '<text x="14" y="122" text-anchor="middle" class="vt-xs" transform="rotate(-90 14 122)">Peluang gagal bayar</text>';
+    DATA.forEach((d) => {
+      g += '<circle cx="' + px(logit(d[0])).toFixed(1) + '" cy="' + py(d[0]).toFixed(1) + '" r="6" class="' + (d[1] ? "titik-pencilan" : "titik-lancar") + '"/>';
+    });
+    g += "</svg>";
+    kanvas.innerHTML = g;
+
+    out.innerHTML =
+      '<div class="cm-grid">' +
+      '<div class="cm-sel ok"><b>' + tp + '</b><span>Gagal bayar yang tertangkap</span></div>' +
+      '<div class="cm-sel bad"><b>' + fp + '</b><span>Nasabah baik yang ikut ditolak</span></div>' +
+      '<div class="cm-sel bad"><b>' + fn + '</b><span>Gagal bayar yang lolos</span></div>' +
+      '<div class="cm-sel ok"><b>' + tn + '</b><span>Nasabah baik yang diterima</span></div>' +
+      "</div>" +
+      '<div class="dm-line"><span>Presisi<br><i class="dm-sub">dari yang ditolak, berapa yang memang berisiko</i></span><b>' + presisi.toFixed(0) + "%</b></div>" +
+      '<div class="dm-line"><span>Recall<br><i class="dm-sub">dari semua yang gagal bayar, berapa yang tertangkap</i></span><b>' + recall.toFixed(0) + "%</b></div>" +
+      '<div class="dm-note">Merah = kenyataannya gagal bayar, hijau = lancar. Semua titik <b>di atas garis ambang</b> ditolak.<br><br>Turunkan ambang: lebih banyak penunggak tertangkap, tapi lebih banyak nasabah baik ikut ditolak. Naikkan ambang: sebaliknya. <b>Modelnya sama persis — yang berubah hanya keputusan bisnis soal kesalahan mana yang lebih mahal.</b></div>';
+  }
+
+  const sl = h("input", { type: "range", min: "0.05", max: "0.95", step: "0.05", value: "0.5", class: "dm-range" });
+  const lb = h("b", { text: "0,50" });
+  sl.oninput = () => { ambang = parseFloat(sl.value); lb.textContent = ambang.toFixed(2).replace(".", ","); draw(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🎚️ <b>Demo: model memberi peluang, manusia memilih ambang</b>" }),
+    h("p", { class: "demo-hint", text: "Dua puluh pemohon kredit. Model regresi logistik menaksir peluang tiap orang gagal bayar. Geser ambangnya dan lihat siapa yang ditolak." }),
+    kanvas,
+    h("label", { class: "dm-row" }, [h("span", { text: "Ambang penolakan: " }), sl, lb]),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: Isolation Forest ---------- */
+DEMOS["isolasi-anomali"] = function (root) {
+  function pengacak(benih) {
+    let a = benih >>> 0;
+    return function () {
+      a |= 0; a = (a + 0x6d2b79f5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  // transaksi kartu: x = jam, y = nominal (juta rupiah)
+  const titik = [];
+  const rData = pengacak(7);
+  for (let i = 0; i < 26; i++) titik.push({ x: 8 + rData() * 13, y: 0.05 + rData() * 0.9, jenis: "normal" });
+  titik.push({ x: 13.5, y: 8.6, jenis: "nominal janggal" });
+  titik.push({ x: 2.5, y: 0.4, jenis: "jam janggal" });
+  titik.push({ x: 3.4, y: 5.2, jenis: "jam & nominal janggal" });
+
+  let benih = 11, ambang = 0.6;
+  const kanvas = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+
+  const n = titik.length;
+  const H = (i) => Math.log(i) + 0.5772156649;
+  const cN = 2 * H(n - 1) - (2 * (n - 1)) / n;
+
+  function kedalaman(p, rnd) {
+    let S = titik.map((_, i) => i);
+    let d = 0;
+    while (S.length > 1 && d < 40) {
+      let sumbu = rnd() < 0.5 ? "x" : "y";
+      let min = Infinity, max = -Infinity;
+      S.forEach((i) => { const v = titik[i][sumbu]; if (v < min) min = v; if (v > max) max = v; });
+      if (max === min) {
+        sumbu = sumbu === "x" ? "y" : "x"; min = Infinity; max = -Infinity;
+        S.forEach((i) => { const v = titik[i][sumbu]; if (v < min) min = v; if (v > max) max = v; });
+        if (max === min) break;
+      }
+      const potong = min + rnd() * (max - min);
+      const kiri = titik[p][sumbu] < potong;
+      S = S.filter((i) => (titik[i][sumbu] < potong) === kiri);
+      d++;
+    }
+    return d;
+  }
+
+  function hitung() {
+    const rnd = pengacak(benih);
+    const POHON = 150;
+    return titik.map((_, i) => {
+      let total = 0;
+      for (let t = 0; t < POHON; t++) total += kedalaman(i, rnd);
+      const rata = total / POHON;
+      return { i: i, rata: rata, skor: Math.pow(2, -rata / cN) };
+    });
+  }
+
+  const px = (x) => 40 + (x / 24) * 460;
+  const py = (y) => 230 - (y / 10) * 210;
+
+  function draw() {
+    const hasil = hitung();
+    let g = '<svg viewBox="0 0 520 262" class="viz-svg" role="img" aria-label="Sebaran transaksi dan skor anomali">';
+    g += '<line x1="40" y1="230" x2="505" y2="230" class="vaxis"/><line x1="40" y1="15" x2="40" y2="230" class="vaxis"/>';
+    g += '<text x="272" y="254" text-anchor="middle" class="vt-xs">Jam transaksi (0–24)</text>';
+    g += '<text x="14" y="122" text-anchor="middle" class="vt-xs" transform="rotate(-90 14 122)">Nominal (juta)</text>';
+    hasil.forEach((r) => {
+      const t = titik[r.i];
+      const anomali = r.skor >= ambang;
+      g += '<circle cx="' + px(t.x).toFixed(1) + '" cy="' + py(t.y).toFixed(1) + '" r="' + (anomali ? 8 : 5) + '" class="' + (anomali ? "titik-pencilan" : "titik-lancar") + '"/>';
+    });
+    g += "</svg>";
+    kanvas.innerHTML = g;
+
+    const urut = hasil.slice().sort((a, b) => b.skor - a.skor);
+    const normal = hasil.filter((r) => titik[r.i].jenis === "normal");
+    const rataNormal = normal.reduce((a, r) => a + r.rata, 0) / normal.length;
+    const ditandai = hasil.filter((r) => r.skor >= ambang).length;
+    const fmt = (v) => v.toFixed(1).replace(".", ",");
+
+    out.innerHTML =
+      urut.slice(0, 4).map((r, k) => {
+        const t = titik[r.i];
+        const label = t.jenis === "normal" ? "transaksi biasa" : t.jenis;
+        return '<div class="dm-line ' + (r.skor >= ambang ? "bad" : "") + '"><span>#' + (k + 1) + " — " + label +
+          '<br><i class="dm-sub">jam ' + fmt(t.x) + ", Rp" + fmt(t.y) + " jt · rata-rata terisolasi dalam " + fmt(r.rata) + ' potongan</i></span><b>skor ' + r.skor.toFixed(2).replace(".", ",") + "</b></div>";
+      }).join("") +
+      '<div class="dm-line"><span>Transaksi biasa rata-rata butuh</span><b>' + fmt(rataNormal) + " potongan</b></div>" +
+      '<div class="dm-line"><span>Ditandai anomali pada ambang ini</span><b>' + ditandai + " dari " + n + "</b></div>" +
+      '<div class="dm-note">Setiap "pohon" memotong data secara <b>acak</b> — memilih sumbu acak lalu titik potong acak — sampai satu transaksi terisolasi sendirian. Transaksi yang janggal <b>cepat terisolasi</b> karena letaknya jauh dari kerumunan; transaksi biasa tersembunyi di tengah kerumunan sehingga butuh banyak potongan.<br><br>Perhatikan transaksi <b>jam 2 dini hari bernominal kecil</b>: nominalnya wajar, tapi jamnya tidak — dan tetap tertangkap. Anomali tidak harus ekstrem di semua kolom.<br><br><i>Skor mendekati 1 = sangat janggal; sekitar 0,5 ke bawah = biasa. Tiap kali "acak ulang", angkanya sedikit berubah tapi urutan teratasnya tetap sama.</i></div>';
+  }
+
+  const sl = h("input", { type: "range", min: "0.45", max: "0.8", step: "0.01", value: "0.6", class: "dm-range" });
+  const lb = h("b", { text: "0,60" });
+  sl.oninput = () => { ambang = parseFloat(sl.value); lb.textContent = ambang.toFixed(2).replace(".", ","); draw(); };
+  const acak = h("button", { class: "btn ghost", type: "button", text: "🎲 Acak ulang hutan" });
+  acak.onclick = () => { benih = Math.floor(Math.random() * 100000); draw(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🌲 <b>Demo: Isolation Forest menemukan transaksi janggal</b>" }),
+    h("p", { class: "demo-hint", text: "29 transaksi kartu tanpa label mana yang penipuan. Model tidak diberi tahu apa pun — ia hanya mengukur seberapa mudah tiap transaksi dipisahkan dari yang lain." }),
+    kanvas,
+    h("label", { class: "dm-row" }, [h("span", { text: "Ambang skor anomali: " }), sl, lb]),
+    h("div", { class: "demo-controls" }, [acak]),
+    out,
+  ]));
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

@@ -5492,5 +5492,742 @@ Keduanya dinyatakan oleh orang yang sangat kompeten. <b>Kompetensi tidak membuat
       ],
     },
 
+    /* ---------------- LEVEL ALGORITMA (ALGORITMA ML POPULER MENDALAM) ---------------- */
+    {
+      id: "ai-algoritma",
+      level: "Algoritma",
+      title: "Algoritma ML Populer — Mendalam",
+      summary: "Regresi linear & logistik, SVM, Naive Bayes, XGBoost dalam praktik, Isolation Forest untuk deteksi anomali, PCA, DBSCAN, dan peta memilih algoritma.",
+      lessons: [
+        {
+          id: "ai-alg-1",
+          title: "Regresi Linear — Menebak Angka dengan Garis",
+          duration: "15 menit",
+          content: `
+<p>Algoritma machine learning paling tua, paling sederhana, dan — mengejutkannya — masih dipakai setiap hari di bank, pabrik, dan kantor pajak. Kalau kamu hanya boleh memahami satu model, mulailah dari sini, karena hampir semua model lain adalah pengembangannya.</p>
+
+<div data-diagram="pipeline" data-stages="Pasangan data::luas &amp; harga rumah|Tarik garis::harga = a × luas + b|Ukur meleset::selisih dikuadratkan|Garis terbaik::meleset paling kecil" data-caption="Seluruh cara kerja regresi linear dalam empat langkah"></div>
+
+<h3>Fundamental: apa yang ditebak?</h3>
+<div class="callout">
+Regresi linear menebak <b>angka</b> — harga rumah, omzet bulan depan, lama pengiriman. Caranya: mencari <b>garis lurus</b> yang paling dekat dengan semua titik data, lalu memakai garis itu untuk menebak data baru.<br><br>
+<b>ŷ = a · x + b</b><br>
+<i>ŷ</i> (dibaca "y topi") = tebakan · <i>x</i> = data yang diketahui · <b>a</b> = kemiringan · <b>b</b> = titik awal
+</div>
+
+<p>Ingat pelajaran <b>Membaca Simbol</b>: tanda topi pada ŷ menandakan <i>hasil tebakan</i>, bukan nilai sebenarnya.</p>
+
+<h3>Apa arti "garis terbaik"?</h3>
+<p>Setiap garis pasti meleset dari sebagian titik. Garis terbaik adalah yang <b>jumlah kuadrat selisihnya paling kecil</b> — disebut metode <b>kuadrat terkecil</b> (<i>least squares</i>).</p>
+
+<div class="callout warn">
+<b>Kenapa selisihnya dikuadratkan, bukan dijumlahkan biasa?</b> Karena selisih positif dan negatif akan saling meniadakan — garis yang ngawur pun bisa terlihat "selisih nol". Mengkuadratkan membuat semua selisih positif, dan sekaligus <b>menghukum kesalahan besar jauh lebih berat</b> daripada kesalahan kecil. Sifat kedua ini penting — dan juga sumber kelemahan terbesarnya, seperti akan kamu lihat.
+</div>
+
+<h3>Coba kalahkan garis terbaik</h3>
+
+<div data-demo="regresi-linear"></div>
+
+<h3>Membaca koefisien — bagian paling berguna untuk bisnis</h3>
+<p>Kemiringan <b>a</b> bukan sekadar angka matematika. Kalau a = 7,8, artinya: <b>tiap tambahan 1 m², harga naik sekitar Rp7,8 juta</b>. Inilah alasan regresi linear disukai analis — hasilnya bisa diceritakan.</p>
+
+<div class="callout warn">
+<b>⚠️ Tapi hati-hati: hubungan bukan sebab-akibat.</b> Regresi hanya menemukan bahwa dua hal bergerak bersama. Penjualan es krim dan kasus tenggelam naik bersamaan — bukan karena es krim menyebabkan tenggelam, melainkan karena keduanya naik saat musim panas. Koefisien yang besar tidak membuktikan x <i>menyebabkan</i> y.
+</div>
+
+<h3>Lebih dari satu faktor: regresi berganda</h3>
+<p>Harga rumah tidak hanya soal luas. <b>Regresi berganda</b> memakai banyak faktor sekaligus:</p>
+<p style="text-align:center"><b>harga = a₁·luas + a₂·jumlah kamar + a₃·jarak ke kota + b</b></p>
+<p>Tiap koefisien kini dibaca <b>"dengan faktor lain dianggap tetap"</b> — misalnya a₃ negatif berarti makin jauh dari kota makin murah, untuk luas dan jumlah kamar yang sama.</p>
+
+<h3>Empat kelemahan yang wajib diingat</h3>
+<table class="tbl">
+  <tr><th>Kelemahan</th><th>Artinya</th></tr>
+  <tr><td><b>Peka pencilan</b></td><td>Satu titik ekstrem bisa menarik seluruh garis — seperti di demo</td></tr>
+  <tr><td><b>Hanya bisa garis lurus</b></td><td>Hubungan yang melengkung dipaksa lurus. Ingat Kuartet Anscombe: gambar datanya dulu</td></tr>
+  <tr><td><b>Faktor yang saling mirip</b></td><td>Luas bangunan &amp; luas tanah yang sangat berkaitan membuat koefisien masing-masing tidak stabil</td></tr>
+  <tr><td><b>Menebak di luar jangkauan</b></td><td>Data 30–150 m² tidak bisa dipercaya untuk menebak rumah 2.000 m²</td></tr>
+</table>
+
+<h3>Ridge &amp; Lasso — regresi yang direm</h3>
+<p>Ingat <b>regularisasi</b> di pelajaran Melatih Model dengan Benar? Dua versi regresi linear memakainya:</p>
+<table class="tbl">
+  <tr><th></th><th>Ridge</th><th>Lasso</th></tr>
+  <tr><td><b>Cara merem</b></td><td>Mengecilkan semua koefisien</td><td>Bisa membuat koefisien tepat <b>nol</b></td></tr>
+  <tr><td><b>Akibatnya</b></td><td>Lebih stabil saat banyak faktor saling mirip</td><td>Sekaligus <b>memilih faktor</b> — yang tak berguna dibuang</td></tr>
+  <tr><td><b>Kapan dipakai</b></td><td>Semua faktor mungkin berpengaruh sedikit-sedikit</td><td>Curiga banyak faktor tidak berguna</td></tr>
+</table>
+
+<pre class="code">from sklearn.linear_model import LinearRegression, Ridge, Lasso
+
+model = LinearRegression()
+model.fit(X_latih, y_latih)
+print(model.coef_)        # kemiringan tiap faktor
+print(model.intercept_)   # titik awal b
+
+ridge = Ridge(alpha=1.0).fit(X_latih, y_latih)
+lasso = Lasso(alpha=0.1).fit(X_latih, y_latih)
+print(lasso.coef_)        # sebagian bisa bernilai 0 = faktor dibuang</pre>
+
+<div class="callout">
+<b>💡 Kenapa masih penting di era deep learning?</b> Karena ia <b>cepat, bisa dijelaskan, dan jadi pembanding dasar</b>. Kalau model rumitmu tidak jauh lebih baik daripada regresi linear, gunakan regresi linear. Banyak keputusan kredit dan penetapan harga resmi justru mensyaratkan model yang bisa dijelaskan seperti ini.
+</div>
+`,
+          keyPoints: [
+            "Regresi linear menebak ANGKA dengan mencari garis lurus ŷ = a·x + b yang paling dekat dengan semua titik.",
+            "Garis terbaik = jumlah kuadrat selisihnya paling kecil (least squares); dikuadratkan agar selisih tak saling meniadakan dan kesalahan besar dihukum berat.",
+            "Kemiringan bisa dibaca untuk bisnis: a = 7,8 berarti tiap tambah 1 m² harga naik sekitar Rp7,8 juta.",
+            "Hubungan bukan sebab-akibat: koefisien besar tidak membuktikan x menyebabkan y.",
+            "Regresi berganda memakai banyak faktor; tiap koefisien dibaca dengan faktor lain dianggap tetap.",
+            "Kelemahan: peka pencilan, hanya garis lurus, faktor yang saling mirip membuat koefisien tak stabil, dan tak bisa dipercaya di luar jangkauan data.",
+            "Ridge mengecilkan semua koefisien; Lasso bisa membuat koefisien nol sehingga sekaligus memilih faktor.",
+          ],
+          practice: [
+            { type: "number", q: "Model: harga = 7 × luas + 250 (juta). Berapa tebakan harga rumah 80 m²?", answer: 810, tol: 0.5, hint: "Masukkan luas = 80 ke rumusnya.", solution: "7 × 80 + 250 = 560 + 250 = Rp810 juta." },
+            { type: "number", q: "Selisih tebakan tiga rumah adalah −10, 20, dan −10 juta. Berapa jumlah kuadrat selisihnya?", answer: 600, tol: 0.5, hint: "Kuadratkan tiap selisih, lalu jumlahkan.", solution: "100 + 400 + 100 = 600. Perhatikan: kalau dijumlahkan biasa hasilnya 0 — itulah alasan dikuadratkan." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa regresi linear memakai kuadrat selisih, bukan jumlah selisih biasa?",
+              options: [
+                "Agar selisih plus dan minus tak saling hapus, dan meleset besar dihukum berat",
+                "Agar hasil perhitungannya selalu berupa bilangan bulat yang mudah dibaca",
+                "Agar garisnya otomatis melewati titik tengah dari seluruh data",
+                "Agar perhitungannya berjalan lebih cepat pada data berukuran besar",
+              ],
+              answer: 0,
+              explain: "Tanpa dikuadratkan, garis yang sangat meleset pun bisa terlihat berselisih nol.",
+            },
+            {
+              q: "Model harga rumah punya kemiringan luas = 7,8. Pernyataan mana yang paling tepat?",
+              options: [
+                "Rumah yang lebih luas 1 m² cenderung lebih mahal sekitar Rp7,8 juta",
+                "Menambah luas rumah 1 m² pasti menyebabkan harganya naik Rp7,8 juta",
+                "Rumah seluas 7,8 m² adalah ukuran yang paling banyak terjual",
+                "Harga rumah rata-rata naik 7,8% setiap kali luasnya bertambah",
+              ],
+              answer: 0,
+              explain: "Regresi menemukan kecenderungan bersama, bukan sebab-akibat yang pasti.",
+            },
+            {
+              q: "Apa keunggulan khas Lasso dibanding regresi linear biasa?",
+              options: [
+                "Bisa membuat koefisien nol sehingga faktor tak berguna terbuang",
+                "Bisa menangkap hubungan melengkung tanpa perlu mengubah bentuk datanya",
+                "Tidak terpengaruh pencilan sama sekali karena tidak memakai kuadrat",
+                "Tidak memerlukan data latih karena koefisiennya ditentukan manusia",
+              ],
+              answer: 0,
+              explain: "Karena itu Lasso sering dipakai saat dicurigai banyak faktor yang sebenarnya tidak berpengaruh.",
+            },
+            {
+              q: "Model dilatih dengan rumah 30–150 m². Kenapa tebakannya untuk rumah 2.000 m² tak bisa dipercaya?",
+              options: [
+                "Karena hubungan di luar jangkauan data tidak pernah dilihat model dan bisa berbeda",
+                "Karena regresi linear hanya bisa menebak angka yang lebih kecil dari seribu",
+                "Karena rumah besar selalu dianggap pencilan dan otomatis dibuang model",
+                "Karena koefisiennya harus dihitung ulang setiap kali luasnya berubah",
+              ],
+              answer: 0,
+              explain: "Menebak di luar jangkauan (ekstrapolasi) mengandaikan pola yang sama berlanjut — anggapan yang sering keliru.",
+            },
+          ],
+        },
+        {
+          id: "ai-alg-2",
+          title: "Regresi Logistik — Menebak Ya atau Tidak",
+          duration: "15 menit",
+          content: `
+<p>Namanya membingungkan: disebut <b>regresi</b>, padahal dipakai untuk <b>klasifikasi</b> — menebak ya/tidak, lancar/gagal bayar, spam/bukan spam. Ia salah satu model yang paling banyak dipakai di dunia keuangan, dan kamu akan segera tahu kenapa.</p>
+
+<div data-diagram="pipeline" data-stages="Hitung skor::a·x + b seperti regresi|Tekan ke 0–1::lewat fungsi sigmoid|Jadi peluang::mis. 72% gagal bayar|Putuskan::bandingkan dengan ambang" data-caption="Regresi logistik = regresi linear + fungsi sigmoid + ambang keputusan"></div>
+
+<h3>Fundamental: kenapa garis lurus tidak cukup?</h3>
+<div class="callout">
+Misalnya kita ingin menebak <b>peluang</b> seseorang gagal bayar. Peluang harus di antara 0 dan 1. Tapi garis lurus bisa menghasilkan 1,4 atau −0,3 — angka yang tidak masuk akal sebagai peluang.<br><br>
+Solusinya: hitung skor seperti regresi linear, lalu <b>tekan hasilnya ke rentang 0 sampai 1</b> memakai fungsi <b>sigmoid</b> — fungsi berbentuk huruf S yang sudah kamu kenal dari pelajaran fungsi aktivasi.
+</div>
+
+<table class="tbl">
+  <tr><th>Skor dari model</th><th>Setelah sigmoid</th><th>Artinya</th></tr>
+  <tr><td>−4</td><td>0,02</td><td>Hampir pasti lancar</td></tr>
+  <tr><td>0</td><td>0,50</td><td>Tidak bisa dibedakan</td></tr>
+  <tr><td>+4</td><td>0,98</td><td>Hampir pasti gagal bayar</td></tr>
+</table>
+
+<h3>Model memberi peluang — manusia yang memutuskan</h3>
+<p>Ini bagian yang paling sering dilupakan: regresi logistik <b>tidak</b> berkata "tolak". Ia berkata "peluangnya 62%". Keputusan menolak atau menerima ditentukan oleh <b>ambang</b> yang kamu pilih.</p>
+
+<div data-demo="ambang-logistik"></div>
+
+<h3>Memilih ambang = memilih kesalahan mana yang lebih mahal</h3>
+<table class="tbl">
+  <tr><th>Kasus</th><th>Kesalahan yang lebih mahal</th><th>Ambang cenderung</th></tr>
+  <tr><td>Kredit</td><td>Meloloskan penunggak (uang hilang)</td><td>Lebih rendah</td></tr>
+  <tr><td>Filter spam</td><td>Email penting masuk folder spam</td><td>Lebih tinggi</td></tr>
+  <tr><td>Skrining penyakit</td><td>Orang sakit dinyatakan sehat</td><td>Lebih rendah</td></tr>
+  <tr><td>Penandaan penipuan</td><td>Terlalu banyak pelanggan jujur diblokir</td><td>Tergantung biaya penanganan</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Ambang 0,5 bukan aturan.</b> Itu hanya nilai bawaan. Memakai 0,5 begitu saja pada kasus kredit atau medis adalah keputusan bisnis yang diambil tanpa sadar. Hubungkan dengan pelajaran <b>precision &amp; recall</b>: ambang adalah tuas yang menggeser keseimbangan keduanya.
+</div>
+
+<h3>Kenapa bank menyukainya</h3>
+<ul>
+  <li><b>Bisa dijelaskan.</b> Tiap faktor punya koefisien yang bisa dibaca: "tunggakan sebelumnya menaikkan risiko sekian". Regulator sering mensyaratkan ini.</li>
+  <li><b>Menghasilkan peluang yang cukup terkalibrasi</b> — angka 70% memang cenderung terjadi sekitar 70% kasus.</li>
+  <li><b>Cepat dan stabil</b>, bahkan dengan data yang tidak terlalu besar.</li>
+  <li><b>Pembanding dasar</b> yang wajib dikalahkan model yang lebih rumit.</li>
+</ul>
+
+<pre class="code">from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(max_iter=1000)
+model.fit(X_latih, y_latih)
+
+peluang = model.predict_proba(X_uji)[:, 1]   # peluang kelas "gagal bayar"
+keputusan = (peluang >= 0.3).astype(int)      # ambang dipilih sendiri, bukan 0,5</pre>
+
+<div class="callout">
+<b>Batasnya:</b> seperti regresi linear, ia menganggap pengaruh tiap faktor <b>lurus</b> terhadap skor. Pola yang rumit — misalnya risiko tinggi pada usia sangat muda <i>dan</i> sangat tua — tidak tertangkap kecuali kamu menyiapkan fiturnya secara khusus. Di situlah model pohon seperti XGBoost sering unggul.
+</div>
+`,
+          keyPoints: [
+            "Meski bernama regresi, regresi logistik dipakai untuk KLASIFIKASI (ya/tidak).",
+            "Caranya: hitung skor seperti regresi linear, lalu tekan ke rentang 0–1 dengan fungsi sigmoid sehingga menjadi peluang.",
+            "Model hanya memberi peluang; keputusan ditentukan ambang yang dipilih manusia.",
+            "Ambang 0,5 hanya bawaan — memilih ambang berarti memilih kesalahan mana yang lebih mahal.",
+            "Menurunkan ambang menaikkan recall tapi menambah penolakan keliru; menaikkannya kebalikannya.",
+            "Disukai bank karena bisa dijelaskan, peluangnya cukup terkalibrasi, cepat, dan jadi pembanding dasar.",
+            "Batasnya: menganggap pengaruh faktor lurus, sehingga pola rumit butuh fitur khusus atau model lain.",
+          ],
+          practice: [
+            { type: "number", q: "Pada ambang tertentu, model menolak 10 orang: 7 memang gagal bayar, 3 sebenarnya lancar. Berapa presisinya (dalam %)?", answer: 70, tol: 0.5, hint: "Presisi = benar ditolak ÷ semua yang ditolak.", solution: "7 ÷ 10 = 70%." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa regresi logistik memakai fungsi sigmoid?",
+              options: [
+                "Untuk menekan skor ke rentang 0 sampai 1 sehingga bisa dibaca sebagai peluang",
+                "Untuk mengubah data kategori menjadi angka sebelum model dilatih",
+                "Untuk mempercepat pelatihan dengan membuang data yang tidak penting",
+                "Untuk membuat garis keputusannya melengkung mengikuti bentuk data",
+              ],
+              answer: 0,
+              explain: "Garis lurus bisa menghasilkan angka di luar 0–1; sigmoid menjaga hasilnya tetap bermakna sebagai peluang.",
+            },
+            {
+              q: "Sebuah bank ingin menangkap sebanyak mungkin calon penunggak. Apa yang sebaiknya dilakukan pada ambang?",
+              options: [
+                "Menurunkan ambang, dengan konsekuensi lebih banyak nasabah baik ikut ditolak",
+                "Menaikkan ambang, agar model menjadi lebih yakin sebelum menolak siapa pun",
+                "Mempertahankan ambang 0,5 karena itu nilai yang paling seimbang",
+                "Menghapus ambang dan memakai peluang mentahnya sebagai keputusan",
+              ],
+              answer: 0,
+              explain: "Ambang lebih rendah menaikkan recall, tapi presisi turun karena penolakan keliru bertambah.",
+            },
+            {
+              q: "Apa yang sebenarnya dihasilkan regresi logistik?",
+              options: [
+                "Peluang suatu kejadian; keputusannya bergantung ambang yang dipilih",
+                "Keputusan ya atau tidak yang sudah pasti tanpa perlu pengaturan lagi",
+                "Angka kontinu seperti harga atau omzet, sama seperti regresi linear",
+                "Kelompok-kelompok data tanpa memerlukan label sama sekali",
+              ],
+              answer: 0,
+              explain: "Memisahkan peluang dari keputusan membuat model yang sama bisa dipakai untuk kebutuhan bisnis berbeda.",
+            },
+            {
+              q: "Kenapa regresi logistik tetap populer di dunia kredit meski ada model yang lebih canggih?",
+              options: [
+                "Karena koefisiennya bisa dijelaskan, yang sering disyaratkan regulator",
+                "Karena ia selalu lebih akurat daripada XGBoost pada data kredit",
+                "Karena ia satu-satunya model yang bisa menghasilkan peluang",
+                "Karena ia tidak memerlukan data historis nasabah sama sekali",
+              ],
+              answer: 0,
+              explain: "Keputusan yang memengaruhi hidup orang sering wajib bisa dijelaskan alasannya.",
+            },
+          ],
+        },
+        {
+          id: "ai-alg-3",
+          title: "SVM & Naive Bayes — Dua Klasifikator Klasik",
+          duration: "13 menit",
+          content: `
+<p>Sebelum era deep learning, dua algoritma ini menguasai banyak tugas klasifikasi — terutama teks. Keduanya masih sering dipakai karena cepat dan kuat pada kondisi tertentu.</p>
+
+<div data-diagram="compare3" data-cols="Regresi logistik::Peluang lewat sigmoid::Mudah dijelaskan|SVM::Pemisah berjarak terlebar::Kuat di dimensi tinggi|Naive Bayes::Hitung peluang per kata::Sangat cepat untuk teks" data-caption="Tiga klasifikator klasik dengan cara berpikir yang berbeda"></div>
+
+<h3>1. SVM — garis pemisah dengan jarak terlebar</h3>
+<div class="callout">
+Bayangkan titik merah dan biru di atas meja. Banyak garis bisa memisahkan keduanya. <b>SVM</b> (Support Vector Machine) memilih garis yang <b>jaraknya ke titik terdekat dari kedua sisi paling lebar</b> — seperti membuat jalan selebar mungkin di antara dua kampung.<br><br>
+Titik-titik yang paling dekat dengan "jalan" itu disebut <b>support vector</b>. Hanya merekalah yang menentukan letak garis; titik lain yang jauh tidak berpengaruh.
+</div>
+
+<p>Kenapa jarak terlebar? Garis yang terlalu mepet ke satu kelompok mudah salah saat datang data baru yang sedikit bergeser. Jalan yang lebar memberi <b>ruang aman</b>.</p>
+
+<h3>Trik kernel — kalau datanya tidak bisa dipisah garis lurus</h3>
+<div class="callout warn">
+Misalkan titik biru berkumpul di tengah dan titik merah melingkarinya. Tidak ada garis lurus yang bisa memisahkan.<br><br>
+<b>Trik kernel</b> "mengangkat" data ke dimensi lebih tinggi — bayangkan titik biru di tengah diangkat ke atas meja. Sekarang sebuah bidang datar bisa memisahkan yang terangkat dari yang di bawah. Kembali ke tampilan dua dimensi, pemisah itu terlihat sebagai <b>lingkaran</b>.
+</div>
+
+<table class="tbl">
+  <tr><th>SVM cocok untuk</th><th>SVM kurang cocok untuk</th></tr>
+  <tr><td>Data berukuran kecil sampai menengah</td><td>Data sangat besar (latihannya melambat drastis)</td></tr>
+  <tr><td>Banyak kolom, misalnya teks yang diubah jadi ribuan kata</td><td>Saat butuh peluang yang terkalibrasi baik</td></tr>
+  <tr><td>Batas kelas yang tegas</td><td>Data yang wajib diskalakan tapi tidak dilakukan</td></tr>
+</table>
+
+<h3>2. Naive Bayes — menghitung peluang kata demi kata</h3>
+<p>Ingat <b>Teorema Bayes</b> dari modul Matematika: memperbarui keyakinan setelah melihat bukti. Naive Bayes memakainya untuk klasifikasi.</p>
+
+<div class="callout">
+<b>Contoh filter spam.</b> Dari data lama diketahui: kata "gratis" muncul di 40% email spam tapi hanya 2% email biasa. Kata "rapat" muncul di 1% spam tapi 15% email biasa.<br><br>
+Email baru berisi "gratis" → keyakinan bahwa ini spam <b>naik</b>. Juga berisi "rapat" → keyakinan <b>turun</b>. Naive Bayes menggabungkan bukti dari setiap kata untuk mendapatkan peluang akhirnya.
+</div>
+
+<div class="callout warn">
+<b>Kenapa disebut "naive" (naif)?</b> Karena ia menganggap setiap kata <b>tidak saling berhubungan</b> — seolah "kartu" dan "kredit" muncul bersama hanya kebetulan. Anggapan ini jelas keliru. Anehnya, hasilnya tetap sering bagus, karena untuk memilih kelas yang benar, peluangnya tidak perlu tepat — cukup urutannya benar.
+</div>
+
+<table class="tbl">
+  <tr><th>Kelebihan</th><th>Kekurangan</th></tr>
+  <tr><td>Sangat cepat, bahkan untuk jutaan dokumen</td><td>Anggapan "kata saling bebas" membuat nilai peluangnya kurang bisa dipercaya</td></tr>
+  <tr><td>Butuh sedikit data untuk mulai bekerja</td><td>Tidak paham urutan &amp; konteks: "tidak bagus" dibaca seperti "bagus" + "tidak"</td></tr>
+  <tr><td>Pembanding dasar yang sangat baik untuk teks</td><td>Kalah dari model modern pada teks yang bernuansa</td></tr>
+</table>
+
+<pre class="code">from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import SVC
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+spam = make_pipeline(CountVectorizer(), MultinomialNB())
+spam.fit(teks_latih, label_latih)
+
+svm = make_pipeline(StandardScaler(), SVC(kernel="rbf"))   # SVM wajib diskalakan
+svm.fit(X_latih, y_latih)</pre>
+
+<div class="callout">
+<b>Posisinya hari ini:</b> untuk data tabel, XGBoost umumnya lebih unggul. Untuk teks bernuansa, model bahasa modern jauh lebih baik. Tapi saat datamu sedikit, butuh hasil dalam hitungan detik, atau perlu pembanding cepat, keduanya masih pilihan yang masuk akal.
+</div>
+`,
+          keyPoints: [
+            "SVM mencari garis pemisah dengan jarak terlebar ke titik terdekat kedua kelas; titik terdekat itu disebut support vector.",
+            "Jarak terlebar memberi ruang aman sehingga lebih tahan terhadap data baru yang sedikit bergeser.",
+            "Trik kernel mengangkat data ke dimensi lebih tinggi agar data yang tak bisa dipisah garis lurus tetap bisa dipisahkan.",
+            "SVM cocok untuk data kecil–menengah dengan banyak kolom; lambat pada data sangat besar dan wajib diskalakan.",
+            "Naive Bayes memakai Teorema Bayes untuk menggabungkan bukti dari setiap fitur, misalnya kata pada email.",
+            "Disebut naive karena menganggap fitur saling bebas — keliru, tapi hasil klasifikasinya tetap sering bagus.",
+            "Naive Bayes sangat cepat dan butuh sedikit data, tapi tak paham urutan kata dan nilai peluangnya kurang bisa dipercaya.",
+          ],
+          quiz: [
+            {
+              q: "Garis pemisah seperti apa yang dipilih SVM?",
+              options: [
+                "Garis yang jaraknya ke titik terdekat dari kedua kelas paling lebar",
+                "Garis yang melewati titik tengah dari seluruh data yang ada",
+                "Garis yang membagi data menjadi dua kelompok dengan jumlah sama",
+                "Garis yang memiliki kemiringan paling kecil di antara semua pilihan",
+              ],
+              answer: 0,
+              explain: "Jarak terlebar memberi ruang aman bagi data baru yang sedikit bergeser.",
+            },
+            {
+              q: "Apa fungsi trik kernel pada SVM?",
+              options: [
+                "Mengangkat data ke dimensi lebih tinggi agar tetap bisa dipisahkan",
+                "Mempercepat pelatihan dengan hanya memakai sebagian kecil data secara acak",
+                "Mengubah hasil klasifikasi menjadi peluang yang terkalibrasi dengan baik",
+                "Membuang titik-titik yang dianggap pencilan sebelum model dilatih",
+              ],
+              answer: 0,
+              explain: "Pemisah datar di dimensi tinggi bisa tampak melengkung saat dilihat kembali di dimensi aslinya.",
+            },
+            {
+              q: "Kenapa Naive Bayes disebut 'naif'?",
+              options: [
+                "Karena menganggap tiap fitur saling bebas, padahal sering berhubungan",
+                "Karena hanya bisa dipakai oleh pemula yang baru belajar machine learning",
+                "Karena tidak memakai data latih sama sekali untuk membuat keputusan",
+                "Karena hasilnya selalu lebih buruk daripada menebak secara acak",
+              ],
+              answer: 0,
+              explain: "Anggapan itu keliru, tapi urutan peluang antar-kelas sering tetap benar sehingga klasifikasinya bagus.",
+            },
+          ],
+        },
+        {
+          id: "ai-alg-4",
+          title: "XGBoost dalam Praktik",
+          duration: "15 menit",
+          content: `
+<p>Di pelajaran <b>Boosting &amp; XGBoost</b> kamu sudah paham konsepnya: banyak pohon kecil dilatih berurutan, masing-masing memperbaiki kesalahan pohon sebelumnya. Pelajaran ini membahas bagian yang tidak diajarkan konsep: <b>cara memakainya dengan benar</b>.</p>
+
+<div data-diagram="pipeline" data-stages="Data latih::membangun pohon|Data validasi::dipantau tiap putaran|Berhenti dini::saat tak membaik lagi|Data uji::diukur sekali di akhir" data-caption="Alur kerja XGBoost yang benar — data validasi berbeda dari data uji"></div>
+
+<h3>Kenapa ia juara data tabel</h3>
+<ul>
+  <li><b>Menangkap pola rumit</b> dan interaksi antar-kolom tanpa perlu kamu siapkan manual — kelemahan regresi logistik.</li>
+  <li><b>Tidak perlu penskalaan</b> fitur, karena pohon hanya membandingkan "lebih besar atau lebih kecil".</li>
+  <li><b>Menangani nilai kosong</b> sendiri: ia belajar ke cabang mana nilai kosong sebaiknya diarahkan.</li>
+  <li><b>Punya rem bawaan</b> (regularisasi) sehingga tidak mudah menghafal.</li>
+</ul>
+
+<h3>Lima pengaturan yang paling berpengaruh</h3>
+<table class="tbl">
+  <tr><th>Pengaturan</th><th>Artinya</th><th>Terlalu besar</th><th>Terlalu kecil</th></tr>
+  <tr><td><b>n_estimators</b></td><td>Jumlah pohon</td><td>Menghafal, lambat</td><td>Belum belajar cukup</td></tr>
+  <tr><td><b>learning_rate</b></td><td>Seberapa besar tiap pohon boleh mengoreksi</td><td>Kasar, mudah menghafal</td><td>Butuh sangat banyak pohon</td></tr>
+  <tr><td><b>max_depth</b></td><td>Kedalaman tiap pohon</td><td>Pola kebetulan ikut dipelajari</td><td>Terlalu sederhana</td></tr>
+  <tr><td><b>subsample</b></td><td>Porsi baris yang dipakai tiap pohon</td><td>—</td><td>Terlalu acak</td></tr>
+  <tr><td><b>colsample_bytree</b></td><td>Porsi kolom yang dipakai tiap pohon</td><td>—</td><td>Informasi penting terlewat</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Pasangan yang saling mengunci: learning_rate dan n_estimators.</b> Langkah kecil (learning_rate 0,05) butuh banyak pohon; langkah besar (0,3) butuh sedikit. Cara paling andal: pasang learning_rate kecil, jumlah pohon besar, lalu biarkan <b>early stopping</b> yang memutuskan kapan berhenti.
+</div>
+
+<h3>Early stopping — pengaturan terpenting yang sering dilewati</h3>
+<pre class="code">from xgboost import XGBClassifier
+
+model = XGBClassifier(
+    n_estimators=2000,          # batas atas, bukan jumlah akhir
+    learning_rate=0.05,
+    max_depth=4,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    early_stopping_rounds=50,   # berhenti bila 50 putaran tak membaik
+    eval_metric="auc",
+)
+model.fit(X_latih, y_latih, eval_set=[(X_validasi, y_validasi)], verbose=False)
+print(model.best_iteration)     # jumlah pohon yang benar-benar dipakai</pre>
+
+<div class="callout warn">
+<b>⚠️ Jebakan halus:</b> data yang dipakai untuk early stopping <b>sudah memengaruhi model</b>. Karena itu jangan memakai data uji sebagai <i>eval_set</i> — hasil akhirnya akan terlihat lebih bagus dari kenyataan. Siapkan <b>tiga</b> bagian data: latih, validasi, uji — persis seperti di pelajaran Melatih Model dengan Benar.
+</div>
+
+<h3>Membaca "feature importance" dengan hati-hati</h3>
+<p>XGBoost bisa menunjukkan kolom mana yang paling sering dipakai. Ini berguna, tapi sering disalahartikan:</p>
+<table class="tbl">
+  <tr><th>Yang sering disimpulkan</th><th>Yang sebenarnya benar</th></tr>
+  <tr><td>"Kolom ini menyebabkan hasilnya"</td><td>Kolom ini <b>berguna bagi model</b> untuk menebak — belum tentu penyebab</td></tr>
+  <tr><td>"Kolom yang tak penting boleh diabaikan"</td><td>Bisa jadi informasinya sudah tertangkap kolom lain yang mirip</td></tr>
+  <tr><td>"Urutannya pasti"</td><td>Tiap cara menghitung (gain, weight, cover) bisa memberi urutan berbeda</td></tr>
+</table>
+<p>Untuk penjelasan yang lebih dapat dipertanggungjawabkan per keputusan, praktisi memakai <b>SHAP</b> — pendekatan yang menunjukkan sumbangan tiap kolom untuk <i>satu</i> tebakan tertentu.</p>
+
+<h3>Tiga jebakan yang paling sering</h3>
+<ol>
+  <li><b>Kebocoran data.</b> Kolom yang sebenarnya baru diketahui <i>setelah</i> kejadian — misalnya "tanggal pelunasan" untuk menebak gagal bayar. Model tampak nyaris sempurna di latihan, lalu gagal total di dunia nyata.</li>
+  <li><b>Kelas timpang.</b> Kalau penipuan hanya 1%, pakai <b>scale_pos_weight</b> dan ukur dengan AUC atau recall, bukan akurasi.</li>
+  <li><b>Menyetel berlebihan.</b> Mencoba ratusan kombinasi pengaturan sampai skor validasi naik 0,1% sering hanya menemukan kebetulan.</li>
+</ol>
+
+<div class="callout">
+<b>💡 Urutan kerja yang disarankan:</b> mulai dari regresi logistik sebagai pembanding → XGBoost dengan pengaturan bawaan + early stopping → baru setel beberapa pengaturan utama. Kalau XGBoost hanya menang tipis dari regresi logistik, pertimbangkan model yang lebih sederhana dan lebih mudah dijelaskan. LightGBM dan CatBoost bekerja dengan cara serupa — lihat Peta Pustaka Lain.
+</div>
+`,
+          keyPoints: [
+            "XGBoost unggul pada data tabel: menangkap interaksi rumit, tak perlu penskalaan, menangani nilai kosong, dan punya regularisasi bawaan.",
+            "Lima pengaturan utama: n_estimators, learning_rate, max_depth, subsample, colsample_bytree.",
+            "learning_rate dan n_estimators saling mengunci; cara andal: learning_rate kecil, pohon banyak, biarkan early stopping memutuskan.",
+            "Data untuk early stopping ikut memengaruhi model — jangan pakai data uji; siapkan latih, validasi, dan uji.",
+            "Feature importance berarti berguna bagi model, bukan penyebab; untuk penjelasan per keputusan dipakai SHAP.",
+            "Jebakan utama: kebocoran data, kelas timpang (pakai scale_pos_weight & ukur AUC/recall), dan menyetel berlebihan.",
+            "Mulai dari regresi logistik sebagai pembanding; bila XGBoost hanya menang tipis, pilih yang lebih sederhana.",
+          ],
+          quiz: [
+            {
+              q: "Kenapa data uji tidak boleh dipakai sebagai eval_set untuk early stopping?",
+              options: [
+                "Karena data itu ikut menentukan kapan model berhenti, jadi skornya terlalu bagus",
+                "Karena XGBoost menolak menerima data yang ukurannya lebih kecil dari data latih",
+                "Karena early stopping hanya bekerja bila data evaluasinya belum pernah diacak",
+                "Karena data uji otomatis dihapus setelah dipakai satu kali oleh pustaka",
+              ],
+              answer: 0,
+              explain: "Data yang memengaruhi keputusan pelatihan tidak lagi netral untuk mengukur hasil akhir.",
+            },
+            {
+              q: "Cara paling andal menentukan jumlah pohon di XGBoost?",
+              options: [
+                "Learning_rate kecil, batas pohon besar, lalu biarkan early stopping memutuskan",
+                "Selalu memakai tepat 100 pohon karena itu nilai bawaan yang sudah teruji",
+                "Memakai pohon sebanyak jumlah baris data agar semua pola terpelajari",
+                "Menambah pohon terus sampai skor pada data latih mencapai seratus persen",
+              ],
+              answer: 0,
+              explain: "Early stopping berhenti tepat saat model berhenti membaik pada data validasi.",
+            },
+            {
+              q: "Kolom 'jumlah transaksi' punya feature importance tertinggi. Kesimpulan yang tepat?",
+              options: [
+                "Kolom itu paling berguna bagi model untuk menebak, belum tentu penyebab hasilnya",
+                "Kolom itu terbukti menjadi penyebab utama dari hasil yang ditebak model",
+                "Kolom lain yang nilainya rendah pasti tidak berguna dan aman dibuang",
+                "Urutan pentingnya kolom akan sama persis dengan cara perhitungan apa pun",
+              ],
+              answer: 0,
+              explain: "Kegunaan untuk menebak berbeda dengan hubungan sebab-akibat; untuk penjelasan per keputusan dipakai SHAP.",
+            },
+            {
+              q: "Model XGBoost menebak gagal bayar dengan akurasi 99,8% di data latih dan validasi. Apa yang harus dicurigai lebih dulu?",
+              options: [
+                "Kebocoran data — ada kolom yang sebenarnya baru diketahui setelah kejadian",
+                "Jumlah pohon terlalu sedikit sehingga model belum belajar dengan cukup",
+                "Learning rate terlalu kecil sehingga model berhenti terlalu dini",
+                "Data validasinya terlalu besar dibanding data latih yang tersedia",
+              ],
+              answer: 0,
+              explain: "Hasil yang nyaris sempurna pada masalah yang sulit hampir selalu tanda ada informasi masa depan yang bocor.",
+            },
+          ],
+        },
+        {
+          id: "ai-alg-5",
+          title: "Isolation Forest — Menemukan yang Janggal",
+          duration: "15 menit",
+          content: `
+<p>Kebanyakan model belajar dari contoh berlabel: "ini penipuan, ini bukan". Masalahnya, di dunia nyata penipuan <b>jarang</b>, <b>jarang diberi label</b>, dan <b>terus berganti bentuk</b>. Isolation Forest mendekati masalah ini dari arah yang terbalik.</p>
+
+<div data-diagram="cycle" data-steps="Pilih kolom acak|Pilih titik potong acak|Buang sisi lain|Ulangi sampai tinggal sendiri" data-center="hitung potongan" data-caption="Satu pohon isolasi: berapa potongan acak sampai sebuah titik terpisah sendirian?"></div>
+
+<h3>Fundamental: ide yang dibalik</h3>
+<div class="callout">
+Model deteksi anomali biasa mencoba <b>mempelajari seperti apa data normal</b>, lalu menandai yang berbeda. Isolation Forest tidak peduli seperti apa data normal. Ia hanya bertanya:<br><br>
+<b>"Seberapa mudah titik ini dipisahkan dari yang lain?"</b><br><br>
+Titik yang janggal letaknya jauh dari kerumunan, sehingga <b>sedikit potongan acak</b> sudah cukup mengisolasinya. Titik yang normal tersembunyi di tengah kerumunan dan butuh <b>banyak potongan</b>.
+</div>
+
+<div class="callout warn">
+🎯 <b>Analogi tebak-tebakan.</b> Di sebuah kelas, kamu menebak siapa yang dimaksud dengan pertanyaan acak: "tingginya di atas 170 cm?", "rambutnya panjang?". Orang yang sangat unik — tingginya 195 cm — ketahuan hanya dalam satu atau dua pertanyaan. Orang dengan ciri rata-rata butuh banyak pertanyaan. Jumlah pertanyaan itulah skor kejanggalannya.
+</div>
+
+<h3>Lihat hutannya bekerja</h3>
+
+<div data-demo="isolasi-anomali"></div>
+
+<h3>Kenapa disebut "hutan"?</h3>
+<p>Satu pohon memakai potongan acak, jadi hasilnya bisa kebetulan. Karena itu dibuat <b>ratusan pohon</b>, dan yang dipakai adalah <b>rata-rata</b> jumlah potongannya. Titik yang secara konsisten cepat terisolasi di banyak pohon hampir pasti janggal.</p>
+
+<h3>Satu pengaturan yang menentukan: contamination</h3>
+<div class="callout warn">
+<b>contamination</b> adalah perkiraanmu tentang <b>porsi data yang janggal</b> — misalnya 0,01 berarti sekitar 1%. Model memakai angka ini untuk menentukan batas skor.<br><br>
+Kalau kamu menebak 5% padahal kenyataannya 0,5%, model akan menandai sepuluh kali lebih banyak transaksi — dan tim yang memeriksanya akan kewalahan lalu mulai mengabaikan peringatan. <b>Angka ini keputusan bisnis, bukan detail teknis.</b>
+</div>
+
+<pre class="code">from sklearn.ensemble import IsolationForest
+
+model = IsolationForest(n_estimators=200, contamination=0.01, random_state=42)
+model.fit(X_transaksi)
+
+tanda = model.predict(X_transaksi)          # -1 = janggal, 1 = normal
+skor = model.decision_function(X_transaksi) # makin kecil makin janggal</pre>
+
+<h3>Di mana dipakai</h3>
+<table class="tbl">
+  <tr><th>Bidang</th><th>Yang dicari</th></tr>
+  <tr><td><b>Kartu &amp; pembayaran</b></td><td>Transaksi di jam, lokasi, atau nominal yang tidak biasa</td></tr>
+  <tr><td><b>Audit</b></td><td>Jurnal akuntansi yang janggal — pasangan alami <b>hukum Benford</b> yang sudah kamu pelajari</td></tr>
+  <tr><td><b>Forensik blockchain</b></td><td>Alamat dengan pola pergerakan dana yang menyimpang</td></tr>
+  <tr><td><b>Mesin &amp; sensor</b></td><td>Getaran atau suhu yang menandakan kerusakan sebelum terjadi</td></tr>
+  <tr><td><b>Keamanan jaringan</b></td><td>Pola akses yang tidak biasa</td></tr>
+</table>
+
+<h3>🚩 Batas yang wajib dipahami</h3>
+<ol>
+  <li><b>Janggal bukan berarti curang.</b> Pembelian besar saat liburan itu janggal, tapi sah. Hasilnya adalah <b>daftar untuk diperiksa manusia</b>, bukan vonis — persis prinsip heuristik di modul Forensik.</li>
+  <li><b>Penipu yang meniru pola normal tidak tertangkap.</b> Penipuan kecil-kecil yang berulang dengan pola wajar justru lolos.</li>
+  <li><b>Anomali berkelompok</b> saling menutupi: sepuluh transaksi palsu yang mirip satu sama lain membentuk kerumunan kecil dan tak lagi mudah diisolasi.</li>
+  <li><b>Pemilihan kolom menentukan segalanya.</b> Anomali hanya terlihat pada kolom yang kamu masukkan.</li>
+</ol>
+
+<div class="callout">
+<b>Alternatif yang perlu dikenal:</b> <b>z-score</b> (sederhana, untuk satu kolom), <b>Local Outlier Factor</b> (membandingkan kepadatan dengan tetangga), dan <b>autoencoder</b> (jaringan saraf yang kesulitan merekonstruksi data janggal). Isolation Forest sering jadi pilihan pertama karena cepat, tidak butuh label, dan bekerja cukup baik tanpa banyak penyetelan.
+</div>
+`,
+          keyPoints: [
+            "Isolation Forest mendeteksi anomali tanpa label dengan bertanya: seberapa mudah titik ini dipisahkan dari yang lain?",
+            "Titik janggal terisolasi dalam sedikit potongan acak; titik normal di tengah kerumunan butuh banyak potongan.",
+            "Disebut hutan karena memakai ratusan pohon acak dan merata-ratakan jumlah potongannya.",
+            "Anomali tidak harus ekstrem di semua kolom — jam yang janggal dengan nominal wajar tetap bisa tertangkap.",
+            "contamination adalah perkiraan porsi data janggal; menentukannya adalah keputusan bisnis karena memengaruhi beban pemeriksaan.",
+            "Dipakai pada pembayaran, audit, forensik blockchain, sensor mesin, dan keamanan jaringan.",
+            "Batasnya: janggal bukan berarti curang, penipu yang meniru pola normal lolos, anomali berkelompok saling menutupi, dan hasil bergantung kolom yang dipilih.",
+          ],
+          quiz: [
+            {
+              q: "Apa ide inti Isolation Forest?",
+              options: [
+                "Titik janggal lebih mudah dipisahkan dari data lain dengan sedikit potongan acak",
+                "Mempelajari seperti apa data normal dari contoh berlabel, lalu mencari yang berbeda",
+                "Mengelompokkan data lalu menganggap kelompok terkecil sebagai anomali",
+                "Menghitung jarak tiap titik ke rata-rata data lalu mengambil yang terjauh",
+              ],
+              answer: 0,
+              explain: "Ia tidak mempelajari data normal — ia mengukur seberapa cepat tiap titik terisolasi.",
+            },
+            {
+              q: "Kenapa pengaturan contamination disebut keputusan bisnis?",
+              options: [
+                "Karena menentukan banyaknya data yang ditandai dan beban tim pemeriksa",
+                "Karena nilainya harus disetujui regulator sebelum model boleh dijalankan",
+                "Karena menentukan jumlah pohon yang dibuat dan biaya komputasinya",
+                "Karena nilainya harus sama dengan porsi keuntungan perusahaan",
+              ],
+              answer: 0,
+              explain: "Perkiraan yang terlalu tinggi membanjiri pemeriksa dengan peringatan palsu hingga mulai diabaikan.",
+            },
+            {
+              q: "Isolation Forest menandai sebuah transaksi sebagai janggal. Langkah yang tepat?",
+              options: [
+                "Menjadikannya daftar untuk diperiksa manusia, karena janggal belum tentu curang",
+                "Langsung memblokir kartu pemiliknya karena model sudah membuktikan kecurangan",
+                "Mengabaikannya karena Isolation Forest tidak dilatih dengan label penipuan",
+                "Menghapus transaksi itu dari data agar model berikutnya lebih akurat",
+              ],
+              answer: 0,
+              explain: "Pembelian besar saat liburan pun janggal tetapi sah — hasilnya petunjuk, bukan vonis.",
+            },
+            {
+              q: "Kenapa sepuluh transaksi palsu yang mirip satu sama lain bisa lolos dari Isolation Forest?",
+              options: [
+                "Karena mereka membentuk kerumunan kecil sendiri sehingga tidak lagi mudah diisolasi",
+                "Karena Isolation Forest hanya bisa menandai satu anomali dalam setiap data",
+                "Karena transaksi palsu selalu memiliki nominal yang lebih kecil dari biasanya",
+                "Karena model otomatis menganggap transaksi berulang sebagai transaksi normal",
+              ],
+              answer: 0,
+              explain: "Anomali yang berkelompok saling menutupi — kelemahan yang disebut masking.",
+            },
+          ],
+        },
+        {
+          id: "ai-alg-6",
+          title: "PCA, DBSCAN & Peta Memilih Algoritma",
+          duration: "15 menit",
+          content: `
+<p>Pelajaran penutup modul ini: dua algoritma tanpa label yang sangat sering dipakai, lalu <b>peta</b> untuk memilih algoritma yang tepat dari semua yang sudah kamu pelajari.</p>
+
+<h3>1. PCA — meringkas banyak kolom menjadi sedikit</h3>
+<div class="callout">
+Bayangkan data pelanggan dengan 50 kolom. Mustahil digambar, dan banyak kolomnya saling mengulang — "total belanja" dan "jumlah transaksi" misalnya bergerak hampir bersamaan.<br><br>
+<b>PCA</b> (Principal Component Analysis) mencari <b>arah baru</b> yang menangkap variasi terbesar dalam data, lalu meringkas 50 kolom menjadi beberapa <b>komponen</b> saja — sambil menyimpan sebagian besar informasinya.
+</div>
+
+<div class="callout warn">
+🔦 <b>Analogi bayangan.</b> Benda tiga dimensi bisa diwakili bayangan dua dimensi. Kalau senter diarahkan dari sudut yang tepat, bayangan sebuah sepeda masih jelas terlihat sebagai sepeda. Dari sudut yang salah, ia hanya garis. PCA mencari <b>sudut senter terbaik</b> — arah yang membuat bayangan paling informatif.
+</div>
+
+<table class="tbl">
+  <tr><th>PCA berguna untuk</th><th>Yang perlu diwaspadai</th></tr>
+  <tr><td>Menggambar data berkolom banyak dalam 2 dimensi</td><td><b>Wajib diskalakan dulu</b> — kolom bersatuan besar akan mendominasi (ingat demo penskalaan fitur)</td></tr>
+  <tr><td>Mengurangi kolom yang saling mengulang</td><td>Komponennya <b>sulit ditafsirkan</b> — "komponen 1" bukan kolom yang punya nama</td></tr>
+  <tr><td>Mempercepat model berikutnya</td><td>Hanya menangkap hubungan lurus</td></tr>
+</table>
+
+<h3>2. DBSCAN — mengelompokkan berdasarkan kepadatan</h3>
+<p>Ingat <b>k-Means</b>: kamu harus menentukan jumlah kelompok di awal, dan kelompoknya selalu berbentuk bulat. DBSCAN bekerja berbeda — ia mencari <b>daerah yang padat</b>.</p>
+
+<div class="callout">
+Cara kerjanya: titik yang punya cukup banyak tetangga dalam jarak tertentu dianggap <b>inti kelompok</b>. Kelompok tumbuh dengan menyambung titik-titik inti yang berdekatan. Titik yang tidak masuk kelompok mana pun ditandai sebagai <b>noise</b> — sekaligus menjadi deteksi anomali gratis.
+</div>
+
+<table class="tbl">
+  <tr><th></th><th>k-Means</th><th>DBSCAN</th></tr>
+  <tr><td><b>Jumlah kelompok</b></td><td>Harus ditentukan di awal</td><td class="ok-cell">Ditemukan sendiri</td></tr>
+  <tr><td><b>Bentuk kelompok</b></td><td>Cenderung bulat</td><td class="ok-cell">Bentuk apa pun, termasuk memanjang</td></tr>
+  <tr><td><b>Titik yang menyimpang</b></td><td class="bad-cell">Dipaksa masuk kelompok terdekat</td><td class="ok-cell">Ditandai sebagai noise</td></tr>
+  <tr><td><b>Pengaturan utama</b></td><td>Jumlah kelompok (k)</td><td>Jarak (eps) &amp; jumlah tetangga minimum</td></tr>
+  <tr><td><b>Kelemahan</b></td><td>Salah bila k keliru</td><td class="bad-cell">Kesulitan bila kepadatan tiap kelompok sangat berbeda</td></tr>
+</table>
+
+<h3>3. Peta memilih algoritma</h3>
+
+<div data-diagram="tree" data-nodes="Datamu punya label?::Menebak angka?::Mencari kelompok?" data-leaves="Regresi linear / XGBoost|Logistik / XGBoost|k-Means / DBSCAN|Isolation Forest / PCA" data-yes="Ya" data-no="Tidak" data-caption="Pertanyaan pertama selalu sama: apakah ada jawaban benar yang bisa dicontoh model?"></div>
+
+<table class="tbl">
+  <tr><th>Tujuanmu</th><th>Mulai dari</th><th>Naik ke</th></tr>
+  <tr><td>Menebak angka (harga, omzet)</td><td>Regresi linear</td><td>XGBoost</td></tr>
+  <tr><td>Menebak ya/tidak &amp; perlu dijelaskan</td><td>Regresi logistik</td><td>XGBoost + SHAP</td></tr>
+  <tr><td>Klasifikasi teks sederhana</td><td>Naive Bayes</td><td>SVM → model bahasa</td></tr>
+  <tr><td>Mengelompokkan pelanggan</td><td>k-Means</td><td>DBSCAN</td></tr>
+  <tr><td>Menemukan yang janggal</td><td>z-score per kolom</td><td>Isolation Forest</td></tr>
+  <tr><td>Terlalu banyak kolom</td><td>Buang kolom yang jelas tak relevan</td><td>PCA</td></tr>
+  <tr><td>Gambar, suara, teks bernuansa</td><td colspan="2">Deep learning — lihat modul Arsitektur</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Aturan yang paling sering dilanggar:</b> selalu mulai dari kolom <b>"Mulai dari"</b>. Model sederhana memberi <b>pembanding</b>. Tanpa pembanding, kamu tidak pernah tahu apakah model rumitmu benar-benar lebih baik — atau hanya lebih rumit.
+</div>
+
+<div class="callout">
+<b>Penutup modul.</b> Kamu kini mengenal algoritma yang dipakai di sebagian besar pekerjaan machine learning sehari-hari di bank, e-commerce, pabrik, dan kantor audit. Yang membedakan praktisi yang baik bukan jumlah algoritma yang dihafal, melainkan kebiasaan bertanya: <b>apa yang sebenarnya ingin ditebak, kesalahan mana yang lebih mahal, dan apakah model yang lebih sederhana sudah cukup?</b>
+</div>
+`,
+          keyPoints: [
+            "PCA meringkas banyak kolom menjadi sedikit komponen yang menangkap variasi terbesar, seperti mencari sudut senter terbaik untuk bayangan benda.",
+            "PCA wajib diskalakan lebih dulu, dan komponennya sulit ditafsirkan karena bukan kolom asli.",
+            "DBSCAN mengelompokkan berdasarkan kepadatan: tak perlu menentukan jumlah kelompok, bisa berbentuk apa pun, dan menandai titik menyimpang sebagai noise.",
+            "k-Means memaksa setiap titik masuk kelompok; DBSCAN kesulitan bila kepadatan antar-kelompok sangat berbeda.",
+            "Pertanyaan pertama memilih algoritma: apakah datamu punya label?",
+            "Selalu mulai dari model sederhana sebagai pembanding sebelum naik ke model yang lebih rumit.",
+          ],
+          quiz: [
+            {
+              q: "Kenapa data wajib diskalakan sebelum PCA?",
+              options: [
+                "Karena kolom bersatuan besar akan mendominasi arah komponen yang ditemukan",
+                "Karena PCA hanya bisa membaca angka di antara nol dan satu",
+                "Karena tanpa penskalaan PCA tidak bisa menghitung jumlah komponennya",
+                "Karena penskalaan membuat komponen PCA menjadi mudah ditafsirkan",
+              ],
+              answer: 0,
+              explain: "PCA mencari variasi terbesar; kolom bernilai jutaan otomatis tampak paling bervariasi.",
+            },
+            {
+              q: "Apa keunggulan DBSCAN dibanding k-Means?",
+              options: [
+                "Tak perlu menentukan jumlah kelompok dan bisa menandai noise",
+                "Selalu menghasilkan kelompok yang berbentuk bulat dan berukuran sama",
+                "Bekerja paling baik saat kepadatan setiap kelompok sangat berbeda",
+                "Tidak memerlukan pengaturan apa pun sehingga hasilnya selalu pasti",
+              ],
+              answer: 0,
+              explain: "k-Means memaksa setiap titik masuk kelompok terdekat, termasuk titik yang sebenarnya menyimpang.",
+            },
+            {
+              q: "Tugasmu menebak apakah nasabah akan gagal bayar, dan keputusannya harus bisa dijelaskan. Mulai dari?",
+              options: [
+                "Regresi logistik sebagai pembanding, lalu XGBoost dengan penjelasan SHAP bila perlu",
+                "DBSCAN untuk mengelompokkan nasabah sebelum menentukan siapa yang ditolak",
+                "PCA untuk meringkas kolom lalu langsung memakai komponennya sebagai keputusan",
+                "Isolation Forest karena nasabah gagal bayar selalu merupakan anomali",
+              ],
+              answer: 0,
+              explain: "Ada label (gagal bayar/tidak) dan butuh penjelasan — regresi logistik adalah titik mulai yang tepat.",
+            },
+            {
+              q: "Kenapa selalu disarankan memulai dari model sederhana?",
+              options: [
+                "Agar ada pembanding untuk menilai apakah model rumit benar-benar lebih baik",
+                "Karena model sederhana selalu lebih akurat daripada model yang rumit",
+                "Karena model rumit dilarang dipakai sebelum model sederhana dicoba",
+                "Karena model sederhana tidak memerlukan data latih sama sekali",
+              ],
+              answer: 0,
+              explain: "Tanpa pembanding, kerumitan tambahan tidak bisa dibuktikan manfaatnya.",
+            },
+          ],
+        },
+      ],
+    },
+
   ],
 };
