@@ -891,3 +891,22 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
   .sesi-opsi { padding: 12px 13px; font-size: .9rem; }
   .dis-sesi { margin-left: 0; width: 100%; text-align: center; }
 }
+
+/* ---- Demo kriptografi (tiga-operasi & tukar-kunci) ---- */
+.krip-blok { border-top: 1px dashed var(--border); padding: 12px 0 6px; }
+.krip-blok:first-child { border-top: none; }
+.krip-judul { font-size: .84rem; font-weight: 800; letter-spacing: .03em; margin-bottom: 7px; }
+.krip-hasil {
+  font-family: "Consolas", "Courier New", monospace; font-size: .85rem;
+  word-break: break-all; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 9px 11px; margin: 5px 0;
+}
+.krip-hasil.sandi { color: #8b5cf6; }
+.krip-hasil.sidik { color: var(--primary); }
+.krip-hasil.ttd { color: #a16207; }
+.krip-hasil.ok { color: var(--ok); border-color: var(--ok); }
+.krip-hasil.bad { color: var(--bad); border-color: var(--bad); }
+.krip-warna { display: flex; gap: 10px; margin: 10px 0 4px; }
+.krip-warna i { flex: 1; height: 34px; border-radius: 8px; border: 1px solid var(--border); }
+.pc-input.lebar { width: 210px; text-align: left; }
+@media (max-width: 720px) { .pc-input.lebar { width: 100%; } .krip-hasil { font-size: .78rem; } }

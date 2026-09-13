@@ -3948,6 +3948,115 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
       summary: "Mesin keamanan crypto: simetris vs asimetris, ECDSA, ancaman komputer kuantum, dan kriptografi tahan kuantum.",
       lessons: [
         {
+          id: "bc-enk-1",
+          title: "Enkripsi, Hash & Tanda Tangan — Tiga Hal yang Sering Tertukar",
+          duration: "14 menit",
+          content: `
+<p>Tiga kata ini terus muncul berbarengan sampai banyak orang mengira artinya sama. Padahal ketiganya <b>menjawab pertanyaan yang berbeda</b> — dan salah satunya hampir tidak dipakai blockchain sama sekali.</p>
+
+<div data-diagram="compare3" data-cols="Enkripsi::Menyembunyikan isi::Bisa dibalik dengan kunci|Hash::Menyegel isi::Tidak bisa dibalik|Tanda tangan::Membuktikan asal::Isinya tetap terbuka" data-caption="Tiga operasi, tiga tujuan yang sama sekali berbeda"></div>
+
+<h3>Fundamental: apa itu enkripsi?</h3>
+<div class="callout">
+<b>Enkripsi</b> mengubah pesan yang bisa dibaca (<i>plaintext</i>) menjadi deretan tak bermakna (<i>ciphertext</i>), memakai sebuah <b>kunci</b>. Yang memegang kunci yang tepat bisa <b>mengembalikannya</b> menjadi pesan asli — proses itu disebut <b>dekripsi</b>.<br><br>
+Kata kuncinya: <b>bisa dibalik</b>. Enkripsi dirancang untuk dibuka lagi — oleh orang yang berhak.
+</div>
+
+<p>Bandingkan dengan <b>hash</b>, yang sudah kamu pelajari di modul Fundamental: hash <b>tidak punya kunci</b> dan <b>tidak bisa dibalik</b>. Ia bukan untuk menyembunyikan, melainkan untuk <b>menyegel</b> — membuktikan sesuatu belum berubah.</p>
+
+<h3>Rasakan bedanya sendiri</h3>
+
+<div data-demo="tiga-operasi"></div>
+
+<h3>Tabel pembeda</h3>
+<table class="tbl">
+  <tr><th></th><th>Enkripsi</th><th>Hash</th><th>Tanda tangan</th></tr>
+  <tr><td><b>Tujuannya</b></td><td>Kerahasiaan</td><td>Keutuhan</td><td>Keaslian</td></tr>
+  <tr><td><b>Pakai kunci?</b></td><td>Ya</td><td>Tidak</td><td>Ya (kunci privat)</td></tr>
+  <tr><td><b>Bisa dibalik?</b></td><td class="ok-cell">Ya, dengan kunci</td><td class="bad-cell">Tidak pernah</td><td>Tidak perlu dibalik</td></tr>
+  <tr><td><b>Isi pesan</b></td><td>Tersembunyi</td><td>Tidak ikut disimpan</td><td class="bad-cell">Tetap terbuka</td></tr>
+  <tr><td><b>Dipakai blockchain?</b></td><td class="bad-cell">Hampir tidak</td><td class="ok-cell">Ya, inti</td><td class="ok-cell">Ya, inti</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Salah paham paling luas tentang blockchain.</b><br><br>
+Kalimat <i>"data blockchain aman karena dienkripsi"</i> <b>keliru</b>. Blockchain justru <b>tidak mengenkripsi</b> isinya — seluruh transaksinya sengaja dibuat <b>terbuka</b> agar siapa pun bisa memeriksanya sendiri. Itulah sumber kepercayaannya.<br><br>
+Yang dipakai blockchain adalah <b>hash</b> (menyegel agar tak bisa diubah diam-diam) dan <b>tanda tangan digital</b> (membuktikan siapa pemiliknya). Keduanya <b>bukan</b> enkripsi.
+</div>
+
+<h3>Dua keluarga enkripsi</h3>
+<table class="tbl">
+  <tr><th></th><th>Simetris</th><th>Asimetris</th></tr>
+  <tr><td><b>Kuncinya</b></td><td>Satu kunci untuk mengunci &amp; membuka</td><td>Sepasang: publik untuk mengunci, privat untuk membuka</td></tr>
+  <tr><td><b>Kecepatan</b></td><td class="ok-cell">Sangat cepat</td><td>Jauh lebih lambat</td></tr>
+  <tr><td><b>Masalahnya</b></td><td class="bad-cell">Bagaimana mengirim kuncinya dengan aman?</td><td>Berat untuk data besar</td></tr>
+  <tr><td><b>Contohnya</b></td><td>AES</td><td>RSA, kriptografi kurva eliptik</td></tr>
+</table>
+
+<div class="callout">
+<b>Perhatikan arah kuncinya pada enkripsi asimetris</b> — ini sering membingungkan:<br><br>
+• Untuk <b>merahasiakan</b>: dikunci dengan kunci <b>publik</b> penerima, dibuka dengan kunci <b>privat</b>-nya. Siapa pun bisa mengirimimu pesan rahasia, hanya kamu yang bisa membukanya.<br>
+• Untuk <b>menandatangani</b>: dibuat dengan kunci <b>privat</b>, diperiksa dengan kunci <b>publik</b>. Arahnya <b>terbalik</b>.<br><br>
+Sepasang kunci yang sama, dua kegunaan yang berlawanan arah.
+</div>
+`,
+          keyPoints: [
+            "Enkripsi mengubah plaintext jadi ciphertext dengan kunci, dan BISA dibalik (dekripsi) oleh pemegang kunci.",
+            "Hash tidak punya kunci dan tidak bisa dibalik — tujuannya menyegel, bukan menyembunyikan.",
+            "Tanda tangan membuktikan asal-usul, tetapi isi pesannya tetap terbuka untuk semua orang.",
+            "Blockchain HAMPIR TIDAK memakai enkripsi — isinya sengaja terbuka; yang dipakai adalah hash dan tanda tangan.",
+            "Kalimat 'data blockchain aman karena dienkripsi' adalah salah paham yang paling luas.",
+            "Simetris: satu kunci, cepat, tapi sulit mengirim kuncinya. Asimetris: sepasang kunci, lambat, tapi kunci publik boleh disebar.",
+            "Arah kunci berlawanan: merahasiakan pakai kunci publik penerima; menandatangani pakai kunci privat sendiri.",
+          ],
+          quiz: [
+            {
+              q: "Apa pembeda paling mendasar antara enkripsi dan hash?",
+              options: [
+                "Enkripsi bisa dibalik dengan kunci, sedangkan hash tidak bisa dibalik sama sekali",
+                "Enkripsi menghasilkan keluaran panjang tetap, sedangkan hash panjangnya mengikuti masukan",
+                "Enkripsi hanya untuk teks, sedangkan hash bisa dipakai untuk segala jenis berkas",
+                "Enkripsi memerlukan dua kunci, sedangkan hash hanya memerlukan satu kunci",
+              ],
+              answer: 0,
+              explain: "Enkripsi dirancang untuk dibuka lagi oleh yang berhak; hash memang tidak pernah dimaksudkan untuk dibalik.",
+            },
+            {
+              q: "Kenapa kalimat 'data blockchain aman karena dienkripsi' itu keliru?",
+              options: [
+                "Karena isi blockchain justru sengaja dibuat terbuka; yang dipakai hash dan tanda tangan",
+                "Karena enkripsi di blockchain baru diterapkan pada jaringan generasi terbaru",
+                "Karena blockchain memakai enkripsi yang kuncinya dipegang para penambang",
+                "Karena data blockchain tidak pernah disimpan, melainkan dihitung ulang tiap saat",
+              ],
+              answer: 0,
+              explain: "Keterbukaan itulah sumber kepercayaannya — siapa pun bisa memeriksa sendiri tanpa izin.",
+            },
+            {
+              q: "Untuk mengirim pesan rahasia kepada seseorang, kunci mana yang dipakai mengunci?",
+              options: [
+                "Kunci publik milik penerima, sehingga hanya kunci privatnya yang bisa membuka",
+                "Kunci privat milik pengirim, sehingga penerima membuka dengan kunci publik pengirim",
+                "Kunci publik milik pengirim, karena penerima sudah mengetahuinya lebih dulu",
+                "Kunci privat milik penerima, yang lebih dulu dikirimkan lewat jalur terpisah",
+              ],
+              answer: 0,
+              explain: "Untuk merahasiakan arahnya begitu; untuk menandatangani arahnya justru terbalik.",
+            },
+            {
+              q: "Apa kelemahan utama enkripsi simetris yang membuat enkripsi asimetris dibutuhkan?",
+              options: [
+                "Sulitnya mengirim kunci dengan aman kepada pihak yang belum pernah ditemui",
+                "Prosesnya jauh lebih lambat sehingga tidak cocok untuk data berukuran besar",
+                "Hasil enkripsinya bisa dibongkar tanpa kunci bila pesannya cukup panjang",
+                "Kuncinya harus berbeda untuk setiap pesan yang dikirimkan",
+              ],
+              answer: 0,
+              explain: "Justru soal distribusi kunci inilah yang dipecahkan pertukaran kunci dan kriptografi asimetris.",
+            },
+          ],
+        },
+        {
           id: "bc-kri-1",
           title: "Kriptografi Simetris vs Asimetris",
           duration: "13 menit",
@@ -4394,6 +4503,178 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
               answer: 0,
               explain:
                 "Alamat sekali pakai menyembunyikan kunci publik; dompet terbaru mengikuti standar keamanan.",
+            },
+          ],
+        },
+        {
+          id: "bc-enk-2",
+          title: "Menyepakati Kunci di Jalur Terbuka",
+          duration: "13 menit",
+          content: `
+<p>Enkripsi simetris cepat, tapi punya satu masalah yang tampak mustahil: <b>bagaimana dua orang menyepakati kunci rahasia kalau semua jalur komunikasinya bisa disadap?</b> Pelajaran ini menjawabnya.</p>
+
+<h3>Masalahnya dulu</h3>
+<div class="callout">
+Kamu ingin mengirim pesan terenkripsi ke seseorang di negara lain yang belum pernah kamu temui. Kalian butuh kunci yang sama. Tapi kalau kunci itu dikirim lewat internet, <b>penyadap ikut mendapatkannya</b> — dan seluruh enkripsinya jadi percuma.<br><br>
+Selama berabad-abad, satu-satunya jawaban adalah <b>bertemu langsung</b> atau memakai kurir tepercaya. Itu tidak mungkin untuk internet.
+</div>
+
+<h3>Jawabannya: hitung rahasia bersama, jangan kirimkan</h3>
+<p>Idenya sangat cerdik: alih-alih mengirim kunci, kedua pihak <b>menghitung sendiri</b> kunci yang sama dari potongan-potongan yang boleh terlihat umum. Angka rahasianya <b>tidak pernah melintas di jalur mana pun</b>.</p>
+
+<div data-demo="tukar-kunci"></div>
+
+<div class="callout warn">
+<b>Kenapa penyadap kalah?</b> Ia mendengar semuanya: g, p, dan kedua angka yang dikirim. Untuk menemukan rahasia bersamanya, ia harus memecahkan <b>g^x mod p</b> — mencari x dari hasilnya. Dengan angka kecil di demo itu mudah dicoba satu per satu; dengan bilangan ratusan digit, mencobanya satu per satu <b>memakan waktu lebih lama dari umur alam semesta</b>.<br><br>
+Inilah "fungsi satu arah" yang kamu pelajari di modul Matematika, dipakai untuk sesuatu yang sangat praktis.
+</div>
+
+<h3>Enkripsi hibrida — kenapa keduanya dipakai bersama</h3>
+<p>Setelah kunci bersama disepakati, komunikasi selanjutnya <b>tidak</b> memakai kriptografi asimetris. Terlalu lambat. Yang dilakukan:</p>
+
+<div data-diagram="pipeline" data-stages="Sepakati kunci::cara asimetris, sekali saja|Buat kunci sesi::kunci simetris acak|Kirim data::dienkripsi simetris, cepat|Selesai::kunci sesi dibuang" data-caption="Enkripsi hibrida: yang lambat dipakai sekali, yang cepat dipakai seterusnya"></div>
+
+<div class="callout">
+<b>Inilah yang terjadi setiap kali kamu membuka situs berawalan https</b> — termasuk saat membuka bursa kripto atau situs ini sendiri. Prosesnya berlangsung dalam sepersekian detik, berulang tiap kali kamu membuka halaman baru, dan kamu tidak pernah menyadarinya.
+</div>
+
+<h3>Satu sifat yang sangat berharga</h3>
+<div class="callout warn">
+<b>Forward secrecy.</b> Karena kunci sesi dibuat <b>baru setiap kali</b> lalu dibuang, penyerang yang berhasil mencuri kunci privat servermu <b>hari ini</b> tetap tidak bisa membuka rekaman percakapan <b>tahun lalu</b>.<br><br>
+Ini penting untuk ancaman "rekam sekarang, buka nanti" yang kamu pelajari di pelajaran kuantum — meski forward secrecy tidak menolong bila algoritma pertukaran kuncinya sendiri yang jebol.
+</div>
+`,
+          keyPoints: [
+            "Masalah lama: dua pihak butuh kunci yang sama, tapi mengirim kunci lewat jalur yang disadap membuatnya percuma.",
+            "Solusinya: kedua pihak menghitung sendiri kunci yang sama; angka rahasianya tidak pernah dikirimkan.",
+            "Penyadap mendengar g, p, dan kedua angka publik, tapi harus memecahkan g^x mod p untuk mendapatkan rahasianya.",
+            "Enkripsi hibrida: asimetris dipakai sekali untuk menyepakati kunci, lalu simetris yang cepat untuk seluruh datanya.",
+            "Inilah yang terjadi setiap kali membuka situs https, dalam sepersekian detik tanpa disadari.",
+            "Forward secrecy: kunci sesi dibuat baru tiap kali lalu dibuang, sehingga rekaman lama tetap aman meski kunci server dicuri kemudian.",
+          ],
+          quiz: [
+            {
+              q: "Apa inti cerdik dari pertukaran kunci Diffie-Hellman?",
+              options: [
+                "Kedua pihak menghitung sendiri kunci yang sama tanpa pernah mengirimkannya",
+                "Kunci dikirim dalam bentuk terenkripsi sehingga penyadap tak bisa membacanya",
+                "Kunci dipecah menjadi beberapa bagian yang dikirim lewat jalur berbeda",
+                "Kunci diganti begitu cepat sehingga penyadap tak sempat menangkapnya",
+              ],
+              answer: 0,
+              explain: "Rahasianya tidak pernah melintas di jalur mana pun — itulah yang membuatnya aman meski seluruh percakapan disadap.",
+            },
+            {
+              q: "Kenapa komunikasi https memakai enkripsi simetris DAN asimetris sekaligus?",
+              options: [
+                "Asimetris dipakai sekali menyepakati kunci, simetris yang cepat untuk seluruh datanya",
+                "Simetris dipakai untuk data penting, asimetris untuk data yang kurang penting",
+                "Keduanya dipakai bergantian agar penyadap kebingungan membedakannya",
+                "Asimetris dipakai mengirim data, simetris hanya untuk memeriksa keutuhannya",
+              ],
+              answer: 0,
+              explain: "Asimetris terlalu lambat untuk data besar; simetris tidak bisa menyelesaikan masalah distribusi kunci. Keduanya saling melengkapi.",
+            },
+            {
+              q: "Apa manfaat forward secrecy?",
+              options: [
+                "Rekaman percakapan lama tetap aman walau kunci privat server dicuri kemudian",
+                "Percakapan menjadi lebih cepat karena kuncinya tidak perlu dihitung ulang",
+                "Penyadap tidak bisa mengetahui siapa yang sedang berkomunikasi dengan siapa",
+                "Pesan yang salah kirim bisa ditarik kembali sebelum dibaca penerimanya",
+              ],
+              answer: 0,
+              explain: "Karena tiap sesi memakai kunci baru yang langsung dibuang, tidak ada satu kunci yang membuka seluruh riwayat.",
+            },
+          ],
+        },
+        {
+          id: "bc-enk-3",
+          title: "Di Mana Enkripsi Sebenarnya Dipakai dalam Crypto",
+          duration: "12 menit",
+          content: `
+<p>Kita sudah tahu blockchain <b>tidak</b> mengenkripsi isinya. Lalu di mana enkripsi benar-benar dipakai dalam dunia kripto? Ternyata di banyak tempat — hanya saja bukan di tempat yang orang kira.</p>
+
+<div data-diagram="layers" data-items="Berkas dompet di perangkatmu|Sambungan ke bursa (https)|Pesan &amp; kunci cadangan|Mempool terenkripsi (baru)" data-caption="Empat tempat enkripsi benar-benar bekerja di sekitar kripto"></div>
+
+<h3>1. Berkas dompet di perangkatmu</h3>
+<div class="callout">
+Inilah pemakaian yang paling menyentuh kamu langsung. Kunci privat di dompetmu <b>disimpan dalam keadaan terenkripsi</b>, dan kata sandi yang kamu ketik saat membuka dompet adalah kunci yang membukanya.<br><br>
+Artinya: pencuri yang mengambil berkas dompetmu <b>masih terhalang kata sandi</b>. Itulah kenapa kata sandi dompet yang lemah sangat berbahaya — ia satu-satunya lapisan antara berkas itu dan dana kamu.
+</div>
+
+<h3>2. Sambungan ke bursa dan dompet</h3>
+<p>Setiap kali membuka aplikasi bursa, sambunganmu dienkripsi memakai proses yang baru saja kamu pelajari. Tanpa itu, siapa pun yang berbagi jaringan Wi-Fi denganmu bisa membaca kata sandi dan kode OTP-mu.</p>
+
+<h3>3. Mencadangkan frasa pemulihan</h3>
+<div class="callout warn">
+Banyak orang memotret frasa pemulihannya lalu menyimpannya di layanan awan. Layanan itu memang menyimpan berkas dalam keadaan terenkripsi — <b>tetapi kuncinya dipegang penyedia layanan</b>, bukan kamu.<br><br>
+Kalau memang harus disimpan digital, enkripsi sendiri lebih dulu dengan kata sandi yang hanya kamu ketahui. Tapi cara yang paling disarankan tetap: <b>tulis di kertas, simpan di tempat aman, jangan difoto</b>.
+</div>
+
+<h3>4. Perbatasan yang sedang dikerjakan</h3>
+<table class="tbl">
+  <tr><th>Yang sedang dikembangkan</th><th>Masalah yang ingin dipecahkan</th></tr>
+  <tr><td><b>Mempool terenkripsi</b></td><td>Transaksi yang menunggu kini terlihat semua orang, sehingga bisa disalip demi keuntungan. Menyembunyikannya sampai masuk blok mencegah hal itu</td></tr>
+  <tr><td><b>Enkripsi homomorfik</b></td><td>Menghitung <b>di atas data terenkripsi</b> tanpa membukanya. Masih sangat lambat, tapi akan sangat berguna bila matang</td></tr>
+  <tr><td><b>Bukti tanpa pengetahuan</b></td><td>Membuktikan sesuatu benar tanpa mengungkap datanya — sudah kamu pelajari di modul Forensik</td></tr>
+</table>
+
+<div class="callout">
+<b>Pola yang terlihat dari keempatnya:</b> enkripsi dipakai di <b>tepi</b> sistem kripto — pada perangkatmu, pada sambungan, pada cadangan — sementara <b>inti blockchainnya sendiri tetap terbuka</b>.<br><br>
+Ini bukan kelalaian, melainkan pilihan rancangan. Blockchain memilih <b>keterbukaan yang bisa diverifikasi</b> daripada kerahasiaan. Privasi lalu dikerjakan dengan cara lain — seperti bukti tanpa pengetahuan — bukan dengan menyembunyikan buku besarnya.
+</div>
+
+<div class="callout warn">
+<b>Yang praktis bisa kamu lakukan hari ini:</b><br>
+• Pakai kata sandi dompet yang <b>panjang dan unik</b> — itu kunci enkripsi berkas dompetmu.<br>
+• Pastikan alamat situs bursa berawalan <b>https</b> dan ejaannya benar sebelum memasukkan apa pun.<br>
+• <b>Jangan</b> menyimpan frasa pemulihan sebagai foto atau catatan biasa di layanan awan.<br>
+• Sadari bahwa enkripsi melindungi <b>berkas dan sambungan</b> — bukan membuat transaksimu di blockchain jadi rahasia.
+</div>
+`,
+          keyPoints: [
+            "Berkas dompet disimpan terenkripsi; kata sandi yang kamu ketik adalah kunci pembukanya.",
+            "Kata sandi dompet yang lemah berbahaya karena ia satu-satunya lapisan antara berkas curian dan dana kamu.",
+            "Sambungan ke bursa dienkripsi lewat https; tanpa itu pengguna Wi-Fi yang sama bisa membaca kata sandi dan OTP.",
+            "Menyimpan frasa pemulihan di layanan awan berarti kuncinya dipegang penyedia layanan, bukan kamu.",
+            "Perbatasan yang sedang dikerjakan: mempool terenkripsi, enkripsi homomorfik, dan bukti tanpa pengetahuan.",
+            "Polanya: enkripsi dipakai di TEPI sistem (perangkat, sambungan, cadangan); inti blockchainnya tetap terbuka.",
+            "Itu pilihan rancangan — blockchain memilih keterbukaan yang bisa diverifikasi, lalu mengerjakan privasi dengan cara lain.",
+          ],
+          quiz: [
+            {
+              q: "Apa yang sebenarnya dilindungi kata sandi dompet kriptomu?",
+              options: [
+                "Berkas dompet yang menyimpan kunci privat dalam keadaan terenkripsi",
+                "Seluruh transaksi yang pernah kamu kirim agar tak terbaca di blockchain",
+                "Saldo koinmu agar tidak bisa dilihat lewat block explorer publik",
+                "Sambungan antara aplikasi dompet dan jaringan blockchain",
+              ],
+              answer: 0,
+              explain: "Karena itu kata sandi yang lemah berbahaya: ia satu-satunya lapisan bila berkas dompetmu dicuri.",
+            },
+            {
+              q: "Kenapa menyimpan foto frasa pemulihan di layanan awan berisiko?",
+              options: [
+                "Karena kunci enkripsi berkas itu dipegang penyedia layanan, bukan olehmu",
+                "Karena berkas di layanan awan sama sekali tidak pernah dienkripsi",
+                "Karena layanan awan otomatis membagikan berkas kepada pengguna lain",
+                "Karena foto akan kehilangan kualitas sehingga frasanya jadi tak terbaca",
+              ],
+              answer: 0,
+              explain: "Terenkripsi bukan berarti aman bagimu — yang menentukan adalah siapa yang memegang kuncinya.",
+            },
+            {
+              q: "Apa pola pemakaian enkripsi dalam ekosistem kripto?",
+              options: [
+                "Dipakai di tepi sistem — perangkat, sambungan, cadangan — sementara blockchainnya tetap terbuka",
+                "Dipakai pada seluruh transaksi di blockchain sehingga isinya tak terbaca publik",
+                "Dipakai hanya oleh bursa besar, sedangkan dompet pribadi tidak memakainya",
+                "Dipakai untuk menyembunyikan saldo alamat dari penelusuran block explorer",
+              ],
+              answer: 0,
+              explain: "Blockchain sengaja memilih keterbukaan yang bisa diverifikasi; privasi dikerjakan lewat cara lain seperti bukti tanpa pengetahuan.",
             },
           ],
         },

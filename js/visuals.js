@@ -1877,6 +1877,128 @@ DEMOS["klaster-alamat"] = function (root) {
   gambar();
 };
 
+/* ---------- Demo: tiga operasi kriptografi pada pesan yang sama ---------- */
+DEMOS["tiga-operasi"] = function (root) {
+  const s = { pesan: "Kirim 5 BTC ke Budi", kunci: "rahasia123", kunciBuka: "rahasia123" };
+
+  // XOR sederhana — hanya untuk memperagakan sifat "bisa dibalik",
+  // BUKAN enkripsi yang layak dipakai sungguhan.
+  function xorHex(teks, kunci) {
+    let h = "";
+    for (let i = 0; i < teks.length; i++) {
+      const c = teks.charCodeAt(i) ^ kunci.charCodeAt(i % kunci.length);
+      h += c.toString(16).padStart(2, "0");
+    }
+    return h;
+  }
+  function xorBalik(hex, kunci) {
+    let t = "";
+    for (let i = 0; i < hex.length; i += 2) {
+      const c = parseInt(hex.substr(i, 2), 16) ^ kunci.charCodeAt((i / 2) % kunci.length);
+      t += String.fromCharCode(c);
+    }
+    return t;
+  }
+  const bisaDibaca = (t) => /^[\x20-\x7E\s]*$/.test(t);
+
+  const out = h("div", { class: "dm-out" });
+
+  function draw() {
+    const sandi = xorHex(s.pesan, s.kunci || " ");
+    const dibuka = xorBalik(sandi, s.kunciBuka || " ");
+    const cocok = dibuka === s.pesan;
+    const sidik = demoHash(s.pesan);
+    const ttd = demoHash(s.pesan + "|" + s.kunci);
+
+    out.innerHTML =
+      '<div class="krip-blok"><div class="krip-judul">🔒 ENKRIPSI — menyembunyikan</div>' +
+      '<div class="krip-hasil sandi">' + sandi.slice(0, 72) + (sandi.length > 72 ? "…" : "") + "</div>" +
+      '<div class="dm-sub">Dibuka dengan kunci "' + (s.kunciBuka || "(kosong)") + '":</div>' +
+      '<div class="krip-hasil ' + (cocok ? "ok" : "bad") + '">' +
+      (bisaDibaca(dibuka) ? dibuka : dibuka.replace(/[^\x20-\x7E]/g, "�")) + "</div>" +
+      '<div class="dm-sub">' + (cocok ? "✅ Kunci cocok — pesan kembali utuh." : "❌ Kunci salah — hasilnya jadi sampah. Tak ada petunjuk seberapa dekat tebakanmu.") + "</div></div>" +
+
+      '<div class="krip-blok"><div class="krip-judul">🔑 HASH — menyegel, satu arah</div>' +
+      '<div class="krip-hasil sidik">' + sidik + "</div>" +
+      '<div class="dm-sub">Panjangnya selalu sama, apa pun panjang pesannya. <b>Tidak ada kunci</b> dan <b>tidak bisa dibalik</b> — tak ada cara mendapatkan pesan asli dari deretan ini.</div></div>' +
+
+      '<div class="krip-blok"><div class="krip-judul">✍️ TANDA TANGAN — membuktikan, bukan menyembunyikan</div>' +
+      '<div class="krip-hasil biasa">' + s.pesan + "</div>" +
+      '<div class="dm-sub">Pesannya <b>tetap terbaca siapa saja</b>. Yang ditambahkan hanyalah:</div>' +
+      '<div class="krip-hasil ttd">' + ttd + "</div>" +
+      '<div class="dm-sub">Siapa pun bisa memeriksa tanda tangan ini sah, tanpa bisa memalsukannya.</div></div>' +
+
+      '<div class="dm-note">⚠️ <b>Perhatikan baris ketiga.</b> Tanda tangan digital <b>tidak menyembunyikan apa pun</b> — pesannya tetap terbuka. Inilah yang dipakai blockchain.<br><br>Karena itu kalimat "data blockchain dienkripsi" <b>keliru</b>: yang dipakai blockchain adalah <b>hash</b> dan <b>tanda tangan</b>, bukan enkripsi. Justru seluruh isinya sengaja dibuat terbuka agar semua orang bisa memeriksanya.<br><br><i>Catatan: enkripsi di demo ini memakai XOR sederhana supaya sifat "bisa dibalik" terlihat. Enkripsi sungguhan jauh lebih rumit.</i></div>';
+  }
+
+  function isian(kunci, label) {
+    const inp = h("input", { class: "pc-input lebar", type: "text", value: s[kunci] });
+    inp.addEventListener("input", () => { s[kunci] = inp.value; draw(); });
+    return h("label", { class: "pc-row" }, [h("span", { text: label }), inp]);
+  }
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🧪 <b>Demo: tiga operasi yang sering tertukar</b>" }),
+    h("p", { class: "demo-hint", text: "Pesan yang sama dilewatkan tiga operasi berbeda. Ubah kunci pembukanya menjadi salah, lalu perhatikan apa yang terjadi." }),
+    h("div", { class: "pc-form" }, [
+      isian("pesan", "Pesan"),
+      isian("kunci", "Kunci rahasia"),
+      isian("kunciBuka", "Kunci untuk membuka"),
+    ]),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: pertukaran kunci Diffie-Hellman ---------- */
+DEMOS["tukar-kunci"] = function (root) {
+  const G = 5, P = 23; // angka kecil sengaja dipilih agar bisa diikuti manual
+  const s = { a: 6, b: 15 };
+  const out = h("div", { class: "dm-out" });
+
+  const pangkatMod = (basis, pangkat, mod) => {
+    let h2 = 1;
+    for (let i = 0; i < pangkat; i++) h2 = (h2 * basis) % mod;
+    return h2;
+  };
+  const warna = (n) => "hsl(" + Math.round((n / P) * 360) + ", 70%, 55%)";
+
+  function draw() {
+    const A = pangkatMod(G, s.a, P);       // dikirim Ani, terlihat umum
+    const B = pangkatMod(G, s.b, P);       // dikirim Budi, terlihat umum
+    const rahasiaAni = pangkatMod(B, s.a, P);
+    const rahasiaBudi = pangkatMod(A, s.b, P);
+    const sama = rahasiaAni === rahasiaBudi;
+
+    out.innerHTML =
+      '<div class="dm-line"><span>Diketahui umum</span><b>g = ' + G + ", p = " + P + "</b></div>" +
+      '<div class="dm-line"><span>Ani kirim ke Budi<br><i class="dm-sub">' + G + "^" + s.a + " mod " + P + '</i></span><b>' + A + "</b></div>" +
+      '<div class="dm-line"><span>Budi kirim ke Ani<br><i class="dm-sub">' + G + "^" + s.b + " mod " + P + '</i></span><b>' + B + "</b></div>" +
+      '<div class="krip-hasil biasa">👂 Penyadap mendengar semuanya: g=' + G + ", p=" + P + ", " + A + ", " + B + "</div>" +
+      '<div class="dm-line good"><span>Ani hitung<br><i class="dm-sub">' + B + "^" + s.a + " mod " + P + '</i></span><b>' + rahasiaAni + "</b></div>" +
+      '<div class="dm-line good"><span>Budi hitung<br><i class="dm-sub">' + A + "^" + s.b + " mod " + P + '</i></span><b>' + rahasiaBudi + "</b></div>" +
+      '<div class="krip-warna"><i style="background:' + warna(rahasiaAni) + '"></i><i style="background:' + warna(rahasiaBudi) + '"></i></div>' +
+      '<div class="dm-line big ' + (sama ? "good" : "bad") + '"><span>' + (sama ? "🤝 Keduanya tiba di angka yang SAMA" : "Tidak cocok") + "</span><b>" + rahasiaAni + "</b></div>" +
+      '<div class="dm-note">Ani dan Budi kini punya rahasia bersama <b>' + rahasiaAni + "</b> — padahal angka itu <b>tidak pernah dikirim</b> lewat jalur mana pun.<br><br>Penyadap mendengar seluruh percakapan (" + G + ", " + P + ", " + A + ", " + B + ") tetapi untuk mendapatkan " + rahasiaAni + " ia harus menemukan <b>a</b> atau <b>b</b> dari " + G + "^x mod " + P + " — persoalan yang dengan bilangan sungguhan berukuran ratusan digit <b>praktis mustahil</b>.<br><br>Inilah yang terjadi diam-diam setiap kali kamu membuka situs berawalan https.</div>";
+  }
+
+  const sl = (kunci, label) => {
+    const r = h("input", { type: "range", min: "2", max: "20", value: String(s[kunci]), class: "dm-range" });
+    const b = h("b", { text: String(s[kunci]) });
+    r.oninput = () => { s[kunci] = parseInt(r.value, 10); b.textContent = r.value; draw(); };
+    return h("label", { class: "dm-row" }, [h("span", { text: label }), r, b]);
+  };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🤝 <b>Demo: menyepakati kunci rahasia di jalur terbuka</b>" }),
+    h("p", { class: "demo-hint", text: "Ani dan Budi belum pernah bertemu dan semua percakapannya disadap. Anehnya mereka tetap bisa menyepakati satu angka rahasia. Geser angka rahasia masing-masing dan perhatikan hasil akhirnya." }),
+    sl("a", "Rahasia Ani (a): "),
+    sl("b", "Rahasia Budi (b): "),
+    out,
+  ]));
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";
