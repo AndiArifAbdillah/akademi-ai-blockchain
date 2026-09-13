@@ -2279,6 +2279,307 @@ DEMOS["isolasi-anomali"] = function (root) {
   draw();
 };
 
+/* ---------- Demo: kenapa pohon dalam hutan harus berbeda-beda ---------- */
+DEMOS["hutan-korelasi"] = function (root) {
+  // distribusi normal baku (pendekatan Abramowitz–Stegun) dan kebalikannya (bagi dua)
+  const Phi = (z) => {
+    const t = 1 / (1 + 0.2316419 * Math.abs(z));
+    const d = 0.3989423 * Math.exp((-z * z) / 2);
+    const q = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+    return z > 0 ? 1 - q : q;
+  };
+  const PhiInv = (p) => { let lo = -8, hi = 8; for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (Phi(m) < p) lo = m; else hi = m; } return (lo + hi) / 2; };
+
+  let p = 0.65, n = 25, rho = 0.2;
+  const kanvas = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+  const akurasi = (k) => Phi(PhiInv(p) / Math.sqrt(rho + (1 - rho) / k));
+  const batas = () => (rho === 0 ? 1 : Phi(PhiInv(p) / Math.sqrt(rho)));
+  const px = (k) => 50 + ((k - 1) / 199) * 450;
+  const py = (a) => 225 - ((a - 0.5) / 0.5) * 205;
+  const pct = (v) => (v * 100).toFixed(1).replace(".", ",") + "%";
+
+  function draw() {
+    let g = '<svg viewBox="0 0 520 262" class="viz-svg" role="img" aria-label="Akurasi hutan terhadap jumlah pohon">';
+    g += '<line x1="50" y1="225" x2="505" y2="225" class="vaxis"/><line x1="50" y1="15" x2="50" y2="225" class="vaxis"/>';
+    [0.5, 0.75, 1].forEach((a) => { g += '<text x="44" y="' + (py(a) + 4).toFixed(1) + '" text-anchor="end" class="vt-xs">' + Math.round(a * 100) + "%</text>"; });
+    g += '<line x1="50" y1="' + py(batas()).toFixed(1) + '" x2="505" y2="' + py(batas()).toFixed(1) + '" class="garis-terbaik"/>';
+    g += '<text x="500" y="' + (py(batas()) + (batas() > 0.95 ? 16 : -6)).toFixed(1) + '" text-anchor="end" class="vt-xs">batas atas ' + pct(batas()) + "</text>";
+    g += '<line x1="50" y1="' + py(p).toFixed(1) + '" x2="505" y2="' + py(p).toFixed(1) + '" class="garis-ambang"/>';
+    g += '<text x="500" y="' + (py(p) + 16).toFixed(1) + '" text-anchor="end" class="vt-xs">satu pohon ' + pct(p) + "</text>";
+    let jalur = "";
+    for (let k = 1; k <= 200; k++) jalur += (k === 1 ? "M" : "L") + px(k).toFixed(1) + " " + py(akurasi(k)).toFixed(1) + " ";
+    g += '<path d="' + jalur + '" class="vline aktif"/>';
+    g += '<circle cx="' + px(n).toFixed(1) + '" cy="' + py(akurasi(n)).toFixed(1) + '" r="7" class="titik-lancar"/>';
+    g += '<text x="277" y="252" text-anchor="middle" class="vt-xs">Jumlah pohon (1–200)</text>';
+    g += "</svg>";
+    kanvas.innerHTML = g;
+
+    const sisa = rho + (1 - rho) / n;
+    out.innerHTML =
+      '<div class="dm-line"><span>Akurasi satu pohon</span><b>' + pct(p) + "</b></div>" +
+      '<div class="dm-line big good"><span>Akurasi hutan ' + n + " pohon</span><b>" + pct(akurasi(n)) + "</b></div>" +
+      '<div class="dm-line"><span>Batas atas, walau pohonnya tak terhingga</span><b>' + pct(batas()) + "</b></div>" +
+      '<div class="dm-line teks"><span>Keraguan yang tersisa<br><i class="dm-sub">ρ + (1 − ρ) ÷ n — bagian kiri tidak bisa dihapus dengan menambah pohon</i></span><b>' +
+      rho.toFixed(2).replace(".", ",") + " + " + ((1 - rho) / n).toFixed(3).replace(".", ",") + " = " + sisa.toFixed(3).replace(".", ",") + "</b></div>" +
+      '<div class="dm-note">' +
+      (rho >= 0.99
+        ? "<b>Pohon kembar:</b> semua pohon membuat kesalahan yang sama persis, jadi seribu pohon pun sama saja dengan satu pohon. Voting tidak ada gunanya kalau semua pemilih berpendapat sama."
+        : "Menambah pohon menghapus bagian <b>(1 − ρ) ÷ n</b> — itu sebabnya kurva cepat naik lalu mendatar. Tapi bagian <b>ρ</b> (kesalahan yang dibuat bersama oleh semua pohon) tidak bisa dihapus dengan cara apa pun kecuali <b>membuat pohonnya lebih berbeda</b>. Itulah tugas bootstrap dan pemilihan fitur acak.") +
+      "<br><br><i>Model sederhana untuk ilustrasi (rata-rata keyakinan pohon); nilai ρ pada tombol adalah perkiraan, bukan hasil pengukuran.</i></div>";
+  }
+
+  const rentang = (label, attrs, ubah, tampil) => {
+    const sl = h("input", Object.assign({ type: "range", class: "dm-range" }, attrs));
+    const lb = h("b", { text: tampil(parseFloat(attrs.value)) });
+    sl.oninput = () => { const v = parseFloat(sl.value); ubah(v); lb.textContent = tampil(v); draw(); };
+    return { el: h("label", { class: "dm-row" }, [h("span", { text: label }), sl, lb]), sl: sl, lb: lb, tampil: tampil };
+  };
+  const rP = rentang("Akurasi tiap pohon: ", { min: "55", max: "80", step: "1", value: "65" }, (v) => { p = v / 100; }, (v) => v + "%");
+  const rN = rentang("Jumlah pohon: ", { min: "1", max: "200", step: "1", value: "25" }, (v) => { n = v; }, (v) => String(v));
+  const rR = rentang("Kemiripan antar-pohon (ρ): ", { min: "0", max: "100", step: "5", value: "20" }, (v) => { rho = v / 100; }, (v) => v + "%");
+  const preset = (teks, nilai) => {
+    const b = h("button", { class: "btn ghost", type: "button", text: teks });
+    b.onclick = () => { rho = nilai / 100; rR.sl.value = String(nilai); rR.lb.textContent = rR.tampil(nilai); draw(); };
+    return b;
+  };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🌳 <b>Demo: hutan hanya pintar kalau pohonnya berbeda-beda</b>" }),
+    h("p", { class: "demo-hint", text: "Tiap pohon benar 65% dari waktu. Tambah jumlah pohon, lalu ubah seberapa mirip kesalahan antar-pohon — dan lihat batas yang tidak bisa ditembus." }),
+    kanvas,
+    rN.el, rR.el, rP.el,
+    h("div", { class: "demo-controls" }, [preset("👯 Pohon kembar", 100), preset("🎒 Bootstrap saja", 50), preset("🎲 Bootstrap + fitur acak", 20)]),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: pertumbuhan pohon level-wise vs leaf-wise ---------- */
+DEMOS["tumbuh-daun"] = function (root) {
+  // nomor simpul gaya heap: anak dari i adalah 2i dan 2i+1. G = penurunan kesalahan bila simpul dipecah (ilustrasi)
+  const G = { 1: 40, 2: 28, 3: 3, 4: 14, 5: 2, 6: 1.5, 7: 1, 8: 12, 9: 2, 10: 1, 11: 1, 12: 0.5, 13: 0.5, 14: 0.5, 15: 0.5 };
+  const BARIS = { 1: 1000, 2: 640, 3: 360, 4: 420, 5: 220, 6: 200, 7: 160, 8: 90, 9: 330, 10: 120, 11: 100, 12: 110, 13: 90, 14: 100, 15: 60,
+    16: 30, 17: 60, 18: 180, 19: 150, 20: 70, 21: 50, 22: 60, 23: 40, 24: 60, 25: 50, 26: 50, 27: 40, 28: 50, 29: 50, 30: 30, 31: 30 };
+  const AWAL = 110;
+  const kedalaman = (i) => Math.floor(Math.log2(i));
+  let k = 4;
+
+  function tumbuh(mode) {
+    const pecah = [];
+    let daun = [1];
+    for (let s = 0; s < k; s++) {
+      const calon = daun.filter((i) => kedalaman(i) <= 3);
+      if (!calon.length) break;
+      const pilih = calon.reduce((a, b) => {
+        if (mode === "level") return kedalaman(a) < kedalaman(b) || (kedalaman(a) === kedalaman(b) && a < b) ? a : b;
+        return G[a] > G[b] || (G[a] === G[b] && a < b) ? a : b;
+      });
+      pecah.push(pilih);
+      daun = daun.filter((i) => i !== pilih).concat([2 * pilih, 2 * pilih + 1]);
+    }
+    return { pecah: pecah, daun: daun };
+  }
+
+  function panel(hasil) {
+    const pos = (i) => { const d = kedalaman(i), slot = i - Math.pow(2, d); return [((slot + 0.5) * 520) / Math.pow(2, d), 22 + d * 40]; };
+    let garis = "", simpul = "";
+    hasil.pecah.forEach((i, urut) => {
+      const [x, y] = pos(i);
+      [2 * i, 2 * i + 1].forEach((c) => { const [cx, cy] = pos(c); garis += '<line x1="' + x.toFixed(1) + '" y1="' + y + '" x2="' + cx.toFixed(1) + '" y2="' + cy + '" class="vline"/>'; });
+      simpul += '<circle cx="' + x.toFixed(1) + '" cy="' + y + '" r="11" class="vbox accent aktif"/><text x="' + x.toFixed(1) + '" y="' + (y + 4) + '" text-anchor="middle" class="vt-xs">' + (urut + 1) + "</text>";
+    });
+    hasil.daun.forEach((i) => {
+      const [x, y] = pos(i);
+      simpul += '<circle cx="' + x.toFixed(1) + '" cy="' + y + '" r="8" class="vbox ok"/><text x="' + x.toFixed(1) + '" y="' + (y + 22) + '" text-anchor="middle" class="vt-xs" style="font-size:9.5px">' + BARIS[i] + "</text>";
+    });
+    return '<svg viewBox="0 0 520 212" class="viz-svg" role="img" aria-label="Bentuk pohon">' + garis + simpul + "</svg>";
+  }
+
+  function ringkas(hasil) {
+    const sisa = AWAL - hasil.pecah.reduce((t, i) => t + G[i], 0);
+    return {
+      sisa: sisa,
+      dalam: Math.max.apply(null, hasil.daun.map(kedalaman)),
+      kecil: Math.min.apply(null, hasil.daun.map((i) => BARIS[i])),
+    };
+  }
+
+  const wadah = h("div");
+  function draw() {
+    const A = tumbuh("level"), B = tumbuh("leaf");
+    const a = ringkas(A), b = ringkas(B);
+    const baris = (r, lawan) =>
+      '<div class="dm-line ' + (r.sisa < lawan.sisa ? "good" : "") + '"><span>Kesalahan pada data latih tersisa</span><b>' + String(r.sisa).replace(".", ",") + "</b></div>" +
+      '<div class="dm-line"><span>Kedalaman terdalam</span><b>' + r.dalam + "</b></div>" +
+      '<div class="dm-line ' + (r.kecil < 60 ? "bad" : "") + '"><span>Daun terkecil (baris data)</span><b>' + r.kecil + "</b></div>";
+    wadah.innerHTML =
+      '<div class="dm-out"><div class="dm-line big"><span>📶 Level-wise <i class="dm-sub">— pola bawaan XGBoost: habiskan satu tingkat dulu</i></span></div>' + panel(A) + baris(a, b) + "</div>" +
+      '<div class="dm-out"><div class="dm-line big"><span>🍃 Leaf-wise <i class="dm-sub">— pola LightGBM: pecah daun yang paling menguntungkan</i></span></div>' + panel(B) + baris(b, a) + "</div>" +
+      '<div class="dm-note">Kedua pohon punya <b>jumlah daun yang sama (' + (k + 1) + ")</b>. Angka di lingkaran biru = urutan pemecahan; angka di bawah daun hijau = jumlah baris data di daun itu.<br><br>" +
+      (b.sisa < a.sisa
+        ? "Leaf-wise menurunkan kesalahan lebih cepat karena tidak membuang jatah pemecahan untuk cabang yang hampir tak berguna. Harganya: cabangnya menjorok dalam dan daun terkecilnya hanya berisi <b>" + b.kecil + " baris</b>. Keputusan yang diambil dari sedikit data mudah berubah jadi hafalan — karena itu di LightGBM <b>num_leaves</b> dan <b>min_child_samples</b> adalah rem utamanya."
+        : "Pada pemecahan awal kedua cara masih memilih simpul yang sama. Tambah jumlah pemecahan untuk melihat keduanya berpisah jalan.") +
+      "<br><br><i>Nilai penurunan kesalahan tiap pemecahan adalah ilustrasi.</i></div>";
+  }
+
+  const sl = h("input", { type: "range", min: "1", max: "7", step: "1", value: "4", class: "dm-range" });
+  const lb = h("b", { text: "4" });
+  sl.oninput = () => { k = parseInt(sl.value, 10); lb.textContent = sl.value; draw(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🌿 <b>Demo: dua cara menumbuhkan pohon dengan jatah yang sama</b>" }),
+    h("p", { class: "demo-hint", text: "Data latih 1.000 baris. Setiap pemecahan menurunkan kesalahan dengan besar yang berbeda-beda. Geser jatah pemecahannya." }),
+    h("label", { class: "dm-row" }, [h("span", { text: "Jatah pemecahan: " }), sl, lb]),
+    wadah,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: melatih neural network kecil untuk XOR ---------- */
+DEMOS["latih-xor"] = function (root) {
+  function pengacak(benih) {
+    let a = benih >>> 0;
+    return function () {
+      a |= 0; a = (a + 0x6d2b79f5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const X = [[0, 0], [0, 1], [1, 0], [1, 1]], Y = [0, 1, 1, 0];
+  const TERSEMBUNYI = 4, LR = 0.8;
+  let benih = 1, linear = false, jaringan, langkahKe, riwayat, pemutar = null;
+
+  function buat() {
+    const r = pengacak(benih), s = () => r() * 2 - 1;
+    jaringan = {
+      W1: Array.from({ length: TERSEMBUNYI }, () => [s(), s()]),
+      b1: Array.from({ length: TERSEMBUNYI }, () => s() * 0.5),
+      W2: Array.from({ length: TERSEMBUNYI }, () => s()),
+      b2: 0,
+    };
+    langkahKe = 0; riwayat = [];
+  }
+  function maju(x) {
+    const a1 = jaringan.W1.map((w, j) => { const z = w[0] * x[0] + w[1] * x[1] + jaringan.b1[j]; return linear ? z : Math.tanh(z); });
+    let z2 = jaringan.b2;
+    a1.forEach((a, j) => { z2 += jaringan.W2[j] * a; });
+    return { a1: a1, y: 1 / (1 + Math.exp(-z2)) };
+  }
+  // satu langkah: maju, hitung loss, mundur (aturan rantai), perbarui bobot
+  function langkah() {
+    const gW1 = jaringan.W1.map(() => [0, 0]), gb1 = jaringan.b1.map(() => 0), gW2 = jaringan.W2.map(() => 0);
+    let gb2 = 0, L = 0;
+    X.forEach((x, i) => {
+      const f = maju(x);
+      const yy = Math.min(1 - 1e-9, Math.max(1e-9, f.y));
+      L -= Y[i] * Math.log(yy) + (1 - Y[i]) * Math.log(1 - yy);
+      const d2 = f.y - Y[i];
+      gb2 += d2;
+      f.a1.forEach((a, j) => {
+        gW2[j] += d2 * a;
+        const d1 = d2 * jaringan.W2[j] * (linear ? 1 : 1 - a * a);
+        gW1[j][0] += d1 * x[0]; gW1[j][1] += d1 * x[1]; gb1[j] += d1;
+      });
+    });
+    const m = X.length;
+    jaringan.W1.forEach((w, j) => {
+      w[0] -= (LR * gW1[j][0]) / m; w[1] -= (LR * gW1[j][1]) / m;
+      jaringan.b1[j] -= (LR * gb1[j]) / m; jaringan.W2[j] -= (LR * gW2[j]) / m;
+    });
+    jaringan.b2 -= (LR * gb2) / m;
+    langkahKe++;
+    riwayat.push(L / m);
+  }
+
+  const kanvas = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+  const koma = (v, d) => v.toFixed(d).replace(".", ",");
+
+  function draw() {
+    const SEL = 20, UK = 12, X0 = 12, Y0 = 12;
+    const ke = (v) => X0 + ((v + 0.25) / 1.5) * SEL * UK;
+    let g = '<svg viewBox="0 0 520 272" class="viz-svg" role="img" aria-label="Wilayah keputusan jaringan dan grafik loss">';
+    for (let r = 0; r < SEL; r++) {
+      for (let c = 0; c < SEL; c++) {
+        const u = -0.25 + ((c + 0.5) * 1.5) / SEL, v = 1.25 - ((r + 0.5) * 1.5) / SEL;
+        const pr = maju([u, v]).y;
+        g += '<rect x="' + (X0 + c * UK) + '" y="' + (Y0 + r * UK) + '" width="' + UK + '" height="' + UK + '" class="' + (pr >= 0.5 ? "sel-satu" : "sel-nol") + '" fill-opacity="' + (Math.abs(pr - 0.5) * 1.5).toFixed(2) + '"/>';
+      }
+    }
+    X.forEach((x, i) => {
+      g += '<circle cx="' + ke(x[0]).toFixed(1) + '" cy="' + (Y0 + SEL * UK - (ke(x[1]) - X0)).toFixed(1) + '" r="11" class="' + (Y[i] ? "titik-pencilan" : "titik-lancar") + '" style="stroke-width:3"/>';
+    });
+    g += '<text x="132" y="266" text-anchor="middle" class="vt-xs">merah = jawab 1 · hijau = jawab 0</text>';
+
+    // grafik loss
+    const GX0 = 300, GX1 = 508, GY0 = 20, GY1 = 230;
+    const LMAX = 0.8, jumlah = Math.max(riwayat.length, 200);
+    const gx = (t) => GX0 + (t / jumlah) * (GX1 - GX0);
+    const gy = (L) => GY1 - (Math.min(L, LMAX) / LMAX) * (GY1 - GY0);
+    g += '<line x1="' + GX0 + '" y1="' + GY1 + '" x2="' + GX1 + '" y2="' + GY1 + '" class="vaxis"/><line x1="' + GX0 + '" y1="' + GY0 + '" x2="' + GX0 + '" y2="' + GY1 + '" class="vaxis"/>';
+    g += '<line x1="' + GX0 + '" y1="' + gy(Math.LN2).toFixed(1) + '" x2="' + GX1 + '" y2="' + gy(Math.LN2).toFixed(1) + '" class="garis-ambang"/>';
+    g += '<text x="' + GX1 + '" y="' + (gy(Math.LN2) - 6).toFixed(1) + '" text-anchor="end" class="vt-xs">0,69 = tebak 50:50</text>';
+    if (riwayat.length) {
+      const lompat = Math.max(1, Math.ceil(riwayat.length / 200));
+      let jalur = "M" + gx(1).toFixed(1) + " " + gy(riwayat[0]).toFixed(1);
+      for (let t = lompat; t < riwayat.length; t += lompat) jalur += " L" + gx(t + 1).toFixed(1) + " " + gy(riwayat[t]).toFixed(1);
+      g += '<path d="' + jalur + '" class="vline aktif"/>';
+    }
+    g += '<text x="404" y="252" text-anchor="middle" class="vt-xs">langkah latihan →</text>';
+    g += '<text x="290" y="125" text-anchor="middle" class="vt-xs" transform="rotate(-90 290 125)">loss</text>';
+    g += "</svg>";
+    kanvas.innerHTML = g;
+
+    const hasil = X.map((x) => maju(x).y);
+    const benar = hasil.filter((pr, i) => (pr >= 0.5 ? 1 : 0) === Y[i]).length;
+    const L = riwayat.length ? riwayat[riwayat.length - 1] : null;
+    let catatan;
+    if (langkahKe === 0) catatan = "Bobot masih acak, jadi wilayah warnanya asal-asalan. Tekan <b>Latih</b> dan perhatikan loss turun sementara warna menyesuaikan diri dengan keempat titik.";
+    else if (linear && langkahKe >= 150) catatan = "<b>Macet di 0,69 — dan akan macet selamanya.</b> Tanpa fungsi aktivasi, sebanyak apa pun neuron dan lapisannya, seluruh jaringan tetap setara dengan <b>satu garis lurus</b>. XOR butuh dua garis, jadi pilihan terbaiknya menebak 50:50 untuk semua. Inilah alasan fungsi aktivasi wajib ada.";
+    else if (benar === 4 && L < 0.1) catatan = "<b>Berhasil.</b> Jaringan menemukan sendiri cara memisahkan XOR — perhatikan wilayah merahnya berbentuk pita diagonal, sesuatu yang mustahil dibuat satu garis lurus. Tidak ada yang memprogram aturan ini; semuanya hasil ribuan koreksi kecil pada " + (TERSEMBUNYI * 3 + TERSEMBUNYI + 1) + " bobot.";
+    else catatan = "Sedang belajar. Setiap langkah: <b>maju</b> (tebak), hitung <b>loss</b>, <b>mundur</b> (cari andil tiap bobot dengan aturan rantai), lalu geser bobot sedikit ke arah yang menurunkan loss.";
+
+    out.innerHTML =
+      '<div class="dm-line"><span>Langkah latihan</span><b>' + langkahKe + "</b></div>" +
+      '<div class="dm-line ' + (L !== null && L < 0.1 ? "good" : "") + '"><span>Loss saat ini</span><b>' + (L === null ? "—" : koma(L, 3)) + "</b></div>" +
+      X.map((x, i) => '<div class="dm-line ' + ((hasil[i] >= 0.5 ? 1 : 0) === Y[i] ? "good" : "bad") + '"><span>Input (' + x.join(", ") + ') <i class="dm-sub">jawaban benar ' + Y[i] + "</i></span><b>" + koma(hasil[i] * 100, 0) + "% yakin 1</b></div>").join("") +
+      '<div class="dm-note">' + catatan + "</div>";
+  }
+
+  function berhenti() { if (pemutar) { clearInterval(pemutar); pemutar = null; } tPutar.textContent = "▶ Latih"; }
+  const tPutar = h("button", { class: "btn", type: "button", text: "▶ Latih" });
+  tPutar.onclick = () => {
+    if (pemutar) { berhenti(); return; }
+    tPutar.textContent = "⏸ Jeda";
+    pemutar = setInterval(() => {
+      if (!root.isConnected) { berhenti(); return; }
+      for (let i = 0; i < 8; i++) langkah();
+      draw();
+      const L = riwayat[riwayat.length - 1];
+      if (langkahKe >= 1200 || (!linear && L < 0.02)) berhenti();
+    }, 70);
+  };
+  const tSatu = h("button", { class: "btn ghost", type: "button", text: "+10 langkah" });
+  tSatu.onclick = () => { for (let i = 0; i < 10; i++) langkah(); draw(); };
+  const tAcak = h("button", { class: "btn ghost", type: "button", text: "🎲 Bobot acak baru" });
+  tAcak.onclick = () => { berhenti(); benih = 1 + Math.floor(Math.random() * 100000); buat(); draw(); };
+  const cek = h("input", { type: "checkbox" });
+  cek.onchange = () => { berhenti(); linear = cek.checked; buat(); draw(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🧠 <b>Demo: latih neural network sungguhan di browsermu</b>" }),
+    h("p", { class: "demo-hint", text: "Soal XOR: jawab 1 hanya bila kedua input berbeda. Jaringan 2 input → 4 neuron tersembunyi → 1 output, mulai dari bobot acak." }),
+    kanvas,
+    h("div", { class: "demo-controls" }, [tPutar, tSatu, tAcak]),
+    h("label", { class: "dm-row" }, [cek, h("span", { text: " Hapus fungsi aktivasi (jaringan jadi linear)" })]),
+    out,
+  ]));
+  buat();
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

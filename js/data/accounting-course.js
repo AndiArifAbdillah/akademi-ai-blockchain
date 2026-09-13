@@ -12,7 +12,7 @@ const ACCOUNTING_COURSE = {
   description:
     "Jalur ini mengajarkan akuntansi dari nol: dari persamaan dasar dan debit-kredit, cara mencatat di jurnal, sampai membaca laporan keuangan dan rasio untuk mengambil keputusan bisnis.",
   modules: [
-    /* ---------------- LEVEL DASAR (MULAI DARI NOL) ---------------- */
+    /* ---------------- MODUL 1: MULAI DARI NOL ---------------- */
     {
       id: "acc-dasar",
       level: "Dasar",
@@ -155,10 +155,6 @@ const ACCOUNTING_COURSE = {
 <div class="callout warn">
 <b>Kesalahan paling umum:</b> mencampur uang pribadi & bisnis. Aturan pertama: <b>pisahkan!</b> Ini fondasi semua pencatatan yang sehat.
 </div>
-
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu sudah punya fondasi: <b>uang masuk-keluar</b>, <b>aset/utang/kekayaan</b>, dan <b>alasan mencatat</b>. Sekarang lanjut ke modul <b>Pemula</b> — istilah-istilah akuntansi akan terasa jauh lebih ramah!
-</div>
 `,
           keyPoints: [
             "Tanpa catatan, pemilik 'buta': tak tahu untung/rugi & uang tercampur.",
@@ -192,13 +188,12 @@ const ACCOUNTING_COURSE = {
         },
       ],
     },
-
-    /* ---------------- LEVEL PEMULA ---------------- */
+    /* ---------------- MODUL 2: FONDASI AKUNTANSI ---------------- */
     {
       id: "acc-pemula",
       level: "Pemula",
       title: "Fondasi Akuntansi",
-      summary: "Konsep inti: persamaan dasar, jenis akun, dan debit-kredit.",
+      summary: "Konsep inti: persamaan dasar, lima jenis akun, dan debit-kredit.",
       lessons: [
         {
           id: "acc-p-1",
@@ -441,13 +436,12 @@ const ACCOUNTING_COURSE = {
         },
       ],
     },
-
-    /* ---------------- LEVEL MENENGAH ---------------- */
+    /* ---------------- MODUL 3: SIKLUS & LAPORAN KEUANGAN ---------------- */
     {
       id: "acc-menengah",
       level: "Menengah",
       title: "Siklus & Laporan Keuangan",
-      summary: "Dari mencatat transaksi sampai menghasilkan laporan keuangan.",
+      summary: "Dari jurnal & buku besar sampai laporan laba rugi, neraca, arus kas — ditutup satu contoh kasus lengkap.",
       lessons: [
         {
           id: "acc-m-1",
@@ -682,15 +676,92 @@ const ACCOUNTING_COURSE = {
             },
           ],
         },
+        {
+          id: "acc-deep-1",
+          title: "Siklus Akuntansi Lengkap (Contoh Kasus)",
+          duration: "13 menit",
+          content: `
+<p>Sekarang kita satukan semua yang sudah dipelajari dalam <b>satu contoh nyata</b> — dari transaksi mentah sampai laporan keuangan. Contoh: jasa desain <b>"Kreatif"</b> (angka dalam juta Rupiah).</p>
+
+<div data-diagram="cycle" data-steps="Transaksi|Jurnal|Buku besar|Neraca saldo|Laporan keuangan" data-center="tiap periode" data-caption="Siklus yang berulang setiap bulan, kuartal, dan tahun"></div>
+
+
+<h3>Langkah 1 — Transaksi</h3>
+<ol>
+  <li>Pemilik setor modal Rp50 tunai.</li>
+  <li>Beli komputer (peralatan) Rp20 tunai.</li>
+  <li>Selesaikan jasa, terima Rp15 tunai.</li>
+  <li>Bayar gaji Rp3 tunai.</li>
+</ol>
+
+<h3>Langkah 2 — Jurnal (Debit = Kredit)</h3>
+<table class="tbl">
+  <tr><th>Transaksi</th><th>Debit</th><th>Kredit</th></tr>
+  <tr><td>1</td><td>Kas 50</td><td>Modal 50</td></tr>
+  <tr><td>2</td><td>Peralatan 20</td><td>Kas 20</td></tr>
+  <tr><td>3</td><td>Kas 15</td><td>Pendapatan 15</td></tr>
+  <tr><td>4</td><td>Beban Gaji 3</td><td>Kas 3</td></tr>
+</table>
+
+<h3>Langkah 3 — Saldo buku besar</h3>
+<p>Kas = 50 − 20 + 15 − 3 = <b>42</b>; Peralatan = 20; Modal = 50; Pendapatan = 15; Beban Gaji = 3.</p>
+
+<h3>Langkah 4 — Neraca Saldo (cek seimbang)</h3>
+<p>Total Debit (Kas 42 + Peralatan 20 + Beban 3 = <b>65</b>) = Total Kredit (Modal 50 + Pendapatan 15 = <b>65</b>) ✓</p>
+
+<h3>Langkah 5 — Laporan Keuangan</h3>
+<table class="tbl">
+  <tr><th>Laba Rugi</th><th>Neraca</th></tr>
+  <tr><td>Pendapatan 15 − Beban 3 = <b>Laba Bersih 12</b></td><td>Aset (Kas 42 + Peralatan 20 = <b>62</b>) = Kewajiban 0 + Ekuitas (Modal 50 + Laba 12 = <b>62</b>) ✓</td></tr>
+</table>
+
+<div class="callout">
+<b>Perhatikan keajaibannya:</b> laba Rp12 dari laba rugi <b>otomatis masuk ke ekuitas</b> di neraca, dan neraca tetap <b>seimbang</b>. Inilah siklus akuntansi yang utuh — semua saling terhubung rapi.
+</div>
+`,
+          keyPoints: [
+            "Siklus: transaksi → jurnal (debit=kredit) → buku besar → neraca saldo → laporan keuangan.",
+            "Neraca saldo memastikan total debit = total kredit sebelum menyusun laporan.",
+            "Laba bersih dari laba rugi mengalir masuk ke ekuitas di neraca.",
+            "Neraca selalu seimbang: Aset = Kewajiban + Ekuitas.",
+          ],
+          practice: [
+            { type: "number", q: "Dari contoh, Kas = 50 − 20 + 15 − 3. Berapa saldo kas akhirnya? (juta)", answer: 42, unit: "jt", hint: "Hitung berurutan.", solution: "50 − 20 + 15 − 3 = Rp42jt." },
+            { type: "number", q: "Pendapatan 15, beban 3. Berapa laba bersihnya? (juta)", answer: 12, unit: "jt", hint: "Laba = Pendapatan − Beban.", solution: "15 − 3 = Rp12jt." },
+          ],
+          quiz: [
+            {
+              q: "Apa fungsi neraca saldo dalam siklus?",
+              options: [
+                "Memastikan total debit sama dengan total kredit sebelum menyusun laporan",
+                "Menghitung laba bersih perusahaan untuk satu periode buku",
+                "Mencatat transaksi secara berurutan menurut tanggal terjadinya",
+                "Menyajikan posisi keuangan kepada investor di akhir tahun",
+              ],
+              answer: 0,
+              explain: "Neraca saldo mengecek keseimbangan debit-kredit sebelum laporan dibuat.",
+            },
+            {
+              q: "Laba bersih dari laporan laba rugi akan...",
+              options: [
+                "Masuk menambah ekuitas di neraca",
+                "Masuk menambah kas di laporan arus kas",
+                "Masuk mengurangi kewajiban di neraca",
+                "Dihapus pada awal periode berikutnya",
+              ],
+              answer: 0,
+              explain: "Laba menambah ekuitas (laba ditahan), menjaga neraca tetap seimbang.",
+            },
+          ],
+        },
       ],
     },
-
-    /* ---------------- LEVEL MAHIR ---------------- */
+    /* ---------------- MODUL 4: AKRUAL, ASET & PERSEDIAAN ---------------- */
     {
-      id: "acc-mahir",
-      level: "Mahir",
-      title: "Analisis & Keputusan Bisnis",
-      summary: "Akrual, rasio keuangan, dan akuntansi untuk pengambilan keputusan.",
+      id: "acc-pendalaman",
+      level: "Pendalaman",
+      title: "Akrual, Aset & Persediaan",
+      summary: "Basis akrual vs kas, penyusutan & modal kerja, serta metode persediaan FIFO, LIFO & rata-rata.",
       lessons: [
         {
           id: "acc-a-1",
@@ -744,6 +815,210 @@ const ACCOUNTING_COURSE = {
               answer: 0,
               explain:
                 "Beban diakui pada periode yang sama dengan pendapatan yang dihasilkannya.",
+            },
+          ],
+        },
+        {
+          id: "acc-a-3",
+          title: "Penyusutan, Persediaan & Modal Kerja",
+          duration: "10 menit",
+          content: `
+<p>Tiga konsep penting dalam akuntansi sehari-hari bisnis:</p>
+
+<div data-diagram="cycle" data-steps="Beli persediaan (kas keluar)|Jual (jadi piutang)|Tagih piutang|Kas masuk lagi" data-center="siklus kas" data-caption="Modal kerja adalah uang yang terus berputar — makin cepat berputar, makin sedikit modal dibutuhkan"></div>
+
+
+<h3>1. Penyusutan (Depresiasi)</h3>
+<p>Aset jangka panjang (mesin, kendaraan) kehilangan nilai seiring waktu. Biayanya <b>disebar</b> selama masa manfaatnya, bukan dibebankan sekaligus.</p>
+<div class="callout">
+<b>Metode garis lurus:</b> Penyusutan/tahun = (Harga − Nilai sisa) ÷ Masa manfaat. Mesin Rp50jt, nilai sisa 0, manfaat 5 tahun → Rp10jt/tahun.
+</div>
+
+<h3>2. Persediaan (Inventory)</h3>
+<p>Barang yang siap dijual. Saat harga beli berubah-ubah, ada metode menilainya:</p>
+<ul>
+  <li><b>FIFO</b> (First In, First Out) — barang yang masuk duluan dianggap terjual duluan.</li>
+  <li><b>Rata-rata (Average)</b> — pakai harga rata-rata.</li>
+</ul>
+
+<h3>3. Modal Kerja (Working Capital)</h3>
+<div class="callout">
+<b>Modal Kerja = Aset Lancar − Kewajiban Lancar.</b> Menunjukkan "napas" jangka pendek bisnis untuk operasi harian. Positif = sehat; negatif = perlu waspada.
+</div>
+`,
+          keyPoints: [
+            "Penyusutan menyebar biaya aset jangka panjang selama masa manfaatnya (mis. garis lurus).",
+            "Persediaan bisa dinilai dengan FIFO atau rata-rata saat harga berubah.",
+            "Modal Kerja = Aset Lancar − Kewajiban Lancar; mengukur napas operasional.",
+          ],
+          quiz: [
+            {
+              q: "Mesin Rp60jt, nilai sisa 0, masa manfaat 6 tahun. Penyusutan garis lurus per tahun?",
+              options: ["Rp6jt", "Rp10jt", "Rp60jt", "Rp12jt"],
+              answer: 1,
+              explain: "(60 − 0) ÷ 6 = Rp10jt per tahun.",
+            },
+            {
+              q: "Modal kerja dihitung dari?",
+              options: [
+                "Aset Lancar − Kewajiban Lancar",
+                "Total Aset − Total Kewajiban",
+                "Kas + Piutang − Persediaan",
+                "Pendapatan − Beban Operasional",
+              ],
+              answer: 0,
+              explain: "Modal Kerja = Aset Lancar − Kewajiban Lancar.",
+            },
+          ],
+        },
+        {
+          id: "acc-deep-2",
+          title: "Metode Persediaan: FIFO, LIFO & Average",
+          duration: "11 menit",
+          content: `
+<p>Bayangkan kamu membeli stok pada harga yang <b>berbeda-beda</b>. Saat menjual, harga beli yang mana yang dipakai untuk menghitung HPP? Di sinilah metode persediaan berperan.</p>
+
+<div data-diagram="vs" data-left="FIFO::Masuk duluan terjual duluan::Umum dipakai di Indonesia" data-right="LIFO::Masuk terakhir terjual duluan::Dilarang di PSAK/IFRS" data-caption="Metode penilaian persediaan"></div>
+
+
+<h3>Fundamental: masalahnya</h3>
+<p>Kamu beli 10 unit @Rp1.000, lalu 10 unit lagi @Rp1.200. Saat menjual 10 unit, apakah HPP-nya Rp1.000 atau Rp1.200 per unit? Ada tiga cara menjawab:</p>
+
+<table class="tbl">
+  <tr><th>Metode</th><th>Aturan</th><th>HPP 10 unit terjual</th></tr>
+  <tr><td><b>FIFO</b> (First In First Out)</td><td>Yang masuk duluan dijual duluan</td><td>10 × 1.000 = Rp10.000</td></tr>
+  <tr><td><b>LIFO</b> (Last In First Out)</td><td>Yang masuk terakhir dijual duluan</td><td>10 × 1.200 = Rp12.000</td></tr>
+  <tr><td><b>Average</b> (Rata-rata)</td><td>Pakai harga rata-rata</td><td>10 × 1.100 = Rp11.000</td></tr>
+</table>
+
+<h3>💥 Dampak</h3>
+<ul>
+  <li>Saat harga <b>naik</b>: FIFO → HPP lebih rendah → <b>laba tampak lebih besar</b> (dan pajak lebih besar). LIFO sebaliknya.</li>
+  <li>Pilihan metode memengaruhi laba, pajak, dan nilai persediaan di neraca.</li>
+</ul>
+
+<div class="callout warn">
+<b>Penting:</b> <b>LIFO TIDAK diperbolehkan</b> di standar internasional (IFRS) maupun Indonesia (PSAK). Di sini yang umum dipakai: <b>FIFO</b> dan <b>Average</b>. LIFO dijelaskan agar kamu memahami konsepnya.
+</div>
+`,
+          keyPoints: [
+            "Saat harga beli bervariasi, metode persediaan menentukan HPP: FIFO, LIFO, atau Average.",
+            "FIFO = masuk duluan terjual duluan; LIFO = masuk terakhir terjual duluan; Average = harga rata-rata.",
+            "Saat harga naik, FIFO membuat laba (& pajak) tampak lebih besar daripada LIFO.",
+            "LIFO tidak diperbolehkan di IFRS/PSAK; yang umum di Indonesia: FIFO & Average.",
+          ],
+          practice: [
+            { type: "number", q: "Beli 10 unit @Rp1.000 lalu 10 unit @Rp1.200. Jual 10 unit dengan FIFO. Berapa HPP-nya? (Rupiah)", answer: 10000, tol: 1, hint: "FIFO: yang masuk duluan (Rp1.000) terjual duluan.", solution: "10 × 1.000 = Rp10.000." },
+            { type: "number", q: "Dengan metode Average dari soal di atas (rata-rata Rp1.100/unit), berapa HPP 10 unit? (Rupiah)", answer: 11000, tol: 1, hint: "10 × harga rata-rata.", solution: "10 × 1.100 = Rp11.000." },
+          ],
+          quiz: [
+            {
+              q: "Apa arti FIFO?",
+              options: [
+                "Yang masuk terakhir dijual duluan",
+                "Yang masuk duluan dijual duluan",
+                "Harga rata-rata",
+                "Tidak menjual apa pun",
+              ],
+              answer: 1,
+              explain: "FIFO = First In First Out: stok lama terjual lebih dulu.",
+            },
+            {
+              q: "Metode persediaan mana yang TIDAK diperbolehkan di Indonesia (PSAK)?",
+              options: ["FIFO", "Average", "LIFO", "Semua dilarang"],
+              answer: 2,
+              explain: "LIFO tidak diperbolehkan di PSAK/IFRS.",
+            },
+          ],
+        },
+      ],
+    },
+    /* ---------------- MODUL 5: MEMBACA RASIO & METRIK KINERJA ---------------- */
+    {
+      id: "acc-fundamental",
+      level: "Fundamental",
+      title: "Membaca Rasio & Metrik Kinerja",
+      summary: "Persen & CAGR, lalu rasio keuangan, likuiditas & efisiensi, laba bersih, Free Cash Flow, ROI, dan ROE/ROA/ROIC.",
+      lessons: [
+        {
+          id: "acc-mat-1",
+          title: "Persen, Rasio & CAGR",
+          duration: "12 menit",
+          content: `
+<p>Kita mulai dari yang paling dasar, lalu naik ke rumus pertumbuhan yang sering disalahhitung orang.</p>
+
+<div data-diagram="bar" data-bars="Kenaikan tahun 1:10|Kenaikan tahun 2:11|Kenaikan tahun 3:12.1" data-unit=" juta" data-caption="Modal Rp100 juta tumbuh 10% per tahun — persentasenya sama, tapi kenaikannya membesar. Itulah bunga berbunga."></div>
+
+
+<h3>Persen &amp; perubahan persen</h3>
+<div class="callout">
+<b>Persen</b> = per seratus. <b>Perubahan persen</b> = (Baru − Lama) ÷ Lama × 100%.<br>
+Contoh: dari 200 jadi 250 → (250 − 200) ÷ 200 × 100% = <b>25%</b>.
+</div>
+
+<div class="callout warn">
+<b>Jebakan persen (penting!):</b> turun <b>50%</b> lalu naik <b>50%</b> <b>TIDAK</b> kembali ke awal.<br>
+100 → turun 50% → 50 → naik 50% → <b>75</b>, bukan 100. Untuk kembali ke 100 dari 50, butuh kenaikan <b>100%</b>. Inilah kenapa kerugian besar sangat sulit dipulihkan.
+</div>
+
+<h3>CAGR — pertumbuhan rata-rata per tahun</h3>
+<p>Kalau nilai tumbuh dari Rp100 juta jadi Rp200 juta dalam 5 tahun, banyak orang menghitung 100% ÷ 5 = 20% per tahun. <b>Itu keliru</b>, karena pertumbuhan bersifat <b>majemuk</b>.</p>
+
+<div class="callout">
+<b>Rumus CAGR:</b> CAGR = (Nilai Akhir ÷ Nilai Awal)<sup>(1 ÷ jumlah tahun)</sup> − 1
+</div>
+
+<h3>Coba sendiri — hitung CAGR 👇</h3>
+<div data-demo="js-playground">// CAGR: pertumbuhan majemuk rata-rata per tahun
+const awal = 100000000;   // Rp100 juta
+const akhir = 200000000;  // Rp200 juta
+const tahun = 5;
+
+const cagr = (Math.pow(akhir / awal, 1 / tahun) - 1) * 100;
+
+console.log("Dari Rp" + awal.toLocaleString("id-ID") + " menjadi Rp" + akhir.toLocaleString("id-ID"));
+console.log("Dalam " + tahun + " tahun");
+console.log("CAGR = " + cagr.toFixed(2) + "% per tahun");
+console.log("-----");
+console.log("Perhatikan: BUKAN 100% / 5 = 20%. Pertumbuhan itu majemuk.");
+console.log("Bukti: 100jt dikali 1,1487 sebanyak 5 kali = 200jt.");</div>
+
+<div class="callout">
+<b>Kenapa CAGR berguna:</b> ia meratakan naik-turun menjadi satu angka, sehingga kamu bisa <b>membandingkan</b> pertumbuhan dua bisnis/investasi dengan adil, walaupun jalurnya berbeda-beda.
+</div>
+`,
+          keyPoints: [
+            "Perubahan persen = (Baru − Lama) ÷ Lama × 100%.",
+            "Jebakan: turun 50% lalu naik 50% tidak kembali ke awal (100 → 50 → 75).",
+            "CAGR = (Akhir ÷ Awal)^(1/tahun) − 1 — pertumbuhan majemuk, bukan pembagian sederhana.",
+            "CAGR meratakan naik-turun sehingga pertumbuhan bisa dibandingkan adil.",
+          ],
+          practice: [
+            { type: "number", q: "Penjualan naik dari 200 ke 250. Berapa persen kenaikannya?", answer: 25, tol: 0.5, hint: "(250 − 200) ÷ 200 × 100%.", solution: "50 ÷ 200 × 100% = 25%." },
+            { type: "number", q: "Nilai turun 50% dari 100, lalu naik 50%. Berapa nilai akhirnya?", answer: 75, tol: 0.5, hint: "100 → 50, lalu 50 + 50% dari 50.", solution: "50 × 1,5 = 75 — tidak kembali ke 100." },
+          ],
+          quiz: [
+            {
+              q: "Nilai turun 50% lalu naik 50%. Hasilnya?",
+              options: [
+                "Kembali ke nilai awal",
+                "Masih 25% di bawah nilai awal",
+                "Lebih tinggi dari awal",
+                "Menjadi nol",
+              ],
+              answer: 1,
+              explain: "100 → 50 → 75; kenaikan dihitung dari basis yang lebih kecil.",
+            },
+            {
+              q: "Rumus CAGR yang benar?",
+              options: [
+                "(Akhir ÷ Awal) pangkat (1 ÷ tahun), lalu dikurangi 1",
+                "(Akhir − Awal) ÷ Awal, lalu dibagi jumlah tahun",
+                "(Akhir ÷ Awal) dikali jumlah tahun, lalu dikurangi 1",
+                "(Akhir + Awal) ÷ 2, lalu dibagi jumlah tahun",
+              ],
+              answer: 0,
+              explain: "CAGR memperhitungkan efek majemuk, bukan rata-rata sederhana.",
             },
           ],
         },
@@ -814,545 +1089,71 @@ const ACCOUNTING_COURSE = {
           ],
         },
         {
-          id: "acc-a-3",
-          title: "Penyusutan, Persediaan & Modal Kerja",
-          duration: "10 menit",
-          content: `
-<p>Tiga konsep penting dalam akuntansi sehari-hari bisnis:</p>
-
-<div data-diagram="cycle" data-steps="Beli persediaan (kas keluar)|Jual (jadi piutang)|Tagih piutang|Kas masuk lagi" data-center="siklus kas" data-caption="Modal kerja adalah uang yang terus berputar — makin cepat berputar, makin sedikit modal dibutuhkan"></div>
-
-
-<h3>1. Penyusutan (Depresiasi)</h3>
-<p>Aset jangka panjang (mesin, kendaraan) kehilangan nilai seiring waktu. Biayanya <b>disebar</b> selama masa manfaatnya, bukan dibebankan sekaligus.</p>
-<div class="callout">
-<b>Metode garis lurus:</b> Penyusutan/tahun = (Harga − Nilai sisa) ÷ Masa manfaat. Mesin Rp50jt, nilai sisa 0, manfaat 5 tahun → Rp10jt/tahun.
-</div>
-
-<h3>2. Persediaan (Inventory)</h3>
-<p>Barang yang siap dijual. Saat harga beli berubah-ubah, ada metode menilainya:</p>
-<ul>
-  <li><b>FIFO</b> (First In, First Out) — barang yang masuk duluan dianggap terjual duluan.</li>
-  <li><b>Rata-rata (Average)</b> — pakai harga rata-rata.</li>
-</ul>
-
-<h3>3. Modal Kerja (Working Capital)</h3>
-<div class="callout">
-<b>Modal Kerja = Aset Lancar − Kewajiban Lancar.</b> Menunjukkan "napas" jangka pendek bisnis untuk operasi harian. Positif = sehat; negatif = perlu waspada.
-</div>
-`,
-          keyPoints: [
-            "Penyusutan menyebar biaya aset jangka panjang selama masa manfaatnya (mis. garis lurus).",
-            "Persediaan bisa dinilai dengan FIFO atau rata-rata saat harga berubah.",
-            "Modal Kerja = Aset Lancar − Kewajiban Lancar; mengukur napas operasional.",
-          ],
-          quiz: [
-            {
-              q: "Mesin Rp60jt, nilai sisa 0, masa manfaat 6 tahun. Penyusutan garis lurus per tahun?",
-              options: ["Rp6jt", "Rp10jt", "Rp60jt", "Rp12jt"],
-              answer: 1,
-              explain: "(60 − 0) ÷ 6 = Rp10jt per tahun.",
-            },
-            {
-              q: "Modal kerja dihitung dari?",
-              options: [
-                "Aset Lancar − Kewajiban Lancar",
-                "Total Aset − Total Kewajiban",
-                "Kas + Piutang − Persediaan",
-                "Pendapatan − Beban Operasional",
-              ],
-              answer: 0,
-              explain: "Modal Kerja = Aset Lancar − Kewajiban Lancar.",
-            },
-          ],
-        },
-        {
-          id: "acc-a-4",
-          title: "Akuntansi untuk Keputusan Bisnis",
-          duration: "11 menit",
-          content: `
-<p>Akuntansi bukan sekadar mencatat masa lalu — ia alat untuk <b>mengambil keputusan</b>.</p>
-
-<div data-diagram="compare3" data-cols="Biaya relevan::berubah karena keputusan::WAJIB dihitung|Sunk cost::terlanjur keluar::ABAIKAN sepenuhnya|Biaya peluang::hilang karena memilih A::paling sering dilupakan" data-caption="Tiga jenis biaya saat mengambil keputusan"></div>
-
-
-<h3>Biaya tetap vs variabel</h3>
-<ul>
-  <li><b>Biaya tetap</b> — tidak berubah ikut produksi (sewa, gaji tetap).</li>
-  <li><b>Biaya variabel</b> — naik-turun ikut jumlah produksi (bahan baku).</li>
-</ul>
-
-<h3>Margin kontribusi & titik impas (break-even)</h3>
-<div class="callout">
-<b>Margin Kontribusi</b> = Harga jual − Biaya variabel per unit.<br>
-<b>Titik Impas (unit)</b> = Biaya Tetap ÷ Margin Kontribusi per unit.
-</div>
-<p><b>Contoh:</b> Biaya tetap Rp10jt/bulan. Tiap produk dijual Rp50rb, biaya variabelnya Rp30rb → margin kontribusi Rp20rb. Titik impas = 10.000.000 ÷ 20.000 = <b>500 unit</b>/bulan. Di bawah itu rugi, di atasnya untung.</p>
-
-<h3>Etika & integritas</h3>
-<div class="callout warn">
-<b>Penting:</b> Laporan keuangan harus jujur. Memanipulasi angka ("creative accounting") bisa berakibat hukum, kehilangan kepercayaan investor, dan kehancuran bisnis. Integritas adalah fondasi akuntansi.
-</div>
-
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu telah menempuh perjalanan dari persamaan dasar, debit-kredit, laporan keuangan, sampai analisis rasio & keputusan bisnis. Kini kamu bisa "membaca" kesehatan sebuah bisnis lewat angkanya.
-</div>
-`,
-          keyPoints: [
-            "Biaya tetap tidak ikut produksi; biaya variabel ikut produksi.",
-            "Titik impas (unit) = Biaya Tetap ÷ Margin Kontribusi per unit.",
-            "Integritas & kejujuran laporan adalah fondasi akuntansi.",
-          ],
-          practice: [
-            { type: "number", q: "Biaya tetap Rp30jt/bulan, margin kontribusi Rp50.000/unit. Berapa titik impas (unit)?", answer: 600, unit: "unit", hint: "Titik impas = Biaya Tetap ÷ Margin Kontribusi per unit. Ingat Rp30jt = 30.000.000.", solution: "30.000.000 ÷ 50.000 = 600 unit." },
-            { type: "number", q: "Harga jual Rp80.000/unit, biaya variabel Rp50.000/unit. Berapa margin kontribusi per unit? (Rupiah)", answer: 30000, tol: 1, hint: "Margin kontribusi = Harga jual − Biaya variabel.", solution: "80.000 − 50.000 = Rp30.000." },
-          ],
-          quiz: [
-            {
-              q: "Biaya tetap Rp20jt, margin kontribusi Rp40rb/unit. Titik impasnya?",
-              options: ["200 unit", "500 unit", "800 unit", "2.000 unit"],
-              answer: 1,
-              explain: "20.000.000 ÷ 40.000 = 500 unit.",
-            },
-            {
-              q: "Manakah contoh biaya variabel?",
-              options: [
-                "Bahan baku yang naik-turun mengikuti jumlah produksi",
-                "Sewa gedung yang dibayar tetap setiap bulannya",
-                "Gaji pokok staf administrasi yang sudah disepakati",
-                "Premi asuransi bangunan yang dibayar tiap tahun",
-              ],
-              answer: 0,
-              explain: "Biaya variabel berubah mengikuti volume produksi, seperti bahan baku.",
-            },
-          ],
-        },
-      ],
-    },
-
-    /* ---------------- LEVEL PROYEK (PRAKTIK BISNIS) ---------------- */
-    {
-      id: "acc-proyek",
-      level: "Proyek",
-      title: "Membaca Laporan & Membangun Bisnis",
-      summary: "Praktik nyata: baca laporan bisnis/saham/crypto, kelola keuangan, dan bangun bisnis.",
-      lessons: [
-        {
-          id: "acc-pro-1",
-          title: "Studi Kasus: Membaca Laporan Perusahaan",
+          id: "acc-adv-4",
+          title: "Rasio Likuiditas & Efisiensi",
           duration: "12 menit",
           content: `
-<p>Mari "membaca" sebuah bisnis lewat angkanya. Contoh: <b>Warung Kopi Sejahtera</b> (dalam juta Rupiah).</p>
+<p>Pelajaran sebelumnya memperkenalkan tiga keluarga rasio. Sekarang kita perdalam dua yang paling sering menentukan hidup-mati operasional: rasio <b>likuiditas</b> (kemampuan bayar jangka pendek) dan <b>efisiensi</b> (seberapa cepat aset berputar jadi uang).</p>
 
-<h3>Laporan Laba Rugi (setahun)</h3>
+<div data-diagram="layers" data-items="Rasio Kas — paling ketat|Quick Ratio — tanpa persediaan|Current Ratio — semua aset lancar" data-caption="Tiga tingkat ketatnya mengukur kemampuan bayar jangka pendek"></div>
+
+
+<h3>Likuiditas</h3>
 <table class="tbl">
-  <tr><td>Pendapatan (penjualan)</td><td>500</td></tr>
-  <tr><td>− HPP (biji kopi, susu, gelas)</td><td>(200)</td></tr>
-  <tr><td><b>= Laba Kotor</b></td><td><b>300</b> (margin 60%)</td></tr>
-  <tr><td>− Beban (sewa, gaji, listrik)</td><td>(240)</td></tr>
-  <tr><td><b>= Laba Bersih</b></td><td><b>60</b> (margin 12%)</td></tr>
+  <tr><th>Rasio</th><th>Rumus</th><th>Arti</th></tr>
+  <tr><td><b>Current Ratio</b></td><td>Aset Lancar ÷ Kewajiban Lancar</td><td>Sanggup bayar utang jangka pendek?</td></tr>
+  <tr><td><b>Quick Ratio</b> (acid test)</td><td>(Aset Lancar − Persediaan) ÷ Kewajiban Lancar</td><td>Versi lebih ketat (persediaan sulit cepat jadi uang)</td></tr>
 </table>
 
-<h3>Neraca (per 31 Des)</h3>
-<table class="tbl">
-  <tr><td>Aset (kas, peralatan, persediaan)</td><td>250</td></tr>
-  <tr><td>Kewajiban (utang bank)</td><td>100</td></tr>
-  <tr><td><b>Ekuitas (modal pemilik)</b></td><td><b>150</b></td></tr>
-</table>
-
-<h3>Yang dilihat seorang analis</h3>
+<h3>Efisiensi (perputaran)</h3>
 <ul>
-  <li><b>Tumbuh atau tidak?</b> Bandingkan pendapatan dengan tahun lalu.</li>
-  <li><b>Margin sehat?</b> Laba kotor 60% & laba bersih 12% tergolong sehat untuk warung kopi.</li>
-  <li><b>Utang wajar?</b> Utang 100 vs ekuitas 150 → masih terkendali.</li>
-  <li><b>Menghasilkan kas?</b> Cek laporan arus kas — laba di kertas harus didukung kas nyata.</li>
+  <li><b>Inventory Turnover</b> = HPP ÷ rata-rata persediaan → seberapa cepat stok terjual. Rendah = stok menumpuk.</li>
+  <li><b>Receivables Turnover</b> → seberapa cepat piutang tertagih. Rendah = uang tersangkut di pelanggan.</li>
+  <li><b>Cash Conversion Cycle</b> → berapa lama uang "terkunci" dari beli bahan sampai kembali jadi kas.</li>
 </ul>
 
-<div class="callout warn">
-<b>Tanda bahaya (red flags):</b> pendapatan naik tapi laba turun terus, utang membengkak, piutang menumpuk (banyak penjualan belum dibayar), atau laba besar tapi kas selalu menipis.
-</div>
+<h3>💥 Dampak</h3>
+<ul>
+  <li>Likuiditas rendah (current ratio &lt; 1) → risiko gagal bayar meski untung.</li>
+  <li>Perputaran lambat → kas terjebak di stok/piutang → butuh modal kerja lebih besar.</li>
+</ul>
 `,
           keyPoints: [
-            "Baca bisnis lewat 3 hal: pertumbuhan pendapatan, margin laba, dan tingkat utang.",
-            "Laba kotor & laba bersih menunjukkan seberapa efisien dan menguntungkan bisnis.",
-            "Selalu cek arus kas — laba di kertas harus didukung kas nyata.",
-            "Red flags: laba turun, utang membengkak, piutang menumpuk, kas menipis.",
-          ],
-          quiz: [
-            {
-              q: "Pendapatan Rp500jt, laba bersih Rp60jt. Berapa margin laba bersihnya?",
-              options: ["6%", "12%", "60%", "40%"],
-              answer: 1,
-              explain: "Margin = 60 ÷ 500 × 100% = 12%.",
-            },
-            {
-              q: "Manakah 'red flag' saat membaca laporan keuangan?",
-              options: [
-                "Margin stabil dan kas bertumbuh",
-                "Laba di kertas besar tapi kas terus menipis",
-                "Utang kecil dibanding ekuitas",
-                "Pendapatan naik dan laba ikut naik",
-              ],
-              answer: 1,
-              explain:
-                "Laba tanpa kas (mis. banyak piutang) adalah sinyal bahaya likuiditas.",
-            },
-          ],
-        },
-        {
-          id: "acc-pro-2",
-          title: "Analisis Saham dari Laporan Keuangan",
-          duration: "13 menit",
-          content: `
-<p>Saham = sepotong kepemilikan perusahaan. Investor menilai saham lewat <b>laporan keuangan</b> dan beberapa rasio kunci.</p>
-
-<table class="tbl">
-  <tr><th>Rasio</th><th>Rumus</th><th>Arti singkat</th></tr>
-  <tr><td><b>EPS</b></td><td>Laba bersih ÷ jumlah saham</td><td>Laba per lembar saham</td></tr>
-  <tr><td><b>P/E</b></td><td>Harga saham ÷ EPS</td><td>Berapa kali laba yang dibayar; makin tinggi makin "mahal"</td></tr>
-  <tr><td><b>PBV</b></td><td>Harga saham ÷ nilai buku per saham</td><td>Harga vs ekuitas per saham</td></tr>
-  <tr><td><b>ROE</b></td><td>Laba bersih ÷ ekuitas × 100%</td><td>Imbal hasil bagi modal pemilik</td></tr>
-  <tr><td><b>DER</b></td><td>Total utang ÷ ekuitas</td><td>Ketergantungan pada utang (risiko)</td></tr>
-  <tr><td><b>Dividend yield</b></td><td>Dividen per saham ÷ harga</td><td>Imbal hasil tunai per tahun</td></tr>
-</table>
-
-<div class="callout">
-<b>Contoh:</b> Harga saham Rp1.000, EPS Rp100 → P/E = 10. Artinya kamu membayar 10× laba setahun. Bandingkan dengan pesaing & rata-rata industri sebelum menilai mahal/murah.
-</div>
-
-<h3>Di mana datanya?</h3>
-<p>Perusahaan publik wajib menerbitkan <b>Laporan Tahunan</b> dan laporan keuangan triwulan (di Indonesia: lewat Bursa Efek Indonesia / situs perusahaan). Di sana ada laba rugi, neraca, arus kas, dan catatan.</p>
-
-<div class="callout warn">
-<b>Penting:</b> rasio hanya bermakna saat <b>dibandingkan</b> (antar waktu, pesaing, industri) dan dipadukan dengan kualitas bisnis. Ini edukasi, <b>bukan saran investasi</b>. Saham berisiko.
-</div>
-`,
-          keyPoints: [
-            "Saham dinilai lewat rasio: EPS, P/E, PBV, ROE, DER, dividend yield.",
-            "P/E = Harga ÷ EPS — menunjukkan seberapa 'mahal' harga relatif terhadap laba.",
-            "Data dari Laporan Tahunan & laporan triwulan perusahaan publik.",
-            "Rasio bermakna saat dibandingkan; ini edukasi, bukan saran investasi.",
+            "Current Ratio = Aset Lancar ÷ Kewajiban Lancar; Quick Ratio mengecualikan persediaan (lebih ketat).",
+            "Inventory & receivables turnover mengukur seberapa cepat stok terjual & piutang tertagih.",
+            "Dampak: likuiditas rendah = risiko gagal bayar; perputaran lambat = kas terjebak & butuh modal kerja besar.",
           ],
           practice: [
-            { type: "number", q: "Harga saham Rp1.200, EPS Rp150. Berapa P/E rasionya?", answer: 8, tol: 0.1, hint: "P/E = Harga ÷ EPS.", solution: "1.200 ÷ 150 = 8." },
-            { type: "number", q: "Laba bersih Rp80jt, jumlah saham 2 juta lembar. Berapa EPS-nya? (Rupiah)", answer: 40, tol: 0.5, hint: "EPS = Laba bersih ÷ jumlah saham.", solution: "80.000.000 ÷ 2.000.000 = Rp40." },
+            { type: "number", q: "Aset lancar Rp120jt, persediaan Rp40jt, kewajiban lancar Rp50jt. Berapa quick ratio-nya? (desimal, mis. 1.6)", answer: 1.6, tol: 0.05, hint: "Quick Ratio = (Aset Lancar − Persediaan) ÷ Kewajiban Lancar.", solution: "(120 − 40) ÷ 50 = 1,6." },
+            { type: "number", q: "HPP setahun Rp240jt, rata-rata persediaan Rp40jt. Berapa inventory turnover-nya? (kali per tahun)", answer: 6, tol: 0.1, hint: "Inventory Turnover = HPP ÷ rata-rata persediaan.", solution: "240 ÷ 40 = 6 kali per tahun." },
           ],
           quiz: [
             {
-              q: "Apa arti P/E rasio yang tinggi?",
+              q: "Apa beda Quick Ratio dari Current Ratio?",
               options: [
-                "Investor membayar lebih mahal untuk setiap rupiah laba perusahaan",
-                "Perusahaan mencetak laba yang jauh lebih besar dari pesaingnya",
-                "Perusahaan membagikan dividen dalam jumlah yang sangat besar",
-                "Harga saham dipastikan akan turun dalam waktu dekat",
+                "Quick Ratio mengecualikan persediaan, sehingga lebih ketat",
+                "Quick Ratio hanya menghitung kas, tanpa piutang sama sekali",
+                "Quick Ratio memasukkan utang jangka panjang ke dalam hitungan",
+                "Quick Ratio dihitung bulanan, sedangkan Current Ratio tahunan",
               ],
               answer: 0,
               explain:
-                "P/E tinggi = harga relatif mahal terhadap laba; perlu dibandingkan dengan industri.",
+                "Quick ratio mengeluarkan persediaan yang sulit cepat dicairkan.",
             },
             {
-              q: "ROE mengukur?",
+              q: "Dampak perputaran persediaan yang lambat?",
               options: [
-                "Laba yang dihasilkan dari setiap rupiah modal milik pemilik",
-                "Laba yang dihasilkan dari seluruh aset milik perusahaan",
-                "Kemampuan perusahaan melunasi utang jangka pendeknya",
-                "Kecepatan perusahaan menagih piutang dari pelanggan",
+                "Kas terjebak di stok, sehingga butuh modal kerja lebih besar",
+                "Harga pokok penjualan turun sehingga laba otomatis naik",
+                "Perusahaan mendapat potongan pajak atas persediaan tersimpan",
+                "Piutang pelanggan tertagih lebih cepat dari biasanya",
               ],
               answer: 0,
-              explain: "ROE = Laba bersih ÷ Ekuitas — efisiensi menghasilkan laba dari modal.",
+              explain:
+                "Stok yang lambat terjual mengunci kas dan menekan likuiditas.",
             },
           ],
         },
-        {
-          id: "acc-pro-3",
-          title: "Membaca 'Laporan' Proyek Crypto",
-          duration: "12 menit",
-          content: `
-<p>Proyek crypto tidak punya laporan keuangan klasik, tapi punya datanya sendiri yang bisa "dibaca" untuk menilai kesehatan & risiko.</p>
-
-<div data-diagram="compare3" data-cols="Perusahaan::Laporan diaudit::Laba &amp; arus kas|Proyek kripto::Data on-chain terbuka::Fee protokol &amp; TVL|Pertanyaannya sama::Uang masuk dari mana?::Bisa bertahan tidak?" data-caption="Bahasanya berbeda, pertanyaan intinya sama persis"></div>
-
-
-<h3>1. Tokenomics (ekonomi token)</h3>
-<ul>
-  <li><b>Total/Max supply</b> — berapa banyak token akan ada? Pasokan tak terbatas berisiko inflasi.</li>
-  <li><b>Distribusi</b> — siapa memegang? Jika tim/investor memegang porsi sangat besar, hati-hati.</li>
-  <li><b>Vesting</b> — jadwal pelepasan token tim; pelepasan besar bisa menekan harga.</li>
-</ul>
-
-<h3>2. Metrik on-chain (transparan di blockchain)</h3>
-<ul>
-  <li><b>TVL</b> (Total Value Locked) — total dana yang "dikunci" di protokol DeFi; ukuran adopsi.</li>
-  <li><b>Pengguna & transaksi aktif</b> — apakah benar dipakai, bukan sekadar hype?</li>
-  <li><b>Pendapatan/fee protokol</b> — apakah menghasilkan pemasukan nyata?</li>
-  <li><b>Treasury</b> — kas/aset proyek untuk bertahan & berkembang.</li>
-</ul>
-
-<div class="callout">
-<b>Analogi:</b> TVL & pengguna aktif ibarat "pendapatan & pelanggan", treasury ibarat "kas", distribusi token ibarat "struktur kepemilikan saham". Polanya mirip menilai bisnis.
-</div>
-
-<div class="callout warn">
-<b>Tanda bahaya:</b> whitepaper tanpa detail teknis, tim anonim tanpa rekam jejak, janji imbal hasil "pasti & besar", token tim porsi sangat besar, dan tidak ada produk yang benar-benar dipakai. Selalu <b>DYOR</b> — ini edukasi, bukan saran investasi.
-</div>
-`,
-          keyPoints: [
-            "Proyek crypto dinilai lewat tokenomics (supply, distribusi, vesting) & metrik on-chain.",
-            "TVL, pengguna aktif, fee protokol, dan treasury ~ pendapatan/pelanggan/kas pada bisnis.",
-            "Red flags: tim anonim, janji untung pasti, token tim berporsi besar, tanpa produk nyata.",
-          ],
-          quiz: [
-            {
-              q: "Apa itu TVL pada proyek DeFi?",
-              options: [
-                "Total Value Locked — dana yang dikunci pengguna di dalam protokol",
-                "Total Volume Lelang — nilai transaksi harian di bursa protokol",
-                "Token Value Limit — batas jumlah token yang boleh diterbitkan",
-                "Total Value Listed — nilai seluruh token yang tercatat di bursa",
-              ],
-              answer: 0,
-              explain:
-                "TVL mencerminkan seberapa banyak nilai dipercayakan ke protokol.",
-            },
-            {
-              q: "Manakah tanda bahaya proyek crypto?",
-              options: [
-                "Janji imbal hasil pasti dan besar, dengan tim yang anonim",
-                "Kode kontraknya terbuka dan sudah diaudit pihak independen",
-                "Pendapatan protokolnya bisa diperiksa langsung secara on-chain",
-                "Token milik tim dikunci bertahap selama beberapa tahun",
-              ],
-              answer: 0,
-              explain:
-                "Janji untung pasti + tim anonim adalah pola klasik penipuan.",
-            },
-          ],
-        },
-        {
-          id: "acc-pro-4",
-          title: "Mengelola Keuangan Bisnis",
-          duration: "12 menit",
-          content: `
-<p>Banyak bisnis untung di atas kertas tapi tetap kolaps karena <b>salah mengelola kas</b>. Berikut praktik pengelolaan keuangan bisnis.</p>
-
-<div data-diagram="cycle" data-steps="Catat semua transaksi|Susun laporan bulanan|Bandingkan dengan anggaran|Perbaiki keputusan" data-center="tiap bulan" data-caption="Keuangan bisnis dikelola dalam putaran bulanan, bukan sekali setahun"></div>
-
-
-<h3>Kebiasaan wajib</h3>
-<ol>
-  <li><b>Pisahkan uang pribadi & bisnis</b> — rekening berbeda. Ini fondasi semua pencatatan.</li>
-  <li><b>Catat semua transaksi</b> — pemasukan & pengeluaran, sekecil apa pun.</li>
-  <li><b>Kelola arus kas</b> — pastikan kas masuk cukup menutup kas keluar tiap periode.</li>
-  <li><b>Buat anggaran (budget)</b> — rencanakan pengeluaran agar tidak bocor.</li>
-  <li><b>Dana darurat</b> — simpan kas untuk menutup beberapa bulan biaya tetap.</li>
-</ol>
-
-<div class="callout">
-<b>Modal kerja</b> = Aset Lancar − Kewajiban Lancar. Ini "napas" harian bisnis. Kelola dengan: tagih piutang tepat waktu, atur pembayaran ke pemasok, dan jangan menumpuk persediaan berlebihan.
-</div>
-
-<h3>Menetapkan harga (pricing)</h3>
-<p>Harga harus menutup <b>biaya + margin</b>. Mulai dari biaya per unit (HPP + porsi biaya tetap), tambahkan margin yang wajar, lalu cek terhadap harga pasar & daya beli pelanggan.</p>
-
-<div class="callout warn">
-<b>Ingat:</b> Laba ≠ Kas. Penjualan kredit yang belum dibayar menambah laba tapi <b>bukan</b> kas. Pantau kas seketat memantau laba.
-</div>
-`,
-          keyPoints: [
-            "Pisahkan uang pribadi & bisnis, dan catat semua transaksi.",
-            "Kelola arus kas, buat anggaran, dan siapkan dana darurat.",
-            "Modal Kerja = Aset Lancar − Kewajiban Lancar; jaga 'napas' harian bisnis.",
-            "Harga harus menutup biaya + margin; ingat laba tidak sama dengan kas.",
-          ],
-          quiz: [
-            {
-              q: "Kebiasaan paling mendasar dalam mengelola keuangan bisnis?",
-              options: [
-                "Memisahkan rekening pribadi dan bisnis serta mencatat semua transaksi",
-                "Menyimpan seluruh uang usaha dalam bentuk tunai agar mudah dipakai",
-                "Mencatat transaksi besar saja agar pembukuan tidak terlalu rumit",
-                "Menunggu akhir tahun untuk merekap seluruh transaksi sekaligus",
-              ],
-              answer: 0,
-              explain:
-                "Pemisahan & pencatatan adalah fondasi pengelolaan keuangan yang sehat.",
-            },
-            {
-              q: "Mengapa memantau kas sama pentingnya dengan laba?",
-              options: [
-                "Karena bisnis yang untung pun bisa kehabisan kas lalu kolaps",
-                "Karena kas selalu sama besarnya dengan laba bersih perusahaan",
-                "Karena investor hanya melihat saldo kas saat menilai perusahaan",
-                "Karena laba tidak perlu dilaporkan kepada kantor pajak",
-              ],
-              answer: 0,
-              explain:
-                "Laba di kertas tanpa kas yang cukup tetap bisa membangkrutkan bisnis.",
-            },
-          ],
-        },
-        {
-          id: "acc-pro-5",
-          title: "Membangun & Menilai Bisnis",
-          duration: "13 menit",
-          content: `
-<p>Akuntansi adalah alat untuk membangun bisnis yang sehat. Beberapa konsep kunci untuk pemilik bisnis:</p>
-
-<div data-diagram="pipeline" data-stages="Ide::masalah nyata milik siapa?|Uji pasar::adakah yang mau membayar?|Model bisnis::untung per transaksi|Skala::tumbuh tanpa biaya ikut meledak" data-caption="Empat saringan sebelum sebuah bisnis layak dibesarkan"></div>
-
-
-<h3>Model bisnis & unit economics</h3>
-<ul>
-  <li><b>Model bisnis</b> — bagaimana persisnya kamu menghasilkan uang?</li>
-  <li><b>Unit economics</b> — untung/rugi per satu unit/pelanggan. Jika tiap unit rugi, makin banyak jual makin rugi.</li>
-  <li><b>Margin kontribusi</b> = Harga − Biaya variabel per unit. Inilah yang menutup biaya tetap.</li>
-</ul>
-
-<h3>Titik impas & runway</h3>
-<div class="callout">
-<b>Titik Impas (unit)</b> = Biaya Tetap ÷ Margin Kontribusi per unit.<br>
-<b>Runway</b> = Kas tersedia ÷ pengeluaran bersih per bulan = berapa bulan bisnis bisa bertahan.
-</div>
-
-<h3>Pendanaan</h3>
-<ul>
-  <li><b>Bootstrapping</b> — tumbuh dari kas sendiri & laba. Kontrol penuh, tumbuh perlahan.</li>
-  <li><b>Investor</b> — dapat modal besar, tapi melepas sebagian kepemilikan (ekuitas) & kendali.</li>
-</ul>
-
-<p>Pemilik yang paham angkanya bisa mengambil keputusan lebih baik: kapan menaikkan harga, menambah karyawan, atau mencari pendanaan.</p>
-
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu telah menempuh akuntansi dari persamaan dasar sampai membaca laporan bisnis/saham/crypto, mengelola keuangan, dan menilai bisnis. Kini kamu bisa "berbicara bahasa bisnis" dengan percaya diri.
-</div>
-
-<div class="callout warn">
-<b>Pengingat:</b> seluruh materi ini edukasi, bukan saran finansial/investasi.
-</div>
-`,
-          keyPoints: [
-            "Unit economics: pastikan tiap unit/pelanggan menguntungkan sebelum menskalakan.",
-            "Titik Impas = Biaya Tetap ÷ Margin Kontribusi; Runway = Kas ÷ pengeluaran bulanan.",
-            "Pendanaan: bootstrapping (kendali penuh) vs investor (modal besar, lepas sebagian ekuitas).",
-            "Memahami angka membuat keputusan bisnis lebih tepat.",
-          ],
-          practice: [
-            { type: "number", q: "Kas Rp120jt, pengeluaran bersih Rp20jt/bulan. Berapa bulan runway bisnisnya?", answer: 6, unit: "bulan", hint: "Runway = Kas ÷ pengeluaran per bulan.", solution: "120 ÷ 20 = 6 bulan." },
-            { type: "number", q: "Biaya tetap Rp15jt/bulan, margin kontribusi Rp30.000/unit. Titik impas (unit)?", answer: 500, unit: "unit", hint: "Titik impas = Biaya Tetap ÷ Margin Kontribusi per unit.", solution: "15.000.000 ÷ 30.000 = 500 unit." },
-          ],
-          quiz: [
-            {
-              q: "Apa itu 'runway' sebuah bisnis?",
-              options: [
-                "Berapa bulan bisnis bisa bertahan dengan kas yang tersedia",
-                "Berapa lama waktu yang dibutuhkan hingga bisnis balik modal",
-                "Jumlah pelanggan yang dibutuhkan untuk mencapai titik impas",
-                "Batas waktu pelunasan utang yang disepakati dengan bank",
-              ],
-              answer: 0,
-              explain:
-                "Runway = Kas ÷ pengeluaran bulanan — daya tahan finansial bisnis.",
-            },
-            {
-              q: "Konsekuensi memilih pendanaan dari investor?",
-              options: [
-                "Mendapat modal besar, tapi melepas sebagian kepemilikan dan kendali",
-                "Mendapat modal besar, tapi wajib membayar bunga tetap setiap bulan",
-                "Mendapat modal kecil, tapi kepemilikan tetap utuh sepenuhnya",
-                "Mendapat modal tanpa syarat apa pun karena investor menanggung risiko",
-              ],
-              answer: 0,
-              explain:
-                "Modal investor ditukar dengan ekuitas (kepemilikan) dan sering sebagian kendali.",
-            },
-          ],
-        },
-        {
-          id: "acc-pro-studi",
-          title: "Studi Kasus Mendalam: Untung Tapi Krisis Kas",
-          duration: "12 menit",
-          content: `
-<p>Pelajaran paling mahal dalam bisnis: <b>untung di kertas tidak menjamin ada uang di kas.</b> Mari hitung sebuah skenario nyata.</p>
-
-<h3>Skenario: Toko Roti "Manis"</h3>
-<p>Bulan ini toko mencatat <b>laba Rp15 juta</b> — terdengar bagus! Tapi banyak penjualan dilakukan secara <b>kredit</b> (kafe langganan bayar belakangan), sehingga uang tunai belum masuk. Mari lihat kondisi kasnya:</p>
-<ul>
-  <li>Kas tersedia: <b>Rp30 juta</b></li>
-  <li>Pengeluaran tunai per bulan (gaji, bahan, sewa): <b>Rp25 juta</b></li>
-  <li>Piutang (penjualan kredit belum dibayar): <b>Rp40 juta</b></li>
-</ul>
-
-<h3>Coba sendiri — hitung "napas" (runway) tokonya 👇</h3>
-<div data-demo="js-playground">const kas = 30;                // juta
-const pengeluaranBulanan = 25; // juta
-const piutang = 40;            // penjualan kredit belum dibayar
-
-console.log("Laba di kertas: Rp15 jt (kelihatan sehat)");
-console.log("Tapi runway kas sekarang: " + (kas / pengeluaranBulanan).toFixed(1) + " bulan");
-
-// Jika piutang berhasil ditagih:
-const kasBaru = kas + piutang;
-console.log("Jika piutang Rp" + piutang + " jt tertagih, kas jadi Rp" + kasBaru + " jt");
-console.log("Runway baru: " + (kasBaru / pengeluaranBulanan).toFixed(1) + " bulan");
-console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
-
-<div class="callout warn">
-<b>Inti pelajaran:</b> runway hanya <b>1,2 bulan</b> meski laba "bagus". Jika piutang tak tertagih tepat waktu, toko bisa gagal bayar gaji walau untung. Solusinya: <b>kelola piutang</b> (tagih tepat waktu), jaga kas, dan jangan terlalu longgar memberi kredit.
-</div>
-
-<h3>Apa yang dilakukan pemilik cerdas</h3>
-<ul>
-  <li>Memantau <b>kas</b> seketat memantau laba.</li>
-  <li>Menetapkan tenggat & menagih <b>piutang</b> secara disiplin.</li>
-  <li>Menyiapkan <b>dana darurat</b> beberapa bulan biaya tetap.</li>
-</ul>
-`,
-          keyPoints: [
-            "Untung di kertas tidak sama dengan uang tunai di kas — penjualan kredit menambah laba, bukan kas.",
-            "Runway = Kas ÷ pengeluaran bulanan; bisa sangat pendek meski laba terlihat sehat.",
-            "Kelola piutang (tagih tepat waktu) dan siapkan dana darurat agar tidak krisis kas.",
-          ],
-          practice: [
-            { type: "number", q: "Kas Rp30jt, pengeluaran Rp25jt/bulan. Berapa runway-nya? (bulan, 1 desimal — tulis 1.2)", answer: 1.2, tol: 0.05, hint: "Runway = Kas ÷ pengeluaran bulanan.", solution: "30 ÷ 25 = 1,2 bulan." },
-            { type: "number", q: "Setelah piutang Rp40jt tertagih, kas jadi Rp70jt. Berapa runway barunya? (bulan, 1 desimal)", answer: 2.8, tol: 0.05, hint: "Runway = Kas baru ÷ pengeluaran bulanan.", solution: "70 ÷ 25 = 2,8 bulan." },
-          ],
-          quiz: [
-            {
-              q: "Mengapa toko bisa untung tapi tetap krisis kas?",
-              options: [
-                "Banyak penjualan kredit: labanya tercatat, tapi uang tunainya belum masuk",
-                "Harga jual yang terlalu murah membuat labanya sebenarnya negatif",
-                "Pajak penghasilan dipotong langsung dari kas toko setiap hari",
-                "Pemilik menarik laba lebih besar daripada yang tercatat di buku",
-              ],
-              answer: 0,
-              explain:
-                "Penjualan kredit menambah laba & piutang, tetapi belum menambah kas.",
-            },
-            {
-              q: "Tindakan paling tepat menghindari krisis kas?",
-              options: [
-                "Menagih piutang tepat waktu dan memantau kas seketat memantau laba",
-                "Menaikkan harga jual setinggi mungkin agar laba makin besar",
-                "Memperbanyak penjualan kredit agar pelanggan makin banyak",
-                "Menambah persediaan barang agar tidak pernah kehabisan stok",
-              ],
-              answer: 0,
-              explain:
-                "Disiplin menagih piutang & memantau kas menjaga likuiditas bisnis.",
-            },
-          ],
-        },
-      ],
-    },
-
-    /* ---------------- LEVEL FUNDAMENTAL (METRIK KEUANGAN) ---------------- */
-    {
-      id: "acc-fundamental",
-      level: "Fundamental",
-      title: "Metrik Keuangan & Dampaknya",
-      summary: "Kuasai metrik kunci dari nol: Net Profit, Free Cash Flow, ROI, ROE/ROA, RAB — dan dampaknya ke perusahaan.",
-      lessons: [
         {
           id: "acc-fund-1",
           title: "Net Profit (Laba Bersih) & Kualitasnya",
@@ -1481,7 +1282,7 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
 </table>
 
 <div class="callout">
-<b>FCF yield adalah kembarannya PER.</b> Ingat pelajaran <b>Valuasi Relatif &amp; Multiples</b>? PER melihat harga terhadap <b>laba</b>; FCF yield melihat kas bebas terhadap <b>harga</b> — dan karena memakai kas, ia lebih sulit dipoles. FCF yield 8% kira-kira setara "PER kas" sebesar 12,5×.
+<b>FCF yield adalah kembarannya PER.</b> PER — yang dibahas lengkap di modul <b>Valuasi Relatif &amp; Multiples</b> — melihat harga terhadap <b>laba</b>; FCF yield melihat kas bebas terhadap <b>harga</b> — dan karena memakai kas, ia lebih sulit dipoles. FCF yield 8% kira-kira setara "PER kas" sebesar 12,5×.
 </div>
 
 <h3>Coba sendiri</h3>
@@ -1690,6 +1491,337 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
           ],
         },
         {
+          id: "acc-fund-6",
+          title: "Metrik Lain & Memahami 'ROTI'",
+          duration: "11 menit",
+          content: `
+<p>Beberapa metrik penting lain yang sering muncul — beserta apa yang mereka ungkap:</p>
+
+<table class="tbl">
+  <tr><th>Metrik</th><th>Arti singkat</th></tr>
+  <tr><td><b>Gross Margin</b></td><td>Laba kotor ÷ pendapatan — efisiensi produksi</td></tr>
+  <tr><td><b>Operating Margin</b></td><td>Laba operasi ÷ pendapatan — efisiensi operasi inti</td></tr>
+  <tr><td><b>EBITDA</b></td><td>Laba sebelum bunga, pajak, depresiasi & amortisasi — proksi kas operasional</td></tr>
+  <tr><td><b>Burn Rate</b></td><td>Kecepatan bisnis "membakar" kas per bulan</td></tr>
+  <tr><td><b>Break-even</b></td><td>Titik saat tidak untung & tidak rugi</td></tr>
+</table>
+
+<h3>Soal "ROTI"</h3>
+<div class="callout">
+<b>ROTI</b> paling umum berarti <b>Return on Time Invested</b> — imbal hasil atas <b>WAKTU/usaha</b> yang kamu curahkan, bukan uang. Gunanya menilai: "apakah kegiatan ini <b>sepadan</b> dengan waktu yang dipakai?" Ini alat produktivitas & prioritas, <b>bukan</b> rasio laporan keuangan standar.
+</div>
+<p>Jika yang kamu maksud <b>ROTA</b> (Return on Total Assets), itu praktis sama dengan <b>ROA</b> — laba dibagi total aset.</p>
+
+<h3>💥 Dampak menyeluruh</h3>
+<p>Metrik adalah <b>"dashboard"</b> bisnis. Memilih metrik yang <b>tepat</b> mengarahkan keputusan yang tepat; fokus pada metrik yang salah bisa menyesatkan seluruh perusahaan (mis. mengejar pendapatan sambil mengabaikan arus kas → bangkrut walau tumbuh).</p>
+`,
+          keyPoints: [
+            "Metrik lain: gross/operating margin, EBITDA (proksi kas operasional), burn rate, break-even.",
+            "ROTI = Return on Time Invested — imbal hasil atas waktu/usaha; alat produktivitas, bukan rasio laporan keuangan. (ROTA ≈ ROA.)",
+            "Dampak: metrik adalah dashboard bisnis; memilih metrik tepat mengarahkan keputusan tepat.",
+          ],
+          quiz: [
+            {
+              q: "Apa arti 'ROTI' yang paling umum dalam konteks bisnis?",
+              options: [
+                "Return on Time Invested — imbal hasil atas waktu dan usaha yang dicurahkan",
+                "Return on Total Investment — imbal hasil atas seluruh modal perusahaan",
+                "Rate of Tax Income — tarif pajak atas penghasilan usaha",
+                "Return on Tangible Inventory — imbal hasil atas persediaan fisik",
+              ],
+              answer: 0,
+              explain:
+                "ROTI = Return on Time Invested; menilai apakah suatu kegiatan sepadan dengan waktunya.",
+            },
+            {
+              q: "Apa itu EBITDA?",
+              options: [
+                "Laba sebelum bunga, pajak, penyusutan & amortisasi — proksi kas operasi",
+                "Laba setelah dikurangi seluruh beban termasuk bunga dan pajak",
+                "Pendapatan kotor sebelum dikurangi harga pokok penjualan",
+                "Arus kas bebas setelah dikurangi belanja modal perusahaan",
+              ],
+              answer: 0,
+              explain:
+                "EBITDA mendekati kas yang dihasilkan operasi sebelum beban non-tunai & pendanaan.",
+            },
+          ],
+        },
+      ],
+    },
+    /* ---------------- MODUL 6: BIAYA, ANGGARAN & PAJAK ---------------- */
+    {
+      id: "acc-terapan",
+      level: "Terapan",
+      title: "Biaya, Anggaran & Pajak",
+      summary: "Sisi operasional: CapEx vs OpEx, struktur biaya, titik impas, akuntansi biaya & ABC, RAB, anggaran & varians, pajak, dan penggajian.",
+      lessons: [
+        {
+          id: "acc-op-1",
+          title: "CapEx vs OpEx",
+          duration: "11 menit",
+          content: `
+<p>Dua jenis pengeluaran yang harus dibedakan setiap pebisnis: <b>CapEx</b> dan <b>OpEx</b>. Keliru membedakannya bisa mengacaukan laporan & keputusan.</p>
+
+<div data-diagram="vs" data-left="CapEx::Aset jangka panjang::Jadi aset lalu disusutkan::Neraca" data-right="OpEx::Biaya harian::Langsung jadi beban::Laba Rugi" data-caption="CapEx vs OpEx"></div>
+
+
+<table class="tbl">
+  <tr><th></th><th>CapEx (Belanja Modal)</th><th>OpEx (Belanja Operasional)</th></tr>
+  <tr><td>Untuk apa</td><td>Membeli/memperbarui <b>aset jangka panjang</b> (mesin, gedung, kendaraan)</td><td>Biaya <b>menjalankan bisnis sehari-hari</b> (gaji, sewa, listrik, bahan)</td></tr>
+  <tr><td>Manfaat</td><td>Jangka panjang (bertahun-tahun)</td><td>Habis pada periode itu</td></tr>
+  <tr><td>Pencatatan</td><td>Jadi <b>aset</b>, lalu <b>disusutkan</b> bertahap</td><td>Langsung jadi <b>beban</b> di laba rugi</td></tr>
+  <tr><td>Muncul di</td><td>Neraca + Arus Kas Investasi</td><td>Laporan Laba Rugi</td></tr>
+</table>
+
+<h3>💥 Dampak & keputusan</h3>
+<ul>
+  <li><b>CapEx besar</b> menekan kas <b>sekarang</b> tapi membangun kapasitas masa depan → dampaknya tersebar lewat penyusutan bertahun-tahun.</li>
+  <li><b>OpEx tinggi</b> menekan laba <b>tiap periode</b> secara langsung.</li>
+  <li>Keputusan klasik: <b>beli (CapEx)</b> vs <b>sewa/langganan (OpEx)</b>? Sewa menjaga kas & fleksibel; beli lebih murah jangka panjang jika dipakai lama.</li>
+</ul>
+
+<div class="callout">
+<b>Ingat rumus FCF:</b> Free Cash Flow = Arus Kas Operasi − <b>CapEx</b>. CapEx yang besar langsung memangkas kas bebas perusahaan.
+</div>
+`,
+          keyPoints: [
+            "CapEx = belanja aset jangka panjang (dicatat sebagai aset & disusutkan); OpEx = biaya operasi harian (langsung jadi beban).",
+            "CapEx muncul di neraca & arus kas investasi; OpEx di laporan laba rugi.",
+            "Keputusan beli (CapEx) vs sewa (OpEx) memengaruhi kas & fleksibilitas.",
+            "CapEx besar langsung memangkas Free Cash Flow.",
+          ],
+          practice: [
+            { type: "choice", q: "Membeli mesin produksi seharga Rp200jt untuk dipakai 8 tahun termasuk?", options: ["OpEx (beban operasional)", "CapEx (belanja modal)"], answer: 1, hint: "Aset jangka panjang atau biaya harian?", solution: "Aset jangka panjang yang disusutkan = CapEx." },
+            { type: "choice", q: "Membayar tagihan listrik & gaji bulanan termasuk?", options: ["CapEx (belanja modal)", "OpEx (belanja operasional)"], answer: 1, hint: "Habis pada periode itu?", solution: "Biaya menjalankan bisnis sehari-hari = OpEx." },
+          ],
+          quiz: [
+            {
+              q: "Perbedaan utama CapEx dan OpEx?",
+              options: [
+                "CapEx untuk aset jangka panjang yang disusutkan; OpEx biaya operasi harian",
+                "CapEx dibayar tunai; OpEx selalu dibayar dengan cara mencicil",
+                "CapEx untuk perusahaan besar; OpEx untuk usaha kecil dan menengah",
+                "CapEx dicatat sebagai beban; OpEx dicatat sebagai aset di neraca",
+              ],
+              answer: 0,
+              explain:
+                "CapEx = investasi aset jangka panjang; OpEx = biaya operasi yang habis pakai.",
+            },
+            {
+              q: "Bagaimana CapEx memengaruhi Free Cash Flow?",
+              options: [
+                "Mengurangi FCF, karena FCF = Arus Kas Operasi − CapEx",
+                "Menambah FCF, karena aset baru meningkatkan nilai perusahaan",
+                "Tidak berpengaruh, karena CapEx hanya tercatat di neraca",
+                "Menambah FCF pada tahun berikutnya secara otomatis",
+              ],
+              answer: 0,
+              explain: "CapEx dikurangkan langsung dari arus kas operasi untuk mendapat FCF.",
+            },
+          ],
+        },
+        {
+          id: "acc-op-2",
+          title: "Struktur Biaya: Langsung, Tidak Langsung & Overhead",
+          duration: "11 menit",
+          content: `
+<p>Memahami dari mana biaya berasal membantumu menetapkan harga yang tepat & tahu produk mana yang benar-benar untung.</p>
+
+<div data-diagram="stack" data-parts="Bahan baku (variabel):40|Gaji tetap:25|Sewa &amp; listrik:15|Pemasaran:12|Lain-lain:8" data-caption="Contoh struktur biaya sebuah usaha — perhatikan mana yang ikut naik saat penjualan naik"></div>
+
+
+<h3>Berdasarkan keterlacakan ke produk</h3>
+<ul>
+  <li><b>Biaya Langsung (Direct)</b> — bisa dilacak langsung ke satu produk: bahan baku, upah pekerja produksi.</li>
+  <li><b>Biaya Tidak Langsung / Overhead</b> — tidak bisa ditempel ke satu produk: listrik pabrik, gaji supervisor, sewa, penyusutan mesin.</li>
+</ul>
+
+<h3>Berdasarkan perilaku terhadap produksi (recap)</h3>
+<ul>
+  <li><b>Biaya Tetap</b> — tidak berubah ikut jumlah (sewa).</li>
+  <li><b>Biaya Variabel</b> — naik-turun ikut jumlah (bahan baku).</li>
+</ul>
+
+<div class="callout">
+<b>Overhead</b> sering "tersembunyi" tapi bisa besar. Kesalahan umum UMKM: menetapkan harga hanya dari biaya bahan (langsung) sambil <b>lupa membebankan overhead</b> → merasa untung padahal rugi.
+</div>
+
+<h3>💥 Dampak</h3>
+<ul>
+  <li><b>Penetapan harga</b>: harga harus menutup biaya langsung + porsi overhead + margin.</li>
+  <li><b>Profitabilitas produk</b>: setelah membagi overhead, mungkin ketahuan ada produk yang sebenarnya merugi.</li>
+  <li><b>Kontrol biaya</b>: overhead adalah target utama efisiensi.</li>
+</ul>
+
+<div data-demo="cost-structure"></div>
+`,
+          keyPoints: [
+            "Biaya langsung bisa dilacak ke produk (bahan, upah produksi); overhead/tidak langsung tidak (listrik, sewa, supervisor).",
+            "Biaya tetap tidak ikut produksi; biaya variabel ikut produksi.",
+            "Kesalahan umum: menetapkan harga tanpa membebankan overhead → merasa untung padahal rugi.",
+            "Dampak: struktur biaya menentukan harga tepat, profitabilitas produk, & target efisiensi.",
+          ],
+          quiz: [
+            {
+              q: "Listrik pabrik & gaji supervisor termasuk biaya?",
+              options: [
+                "Overhead (biaya tidak langsung)",
+                "Bahan baku langsung",
+                "Tenaga kerja langsung",
+                "Beban pemasaran",
+              ],
+              answer: 0,
+              explain:
+                "Tidak bisa dilacak ke satu produk tertentu = overhead / biaya tidak langsung.",
+            },
+            {
+              q: "Kesalahan umum penetapan harga pada UMKM?",
+              options: [
+                "Menghitung harga dari biaya bahan saja, lupa membebankan overhead",
+                "Menetapkan harga sedikit di atas pesaing agar terlihat berkualitas",
+                "Menaikkan harga bertahap mengikuti kenaikan biaya bahan baku",
+                "Menghitung harga dari seluruh biaya lalu menambahkan margin laba",
+              ],
+              answer: 0,
+              explain:
+                "Lupa overhead membuat harga terlalu rendah dan bisnis merugi diam-diam.",
+            },
+          ],
+        },
+        {
+          id: "acc-a-4",
+          title: "Akuntansi untuk Keputusan Bisnis",
+          duration: "11 menit",
+          content: `
+<p>Akuntansi bukan sekadar mencatat masa lalu — ia alat untuk <b>mengambil keputusan</b>.</p>
+
+<div data-diagram="compare3" data-cols="Biaya relevan::berubah karena keputusan::WAJIB dihitung|Sunk cost::terlanjur keluar::ABAIKAN sepenuhnya|Biaya peluang::hilang karena memilih A::paling sering dilupakan" data-caption="Tiga jenis biaya saat mengambil keputusan"></div>
+
+
+<h3>Biaya tetap vs variabel</h3>
+<ul>
+  <li><b>Biaya tetap</b> — tidak berubah ikut produksi (sewa, gaji tetap).</li>
+  <li><b>Biaya variabel</b> — naik-turun ikut jumlah produksi (bahan baku).</li>
+</ul>
+
+<h3>Margin kontribusi & titik impas (break-even)</h3>
+<div class="callout">
+<b>Margin Kontribusi</b> = Harga jual − Biaya variabel per unit.<br>
+<b>Titik Impas (unit)</b> = Biaya Tetap ÷ Margin Kontribusi per unit.
+</div>
+<p><b>Contoh:</b> Biaya tetap Rp10jt/bulan. Tiap produk dijual Rp50rb, biaya variabelnya Rp30rb → margin kontribusi Rp20rb. Titik impas = 10.000.000 ÷ 20.000 = <b>500 unit</b>/bulan. Di bawah itu rugi, di atasnya untung.</p>
+
+<h3>Etika & integritas</h3>
+<div class="callout warn">
+<b>Penting:</b> Laporan keuangan harus jujur. Memanipulasi angka ("creative accounting") bisa berakibat hukum, kehilangan kepercayaan investor, dan kehancuran bisnis. Integritas adalah fondasi akuntansi.
+</div>
+`,
+          keyPoints: [
+            "Biaya tetap tidak ikut produksi; biaya variabel ikut produksi.",
+            "Titik impas (unit) = Biaya Tetap ÷ Margin Kontribusi per unit.",
+            "Integritas & kejujuran laporan adalah fondasi akuntansi.",
+          ],
+          practice: [
+            { type: "number", q: "Biaya tetap Rp30jt/bulan, margin kontribusi Rp50.000/unit. Berapa titik impas (unit)?", answer: 600, unit: "unit", hint: "Titik impas = Biaya Tetap ÷ Margin Kontribusi per unit. Ingat Rp30jt = 30.000.000.", solution: "30.000.000 ÷ 50.000 = 600 unit." },
+            { type: "number", q: "Harga jual Rp80.000/unit, biaya variabel Rp50.000/unit. Berapa margin kontribusi per unit? (Rupiah)", answer: 30000, tol: 1, hint: "Margin kontribusi = Harga jual − Biaya variabel.", solution: "80.000 − 50.000 = Rp30.000." },
+          ],
+          quiz: [
+            {
+              q: "Biaya tetap Rp20jt, margin kontribusi Rp40rb/unit. Titik impasnya?",
+              options: ["200 unit", "500 unit", "800 unit", "2.000 unit"],
+              answer: 1,
+              explain: "20.000.000 ÷ 40.000 = 500 unit.",
+            },
+            {
+              q: "Manakah contoh biaya variabel?",
+              options: [
+                "Bahan baku yang naik-turun mengikuti jumlah produksi",
+                "Sewa gedung yang dibayar tetap setiap bulannya",
+                "Gaji pokok staf administrasi yang sudah disepakati",
+                "Premi asuransi bangunan yang dibayar tiap tahun",
+              ],
+              answer: 0,
+              explain: "Biaya variabel berubah mengikuti volume produksi, seperti bahan baku.",
+            },
+          ],
+        },
+        {
+          id: "acc-aud-1",
+          title: "Akuntansi Biaya & Activity-Based Costing",
+          duration: "13 menit",
+          content: `
+<p>Pertanyaan yang terdengar sederhana tapi sering dijawab salah: <b>"berapa sebenarnya biaya membuat satu produk ini?"</b> Jawaban yang keliru membuat perusahaan menjual produk yang sebenarnya merugi.</p>
+
+<h3>Fundamental: dua jenis biaya (pengingat)</h3>
+<ul>
+  <li><b>Biaya langsung</b> — jelas milik satu produk: bahan baku, upah pekerja produksi.</li>
+  <li><b>Overhead</b> — dipakai bersama: listrik pabrik, sewa, gaji supervisor. <b>Inilah yang sulit dibagi.</b></li>
+</ul>
+
+<h3>Tiga cara menghitung biaya produk</h3>
+<table class="tbl">
+  <tr><th>Metode</th><th>Cocok untuk</th><th>Cara kerja</th></tr>
+  <tr><td><b>Job Order Costing</b></td><td>Produk unik per pesanan: kontraktor, percetakan custom, biro jasa</td><td>Biaya dikumpulkan <b>per pesanan</b></td></tr>
+  <tr><td><b>Process Costing</b></td><td>Produksi massal &amp; seragam: semen, minuman kemasan</td><td>Total biaya ÷ jumlah unit</td></tr>
+  <tr><td><b>Activity-Based Costing (ABC)</b></td><td>Produk beragam dengan pemakaian sumber daya berbeda</td><td>Overhead dibagi berdasarkan <b>aktivitas</b> yang benar-benar dipakai</td></tr>
+</table>
+
+<h3>Kenapa ABC ada? Masalah pembagian yang malas</h3>
+<div class="callout warn">
+<b>Cara lama:</b> semua overhead dibagi rata berdasarkan <b>satu pemicu</b> saja, biasanya jam kerja.
+<br><br><b>Masalahnya:</b> misal Produk A dibuat massal &amp; sederhana, Produk B dibuat sedikit tapi butuh <b>banyak penyetelan mesin, inspeksi, &amp; penanganan khusus</b>. Kalau overhead dibagi hanya berdasarkan jam kerja, <b>Produk A ikut menanggung kerepotan yang disebabkan Produk B</b>.
+<br><br><b>Akibatnya fatal:</b> Produk A terlihat <b>kurang untung</b> (padahal untung), Produk B terlihat <b>untung</b> (padahal merugi). Perusahaan lalu mendorong penjualan produk yang salah.
+</div>
+
+<h3>Cara kerja ABC</h3>
+<ol>
+  <li>Identifikasi <b>aktivitas</b> yang memakan biaya: penyetelan mesin, inspeksi mutu, penanganan bahan, pengiriman.</li>
+  <li>Tentukan <b>pemicu biaya (cost driver)</b> tiap aktivitas: jumlah penyetelan, jumlah inspeksi, jumlah pengiriman.</li>
+  <li>Bebankan biaya ke produk <b>sesuai pemakaian nyatanya</b>.</li>
+</ol>
+
+<div class="callout">
+<b>Contoh:</b> biaya penyetelan mesin Rp100 juta/tahun untuk 200 kali penyetelan → <b>Rp500.000 per penyetelan</b>. Produk yang butuh 150 penyetelan menanggung Rp75 juta; produk yang butuh 50 penyetelan menanggung Rp25 juta. <b>Adil sesuai pemakaian.</b>
+</div>
+
+<div class="callout warn">
+<b>Harganya:</b> ABC lebih <b>akurat</b> tapi lebih <b>rumit &amp; mahal</b> diterapkan. Untuk usaha kecil dengan produk sejenis, metode sederhana sudah memadai. Pakai ABC saat produkmu beragam &amp; overhead-nya besar.
+</div>
+`,
+          keyPoints: [
+            "Biaya langsung mudah dilacak; overhead (dipakai bersama) sulit dibagi — di situlah letak masalahnya.",
+            "Job order costing untuk produk unik per pesanan; process costing untuk produksi massal seragam.",
+            "ABC membagi overhead berdasarkan aktivitas & pemicu biaya (cost driver) yang benar-benar dipakai.",
+            "Pembagian overhead yang malas membuat produk sederhana menanggung kerepotan produk rumit — laba per produk jadi menyesatkan.",
+            "ABC lebih akurat tapi lebih rumit; pakai saat produk beragam & overhead besar.",
+          ],
+          practice: [
+            { type: "number", q: "Biaya penyetelan mesin Rp100jt/tahun untuk 200 kali penyetelan. Berapa biaya per penyetelan? (Rupiah)", answer: 500000, tol: 1000, hint: "Total biaya ÷ jumlah pemicu.", solution: "100.000.000 ÷ 200 = Rp500.000." },
+            { type: "number", q: "Dengan tarif Rp500.000/penyetelan, berapa overhead yang dibebankan ke produk yang butuh 150 penyetelan? (juta)", answer: 75, tol: 0.5, unit: "jt", hint: "150 × Rp500.000.", solution: "150 × 500.000 = Rp75 juta." },
+          ],
+          quiz: [
+            {
+              q: "Apa masalah membagi seluruh overhead hanya berdasarkan jam kerja?",
+              options: [
+                "Produk sederhana ikut menanggung kerepotan produk rumit — labanya menyesatkan",
+                "Jam kerja tidak bisa dicatat secara akurat oleh perusahaan manufaktur mana pun",
+                "Aturan akuntansi melarang overhead dibagi berdasarkan jumlah jam kerja",
+                "Pembagian itu membuat total overhead perusahaan menjadi berlipat ganda",
+              ],
+              answer: 0,
+              explain:
+                "Pemicu tunggal mengabaikan perbedaan pemakaian sumber daya antar-produk.",
+            },
+            {
+              q: "Metode costing mana yang cocok untuk kontraktor bangunan (tiap proyek berbeda)?",
+              options: ["Process costing", "Job order costing", "FIFO", "Tidak perlu costing"],
+              answer: 1,
+              explain: "Job order costing mengumpulkan biaya per pesanan/proyek unik.",
+            },
+          ],
+        },
+        {
           id: "acc-fund-5",
           title: "RAB (Rencana Anggaran Biaya)",
           duration: "12 menit",
@@ -1763,75 +1895,977 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
           ],
         },
         {
-          id: "acc-fund-6",
-          title: "Metrik Lain & Memahami 'ROTI'",
-          duration: "11 menit",
+          id: "acc-aud-2",
+          title: "Anggaran & Analisis Varians",
+          duration: "12 menit",
           content: `
-<p>Beberapa metrik penting lain yang sering muncul — beserta apa yang mereka ungkap:</p>
+<p>Anggaran bukan sekadar ramalan — ia <b>alat kendali</b>. Kekuatannya baru muncul saat kamu <b>membandingkan rencana dengan kenyataan</b>.</p>
 
+<h3>Fundamental: apa itu varians?</h3>
+<div class="callout">
+<b>Varians = Realisasi − Anggaran.</b> Sederhananya: <b>selisih antara yang terjadi dan yang direncanakan.</b>
+<br><br>Tapi hati-hati membacanya — tandanya <b>tidak selalu</b> berarti baik atau buruk:
+<ul>
+  <li><b>Menguntungkan (favorable)</b> — pendapatan <b>lebih tinggi</b> dari rencana, ATAU biaya <b>lebih rendah</b> dari rencana.</li>
+  <li><b>Merugikan (unfavorable)</b> — pendapatan <b>lebih rendah</b>, ATAU biaya <b>lebih tinggi</b>.</li>
+</ul>
+</div>
+
+<h3>Contoh</h3>
 <table class="tbl">
-  <tr><th>Metrik</th><th>Arti singkat</th></tr>
-  <tr><td><b>Gross Margin</b></td><td>Laba kotor ÷ pendapatan — efisiensi produksi</td></tr>
-  <tr><td><b>Operating Margin</b></td><td>Laba operasi ÷ pendapatan — efisiensi operasi inti</td></tr>
-  <tr><td><b>EBITDA</b></td><td>Laba sebelum bunga, pajak, depresiasi & amortisasi — proksi kas operasional</td></tr>
-  <tr><td><b>Burn Rate</b></td><td>Kecepatan bisnis "membakar" kas per bulan</td></tr>
-  <tr><td><b>Break-even</b></td><td>Titik saat tidak untung & tidak rugi</td></tr>
+  <tr><th>Pos</th><th>Anggaran</th><th>Realisasi</th><th>Varians</th><th>Penilaian</th></tr>
+  <tr><td>Penjualan</td><td>500</td><td>540</td><td>+40</td><td class="ok-cell">Menguntungkan</td></tr>
+  <tr><td>Biaya bahan</td><td>200</td><td>230</td><td>+30</td><td>Merugikan</td></tr>
+  <tr><td>Biaya listrik</td><td>50</td><td>45</td><td>−5</td><td class="ok-cell">Menguntungkan</td></tr>
 </table>
+<p>Perhatikan: varians <b>+30</b> pada biaya justru <b>merugikan</b>, sedangkan <b>+40</b> pada penjualan menguntungkan. Selalu lihat <b>jenis posnya</b> dulu.</p>
 
-<h3>Soal "ROTI"</h3>
+<h3>Membongkar penyebab: harga vs jumlah</h3>
+<p>Varians biaya bahan naik Rp30 juta — tapi <b>kenapa</b>? Ada dua kemungkinan yang harus dipisahkan:</p>
+<ul>
+  <li><b>Varians harga</b> — harga bahan per unit naik (mungkin di luar kendali kita: pasar, kurs).</li>
+  <li><b>Varians efisiensi/jumlah</b> — pemakaian bahan lebih boros dari rencana (biasanya <b>bisa</b> dikendalikan: mesin rusak, banyak produk gagal, pemborosan).</li>
+</ul>
 <div class="callout">
-<b>ROTI</b> paling umum berarti <b>Return on Time Invested</b> — imbal hasil atas <b>WAKTU/usaha</b> yang kamu curahkan, bukan uang. Gunanya menilai: "apakah kegiatan ini <b>sepadan</b> dengan waktu yang dipakai?" Ini alat produktivitas & prioritas, <b>bukan</b> rasio laporan keuangan standar.
+<b>Kenapa pemisahan ini penting?</b> Karena menentukan <b>tindakan</b>. Kalau penyebabnya harga pasar, solusinya negosiasi pemasok atau sesuaikan harga jual. Kalau penyebabnya pemborosan, solusinya perbaiki proses produksi. Menyalahkan bagian produksi atas kenaikan harga pasar adalah kesalahan manajemen klasik.
 </div>
-<p>Jika yang kamu maksud <b>ROTA</b> (Return on Total Assets), itu praktis sama dengan <b>ROA</b> — laba dibagi total aset.</p>
 
-<h3>💥 Dampak menyeluruh</h3>
-<p>Metrik adalah <b>"dashboard"</b> bisnis. Memilih metrik yang <b>tepat</b> mengarahkan keputusan yang tepat; fokus pada metrik yang salah bisa menyesatkan seluruh perusahaan (mis. mengejar pendapatan sambil mengabaikan arus kas → bangkrut walau tumbuh).</p>
-
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu kini menguasai metrik keuangan inti dari fundamentalnya: laba bersih, arus kas bebas, ROI, ROE/ROA/ROIC, RAB, dan lainnya — beserta dampaknya pada perusahaan. Ini bekal nyata untuk membaca & mengelola bisnis.
+<h3>Anggaran statis vs fleksibel</h3>
+<div class="callout warn">
+<b>Jebakan anggaran statis:</b> anggaran dibuat untuk 1.000 unit, ternyata terjual 1.300 unit. Biaya bahan <b>pasti</b> lebih besar dari anggaran — tapi itu <b>wajar</b>, bukan pemborosan!
+<br><br><b>Anggaran fleksibel</b> menyesuaikan dulu ke tingkat aktivitas nyata (1.300 unit), <b>baru</b> dibandingkan. Tanpa ini, penilaianmu keliru.
 </div>
+
+<h3>Management by exception</h3>
+<p>Jangan menyelidiki semua selisih. Fokuskan waktu pada varians yang <b>besar &amp; tidak biasa</b> — itulah yang paling mungkin menyimpan masalah nyata.</p>
 `,
           keyPoints: [
-            "Metrik lain: gross/operating margin, EBITDA (proksi kas operasional), burn rate, break-even.",
-            "ROTI = Return on Time Invested — imbal hasil atas waktu/usaha; alat produktivitas, bukan rasio laporan keuangan. (ROTA ≈ ROA.)",
-            "Dampak: metrik adalah dashboard bisnis; memilih metrik tepat mengarahkan keputusan tepat.",
+            "Varians = Realisasi − Anggaran; maknanya (menguntungkan/merugikan) tergantung jenis pos.",
+            "Biaya lebih tinggi dari anggaran = merugikan; pendapatan lebih tinggi = menguntungkan.",
+            "Pisahkan varians harga (sering di luar kendali) dari varians efisiensi (biasanya bisa dikendalikan) — menentukan tindakan.",
+            "Anggaran fleksibel menyesuaikan ke tingkat aktivitas nyata dulu, agar perbandingannya adil.",
+            "Management by exception: selidiki varians yang besar & tidak biasa saja.",
+          ],
+          practice: [
+            { type: "number", q: "Anggaran biaya bahan Rp200jt, realisasi Rp230jt. Berapa variansnya? (juta)", answer: 30, tol: 0.5, unit: "jt", hint: "Realisasi − Anggaran.", solution: "230 − 200 = Rp30jt (merugikan, karena biaya naik)." },
+            { type: "choice", q: "Anggaran dibuat untuk 1.000 unit, ternyata terjual 1.300 unit sehingga biaya bahan melebihi anggaran. Penilaian yang tepat?", options: ["Pasti ada pemborosan", "Wajar — bandingkan dengan anggaran FLEKSIBEL pada 1.300 unit dulu", "Produksi harus dihentikan", "Anggaran tidak berguna"], answer: 1, hint: "Volume berubah, apakah adil membandingkan dengan anggaran lama?", solution: "Anggaran fleksibel menyesuaikan ke aktivitas nyata sebelum dibandingkan." },
           ],
           quiz: [
             {
-              q: "Apa arti 'ROTI' yang paling umum dalam konteks bisnis?",
+              q: "Biaya realisasi LEBIH TINGGI dari anggaran. Ini varians?",
               options: [
-                "Return on Time Invested — imbal hasil atas waktu dan usaha yang dicurahkan",
-                "Return on Total Investment — imbal hasil atas seluruh modal perusahaan",
-                "Rate of Tax Income — tarif pajak atas penghasilan usaha",
-                "Return on Tangible Inventory — imbal hasil atas persediaan fisik",
+                "Menguntungkan",
+                "Merugikan (unfavorable)",
+                "Netral",
+                "Tidak bisa dinilai",
               ],
-              answer: 0,
-              explain:
-                "ROTI = Return on Time Invested; menilai apakah suatu kegiatan sepadan dengan waktunya.",
+              answer: 1,
+              explain: "Untuk pos biaya, realisasi lebih tinggi berarti merugikan.",
             },
             {
-              q: "Apa itu EBITDA?",
+              q: "Kenapa varians harga dan varians efisiensi perlu dipisahkan?",
               options: [
-                "Laba sebelum bunga, pajak, penyusutan & amortisasi — proksi kas operasi",
-                "Laba setelah dikurangi seluruh beban termasuk bunga dan pajak",
-                "Pendapatan kotor sebelum dikurangi harga pokok penjualan",
-                "Arus kas bebas setelah dikurangi belanja modal perusahaan",
+                "Penyebabnya berbeda, sehingga tindakan perbaikannya pun berbeda",
+                "Keduanya dilaporkan kepada pihak berbeda sesuai aturan pajak",
+                "Varians harga selalu positif sedangkan varians efisiensi negatif",
+                "Menggabungkannya membuat anggaran tahun depan tak bisa disusun",
               ],
               answer: 0,
               explain:
-                "EBITDA mendekati kas yang dihasilkan operasi sebelum beban non-tunai & pendanaan.",
+                "Harga pasar & pemborosan proses menuntut solusi yang sama sekali berbeda.",
+            },
+          ],
+        },
+        {
+          id: "acc-op-3",
+          title: "Pajak Bisnis (PPN & PPh)",
+          duration: "12 menit",
+          content: `
+<p>Pajak adalah kewajiban yang wajib dikelola dengan benar. Dua yang paling penting bagi bisnis di Indonesia: <b>PPN</b> dan <b>PPh</b>.</p>
+
+<div data-diagram="pipeline" data-stages="Pungut PPN::dari pembeli|Setor PPN::ke negara|Hitung laba::pendapatan − beban|Bayar PPh::atas laba" data-caption="PPN hanya numpang lewat; PPh diambil dari labamu sendiri"></div>
+
+
+<h3>PPN (Pajak Pertambahan Nilai)</h3>
+<ul>
+  <li>Pajak atas <b>konsumsi</b>, tarif umum <b>11%</b>, ditambahkan ke harga jual.</li>
+  <li>Bisnis (PKP) <b>memungut</b> PPN dari pelanggan lalu <b>menyetorkannya</b> ke negara — jadi bisnis hanya "penampung", PPN <b>bukan beban</b> bisnis itu sendiri.</li>
+</ul>
+
+<h3>PPh (Pajak Penghasilan)</h3>
+<ul>
+  <li>Pajak atas <b>penghasilan/laba</b>.</li>
+  <li><b>PPh Final UMKM</b> — untuk usaha kecil tertentu, sederhana: dihitung dari <b>omzet</b> (mis. 0,5%).</li>
+  <li><b>PPh Badan</b> — untuk perusahaan, dihitung dari <b>laba</b>.</li>
+  <li><b>PPh 21</b> — dipotong dari gaji karyawan.</li>
+</ul>
+
+<div class="callout warn">
+<b>💥 Dampak:</b> Salah kelola pajak → <b>denda, bunga, bahkan masalah hukum</b>. Pajak juga memengaruhi laba bersih & kas. Karena itu banyak bisnis melakukan <b>perencanaan pajak</b> (legal) dan pembukuan rapi agar patuh & efisien.
+</div>
+
+<div class="callout">
+<b>Catatan:</b> tarif & aturan pajak bisa berubah dan berbeda antarnegara. Untuk keputusan nyata, konsultasikan dengan konsultan/otoritas pajak. Materi ini edukasi.
+</div>
+`,
+          keyPoints: [
+            "PPN = pajak konsumsi (umumnya 11%) yang dipungut dari pelanggan & disetor ke negara — bisnis hanya penampung.",
+            "PPh = pajak penghasilan: PPh Final UMKM (dari omzet), PPh Badan (dari laba), PPh 21 (gaji karyawan).",
+            "Dampak: salah kelola pajak berisiko denda & masalah hukum; pajak memengaruhi laba bersih & kas.",
+            "Tarif & aturan bisa berubah/berbeda antarnegara — konsultasikan untuk keputusan nyata.",
+          ],
+          practice: [
+            { type: "number", q: "Harga barang (belum termasuk pajak) Rp1.000.000, PPN 11%. Berapa PPN-nya? (Rupiah)", answer: 110000, tol: 1, hint: "PPN = 11% × harga.", solution: "11% × 1.000.000 = Rp110.000." },
+            { type: "number", q: "Omzet UMKM sebulan Rp50.000.000, PPh Final 0,5%. Berapa PPh-nya? (Rupiah)", answer: 250000, tol: 1, hint: "PPh Final = 0,5% × omzet.", solution: "0,5% × 50.000.000 = Rp250.000." },
+          ],
+          quiz: [
+            {
+              q: "Mengapa PPN disebut bukan beban bagi bisnis?",
+              options: [
+                "Karena bisnis hanya memungutnya dari pelanggan lalu menyetorkannya ke negara",
+                "Karena PPN sudah termasuk dalam pajak penghasilan yang dibayar tahunan",
+                "Karena PPN hanya dikenakan pada perusahaan asing yang beroperasi di sini",
+                "Karena PPN dikembalikan penuh oleh negara di akhir tahun buku",
+              ],
+              answer: 0,
+              explain:
+                "PPN bersifat pass-through: dipungut dari konsumen, disetor ke negara.",
+            },
+            {
+              q: "PPh Final UMKM umumnya dihitung dari?",
+              options: ["Laba bersih", "Omzet (peredaran bruto)", "Aset", "Utang"],
+              answer: 1,
+              explain: "PPh Final UMKM dihitung sederhana dari omzet, bukan laba.",
+            },
+          ],
+        },
+        {
+          id: "acc-op-4",
+          title: "Penggajian & Biaya Karyawan",
+          duration: "11 menit",
+          content: `
+<p>Bagi banyak bisnis, <b>biaya karyawan adalah pengeluaran terbesar</b>. Dan biaya sesungguhnya <b>lebih dari sekadar gaji pokok</b>.</p>
+
+<div data-diagram="stack" data-parts="Gaji pokok:70|Tunjangan:15|BPJS &amp; jaminan:9|THR (dicicil bulanan):6" data-caption="Biaya karyawan bukan hanya gaji pokok — siapkan sekitar 1,3x dari angka yang dijanjikan"></div>
+
+
+<h3>Komponen biaya karyawan</h3>
+<ul>
+  <li><b>Gaji pokok</b> & <b>tunjangan</b> (transport, makan, jabatan).</li>
+  <li><b>Lembur</b> dan <b>THR</b> (Tunjangan Hari Raya — wajib di Indonesia).</li>
+  <li><b>BPJS</b> (Kesehatan & Ketenagakerjaan) — sebagian ditanggung <b>perusahaan</b>, sebagian karyawan.</li>
+  <li><b>PPh 21</b> — pajak penghasilan karyawan yang dipotong perusahaan.</li>
+</ul>
+
+<div class="callout">
+<b>Poin penting:</b> "biaya membawa" seorang karyawan bagi perusahaan <b>lebih tinggi</b> dari gaji yang ia terima, karena ada iuran BPJS bagian perusahaan, THR, dan tunjangan. Rencanakan berdasarkan <b>biaya total</b>, bukan gaji pokok saja.
+</div>
+
+<h3>💥 Dampak</h3>
+<ul>
+  <li>Salah menghitung biaya karyawan → <b>arus kas</b> kacau (mis. lupa menyiapkan THR).</li>
+  <li>Kepatuhan (BPJS, PPh 21, upah minimum) menghindari <b>masalah hukum ketenagakerjaan</b>.</li>
+  <li>Ukur <b>produktivitas per biaya karyawan</b> untuk menilai efisiensi tim.</li>
+</ul>
+`,
+          keyPoints: [
+            "Biaya karyawan mencakup gaji pokok, tunjangan, lembur, THR, BPJS (bagian perusahaan), & PPh 21.",
+            "Biaya total karyawan bagi perusahaan lebih tinggi dari gaji yang diterima — rencanakan dari biaya total.",
+            "Dampak: salah hitung mengacaukan arus kas (mis. THR); kepatuhan menghindari masalah hukum.",
+          ],
+          quiz: [
+            {
+              q: "Mengapa biaya total karyawan lebih tinggi dari gaji pokoknya?",
+              options: [
+                "Karena ada BPJS bagian perusahaan, THR, tunjangan, dan lainnya",
+                "Karena gaji pokok selalu dikenakan pajak tambahan oleh perusahaan",
+                "Karena karyawan wajib membayar sebagian biaya kantor setiap bulan",
+                "Karena gaji pokok dicatat dua kali dalam laporan laba rugi",
+              ],
+              answer: 0,
+              explain:
+                "Perusahaan menanggung iuran & komponen tambahan di luar gaji pokok.",
+            },
+            {
+              q: "Dampak lupa menyiapkan THR bagi bisnis?",
+              options: [
+                "Mengacaukan arus kas dan berisiko melanggar aturan ketenagakerjaan",
+                "Mengurangi pajak penghasilan perusahaan pada tahun berjalan",
+                "Menaikkan laba bersih karena bebannya tidak jadi dicatat",
+                "Tidak berdampak apa pun karena THR bersifat sukarela",
+              ],
+              answer: 0,
+              explain: "THR adalah kewajiban besar sekaligus; lupa merencanakannya menekan kas.",
             },
           ],
         },
       ],
     },
+    /* ---------------- MODUL 7: PENGENDALIAN, KECURANGAN & AUDIT ---------------- */
+    {
+      id: "acc-audit",
+      level: "Audit",
+      title: "Pengendalian, Kecurangan & Audit",
+      summary: "Segitiga kecurangan & pengendalian internal, mendeteksi manipulasi laporan, dan apa yang sebenarnya dilakukan auditor.",
+      lessons: [
+        {
+          id: "acc-aud-3",
+          title: "Pengendalian Internal & Segitiga Kecurangan",
+          duration: "13 menit",
+          content: `
+<p>Pencatatan yang rapi tak ada artinya kalau <b>angkanya bisa dimanipulasi</b>. Di sinilah <b>pengendalian internal</b> berperan — dan ini relevan bahkan untuk usaha kecil.</p>
 
-    /* ---------------- LEVEL LANJUTAN (VALUASI & RASIO) ---------------- */
+<div data-diagram="compare3" data-cols="Tekanan::target mustahil, utang pribadi::motifnya|Kesempatan::pengawasan lemah::celahnya|Rasionalisasi::'nanti saya kembalikan'::pembenarannya" data-caption="Kecurangan butuh ketiganya sekaligus — hilangkan satu, kecurangan jauh lebih sulit"></div>
+
+
+<h3>Segitiga Kecurangan (Fraud Triangle)</h3>
+<p>Penelitian klasik menemukan kecurangan hampir selalu terjadi saat <b>tiga hal muncul bersamaan</b>:</p>
+<table class="tbl">
+  <tr><th>Unsur</th><th>Wujudnya</th><th>Contoh pikiran pelaku</th></tr>
+  <tr><td><b>Tekanan</b></td><td>Kebutuhan/desakan pribadi atau target</td><td><i>"Aku butuh uang untuk berobat."</i></td></tr>
+  <tr><td><b>Kesempatan</b></td><td>Kontrol lemah, tak ada yang mengawasi</td><td><i>"Tidak akan ada yang tahu."</i></td></tr>
+  <tr><td><b>Pembenaran</b></td><td>Alasan agar merasa tidak bersalah</td><td><i>"Cuma pinjam, nanti dikembalikan."</i></td></tr>
+</table>
+
+<div class="callout">
+<b>Inti yang harus dipahami:</b> perusahaan <b>tidak bisa</b> mengendalikan tekanan hidup karyawan, dan <b>sulit</b> mengubah cara orang membenarkan diri. Yang <b>paling bisa dikendalikan</b> adalah <b>KESEMPATAN</b> — dan itulah persis tugas pengendalian internal.
+</div>
+
+<h3>Pengendalian internal yang paling penting</h3>
+<table class="tbl">
+  <tr><th>Kontrol</th><th>Cara kerjanya</th></tr>
+  <tr><td><b>Pemisahan tugas</b></td><td>Orang yang <b>menyetujui</b>, yang <b>mencatat</b>, dan yang <b>memegang uang/barang</b> harus <b>berbeda</b></td></tr>
+  <tr><td><b>Otorisasi</b></td><td>Pengeluaran di atas nilai tertentu wajib disetujui atasan</td></tr>
+  <tr><td><b>Dokumentasi</b></td><td>Semua transaksi ada bukti bernomor urut (nota, faktur)</td></tr>
+  <tr><td><b>Pengamanan fisik</b></td><td>Kas di brankas, gudang terkunci, akses sistem berkata sandi</td></tr>
+  <tr><td><b>Rekonsiliasi</b></td><td>Catatan internal dicocokkan pihak lain dengan rekening koran bank</td></tr>
+  <tr><td><b>Cuti wajib &amp; rotasi</b></td><td>Kecurangan berkelanjutan sering terbongkar saat pelakunya digantikan orang lain</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Pemisahan tugas adalah kontrol nomor satu.</b> Kalau satu orang bisa <b>membuat tagihan palsu, menyetujuinya, mencatatnya, DAN mengambil uangnya</b> — kecurangan hanya soal waktu. Ini kelemahan paling umum di UMKM, karena "kan cuma dia yang bisa".
+</div>
+
+<h3>Untuk usaha kecil yang orangnya terbatas</h3>
+<p>Kamu mungkin tak punya cukup karyawan untuk memisahkan semua tugas. Yang bisa dilakukan:</p>
+<ul>
+  <li><b>Pemilik ikut memeriksa</b> rekening koran bank setiap bulan — jangan didelegasikan sepenuhnya.</li>
+  <li>Gunakan <b>transfer bank</b> (jejaknya tercatat) daripada tunai sebisa mungkin.</li>
+  <li>Wajibkan <b>bukti fisik</b> untuk tiap pengeluaran.</li>
+  <li>Lakukan <b>hitung stok mendadak</b> secara berkala.</li>
+</ul>
+
+<div class="callout">
+<b>Prinsip penting:</b> kontrol yang baik <b>bukan tanda tidak percaya</b> — justru <b>melindungi karyawan yang jujur</b> dari tuduhan, sekaligus menutup godaan. Sampaikan dengan cara itu agar tidak dianggap curiga berlebihan.
+</div>
+`,
+          keyPoints: [
+            "Segitiga kecurangan: tekanan + kesempatan + pembenaran muncul bersamaan.",
+            "Yang paling bisa dikendalikan perusahaan adalah KESEMPATAN — tugas pengendalian internal.",
+            "Kontrol terpenting: pemisahan tugas (menyetujui ≠ mencatat ≠ memegang aset).",
+            "Kontrol lain: otorisasi, dokumentasi bernomor, pengamanan fisik, rekonsiliasi bank, cuti wajib & rotasi.",
+            "UMKM: pemilik ikut cek rekening koran, utamakan transfer, wajibkan bukti, hitung stok mendadak.",
+            "Kontrol melindungi karyawan jujur dari tuduhan — bukan tanda tidak percaya.",
+          ],
+          practice: [
+            { type: "choice", q: "Satu orang membuat tagihan, menyetujuinya, mencatatnya, sekaligus memegang uangnya. Kontrol apa yang dilanggar?", options: ["Dokumentasi", "Pemisahan tugas", "Pengamanan fisik", "Rotasi jabatan"], answer: 1, hint: "Menyetujui ≠ mencatat ≠ memegang aset.", solution: "Ini pelanggaran pemisahan tugas — kelemahan kontrol paling berbahaya." },
+            { type: "choice", q: "Dari tiga unsur segitiga kecurangan, mana yang paling bisa dikendalikan perusahaan?", options: ["Tekanan hidup karyawan", "Kesempatan", "Pembenaran diri pelaku", "Semua tidak bisa dikendalikan"], answer: 1, hint: "Mana yang bisa ditutup lewat sistem?", solution: "Kesempatan ditutup dengan pengendalian internal yang baik." },
+          ],
+          quiz: [
+            {
+              q: "Apa tiga unsur Segitiga Kecurangan?",
+              options: [
+                "Uang, waktu, tempat",
+                "Tekanan, kesempatan, pembenaran",
+                "Aset, utang, modal",
+                "Debit, kredit, saldo",
+              ],
+              answer: 1,
+              explain:
+                "Kecurangan umumnya butuh ketiganya hadir bersamaan.",
+            },
+            {
+              q: "Kenapa cuti wajib bisa menjadi alat pengendalian?",
+              options: [
+                "Kecurangan berkelanjutan sering terbongkar saat tugasnya digantikan orang lain",
+                "Karyawan yang sedang cuti tidak bisa mengakses sistem perusahaan dari rumah",
+                "Cuti wajib mengurangi beban gaji bulanan sehingga laba perusahaan ikut naik",
+                "Aturan ketenagakerjaan mewajibkan audit setiap kali ada karyawan yang cuti",
+              ],
+              answer: 0,
+              explain:
+                "Skema yang butuh perawatan terus-menerus akan terlihat saat pelakunya absen.",
+            },
+          ],
+        },
+        {
+          id: "acc-aud-4",
+          title: "Mendeteksi Manipulasi Laporan Keuangan",
+          duration: "14 menit",
+          content: `
+<p>Ini keterampilan yang membuatmu <b>jauh lebih tajam</b> membaca laporan — dan langsung berguna saat menilai saham (modul Prospek).</p>
+
+<h3>Fundamental: kenapa laporan dimanipulasi?</h3>
+<p>Karena ada <b>tekanan</b>: target laba, syarat pinjaman bank, harga saham, bonus manajemen. Manipulasinya berjenjang:</p>
+<table class="tbl">
+  <tr><th>Tingkat</th><th>Wujudnya</th><th>Status</th></tr>
+  <tr><td><b>Earnings management</b></td><td>Memanfaatkan celah aturan agar laba terlihat mulus</td><td>Legal tapi <b>menyesatkan</b></td></tr>
+  <tr><td><b>Agresif</b></td><td>Asumsi ekstrem, mengakui pendapatan terlalu dini</td><td>Zona abu-abu</td></tr>
+  <tr><td><b>Fraud</b></td><td>Angka fiktif, transaksi palsu</td><td><b>Ilegal</b></td></tr>
+</table>
+
+<h3>🚩 Tanda bahaya utama</h3>
+<div class="callout warn">
+<b>#1 — Laba naik tapi arus kas operasi tidak.</b> Ini <b>sinyal paling kuat</b>. Laba bisa "diatur" lewat pencatatan; <b>kas jauh lebih sulit dipalsukan</b>. Bila keduanya berpisah jalan bertahun-tahun, selidiki.
+</div>
+<ul>
+  <li><b>Piutang tumbuh jauh lebih cepat dari penjualan</b> → mungkin penjualan dipaksakan ke pelanggan yang belum tentu bayar.</li>
+  <li><b>Persediaan menumpuk</b> lebih cepat dari penjualan → barang tak laku, atau nilainya digelembungkan.</li>
+  <li><b>Perubahan kebijakan akuntansi</b> yang kebetulan menaikkan laba (mis. masa manfaat aset tiba-tiba diperpanjang).</li>
+  <li><b>Lonjakan transaksi di akhir periode</b> → mengejar target (<i>channel stuffing</i>).</li>
+  <li><b>Pos "lain-lain" besar</b> tanpa penjelasan memadai.</li>
+  <li><b>Sering berganti auditor</b> — terutama setelah perbedaan pendapat.</li>
+  <li><b>Laba terlalu mulus</b> — bisnis nyata naik-turun; laba yang selalu "pas" mencurigakan.</li>
+</ul>
+
+<h3>Hukum Benford — alat penyaring forensik</h3>
+<div class="callout">
+Pada banyak kumpulan angka alami (nilai transaksi, populasi, tagihan), <b>angka pertama tidak muncul merata</b>. Angka <b>1</b> muncul jauh lebih sering daripada <b>9</b>.
+<br><br>Angka <b>buatan manusia</b> cenderung tersebar terlalu rata — sehingga <b>penyimpangan dari pola Benford</b> bisa menjadi tanda untuk diperiksa lebih dalam.
+</div>
+
+<h3>Coba sendiri — lihat pola Benford 👇</h3>
+<div data-demo="js-playground">// Hukum Benford: seberapa sering tiap angka muncul sebagai DIGIT PERTAMA
+// Rumus: P(d) = log10(1 + 1/d)
+
+console.log("Digit | Harapan Benford | Kalau merata");
+console.log("------|-----------------|-------------");
+
+let total = 0;
+[1,2,3,4,5,6,7,8,9].forEach(function(d){
+  const p = Math.log10(1 + 1 / d) * 100;
+  total = total + p;
+  console.log("  " + d + "   |     " + p.toFixed(1) + "%       |    11.1%");
+});
+
+console.log("------|-----------------|-------------");
+console.log("Total |     " + total.toFixed(1) + "%      |   100.0%");
+console.log("");
+console.log("Angka 1 muncul ~30%, angka 9 hanya ~4,6%.");
+console.log("Data yang DIKARANG biasanya tersebar terlalu merata.");</div>
+
+<div class="callout warn">
+<b>Penting — jangan salah pakai:</b> Benford adalah <b>alat penyaring</b>, <b>BUKAN bukti kecurangan</b>. Ia juga <b>tidak berlaku</b> untuk semua data (mis. angka dengan batas tetap seperti tinggi badan, atau nomor urut yang ditetapkan). Penyimpangan hanya berarti: <b>"perlu diperiksa lebih lanjut"</b>.
+</div>
+
+<div class="callout">
+<b>Cara pakai yang benar:</b> gabungkan beberapa sinyal. Satu tanda bahaya bisa punya penjelasan wajar. <b>Beberapa tanda sekaligus</b> — laba naik tanpa kas, piutang membengkak, auditor berganti — barulah pola yang serius.
+</div>
+`,
+          keyPoints: [
+            "Manipulasi berjenjang: earnings management (legal tapi menyesatkan) → agresif → fraud (ilegal).",
+            "Sinyal terkuat: laba naik tapi arus kas operasi tidak — kas jauh lebih sulit dipalsukan.",
+            "Red flag lain: piutang/persediaan tumbuh melebihi penjualan, kebijakan akuntansi berubah menguntungkan, lonjakan akhir periode, pos 'lain-lain' besar, sering ganti auditor, laba terlalu mulus.",
+            "Hukum Benford: digit pertama '1' muncul ~30%, '9' hanya ~4,6% pada data alami.",
+            "Benford adalah alat penyaring, BUKAN bukti; tidak berlaku untuk semua jenis data.",
+            "Gabungkan beberapa sinyal — satu tanda saja bisa punya penjelasan wajar.",
+          ],
+          practice: [
+            { type: "number", q: "Menurut hukum Benford, berapa persen angka '1' muncul sebagai digit pertama? (1 desimal)", answer: 30.1, tol: 0.5, unit: "%", hint: "log10(1 + 1/1) × 100.", solution: "log10(2) = 0,301 → 30,1%." },
+            { type: "choice", q: "Laba perusahaan naik 5 tahun berturut-turut, tapi arus kas operasinya stagnan. Kesimpulan yang tepat?", options: ["Perusahaan sangat sehat", "Sinyal kuat untuk diselidiki — laba bisa diatur, kas lebih sulit dipalsukan", "Pasti fraud", "Tidak berarti apa-apa"], answer: 1, hint: "Ini red flag, tapi apakah langsung bukti?", solution: "Ini sinyal kuat yang wajib diselidiki, bukan vonis otomatis." },
+          ],
+          quiz: [
+            {
+              q: "Apa red flag paling kuat dalam laporan keuangan?",
+              options: [
+                "Laba terus naik tapi arus kas operasi tidak ikut naik",
+                "Laba naik bersamaan dengan kenaikan arus kas operasi",
+                "Perusahaan membagikan dividen secara rutin setiap tahun",
+                "Perusahaan mengganti logo dan nama merek dagangnya",
+              ],
+              answer: 0,
+              explain:
+                "Laba dapat direkayasa lewat pencatatan; arus kas jauh lebih sulit dimanipulasi.",
+            },
+            {
+              q: "Bagaimana cara benar memakai hukum Benford?",
+              options: [
+                "Sebagai penyaring awal — penyimpangan berarti perlu diperiksa lebih lanjut",
+                "Sebagai bukti hukum yang cukup untuk menyatakan telah terjadi kecurangan",
+                "Sebagai pengganti audit menyeluruh pada seluruh transaksi perusahaan",
+                "Sebagai rumus untuk menghitung besarnya kerugian akibat kecurangan",
+              ],
+              answer: 0,
+              explain:
+                "Benford menandai anomali untuk ditelusuri, bukan membuktikan kecurangan.",
+            },
+          ],
+        },
+        {
+          id: "acc-aud-5",
+          title: "Audit — Apa yang Sebenarnya Dilakukan Auditor",
+          duration: "13 menit",
+          content: `
+<p>Banyak orang salah paham soal audit — termasuk investor. Memahami <b>apa yang audit janjikan dan tidak janjikan</b> akan membuatmu membaca laporan dengan lebih bijak.</p>
+
+<h3>Fundamental: kenapa audit ada?</h3>
+<div class="callout">
+Laporan keuangan dibuat oleh <b>manajemen</b> — pihak yang justru <b>berkepentingan</b> agar angkanya terlihat bagus. Investor &amp; bank butuh pihak <b>independen</b> untuk memeriksanya. Itulah <b>auditor eksternal</b>.
+</div>
+
+<h3>⚠️ Yang paling sering disalahpahami</h3>
+<div class="callout warn">
+<b>Auditor TIDAK menjamin laporan bebas dari kecurangan, dan TIDAK memeriksa semua transaksi.</b>
+<br><br>Yang auditor berikan adalah <b>opini</b>: apakah laporan <b>disajikan secara wajar</b> dalam <b>semua hal yang material</b>, sesuai standar akuntansi. Itu saja — dan itu tetap berharga, asal kamu tahu batasnya.
+</div>
+
+<h3>Dua konsep kunci</h3>
+<ul>
+  <li><b>Materialitas</b> — auditor fokus pada salah saji yang <b>cukup besar</b> untuk memengaruhi keputusan pembaca. Selisih Rp1 juta di perusahaan triliunan tidak akan dikejar.</li>
+  <li><b>Sampling</b> — auditor memeriksa <b>contoh</b> transaksi, bukan semuanya. Memeriksa jutaan transaksi satu per satu tidak mungkin &amp; tidak ekonomis.</li>
+</ul>
+
+<h3>Empat jenis opini auditor</h3>
+<table class="tbl">
+  <tr><th>Opini</th><th>Artinya</th><th>Sikapmu</th></tr>
+  <tr><td><b>Wajar Tanpa Pengecualian</b></td><td>Bersih — laporan wajar dalam semua hal material</td><td class="ok-cell">Normal &amp; diharapkan</td></tr>
+  <tr><td><b>Wajar Dengan Pengecualian</b></td><td>Wajar, <b>kecuali</b> pada hal tertentu</td><td>Baca bagian pengecualiannya!</td></tr>
+  <tr><td><b>Tidak Wajar</b></td><td>Laporan <b>menyesatkan</b></td><td>Tanda bahaya besar</td></tr>
+  <tr><td><b>Tidak Menyatakan Pendapat</b></td><td>Auditor <b>tak bisa menyimpulkan</b> (bukti tak cukup / dibatasi)</td><td>Sangat mencurigakan</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Kebiasaan yang berharga:</b> saat membaca laporan tahunan, <b>cari halaman opini auditor</b> — biasanya di depan laporan keuangan. Kalau opininya <b>bukan</b> "wajar tanpa pengecualian", baca alasannya dengan teliti. Banyak investor melewatkan halaman ini padahal isinya krusial.
+</div>
+
+<h3>Audit internal vs eksternal</h3>
+<table class="tbl">
+  <tr><th></th><th>Audit Internal</th><th>Audit Eksternal</th></tr>
+  <tr><td>Siapa</td><td>Karyawan perusahaan sendiri</td><td>Kantor akuntan publik independen</td></tr>
+  <tr><td>Untuk siapa</td><td>Manajemen &amp; dewan komisaris</td><td>Investor, bank, publik</td></tr>
+  <tr><td>Fokus</td><td>Memperbaiki proses &amp; kontrol</td><td>Kewajaran laporan keuangan</td></tr>
+</table>
+
+<h3>Kenapa audit kadang gagal?</h3>
+<ul>
+  <li><b>Kolusi</b> — bila beberapa pihak bersekongkol memalsukan bukti, sampling sangat sulit menangkapnya.</li>
+  <li><b>Ketergantungan biaya</b> — auditor dibayar oleh perusahaan yang diauditnya (konflik kepentingan klasik — prinsip <i>ikuti alur uangnya</i> dibahas lagi di modul Investasi).</li>
+  <li><b>Keterbatasan waktu &amp; ruang lingkup</b>.</li>
+</ul>
+
+<div class="callout warn">
+<b>Pengingat:</b> materi ini <b>edukasi</b>. Untuk kebutuhan audit atau dugaan kecurangan yang nyata, libatkan akuntan/auditor berlisensi.
+</div>
+`,
+          keyPoints: [
+            "Audit ada karena laporan dibuat manajemen yang berkepentingan — dibutuhkan pihak independen.",
+            "Auditor memberi OPINI atas kewajaran laporan; tidak menjamin bebas kecurangan & tidak memeriksa semua transaksi.",
+            "Dua konsep kunci: materialitas (fokus salah saji besar) & sampling (memeriksa contoh).",
+            "Empat opini: wajar tanpa pengecualian, dengan pengecualian, tidak wajar, tidak menyatakan pendapat.",
+            "Biasakan mencari halaman opini auditor di laporan tahunan — bila bukan 'tanpa pengecualian', baca alasannya.",
+            "Audit bisa gagal karena kolusi, konflik kepentingan (auditor dibayar kliennya), & keterbatasan ruang lingkup.",
+          ],
+          practice: [
+            { type: "choice", q: "Auditor memberi opini 'Tidak Menyatakan Pendapat'. Apa artinya?", options: ["Laporan sangat baik", "Auditor tidak bisa menyimpulkan karena bukti tak cukup atau dibatasi — sangat mencurigakan", "Perusahaan bangkrut", "Audit belum selesai dijadwalkan"], answer: 1, hint: "Auditor tidak bisa memberi kesimpulan.", solution: "Disclaimer of opinion menandakan hambatan serius dalam audit — patut diwaspadai." },
+            { type: "choice", q: "Apakah opini 'wajar tanpa pengecualian' menjamin tidak ada kecurangan sama sekali?", options: ["Ya, dijamin bersih", "Tidak — audit memakai sampling & fokus pada salah saji material", "Ya, karena semua transaksi diperiksa", "Tidak ada hubungannya"], answer: 1, hint: "Ingat konsep materialitas & sampling.", solution: "Audit memberi keyakinan memadai atas kewajaran, bukan jaminan mutlak bebas fraud." },
+          ],
+          quiz: [
+            {
+              q: "Apa yang sebenarnya diberikan auditor eksternal?",
+              options: [
+                "Opini apakah laporan disajikan wajar dalam semua hal yang material",
+                "Jaminan bahwa perusahaan bebas dari seluruh kecurangan",
+                "Kepastian bahwa perusahaan akan tetap untung tahun depan",
+                "Rekomendasi apakah saham perusahaan layak dibeli",
+              ],
+              answer: 0,
+              explain:
+                "Auditor menyatakan opini atas kewajaran, bukan jaminan absolut.",
+            },
+            {
+              q: "Apa konflik kepentingan klasik dalam audit eksternal?",
+              options: [
+                "Auditor dibayar oleh perusahaan yang diauditnya sendiri",
+                "Auditor dilarang bertemu langsung dengan manajemen perusahaan",
+                "Auditor wajib memiliki saham perusahaan yang sedang diaudit",
+                "Auditor ditunjuk dan digaji langsung oleh regulator",
+              ],
+              answer: 0,
+              explain:
+                "Ketergantungan biaya pada klien dapat menekan independensi — ikuti alur uangnya.",
+            },
+          ],
+        },
+      ],
+    },
+    /* ---------------- MODUL 8: NILAI WAKTU UANG & DCF ---------------- */
+    {
+      id: "acc-matematika",
+      level: "Matematika",
+      title: "Nilai Waktu Uang & DCF",
+      summary: "Membaca simbol rumus keuangan, FV & PV, NPV & IRR, anuitas & perpetuitas — lalu memakai semuanya untuk menilai bisnis dengan DCF.",
+      lessons: [
+        {
+          id: "acc-mat-0",
+          title: "Membaca Simbol Matematika Keuangan",
+          duration: "13 menit",
+          content: `
+<p>Rumus keuangan penuh singkatan: PV, FV, r, n, CF, PMT. Kelihatannya rumit — padahal itu cuma <b>singkatan kata biasa</b>. Mari kita bongkar satu per satu.</p>
+
+<h3>1. Singkatan yang paling sering muncul</h3>
+<table class="tbl">
+  <tr><th>Simbol</th><th>Kepanjangan</th><th>Artinya dalam bahasa sehari-hari</th></tr>
+  <tr><td><b>PV</b></td><td>Present Value</td><td><b>Nilai sekarang</b> — berapa nilainya hari ini</td></tr>
+  <tr><td><b>FV</b></td><td>Future Value</td><td><b>Nilai nanti</b> — berapa nilainya di masa depan</td></tr>
+  <tr><td><b>r</b></td><td>rate</td><td><b>Tingkat bunga/return</b> per periode. Ditulis desimal: 10% = <b>0,10</b></td></tr>
+  <tr><td><b>n</b></td><td>number</td><td><b>Jumlah periode</b> (biasanya tahun)</td></tr>
+  <tr><td><b>CF</b></td><td>Cash Flow</td><td><b>Arus kas</b> — uang masuk/keluar</td></tr>
+  <tr><td><b>CFₜ</b></td><td>Cash Flow at t</td><td>Arus kas <b>pada tahun ke-t</b> (angka kecil = penunjuk waktu)</td></tr>
+  <tr><td><b>PMT</b></td><td>Payment</td><td><b>Cicilan/setoran tetap</b> tiap periode</td></tr>
+  <tr><td><b>g</b></td><td>growth</td><td><b>Tingkat pertumbuhan</b> per periode</td></tr>
+</table>
+
+<div class="callout">
+<b>Kunci utamanya:</b> huruf-huruf itu <b>bukan sihir</b> — cuma <b>singkatan</b> supaya rumus tidak kepanjangan. "PV" lebih ringkas daripada menulis "nilai sekarang" berulang kali.
+</div>
+
+<h3>2. Angka kecil di bawah: CFₜ, a₁, a₂</h3>
+<div class="callout">
+Angka atau huruf kecil di bawah (disebut <b>subskrip</b>) hanyalah <b>penunjuk urutan</b>.
+<ul>
+  <li><b>CF₁</b> = arus kas tahun <b>ke-1</b></li>
+  <li><b>CF₂</b> = arus kas tahun <b>ke-2</b></li>
+  <li><b>CFₜ</b> = arus kas tahun <b>ke-t</b> (t = tahun keberapa pun)</li>
+</ul>
+Jadi kalau melihat CFₜ, bacalah: <i>"arus kas pada tahun ke-berapa pun yang sedang kita bicarakan"</i>.
+</div>
+
+<h3>3. Pangkat: (1+r)ⁿ</h3>
+<div class="callout">
+<b>(1+r)ⁿ</b> artinya "(1+r) dikalikan dirinya sendiri sebanyak n kali". Inilah <b>rumus bunga majemuk</b>.
+<br><br>Contoh dengan r = 10% (0,10) selama 3 tahun:<br>
+(1 + 0,10)³ = 1,1 × 1,1 × 1,1 = <b>1,331</b><br>
+Artinya uangmu menjadi <b>1,331 kali lipat</b> setelah 3 tahun.
+</div>
+
+<h3>Coba sendiri — lihat arti tiap simbol 👇</h3>
+<div data-demo="js-playground">// Membongkar rumus FV = PV x (1 + r)^n
+const PV = 1000000;  // Present Value  = nilai SEKARANG (Rp1 juta)
+const r  = 0.10;     // rate           = bunga 10% per tahun (ditulis 0,10)
+const n  = 3;        // number         = jumlah tahun
+
+const faktor = Math.pow(1 + r, n);   // (1 + r) pangkat n
+const FV = PV * faktor;              // Future Value = nilai NANTI
+
+console.log("PV (nilai sekarang) = Rp" + PV.toLocaleString("id-ID"));
+console.log("r  (bunga)          = " + (r * 100) + "% per tahun");
+console.log("n  (jumlah tahun)   = " + n);
+console.log("-----");
+console.log("Faktor (1+r)^n      = " + faktor.toFixed(3));
+console.log("FV (nilai nanti)    = Rp" + Math.round(FV).toLocaleString("id-ID"));
+console.log("-----");
+console.log("Rumusnya cuma berkata: uang sekarang dikali faktor pertumbuhan.");</div>
+
+<h3>4. Simbol umum lainnya</h3>
+<table class="tbl">
+  <tr><th>Simbol</th><th>Artinya</th></tr>
+  <tr><td><b>Σ</b></td><td>"Jumlahkan semuanya" (sigma). Σ CFₜ = jumlahkan seluruh arus kas</td></tr>
+  <tr><td><b>÷</b> atau <b>/</b></td><td>Bagi</td></tr>
+  <tr><td><b>%</b></td><td>Per seratus. 25% = 25/100 = 0,25</td></tr>
+  <tr><td><b>≈</b></td><td>Kira-kira (tidak persis)</td></tr>
+  <tr><td><b>Δ</b></td><td>Perubahan/selisih (delta)</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Jebakan paling umum:</b> lupa mengubah persen jadi desimal. Dalam rumus, <b>10% harus ditulis 0,10</b> — bukan 10. Kalau hasilnya terasa aneh (kelewat besar), biasanya ini penyebabnya.
+</div>
+
+<h3>5. Membaca rumus panjang</h3>
+<div class="callout">
+<b>PV = CFₜ ÷ (1+r)ᵗ</b><br>
+→ <i>"Nilai sekarang = arus kas tahun ke-t, dibagi faktor pertumbuhan selama t tahun"</i><br>
+→ Sederhananya: <b>"uang masa depan dikecilkan agar setara nilainya hari ini"</b>.
+<br><br>Selalu terjemahkan simbol ke kata dulu — rumusnya akan terasa masuk akal.
+</div>
+`,
+          keyPoints: [
+            "PV = nilai sekarang, FV = nilai nanti, r = tingkat bunga (desimal), n = jumlah periode.",
+            "CF = arus kas; subskrip (CFₜ) hanyalah penunjuk 'tahun ke-berapa'.",
+            "(1+r)ⁿ = faktor bunga majemuk: (1+r) dikali dirinya n kali.",
+            "Persen wajib diubah jadi desimal dalam rumus: 10% ditulis 0,10 — kesalahan paling umum.",
+            "Σ berarti jumlahkan semuanya; terjemahkan tiap simbol jadi kata sebelum membaca rumus.",
+          ],
+          practice: [
+            { type: "number", q: "Bunga 8% harus ditulis sebagai berapa dalam rumus? (bentuk desimal)", answer: 0.08, tol: 0.005, hint: "Bagi dengan 100.", solution: "8 ÷ 100 = 0,08." },
+            { type: "number", q: "Berapa nilai (1 + 0,10)³? (3 desimal)", answer: 1.331, tol: 0.005, hint: "1,1 × 1,1 × 1,1.", solution: "1,1³ = 1,331." },
+          ],
+          quiz: [
+            {
+              q: "Apa arti 'PV' dan 'FV'?",
+              options: [
+                "Present Value (nilai sekarang) & Future Value (nilai nanti)",
+                "Profit Value (nilai laba) & Fixed Value (nilai tetap)",
+                "Price Value (nilai harga) & Face Value (nilai nominal)",
+                "Past Value (nilai lalu) & Final Value (nilai akhir)",
+              ],
+              answer: 0,
+              explain: "PV = nilai hari ini, FV = nilai di masa depan.",
+            },
+            {
+              q: "Bunga 12% ditulis bagaimana di dalam rumus?",
+              options: ["12", "0,12", "1,2", "120"],
+              answer: 1,
+              explain: "Persen harus diubah ke desimal: 12 ÷ 100 = 0,12.",
+            },
+            {
+              q: "Apa arti subskrip pada CFₜ?",
+              options: [
+                "Penunjuk waktu: arus kas pada tahun ke-t",
+                "Pangkat: arus kas dipangkatkan dengan t",
+                "Pengali: arus kas dikali tarif pajak t",
+                "Satuan: arus kas dalam ribuan rupiah",
+              ],
+              answer: 0,
+              explain: "Angka/huruf kecil di bawah adalah penunjuk urutan periode.",
+            },
+          ],
+        },
+        {
+          id: "acc-mat-2",
+          title: "Nilai Waktu Uang: FV & PV",
+          duration: "13 menit",
+          content: `
+<p>Ini rumus paling fundamental dalam keuangan — dasar dari DCF, kredit, tabungan, dan hampir semua keputusan investasi.</p>
+
+<div data-diagram="timeline" data-events="Sekarang::Rp100 juta|1 tahun::setara Rp110 jt|2 tahun::setara Rp121 jt|3 tahun::setara Rp133 jt" data-caption="Uang hari ini lebih berharga daripada nominal sama di masa depan (asumsi bunga 10%/tahun)"></div>
+
+
+<h3>Fundamental: uang punya "harga waktu"</h3>
+<div class="callout">
+Rp100 hari ini <b>lebih berharga</b> daripada Rp100 tahun depan, karena uang hari ini bisa <b>bekerja</b> (ditabung/diinvestasikan) dan bertumbuh. Karena itu setiap perbandingan uang antarwaktu harus disesuaikan.
+</div>
+
+<h3>Dua rumus kembar</h3>
+<table class="tbl">
+  <tr><th>Arah</th><th>Rumus</th><th>Menjawab</th></tr>
+  <tr><td><b>Future Value</b> (ke depan)</td><td>FV = PV × (1 + r)<sup>n</sup></td><td>"Uangku sekarang jadi berapa nanti?"</td></tr>
+  <tr><td><b>Present Value</b> (ke belakang)</td><td>PV = FV ÷ (1 + r)<sup>n</sup></td><td>"Uang nanti setara berapa sekarang?"</td></tr>
+</table>
+<p>Keterangan: <b>r</b> = tingkat bunga/diskon per periode, <b>n</b> = jumlah periode.</p>
+
+<h3>Contoh dua arah</h3>
+<pre class="code">FV: Rp10 juta, bunga 10%, 3 tahun
+    FV = 10.000.000 × (1,1)³ = 10.000.000 × 1,331 = Rp13.310.000
+
+PV: Rp13.310.000 tiga tahun lagi, diskon 10%
+    PV = 13.310.000 ÷ 1,331 = Rp10.000.000  (kembali ke asal)</pre>
+
+<h3>Bunga sederhana vs majemuk</h3>
+<table class="tbl">
+  <tr><th></th><th>Sederhana</th><th>Majemuk</th></tr>
+  <tr><td>Rumus</td><td>PV × (1 + r×n)</td><td>PV × (1 + r)<sup>n</sup></td></tr>
+  <tr><td>Bunga dihitung dari</td><td>Pokok saja</td><td>Pokok + bunga sebelumnya</td></tr>
+  <tr><td>Rp10jt, 10%, 10 thn</td><td>Rp20 juta</td><td><b>Rp25,9 juta</b></td></tr>
+</table>
+
+<div class="callout">
+<b>Aturan 72 (trik cepat):</b> untuk memperkirakan berapa lama uang menjadi <b>dua kali lipat</b>, bagi <b>72</b> dengan persen bunganya.<br>
+Bunga 9% → 72 ÷ 9 = <b>8 tahun</b>. Bunga 6% → 12 tahun.
+</div>
+
+<div class="callout warn">
+<b>Sisi gelapnya:</b> rumus yang sama bekerja pada <b>utang</b>. Bunga pinjaman 24%/tahun berarti utangmu berlipat ganda dalam sekitar <b>3 tahun</b> (72 ÷ 24) bila tak dibayar. Bunga majemuk adalah teman terbaik penabung — dan musuh terberat pengutang.
+</div>
+`,
+          keyPoints: [
+            "FV = PV × (1 + r)^n; PV = FV ÷ (1 + r)^n — dua arah dari konsep yang sama.",
+            "Bunga majemuk jauh melampaui bunga sederhana karena bunga ikut berbunga.",
+            "Aturan 72: waktu berlipat ganda ≈ 72 ÷ persen bunga.",
+            "Rumus yang sama berlaku untuk utang — bunga tinggi melipatgandakan utang dengan cepat.",
+          ],
+          practice: [
+            { type: "number", q: "Rp10.000.000 dibungakan 10% selama 3 tahun (majemuk). Berapa nilainya nanti? (Rupiah)", answer: 13310000, tol: 10000, hint: "FV = 10.000.000 × (1,1)³.", solution: "10.000.000 × 1,331 = Rp13.310.000." },
+            { type: "number", q: "Dengan aturan 72, berapa tahun uang berlipat ganda pada bunga 9%?", answer: 8, tol: 0.3, unit: "tahun", hint: "72 ÷ 9.", solution: "72 ÷ 9 = 8 tahun." },
+          ],
+          quiz: [
+            {
+              q: "Rumus Present Value (nilai sekarang)?",
+              options: [
+                "PV = FV × (1 + r)^n",
+                "PV = FV ÷ (1 + r)^n",
+                "PV = FV − r",
+                "PV = FV × n",
+              ],
+              answer: 1,
+              explain: "Untuk membawa uang masa depan ke nilai kini, kita membaginya (mendiskon).",
+            },
+            {
+              q: "Kenapa bunga majemuk jauh melampaui bunga sederhana dalam jangka panjang?",
+              options: [
+                "Bunga ikut berbunga, karena dihitung dari pokok ditambah bunga sebelumnya",
+                "Bunga majemuk selalu memakai tarif lebih tinggi dari bunga sederhana",
+                "Bunga majemuk dibayarkan di muka sehingga bisa langsung diinvestasikan",
+                "Bunga majemuk tidak dikenai pajak sehingga hasil bersihnya lebih besar",
+              ],
+              answer: 0,
+              explain: "Efek majemuk membuat pertumbuhan makin cepat seiring waktu.",
+            },
+          ],
+        },
+        {
+          id: "acc-mat-3",
+          title: "NPV & IRR — Matematika Keputusan Investasi",
+          duration: "13 menit",
+          content: `
+<p>Bagaimana memutuskan sebuah proyek layak dijalankan? Ini rumus yang dipakai profesional keuangan.</p>
+
+<h3>NPV (Net Present Value)</h3>
+<div class="callout">
+<b>NPV</b> = jumlah dari semua arus kas masa depan yang sudah <b>didiskon</b>, dikurangi <b>investasi awal</b>.<br><br>
+<b>NPV = Σ [ CF<sub>t</sub> ÷ (1 + r)<sup>t</sup> ] − Investasi Awal</b><br><br>
+Keterangan: <b>CF<sub>t</sub></b> = arus kas pada tahun ke-t, <b>r</b> = tingkat diskon, <b>t</b> = tahun.
+</div>
+
+<table class="tbl">
+  <tr><th>Hasil</th><th>Artinya</th><th>Keputusan</th></tr>
+  <tr><td><b>NPV positif</b></td><td>Proyek menghasilkan lebih dari biaya modalnya</td><td class="ok-cell">Layak</td></tr>
+  <tr><td><b>NPV nol</b></td><td>Impas terhadap biaya modal</td><td>Netral</td></tr>
+  <tr><td><b>NPV negatif</b></td><td>Menghancurkan nilai</td><td>Tolak</td></tr>
+</table>
+
+<h3>Coba sendiri — hitung NPV 👇</h3>
+<div data-demo="js-playground">// NPV: apakah proyek ini layak?
+const investasiAwal = 100000000;   // Rp100 juta keluar sekarang
+const arusKas = [30000000, 40000000, 50000000, 30000000];  // tahun 1-4
+const diskon = 0.10;               // 10% per tahun
+
+let npv = 0 - investasiAwal;
+arusKas.forEach(function(cf, i){
+  const tahun = i + 1;
+  const nilaiKini = cf / Math.pow(1 + diskon, tahun);
+  npv = npv + nilaiKini;
+  console.log("Tahun " + tahun + ": Rp" + cf.toLocaleString("id-ID") + " -> nilai kini Rp" + Math.round(nilaiKini).toLocaleString("id-ID"));
+});
+
+console.log("-----");
+console.log("NPV = Rp" + Math.round(npv).toLocaleString("id-ID"));
+if (npv > 0) {
+  console.log("NPV POSITIF -> proyek menambah nilai.");
+} else {
+  console.log("NPV NEGATIF -> proyek menghancurkan nilai.");
+}
+console.log("Coba naikkan diskon jadi 0.25 lalu jalankan lagi.");</div>
+
+<h3>IRR (Internal Rate of Return)</h3>
+<div class="callout">
+<b>IRR</b> = tingkat diskon <b>r</b> yang membuat <b>NPV = 0</b>. Ia menjawab: <i>"proyek ini sebenarnya memberi imbal hasil berapa persen per tahun?"</i><br><br>
+Aturannya: <b>IRR lebih tinggi dari biaya modal → layak.</b>
+</div>
+<p>IRR tidak bisa dihitung langsung dengan satu rumus — biasanya dicari lewat <b>coba-coba</b> (atau otomatis oleh spreadsheet).</p>
+
+<div class="callout warn">
+<b>Kelemahan IRR:</b> bisa menyesatkan saat membandingkan proyek berukuran sangat berbeda. Proyek kecil ber-IRR 50% (untung Rp5 juta) kalah bermanfaat dibanding proyek besar ber-IRR 20% (untung Rp500 juta). <b>Untuk memilih, NPV lebih dapat diandalkan.</b>
+</div>
+`,
+          keyPoints: [
+            "NPV = Σ [CFt ÷ (1+r)^t] − investasi awal; NPV positif = layak.",
+            "IRR = tingkat diskon yang membuat NPV = 0; layak bila IRR di atas biaya modal.",
+            "IRR dicari lewat coba-coba, tidak dengan satu rumus langsung.",
+            "IRR bisa menyesatkan pada proyek berbeda ukuran — NPV lebih andal untuk memilih.",
+          ],
+          practice: [
+            { type: "number", q: "Arus kas Rp110 juta diterima 1 tahun lagi, diskon 10%. Berapa nilai kininya? (Rupiah)", answer: 100000000, tol: 100000, hint: "PV = 110.000.000 ÷ 1,1.", solution: "110.000.000 ÷ 1,1 = Rp100.000.000." },
+            { type: "choice", q: "Sebuah proyek punya NPV = −Rp20 juta. Keputusan yang tepat?", options: ["Jalankan, karena IRR pasti tinggi", "Tolak — proyek menghancurkan nilai", "Jalankan setengahnya", "Tunggu tanpa alasan"], answer: 1, hint: "Apa arti NPV negatif?", solution: "NPV negatif berarti hasilnya tak menutupi biaya modal → tolak." },
+          ],
+          quiz: [
+            {
+              q: "Apa arti NPV positif?",
+              options: [
+                "Proyek menghasilkan lebih dari biaya modalnya, sehingga layak dijalankan",
+                "Proyek pasti balik modal dalam waktu kurang dari satu tahun",
+                "Proyek menghasilkan laba akuntansi pada tahun pertamanya",
+                "Arus kas proyek tidak pernah bernilai negatif pada tahun mana pun",
+              ],
+              answer: 0,
+              explain: "NPV positif berarti nilai kini arus kas melebihi investasi awal.",
+            },
+            {
+              q: "Apa definisi IRR?",
+              options: [
+                "Tingkat diskon yang membuat NPV sama dengan nol",
+                "Tingkat bunga pinjaman yang dipakai membiayai proyek",
+                "Rata-rata imbal hasil tahunan tanpa memperhitungkan waktu",
+                "Tingkat inflasi yang diperkirakan selama umur proyek",
+              ],
+              answer: 0,
+              explain: "IRR adalah imbal hasil implisit sebuah proyek.",
+            },
+          ],
+        },
+        {
+          id: "acc-mat-4",
+          title: "Anuitas, Perpetuitas & Terminal Value",
+          duration: "13 menit",
+          content: `
+<p>Rumus penutup: cara menghitung nilai dari <b>arus kas berulang</b> — dipakai untuk cicilan, pensiun, obligasi, dan bagian terpenting DCF.</p>
+
+<h3>Anuitas — pembayaran tetap selama n periode</h3>
+<div class="callout">
+<b>PV Anuitas = PMT × [ 1 − (1 + r)<sup>−n</sup> ] ÷ r</b><br><br>
+Keterangan: <b>PMT</b> = pembayaran tiap periode, <b>r</b> = bunga per periode, <b>n</b> = jumlah periode.
+</div>
+<p><b>Kegunaan sehari-hari:</b> rumus inilah yang dipakai bank untuk menghitung <b>cicilan KPR</b> atau kredit kendaraan — dan yang bisa kamu pakai untuk mengecek apakah cicilan yang ditawarkan masuk akal.</p>
+
+<h3>Perpetuitas — pembayaran tetap SELAMANYA</h3>
+<div class="callout">
+<b>PV Perpetuitas = PMT ÷ r</b><br><br>
+Terlihat mengejutkan: arus kas <b>tak terbatas</b> ternyata punya nilai <b>terbatas</b>! Sebabnya, uang yang sangat jauh di masa depan didiskon sampai nilainya mendekati nol.
+</div>
+<pre class="code">Contoh: Rp10 juta per tahun selamanya, diskon 10%
+        PV = 10.000.000 ÷ 0,10 = Rp100.000.000</pre>
+
+<h3>Gordon Growth — perpetuitas yang bertumbuh</h3>
+<div class="callout">
+Kalau arus kasnya <b>tumbuh</b> sebesar <b>g</b> per tahun:<br><br>
+<b>PV = CF × (1 + g) ÷ (r − g)</b><br><br>
+Inilah rumus <b>Terminal Value</b> pada DCF — cara menghitung nilai bisnis <b>setelah</b> periode ramalan rinci berakhir.
+</div>
+
+<div class="callout warn">
+<b>Bahaya terbesar dalam valuasi:</b> perhatikan penyebut <b>(r − g)</b>. Kalau <b>g</b> mendekati <b>r</b>, penyebutnya mendekati nol dan nilainya <b>meledak jadi tak masuk akal</b>. Dan kalau g lebih besar dari r, rumusnya rusak total.
+<br><br><b>Aturan disiplin:</b> pertumbuhan abadi (<b>g</b>) tidak boleh melebihi pertumbuhan ekonomi jangka panjang — tak ada perusahaan yang bisa tumbuh lebih cepat dari dunia <b>selamanya</b>. Banyak valuasi terlalu optimistis lahir dari kesalahan di titik ini.
+</div>
+`,
+          keyPoints: [
+            "PV Anuitas = PMT × [1 − (1+r)^−n] ÷ r — dipakai menghitung cicilan KPR/kredit.",
+            "PV Perpetuitas = PMT ÷ r — arus kas tak terbatas punya nilai terbatas karena didiskon.",
+            "Gordon Growth: PV = CF × (1+g) ÷ (r−g) — dasar Terminal Value pada DCF.",
+            "Bahaya: bila g mendekati r, nilainya meledak; g tak boleh melebihi pertumbuhan ekonomi jangka panjang.",
+          ],
+          practice: [
+            { type: "number", q: "Arus kas Rp10 juta per tahun selamanya, diskon 10%. Berapa nilai sekarangnya? (Rupiah)", answer: 100000000, tol: 100000, hint: "PV = PMT ÷ r = 10.000.000 ÷ 0,10.", solution: "10.000.000 ÷ 0,1 = Rp100.000.000." },
+            { type: "number", q: "Arus kas Rp10 juta, tumbuh 5%/tahun, diskon 10%. Berapa nilainya? (rumus Gordon, Rupiah)", answer: 210000000, tol: 2000000, hint: "PV = CF × (1+g) ÷ (r−g) = 10jt × 1,05 ÷ 0,05.", solution: "10.500.000 ÷ 0,05 = Rp210.000.000." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa arus kas 'selamanya' bisa punya nilai terbatas?",
+              options: [
+                "Uang yang sangat jauh di masa depan didiskon hingga nilainya mendekati nol",
+                "Arus kas selamanya dibatasi hukum hingga maksimal lima puluh tahun",
+                "Arus kas selalu berhenti tumbuh setelah beberapa tahun pertama",
+                "Rumus keuangan tidak mampu menghitung jumlah yang tak terhingga",
+              ],
+              answer: 0,
+              explain: "Diskonto membuat kontribusi arus kas jauh menjadi sangat kecil.",
+            },
+            {
+              q: "Apa bahaya terbesar rumus Gordon Growth PV = CF(1+g) ÷ (r−g)?",
+              options: [
+                "Bila g mendekati r, penyebutnya mendekati nol & nilainya meledak",
+                "Bila g negatif, rumusnya tidak bisa dipakai sama sekali",
+                "Bila r terlalu besar, hasilnya selalu bernilai negatif",
+                "Bila CF kecil, hasilnya selalu lebih besar dari harga pasar",
+              ],
+              answer: 0,
+              explain:
+                "Asumsi pertumbuhan abadi yang terlalu tinggi menghasilkan valuasi menyesatkan.",
+            },
+          ],
+        },
+        {
+          id: "acc-deep-3",
+          title: "DCF — Menilai Bisnis dari Arus Kas Masa Depan",
+          duration: "12 menit",
+          content: `
+<p>Bagaimana menentukan "harga wajar" sebuah bisnis? Salah satu metode paling dihormati: <b>Discounted Cash Flow (DCF)</b>. Kita bangun dari nol.</p>
+
+<div data-diagram="flow" data-steps="Ramalan Arus Kas|Diskon ke Nilai Kini|Jumlahkan|Nilai Wajar" data-caption="Empat langkah DCF"></div>
+
+
+<h3>Fundamental 1: bisnis bernilai sebesar kas masa depannya</h3>
+<p>Sebuah bisnis pada dasarnya adalah <b>mesin penghasil kas</b>. Nilainya = semua uang yang akan ia hasilkan di masa depan. Masuk akal, kan?</p>
+
+<h3>Fundamental 2: uang sekarang lebih berharga dari uang nanti</h3>
+<div class="callout">
+<b>Nilai waktu uang:</b> Rp100 hari ini lebih berharga daripada Rp100 tahun depan — karena Rp100 hari ini bisa kamu tabung/investasikan dan bertumbuh. Jadi uang masa depan harus "<b>didiskon</b>" (dikurangi) untuk mendapat nilainya <b>hari ini</b>.
+</div>
+<p>Contoh: jika bunga 10%, Rp110 tahun depan setara dengan <b>Rp100</b> hari ini (karena Rp100 × 1,1 = Rp110). Rp100 itu disebut <b>Present Value</b> (nilai sekarang).</p>
+
+<h3>Cara kerja DCF (intuisi)</h3>
+<ol>
+  <li>Perkirakan arus kas bisnis untuk beberapa tahun ke depan.</li>
+  <li><b>Diskon</b> tiap arus kas ke nilai sekarang (uang makin jauh, makin didiskon).</li>
+  <li>Jumlahkan semuanya → itulah <b>nilai wajar</b> bisnis menurut DCF.</li>
+</ol>
+
+<h3>"Arus kas" yang mana? Jawabannya: FCF</h3>
+<div class="callout">
+Selama ini kita menyebut "arus kas" secara umum. Sekarang kita sebut tepatnya: yang didiskon dalam DCF adalah <b>Free Cash Flow</b> — yang sudah kamu pelajari di pelajaran <b>Free Cash Flow</b>.<br><br>
+<b>Kenapa FCF, bukan laba bersih?</b> Karena laba bersih mengandung pos non-tunai (penyusutan) dan <b>belum</b> memperhitungkan uang yang harus dikeluarkan untuk menjaga aset (CapEx). Yang benar-benar bisa dinikmati pemilik adalah <b>kas yang tersisa setelah semua itu</b> — dan itulah FCF.
+</div>
+
+<div class="callout warn">
+<b>Inilah mengapa dua pelajaran itu saling mengunci:</b><br>
+• <b>FCF</b> menjawab: <i>berapa kas yang benar-benar dihasilkan bisnis tiap tahun?</i><br>
+• <b>DCF</b> menjawab: <i>berapa nilai seluruh FCF masa depan itu, dinyatakan dalam rupiah hari ini?</i><br><br>
+Tanpa FCF, DCF tidak punya bahan. Tanpa DCF, FCF hanya angka tahunan tanpa kesimpulan nilai.
+</div>
+
+<h3>Tiga bahan yang menentukan hasilnya</h3>
+<table class="tbl">
+  <tr><th>Bahan</th><th>Dari mana</th><th>Kalau meleset</th></tr>
+  <tr><td><b>FCF tahun-tahun ke depan</b></td><td>Ramalan pertumbuhan</td><td>Salah sedikit di awal, salah jauh di akhir</td></tr>
+  <tr><td><b>Tingkat diskon</b></td><td><b>Biaya modal (WACC)</b> — dipelajari di modul Kualitas Bisnis</td><td>Beda 1% bisa mengubah nilai puluhan persen</td></tr>
+  <tr><td><b>Terminal value</b></td><td>Nilai bisnis setelah periode ramalan</td><td>Sering menyumbang <b>lebih dari separuh</b> hasil akhir</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Hati-hati:</b> DCF hanya sebaik <b>asumsinya</b> ("sampah masuk, sampah keluar"). Ramalan arus kas & tingkat diskon yang meleset menghasilkan nilai yang salah. Ini alat, bukan ramalan pasti. Edukasi, bukan saran investasi.<br><br>
+<b>Cara memakainya yang jujur:</b> jangan mencari satu angka "nilai wajar". Hitung <b>tiga skenario</b> (buruk / dasar / baik), lalu lihat rentangnya. Kalau harga pasar berada jauh di bawah <b>skenario buruk</b> sekalipun, barulah itu temuan yang menarik.
+</div>
+`,
+          keyPoints: [
+            "DCF menilai bisnis sebagai total kas yang akan dihasilkannya di masa depan.",
+            "Nilai waktu uang: uang sekarang lebih berharga dari uang nanti; uang masa depan harus didiskon.",
+            "Langkah DCF: perkirakan arus kas masa depan → diskon ke nilai sekarang → jumlahkan.",
+            "DCF hanya sebaik asumsinya (ramalan & tingkat diskon); bukan ramalan pasti.",
+          ],
+          practice: [
+            { type: "number", q: "Jika bunga/tingkat diskon 10%, berapa nilai sekarang (present value) dari Rp110 yang diterima 1 tahun lagi? (Rupiah)", answer: 100, tol: 0.5, hint: "Nilai sekarang × 1,1 = 110.", solution: "110 ÷ 1,1 = Rp100." },
+          ],
+          quiz: [
+            {
+              q: "Apa prinsip 'nilai waktu uang'?",
+              options: [
+                "Uang hari ini lebih berharga daripada jumlah yang sama di masa depan",
+                "Uang di masa depan lebih berharga karena nilainya terus bertambah",
+                "Nilai uang selalu tetap selama jumlah nominalnya tidak berubah",
+                "Uang hanya punya nilai waktu bila disimpan di bank",
+              ],
+              answer: 0,
+              explain: "Uang hari ini bisa diinvestasikan & bertumbuh, jadi lebih berharga.",
+            },
+            {
+              q: "Apa dasar penilaian DCF?",
+              options: [
+                "Arus kas masa depan yang didiskon ke nilai sekarang lalu dijumlahkan",
+                "Harga saham rata-rata perusahaan sejenis dalam satu industri",
+                "Nilai buku seluruh aset dikurangi seluruh kewajiban perusahaan",
+                "Laba bersih tahun terakhir dikalikan rata-rata P/E industri",
+              ],
+              answer: 0,
+              explain: "DCF menjumlahkan arus kas masa depan yang telah didiskon menjadi nilai kini.",
+            },
+          ],
+        },
+      ],
+    },
+    /* ---------------- MODUL 9: VALUASI RELATIF & MULTIPLES ---------------- */
     {
       id: "acc-lanjutan",
       level: "Lanjutan",
-      title: "Valuasi & Rasio Lanjutan",
-      summary: "Nilai sebuah bisnis lebih dalam: PBV, PEG, EV/EBITDA, dan rasio likuiditas & efisiensi.",
+      title: "Valuasi Relatif & Multiples",
+      summary: "Menilai harga lewat perbandingan: PBV & nilai buku, PER & PEG, EV/EBITDA, dan jebakan valuasi relatif.",
       lessons: [
         {
           id: "acc-adv-1",
@@ -2240,1023 +3274,14 @@ if (targetPE > rataPE) {
             },
           ],
         },
-        {
-          id: "acc-adv-4",
-          title: "Rasio Likuiditas & Efisiensi",
-          duration: "12 menit",
-          content: `
-<p>Selain valuasi, kesehatan operasional dinilai lewat rasio <b>likuiditas</b> (kemampuan bayar jangka pendek) dan <b>efisiensi</b> (seberapa cepat aset berputar jadi uang).</p>
-
-<div data-diagram="layers" data-items="Rasio Kas — paling ketat|Quick Ratio — tanpa persediaan|Current Ratio — semua aset lancar" data-caption="Tiga tingkat ketatnya mengukur kemampuan bayar jangka pendek"></div>
-
-
-<h3>Likuiditas</h3>
-<table class="tbl">
-  <tr><th>Rasio</th><th>Rumus</th><th>Arti</th></tr>
-  <tr><td><b>Current Ratio</b></td><td>Aset Lancar ÷ Kewajiban Lancar</td><td>Sanggup bayar utang jangka pendek?</td></tr>
-  <tr><td><b>Quick Ratio</b> (acid test)</td><td>(Aset Lancar − Persediaan) ÷ Kewajiban Lancar</td><td>Versi lebih ketat (persediaan sulit cepat jadi uang)</td></tr>
-</table>
-
-<h3>Efisiensi (perputaran)</h3>
-<ul>
-  <li><b>Inventory Turnover</b> = HPP ÷ rata-rata persediaan → seberapa cepat stok terjual. Rendah = stok menumpuk.</li>
-  <li><b>Receivables Turnover</b> → seberapa cepat piutang tertagih. Rendah = uang tersangkut di pelanggan.</li>
-  <li><b>Cash Conversion Cycle</b> → berapa lama uang "terkunci" dari beli bahan sampai kembali jadi kas.</li>
-</ul>
-
-<h3>💥 Dampak</h3>
-<ul>
-  <li>Likuiditas rendah (current ratio &lt; 1) → risiko gagal bayar meski untung.</li>
-  <li>Perputaran lambat → kas terjebak di stok/piutang → butuh modal kerja lebih besar.</li>
-</ul>
-
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu kini menguasai valuasi lanjutan (PBV, PEG, EV/EBITDA) dan rasio operasional. Digabung dengan modul metrik sebelumnya, kamu bisa menilai kesehatan & harga wajar sebuah bisnis dari banyak sudut.
-</div>
-`,
-          keyPoints: [
-            "Current Ratio = Aset Lancar ÷ Kewajiban Lancar; Quick Ratio mengecualikan persediaan (lebih ketat).",
-            "Inventory & receivables turnover mengukur seberapa cepat stok terjual & piutang tertagih.",
-            "Dampak: likuiditas rendah = risiko gagal bayar; perputaran lambat = kas terjebak & butuh modal kerja besar.",
-          ],
-          practice: [
-            { type: "number", q: "Aset lancar Rp120jt, persediaan Rp40jt, kewajiban lancar Rp50jt. Berapa quick ratio-nya? (desimal, mis. 1.6)", answer: 1.6, tol: 0.05, hint: "Quick Ratio = (Aset Lancar − Persediaan) ÷ Kewajiban Lancar.", solution: "(120 − 40) ÷ 50 = 1,6." },
-            { type: "number", q: "HPP setahun Rp240jt, rata-rata persediaan Rp40jt. Berapa inventory turnover-nya? (kali per tahun)", answer: 6, tol: 0.1, hint: "Inventory Turnover = HPP ÷ rata-rata persediaan.", solution: "240 ÷ 40 = 6 kali per tahun." },
-          ],
-          quiz: [
-            {
-              q: "Apa beda Quick Ratio dari Current Ratio?",
-              options: [
-                "Quick Ratio mengecualikan persediaan, sehingga lebih ketat",
-                "Quick Ratio hanya menghitung kas, tanpa piutang sama sekali",
-                "Quick Ratio memasukkan utang jangka panjang ke dalam hitungan",
-                "Quick Ratio dihitung bulanan, sedangkan Current Ratio tahunan",
-              ],
-              answer: 0,
-              explain:
-                "Quick ratio mengeluarkan persediaan yang sulit cepat dicairkan.",
-            },
-            {
-              q: "Dampak perputaran persediaan yang lambat?",
-              options: [
-                "Kas terjebak di stok, sehingga butuh modal kerja lebih besar",
-                "Harga pokok penjualan turun sehingga laba otomatis naik",
-                "Perusahaan mendapat potongan pajak atas persediaan tersimpan",
-                "Piutang pelanggan tertagih lebih cepat dari biasanya",
-              ],
-              answer: 0,
-              explain:
-                "Stok yang lambat terjual mengunci kas dan menekan likuiditas.",
-            },
-          ],
-        },
       ],
     },
-
-    /* ---------------- LEVEL TERAPAN (BIAYA, PAJAK & OPERASI) ---------------- */
-    {
-      id: "acc-terapan",
-      level: "Terapan",
-      title: "Biaya, Pajak & Operasi Bisnis",
-      summary: "Praktik operasional: CapEx vs OpEx, struktur biaya & overhead, pajak (PPN/PPh), dan penggajian.",
-      lessons: [
-        {
-          id: "acc-op-1",
-          title: "CapEx vs OpEx",
-          duration: "11 menit",
-          content: `
-<p>Dua jenis pengeluaran yang harus dibedakan setiap pebisnis: <b>CapEx</b> dan <b>OpEx</b>. Keliru membedakannya bisa mengacaukan laporan & keputusan.</p>
-
-<div data-diagram="vs" data-left="CapEx::Aset jangka panjang::Jadi aset lalu disusutkan::Neraca" data-right="OpEx::Biaya harian::Langsung jadi beban::Laba Rugi" data-caption="CapEx vs OpEx"></div>
-
-
-<table class="tbl">
-  <tr><th></th><th>CapEx (Belanja Modal)</th><th>OpEx (Belanja Operasional)</th></tr>
-  <tr><td>Untuk apa</td><td>Membeli/memperbarui <b>aset jangka panjang</b> (mesin, gedung, kendaraan)</td><td>Biaya <b>menjalankan bisnis sehari-hari</b> (gaji, sewa, listrik, bahan)</td></tr>
-  <tr><td>Manfaat</td><td>Jangka panjang (bertahun-tahun)</td><td>Habis pada periode itu</td></tr>
-  <tr><td>Pencatatan</td><td>Jadi <b>aset</b>, lalu <b>disusutkan</b> bertahap</td><td>Langsung jadi <b>beban</b> di laba rugi</td></tr>
-  <tr><td>Muncul di</td><td>Neraca + Arus Kas Investasi</td><td>Laporan Laba Rugi</td></tr>
-</table>
-
-<h3>💥 Dampak & keputusan</h3>
-<ul>
-  <li><b>CapEx besar</b> menekan kas <b>sekarang</b> tapi membangun kapasitas masa depan → dampaknya tersebar lewat penyusutan bertahun-tahun.</li>
-  <li><b>OpEx tinggi</b> menekan laba <b>tiap periode</b> secara langsung.</li>
-  <li>Keputusan klasik: <b>beli (CapEx)</b> vs <b>sewa/langganan (OpEx)</b>? Sewa menjaga kas & fleksibel; beli lebih murah jangka panjang jika dipakai lama.</li>
-</ul>
-
-<div class="callout">
-<b>Ingat rumus FCF:</b> Free Cash Flow = Arus Kas Operasi − <b>CapEx</b>. CapEx yang besar langsung memangkas kas bebas perusahaan.
-</div>
-`,
-          keyPoints: [
-            "CapEx = belanja aset jangka panjang (dicatat sebagai aset & disusutkan); OpEx = biaya operasi harian (langsung jadi beban).",
-            "CapEx muncul di neraca & arus kas investasi; OpEx di laporan laba rugi.",
-            "Keputusan beli (CapEx) vs sewa (OpEx) memengaruhi kas & fleksibilitas.",
-            "CapEx besar langsung memangkas Free Cash Flow.",
-          ],
-          practice: [
-            { type: "choice", q: "Membeli mesin produksi seharga Rp200jt untuk dipakai 8 tahun termasuk?", options: ["OpEx (beban operasional)", "CapEx (belanja modal)"], answer: 1, hint: "Aset jangka panjang atau biaya harian?", solution: "Aset jangka panjang yang disusutkan = CapEx." },
-            { type: "choice", q: "Membayar tagihan listrik & gaji bulanan termasuk?", options: ["CapEx (belanja modal)", "OpEx (belanja operasional)"], answer: 1, hint: "Habis pada periode itu?", solution: "Biaya menjalankan bisnis sehari-hari = OpEx." },
-          ],
-          quiz: [
-            {
-              q: "Perbedaan utama CapEx dan OpEx?",
-              options: [
-                "CapEx untuk aset jangka panjang yang disusutkan; OpEx biaya operasi harian",
-                "CapEx dibayar tunai; OpEx selalu dibayar dengan cara mencicil",
-                "CapEx untuk perusahaan besar; OpEx untuk usaha kecil dan menengah",
-                "CapEx dicatat sebagai beban; OpEx dicatat sebagai aset di neraca",
-              ],
-              answer: 0,
-              explain:
-                "CapEx = investasi aset jangka panjang; OpEx = biaya operasi yang habis pakai.",
-            },
-            {
-              q: "Bagaimana CapEx memengaruhi Free Cash Flow?",
-              options: [
-                "Mengurangi FCF, karena FCF = Arus Kas Operasi − CapEx",
-                "Menambah FCF, karena aset baru meningkatkan nilai perusahaan",
-                "Tidak berpengaruh, karena CapEx hanya tercatat di neraca",
-                "Menambah FCF pada tahun berikutnya secara otomatis",
-              ],
-              answer: 0,
-              explain: "CapEx dikurangkan langsung dari arus kas operasi untuk mendapat FCF.",
-            },
-          ],
-        },
-        {
-          id: "acc-op-2",
-          title: "Struktur Biaya: Langsung, Tidak Langsung & Overhead",
-          duration: "11 menit",
-          content: `
-<p>Memahami dari mana biaya berasal membantumu menetapkan harga yang tepat & tahu produk mana yang benar-benar untung.</p>
-
-<div data-diagram="stack" data-parts="Bahan baku (variabel):40|Gaji tetap:25|Sewa &amp; listrik:15|Pemasaran:12|Lain-lain:8" data-caption="Contoh struktur biaya sebuah usaha — perhatikan mana yang ikut naik saat penjualan naik"></div>
-
-
-<h3>Berdasarkan keterlacakan ke produk</h3>
-<ul>
-  <li><b>Biaya Langsung (Direct)</b> — bisa dilacak langsung ke satu produk: bahan baku, upah pekerja produksi.</li>
-  <li><b>Biaya Tidak Langsung / Overhead</b> — tidak bisa ditempel ke satu produk: listrik pabrik, gaji supervisor, sewa, penyusutan mesin.</li>
-</ul>
-
-<h3>Berdasarkan perilaku terhadap produksi (recap)</h3>
-<ul>
-  <li><b>Biaya Tetap</b> — tidak berubah ikut jumlah (sewa).</li>
-  <li><b>Biaya Variabel</b> — naik-turun ikut jumlah (bahan baku).</li>
-</ul>
-
-<div class="callout">
-<b>Overhead</b> sering "tersembunyi" tapi bisa besar. Kesalahan umum UMKM: menetapkan harga hanya dari biaya bahan (langsung) sambil <b>lupa membebankan overhead</b> → merasa untung padahal rugi.
-</div>
-
-<h3>💥 Dampak</h3>
-<ul>
-  <li><b>Penetapan harga</b>: harga harus menutup biaya langsung + porsi overhead + margin.</li>
-  <li><b>Profitabilitas produk</b>: setelah membagi overhead, mungkin ketahuan ada produk yang sebenarnya merugi.</li>
-  <li><b>Kontrol biaya</b>: overhead adalah target utama efisiensi.</li>
-</ul>
-
-<div data-demo="cost-structure"></div>
-`,
-          keyPoints: [
-            "Biaya langsung bisa dilacak ke produk (bahan, upah produksi); overhead/tidak langsung tidak (listrik, sewa, supervisor).",
-            "Biaya tetap tidak ikut produksi; biaya variabel ikut produksi.",
-            "Kesalahan umum: menetapkan harga tanpa membebankan overhead → merasa untung padahal rugi.",
-            "Dampak: struktur biaya menentukan harga tepat, profitabilitas produk, & target efisiensi.",
-          ],
-          quiz: [
-            {
-              q: "Listrik pabrik & gaji supervisor termasuk biaya?",
-              options: [
-                "Overhead (biaya tidak langsung)",
-                "Bahan baku langsung",
-                "Tenaga kerja langsung",
-                "Beban pemasaran",
-              ],
-              answer: 0,
-              explain:
-                "Tidak bisa dilacak ke satu produk tertentu = overhead / biaya tidak langsung.",
-            },
-            {
-              q: "Kesalahan umum penetapan harga pada UMKM?",
-              options: [
-                "Menghitung harga dari biaya bahan saja, lupa membebankan overhead",
-                "Menetapkan harga sedikit di atas pesaing agar terlihat berkualitas",
-                "Menaikkan harga bertahap mengikuti kenaikan biaya bahan baku",
-                "Menghitung harga dari seluruh biaya lalu menambahkan margin laba",
-              ],
-              answer: 0,
-              explain:
-                "Lupa overhead membuat harga terlalu rendah dan bisnis merugi diam-diam.",
-            },
-          ],
-        },
-        {
-          id: "acc-op-3",
-          title: "Pajak Bisnis (PPN & PPh)",
-          duration: "12 menit",
-          content: `
-<p>Pajak adalah kewajiban yang wajib dikelola dengan benar. Dua yang paling penting bagi bisnis di Indonesia: <b>PPN</b> dan <b>PPh</b>.</p>
-
-<div data-diagram="pipeline" data-stages="Pungut PPN::dari pembeli|Setor PPN::ke negara|Hitung laba::pendapatan − beban|Bayar PPh::atas laba" data-caption="PPN hanya numpang lewat; PPh diambil dari labamu sendiri"></div>
-
-
-<h3>PPN (Pajak Pertambahan Nilai)</h3>
-<ul>
-  <li>Pajak atas <b>konsumsi</b>, tarif umum <b>11%</b>, ditambahkan ke harga jual.</li>
-  <li>Bisnis (PKP) <b>memungut</b> PPN dari pelanggan lalu <b>menyetorkannya</b> ke negara — jadi bisnis hanya "penampung", PPN <b>bukan beban</b> bisnis itu sendiri.</li>
-</ul>
-
-<h3>PPh (Pajak Penghasilan)</h3>
-<ul>
-  <li>Pajak atas <b>penghasilan/laba</b>.</li>
-  <li><b>PPh Final UMKM</b> — untuk usaha kecil tertentu, sederhana: dihitung dari <b>omzet</b> (mis. 0,5%).</li>
-  <li><b>PPh Badan</b> — untuk perusahaan, dihitung dari <b>laba</b>.</li>
-  <li><b>PPh 21</b> — dipotong dari gaji karyawan.</li>
-</ul>
-
-<div class="callout warn">
-<b>💥 Dampak:</b> Salah kelola pajak → <b>denda, bunga, bahkan masalah hukum</b>. Pajak juga memengaruhi laba bersih & kas. Karena itu banyak bisnis melakukan <b>perencanaan pajak</b> (legal) dan pembukuan rapi agar patuh & efisien.
-</div>
-
-<div class="callout">
-<b>Catatan:</b> tarif & aturan pajak bisa berubah dan berbeda antarnegara. Untuk keputusan nyata, konsultasikan dengan konsultan/otoritas pajak. Materi ini edukasi.
-</div>
-`,
-          keyPoints: [
-            "PPN = pajak konsumsi (umumnya 11%) yang dipungut dari pelanggan & disetor ke negara — bisnis hanya penampung.",
-            "PPh = pajak penghasilan: PPh Final UMKM (dari omzet), PPh Badan (dari laba), PPh 21 (gaji karyawan).",
-            "Dampak: salah kelola pajak berisiko denda & masalah hukum; pajak memengaruhi laba bersih & kas.",
-            "Tarif & aturan bisa berubah/berbeda antarnegara — konsultasikan untuk keputusan nyata.",
-          ],
-          practice: [
-            { type: "number", q: "Harga barang (belum termasuk pajak) Rp1.000.000, PPN 11%. Berapa PPN-nya? (Rupiah)", answer: 110000, tol: 1, hint: "PPN = 11% × harga.", solution: "11% × 1.000.000 = Rp110.000." },
-            { type: "number", q: "Omzet UMKM sebulan Rp50.000.000, PPh Final 0,5%. Berapa PPh-nya? (Rupiah)", answer: 250000, tol: 1, hint: "PPh Final = 0,5% × omzet.", solution: "0,5% × 50.000.000 = Rp250.000." },
-          ],
-          quiz: [
-            {
-              q: "Mengapa PPN disebut bukan beban bagi bisnis?",
-              options: [
-                "Karena bisnis hanya memungutnya dari pelanggan lalu menyetorkannya ke negara",
-                "Karena PPN sudah termasuk dalam pajak penghasilan yang dibayar tahunan",
-                "Karena PPN hanya dikenakan pada perusahaan asing yang beroperasi di sini",
-                "Karena PPN dikembalikan penuh oleh negara di akhir tahun buku",
-              ],
-              answer: 0,
-              explain:
-                "PPN bersifat pass-through: dipungut dari konsumen, disetor ke negara.",
-            },
-            {
-              q: "PPh Final UMKM umumnya dihitung dari?",
-              options: ["Laba bersih", "Omzet (peredaran bruto)", "Aset", "Utang"],
-              answer: 1,
-              explain: "PPh Final UMKM dihitung sederhana dari omzet, bukan laba.",
-            },
-          ],
-        },
-        {
-          id: "acc-op-4",
-          title: "Penggajian & Biaya Karyawan",
-          duration: "11 menit",
-          content: `
-<p>Bagi banyak bisnis, <b>biaya karyawan adalah pengeluaran terbesar</b>. Dan biaya sesungguhnya <b>lebih dari sekadar gaji pokok</b>.</p>
-
-<div data-diagram="stack" data-parts="Gaji pokok:70|Tunjangan:15|BPJS &amp; jaminan:9|THR (dicicil bulanan):6" data-caption="Biaya karyawan bukan hanya gaji pokok — siapkan sekitar 1,3x dari angka yang dijanjikan"></div>
-
-
-<h3>Komponen biaya karyawan</h3>
-<ul>
-  <li><b>Gaji pokok</b> & <b>tunjangan</b> (transport, makan, jabatan).</li>
-  <li><b>Lembur</b> dan <b>THR</b> (Tunjangan Hari Raya — wajib di Indonesia).</li>
-  <li><b>BPJS</b> (Kesehatan & Ketenagakerjaan) — sebagian ditanggung <b>perusahaan</b>, sebagian karyawan.</li>
-  <li><b>PPh 21</b> — pajak penghasilan karyawan yang dipotong perusahaan.</li>
-</ul>
-
-<div class="callout">
-<b>Poin penting:</b> "biaya membawa" seorang karyawan bagi perusahaan <b>lebih tinggi</b> dari gaji yang ia terima, karena ada iuran BPJS bagian perusahaan, THR, dan tunjangan. Rencanakan berdasarkan <b>biaya total</b>, bukan gaji pokok saja.
-</div>
-
-<h3>💥 Dampak</h3>
-<ul>
-  <li>Salah menghitung biaya karyawan → <b>arus kas</b> kacau (mis. lupa menyiapkan THR).</li>
-  <li>Kepatuhan (BPJS, PPh 21, upah minimum) menghindari <b>masalah hukum ketenagakerjaan</b>.</li>
-  <li>Ukur <b>produktivitas per biaya karyawan</b> untuk menilai efisiensi tim.</li>
-</ul>
-
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu kini menguasai sisi operasional akuntansi: CapEx vs OpEx, struktur biaya & overhead, pajak (PPN/PPh), dan penggajian — bekal nyata mengelola keuangan bisnis sehari-hari.
-</div>
-`,
-          keyPoints: [
-            "Biaya karyawan mencakup gaji pokok, tunjangan, lembur, THR, BPJS (bagian perusahaan), & PPh 21.",
-            "Biaya total karyawan bagi perusahaan lebih tinggi dari gaji yang diterima — rencanakan dari biaya total.",
-            "Dampak: salah hitung mengacaukan arus kas (mis. THR); kepatuhan menghindari masalah hukum.",
-          ],
-          quiz: [
-            {
-              q: "Mengapa biaya total karyawan lebih tinggi dari gaji pokoknya?",
-              options: [
-                "Karena ada BPJS bagian perusahaan, THR, tunjangan, dan lainnya",
-                "Karena gaji pokok selalu dikenakan pajak tambahan oleh perusahaan",
-                "Karena karyawan wajib membayar sebagian biaya kantor setiap bulan",
-                "Karena gaji pokok dicatat dua kali dalam laporan laba rugi",
-              ],
-              answer: 0,
-              explain:
-                "Perusahaan menanggung iuran & komponen tambahan di luar gaji pokok.",
-            },
-            {
-              q: "Dampak lupa menyiapkan THR bagi bisnis?",
-              options: [
-                "Mengacaukan arus kas dan berisiko melanggar aturan ketenagakerjaan",
-                "Mengurangi pajak penghasilan perusahaan pada tahun berjalan",
-                "Menaikkan laba bersih karena bebannya tidak jadi dicatat",
-                "Tidak berdampak apa pun karena THR bersifat sukarela",
-              ],
-              answer: 0,
-              explain: "THR adalah kewajiban besar sekaligus; lupa merencanakannya menekan kas.",
-            },
-          ],
-        },
-      ],
-    },
-
-    /* ---------------- LEVEL PENDALAMAN (SIKLUS, PERSEDIAAN & VALUASI) ---------------- */
-    {
-      id: "acc-pendalaman",
-      level: "Pendalaman",
-      title: "Siklus Lengkap, Persediaan & DCF",
-      summary: "Menyatukan semuanya: contoh kasus transaksi → laporan, metode FIFO/LIFO/Average, dan valuasi DCF.",
-      lessons: [
-        {
-          id: "acc-deep-1",
-          title: "Siklus Akuntansi Lengkap (Contoh Kasus)",
-          duration: "13 menit",
-          content: `
-<p>Sekarang kita satukan semua yang sudah dipelajari dalam <b>satu contoh nyata</b> — dari transaksi mentah sampai laporan keuangan. Contoh: jasa desain <b>"Kreatif"</b> (angka dalam juta Rupiah).</p>
-
-<div data-diagram="cycle" data-steps="Transaksi|Jurnal|Buku besar|Neraca saldo|Laporan keuangan" data-center="tiap periode" data-caption="Siklus yang berulang setiap bulan, kuartal, dan tahun"></div>
-
-
-<h3>Langkah 1 — Transaksi</h3>
-<ol>
-  <li>Pemilik setor modal Rp50 tunai.</li>
-  <li>Beli komputer (peralatan) Rp20 tunai.</li>
-  <li>Selesaikan jasa, terima Rp15 tunai.</li>
-  <li>Bayar gaji Rp3 tunai.</li>
-</ol>
-
-<h3>Langkah 2 — Jurnal (Debit = Kredit)</h3>
-<table class="tbl">
-  <tr><th>Transaksi</th><th>Debit</th><th>Kredit</th></tr>
-  <tr><td>1</td><td>Kas 50</td><td>Modal 50</td></tr>
-  <tr><td>2</td><td>Peralatan 20</td><td>Kas 20</td></tr>
-  <tr><td>3</td><td>Kas 15</td><td>Pendapatan 15</td></tr>
-  <tr><td>4</td><td>Beban Gaji 3</td><td>Kas 3</td></tr>
-</table>
-
-<h3>Langkah 3 — Saldo buku besar</h3>
-<p>Kas = 50 − 20 + 15 − 3 = <b>42</b>; Peralatan = 20; Modal = 50; Pendapatan = 15; Beban Gaji = 3.</p>
-
-<h3>Langkah 4 — Neraca Saldo (cek seimbang)</h3>
-<p>Total Debit (Kas 42 + Peralatan 20 + Beban 3 = <b>65</b>) = Total Kredit (Modal 50 + Pendapatan 15 = <b>65</b>) ✓</p>
-
-<h3>Langkah 5 — Laporan Keuangan</h3>
-<table class="tbl">
-  <tr><th>Laba Rugi</th><th>Neraca</th></tr>
-  <tr><td>Pendapatan 15 − Beban 3 = <b>Laba Bersih 12</b></td><td>Aset (Kas 42 + Peralatan 20 = <b>62</b>) = Kewajiban 0 + Ekuitas (Modal 50 + Laba 12 = <b>62</b>) ✓</td></tr>
-</table>
-
-<div class="callout">
-<b>Perhatikan keajaibannya:</b> laba Rp12 dari laba rugi <b>otomatis masuk ke ekuitas</b> di neraca, dan neraca tetap <b>seimbang</b>. Inilah siklus akuntansi yang utuh — semua saling terhubung rapi.
-</div>
-`,
-          keyPoints: [
-            "Siklus: transaksi → jurnal (debit=kredit) → buku besar → neraca saldo → laporan keuangan.",
-            "Neraca saldo memastikan total debit = total kredit sebelum menyusun laporan.",
-            "Laba bersih dari laba rugi mengalir masuk ke ekuitas di neraca.",
-            "Neraca selalu seimbang: Aset = Kewajiban + Ekuitas.",
-          ],
-          practice: [
-            { type: "number", q: "Dari contoh, Kas = 50 − 20 + 15 − 3. Berapa saldo kas akhirnya? (juta)", answer: 42, unit: "jt", hint: "Hitung berurutan.", solution: "50 − 20 + 15 − 3 = Rp42jt." },
-            { type: "number", q: "Pendapatan 15, beban 3. Berapa laba bersihnya? (juta)", answer: 12, unit: "jt", hint: "Laba = Pendapatan − Beban.", solution: "15 − 3 = Rp12jt." },
-          ],
-          quiz: [
-            {
-              q: "Apa fungsi neraca saldo dalam siklus?",
-              options: [
-                "Memastikan total debit sama dengan total kredit sebelum menyusun laporan",
-                "Menghitung laba bersih perusahaan untuk satu periode buku",
-                "Mencatat transaksi secara berurutan menurut tanggal terjadinya",
-                "Menyajikan posisi keuangan kepada investor di akhir tahun",
-              ],
-              answer: 0,
-              explain: "Neraca saldo mengecek keseimbangan debit-kredit sebelum laporan dibuat.",
-            },
-            {
-              q: "Laba bersih dari laporan laba rugi akan...",
-              options: [
-                "Masuk menambah ekuitas di neraca",
-                "Masuk menambah kas di laporan arus kas",
-                "Masuk mengurangi kewajiban di neraca",
-                "Dihapus pada awal periode berikutnya",
-              ],
-              answer: 0,
-              explain: "Laba menambah ekuitas (laba ditahan), menjaga neraca tetap seimbang.",
-            },
-          ],
-        },
-        {
-          id: "acc-deep-2",
-          title: "Metode Persediaan: FIFO, LIFO & Average",
-          duration: "11 menit",
-          content: `
-<p>Bayangkan kamu membeli stok pada harga yang <b>berbeda-beda</b>. Saat menjual, harga beli yang mana yang dipakai untuk menghitung HPP? Di sinilah metode persediaan berperan.</p>
-
-<div data-diagram="vs" data-left="FIFO::Masuk duluan terjual duluan::Umum dipakai di Indonesia" data-right="LIFO::Masuk terakhir terjual duluan::Dilarang di PSAK/IFRS" data-caption="Metode penilaian persediaan"></div>
-
-
-<h3>Fundamental: masalahnya</h3>
-<p>Kamu beli 10 unit @Rp1.000, lalu 10 unit lagi @Rp1.200. Saat menjual 10 unit, apakah HPP-nya Rp1.000 atau Rp1.200 per unit? Ada tiga cara menjawab:</p>
-
-<table class="tbl">
-  <tr><th>Metode</th><th>Aturan</th><th>HPP 10 unit terjual</th></tr>
-  <tr><td><b>FIFO</b> (First In First Out)</td><td>Yang masuk duluan dijual duluan</td><td>10 × 1.000 = Rp10.000</td></tr>
-  <tr><td><b>LIFO</b> (Last In First Out)</td><td>Yang masuk terakhir dijual duluan</td><td>10 × 1.200 = Rp12.000</td></tr>
-  <tr><td><b>Average</b> (Rata-rata)</td><td>Pakai harga rata-rata</td><td>10 × 1.100 = Rp11.000</td></tr>
-</table>
-
-<h3>💥 Dampak</h3>
-<ul>
-  <li>Saat harga <b>naik</b>: FIFO → HPP lebih rendah → <b>laba tampak lebih besar</b> (dan pajak lebih besar). LIFO sebaliknya.</li>
-  <li>Pilihan metode memengaruhi laba, pajak, dan nilai persediaan di neraca.</li>
-</ul>
-
-<div class="callout warn">
-<b>Penting:</b> <b>LIFO TIDAK diperbolehkan</b> di standar internasional (IFRS) maupun Indonesia (PSAK). Di sini yang umum dipakai: <b>FIFO</b> dan <b>Average</b>. LIFO dijelaskan agar kamu memahami konsepnya.
-</div>
-`,
-          keyPoints: [
-            "Saat harga beli bervariasi, metode persediaan menentukan HPP: FIFO, LIFO, atau Average.",
-            "FIFO = masuk duluan terjual duluan; LIFO = masuk terakhir terjual duluan; Average = harga rata-rata.",
-            "Saat harga naik, FIFO membuat laba (& pajak) tampak lebih besar daripada LIFO.",
-            "LIFO tidak diperbolehkan di IFRS/PSAK; yang umum di Indonesia: FIFO & Average.",
-          ],
-          practice: [
-            { type: "number", q: "Beli 10 unit @Rp1.000 lalu 10 unit @Rp1.200. Jual 10 unit dengan FIFO. Berapa HPP-nya? (Rupiah)", answer: 10000, tol: 1, hint: "FIFO: yang masuk duluan (Rp1.000) terjual duluan.", solution: "10 × 1.000 = Rp10.000." },
-            { type: "number", q: "Dengan metode Average dari soal di atas (rata-rata Rp1.100/unit), berapa HPP 10 unit? (Rupiah)", answer: 11000, tol: 1, hint: "10 × harga rata-rata.", solution: "10 × 1.100 = Rp11.000." },
-          ],
-          quiz: [
-            {
-              q: "Apa arti FIFO?",
-              options: [
-                "Yang masuk terakhir dijual duluan",
-                "Yang masuk duluan dijual duluan",
-                "Harga rata-rata",
-                "Tidak menjual apa pun",
-              ],
-              answer: 1,
-              explain: "FIFO = First In First Out: stok lama terjual lebih dulu.",
-            },
-            {
-              q: "Metode persediaan mana yang TIDAK diperbolehkan di Indonesia (PSAK)?",
-              options: ["FIFO", "Average", "LIFO", "Semua dilarang"],
-              answer: 2,
-              explain: "LIFO tidak diperbolehkan di PSAK/IFRS.",
-            },
-          ],
-        },
-        {
-          id: "acc-deep-3",
-          title: "DCF — Menilai Bisnis dari Arus Kas Masa Depan",
-          duration: "12 menit",
-          content: `
-<p>Bagaimana menentukan "harga wajar" sebuah bisnis? Salah satu metode paling dihormati: <b>Discounted Cash Flow (DCF)</b>. Kita bangun dari nol.</p>
-
-<div data-diagram="flow" data-steps="Ramalan Arus Kas|Diskon ke Nilai Kini|Jumlahkan|Nilai Wajar" data-caption="Empat langkah DCF"></div>
-
-
-<h3>Fundamental 1: bisnis bernilai sebesar kas masa depannya</h3>
-<p>Sebuah bisnis pada dasarnya adalah <b>mesin penghasil kas</b>. Nilainya = semua uang yang akan ia hasilkan di masa depan. Masuk akal, kan?</p>
-
-<h3>Fundamental 2: uang sekarang lebih berharga dari uang nanti</h3>
-<div class="callout">
-<b>Nilai waktu uang:</b> Rp100 hari ini lebih berharga daripada Rp100 tahun depan — karena Rp100 hari ini bisa kamu tabung/investasikan dan bertumbuh. Jadi uang masa depan harus "<b>didiskon</b>" (dikurangi) untuk mendapat nilainya <b>hari ini</b>.
-</div>
-<p>Contoh: jika bunga 10%, Rp110 tahun depan setara dengan <b>Rp100</b> hari ini (karena Rp100 × 1,1 = Rp110). Rp100 itu disebut <b>Present Value</b> (nilai sekarang).</p>
-
-<h3>Cara kerja DCF (intuisi)</h3>
-<ol>
-  <li>Perkirakan arus kas bisnis untuk beberapa tahun ke depan.</li>
-  <li><b>Diskon</b> tiap arus kas ke nilai sekarang (uang makin jauh, makin didiskon).</li>
-  <li>Jumlahkan semuanya → itulah <b>nilai wajar</b> bisnis menurut DCF.</li>
-</ol>
-
-<h3>"Arus kas" yang mana? Jawabannya: FCF</h3>
-<div class="callout">
-Selama ini kita menyebut "arus kas" secara umum. Sekarang kita sebut tepatnya: yang didiskon dalam DCF adalah <b>Free Cash Flow</b> — yang sudah kamu pelajari di modul <b>Metrik Keuangan</b>.<br><br>
-<b>Kenapa FCF, bukan laba bersih?</b> Karena laba bersih mengandung pos non-tunai (penyusutan) dan <b>belum</b> memperhitungkan uang yang harus dikeluarkan untuk menjaga aset (CapEx). Yang benar-benar bisa dinikmati pemilik adalah <b>kas yang tersisa setelah semua itu</b> — dan itulah FCF.
-</div>
-
-<div class="callout warn">
-<b>Inilah mengapa dua pelajaran itu saling mengunci:</b><br>
-• <b>FCF</b> menjawab: <i>berapa kas yang benar-benar dihasilkan bisnis tiap tahun?</i><br>
-• <b>DCF</b> menjawab: <i>berapa nilai seluruh FCF masa depan itu, dinyatakan dalam rupiah hari ini?</i><br><br>
-Tanpa FCF, DCF tidak punya bahan. Tanpa DCF, FCF hanya angka tahunan tanpa kesimpulan nilai.
-</div>
-
-<h3>Tiga bahan yang menentukan hasilnya</h3>
-<table class="tbl">
-  <tr><th>Bahan</th><th>Dari mana</th><th>Kalau meleset</th></tr>
-  <tr><td><b>FCF tahun-tahun ke depan</b></td><td>Ramalan pertumbuhan</td><td>Salah sedikit di awal, salah jauh di akhir</td></tr>
-  <tr><td><b>Tingkat diskon</b></td><td><b>Biaya modal (WACC)</b> — dipelajari di modul Kualitas Bisnis</td><td>Beda 1% bisa mengubah nilai puluhan persen</td></tr>
-  <tr><td><b>Terminal value</b></td><td>Nilai bisnis setelah periode ramalan</td><td>Sering menyumbang <b>lebih dari separuh</b> hasil akhir</td></tr>
-</table>
-
-<div class="callout warn">
-<b>Hati-hati:</b> DCF hanya sebaik <b>asumsinya</b> ("sampah masuk, sampah keluar"). Ramalan arus kas & tingkat diskon yang meleset menghasilkan nilai yang salah. Ini alat, bukan ramalan pasti. Edukasi, bukan saran investasi.<br><br>
-<b>Cara memakainya yang jujur:</b> jangan mencari satu angka "nilai wajar". Hitung <b>tiga skenario</b> (buruk / dasar / baik), lalu lihat rentangnya. Kalau harga pasar berada jauh di bawah <b>skenario buruk</b> sekalipun, barulah itu temuan yang menarik.
-</div>
-
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu telah menuntaskan pendalaman akuntansi: siklus lengkap, metode persediaan, dan valuasi DCF. Digabung dengan seluruh modul, kamu kini bisa <b>mencatat, membaca, menilai, dan mengelola</b> bisnis dari fondasi sampai lanjutan.
-</div>
-`,
-          keyPoints: [
-            "DCF menilai bisnis sebagai total kas yang akan dihasilkannya di masa depan.",
-            "Nilai waktu uang: uang sekarang lebih berharga dari uang nanti; uang masa depan harus didiskon.",
-            "Langkah DCF: perkirakan arus kas masa depan → diskon ke nilai sekarang → jumlahkan.",
-            "DCF hanya sebaik asumsinya (ramalan & tingkat diskon); bukan ramalan pasti.",
-          ],
-          practice: [
-            { type: "number", q: "Jika bunga/tingkat diskon 10%, berapa nilai sekarang (present value) dari Rp110 yang diterima 1 tahun lagi? (Rupiah)", answer: 100, tol: 0.5, hint: "Nilai sekarang × 1,1 = 110.", solution: "110 ÷ 1,1 = Rp100." },
-          ],
-          quiz: [
-            {
-              q: "Apa prinsip 'nilai waktu uang'?",
-              options: [
-                "Uang hari ini lebih berharga daripada jumlah yang sama di masa depan",
-                "Uang di masa depan lebih berharga karena nilainya terus bertambah",
-                "Nilai uang selalu tetap selama jumlah nominalnya tidak berubah",
-                "Uang hanya punya nilai waktu bila disimpan di bank",
-              ],
-              answer: 0,
-              explain: "Uang hari ini bisa diinvestasikan & bertumbuh, jadi lebih berharga.",
-            },
-            {
-              q: "Apa dasar penilaian DCF?",
-              options: [
-                "Arus kas masa depan yang didiskon ke nilai sekarang lalu dijumlahkan",
-                "Harga saham rata-rata perusahaan sejenis dalam satu industri",
-                "Nilai buku seluruh aset dikurangi seluruh kewajiban perusahaan",
-                "Laba bersih tahun terakhir dikalikan rata-rata P/E industri",
-              ],
-              answer: 0,
-              explain: "DCF menjumlahkan arus kas masa depan yang telah didiskon menjadi nilai kini.",
-            },
-          ],
-        },
-      ],
-    },
-
-    /* ---------------- LEVEL PROSPEK (RISIKO & MASA DEPAN) ---------------- */
-    {
-      id: "acc-prospek",
-      level: "Prospek",
-      title: "Menilai Prospek & Risiko Masa Depan",
-      summary: "Alat terukur menilai masa depan: Z-Score (risiko bangkrut), F-Score, skenario & expected value, margin of safety.",
-      lessons: [
-        {
-          id: "acc-prosp-1",
-          title: "Berpikir dalam Kemungkinan, Bukan Kepastian",
-          duration: "10 menit",
-          content: `
-<p>Sebelum belajar rumusnya, ada satu hal yang <b>wajib</b> dipahami — dan ini justru pelajaran terpenting di modul ini.</p>
-
-<div data-diagram="bar" data-bars="Buruk (peluang 20%):-30|Dasar (peluang 60%):15|Baik (peluang 20%):60" data-unit="%" data-caption="Bukan satu ramalan tunggal, tapi rentang kemungkinan beserta peluangnya"></div>
-
-
-<div class="callout warn">
-<b>Tidak ada rumus yang bisa menghitung "berapa % saham ini akan naik".</b> Masa depan dipengaruhi hal-hal tak terhitung: kondisi ekonomi, teknologi baru, keputusan manusia, keberuntungan. Siapa pun yang mengklaim punya rumus pasti — <b>patut dicurigai</b>.
-</div>
-
-<h3>Lalu apa yang BISA dihitung?</h3>
-<p>Analis profesional tidak bertanya <i>"berapa persen harga akan naik?"</i>. Mereka bertanya:</p>
-<ul>
-  <li>Seberapa <b>sehat</b> perusahaan ini sekarang? (rasio)</li>
-  <li>Seberapa besar <b>risiko gagal</b>-nya? (Z-Score)</li>
-  <li>Seberapa <b>kuat fundamental</b>-nya & membaik atau memburuk? (F-Score)</li>
-  <li>Apa <b>rentang kemungkinan</b> hasilnya? (skenario)</li>
-  <li>Berapa <b>ruang aman</b> kalau perkiraanku meleset? (margin of safety)</li>
-</ul>
-
-<div class="callout">
-<b>Pergeseran cara pikir:</b> dari <i>"apa yang PASTI terjadi"</i> → menjadi <i>"apa saja yang MUNGKIN terjadi, seberapa besar peluangnya, dan apakah aku tetap aman kalau salah."</i> Inilah inti berpikir probabilistik.
-</div>
-
-<h3>Analogi ramalan cuaca</h3>
-<p>Ahli meteorologi tidak berkata "besok pasti hujan". Mereka berkata <b>"peluang hujan 70%"</b> — dan kamu tetap membawa payung. Mereka juga bisa salah. Beginilah cara menilai bisnis: bekerja dengan kemungkinan, dan <b>siapkan payung</b> (margin of safety).</p>
-
-<div class="callout warn">
-<b>Ingat:</b> seluruh modul ini adalah <b>alat analisis edukatif</b>, bukan saran investasi. Tiap model punya keterbatasan yang akan saya jelaskan jujur di tiap pelajaran.
-</div>
-`,
-          keyPoints: [
-            "Tidak ada rumus yang bisa menghitung probabilitas saham akan naik — masa depan mengandung ketidakpastian mendasar.",
-            "Yang bisa dihitung: kesehatan, risiko gagal, kekuatan fundamental, rentang kemungkinan, dan ruang aman.",
-            "Pergeseran pikir: dari 'apa yang pasti terjadi' ke 'apa yang mungkin terjadi & apakah aku aman kalau salah'.",
-            "Semua model punya keterbatasan; ini alat analisis, bukan ramalan.",
-          ],
-          quiz: [
-            {
-              q: "Manakah pernyataan yang benar tentang memprediksi masa depan saham?",
-              options: [
-                "Tak ada rumus pasti; yang bisa dinilai kesehatan, risiko & rentang kemungkinan",
-                "Z-Score dan DCF bisa memastikan harga saham tahun depan dengan sangat tepat",
-                "Pola harga saham masa lalu cukup untuk memastikan arah harganya ke depan",
-                "Saham dengan laba terbesar tahun ini pasti naik paling tinggi tahun depan",
-              ],
-              answer: 0,
-              explain:
-                "Masa depan tak bisa dipastikan; analisis fokus pada kesehatan, risiko, & kemungkinan.",
-            },
-            {
-              q: "Apa inti 'berpikir probabilistik' dalam menilai bisnis?",
-              options: [
-                "Menimbang berbagai kemungkinan dan menyiapkan ruang aman bila meleset",
-                "Memilih satu skenario paling mungkin lalu bertaruh penuh padanya",
-                "Menghindari keputusan sampai seluruh ketidakpastian benar-benar hilang",
-                "Mengikuti pendapat mayoritas analis agar peluang benarnya lebih besar",
-              ],
-              answer: 0,
-              explain:
-                "Berpikir dalam kemungkinan + margin of safety, bukan mengejar kepastian.",
-            },
-          ],
-        },
-        {
-          id: "acc-prosp-2",
-          title: "Altman Z-Score — Mengukur Risiko Kebangkrutan",
-          duration: "13 menit",
-          content: `
-<p>Ini model yang paling mendekati "menghitung probabilitas" secara sah. Dibuat <b>Edward Altman (1968)</b>, <b>Z-Score</b> memperkirakan seberapa besar risiko sebuah perusahaan <b>bangkrut</b> dalam ~2 tahun ke depan.</p>
-
-<div data-diagram="scale" data-zones="Rawan|Abu-abu|Aman" data-marks="1,81|2,99" data-caption="Zona Altman Z-Score"></div>
-
-
-<div class="callout">
-<b>Perhatikan baik-baik:</b> Z-Score memprediksi <b>risiko KEBANGKRUTAN</b>, <b>bukan</b> kenaikan harga saham. Perusahaan sehat (Z tinggi) belum tentu sahamnya naik — tapi perusahaan Z rendah memang <b>berisiko tinggi</b>.
-</div>
-
-<h3>Lima rasio yang dipakai</h3>
-<table class="tbl">
-  <tr><th>Kode</th><th>Rasio</th><th>Mengukur</th></tr>
-  <tr><td><b>X1</b></td><td>Modal Kerja ÷ Total Aset</td><td>Likuiditas (napas jangka pendek)</td></tr>
-  <tr><td><b>X2</b></td><td>Laba Ditahan ÷ Total Aset</td><td>Akumulasi laba selama ini</td></tr>
-  <tr><td><b>X3</b></td><td>EBIT ÷ Total Aset</td><td>Produktivitas aset menghasilkan laba</td></tr>
-  <tr><td><b>X4</b></td><td>Nilai Pasar Ekuitas ÷ Total Utang</td><td>Bantalan modal terhadap utang</td></tr>
-  <tr><td><b>X5</b></td><td>Penjualan ÷ Total Aset</td><td>Perputaran aset</td></tr>
-</table>
-
-<div class="callout">
-<b>Rumus:</b> Z = 1,2·X1 + 1,4·X2 + 3,3·X3 + 0,6·X4 + 1,0·X5
-</div>
-
-<h3>Membaca hasilnya</h3>
-<table class="tbl">
-  <tr><th>Nilai Z</th><th>Zona</th><th>Arti</th></tr>
-  <tr><td><b>di atas 2,99</b></td><td class="ok-cell">Aman</td><td>Risiko kebangkrutan rendah</td></tr>
-  <tr><td><b>1,81 – 2,99</b></td><td>Abu-abu</td><td>Perlu diwaspadai</td></tr>
-  <tr><td><b>di bawah 1,81</b></td><td>Rawan</td><td>Risiko kebangkrutan tinggi</td></tr>
-</table>
-
-<h3>Coba sendiri — hitung Z-Score 👇</h3>
-<div data-demo="js-playground">// Altman Z-Score (ubah angkanya & jalankan lagi)
-const X1 = 0.20;  // Modal Kerja / Total Aset
-const X2 = 0.15;  // Laba Ditahan / Total Aset
-const X3 = 0.12;  // EBIT / Total Aset
-const X4 = 1.50;  // Nilai Pasar Ekuitas / Total Utang
-const X5 = 1.10;  // Penjualan / Total Aset
-
-const Z = 1.2*X1 + 1.4*X2 + 3.3*X3 + 0.6*X4 + 1.0*X5;
-console.log("Z-Score = " + Z.toFixed(2));
-
-if (Z > 2.99) {
-  console.log("Zona AMAN - risiko kebangkrutan rendah");
-} else if (Z > 1.81) {
-  console.log("Zona ABU-ABU - perlu diwaspadai");
-} else {
-  console.log("Zona RAWAN - risiko kebangkrutan tinggi");
-}
-console.log("Catatan: ini indikator risiko, BUKAN ramalan harga saham.");</div>
-
-<div class="callout warn">
-<b>Keterbatasan (penting!):</b> rumus di atas dirancang untuk <b>perusahaan manufaktur yang sudah go public</b>. Ada varian lain untuk perusahaan tertutup & non-manufaktur. Model ini <b>tidak cocok</b> untuk bank/lembaga keuangan, startup yang belum untung, dan <b>tidak berlaku sama sekali</b> untuk proyek crypto.
-</div>
-`,
-          keyPoints: [
-            "Altman Z-Score (1968) memperkirakan risiko KEBANGKRUTAN dalam ~2 tahun, bukan kenaikan harga saham.",
-            "Z = 1,2·X1 + 1,4·X2 + 3,3·X3 + 0,6·X4 + 1,0·X5 (likuiditas, laba ditahan, EBIT, ekuitas/utang, perputaran).",
-            "Zona: di atas 2,99 aman; 1,81–2,99 abu-abu; di bawah 1,81 rawan.",
-            "Keterbatasan: untuk manufaktur publik; ada varian lain; tidak cocok untuk bank, startup, & crypto.",
-          ],
-          practice: [
-            { type: "number", q: "Modal kerja Rp40jt, total aset Rp200jt. Berapa nilai X1 (Modal Kerja ÷ Total Aset)? (desimal, mis. 0.2)", answer: 0.2, tol: 0.01, hint: "X1 = Modal Kerja ÷ Total Aset.", solution: "40 ÷ 200 = 0,2." },
-            { type: "number", q: "Jika X1=0.2, X2=0.1, X3=0.1, X4=1.0, X5=1.0 — berapa Z-Score-nya? (2 desimal)", answer: 2.31, tol: 0.05, hint: "Z = 1,2(0,2) + 1,4(0,1) + 3,3(0,1) + 0,6(1,0) + 1,0(1,0).", solution: "0,24 + 0,14 + 0,33 + 0,6 + 1,0 = 2,31 → zona abu-abu." },
-          ],
-          quiz: [
-            {
-              q: "Apa yang sebenarnya diprediksi Altman Z-Score?",
-              options: [
-                "Risiko perusahaan bangkrut dalam sekitar dua tahun ke depan",
-                "Arah pergerakan harga saham dalam beberapa bulan ke depan",
-                "Besarnya laba bersih perusahaan pada tahun buku berikutnya",
-                "Nilai wajar saham berdasarkan arus kas masa depannya",
-              ],
-              answer: 0,
-              explain:
-                "Z-Score adalah model risiko kebangkrutan (financial distress), bukan prediksi harga.",
-            },
-            {
-              q: "Z-Score = 1,5 berarti perusahaan berada di zona?",
-              options: [
-                "Rawan — risiko kebangkrutan tinggi",
-                "Abu-abu — perlu diwaspadai",
-                "Aman — risiko kebangkrutan rendah",
-                "Sangat aman — hampir mustahil bangkrut",
-              ],
-              answer: 0,
-              explain: "Di bawah 1,81 termasuk zona rawan.",
-            },
-          ],
-        },
-        {
-          id: "acc-prosp-3",
-          title: "Piotroski F-Score — Skor Kekuatan Fundamental",
-          duration: "12 menit",
-          content: `
-<p>Kalau Z-Score menilai <b>risiko gagal</b>, <b>Piotroski F-Score</b> menilai <b>kekuatan & arah perbaikan</b> fundamental sebuah perusahaan. Dibuat Joseph Piotroski (2000), bentuknya sangat sederhana: <b>checklist 9 poin</b>.</p>
-
-<div data-diagram="scale" data-zones="Lemah (0-3)|Menengah (4-7)|Kuat (8-9)" data-caption="Membaca Piotroski F-Score"></div>
-
-
-<div class="callout">
-<b>Caranya:</b> tiap kriteria yang <b>terpenuhi</b> = <b>1 poin</b>, tidak terpenuhi = 0. Total maksimal <b>9</b>.
-</div>
-
-<h3>A. Profitabilitas (4 poin)</h3>
-<ol>
-  <li>Laba bersih <b>positif</b></li>
-  <li>Arus kas operasi <b>positif</b></li>
-  <li>ROA <b>meningkat</b> dibanding tahun lalu</li>
-  <li>Arus kas operasi <b>lebih besar</b> dari laba bersih (kualitas laba baik — labanya didukung kas nyata)</li>
-</ol>
-
-<h3>B. Utang & Likuiditas (3 poin)</h3>
-<ol start="5">
-  <li>Utang jangka panjang <b>menurun</b></li>
-  <li>Current ratio <b>meningkat</b></li>
-  <li><b>Tidak</b> menerbitkan saham baru (kepemilikanmu tidak terdilusi)</li>
-</ol>
-
-<h3>C. Efisiensi Operasi (2 poin)</h3>
-<ol start="8">
-  <li>Gross margin <b>meningkat</b></li>
-  <li>Perputaran aset <b>meningkat</b></li>
-</ol>
-
-<h3>Membaca skornya</h3>
-<table class="tbl">
-  <tr><th>Skor</th><th>Arti</th></tr>
-  <tr><td><b>8 – 9</b></td><td class="ok-cell">Fundamental kuat & membaik</td></tr>
-  <tr><td><b>4 – 7</b></td><td>Menengah</td></tr>
-  <tr><td><b>0 – 3</b></td><td>Fundamental lemah</td></tr>
-</table>
-
-<div class="callout">
-<b>Kenapa cerdas?</b> F-Score tidak hanya melihat kondisi <b>sekarang</b>, tapi <b>arah perubahannya</b> (membaik atau memburuk). Perusahaan biasa yang terus membaik sering lebih menarik daripada perusahaan bagus yang menurun.
-</div>
-
-<div class="callout warn">
-<b>Keterbatasan:</b> F-Score menilai <b>masa lalu & tren terakhir</b>, bukan masa depan. Ia juga mengabaikan harga saham (perusahaan kuat bisa saja terlalu mahal) dan kualitas bisnis (merek, keunggulan bersaing).
-</div>
-`,
-          keyPoints: [
-            "Piotroski F-Score = checklist 9 poin kekuatan fundamental (profitabilitas 4, utang/likuiditas 3, efisiensi 2).",
-            "Tiap kriteria terpenuhi = 1 poin; skor 8–9 kuat, 0–3 lemah.",
-            "Keunggulan: menilai arah perubahan (membaik/memburuk), bukan hanya kondisi saat ini.",
-            "Keterbatasan: berbasis data masa lalu, mengabaikan harga & kualitas bisnis.",
-          ],
-          practice: [
-            { type: "number", q: "Sebuah perusahaan: laba bersih positif ✓, arus kas operasi positif ✓, ROA meningkat ✓, tapi arus kas operasi LEBIH KECIL dari laba bersih ✗. Berapa poin dari kelompok Profitabilitas (maks 4)?", answer: 3, unit: "poin", hint: "Hitung centang saja dari 4 kriteria profitabilitas.", solution: "3 kriteria terpenuhi = 3 poin." },
-            { type: "choice", q: "Total F-Score sebuah perusahaan = 9. Termasuk kategori apa?", options: ["Fundamental lemah", "Menengah", "Fundamental kuat & membaik"], answer: 2, hint: "Skor 8–9 masuk kategori apa?", solution: "Skor 8–9 = fundamental kuat & membaik." },
-          ],
-          quiz: [
-            {
-              q: "Berapa poin maksimal Piotroski F-Score?",
-              options: ["5", "9", "10", "100"],
-              answer: 1,
-              explain: "F-Score terdiri dari 9 kriteria, masing-masing bernilai 1 poin.",
-            },
-            {
-              q: "Kenapa kriteria 'arus kas operasi lebih besar dari laba bersih' itu penting?",
-              options: [
-                "Menandakan laba didukung kas nyata, bukan sekadar angka catatan",
-                "Menandakan perusahaan membayar pajak lebih kecil dari seharusnya",
-                "Menandakan perusahaan sedang menimbun kas terlalu banyak",
-                "Menandakan laba bersihnya dilaporkan terlalu rendah oleh auditor",
-              ],
-              answer: 0,
-              explain:
-                "Laba yang didukung kas nyata lebih berkualitas daripada laba akrual semata.",
-            },
-          ],
-        },
-        {
-          id: "acc-prosp-4",
-          title: "Analisis Skenario, Expected Value & Sensitivitas",
-          duration: "13 menit",
-          content: `
-<p>Karena masa depan tak pasti, cara paling jujur menilainya bukan satu angka, melainkan <b>beberapa kemungkinan</b>.</p>
-
-<div data-diagram="bar" data-bars="Skenario buruk (20%):-30|Skenario dasar (60%):15|Skenario baik (20%):60|Nilai harapan:15" data-unit="%" data-caption="Nilai harapan = rata-rata semua skenario, ditimbang peluangnya masing-masing"></div>
-
-
-<h3>1. Analisis Skenario</h3>
-<p>Buat <b>tiga versi</b> masa depan, bukan satu:</p>
-<table class="tbl">
-  <tr><th>Skenario</th><th>Asumsi</th><th>Hasil (mis. laba)</th><th>Peluang</th></tr>
-  <tr><td><b>Terbaik</b></td><td>Penjualan tumbuh pesat</td><td>+100</td><td>30%</td></tr>
-  <tr><td><b>Tengah</b></td><td>Tumbuh normal</td><td>+60</td><td>50%</td></tr>
-  <tr><td><b>Terburuk</b></td><td>Ekonomi lesu</td><td>−20</td><td>20%</td></tr>
-</table>
-
-<h3>2. Expected Value (Nilai Harapan)</h3>
-<div class="callout">
-<b>Rumus:</b> Nilai Harapan = jumlah dari (peluang × hasil) tiap skenario.<br>
-Ini <b>rata-rata tertimbang</b> semua kemungkinan — bukan ramalan pasti, tapi cara membandingkan pilihan secara adil.
-</div>
-
-<h3>Coba sendiri — hitung nilai harapan 👇</h3>
-<div data-demo="js-playground">// Analisis skenario: berapa "nilai harapan" (expected value)?
-const skenario = [
-  { nama: "Terbaik ", peluang: 0.30, hasil: 100 },
-  { nama: "Tengah  ", peluang: 0.50, hasil: 60 },
-  { nama: "Terburuk", peluang: 0.20, hasil: -20 }
-];
-
-let nilaiHarapan = 0;
-skenario.forEach(function(s){
-  const kontribusi = s.peluang * s.hasil;
-  nilaiHarapan = nilaiHarapan + kontribusi;
-  console.log(s.nama + " | peluang " + (s.peluang*100) + "% x hasil " + s.hasil + " = " + kontribusi.toFixed(1));
-});
-console.log("-----");
-console.log("Nilai harapan = " + nilaiHarapan.toFixed(1));
-console.log("Ini rata-rata tertimbang semua kemungkinan, bukan ramalan pasti.");</div>
-
-<h3>3. Analisis Sensitivitas</h3>
-<p>Pertanyaannya: <b>"Kalau asumsiku meleset, seberapa besar hasilnya berubah?"</b> Ubah satu asumsi (mis. pertumbuhan dari 10% jadi 5%) dan lihat dampaknya.</p>
-<div class="callout warn">
-<b>Temuan penting:</b> kalau nilai perusahaan <b>berubah drastis</b> hanya karena asumsi digeser sedikit, berarti penilaianmu <b>rapuh</b> — sebaiknya lebih berhati-hati. Ini yang membedakan analisis matang dari asal hitung.
-</div>
-`,
-          keyPoints: [
-            "Analisis skenario: buat versi terbaik/tengah/terburuk, masing-masing dengan peluangnya.",
-            "Expected Value = jumlah (peluang × hasil); rata-rata tertimbang semua kemungkinan, bukan ramalan pasti.",
-            "Analisis sensitivitas menguji seberapa besar hasil berubah bila asumsi meleset.",
-            "Hasil yang berubah drastis karena asumsi bergeser sedikit = penilaian rapuh, perlu hati-hati.",
-          ],
-          practice: [
-            { type: "number", q: "Skenario: 30% hasil 100, 50% hasil 60, 20% hasil −20. Berapa nilai harapannya?", answer: 56, tol: 0.5, hint: "Jumlahkan (peluang × hasil) tiap skenario.", solution: "(0,3×100) + (0,5×60) + (0,2×−20) = 30 + 30 − 4 = 56." },
-            { type: "number", q: "Peluang 60% untung 50, peluang 40% rugi 25. Berapa nilai harapannya?", answer: 20, tol: 0.5, hint: "(0,6 × 50) + (0,4 × −25).", solution: "30 − 10 = 20." },
-          ],
-          quiz: [
-            {
-              q: "Apa itu 'expected value' (nilai harapan)?",
-              options: [
-                "Jumlah dari (peluang × hasil) untuk semua kemungkinan yang ada",
-                "Hasil dari skenario yang peluangnya paling besar untuk terjadi",
-                "Rata-rata sederhana dari hasil terbaik dan hasil terburuk",
-                "Hasil yang paling diharapkan oleh manajemen perusahaan",
-              ],
-              answer: 0,
-              explain:
-                "Expected value menimbang tiap kemungkinan dengan peluangnya — bukan kepastian.",
-            },
-            {
-              q: "Jika nilai perusahaan berubah drastis hanya karena asumsi digeser sedikit, artinya?",
-              options: [
-                "Penilaiannya rapuh — kesimpulannya perlu disikapi lebih hati-hati",
-                "Penilaiannya sangat akurat karena peka terhadap perubahan kecil",
-                "Perusahaannya pasti bagus karena nilainya bisa naik dengan mudah",
-                "Tidak berarti apa-apa, karena semua penilaian memang bisa berubah",
-              ],
-              answer: 0,
-              explain:
-                "Sensitivitas tinggi menandakan hasil sangat bergantung asumsi yang belum tentu benar.",
-            },
-          ],
-        },
-        {
-          id: "acc-prosp-5",
-          title: "Margin of Safety & Prospek Crypto Secara Realistis",
-          duration: "12 menit",
-          content: `
-<p>Setelah semua analisis, tetap ada kemungkinan kamu <b>salah</b>. Karena itu ada konsep pamungkas dari Benjamin Graham (guru Warren Buffett): <b>Margin of Safety</b>.</p>
-
-<div data-diagram="flow" data-steps="Taksir Nilai Wajar|Bandingkan Harga|= Margin of Safety" data-caption="Menghitung ruang aman"></div>
-
-
-<h3>Fundamental: sisakan ruang untuk salah</h3>
-<div class="callout">
-<b>Analogi jembatan:</b> insinyur merancang jembatan untuk menahan beban <b>jauh di atas</b> perkiraan maksimum — karena perhitungan bisa meleset. Investor melakukan hal yang sama: membeli <b>jauh di bawah</b> nilai wajar, agar tetap aman kalau perkiraannya keliru.
-</div>
-
-<div class="callout">
-<b>Rumus:</b> Margin of Safety = (Nilai Wajar − Harga) ÷ Nilai Wajar × 100%.<br>
-Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kalau perkiraanmu meleset 20%, kamu masih aman.
-</div>
-
-<h3>💥 Kenapa ini pelindung terbaik</h3>
-<ul>
-  <li>Melindungi dari <b>kesalahan analisis</b>-mu sendiri.</li>
-  <li>Melindungi dari <b>kejadian tak terduga</b>.</li>
-  <li>Membuatmu <b>sabar</b> — menunggu harga yang masuk akal, bukan mengejar.</li>
-</ul>
-
-<h3>Bagaimana dengan crypto?</h3>
-<div class="callout warn">
-<b>Saya harus jujur:</b> sebagian besar proyek crypto <b>tidak punya laba & arus kas</b>. Artinya <b>Z-Score, F-Score, dan DCF TIDAK BISA dipakai</b> — tidak ada angka fundamental untuk dihitung. Menilai crypto jauh <b>lebih spekulatif</b> daripada saham.
-</div>
-
-<p>Yang <b>bisa</b> dinilai untuk crypto (bersifat kualitatif, bukan probabilitas):</p>
-<table class="tbl">
-  <tr><th>Aspek</th><th>Pertanyaan</th></tr>
-  <tr><td>Kegunaan nyata</td><td>Apakah benar-benar dipakai orang, atau hanya spekulasi?</td></tr>
-  <tr><td>Adopsi</td><td>Pengguna aktif & transaksi bertumbuh? (TVL untuk DeFi)</td></tr>
-  <tr><td>Pendapatan protokol</td><td>Menghasilkan fee nyata?</td></tr>
-  <tr><td>Tokenomics</td><td>Pasokan, distribusi, jadwal vesting sehat?</td></tr>
-  <tr><td>Tim & keamanan</td><td>Tim terbuka? Kode diaudit?</td></tr>
-</table>
-
-<div class="callout warn">
-<b>Penutup yang jujur:</b> tidak ada alat di modul ini — atau di mana pun — yang bisa memberitahumu bahwa suatu aset "pasti bagus di masa depan". Yang bisa dilakukan: <b>menilai kesehatan</b>, <b>mengukur risiko</b>, <b>menimbang kemungkinan</b>, dan <b>menyisakan ruang aman</b>. Seluruh materi ini <b>edukasi, bukan saran finansial/investasi</b>. Untuk keputusan nyata, pertimbangkan konsultasi dengan penasihat berizin.
-</div>
-
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu kini punya kerangka menilai prospek secara terukur: Z-Score (risiko bangkrut), F-Score (kekuatan fundamental), skenario & expected value (rentang kemungkinan), dan margin of safety (ruang aman).
-</div>
-`,
-          keyPoints: [
-            "Margin of Safety = (Nilai Wajar − Harga) ÷ Nilai Wajar × 100%; membeli jauh di bawah nilai wajar sebagai bantalan kesalahan.",
-            "Melindungi dari kesalahan analisis & kejadian tak terduga; mendorong kesabaran.",
-            "Untuk crypto: Z-Score/F-Score/DCF tidak bisa dipakai (tak ada laba & arus kas) — penilaiannya jauh lebih spekulatif.",
-            "Yang bisa dinilai di crypto: kegunaan nyata, adopsi, pendapatan protokol, tokenomics, tim & audit.",
-            "Tidak ada alat yang bisa memastikan aset 'pasti bagus'; ini edukasi, bukan saran investasi.",
-          ],
-          practice: [
-            { type: "number", q: "Nilai wajar Rp1.000, harga sekarang Rp700. Berapa margin of safety-nya? (dalam %)", answer: 30, tol: 0.5, hint: "(Nilai Wajar − Harga) ÷ Nilai Wajar × 100%.", solution: "(1.000 − 700) ÷ 1.000 × 100% = 30%." },
-            { type: "number", q: "Nilai wajar Rp2.000 dan kamu ingin margin of safety 25%. Berapa harga maksimal untuk membeli? (Rupiah)", answer: 1500, tol: 5, hint: "Harga = Nilai Wajar × (100% − 25%).", solution: "2.000 × 0,75 = Rp1.500." },
-          ],
-          quiz: [
-            {
-              q: "Apa fungsi utama 'margin of safety'?",
-              options: [
-                "Memberi ruang aman bila analisis atau perkiraanmu ternyata meleset",
-                "Menjamin investasi tidak akan pernah mengalami kerugian",
-                "Menentukan batas laba minimal yang harus dicapai perusahaan",
-                "Mengukur seberapa jauh harga saham di atas nilai wajarnya",
-              ],
-              answer: 0,
-              explain:
-                "Margin of safety adalah bantalan terhadap kesalahan & kejadian tak terduga, bukan jaminan untung.",
-            },
-            {
-              q: "Kenapa Z-Score & DCF umumnya tidak bisa dipakai untuk proyek crypto?",
-              options: [
-                "Karena sebagian besar proyek crypto tak punya laba dan arus kas untuk dihitung",
-                "Karena harga crypto berubah terlalu cepat untuk dimasukkan ke rumus",
-                "Karena regulator melarang memakai rumus keuangan untuk aset kripto",
-                "Karena proyek crypto tidak pernah menerbitkan laporan dalam rupiah",
-              ],
-              answer: 0,
-              explain:
-                "Model itu bergantung pada angka laba/arus kas yang umumnya tidak ada pada proyek crypto.",
-            },
-          ],
-        },
-      ],
-    },
-
-    /* ---------------- LEVEL KUALITAS (BISNIS & MOAT) ---------------- */
+    /* ---------------- MODUL 10: KUALITAS BISNIS & KEUNGGULAN KOMPETITIF ---------------- */
     {
       id: "acc-kualitas",
       level: "Kualitas",
       title: "Kualitas Bisnis & Keunggulan Kompetitif",
-      summary: "Sisi kualitatif: alokasi modal, return on capital, sumber pertumbuhan, economic moat, manajemen, & pola pemenang.",
+      summary: "Sisi kualitatif: alokasi modal, biaya modal & hurdle rate, return on capital, sumber pertumbuhan, economic moat, manajemen, dan pola pemenang.",
       lessons: [
         {
           id: "acc-kual-1",
@@ -3806,7 +3831,7 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
 </ul>
 
 <div class="callout warn">
-<b>Hubungkan dengan pelajaran sebelumnya:</b> manajemen yang baik terlihat dari <b>keputusan alokasi modalnya</b>. Itu bukti nyata, bukan sekadar retorika.
+<b>Hubungkan dengan pelajaran Alokasi Modal:</b> manajemen yang baik terlihat dari <b>keputusan alokasi modalnya</b>. Itu bukti nyata, bukan sekadar retorika.
 </div>
 `,
           keyPoints: [
@@ -3863,7 +3888,7 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
 <h3>⚠️ Lima jurang kehancuran</h3>
 <ol>
   <li><b>Sindrom katak rebus</b> — perusahaan menurun <b>perlahan</b> sehingga tak terasa, sampai terlambat. Dalam bisnis, <b>diam = mundur</b>: pesaing bergerak, biaya naik, selera berubah.</li>
-  <li><b>Red flag akuntansi</b> — laba naik tapi <b>arus kas</b> tidak; piutang & persediaan menumpuk lebih cepat dari penjualan; utang membengkak. (Lihat pelajaran <i>Studi Kasus Membaca Laporan</i>.)</li>
+  <li><b>Red flag akuntansi</b> — laba naik tapi <b>arus kas</b> tidak; piutang & persediaan menumpuk lebih cepat dari penjualan; utang membengkak. (Contoh nyatanya ada di pelajaran <i>Studi Kasus: Membaca Laporan Perusahaan</i>.)</li>
   <li><b>Risiko konsentrasi</b> — bergantung pada <b>satu</b> hal: satu pelanggan besar, satu pemasok, satu produk, atau proyek/regulasi pemerintah. Jika sumber itu berubah, bisnis goyah.</li>
   <li><b>Gagal berinovasi teknologi</b> — pemimpin pasar yang mengabaikan teknologi baru bisa runtuh sangat cepat (banyak contoh historis).</li>
   <li><b>Selera konsumen berubah</b> — pilihannya cuma dua: <b>beradaptasi atau mati</b>.</li>
@@ -3871,10 +3896,6 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
 
 <div class="callout">
 <b>Cara memakai kerangka ini:</b> gabungkan dengan sisi kuantitatif. Angka (rasio, Z-Score, DCF) memberitahu <b>"seberapa sehat sekarang"</b>; kualitas bisnis (moat, manajemen, alokasi modal) memberitahu <b>"apakah kesehatan itu bisa bertahan"</b>. Investor & pemilik bisnis terbaik memakai <b>keduanya</b>.
-</div>
-
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu kini punya kerangka lengkap menilai kualitas bisnis: alokasi modal, return on capital, sumber pertumbuhan, economic moat, kualitas manajemen, serta pola pemenang & jurangnya.
 </div>
 
 <div class="callout warn">
@@ -3919,13 +3940,12 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
         },
       ],
     },
-
-    /* ---------------- LEVEL PERBANKAN (MENILAI BANK & LEMBAGA KEUANGAN) ---------------- */
+    /* ---------------- MODUL 11: MENGANALISIS BANK & LEMBAGA KEUANGAN ---------------- */
     {
       id: "acc-bank",
       level: "Perbankan",
       title: "Menganalisis Bank & Lembaga Keuangan",
-      summary: "Bank tidak bisa dinilai dengan alat biasa. Pelajari CASA & biaya dana, NIM, LDR, NPL & CKPN, CAR, sampai cara menilai sahamnya.",
+      summary: "Bank tidak bisa dinilai dengan alat biasa. Pelajari CASA & biaya dana, NIM, LDR, NPL & CKPN, CAR, lalu menilai sahamnya lewat PBV & ROE.",
       lessons: [
         {
           id: "acc-bank-1",
@@ -4292,7 +4312,7 @@ Di atas <b>100%</b> berarti seluruh kredit bermasalah sudah dicadangkan penuh �
 </div>
 
 <h3>💥 Di sinilah kecurangan sering bersembunyi</h3>
-<p>Ingat modul <b>Audit &amp; Deteksi Kecurangan</b>? CKPN adalah salah satu pos paling mudah dimainkan di seluruh laporan keuangan, karena besarnya <b>bergantung pada penilaian manajemen</b>.</p>
+<p>Ingat pelajaran <b>Mendeteksi Manipulasi Laporan Keuangan</b>? CKPN adalah salah satu pos paling mudah dimainkan di seluruh laporan keuangan, karena besarnya <b>bergantung pada penilaian manajemen</b>.</p>
 
 <table class="tbl">
   <tr><th>Trik</th><th>Efek jangka pendek</th><th>Akibatnya nanti</th></tr>
@@ -4601,13 +4621,848 @@ Biasanya jawabannya: ROE-nya rendah karena biaya dananya mahal (CASA rendah), at
         },
       ],
     },
+    /* ---------------- MODUL 12: MENILAI PROSPEK & RISIKO MASA DEPAN ---------------- */
+    {
+      id: "acc-prospek",
+      level: "Prospek",
+      title: "Menilai Prospek & Risiko Masa Depan",
+      summary: "Alat terukur menilai masa depan: Z-Score (risiko bangkrut), F-Score, skenario & expected value, dan margin of safety.",
+      lessons: [
+        {
+          id: "acc-prosp-1",
+          title: "Berpikir dalam Kemungkinan, Bukan Kepastian",
+          duration: "10 menit",
+          content: `
+<p>Sebelum belajar rumusnya, ada satu hal yang <b>wajib</b> dipahami — dan ini justru pelajaran terpenting di modul ini.</p>
 
-    /* ---------------- LEVEL INVESTASI (INDUSTRI PENGELOLAAN DANA) ---------------- */
+<div data-diagram="bar" data-bars="Buruk (peluang 20%):-30|Dasar (peluang 60%):15|Baik (peluang 20%):60" data-unit="%" data-caption="Bukan satu ramalan tunggal, tapi rentang kemungkinan beserta peluangnya"></div>
+
+
+<div class="callout warn">
+<b>Tidak ada rumus yang bisa menghitung "berapa % saham ini akan naik".</b> Masa depan dipengaruhi hal-hal tak terhitung: kondisi ekonomi, teknologi baru, keputusan manusia, keberuntungan. Siapa pun yang mengklaim punya rumus pasti — <b>patut dicurigai</b>.
+</div>
+
+<h3>Lalu apa yang BISA dihitung?</h3>
+<p>Analis profesional tidak bertanya <i>"berapa persen harga akan naik?"</i>. Mereka bertanya:</p>
+<ul>
+  <li>Seberapa <b>sehat</b> perusahaan ini sekarang? (rasio)</li>
+  <li>Seberapa besar <b>risiko gagal</b>-nya? (Z-Score)</li>
+  <li>Seberapa <b>kuat fundamental</b>-nya & membaik atau memburuk? (F-Score)</li>
+  <li>Apa <b>rentang kemungkinan</b> hasilnya? (skenario)</li>
+  <li>Berapa <b>ruang aman</b> kalau perkiraanku meleset? (margin of safety)</li>
+</ul>
+
+<div class="callout">
+<b>Pergeseran cara pikir:</b> dari <i>"apa yang PASTI terjadi"</i> → menjadi <i>"apa saja yang MUNGKIN terjadi, seberapa besar peluangnya, dan apakah aku tetap aman kalau salah."</i> Inilah inti berpikir probabilistik.
+</div>
+
+<h3>Analogi ramalan cuaca</h3>
+<p>Ahli meteorologi tidak berkata "besok pasti hujan". Mereka berkata <b>"peluang hujan 70%"</b> — dan kamu tetap membawa payung. Mereka juga bisa salah. Beginilah cara menilai bisnis: bekerja dengan kemungkinan, dan <b>siapkan payung</b> (margin of safety).</p>
+
+<div class="callout warn">
+<b>Ingat:</b> seluruh modul ini adalah <b>alat analisis edukatif</b>, bukan saran investasi. Tiap model punya keterbatasan yang akan saya jelaskan jujur di tiap pelajaran.
+</div>
+`,
+          keyPoints: [
+            "Tidak ada rumus yang bisa menghitung probabilitas saham akan naik — masa depan mengandung ketidakpastian mendasar.",
+            "Yang bisa dihitung: kesehatan, risiko gagal, kekuatan fundamental, rentang kemungkinan, dan ruang aman.",
+            "Pergeseran pikir: dari 'apa yang pasti terjadi' ke 'apa yang mungkin terjadi & apakah aku aman kalau salah'.",
+            "Semua model punya keterbatasan; ini alat analisis, bukan ramalan.",
+          ],
+          quiz: [
+            {
+              q: "Manakah pernyataan yang benar tentang memprediksi masa depan saham?",
+              options: [
+                "Tak ada rumus pasti; yang bisa dinilai kesehatan, risiko & rentang kemungkinan",
+                "Z-Score dan DCF bisa memastikan harga saham tahun depan dengan sangat tepat",
+                "Pola harga saham masa lalu cukup untuk memastikan arah harganya ke depan",
+                "Saham dengan laba terbesar tahun ini pasti naik paling tinggi tahun depan",
+              ],
+              answer: 0,
+              explain:
+                "Masa depan tak bisa dipastikan; analisis fokus pada kesehatan, risiko, & kemungkinan.",
+            },
+            {
+              q: "Apa inti 'berpikir probabilistik' dalam menilai bisnis?",
+              options: [
+                "Menimbang berbagai kemungkinan dan menyiapkan ruang aman bila meleset",
+                "Memilih satu skenario paling mungkin lalu bertaruh penuh padanya",
+                "Menghindari keputusan sampai seluruh ketidakpastian benar-benar hilang",
+                "Mengikuti pendapat mayoritas analis agar peluang benarnya lebih besar",
+              ],
+              answer: 0,
+              explain:
+                "Berpikir dalam kemungkinan + margin of safety, bukan mengejar kepastian.",
+            },
+          ],
+        },
+        {
+          id: "acc-prosp-2",
+          title: "Altman Z-Score — Mengukur Risiko Kebangkrutan",
+          duration: "13 menit",
+          content: `
+<p>Ini model yang paling mendekati "menghitung probabilitas" secara sah. Dibuat <b>Edward Altman (1968)</b>, <b>Z-Score</b> memperkirakan seberapa besar risiko sebuah perusahaan <b>bangkrut</b> dalam ~2 tahun ke depan.</p>
+
+<div data-diagram="scale" data-zones="Rawan|Abu-abu|Aman" data-marks="1,81|2,99" data-caption="Zona Altman Z-Score"></div>
+
+
+<div class="callout">
+<b>Perhatikan baik-baik:</b> Z-Score memprediksi <b>risiko KEBANGKRUTAN</b>, <b>bukan</b> kenaikan harga saham. Perusahaan sehat (Z tinggi) belum tentu sahamnya naik — tapi perusahaan Z rendah memang <b>berisiko tinggi</b>.
+</div>
+
+<h3>Lima rasio yang dipakai</h3>
+<table class="tbl">
+  <tr><th>Kode</th><th>Rasio</th><th>Mengukur</th></tr>
+  <tr><td><b>X1</b></td><td>Modal Kerja ÷ Total Aset</td><td>Likuiditas (napas jangka pendek)</td></tr>
+  <tr><td><b>X2</b></td><td>Laba Ditahan ÷ Total Aset</td><td>Akumulasi laba selama ini</td></tr>
+  <tr><td><b>X3</b></td><td>EBIT ÷ Total Aset</td><td>Produktivitas aset menghasilkan laba</td></tr>
+  <tr><td><b>X4</b></td><td>Nilai Pasar Ekuitas ÷ Total Utang</td><td>Bantalan modal terhadap utang</td></tr>
+  <tr><td><b>X5</b></td><td>Penjualan ÷ Total Aset</td><td>Perputaran aset</td></tr>
+</table>
+
+<div class="callout">
+<b>Rumus:</b> Z = 1,2·X1 + 1,4·X2 + 3,3·X3 + 0,6·X4 + 1,0·X5
+</div>
+
+<h3>Membaca hasilnya</h3>
+<table class="tbl">
+  <tr><th>Nilai Z</th><th>Zona</th><th>Arti</th></tr>
+  <tr><td><b>di atas 2,99</b></td><td class="ok-cell">Aman</td><td>Risiko kebangkrutan rendah</td></tr>
+  <tr><td><b>1,81 – 2,99</b></td><td>Abu-abu</td><td>Perlu diwaspadai</td></tr>
+  <tr><td><b>di bawah 1,81</b></td><td>Rawan</td><td>Risiko kebangkrutan tinggi</td></tr>
+</table>
+
+<h3>Coba sendiri — hitung Z-Score 👇</h3>
+<div data-demo="js-playground">// Altman Z-Score (ubah angkanya & jalankan lagi)
+const X1 = 0.20;  // Modal Kerja / Total Aset
+const X2 = 0.15;  // Laba Ditahan / Total Aset
+const X3 = 0.12;  // EBIT / Total Aset
+const X4 = 1.50;  // Nilai Pasar Ekuitas / Total Utang
+const X5 = 1.10;  // Penjualan / Total Aset
+
+const Z = 1.2*X1 + 1.4*X2 + 3.3*X3 + 0.6*X4 + 1.0*X5;
+console.log("Z-Score = " + Z.toFixed(2));
+
+if (Z > 2.99) {
+  console.log("Zona AMAN - risiko kebangkrutan rendah");
+} else if (Z > 1.81) {
+  console.log("Zona ABU-ABU - perlu diwaspadai");
+} else {
+  console.log("Zona RAWAN - risiko kebangkrutan tinggi");
+}
+console.log("Catatan: ini indikator risiko, BUKAN ramalan harga saham.");</div>
+
+<div class="callout warn">
+<b>Keterbatasan (penting!):</b> rumus di atas dirancang untuk <b>perusahaan manufaktur yang sudah go public</b>. Ada varian lain untuk perusahaan tertutup & non-manufaktur. Model ini <b>tidak cocok</b> untuk bank/lembaga keuangan, startup yang belum untung, dan <b>tidak berlaku sama sekali</b> untuk proyek crypto.
+</div>
+`,
+          keyPoints: [
+            "Altman Z-Score (1968) memperkirakan risiko KEBANGKRUTAN dalam ~2 tahun, bukan kenaikan harga saham.",
+            "Z = 1,2·X1 + 1,4·X2 + 3,3·X3 + 0,6·X4 + 1,0·X5 (likuiditas, laba ditahan, EBIT, ekuitas/utang, perputaran).",
+            "Zona: di atas 2,99 aman; 1,81–2,99 abu-abu; di bawah 1,81 rawan.",
+            "Keterbatasan: untuk manufaktur publik; ada varian lain; tidak cocok untuk bank, startup, & crypto.",
+          ],
+          practice: [
+            { type: "number", q: "Modal kerja Rp40jt, total aset Rp200jt. Berapa nilai X1 (Modal Kerja ÷ Total Aset)? (desimal, mis. 0.2)", answer: 0.2, tol: 0.01, hint: "X1 = Modal Kerja ÷ Total Aset.", solution: "40 ÷ 200 = 0,2." },
+            { type: "number", q: "Jika X1=0.2, X2=0.1, X3=0.1, X4=1.0, X5=1.0 — berapa Z-Score-nya? (2 desimal)", answer: 2.31, tol: 0.05, hint: "Z = 1,2(0,2) + 1,4(0,1) + 3,3(0,1) + 0,6(1,0) + 1,0(1,0).", solution: "0,24 + 0,14 + 0,33 + 0,6 + 1,0 = 2,31 → zona abu-abu." },
+          ],
+          quiz: [
+            {
+              q: "Apa yang sebenarnya diprediksi Altman Z-Score?",
+              options: [
+                "Risiko perusahaan bangkrut dalam sekitar dua tahun ke depan",
+                "Arah pergerakan harga saham dalam beberapa bulan ke depan",
+                "Besarnya laba bersih perusahaan pada tahun buku berikutnya",
+                "Nilai wajar saham berdasarkan arus kas masa depannya",
+              ],
+              answer: 0,
+              explain:
+                "Z-Score adalah model risiko kebangkrutan (financial distress), bukan prediksi harga.",
+            },
+            {
+              q: "Z-Score = 1,5 berarti perusahaan berada di zona?",
+              options: [
+                "Rawan — risiko kebangkrutan tinggi",
+                "Abu-abu — perlu diwaspadai",
+                "Aman — risiko kebangkrutan rendah",
+                "Sangat aman — hampir mustahil bangkrut",
+              ],
+              answer: 0,
+              explain: "Di bawah 1,81 termasuk zona rawan.",
+            },
+          ],
+        },
+        {
+          id: "acc-prosp-3",
+          title: "Piotroski F-Score — Skor Kekuatan Fundamental",
+          duration: "12 menit",
+          content: `
+<p>Kalau Z-Score menilai <b>risiko gagal</b>, <b>Piotroski F-Score</b> menilai <b>kekuatan & arah perbaikan</b> fundamental sebuah perusahaan. Dibuat Joseph Piotroski (2000), bentuknya sangat sederhana: <b>checklist 9 poin</b>.</p>
+
+<div data-diagram="scale" data-zones="Lemah (0-3)|Menengah (4-7)|Kuat (8-9)" data-caption="Membaca Piotroski F-Score"></div>
+
+
+<div class="callout">
+<b>Caranya:</b> tiap kriteria yang <b>terpenuhi</b> = <b>1 poin</b>, tidak terpenuhi = 0. Total maksimal <b>9</b>.
+</div>
+
+<h3>A. Profitabilitas (4 poin)</h3>
+<ol>
+  <li>Laba bersih <b>positif</b></li>
+  <li>Arus kas operasi <b>positif</b></li>
+  <li>ROA <b>meningkat</b> dibanding tahun lalu</li>
+  <li>Arus kas operasi <b>lebih besar</b> dari laba bersih (kualitas laba baik — labanya didukung kas nyata)</li>
+</ol>
+
+<h3>B. Utang & Likuiditas (3 poin)</h3>
+<ol start="5">
+  <li>Utang jangka panjang <b>menurun</b></li>
+  <li>Current ratio <b>meningkat</b></li>
+  <li><b>Tidak</b> menerbitkan saham baru (kepemilikanmu tidak terdilusi)</li>
+</ol>
+
+<h3>C. Efisiensi Operasi (2 poin)</h3>
+<ol start="8">
+  <li>Gross margin <b>meningkat</b></li>
+  <li>Perputaran aset <b>meningkat</b></li>
+</ol>
+
+<h3>Membaca skornya</h3>
+<table class="tbl">
+  <tr><th>Skor</th><th>Arti</th></tr>
+  <tr><td><b>8 – 9</b></td><td class="ok-cell">Fundamental kuat & membaik</td></tr>
+  <tr><td><b>4 – 7</b></td><td>Menengah</td></tr>
+  <tr><td><b>0 – 3</b></td><td>Fundamental lemah</td></tr>
+</table>
+
+<div class="callout">
+<b>Kenapa cerdas?</b> F-Score tidak hanya melihat kondisi <b>sekarang</b>, tapi <b>arah perubahannya</b> (membaik atau memburuk). Perusahaan biasa yang terus membaik sering lebih menarik daripada perusahaan bagus yang menurun.
+</div>
+
+<div class="callout warn">
+<b>Keterbatasan:</b> F-Score menilai <b>masa lalu & tren terakhir</b>, bukan masa depan. Ia juga mengabaikan harga saham (perusahaan kuat bisa saja terlalu mahal) dan kualitas bisnis (merek, keunggulan bersaing).
+</div>
+`,
+          keyPoints: [
+            "Piotroski F-Score = checklist 9 poin kekuatan fundamental (profitabilitas 4, utang/likuiditas 3, efisiensi 2).",
+            "Tiap kriteria terpenuhi = 1 poin; skor 8–9 kuat, 0–3 lemah.",
+            "Keunggulan: menilai arah perubahan (membaik/memburuk), bukan hanya kondisi saat ini.",
+            "Keterbatasan: berbasis data masa lalu, mengabaikan harga & kualitas bisnis.",
+          ],
+          practice: [
+            { type: "number", q: "Sebuah perusahaan: laba bersih positif ✓, arus kas operasi positif ✓, ROA meningkat ✓, tapi arus kas operasi LEBIH KECIL dari laba bersih ✗. Berapa poin dari kelompok Profitabilitas (maks 4)?", answer: 3, unit: "poin", hint: "Hitung centang saja dari 4 kriteria profitabilitas.", solution: "3 kriteria terpenuhi = 3 poin." },
+            { type: "choice", q: "Total F-Score sebuah perusahaan = 9. Termasuk kategori apa?", options: ["Fundamental lemah", "Menengah", "Fundamental kuat & membaik"], answer: 2, hint: "Skor 8–9 masuk kategori apa?", solution: "Skor 8–9 = fundamental kuat & membaik." },
+          ],
+          quiz: [
+            {
+              q: "Berapa poin maksimal Piotroski F-Score?",
+              options: ["5", "9", "10", "100"],
+              answer: 1,
+              explain: "F-Score terdiri dari 9 kriteria, masing-masing bernilai 1 poin.",
+            },
+            {
+              q: "Kenapa kriteria 'arus kas operasi lebih besar dari laba bersih' itu penting?",
+              options: [
+                "Menandakan laba didukung kas nyata, bukan sekadar angka catatan",
+                "Menandakan perusahaan membayar pajak lebih kecil dari seharusnya",
+                "Menandakan perusahaan sedang menimbun kas terlalu banyak",
+                "Menandakan laba bersihnya dilaporkan terlalu rendah oleh auditor",
+              ],
+              answer: 0,
+              explain:
+                "Laba yang didukung kas nyata lebih berkualitas daripada laba akrual semata.",
+            },
+          ],
+        },
+        {
+          id: "acc-prosp-4",
+          title: "Analisis Skenario, Expected Value & Sensitivitas",
+          duration: "13 menit",
+          content: `
+<p>Karena masa depan tak pasti, cara paling jujur menilainya bukan satu angka, melainkan <b>beberapa kemungkinan</b>.</p>
+
+<div data-diagram="bar" data-bars="Skenario buruk (20%):-30|Skenario dasar (60%):15|Skenario baik (20%):60|Nilai harapan:15" data-unit="%" data-caption="Nilai harapan = rata-rata semua skenario, ditimbang peluangnya masing-masing"></div>
+
+
+<h3>1. Analisis Skenario</h3>
+<p>Buat <b>tiga versi</b> masa depan, bukan satu:</p>
+<table class="tbl">
+  <tr><th>Skenario</th><th>Asumsi</th><th>Hasil (mis. laba)</th><th>Peluang</th></tr>
+  <tr><td><b>Terbaik</b></td><td>Penjualan tumbuh pesat</td><td>+100</td><td>30%</td></tr>
+  <tr><td><b>Tengah</b></td><td>Tumbuh normal</td><td>+60</td><td>50%</td></tr>
+  <tr><td><b>Terburuk</b></td><td>Ekonomi lesu</td><td>−20</td><td>20%</td></tr>
+</table>
+
+<h3>2. Expected Value (Nilai Harapan)</h3>
+<div class="callout">
+<b>Rumus:</b> Nilai Harapan = jumlah dari (peluang × hasil) tiap skenario.<br>
+Ini <b>rata-rata tertimbang</b> semua kemungkinan — bukan ramalan pasti, tapi cara membandingkan pilihan secara adil.
+</div>
+
+<h3>Coba sendiri — hitung nilai harapan 👇</h3>
+<div data-demo="js-playground">// Analisis skenario: berapa "nilai harapan" (expected value)?
+const skenario = [
+  { nama: "Terbaik ", peluang: 0.30, hasil: 100 },
+  { nama: "Tengah  ", peluang: 0.50, hasil: 60 },
+  { nama: "Terburuk", peluang: 0.20, hasil: -20 }
+];
+
+let nilaiHarapan = 0;
+skenario.forEach(function(s){
+  const kontribusi = s.peluang * s.hasil;
+  nilaiHarapan = nilaiHarapan + kontribusi;
+  console.log(s.nama + " | peluang " + (s.peluang*100) + "% x hasil " + s.hasil + " = " + kontribusi.toFixed(1));
+});
+console.log("-----");
+console.log("Nilai harapan = " + nilaiHarapan.toFixed(1));
+console.log("Ini rata-rata tertimbang semua kemungkinan, bukan ramalan pasti.");</div>
+
+<h3>3. Analisis Sensitivitas</h3>
+<p>Pertanyaannya: <b>"Kalau asumsiku meleset, seberapa besar hasilnya berubah?"</b> Ubah satu asumsi (mis. pertumbuhan dari 10% jadi 5%) dan lihat dampaknya.</p>
+<div class="callout warn">
+<b>Temuan penting:</b> kalau nilai perusahaan <b>berubah drastis</b> hanya karena asumsi digeser sedikit, berarti penilaianmu <b>rapuh</b> — sebaiknya lebih berhati-hati. Ini yang membedakan analisis matang dari asal hitung.
+</div>
+`,
+          keyPoints: [
+            "Analisis skenario: buat versi terbaik/tengah/terburuk, masing-masing dengan peluangnya.",
+            "Expected Value = jumlah (peluang × hasil); rata-rata tertimbang semua kemungkinan, bukan ramalan pasti.",
+            "Analisis sensitivitas menguji seberapa besar hasil berubah bila asumsi meleset.",
+            "Hasil yang berubah drastis karena asumsi bergeser sedikit = penilaian rapuh, perlu hati-hati.",
+          ],
+          practice: [
+            { type: "number", q: "Skenario: 30% hasil 100, 50% hasil 60, 20% hasil −20. Berapa nilai harapannya?", answer: 56, tol: 0.5, hint: "Jumlahkan (peluang × hasil) tiap skenario.", solution: "(0,3×100) + (0,5×60) + (0,2×−20) = 30 + 30 − 4 = 56." },
+            { type: "number", q: "Peluang 60% untung 50, peluang 40% rugi 25. Berapa nilai harapannya?", answer: 20, tol: 0.5, hint: "(0,6 × 50) + (0,4 × −25).", solution: "30 − 10 = 20." },
+          ],
+          quiz: [
+            {
+              q: "Apa itu 'expected value' (nilai harapan)?",
+              options: [
+                "Jumlah dari (peluang × hasil) untuk semua kemungkinan yang ada",
+                "Hasil dari skenario yang peluangnya paling besar untuk terjadi",
+                "Rata-rata sederhana dari hasil terbaik dan hasil terburuk",
+                "Hasil yang paling diharapkan oleh manajemen perusahaan",
+              ],
+              answer: 0,
+              explain:
+                "Expected value menimbang tiap kemungkinan dengan peluangnya — bukan kepastian.",
+            },
+            {
+              q: "Jika nilai perusahaan berubah drastis hanya karena asumsi digeser sedikit, artinya?",
+              options: [
+                "Penilaiannya rapuh — kesimpulannya perlu disikapi lebih hati-hati",
+                "Penilaiannya sangat akurat karena peka terhadap perubahan kecil",
+                "Perusahaannya pasti bagus karena nilainya bisa naik dengan mudah",
+                "Tidak berarti apa-apa, karena semua penilaian memang bisa berubah",
+              ],
+              answer: 0,
+              explain:
+                "Sensitivitas tinggi menandakan hasil sangat bergantung asumsi yang belum tentu benar.",
+            },
+          ],
+        },
+        {
+          id: "acc-prosp-5",
+          title: "Margin of Safety & Prospek Crypto Secara Realistis",
+          duration: "12 menit",
+          content: `
+<p>Setelah semua analisis, tetap ada kemungkinan kamu <b>salah</b>. Karena itu ada konsep pamungkas dari Benjamin Graham (guru Warren Buffett): <b>Margin of Safety</b>.</p>
+
+<div data-diagram="flow" data-steps="Taksir Nilai Wajar|Bandingkan Harga|= Margin of Safety" data-caption="Menghitung ruang aman"></div>
+
+
+<h3>Fundamental: sisakan ruang untuk salah</h3>
+<div class="callout">
+<b>Analogi jembatan:</b> insinyur merancang jembatan untuk menahan beban <b>jauh di atas</b> perkiraan maksimum — karena perhitungan bisa meleset. Investor melakukan hal yang sama: membeli <b>jauh di bawah</b> nilai wajar, agar tetap aman kalau perkiraannya keliru.
+</div>
+
+<div class="callout">
+<b>Rumus:</b> Margin of Safety = (Nilai Wajar − Harga) ÷ Nilai Wajar × 100%.<br>
+Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kalau perkiraanmu meleset 20%, kamu masih aman.
+</div>
+
+<h3>💥 Kenapa ini pelindung terbaik</h3>
+<ul>
+  <li>Melindungi dari <b>kesalahan analisis</b>-mu sendiri.</li>
+  <li>Melindungi dari <b>kejadian tak terduga</b>.</li>
+  <li>Membuatmu <b>sabar</b> — menunggu harga yang masuk akal, bukan mengejar.</li>
+</ul>
+
+<h3>Bagaimana dengan crypto?</h3>
+<div class="callout warn">
+<b>Saya harus jujur:</b> sebagian besar proyek crypto <b>tidak punya laba & arus kas</b>. Artinya <b>Z-Score, F-Score, dan DCF TIDAK BISA dipakai</b> — tidak ada angka fundamental untuk dihitung. Menilai crypto jauh <b>lebih spekulatif</b> daripada saham.
+</div>
+
+<p>Yang <b>bisa</b> dinilai untuk crypto (bersifat kualitatif, bukan probabilitas):</p>
+<table class="tbl">
+  <tr><th>Aspek</th><th>Pertanyaan</th></tr>
+  <tr><td>Kegunaan nyata</td><td>Apakah benar-benar dipakai orang, atau hanya spekulasi?</td></tr>
+  <tr><td>Adopsi</td><td>Pengguna aktif & transaksi bertumbuh? (TVL untuk DeFi)</td></tr>
+  <tr><td>Pendapatan protokol</td><td>Menghasilkan fee nyata?</td></tr>
+  <tr><td>Tokenomics</td><td>Pasokan, distribusi, jadwal vesting sehat?</td></tr>
+  <tr><td>Tim & keamanan</td><td>Tim terbuka? Kode diaudit?</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Penutup yang jujur:</b> tidak ada alat di modul ini — atau di mana pun — yang bisa memberitahumu bahwa suatu aset "pasti bagus di masa depan". Yang bisa dilakukan: <b>menilai kesehatan</b>, <b>mengukur risiko</b>, <b>menimbang kemungkinan</b>, dan <b>menyisakan ruang aman</b>. Seluruh materi ini <b>edukasi, bukan saran finansial/investasi</b>. Untuk keputusan nyata, pertimbangkan konsultasi dengan penasihat berizin.
+</div>
+`,
+          keyPoints: [
+            "Margin of Safety = (Nilai Wajar − Harga) ÷ Nilai Wajar × 100%; membeli jauh di bawah nilai wajar sebagai bantalan kesalahan.",
+            "Melindungi dari kesalahan analisis & kejadian tak terduga; mendorong kesabaran.",
+            "Untuk crypto: Z-Score/F-Score/DCF tidak bisa dipakai (tak ada laba & arus kas) — penilaiannya jauh lebih spekulatif.",
+            "Yang bisa dinilai di crypto: kegunaan nyata, adopsi, pendapatan protokol, tokenomics, tim & audit.",
+            "Tidak ada alat yang bisa memastikan aset 'pasti bagus'; ini edukasi, bukan saran investasi.",
+          ],
+          practice: [
+            { type: "number", q: "Nilai wajar Rp1.000, harga sekarang Rp700. Berapa margin of safety-nya? (dalam %)", answer: 30, tol: 0.5, hint: "(Nilai Wajar − Harga) ÷ Nilai Wajar × 100%.", solution: "(1.000 − 700) ÷ 1.000 × 100% = 30%." },
+            { type: "number", q: "Nilai wajar Rp2.000 dan kamu ingin margin of safety 25%. Berapa harga maksimal untuk membeli? (Rupiah)", answer: 1500, tol: 5, hint: "Harga = Nilai Wajar × (100% − 25%).", solution: "2.000 × 0,75 = Rp1.500." },
+          ],
+          quiz: [
+            {
+              q: "Apa fungsi utama 'margin of safety'?",
+              options: [
+                "Memberi ruang aman bila analisis atau perkiraanmu ternyata meleset",
+                "Menjamin investasi tidak akan pernah mengalami kerugian",
+                "Menentukan batas laba minimal yang harus dicapai perusahaan",
+                "Mengukur seberapa jauh harga saham di atas nilai wajarnya",
+              ],
+              answer: 0,
+              explain:
+                "Margin of safety adalah bantalan terhadap kesalahan & kejadian tak terduga, bukan jaminan untung.",
+            },
+            {
+              q: "Kenapa Z-Score & DCF umumnya tidak bisa dipakai untuk proyek crypto?",
+              options: [
+                "Karena sebagian besar proyek crypto tak punya laba dan arus kas untuk dihitung",
+                "Karena harga crypto berubah terlalu cepat untuk dimasukkan ke rumus",
+                "Karena regulator melarang memakai rumus keuangan untuk aset kripto",
+                "Karena proyek crypto tidak pernah menerbitkan laporan dalam rupiah",
+              ],
+              answer: 0,
+              explain:
+                "Model itu bergantung pada angka laba/arus kas yang umumnya tidak ada pada proyek crypto.",
+            },
+          ],
+        },
+      ],
+    },
+    /* ---------------- MODUL 13: MEMBACA LAPORAN & MEMBANGUN BISNIS ---------------- */
+    {
+      id: "acc-proyek",
+      level: "Proyek",
+      title: "Membaca Laporan & Membangun Bisnis",
+      summary: "Praktik nyata: baca laporan bisnis/saham/crypto, kelola keuangan, bangun bisnis, dan studi kasus untung tapi krisis kas.",
+      lessons: [
+        {
+          id: "acc-pro-1",
+          title: "Studi Kasus: Membaca Laporan Perusahaan",
+          duration: "12 menit",
+          content: `
+<p>Mari "membaca" sebuah bisnis lewat angkanya. Contoh: <b>Warung Kopi Sejahtera</b> (dalam juta Rupiah).</p>
+
+<h3>Laporan Laba Rugi (setahun)</h3>
+<table class="tbl">
+  <tr><td>Pendapatan (penjualan)</td><td>500</td></tr>
+  <tr><td>− HPP (biji kopi, susu, gelas)</td><td>(200)</td></tr>
+  <tr><td><b>= Laba Kotor</b></td><td><b>300</b> (margin 60%)</td></tr>
+  <tr><td>− Beban (sewa, gaji, listrik)</td><td>(240)</td></tr>
+  <tr><td><b>= Laba Bersih</b></td><td><b>60</b> (margin 12%)</td></tr>
+</table>
+
+<h3>Neraca (per 31 Des)</h3>
+<table class="tbl">
+  <tr><td>Aset (kas, peralatan, persediaan)</td><td>250</td></tr>
+  <tr><td>Kewajiban (utang bank)</td><td>100</td></tr>
+  <tr><td><b>Ekuitas (modal pemilik)</b></td><td><b>150</b></td></tr>
+</table>
+
+<h3>Yang dilihat seorang analis</h3>
+<ul>
+  <li><b>Tumbuh atau tidak?</b> Bandingkan pendapatan dengan tahun lalu.</li>
+  <li><b>Margin sehat?</b> Laba kotor 60% & laba bersih 12% tergolong sehat untuk warung kopi.</li>
+  <li><b>Utang wajar?</b> Utang 100 vs ekuitas 150 → masih terkendali.</li>
+  <li><b>Menghasilkan kas?</b> Cek laporan arus kas — laba di kertas harus didukung kas nyata.</li>
+</ul>
+
+<div class="callout warn">
+<b>Tanda bahaya (red flags):</b> pendapatan naik tapi laba turun terus, utang membengkak, piutang menumpuk (banyak penjualan belum dibayar), atau laba besar tapi kas selalu menipis.
+</div>
+`,
+          keyPoints: [
+            "Baca bisnis lewat 3 hal: pertumbuhan pendapatan, margin laba, dan tingkat utang.",
+            "Laba kotor & laba bersih menunjukkan seberapa efisien dan menguntungkan bisnis.",
+            "Selalu cek arus kas — laba di kertas harus didukung kas nyata.",
+            "Red flags: laba turun, utang membengkak, piutang menumpuk, kas menipis.",
+          ],
+          quiz: [
+            {
+              q: "Pendapatan Rp500jt, laba bersih Rp60jt. Berapa margin laba bersihnya?",
+              options: ["6%", "12%", "60%", "40%"],
+              answer: 1,
+              explain: "Margin = 60 ÷ 500 × 100% = 12%.",
+            },
+            {
+              q: "Manakah 'red flag' saat membaca laporan keuangan?",
+              options: [
+                "Margin stabil dan kas bertumbuh",
+                "Laba di kertas besar tapi kas terus menipis",
+                "Utang kecil dibanding ekuitas",
+                "Pendapatan naik dan laba ikut naik",
+              ],
+              answer: 1,
+              explain:
+                "Laba tanpa kas (mis. banyak piutang) adalah sinyal bahaya likuiditas.",
+            },
+          ],
+        },
+        {
+          id: "acc-pro-2",
+          title: "Analisis Saham dari Laporan Keuangan",
+          duration: "13 menit",
+          content: `
+<p>Saham = sepotong kepemilikan perusahaan. Investor menilai saham lewat <b>laporan keuangan</b> dan beberapa rasio kunci.</p>
+
+<table class="tbl">
+  <tr><th>Rasio</th><th>Rumus</th><th>Arti singkat</th></tr>
+  <tr><td><b>EPS</b></td><td>Laba bersih ÷ jumlah saham</td><td>Laba per lembar saham</td></tr>
+  <tr><td><b>P/E</b></td><td>Harga saham ÷ EPS</td><td>Berapa kali laba yang dibayar; makin tinggi makin "mahal"</td></tr>
+  <tr><td><b>PBV</b></td><td>Harga saham ÷ nilai buku per saham</td><td>Harga vs ekuitas per saham</td></tr>
+  <tr><td><b>ROE</b></td><td>Laba bersih ÷ ekuitas × 100%</td><td>Imbal hasil bagi modal pemilik</td></tr>
+  <tr><td><b>DER</b></td><td>Total utang ÷ ekuitas</td><td>Ketergantungan pada utang (risiko)</td></tr>
+  <tr><td><b>Dividend yield</b></td><td>Dividen per saham ÷ harga</td><td>Imbal hasil tunai per tahun</td></tr>
+</table>
+
+<div class="callout">
+<b>Contoh:</b> Harga saham Rp1.000, EPS Rp100 → P/E = 10. Artinya kamu membayar 10× laba setahun. Bandingkan dengan pesaing & rata-rata industri sebelum menilai mahal/murah.
+</div>
+
+<h3>Di mana datanya?</h3>
+<p>Perusahaan publik wajib menerbitkan <b>Laporan Tahunan</b> dan laporan keuangan triwulan (di Indonesia: lewat Bursa Efek Indonesia / situs perusahaan). Di sana ada laba rugi, neraca, arus kas, dan catatan.</p>
+
+<div class="callout warn">
+<b>Penting:</b> rasio hanya bermakna saat <b>dibandingkan</b> (antar waktu, pesaing, industri) dan dipadukan dengan kualitas bisnis. Ini edukasi, <b>bukan saran investasi</b>. Saham berisiko.
+</div>
+`,
+          keyPoints: [
+            "Saham dinilai lewat rasio: EPS, P/E, PBV, ROE, DER, dividend yield.",
+            "P/E = Harga ÷ EPS — menunjukkan seberapa 'mahal' harga relatif terhadap laba.",
+            "Data dari Laporan Tahunan & laporan triwulan perusahaan publik.",
+            "Rasio bermakna saat dibandingkan; ini edukasi, bukan saran investasi.",
+          ],
+          practice: [
+            { type: "number", q: "Harga saham Rp1.200, EPS Rp150. Berapa P/E rasionya?", answer: 8, tol: 0.1, hint: "P/E = Harga ÷ EPS.", solution: "1.200 ÷ 150 = 8." },
+            { type: "number", q: "Laba bersih Rp80jt, jumlah saham 2 juta lembar. Berapa EPS-nya? (Rupiah)", answer: 40, tol: 0.5, hint: "EPS = Laba bersih ÷ jumlah saham.", solution: "80.000.000 ÷ 2.000.000 = Rp40." },
+          ],
+          quiz: [
+            {
+              q: "Apa arti P/E rasio yang tinggi?",
+              options: [
+                "Investor membayar lebih mahal untuk setiap rupiah laba perusahaan",
+                "Perusahaan mencetak laba yang jauh lebih besar dari pesaingnya",
+                "Perusahaan membagikan dividen dalam jumlah yang sangat besar",
+                "Harga saham dipastikan akan turun dalam waktu dekat",
+              ],
+              answer: 0,
+              explain:
+                "P/E tinggi = harga relatif mahal terhadap laba; perlu dibandingkan dengan industri.",
+            },
+            {
+              q: "ROE mengukur?",
+              options: [
+                "Laba yang dihasilkan dari setiap rupiah modal milik pemilik",
+                "Laba yang dihasilkan dari seluruh aset milik perusahaan",
+                "Kemampuan perusahaan melunasi utang jangka pendeknya",
+                "Kecepatan perusahaan menagih piutang dari pelanggan",
+              ],
+              answer: 0,
+              explain: "ROE = Laba bersih ÷ Ekuitas — efisiensi menghasilkan laba dari modal.",
+            },
+          ],
+        },
+        {
+          id: "acc-pro-3",
+          title: "Membaca 'Laporan' Proyek Crypto",
+          duration: "12 menit",
+          content: `
+<p>Proyek crypto tidak punya laporan keuangan klasik, tapi punya datanya sendiri yang bisa "dibaca" untuk menilai kesehatan & risiko.</p>
+
+<div data-diagram="compare3" data-cols="Perusahaan::Laporan diaudit::Laba &amp; arus kas|Proyek kripto::Data on-chain terbuka::Fee protokol &amp; TVL|Pertanyaannya sama::Uang masuk dari mana?::Bisa bertahan tidak?" data-caption="Bahasanya berbeda, pertanyaan intinya sama persis"></div>
+
+
+<h3>1. Tokenomics (ekonomi token)</h3>
+<ul>
+  <li><b>Total/Max supply</b> — berapa banyak token akan ada? Pasokan tak terbatas berisiko inflasi.</li>
+  <li><b>Distribusi</b> — siapa memegang? Jika tim/investor memegang porsi sangat besar, hati-hati.</li>
+  <li><b>Vesting</b> — jadwal pelepasan token tim; pelepasan besar bisa menekan harga.</li>
+</ul>
+
+<h3>2. Metrik on-chain (transparan di blockchain)</h3>
+<ul>
+  <li><b>TVL</b> (Total Value Locked) — total dana yang "dikunci" di protokol DeFi; ukuran adopsi.</li>
+  <li><b>Pengguna & transaksi aktif</b> — apakah benar dipakai, bukan sekadar hype?</li>
+  <li><b>Pendapatan/fee protokol</b> — apakah menghasilkan pemasukan nyata?</li>
+  <li><b>Treasury</b> — kas/aset proyek untuk bertahan & berkembang.</li>
+</ul>
+
+<div class="callout">
+<b>Analogi:</b> TVL & pengguna aktif ibarat "pendapatan & pelanggan", treasury ibarat "kas", distribusi token ibarat "struktur kepemilikan saham". Polanya mirip menilai bisnis.
+</div>
+
+<div class="callout warn">
+<b>Tanda bahaya:</b> whitepaper tanpa detail teknis, tim anonim tanpa rekam jejak, janji imbal hasil "pasti & besar", token tim porsi sangat besar, dan tidak ada produk yang benar-benar dipakai. Selalu <b>DYOR</b> — ini edukasi, bukan saran investasi.
+</div>
+`,
+          keyPoints: [
+            "Proyek crypto dinilai lewat tokenomics (supply, distribusi, vesting) & metrik on-chain.",
+            "TVL, pengguna aktif, fee protokol, dan treasury ~ pendapatan/pelanggan/kas pada bisnis.",
+            "Red flags: tim anonim, janji untung pasti, token tim berporsi besar, tanpa produk nyata.",
+          ],
+          quiz: [
+            {
+              q: "Apa itu TVL pada proyek DeFi?",
+              options: [
+                "Total Value Locked — dana yang dikunci pengguna di dalam protokol",
+                "Total Volume Lelang — nilai transaksi harian di bursa protokol",
+                "Token Value Limit — batas jumlah token yang boleh diterbitkan",
+                "Total Value Listed — nilai seluruh token yang tercatat di bursa",
+              ],
+              answer: 0,
+              explain:
+                "TVL mencerminkan seberapa banyak nilai dipercayakan ke protokol.",
+            },
+            {
+              q: "Manakah tanda bahaya proyek crypto?",
+              options: [
+                "Janji imbal hasil pasti dan besar, dengan tim yang anonim",
+                "Kode kontraknya terbuka dan sudah diaudit pihak independen",
+                "Pendapatan protokolnya bisa diperiksa langsung secara on-chain",
+                "Token milik tim dikunci bertahap selama beberapa tahun",
+              ],
+              answer: 0,
+              explain:
+                "Janji untung pasti + tim anonim adalah pola klasik penipuan.",
+            },
+          ],
+        },
+        {
+          id: "acc-pro-4",
+          title: "Mengelola Keuangan Bisnis",
+          duration: "12 menit",
+          content: `
+<p>Banyak bisnis untung di atas kertas tapi tetap kolaps karena <b>salah mengelola kas</b>. Berikut praktik pengelolaan keuangan bisnis.</p>
+
+<div data-diagram="cycle" data-steps="Catat semua transaksi|Susun laporan bulanan|Bandingkan dengan anggaran|Perbaiki keputusan" data-center="tiap bulan" data-caption="Keuangan bisnis dikelola dalam putaran bulanan, bukan sekali setahun"></div>
+
+
+<h3>Kebiasaan wajib</h3>
+<ol>
+  <li><b>Pisahkan uang pribadi & bisnis</b> — rekening berbeda. Ini fondasi semua pencatatan.</li>
+  <li><b>Catat semua transaksi</b> — pemasukan & pengeluaran, sekecil apa pun.</li>
+  <li><b>Kelola arus kas</b> — pastikan kas masuk cukup menutup kas keluar tiap periode.</li>
+  <li><b>Buat anggaran (budget)</b> — rencanakan pengeluaran agar tidak bocor.</li>
+  <li><b>Dana darurat</b> — simpan kas untuk menutup beberapa bulan biaya tetap.</li>
+</ol>
+
+<div class="callout">
+<b>Modal kerja</b> = Aset Lancar − Kewajiban Lancar. Ini "napas" harian bisnis. Kelola dengan: tagih piutang tepat waktu, atur pembayaran ke pemasok, dan jangan menumpuk persediaan berlebihan.
+</div>
+
+<h3>Menetapkan harga (pricing)</h3>
+<p>Harga harus menutup <b>biaya + margin</b>. Mulai dari biaya per unit (HPP + porsi biaya tetap), tambahkan margin yang wajar, lalu cek terhadap harga pasar & daya beli pelanggan.</p>
+
+<div class="callout warn">
+<b>Ingat:</b> Laba ≠ Kas. Penjualan kredit yang belum dibayar menambah laba tapi <b>bukan</b> kas. Pantau kas seketat memantau laba.
+</div>
+`,
+          keyPoints: [
+            "Pisahkan uang pribadi & bisnis, dan catat semua transaksi.",
+            "Kelola arus kas, buat anggaran, dan siapkan dana darurat.",
+            "Modal Kerja = Aset Lancar − Kewajiban Lancar; jaga 'napas' harian bisnis.",
+            "Harga harus menutup biaya + margin; ingat laba tidak sama dengan kas.",
+          ],
+          quiz: [
+            {
+              q: "Kebiasaan paling mendasar dalam mengelola keuangan bisnis?",
+              options: [
+                "Memisahkan rekening pribadi dan bisnis serta mencatat semua transaksi",
+                "Menyimpan seluruh uang usaha dalam bentuk tunai agar mudah dipakai",
+                "Mencatat transaksi besar saja agar pembukuan tidak terlalu rumit",
+                "Menunggu akhir tahun untuk merekap seluruh transaksi sekaligus",
+              ],
+              answer: 0,
+              explain:
+                "Pemisahan & pencatatan adalah fondasi pengelolaan keuangan yang sehat.",
+            },
+            {
+              q: "Mengapa memantau kas sama pentingnya dengan laba?",
+              options: [
+                "Karena bisnis yang untung pun bisa kehabisan kas lalu kolaps",
+                "Karena kas selalu sama besarnya dengan laba bersih perusahaan",
+                "Karena investor hanya melihat saldo kas saat menilai perusahaan",
+                "Karena laba tidak perlu dilaporkan kepada kantor pajak",
+              ],
+              answer: 0,
+              explain:
+                "Laba di kertas tanpa kas yang cukup tetap bisa membangkrutkan bisnis.",
+            },
+          ],
+        },
+        {
+          id: "acc-pro-5",
+          title: "Membangun & Menilai Bisnis",
+          duration: "13 menit",
+          content: `
+<p>Akuntansi adalah alat untuk membangun bisnis yang sehat. Beberapa konsep kunci untuk pemilik bisnis:</p>
+
+<div data-diagram="pipeline" data-stages="Ide::masalah nyata milik siapa?|Uji pasar::adakah yang mau membayar?|Model bisnis::untung per transaksi|Skala::tumbuh tanpa biaya ikut meledak" data-caption="Empat saringan sebelum sebuah bisnis layak dibesarkan"></div>
+
+
+<h3>Model bisnis & unit economics</h3>
+<ul>
+  <li><b>Model bisnis</b> — bagaimana persisnya kamu menghasilkan uang?</li>
+  <li><b>Unit economics</b> — untung/rugi per satu unit/pelanggan. Jika tiap unit rugi, makin banyak jual makin rugi.</li>
+  <li><b>Margin kontribusi</b> = Harga − Biaya variabel per unit. Inilah yang menutup biaya tetap.</li>
+</ul>
+
+<h3>Titik impas & runway</h3>
+<div class="callout">
+<b>Titik Impas (unit)</b> = Biaya Tetap ÷ Margin Kontribusi per unit.<br>
+<b>Runway</b> = Kas tersedia ÷ pengeluaran bersih per bulan = berapa bulan bisnis bisa bertahan.
+</div>
+
+<h3>Pendanaan</h3>
+<ul>
+  <li><b>Bootstrapping</b> — tumbuh dari kas sendiri & laba. Kontrol penuh, tumbuh perlahan.</li>
+  <li><b>Investor</b> — dapat modal besar, tapi melepas sebagian kepemilikan (ekuitas) & kendali.</li>
+</ul>
+
+<p>Pemilik yang paham angkanya bisa mengambil keputusan lebih baik: kapan menaikkan harga, menambah karyawan, atau mencari pendanaan.</p>
+
+<div class="callout warn">
+<b>Pengingat:</b> seluruh materi ini edukasi, bukan saran finansial/investasi.
+</div>
+`,
+          keyPoints: [
+            "Unit economics: pastikan tiap unit/pelanggan menguntungkan sebelum menskalakan.",
+            "Titik Impas = Biaya Tetap ÷ Margin Kontribusi; Runway = Kas ÷ pengeluaran bulanan.",
+            "Pendanaan: bootstrapping (kendali penuh) vs investor (modal besar, lepas sebagian ekuitas).",
+            "Memahami angka membuat keputusan bisnis lebih tepat.",
+          ],
+          practice: [
+            { type: "number", q: "Kas Rp120jt, pengeluaran bersih Rp20jt/bulan. Berapa bulan runway bisnisnya?", answer: 6, unit: "bulan", hint: "Runway = Kas ÷ pengeluaran per bulan.", solution: "120 ÷ 20 = 6 bulan." },
+            { type: "number", q: "Biaya tetap Rp15jt/bulan, margin kontribusi Rp30.000/unit. Titik impas (unit)?", answer: 500, unit: "unit", hint: "Titik impas = Biaya Tetap ÷ Margin Kontribusi per unit.", solution: "15.000.000 ÷ 30.000 = 500 unit." },
+          ],
+          quiz: [
+            {
+              q: "Apa itu 'runway' sebuah bisnis?",
+              options: [
+                "Berapa bulan bisnis bisa bertahan dengan kas yang tersedia",
+                "Berapa lama waktu yang dibutuhkan hingga bisnis balik modal",
+                "Jumlah pelanggan yang dibutuhkan untuk mencapai titik impas",
+                "Batas waktu pelunasan utang yang disepakati dengan bank",
+              ],
+              answer: 0,
+              explain:
+                "Runway = Kas ÷ pengeluaran bulanan — daya tahan finansial bisnis.",
+            },
+            {
+              q: "Konsekuensi memilih pendanaan dari investor?",
+              options: [
+                "Mendapat modal besar, tapi melepas sebagian kepemilikan dan kendali",
+                "Mendapat modal besar, tapi wajib membayar bunga tetap setiap bulan",
+                "Mendapat modal kecil, tapi kepemilikan tetap utuh sepenuhnya",
+                "Mendapat modal tanpa syarat apa pun karena investor menanggung risiko",
+              ],
+              answer: 0,
+              explain:
+                "Modal investor ditukar dengan ekuitas (kepemilikan) dan sering sebagian kendali.",
+            },
+          ],
+        },
+        {
+          id: "acc-pro-studi",
+          title: "Studi Kasus Mendalam: Untung Tapi Krisis Kas",
+          duration: "12 menit",
+          content: `
+<p>Pelajaran paling mahal dalam bisnis: <b>untung di kertas tidak menjamin ada uang di kas.</b> Mari hitung sebuah skenario nyata.</p>
+
+<h3>Skenario: Toko Roti "Manis"</h3>
+<p>Bulan ini toko mencatat <b>laba Rp15 juta</b> — terdengar bagus! Tapi banyak penjualan dilakukan secara <b>kredit</b> (kafe langganan bayar belakangan), sehingga uang tunai belum masuk. Mari lihat kondisi kasnya:</p>
+<ul>
+  <li>Kas tersedia: <b>Rp30 juta</b></li>
+  <li>Pengeluaran tunai per bulan (gaji, bahan, sewa): <b>Rp25 juta</b></li>
+  <li>Piutang (penjualan kredit belum dibayar): <b>Rp40 juta</b></li>
+</ul>
+
+<h3>Coba sendiri — hitung "napas" (runway) tokonya 👇</h3>
+<div data-demo="js-playground">const kas = 30;                // juta
+const pengeluaranBulanan = 25; // juta
+const piutang = 40;            // penjualan kredit belum dibayar
+
+console.log("Laba di kertas: Rp15 jt (kelihatan sehat)");
+console.log("Tapi runway kas sekarang: " + (kas / pengeluaranBulanan).toFixed(1) + " bulan");
+
+// Jika piutang berhasil ditagih:
+const kasBaru = kas + piutang;
+console.log("Jika piutang Rp" + piutang + " jt tertagih, kas jadi Rp" + kasBaru + " jt");
+console.log("Runway baru: " + (kasBaru / pengeluaranBulanan).toFixed(1) + " bulan");
+console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
+
+<div class="callout warn">
+<b>Inti pelajaran:</b> runway hanya <b>1,2 bulan</b> meski laba "bagus". Jika piutang tak tertagih tepat waktu, toko bisa gagal bayar gaji walau untung. Solusinya: <b>kelola piutang</b> (tagih tepat waktu), jaga kas, dan jangan terlalu longgar memberi kredit.
+</div>
+
+<h3>Apa yang dilakukan pemilik cerdas</h3>
+<ul>
+  <li>Memantau <b>kas</b> seketat memantau laba.</li>
+  <li>Menetapkan tenggat & menagih <b>piutang</b> secara disiplin.</li>
+  <li>Menyiapkan <b>dana darurat</b> beberapa bulan biaya tetap.</li>
+</ul>
+`,
+          keyPoints: [
+            "Untung di kertas tidak sama dengan uang tunai di kas — penjualan kredit menambah laba, bukan kas.",
+            "Runway = Kas ÷ pengeluaran bulanan; bisa sangat pendek meski laba terlihat sehat.",
+            "Kelola piutang (tagih tepat waktu) dan siapkan dana darurat agar tidak krisis kas.",
+          ],
+          practice: [
+            { type: "number", q: "Kas Rp30jt, pengeluaran Rp25jt/bulan. Berapa runway-nya? (bulan, 1 desimal — tulis 1.2)", answer: 1.2, tol: 0.05, hint: "Runway = Kas ÷ pengeluaran bulanan.", solution: "30 ÷ 25 = 1,2 bulan." },
+            { type: "number", q: "Setelah piutang Rp40jt tertagih, kas jadi Rp70jt. Berapa runway barunya? (bulan, 1 desimal)", answer: 2.8, tol: 0.05, hint: "Runway = Kas baru ÷ pengeluaran bulanan.", solution: "70 ÷ 25 = 2,8 bulan." },
+          ],
+          quiz: [
+            {
+              q: "Mengapa toko bisa untung tapi tetap krisis kas?",
+              options: [
+                "Banyak penjualan kredit: labanya tercatat, tapi uang tunainya belum masuk",
+                "Harga jual yang terlalu murah membuat labanya sebenarnya negatif",
+                "Pajak penghasilan dipotong langsung dari kas toko setiap hari",
+                "Pemilik menarik laba lebih besar daripada yang tercatat di buku",
+              ],
+              answer: 0,
+              explain:
+                "Penjualan kredit menambah laba & piutang, tetapi belum menambah kas.",
+            },
+            {
+              q: "Tindakan paling tepat menghindari krisis kas?",
+              options: [
+                "Menagih piutang tepat waktu dan memantau kas seketat memantau laba",
+                "Menaikkan harga jual setinggi mungkin agar laba makin besar",
+                "Memperbanyak penjualan kredit agar pelanggan makin banyak",
+                "Menambah persediaan barang agar tidak pernah kehabisan stok",
+              ],
+              answer: 0,
+              explain:
+                "Disiplin menagih piutang & memantau kas menjaga likuiditas bisnis.",
+            },
+          ],
+        },
+      ],
+    },
+    /* ---------------- MODUL 14: DUNIA INVESTASI & PENGELOLAAN DANA ---------------- */
     {
       id: "acc-investasi",
       level: "Investasi",
       title: "Dunia Investasi & Pengelolaan Dana",
-      summary: "Mengenal pelaku industri: public equity, reksa dana/ETF, hedge fund, private equity — beserta biaya, bias, & konflik kepentingannya.",
+      summary: "Mengenal pelaku industri: public equity, reksa dana/ETF, hedge fund, private equity — beserta biaya, bias, konflik kepentingan, dan capital allocator institusional.",
       lessons: [
         {
           id: "acc-inv-1",
@@ -4769,7 +5624,7 @@ Biasanya jawabannya: ROE-nya rendah karena biaya dananya mahal (CASA rendah), at
 </ul>
 
 <div class="callout warn">
-<b>Ketimpangan yang harus disadari:</b> <b>management fee tetap dibayar meski dana merugi</b>. Artinya manajer tetap dapat penghasilan dari <b>besarnya dana</b>, bukan semata dari hasilmu. Ini akar konflik kepentingan yang kita bahas di pelajaran terakhir.
+<b>Ketimpangan yang harus disadari:</b> <b>management fee tetap dibayar meski dana merugi</b>. Artinya manajer tetap dapat penghasilan dari <b>besarnya dana</b>, bukan semata dari hasilmu. Ini akar konflik kepentingan yang kita bahas di pelajaran Konflik Kepentingan.
 </div>
 
 <div class="callout">
@@ -4846,7 +5701,7 @@ Biasanya jawabannya: ROE-nya rendah karena biaya dananya mahal (CASA rendah), at
 </table>
 
 <div class="callout">
-<b>Kaitannya dengan yang sudah kamu pelajari:</b> PE memakai <b>DCF</b> & analisis <b>arus kas</b> untuk menilai target, lalu memperbaiki <b>ROIC</b> dan <b>alokasi modal</b>-nya. Persis kerangka yang kamu kuasai di modul sebelumnya.
+<b>Kaitannya dengan yang sudah kamu pelajari:</b> PE memakai <b>DCF</b> & analisis <b>arus kas</b> untuk menilai target, lalu memperbaiki <b>ROIC</b> dan <b>alokasi modal</b>-nya. Persis kerangka yang kamu kuasai di modul-modul sebelumnya.
 </div>
 `,
           keyPoints: [
@@ -4975,7 +5830,7 @@ Riset jangka panjang (mis. laporan <b>SPIVA</b> dari S&amp;P) secara konsisten m
           title: "Konflik Kepentingan & Realitas untuk Orang Biasa",
           duration: "12 menit",
           content: `
-<p>Penutup modul: memahami <b>insentif</b> pihak yang menawarkan produk keuangan kepadamu.</p>
+<p>Pelajaran ini: memahami <b>insentif</b> pihak yang menawarkan produk keuangan kepadamu.</p>
 
 <h3>Aturan emas: ikuti alur uangnya</h3>
 <div class="callout">
@@ -5006,10 +5861,6 @@ Hedge fund &amp; private equity <b>umumnya tidak bisa diakses</b> masyarakat umu
 
 <div class="callout warn">
 <b>Penutup yang jujur:</b> modul ini <b>tidak</b> mengajarimu memilih produk investasi tertentu, dan bukan saran finansial. Tujuannya membuatmu <b>paham cara industri ini bekerja</b> — supaya kamu bisa bertanya dengan tepat, membaca biaya dengan teliti, dan tidak mudah dibujuk janji manis. Untuk keputusan nyata, pertimbangkan penasihat keuangan <b>berizin</b>.
-</div>
-
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu telah menuntaskan jalur akuntansi secara penuh: dari mencatat uang masuk-keluar, membaca laporan, menilai bisnis &amp; risikonya, sampai memahami industri yang mengelola uang dunia.
 </div>
 `,
           keyPoints: [
@@ -5191,935 +6042,12 @@ Bedanya hanya nol di belakang angkanya.
         },
       ],
     },
-
-    /* ---------------- LEVEL MATEMATIKA ---------------- */
-    {
-      id: "acc-matematika",
-      level: "Matematika",
-      title: "Matematika Keuangan",
-      summary: "Rumus inti keuangan: persen & CAGR, nilai waktu uang, NPV & IRR, anuitas & perpetuitas.",
-      lessons: [
-        {
-          id: "acc-mat-0",
-          title: "Membaca Simbol Matematika Keuangan",
-          duration: "13 menit",
-          content: `
-<p>Rumus keuangan penuh singkatan: PV, FV, r, n, CF, PMT. Kelihatannya rumit — padahal itu cuma <b>singkatan kata biasa</b>. Mari kita bongkar satu per satu.</p>
-
-<h3>1. Singkatan yang paling sering muncul</h3>
-<table class="tbl">
-  <tr><th>Simbol</th><th>Kepanjangan</th><th>Artinya dalam bahasa sehari-hari</th></tr>
-  <tr><td><b>PV</b></td><td>Present Value</td><td><b>Nilai sekarang</b> — berapa nilainya hari ini</td></tr>
-  <tr><td><b>FV</b></td><td>Future Value</td><td><b>Nilai nanti</b> — berapa nilainya di masa depan</td></tr>
-  <tr><td><b>r</b></td><td>rate</td><td><b>Tingkat bunga/return</b> per periode. Ditulis desimal: 10% = <b>0,10</b></td></tr>
-  <tr><td><b>n</b></td><td>number</td><td><b>Jumlah periode</b> (biasanya tahun)</td></tr>
-  <tr><td><b>CF</b></td><td>Cash Flow</td><td><b>Arus kas</b> — uang masuk/keluar</td></tr>
-  <tr><td><b>CFₜ</b></td><td>Cash Flow at t</td><td>Arus kas <b>pada tahun ke-t</b> (angka kecil = penunjuk waktu)</td></tr>
-  <tr><td><b>PMT</b></td><td>Payment</td><td><b>Cicilan/setoran tetap</b> tiap periode</td></tr>
-  <tr><td><b>g</b></td><td>growth</td><td><b>Tingkat pertumbuhan</b> per periode</td></tr>
-</table>
-
-<div class="callout">
-<b>Kunci utamanya:</b> huruf-huruf itu <b>bukan sihir</b> — cuma <b>singkatan</b> supaya rumus tidak kepanjangan. "PV" lebih ringkas daripada menulis "nilai sekarang" berulang kali.
-</div>
-
-<h3>2. Angka kecil di bawah: CFₜ, a₁, a₂</h3>
-<div class="callout">
-Angka atau huruf kecil di bawah (disebut <b>subskrip</b>) hanyalah <b>penunjuk urutan</b>.
-<ul>
-  <li><b>CF₁</b> = arus kas tahun <b>ke-1</b></li>
-  <li><b>CF₂</b> = arus kas tahun <b>ke-2</b></li>
-  <li><b>CFₜ</b> = arus kas tahun <b>ke-t</b> (t = tahun keberapa pun)</li>
-</ul>
-Jadi kalau melihat CFₜ, bacalah: <i>"arus kas pada tahun ke-berapa pun yang sedang kita bicarakan"</i>.
-</div>
-
-<h3>3. Pangkat: (1+r)ⁿ</h3>
-<div class="callout">
-<b>(1+r)ⁿ</b> artinya "(1+r) dikalikan dirinya sendiri sebanyak n kali". Inilah <b>rumus bunga majemuk</b>.
-<br><br>Contoh dengan r = 10% (0,10) selama 3 tahun:<br>
-(1 + 0,10)³ = 1,1 × 1,1 × 1,1 = <b>1,331</b><br>
-Artinya uangmu menjadi <b>1,331 kali lipat</b> setelah 3 tahun.
-</div>
-
-<h3>Coba sendiri — lihat arti tiap simbol 👇</h3>
-<div data-demo="js-playground">// Membongkar rumus FV = PV x (1 + r)^n
-const PV = 1000000;  // Present Value  = nilai SEKARANG (Rp1 juta)
-const r  = 0.10;     // rate           = bunga 10% per tahun (ditulis 0,10)
-const n  = 3;        // number         = jumlah tahun
-
-const faktor = Math.pow(1 + r, n);   // (1 + r) pangkat n
-const FV = PV * faktor;              // Future Value = nilai NANTI
-
-console.log("PV (nilai sekarang) = Rp" + PV.toLocaleString("id-ID"));
-console.log("r  (bunga)          = " + (r * 100) + "% per tahun");
-console.log("n  (jumlah tahun)   = " + n);
-console.log("-----");
-console.log("Faktor (1+r)^n      = " + faktor.toFixed(3));
-console.log("FV (nilai nanti)    = Rp" + Math.round(FV).toLocaleString("id-ID"));
-console.log("-----");
-console.log("Rumusnya cuma berkata: uang sekarang dikali faktor pertumbuhan.");</div>
-
-<h3>4. Simbol umum lainnya</h3>
-<table class="tbl">
-  <tr><th>Simbol</th><th>Artinya</th></tr>
-  <tr><td><b>Σ</b></td><td>"Jumlahkan semuanya" (sigma). Σ CFₜ = jumlahkan seluruh arus kas</td></tr>
-  <tr><td><b>÷</b> atau <b>/</b></td><td>Bagi</td></tr>
-  <tr><td><b>%</b></td><td>Per seratus. 25% = 25/100 = 0,25</td></tr>
-  <tr><td><b>≈</b></td><td>Kira-kira (tidak persis)</td></tr>
-  <tr><td><b>Δ</b></td><td>Perubahan/selisih (delta)</td></tr>
-</table>
-
-<div class="callout warn">
-<b>Jebakan paling umum:</b> lupa mengubah persen jadi desimal. Dalam rumus, <b>10% harus ditulis 0,10</b> — bukan 10. Kalau hasilnya terasa aneh (kelewat besar), biasanya ini penyebabnya.
-</div>
-
-<h3>5. Membaca rumus panjang</h3>
-<div class="callout">
-<b>PV = CFₜ ÷ (1+r)ᵗ</b><br>
-→ <i>"Nilai sekarang = arus kas tahun ke-t, dibagi faktor pertumbuhan selama t tahun"</i><br>
-→ Sederhananya: <b>"uang masa depan dikecilkan agar setara nilainya hari ini"</b>.
-<br><br>Selalu terjemahkan simbol ke kata dulu — rumusnya akan terasa masuk akal.
-</div>
-`,
-          keyPoints: [
-            "PV = nilai sekarang, FV = nilai nanti, r = tingkat bunga (desimal), n = jumlah periode.",
-            "CF = arus kas; subskrip (CFₜ) hanyalah penunjuk 'tahun ke-berapa'.",
-            "(1+r)ⁿ = faktor bunga majemuk: (1+r) dikali dirinya n kali.",
-            "Persen wajib diubah jadi desimal dalam rumus: 10% ditulis 0,10 — kesalahan paling umum.",
-            "Σ berarti jumlahkan semuanya; terjemahkan tiap simbol jadi kata sebelum membaca rumus.",
-          ],
-          practice: [
-            { type: "number", q: "Bunga 8% harus ditulis sebagai berapa dalam rumus? (bentuk desimal)", answer: 0.08, tol: 0.005, hint: "Bagi dengan 100.", solution: "8 ÷ 100 = 0,08." },
-            { type: "number", q: "Berapa nilai (1 + 0,10)³? (3 desimal)", answer: 1.331, tol: 0.005, hint: "1,1 × 1,1 × 1,1.", solution: "1,1³ = 1,331." },
-          ],
-          quiz: [
-            {
-              q: "Apa arti 'PV' dan 'FV'?",
-              options: [
-                "Present Value (nilai sekarang) & Future Value (nilai nanti)",
-                "Profit Value (nilai laba) & Fixed Value (nilai tetap)",
-                "Price Value (nilai harga) & Face Value (nilai nominal)",
-                "Past Value (nilai lalu) & Final Value (nilai akhir)",
-              ],
-              answer: 0,
-              explain: "PV = nilai hari ini, FV = nilai di masa depan.",
-            },
-            {
-              q: "Bunga 12% ditulis bagaimana di dalam rumus?",
-              options: ["12", "0,12", "1,2", "120"],
-              answer: 1,
-              explain: "Persen harus diubah ke desimal: 12 ÷ 100 = 0,12.",
-            },
-            {
-              q: "Apa arti subskrip pada CFₜ?",
-              options: [
-                "Penunjuk waktu: arus kas pada tahun ke-t",
-                "Pangkat: arus kas dipangkatkan dengan t",
-                "Pengali: arus kas dikali tarif pajak t",
-                "Satuan: arus kas dalam ribuan rupiah",
-              ],
-              answer: 0,
-              explain: "Angka/huruf kecil di bawah adalah penunjuk urutan periode.",
-            },
-          ],
-        },
-        {
-          id: "acc-mat-1",
-          title: "Persen, Rasio & CAGR",
-          duration: "12 menit",
-          content: `
-<p>Kita mulai dari yang paling dasar, lalu naik ke rumus pertumbuhan yang sering disalahhitung orang.</p>
-
-<div data-diagram="bar" data-bars="Kenaikan tahun 1:10|Kenaikan tahun 2:11|Kenaikan tahun 3:12.1" data-unit=" juta" data-caption="Modal Rp100 juta tumbuh 10% per tahun — persentasenya sama, tapi kenaikannya membesar. Itulah bunga berbunga."></div>
-
-
-<h3>Persen &amp; perubahan persen</h3>
-<div class="callout">
-<b>Persen</b> = per seratus. <b>Perubahan persen</b> = (Baru − Lama) ÷ Lama × 100%.<br>
-Contoh: dari 200 jadi 250 → (250 − 200) ÷ 200 × 100% = <b>25%</b>.
-</div>
-
-<div class="callout warn">
-<b>Jebakan persen (penting!):</b> turun <b>50%</b> lalu naik <b>50%</b> <b>TIDAK</b> kembali ke awal.<br>
-100 → turun 50% → 50 → naik 50% → <b>75</b>, bukan 100. Untuk kembali ke 100 dari 50, butuh kenaikan <b>100%</b>. Inilah kenapa kerugian besar sangat sulit dipulihkan.
-</div>
-
-<h3>CAGR — pertumbuhan rata-rata per tahun</h3>
-<p>Kalau nilai tumbuh dari Rp100 juta jadi Rp200 juta dalam 5 tahun, banyak orang menghitung 100% ÷ 5 = 20% per tahun. <b>Itu keliru</b>, karena pertumbuhan bersifat <b>majemuk</b>.</p>
-
-<div class="callout">
-<b>Rumus CAGR:</b> CAGR = (Nilai Akhir ÷ Nilai Awal)<sup>(1 ÷ jumlah tahun)</sup> − 1
-</div>
-
-<h3>Coba sendiri — hitung CAGR 👇</h3>
-<div data-demo="js-playground">// CAGR: pertumbuhan majemuk rata-rata per tahun
-const awal = 100000000;   // Rp100 juta
-const akhir = 200000000;  // Rp200 juta
-const tahun = 5;
-
-const cagr = (Math.pow(akhir / awal, 1 / tahun) - 1) * 100;
-
-console.log("Dari Rp" + awal.toLocaleString("id-ID") + " menjadi Rp" + akhir.toLocaleString("id-ID"));
-console.log("Dalam " + tahun + " tahun");
-console.log("CAGR = " + cagr.toFixed(2) + "% per tahun");
-console.log("-----");
-console.log("Perhatikan: BUKAN 100% / 5 = 20%. Pertumbuhan itu majemuk.");
-console.log("Bukti: 100jt dikali 1,1487 sebanyak 5 kali = 200jt.");</div>
-
-<div class="callout">
-<b>Kenapa CAGR berguna:</b> ia meratakan naik-turun menjadi satu angka, sehingga kamu bisa <b>membandingkan</b> pertumbuhan dua bisnis/investasi dengan adil, walaupun jalurnya berbeda-beda.
-</div>
-`,
-          keyPoints: [
-            "Perubahan persen = (Baru − Lama) ÷ Lama × 100%.",
-            "Jebakan: turun 50% lalu naik 50% tidak kembali ke awal (100 → 50 → 75).",
-            "CAGR = (Akhir ÷ Awal)^(1/tahun) − 1 — pertumbuhan majemuk, bukan pembagian sederhana.",
-            "CAGR meratakan naik-turun sehingga pertumbuhan bisa dibandingkan adil.",
-          ],
-          practice: [
-            { type: "number", q: "Penjualan naik dari 200 ke 250. Berapa persen kenaikannya?", answer: 25, tol: 0.5, hint: "(250 − 200) ÷ 200 × 100%.", solution: "50 ÷ 200 × 100% = 25%." },
-            { type: "number", q: "Nilai turun 50% dari 100, lalu naik 50%. Berapa nilai akhirnya?", answer: 75, tol: 0.5, hint: "100 → 50, lalu 50 + 50% dari 50.", solution: "50 × 1,5 = 75 — tidak kembali ke 100." },
-          ],
-          quiz: [
-            {
-              q: "Nilai turun 50% lalu naik 50%. Hasilnya?",
-              options: [
-                "Kembali ke nilai awal",
-                "Masih 25% di bawah nilai awal",
-                "Lebih tinggi dari awal",
-                "Menjadi nol",
-              ],
-              answer: 1,
-              explain: "100 → 50 → 75; kenaikan dihitung dari basis yang lebih kecil.",
-            },
-            {
-              q: "Rumus CAGR yang benar?",
-              options: [
-                "(Akhir ÷ Awal) pangkat (1 ÷ tahun), lalu dikurangi 1",
-                "(Akhir − Awal) ÷ Awal, lalu dibagi jumlah tahun",
-                "(Akhir ÷ Awal) dikali jumlah tahun, lalu dikurangi 1",
-                "(Akhir + Awal) ÷ 2, lalu dibagi jumlah tahun",
-              ],
-              answer: 0,
-              explain: "CAGR memperhitungkan efek majemuk, bukan rata-rata sederhana.",
-            },
-          ],
-        },
-        {
-          id: "acc-mat-2",
-          title: "Nilai Waktu Uang: FV & PV",
-          duration: "13 menit",
-          content: `
-<p>Ini rumus paling fundamental dalam keuangan — dasar dari DCF, kredit, tabungan, dan hampir semua keputusan investasi.</p>
-
-<div data-diagram="timeline" data-events="Sekarang::Rp100 juta|1 tahun::setara Rp110 jt|2 tahun::setara Rp121 jt|3 tahun::setara Rp133 jt" data-caption="Uang hari ini lebih berharga daripada nominal sama di masa depan (asumsi bunga 10%/tahun)"></div>
-
-
-<h3>Fundamental: uang punya "harga waktu"</h3>
-<div class="callout">
-Rp100 hari ini <b>lebih berharga</b> daripada Rp100 tahun depan, karena uang hari ini bisa <b>bekerja</b> (ditabung/diinvestasikan) dan bertumbuh. Karena itu setiap perbandingan uang antarwaktu harus disesuaikan.
-</div>
-
-<h3>Dua rumus kembar</h3>
-<table class="tbl">
-  <tr><th>Arah</th><th>Rumus</th><th>Menjawab</th></tr>
-  <tr><td><b>Future Value</b> (ke depan)</td><td>FV = PV × (1 + r)<sup>n</sup></td><td>"Uangku sekarang jadi berapa nanti?"</td></tr>
-  <tr><td><b>Present Value</b> (ke belakang)</td><td>PV = FV ÷ (1 + r)<sup>n</sup></td><td>"Uang nanti setara berapa sekarang?"</td></tr>
-</table>
-<p>Keterangan: <b>r</b> = tingkat bunga/diskon per periode, <b>n</b> = jumlah periode.</p>
-
-<h3>Contoh dua arah</h3>
-<pre class="code">FV: Rp10 juta, bunga 10%, 3 tahun
-    FV = 10.000.000 × (1,1)³ = 10.000.000 × 1,331 = Rp13.310.000
-
-PV: Rp13.310.000 tiga tahun lagi, diskon 10%
-    PV = 13.310.000 ÷ 1,331 = Rp10.000.000  (kembali ke asal)</pre>
-
-<h3>Bunga sederhana vs majemuk</h3>
-<table class="tbl">
-  <tr><th></th><th>Sederhana</th><th>Majemuk</th></tr>
-  <tr><td>Rumus</td><td>PV × (1 + r×n)</td><td>PV × (1 + r)<sup>n</sup></td></tr>
-  <tr><td>Bunga dihitung dari</td><td>Pokok saja</td><td>Pokok + bunga sebelumnya</td></tr>
-  <tr><td>Rp10jt, 10%, 10 thn</td><td>Rp20 juta</td><td><b>Rp25,9 juta</b></td></tr>
-</table>
-
-<div class="callout">
-<b>Aturan 72 (trik cepat):</b> untuk memperkirakan berapa lama uang menjadi <b>dua kali lipat</b>, bagi <b>72</b> dengan persen bunganya.<br>
-Bunga 9% → 72 ÷ 9 = <b>8 tahun</b>. Bunga 6% → 12 tahun.
-</div>
-
-<div class="callout warn">
-<b>Sisi gelapnya:</b> rumus yang sama bekerja pada <b>utang</b>. Bunga pinjaman 24%/tahun berarti utangmu berlipat ganda dalam sekitar <b>3 tahun</b> (72 ÷ 24) bila tak dibayar. Bunga majemuk adalah teman terbaik penabung — dan musuh terberat pengutang.
-</div>
-`,
-          keyPoints: [
-            "FV = PV × (1 + r)^n; PV = FV ÷ (1 + r)^n — dua arah dari konsep yang sama.",
-            "Bunga majemuk jauh melampaui bunga sederhana karena bunga ikut berbunga.",
-            "Aturan 72: waktu berlipat ganda ≈ 72 ÷ persen bunga.",
-            "Rumus yang sama berlaku untuk utang — bunga tinggi melipatgandakan utang dengan cepat.",
-          ],
-          practice: [
-            { type: "number", q: "Rp10.000.000 dibungakan 10% selama 3 tahun (majemuk). Berapa nilainya nanti? (Rupiah)", answer: 13310000, tol: 10000, hint: "FV = 10.000.000 × (1,1)³.", solution: "10.000.000 × 1,331 = Rp13.310.000." },
-            { type: "number", q: "Dengan aturan 72, berapa tahun uang berlipat ganda pada bunga 9%?", answer: 8, tol: 0.3, unit: "tahun", hint: "72 ÷ 9.", solution: "72 ÷ 9 = 8 tahun." },
-          ],
-          quiz: [
-            {
-              q: "Rumus Present Value (nilai sekarang)?",
-              options: [
-                "PV = FV × (1 + r)^n",
-                "PV = FV ÷ (1 + r)^n",
-                "PV = FV − r",
-                "PV = FV × n",
-              ],
-              answer: 1,
-              explain: "Untuk membawa uang masa depan ke nilai kini, kita membaginya (mendiskon).",
-            },
-            {
-              q: "Kenapa bunga majemuk jauh melampaui bunga sederhana dalam jangka panjang?",
-              options: [
-                "Bunga ikut berbunga, karena dihitung dari pokok ditambah bunga sebelumnya",
-                "Bunga majemuk selalu memakai tarif lebih tinggi dari bunga sederhana",
-                "Bunga majemuk dibayarkan di muka sehingga bisa langsung diinvestasikan",
-                "Bunga majemuk tidak dikenai pajak sehingga hasil bersihnya lebih besar",
-              ],
-              answer: 0,
-              explain: "Efek majemuk membuat pertumbuhan makin cepat seiring waktu.",
-            },
-          ],
-        },
-        {
-          id: "acc-mat-3",
-          title: "NPV & IRR — Matematika Keputusan Investasi",
-          duration: "13 menit",
-          content: `
-<p>Bagaimana memutuskan sebuah proyek layak dijalankan? Ini rumus yang dipakai profesional keuangan.</p>
-
-<h3>NPV (Net Present Value)</h3>
-<div class="callout">
-<b>NPV</b> = jumlah dari semua arus kas masa depan yang sudah <b>didiskon</b>, dikurangi <b>investasi awal</b>.<br><br>
-<b>NPV = Σ [ CF<sub>t</sub> ÷ (1 + r)<sup>t</sup> ] − Investasi Awal</b><br><br>
-Keterangan: <b>CF<sub>t</sub></b> = arus kas pada tahun ke-t, <b>r</b> = tingkat diskon, <b>t</b> = tahun.
-</div>
-
-<table class="tbl">
-  <tr><th>Hasil</th><th>Artinya</th><th>Keputusan</th></tr>
-  <tr><td><b>NPV positif</b></td><td>Proyek menghasilkan lebih dari biaya modalnya</td><td class="ok-cell">Layak</td></tr>
-  <tr><td><b>NPV nol</b></td><td>Impas terhadap biaya modal</td><td>Netral</td></tr>
-  <tr><td><b>NPV negatif</b></td><td>Menghancurkan nilai</td><td>Tolak</td></tr>
-</table>
-
-<h3>Coba sendiri — hitung NPV 👇</h3>
-<div data-demo="js-playground">// NPV: apakah proyek ini layak?
-const investasiAwal = 100000000;   // Rp100 juta keluar sekarang
-const arusKas = [30000000, 40000000, 50000000, 30000000];  // tahun 1-4
-const diskon = 0.10;               // 10% per tahun
-
-let npv = 0 - investasiAwal;
-arusKas.forEach(function(cf, i){
-  const tahun = i + 1;
-  const nilaiKini = cf / Math.pow(1 + diskon, tahun);
-  npv = npv + nilaiKini;
-  console.log("Tahun " + tahun + ": Rp" + cf.toLocaleString("id-ID") + " -> nilai kini Rp" + Math.round(nilaiKini).toLocaleString("id-ID"));
-});
-
-console.log("-----");
-console.log("NPV = Rp" + Math.round(npv).toLocaleString("id-ID"));
-if (npv > 0) {
-  console.log("NPV POSITIF -> proyek menambah nilai.");
-} else {
-  console.log("NPV NEGATIF -> proyek menghancurkan nilai.");
-}
-console.log("Coba naikkan diskon jadi 0.25 lalu jalankan lagi.");</div>
-
-<h3>IRR (Internal Rate of Return)</h3>
-<div class="callout">
-<b>IRR</b> = tingkat diskon <b>r</b> yang membuat <b>NPV = 0</b>. Ia menjawab: <i>"proyek ini sebenarnya memberi imbal hasil berapa persen per tahun?"</i><br><br>
-Aturannya: <b>IRR lebih tinggi dari biaya modal → layak.</b>
-</div>
-<p>IRR tidak bisa dihitung langsung dengan satu rumus — biasanya dicari lewat <b>coba-coba</b> (atau otomatis oleh spreadsheet).</p>
-
-<div class="callout warn">
-<b>Kelemahan IRR:</b> bisa menyesatkan saat membandingkan proyek berukuran sangat berbeda. Proyek kecil ber-IRR 50% (untung Rp5 juta) kalah bermanfaat dibanding proyek besar ber-IRR 20% (untung Rp500 juta). <b>Untuk memilih, NPV lebih dapat diandalkan.</b>
-</div>
-`,
-          keyPoints: [
-            "NPV = Σ [CFt ÷ (1+r)^t] − investasi awal; NPV positif = layak.",
-            "IRR = tingkat diskon yang membuat NPV = 0; layak bila IRR di atas biaya modal.",
-            "IRR dicari lewat coba-coba, tidak dengan satu rumus langsung.",
-            "IRR bisa menyesatkan pada proyek berbeda ukuran — NPV lebih andal untuk memilih.",
-          ],
-          practice: [
-            { type: "number", q: "Arus kas Rp110 juta diterima 1 tahun lagi, diskon 10%. Berapa nilai kininya? (Rupiah)", answer: 100000000, tol: 100000, hint: "PV = 110.000.000 ÷ 1,1.", solution: "110.000.000 ÷ 1,1 = Rp100.000.000." },
-            { type: "choice", q: "Sebuah proyek punya NPV = −Rp20 juta. Keputusan yang tepat?", options: ["Jalankan, karena IRR pasti tinggi", "Tolak — proyek menghancurkan nilai", "Jalankan setengahnya", "Tunggu tanpa alasan"], answer: 1, hint: "Apa arti NPV negatif?", solution: "NPV negatif berarti hasilnya tak menutupi biaya modal → tolak." },
-          ],
-          quiz: [
-            {
-              q: "Apa arti NPV positif?",
-              options: [
-                "Proyek menghasilkan lebih dari biaya modalnya, sehingga layak dijalankan",
-                "Proyek pasti balik modal dalam waktu kurang dari satu tahun",
-                "Proyek menghasilkan laba akuntansi pada tahun pertamanya",
-                "Arus kas proyek tidak pernah bernilai negatif pada tahun mana pun",
-              ],
-              answer: 0,
-              explain: "NPV positif berarti nilai kini arus kas melebihi investasi awal.",
-            },
-            {
-              q: "Apa definisi IRR?",
-              options: [
-                "Tingkat diskon yang membuat NPV sama dengan nol",
-                "Tingkat bunga pinjaman yang dipakai membiayai proyek",
-                "Rata-rata imbal hasil tahunan tanpa memperhitungkan waktu",
-                "Tingkat inflasi yang diperkirakan selama umur proyek",
-              ],
-              answer: 0,
-              explain: "IRR adalah imbal hasil implisit sebuah proyek.",
-            },
-          ],
-        },
-        {
-          id: "acc-mat-4",
-          title: "Anuitas, Perpetuitas & Terminal Value",
-          duration: "13 menit",
-          content: `
-<p>Rumus penutup: cara menghitung nilai dari <b>arus kas berulang</b> — dipakai untuk cicilan, pensiun, obligasi, dan bagian terpenting DCF.</p>
-
-<h3>Anuitas — pembayaran tetap selama n periode</h3>
-<div class="callout">
-<b>PV Anuitas = PMT × [ 1 − (1 + r)<sup>−n</sup> ] ÷ r</b><br><br>
-Keterangan: <b>PMT</b> = pembayaran tiap periode, <b>r</b> = bunga per periode, <b>n</b> = jumlah periode.
-</div>
-<p><b>Kegunaan sehari-hari:</b> rumus inilah yang dipakai bank untuk menghitung <b>cicilan KPR</b> atau kredit kendaraan — dan yang bisa kamu pakai untuk mengecek apakah cicilan yang ditawarkan masuk akal.</p>
-
-<h3>Perpetuitas — pembayaran tetap SELAMANYA</h3>
-<div class="callout">
-<b>PV Perpetuitas = PMT ÷ r</b><br><br>
-Terlihat mengejutkan: arus kas <b>tak terbatas</b> ternyata punya nilai <b>terbatas</b>! Sebabnya, uang yang sangat jauh di masa depan didiskon sampai nilainya mendekati nol.
-</div>
-<pre class="code">Contoh: Rp10 juta per tahun selamanya, diskon 10%
-        PV = 10.000.000 ÷ 0,10 = Rp100.000.000</pre>
-
-<h3>Gordon Growth — perpetuitas yang bertumbuh</h3>
-<div class="callout">
-Kalau arus kasnya <b>tumbuh</b> sebesar <b>g</b> per tahun:<br><br>
-<b>PV = CF × (1 + g) ÷ (r − g)</b><br><br>
-Inilah rumus <b>Terminal Value</b> pada DCF — cara menghitung nilai bisnis <b>setelah</b> periode ramalan rinci berakhir.
-</div>
-
-<div class="callout warn">
-<b>Bahaya terbesar dalam valuasi:</b> perhatikan penyebut <b>(r − g)</b>. Kalau <b>g</b> mendekati <b>r</b>, penyebutnya mendekati nol dan nilainya <b>meledak jadi tak masuk akal</b>. Dan kalau g lebih besar dari r, rumusnya rusak total.
-<br><br><b>Aturan disiplin:</b> pertumbuhan abadi (<b>g</b>) tidak boleh melebihi pertumbuhan ekonomi jangka panjang — tak ada perusahaan yang bisa tumbuh lebih cepat dari dunia <b>selamanya</b>. Banyak valuasi terlalu optimistis lahir dari kesalahan di titik ini.
-</div>
-
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu kini menguasai matematika keuangan inti: persen &amp; CAGR, nilai waktu uang, NPV &amp; IRR, serta anuitas &amp; perpetuitas — rumus yang dipakai bank, analis, dan pemilik bisnis setiap hari.
-</div>
-`,
-          keyPoints: [
-            "PV Anuitas = PMT × [1 − (1+r)^−n] ÷ r — dipakai menghitung cicilan KPR/kredit.",
-            "PV Perpetuitas = PMT ÷ r — arus kas tak terbatas punya nilai terbatas karena didiskon.",
-            "Gordon Growth: PV = CF × (1+g) ÷ (r−g) — dasar Terminal Value pada DCF.",
-            "Bahaya: bila g mendekati r, nilainya meledak; g tak boleh melebihi pertumbuhan ekonomi jangka panjang.",
-          ],
-          practice: [
-            { type: "number", q: "Arus kas Rp10 juta per tahun selamanya, diskon 10%. Berapa nilai sekarangnya? (Rupiah)", answer: 100000000, tol: 100000, hint: "PV = PMT ÷ r = 10.000.000 ÷ 0,10.", solution: "10.000.000 ÷ 0,1 = Rp100.000.000." },
-            { type: "number", q: "Arus kas Rp10 juta, tumbuh 5%/tahun, diskon 10%. Berapa nilainya? (rumus Gordon, Rupiah)", answer: 210000000, tol: 2000000, hint: "PV = CF × (1+g) ÷ (r−g) = 10jt × 1,05 ÷ 0,05.", solution: "10.500.000 ÷ 0,05 = Rp210.000.000." },
-          ],
-          quiz: [
-            {
-              q: "Kenapa arus kas 'selamanya' bisa punya nilai terbatas?",
-              options: [
-                "Uang yang sangat jauh di masa depan didiskon hingga nilainya mendekati nol",
-                "Arus kas selamanya dibatasi hukum hingga maksimal lima puluh tahun",
-                "Arus kas selalu berhenti tumbuh setelah beberapa tahun pertama",
-                "Rumus keuangan tidak mampu menghitung jumlah yang tak terhingga",
-              ],
-              answer: 0,
-              explain: "Diskonto membuat kontribusi arus kas jauh menjadi sangat kecil.",
-            },
-            {
-              q: "Apa bahaya terbesar rumus Gordon Growth PV = CF(1+g) ÷ (r−g)?",
-              options: [
-                "Bila g mendekati r, penyebutnya mendekati nol & nilainya meledak",
-                "Bila g negatif, rumusnya tidak bisa dipakai sama sekali",
-                "Bila r terlalu besar, hasilnya selalu bernilai negatif",
-                "Bila CF kecil, hasilnya selalu lebih besar dari harga pasar",
-              ],
-              answer: 0,
-              explain:
-                "Asumsi pertumbuhan abadi yang terlalu tinggi menghasilkan valuasi menyesatkan.",
-            },
-          ],
-        },
-      ],
-    },
-
-    /* ---------------- LEVEL AUDIT (BIAYA, KONTROL & KECURANGAN) ---------------- */
-    {
-      id: "acc-audit",
-      level: "Audit",
-      title: "Akuntansi Biaya, Kontrol & Deteksi Kecurangan",
-      summary: "Sisi pengendalian: menghitung biaya produk, anggaran & varians, pengendalian internal, mendeteksi manipulasi laporan, dan peran auditor.",
-      lessons: [
-        {
-          id: "acc-aud-1",
-          title: "Akuntansi Biaya & Activity-Based Costing",
-          duration: "13 menit",
-          content: `
-<p>Pertanyaan yang terdengar sederhana tapi sering dijawab salah: <b>"berapa sebenarnya biaya membuat satu produk ini?"</b> Jawaban yang keliru membuat perusahaan menjual produk yang sebenarnya merugi.</p>
-
-<h3>Fundamental: dua jenis biaya (pengingat)</h3>
-<ul>
-  <li><b>Biaya langsung</b> — jelas milik satu produk: bahan baku, upah pekerja produksi.</li>
-  <li><b>Overhead</b> — dipakai bersama: listrik pabrik, sewa, gaji supervisor. <b>Inilah yang sulit dibagi.</b></li>
-</ul>
-
-<h3>Tiga cara menghitung biaya produk</h3>
-<table class="tbl">
-  <tr><th>Metode</th><th>Cocok untuk</th><th>Cara kerja</th></tr>
-  <tr><td><b>Job Order Costing</b></td><td>Produk unik per pesanan: kontraktor, percetakan custom, biro jasa</td><td>Biaya dikumpulkan <b>per pesanan</b></td></tr>
-  <tr><td><b>Process Costing</b></td><td>Produksi massal &amp; seragam: semen, minuman kemasan</td><td>Total biaya ÷ jumlah unit</td></tr>
-  <tr><td><b>Activity-Based Costing (ABC)</b></td><td>Produk beragam dengan pemakaian sumber daya berbeda</td><td>Overhead dibagi berdasarkan <b>aktivitas</b> yang benar-benar dipakai</td></tr>
-</table>
-
-<h3>Kenapa ABC ada? Masalah pembagian yang malas</h3>
-<div class="callout warn">
-<b>Cara lama:</b> semua overhead dibagi rata berdasarkan <b>satu pemicu</b> saja, biasanya jam kerja.
-<br><br><b>Masalahnya:</b> misal Produk A dibuat massal &amp; sederhana, Produk B dibuat sedikit tapi butuh <b>banyak penyetelan mesin, inspeksi, &amp; penanganan khusus</b>. Kalau overhead dibagi hanya berdasarkan jam kerja, <b>Produk A ikut menanggung kerepotan yang disebabkan Produk B</b>.
-<br><br><b>Akibatnya fatal:</b> Produk A terlihat <b>kurang untung</b> (padahal untung), Produk B terlihat <b>untung</b> (padahal merugi). Perusahaan lalu mendorong penjualan produk yang salah.
-</div>
-
-<h3>Cara kerja ABC</h3>
-<ol>
-  <li>Identifikasi <b>aktivitas</b> yang memakan biaya: penyetelan mesin, inspeksi mutu, penanganan bahan, pengiriman.</li>
-  <li>Tentukan <b>pemicu biaya (cost driver)</b> tiap aktivitas: jumlah penyetelan, jumlah inspeksi, jumlah pengiriman.</li>
-  <li>Bebankan biaya ke produk <b>sesuai pemakaian nyatanya</b>.</li>
-</ol>
-
-<div class="callout">
-<b>Contoh:</b> biaya penyetelan mesin Rp100 juta/tahun untuk 200 kali penyetelan → <b>Rp500.000 per penyetelan</b>. Produk yang butuh 150 penyetelan menanggung Rp75 juta; produk yang butuh 50 penyetelan menanggung Rp25 juta. <b>Adil sesuai pemakaian.</b>
-</div>
-
-<div class="callout warn">
-<b>Harganya:</b> ABC lebih <b>akurat</b> tapi lebih <b>rumit &amp; mahal</b> diterapkan. Untuk usaha kecil dengan produk sejenis, metode sederhana sudah memadai. Pakai ABC saat produkmu beragam &amp; overhead-nya besar.
-</div>
-`,
-          keyPoints: [
-            "Biaya langsung mudah dilacak; overhead (dipakai bersama) sulit dibagi — di situlah letak masalahnya.",
-            "Job order costing untuk produk unik per pesanan; process costing untuk produksi massal seragam.",
-            "ABC membagi overhead berdasarkan aktivitas & pemicu biaya (cost driver) yang benar-benar dipakai.",
-            "Pembagian overhead yang malas membuat produk sederhana menanggung kerepotan produk rumit — laba per produk jadi menyesatkan.",
-            "ABC lebih akurat tapi lebih rumit; pakai saat produk beragam & overhead besar.",
-          ],
-          practice: [
-            { type: "number", q: "Biaya penyetelan mesin Rp100jt/tahun untuk 200 kali penyetelan. Berapa biaya per penyetelan? (Rupiah)", answer: 500000, tol: 1000, hint: "Total biaya ÷ jumlah pemicu.", solution: "100.000.000 ÷ 200 = Rp500.000." },
-            { type: "number", q: "Dengan tarif Rp500.000/penyetelan, berapa overhead yang dibebankan ke produk yang butuh 150 penyetelan? (juta)", answer: 75, tol: 0.5, unit: "jt", hint: "150 × Rp500.000.", solution: "150 × 500.000 = Rp75 juta." },
-          ],
-          quiz: [
-            {
-              q: "Apa masalah membagi seluruh overhead hanya berdasarkan jam kerja?",
-              options: [
-                "Produk sederhana ikut menanggung kerepotan produk rumit — labanya menyesatkan",
-                "Jam kerja tidak bisa dicatat secara akurat oleh perusahaan manufaktur mana pun",
-                "Aturan akuntansi melarang overhead dibagi berdasarkan jumlah jam kerja",
-                "Pembagian itu membuat total overhead perusahaan menjadi berlipat ganda",
-              ],
-              answer: 0,
-              explain:
-                "Pemicu tunggal mengabaikan perbedaan pemakaian sumber daya antar-produk.",
-            },
-            {
-              q: "Metode costing mana yang cocok untuk kontraktor bangunan (tiap proyek berbeda)?",
-              options: ["Process costing", "Job order costing", "FIFO", "Tidak perlu costing"],
-              answer: 1,
-              explain: "Job order costing mengumpulkan biaya per pesanan/proyek unik.",
-            },
-          ],
-        },
-        {
-          id: "acc-aud-2",
-          title: "Anggaran & Analisis Varians",
-          duration: "12 menit",
-          content: `
-<p>Anggaran bukan sekadar ramalan — ia <b>alat kendali</b>. Kekuatannya baru muncul saat kamu <b>membandingkan rencana dengan kenyataan</b>.</p>
-
-<h3>Fundamental: apa itu varians?</h3>
-<div class="callout">
-<b>Varians = Realisasi − Anggaran.</b> Sederhananya: <b>selisih antara yang terjadi dan yang direncanakan.</b>
-<br><br>Tapi hati-hati membacanya — tandanya <b>tidak selalu</b> berarti baik atau buruk:
-<ul>
-  <li><b>Menguntungkan (favorable)</b> — pendapatan <b>lebih tinggi</b> dari rencana, ATAU biaya <b>lebih rendah</b> dari rencana.</li>
-  <li><b>Merugikan (unfavorable)</b> — pendapatan <b>lebih rendah</b>, ATAU biaya <b>lebih tinggi</b>.</li>
-</ul>
-</div>
-
-<h3>Contoh</h3>
-<table class="tbl">
-  <tr><th>Pos</th><th>Anggaran</th><th>Realisasi</th><th>Varians</th><th>Penilaian</th></tr>
-  <tr><td>Penjualan</td><td>500</td><td>540</td><td>+40</td><td class="ok-cell">Menguntungkan</td></tr>
-  <tr><td>Biaya bahan</td><td>200</td><td>230</td><td>+30</td><td>Merugikan</td></tr>
-  <tr><td>Biaya listrik</td><td>50</td><td>45</td><td>−5</td><td class="ok-cell">Menguntungkan</td></tr>
-</table>
-<p>Perhatikan: varians <b>+30</b> pada biaya justru <b>merugikan</b>, sedangkan <b>+40</b> pada penjualan menguntungkan. Selalu lihat <b>jenis posnya</b> dulu.</p>
-
-<h3>Membongkar penyebab: harga vs jumlah</h3>
-<p>Varians biaya bahan naik Rp30 juta — tapi <b>kenapa</b>? Ada dua kemungkinan yang harus dipisahkan:</p>
-<ul>
-  <li><b>Varians harga</b> — harga bahan per unit naik (mungkin di luar kendali kita: pasar, kurs).</li>
-  <li><b>Varians efisiensi/jumlah</b> — pemakaian bahan lebih boros dari rencana (biasanya <b>bisa</b> dikendalikan: mesin rusak, banyak produk gagal, pemborosan).</li>
-</ul>
-<div class="callout">
-<b>Kenapa pemisahan ini penting?</b> Karena menentukan <b>tindakan</b>. Kalau penyebabnya harga pasar, solusinya negosiasi pemasok atau sesuaikan harga jual. Kalau penyebabnya pemborosan, solusinya perbaiki proses produksi. Menyalahkan bagian produksi atas kenaikan harga pasar adalah kesalahan manajemen klasik.
-</div>
-
-<h3>Anggaran statis vs fleksibel</h3>
-<div class="callout warn">
-<b>Jebakan anggaran statis:</b> anggaran dibuat untuk 1.000 unit, ternyata terjual 1.300 unit. Biaya bahan <b>pasti</b> lebih besar dari anggaran — tapi itu <b>wajar</b>, bukan pemborosan!
-<br><br><b>Anggaran fleksibel</b> menyesuaikan dulu ke tingkat aktivitas nyata (1.300 unit), <b>baru</b> dibandingkan. Tanpa ini, penilaianmu keliru.
-</div>
-
-<h3>Management by exception</h3>
-<p>Jangan menyelidiki semua selisih. Fokuskan waktu pada varians yang <b>besar &amp; tidak biasa</b> — itulah yang paling mungkin menyimpan masalah nyata.</p>
-`,
-          keyPoints: [
-            "Varians = Realisasi − Anggaran; maknanya (menguntungkan/merugikan) tergantung jenis pos.",
-            "Biaya lebih tinggi dari anggaran = merugikan; pendapatan lebih tinggi = menguntungkan.",
-            "Pisahkan varians harga (sering di luar kendali) dari varians efisiensi (biasanya bisa dikendalikan) — menentukan tindakan.",
-            "Anggaran fleksibel menyesuaikan ke tingkat aktivitas nyata dulu, agar perbandingannya adil.",
-            "Management by exception: selidiki varians yang besar & tidak biasa saja.",
-          ],
-          practice: [
-            { type: "number", q: "Anggaran biaya bahan Rp200jt, realisasi Rp230jt. Berapa variansnya? (juta)", answer: 30, tol: 0.5, unit: "jt", hint: "Realisasi − Anggaran.", solution: "230 − 200 = Rp30jt (merugikan, karena biaya naik)." },
-            { type: "choice", q: "Anggaran dibuat untuk 1.000 unit, ternyata terjual 1.300 unit sehingga biaya bahan melebihi anggaran. Penilaian yang tepat?", options: ["Pasti ada pemborosan", "Wajar — bandingkan dengan anggaran FLEKSIBEL pada 1.300 unit dulu", "Produksi harus dihentikan", "Anggaran tidak berguna"], answer: 1, hint: "Volume berubah, apakah adil membandingkan dengan anggaran lama?", solution: "Anggaran fleksibel menyesuaikan ke aktivitas nyata sebelum dibandingkan." },
-          ],
-          quiz: [
-            {
-              q: "Biaya realisasi LEBIH TINGGI dari anggaran. Ini varians?",
-              options: [
-                "Menguntungkan",
-                "Merugikan (unfavorable)",
-                "Netral",
-                "Tidak bisa dinilai",
-              ],
-              answer: 1,
-              explain: "Untuk pos biaya, realisasi lebih tinggi berarti merugikan.",
-            },
-            {
-              q: "Kenapa varians harga dan varians efisiensi perlu dipisahkan?",
-              options: [
-                "Penyebabnya berbeda, sehingga tindakan perbaikannya pun berbeda",
-                "Keduanya dilaporkan kepada pihak berbeda sesuai aturan pajak",
-                "Varians harga selalu positif sedangkan varians efisiensi negatif",
-                "Menggabungkannya membuat anggaran tahun depan tak bisa disusun",
-              ],
-              answer: 0,
-              explain:
-                "Harga pasar & pemborosan proses menuntut solusi yang sama sekali berbeda.",
-            },
-          ],
-        },
-        {
-          id: "acc-aud-3",
-          title: "Pengendalian Internal & Segitiga Kecurangan",
-          duration: "13 menit",
-          content: `
-<p>Pencatatan yang rapi tak ada artinya kalau <b>angkanya bisa dimanipulasi</b>. Di sinilah <b>pengendalian internal</b> berperan — dan ini relevan bahkan untuk usaha kecil.</p>
-
-<div data-diagram="compare3" data-cols="Tekanan::target mustahil, utang pribadi::motifnya|Kesempatan::pengawasan lemah::celahnya|Rasionalisasi::'nanti saya kembalikan'::pembenarannya" data-caption="Kecurangan butuh ketiganya sekaligus — hilangkan satu, kecurangan jauh lebih sulit"></div>
-
-
-<h3>Segitiga Kecurangan (Fraud Triangle)</h3>
-<p>Penelitian klasik menemukan kecurangan hampir selalu terjadi saat <b>tiga hal muncul bersamaan</b>:</p>
-<table class="tbl">
-  <tr><th>Unsur</th><th>Wujudnya</th><th>Contoh pikiran pelaku</th></tr>
-  <tr><td><b>Tekanan</b></td><td>Kebutuhan/desakan pribadi atau target</td><td><i>"Aku butuh uang untuk berobat."</i></td></tr>
-  <tr><td><b>Kesempatan</b></td><td>Kontrol lemah, tak ada yang mengawasi</td><td><i>"Tidak akan ada yang tahu."</i></td></tr>
-  <tr><td><b>Pembenaran</b></td><td>Alasan agar merasa tidak bersalah</td><td><i>"Cuma pinjam, nanti dikembalikan."</i></td></tr>
-</table>
-
-<div class="callout">
-<b>Inti yang harus dipahami:</b> perusahaan <b>tidak bisa</b> mengendalikan tekanan hidup karyawan, dan <b>sulit</b> mengubah cara orang membenarkan diri. Yang <b>paling bisa dikendalikan</b> adalah <b>KESEMPATAN</b> — dan itulah persis tugas pengendalian internal.
-</div>
-
-<h3>Pengendalian internal yang paling penting</h3>
-<table class="tbl">
-  <tr><th>Kontrol</th><th>Cara kerjanya</th></tr>
-  <tr><td><b>Pemisahan tugas</b></td><td>Orang yang <b>menyetujui</b>, yang <b>mencatat</b>, dan yang <b>memegang uang/barang</b> harus <b>berbeda</b></td></tr>
-  <tr><td><b>Otorisasi</b></td><td>Pengeluaran di atas nilai tertentu wajib disetujui atasan</td></tr>
-  <tr><td><b>Dokumentasi</b></td><td>Semua transaksi ada bukti bernomor urut (nota, faktur)</td></tr>
-  <tr><td><b>Pengamanan fisik</b></td><td>Kas di brankas, gudang terkunci, akses sistem berkata sandi</td></tr>
-  <tr><td><b>Rekonsiliasi</b></td><td>Catatan internal dicocokkan pihak lain dengan rekening koran bank</td></tr>
-  <tr><td><b>Cuti wajib &amp; rotasi</b></td><td>Kecurangan berkelanjutan sering terbongkar saat pelakunya digantikan orang lain</td></tr>
-</table>
-
-<div class="callout warn">
-<b>Pemisahan tugas adalah kontrol nomor satu.</b> Kalau satu orang bisa <b>membuat tagihan palsu, menyetujuinya, mencatatnya, DAN mengambil uangnya</b> — kecurangan hanya soal waktu. Ini kelemahan paling umum di UMKM, karena "kan cuma dia yang bisa".
-</div>
-
-<h3>Untuk usaha kecil yang orangnya terbatas</h3>
-<p>Kamu mungkin tak punya cukup karyawan untuk memisahkan semua tugas. Yang bisa dilakukan:</p>
-<ul>
-  <li><b>Pemilik ikut memeriksa</b> rekening koran bank setiap bulan — jangan didelegasikan sepenuhnya.</li>
-  <li>Gunakan <b>transfer bank</b> (jejaknya tercatat) daripada tunai sebisa mungkin.</li>
-  <li>Wajibkan <b>bukti fisik</b> untuk tiap pengeluaran.</li>
-  <li>Lakukan <b>hitung stok mendadak</b> secara berkala.</li>
-</ul>
-
-<div class="callout">
-<b>Prinsip penting:</b> kontrol yang baik <b>bukan tanda tidak percaya</b> — justru <b>melindungi karyawan yang jujur</b> dari tuduhan, sekaligus menutup godaan. Sampaikan dengan cara itu agar tidak dianggap curiga berlebihan.
-</div>
-`,
-          keyPoints: [
-            "Segitiga kecurangan: tekanan + kesempatan + pembenaran muncul bersamaan.",
-            "Yang paling bisa dikendalikan perusahaan adalah KESEMPATAN — tugas pengendalian internal.",
-            "Kontrol terpenting: pemisahan tugas (menyetujui ≠ mencatat ≠ memegang aset).",
-            "Kontrol lain: otorisasi, dokumentasi bernomor, pengamanan fisik, rekonsiliasi bank, cuti wajib & rotasi.",
-            "UMKM: pemilik ikut cek rekening koran, utamakan transfer, wajibkan bukti, hitung stok mendadak.",
-            "Kontrol melindungi karyawan jujur dari tuduhan — bukan tanda tidak percaya.",
-          ],
-          practice: [
-            { type: "choice", q: "Satu orang membuat tagihan, menyetujuinya, mencatatnya, sekaligus memegang uangnya. Kontrol apa yang dilanggar?", options: ["Dokumentasi", "Pemisahan tugas", "Pengamanan fisik", "Rotasi jabatan"], answer: 1, hint: "Menyetujui ≠ mencatat ≠ memegang aset.", solution: "Ini pelanggaran pemisahan tugas — kelemahan kontrol paling berbahaya." },
-            { type: "choice", q: "Dari tiga unsur segitiga kecurangan, mana yang paling bisa dikendalikan perusahaan?", options: ["Tekanan hidup karyawan", "Kesempatan", "Pembenaran diri pelaku", "Semua tidak bisa dikendalikan"], answer: 1, hint: "Mana yang bisa ditutup lewat sistem?", solution: "Kesempatan ditutup dengan pengendalian internal yang baik." },
-          ],
-          quiz: [
-            {
-              q: "Apa tiga unsur Segitiga Kecurangan?",
-              options: [
-                "Uang, waktu, tempat",
-                "Tekanan, kesempatan, pembenaran",
-                "Aset, utang, modal",
-                "Debit, kredit, saldo",
-              ],
-              answer: 1,
-              explain:
-                "Kecurangan umumnya butuh ketiganya hadir bersamaan.",
-            },
-            {
-              q: "Kenapa cuti wajib bisa menjadi alat pengendalian?",
-              options: [
-                "Kecurangan berkelanjutan sering terbongkar saat tugasnya digantikan orang lain",
-                "Karyawan yang sedang cuti tidak bisa mengakses sistem perusahaan dari rumah",
-                "Cuti wajib mengurangi beban gaji bulanan sehingga laba perusahaan ikut naik",
-                "Aturan ketenagakerjaan mewajibkan audit setiap kali ada karyawan yang cuti",
-              ],
-              answer: 0,
-              explain:
-                "Skema yang butuh perawatan terus-menerus akan terlihat saat pelakunya absen.",
-            },
-          ],
-        },
-        {
-          id: "acc-aud-4",
-          title: "Mendeteksi Manipulasi Laporan Keuangan",
-          duration: "14 menit",
-          content: `
-<p>Ini keterampilan yang membuatmu <b>jauh lebih tajam</b> membaca laporan — dan langsung berguna saat menilai saham (modul Prospek).</p>
-
-<h3>Fundamental: kenapa laporan dimanipulasi?</h3>
-<p>Karena ada <b>tekanan</b>: target laba, syarat pinjaman bank, harga saham, bonus manajemen. Manipulasinya berjenjang:</p>
-<table class="tbl">
-  <tr><th>Tingkat</th><th>Wujudnya</th><th>Status</th></tr>
-  <tr><td><b>Earnings management</b></td><td>Memanfaatkan celah aturan agar laba terlihat mulus</td><td>Legal tapi <b>menyesatkan</b></td></tr>
-  <tr><td><b>Agresif</b></td><td>Asumsi ekstrem, mengakui pendapatan terlalu dini</td><td>Zona abu-abu</td></tr>
-  <tr><td><b>Fraud</b></td><td>Angka fiktif, transaksi palsu</td><td><b>Ilegal</b></td></tr>
-</table>
-
-<h3>🚩 Tanda bahaya utama</h3>
-<div class="callout warn">
-<b>#1 — Laba naik tapi arus kas operasi tidak.</b> Ini <b>sinyal paling kuat</b>. Laba bisa "diatur" lewat pencatatan; <b>kas jauh lebih sulit dipalsukan</b>. Bila keduanya berpisah jalan bertahun-tahun, selidiki.
-</div>
-<ul>
-  <li><b>Piutang tumbuh jauh lebih cepat dari penjualan</b> → mungkin penjualan dipaksakan ke pelanggan yang belum tentu bayar.</li>
-  <li><b>Persediaan menumpuk</b> lebih cepat dari penjualan → barang tak laku, atau nilainya digelembungkan.</li>
-  <li><b>Perubahan kebijakan akuntansi</b> yang kebetulan menaikkan laba (mis. masa manfaat aset tiba-tiba diperpanjang).</li>
-  <li><b>Lonjakan transaksi di akhir periode</b> → mengejar target (<i>channel stuffing</i>).</li>
-  <li><b>Pos "lain-lain" besar</b> tanpa penjelasan memadai.</li>
-  <li><b>Sering berganti auditor</b> — terutama setelah perbedaan pendapat.</li>
-  <li><b>Laba terlalu mulus</b> — bisnis nyata naik-turun; laba yang selalu "pas" mencurigakan.</li>
-</ul>
-
-<h3>Hukum Benford — alat penyaring forensik</h3>
-<div class="callout">
-Pada banyak kumpulan angka alami (nilai transaksi, populasi, tagihan), <b>angka pertama tidak muncul merata</b>. Angka <b>1</b> muncul jauh lebih sering daripada <b>9</b>.
-<br><br>Angka <b>buatan manusia</b> cenderung tersebar terlalu rata — sehingga <b>penyimpangan dari pola Benford</b> bisa menjadi tanda untuk diperiksa lebih dalam.
-</div>
-
-<h3>Coba sendiri — lihat pola Benford 👇</h3>
-<div data-demo="js-playground">// Hukum Benford: seberapa sering tiap angka muncul sebagai DIGIT PERTAMA
-// Rumus: P(d) = log10(1 + 1/d)
-
-console.log("Digit | Harapan Benford | Kalau merata");
-console.log("------|-----------------|-------------");
-
-let total = 0;
-[1,2,3,4,5,6,7,8,9].forEach(function(d){
-  const p = Math.log10(1 + 1 / d) * 100;
-  total = total + p;
-  console.log("  " + d + "   |     " + p.toFixed(1) + "%       |    11.1%");
-});
-
-console.log("------|-----------------|-------------");
-console.log("Total |     " + total.toFixed(1) + "%      |   100.0%");
-console.log("");
-console.log("Angka 1 muncul ~30%, angka 9 hanya ~4,6%.");
-console.log("Data yang DIKARANG biasanya tersebar terlalu merata.");</div>
-
-<div class="callout warn">
-<b>Penting — jangan salah pakai:</b> Benford adalah <b>alat penyaring</b>, <b>BUKAN bukti kecurangan</b>. Ia juga <b>tidak berlaku</b> untuk semua data (mis. angka dengan batas tetap seperti tinggi badan, atau nomor urut yang ditetapkan). Penyimpangan hanya berarti: <b>"perlu diperiksa lebih lanjut"</b>.
-</div>
-
-<div class="callout">
-<b>Cara pakai yang benar:</b> gabungkan beberapa sinyal. Satu tanda bahaya bisa punya penjelasan wajar. <b>Beberapa tanda sekaligus</b> — laba naik tanpa kas, piutang membengkak, auditor berganti — barulah pola yang serius.
-</div>
-`,
-          keyPoints: [
-            "Manipulasi berjenjang: earnings management (legal tapi menyesatkan) → agresif → fraud (ilegal).",
-            "Sinyal terkuat: laba naik tapi arus kas operasi tidak — kas jauh lebih sulit dipalsukan.",
-            "Red flag lain: piutang/persediaan tumbuh melebihi penjualan, kebijakan akuntansi berubah menguntungkan, lonjakan akhir periode, pos 'lain-lain' besar, sering ganti auditor, laba terlalu mulus.",
-            "Hukum Benford: digit pertama '1' muncul ~30%, '9' hanya ~4,6% pada data alami.",
-            "Benford adalah alat penyaring, BUKAN bukti; tidak berlaku untuk semua jenis data.",
-            "Gabungkan beberapa sinyal — satu tanda saja bisa punya penjelasan wajar.",
-          ],
-          practice: [
-            { type: "number", q: "Menurut hukum Benford, berapa persen angka '1' muncul sebagai digit pertama? (1 desimal)", answer: 30.1, tol: 0.5, unit: "%", hint: "log10(1 + 1/1) × 100.", solution: "log10(2) = 0,301 → 30,1%." },
-            { type: "choice", q: "Laba perusahaan naik 5 tahun berturut-turut, tapi arus kas operasinya stagnan. Kesimpulan yang tepat?", options: ["Perusahaan sangat sehat", "Sinyal kuat untuk diselidiki — laba bisa diatur, kas lebih sulit dipalsukan", "Pasti fraud", "Tidak berarti apa-apa"], answer: 1, hint: "Ini red flag, tapi apakah langsung bukti?", solution: "Ini sinyal kuat yang wajib diselidiki, bukan vonis otomatis." },
-          ],
-          quiz: [
-            {
-              q: "Apa red flag paling kuat dalam laporan keuangan?",
-              options: [
-                "Laba terus naik tapi arus kas operasi tidak ikut naik",
-                "Laba naik bersamaan dengan kenaikan arus kas operasi",
-                "Perusahaan membagikan dividen secara rutin setiap tahun",
-                "Perusahaan mengganti logo dan nama merek dagangnya",
-              ],
-              answer: 0,
-              explain:
-                "Laba dapat direkayasa lewat pencatatan; arus kas jauh lebih sulit dimanipulasi.",
-            },
-            {
-              q: "Bagaimana cara benar memakai hukum Benford?",
-              options: [
-                "Sebagai penyaring awal — penyimpangan berarti perlu diperiksa lebih lanjut",
-                "Sebagai bukti hukum yang cukup untuk menyatakan telah terjadi kecurangan",
-                "Sebagai pengganti audit menyeluruh pada seluruh transaksi perusahaan",
-                "Sebagai rumus untuk menghitung besarnya kerugian akibat kecurangan",
-              ],
-              answer: 0,
-              explain:
-                "Benford menandai anomali untuk ditelusuri, bukan membuktikan kecurangan.",
-            },
-          ],
-        },
-        {
-          id: "acc-aud-5",
-          title: "Audit — Apa yang Sebenarnya Dilakukan Auditor",
-          duration: "13 menit",
-          content: `
-<p>Banyak orang salah paham soal audit — termasuk investor. Memahami <b>apa yang audit janjikan dan tidak janjikan</b> akan membuatmu membaca laporan dengan lebih bijak.</p>
-
-<h3>Fundamental: kenapa audit ada?</h3>
-<div class="callout">
-Laporan keuangan dibuat oleh <b>manajemen</b> — pihak yang justru <b>berkepentingan</b> agar angkanya terlihat bagus. Investor &amp; bank butuh pihak <b>independen</b> untuk memeriksanya. Itulah <b>auditor eksternal</b>.
-</div>
-
-<h3>⚠️ Yang paling sering disalahpahami</h3>
-<div class="callout warn">
-<b>Auditor TIDAK menjamin laporan bebas dari kecurangan, dan TIDAK memeriksa semua transaksi.</b>
-<br><br>Yang auditor berikan adalah <b>opini</b>: apakah laporan <b>disajikan secara wajar</b> dalam <b>semua hal yang material</b>, sesuai standar akuntansi. Itu saja — dan itu tetap berharga, asal kamu tahu batasnya.
-</div>
-
-<h3>Dua konsep kunci</h3>
-<ul>
-  <li><b>Materialitas</b> — auditor fokus pada salah saji yang <b>cukup besar</b> untuk memengaruhi keputusan pembaca. Selisih Rp1 juta di perusahaan triliunan tidak akan dikejar.</li>
-  <li><b>Sampling</b> — auditor memeriksa <b>contoh</b> transaksi, bukan semuanya. Memeriksa jutaan transaksi satu per satu tidak mungkin &amp; tidak ekonomis.</li>
-</ul>
-
-<h3>Empat jenis opini auditor</h3>
-<table class="tbl">
-  <tr><th>Opini</th><th>Artinya</th><th>Sikapmu</th></tr>
-  <tr><td><b>Wajar Tanpa Pengecualian</b></td><td>Bersih — laporan wajar dalam semua hal material</td><td class="ok-cell">Normal &amp; diharapkan</td></tr>
-  <tr><td><b>Wajar Dengan Pengecualian</b></td><td>Wajar, <b>kecuali</b> pada hal tertentu</td><td>Baca bagian pengecualiannya!</td></tr>
-  <tr><td><b>Tidak Wajar</b></td><td>Laporan <b>menyesatkan</b></td><td>Tanda bahaya besar</td></tr>
-  <tr><td><b>Tidak Menyatakan Pendapat</b></td><td>Auditor <b>tak bisa menyimpulkan</b> (bukti tak cukup / dibatasi)</td><td>Sangat mencurigakan</td></tr>
-</table>
-
-<div class="callout warn">
-<b>Kebiasaan yang berharga:</b> saat membaca laporan tahunan, <b>cari halaman opini auditor</b> — biasanya di depan laporan keuangan. Kalau opininya <b>bukan</b> "wajar tanpa pengecualian", baca alasannya dengan teliti. Banyak investor melewatkan halaman ini padahal isinya krusial.
-</div>
-
-<h3>Audit internal vs eksternal</h3>
-<table class="tbl">
-  <tr><th></th><th>Audit Internal</th><th>Audit Eksternal</th></tr>
-  <tr><td>Siapa</td><td>Karyawan perusahaan sendiri</td><td>Kantor akuntan publik independen</td></tr>
-  <tr><td>Untuk siapa</td><td>Manajemen &amp; dewan komisaris</td><td>Investor, bank, publik</td></tr>
-  <tr><td>Fokus</td><td>Memperbaiki proses &amp; kontrol</td><td>Kewajaran laporan keuangan</td></tr>
-</table>
-
-<h3>Kenapa audit kadang gagal?</h3>
-<ul>
-  <li><b>Kolusi</b> — bila beberapa pihak bersekongkol memalsukan bukti, sampling sangat sulit menangkapnya.</li>
-  <li><b>Ketergantungan biaya</b> — auditor dibayar oleh perusahaan yang diauditnya (konflik kepentingan klasik — ingat pelajaran <i>ikuti alur uangnya</i>).</li>
-  <li><b>Keterbatasan waktu &amp; ruang lingkup</b>.</li>
-</ul>
-
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu kini menguasai sisi pengendalian akuntansi: menghitung biaya produk dengan benar, mengendalikan lewat anggaran &amp; varians, membangun pengendalian internal, mendeteksi manipulasi laporan, dan memahami apa yang audit benar-benar janjikan.
-</div>
-
-<div class="callout warn">
-<b>Pengingat:</b> materi ini <b>edukasi</b>. Untuk kebutuhan audit atau dugaan kecurangan yang nyata, libatkan akuntan/auditor berlisensi.
-</div>
-`,
-          keyPoints: [
-            "Audit ada karena laporan dibuat manajemen yang berkepentingan — dibutuhkan pihak independen.",
-            "Auditor memberi OPINI atas kewajaran laporan; tidak menjamin bebas kecurangan & tidak memeriksa semua transaksi.",
-            "Dua konsep kunci: materialitas (fokus salah saji besar) & sampling (memeriksa contoh).",
-            "Empat opini: wajar tanpa pengecualian, dengan pengecualian, tidak wajar, tidak menyatakan pendapat.",
-            "Biasakan mencari halaman opini auditor di laporan tahunan — bila bukan 'tanpa pengecualian', baca alasannya.",
-            "Audit bisa gagal karena kolusi, konflik kepentingan (auditor dibayar kliennya), & keterbatasan ruang lingkup.",
-          ],
-          practice: [
-            { type: "choice", q: "Auditor memberi opini 'Tidak Menyatakan Pendapat'. Apa artinya?", options: ["Laporan sangat baik", "Auditor tidak bisa menyimpulkan karena bukti tak cukup atau dibatasi — sangat mencurigakan", "Perusahaan bangkrut", "Audit belum selesai dijadwalkan"], answer: 1, hint: "Auditor tidak bisa memberi kesimpulan.", solution: "Disclaimer of opinion menandakan hambatan serius dalam audit — patut diwaspadai." },
-            { type: "choice", q: "Apakah opini 'wajar tanpa pengecualian' menjamin tidak ada kecurangan sama sekali?", options: ["Ya, dijamin bersih", "Tidak — audit memakai sampling & fokus pada salah saji material", "Ya, karena semua transaksi diperiksa", "Tidak ada hubungannya"], answer: 1, hint: "Ingat konsep materialitas & sampling.", solution: "Audit memberi keyakinan memadai atas kewajaran, bukan jaminan mutlak bebas fraud." },
-          ],
-          quiz: [
-            {
-              q: "Apa yang sebenarnya diberikan auditor eksternal?",
-              options: [
-                "Opini apakah laporan disajikan wajar dalam semua hal yang material",
-                "Jaminan bahwa perusahaan bebas dari seluruh kecurangan",
-                "Kepastian bahwa perusahaan akan tetap untung tahun depan",
-                "Rekomendasi apakah saham perusahaan layak dibeli",
-              ],
-              answer: 0,
-              explain:
-                "Auditor menyatakan opini atas kewajaran, bukan jaminan absolut.",
-            },
-            {
-              q: "Apa konflik kepentingan klasik dalam audit eksternal?",
-              options: [
-                "Auditor dibayar oleh perusahaan yang diauditnya sendiri",
-                "Auditor dilarang bertemu langsung dengan manajemen perusahaan",
-                "Auditor wajib memiliki saham perusahaan yang sedang diaudit",
-                "Auditor ditunjuk dan digaji langsung oleh regulator",
-              ],
-              answer: 0,
-              explain:
-                "Ketergantungan biaya pada klien dapat menekan independensi — ikuti alur uangnya.",
-            },
-          ],
-        },
-      ],
-    },
-
-    /* ---------------- LEVEL MAKRO (EKONOMI NEGARA & DAMPAKNYA) ---------------- */
+    /* ---------------- MODUL 15: EKONOMI MAKRO UNTUK BISNIS ---------------- */
     {
       id: "acc-makro",
       level: "Makro",
       title: "Ekonomi Makro untuk Bisnis",
-      summary: "Zoom out ke seluruh negara: PDB, inflasi, suku bunga, kebijakan fiskal & moneter, tax ratio, kurs, dan siklus ekonomi.",
+      summary: "Zoom out ke seluruh negara: PDB, inflasi, suku bunga, kebijakan fiskal & moneter, kurs, dan siklus ekonomi.",
       lessons: [
         {
           id: "acc-mak-1",
@@ -6652,10 +6580,6 @@ console.log("Itu artinya B punya jauh lebih banyak dana untuk membangun.");</div
   <li><b>Perusahaan</b> — laporan keuangan, moat, manajemen (modul-modul sebelumnya)</li>
 </ol>
 
-<div class="callout">
-<b>Selamat! 🎓</b> Kamu kini melengkapi gambaran utuh: dari mencatat transaksi satu warung, sampai memahami kekuatan ekonomi seluruh negara yang memengaruhinya. Inilah cara pandang yang dipakai analis &amp; pemilik bisnis profesional.
-</div>
-
 <div class="callout warn">
 <b>Pengingat:</b> materi ini <b>edukasi, bukan saran finansial/investasi</b>. Data ekonomi berubah terus — selalu rujuk sumber resmi (BPS, Bank Indonesia, Kementerian Keuangan) untuk angka terbaru.
 </div>
@@ -6701,12 +6625,12 @@ console.log("Itu artinya B punya jauh lebih banyak dana untuk membangun.");</div
         },
       ],
     },
-    /* ---------------- LEVEL ARAH (MASA DEPAN) ---------------- */
+    /* ---------------- MODUL 16: MASA DEPAN AKUNTANSI & PEKERJAAN KEUANGAN ---------------- */
     {
       id: "acc-arah",
       level: "Arah",
       title: "Masa Depan Akuntansi & Pekerjaan Keuangan",
-      summary: "Pekerjaan apa yang menyusut, apa yang tumbuh, dan keterampilan mana yang justru makin bernilai saat mesin makin pintar.",
+      summary: "Pekerjaan apa yang menyusut, apa yang tumbuh, dan keterampilan mana yang justru makin bernilai.",
       lessons: [
         {
           id: "acc-arah-1",
@@ -6894,6 +6818,5 @@ Itu bukan ramalan. Itu hanya konsekuensi dari kenyataan bahwa keputusan tetap ha
         },
       ],
     },
-
   ],
 };

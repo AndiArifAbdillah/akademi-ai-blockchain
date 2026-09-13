@@ -14,17 +14,16 @@ const COURSES = [AI_COURSE, BLOCKCHAIN_COURSE, ACCOUNTING_COURSE];
 const MODULE_ORDER = [
   // 🤖 AI
   "ai-dasar", "ai-pemula", "ai-menengah", "ai-fundamental", "ai-matematika",
-  "ai-pendalaman", "ai-arsitektur", "ai-algoritma", "ai-mahir", "ai-terapan", "ai-pelengkap",
-  "ai-tools", "ai-lanjutan", "ai-proyek", "ai-ekonomi", "ai-arah",
+  "ai-tools", "ai-pendalaman", "ai-algoritma", "ai-ensemble", "ai-arsitektur",
+  "ai-mahir", "ai-lanjutan", "ai-proyek", "ai-terapan", "ai-ekonomi", "ai-arah",
   // ⛓️ Blockchain
-  "bc-dasar", "bc-pemula", "bc-menengah", "bc-fundamental", "bc-matematika",
-  "bc-kriptografi", "bc-mahir", "bc-pendalaman", "bc-forensik", "bc-terapan", "bc-lanjutan",
-  "bc-pelengkap", "bc-proyek", "bc-ekonomi", "bc-arah",
+  "bc-dasar", "bc-pemula", "bc-fundamental", "bc-pendalaman", "bc-matematika",
+  "bc-kriptografi", "bc-menengah", "bc-terapan", "bc-lanjutan", "bc-proyek",
+  "bc-forensik", "bc-pelengkap", "bc-ekonomi", "bc-arah",
   // 📊 Akuntansi
-  "acc-dasar", "acc-pemula", "acc-menengah", "acc-pendalaman", "acc-mahir",
-  "acc-fundamental", "acc-matematika", "acc-terapan", "acc-audit",
-  "acc-lanjutan", "acc-kualitas", "acc-bank", "acc-prospek", "acc-proyek", "acc-investasi",
-  "acc-makro", "acc-arah",
+  "acc-dasar", "acc-pemula", "acc-menengah", "acc-pendalaman", "acc-fundamental",
+  "acc-terapan", "acc-audit", "acc-matematika", "acc-lanjutan", "acc-kualitas",
+  "acc-bank", "acc-prospek", "acc-proyek", "acc-investasi", "acc-makro", "acc-arah",
 ];
 (function urutkanModul() {
   const pos = (id) => {
@@ -720,10 +719,15 @@ function renderCourse(course) {
 /* ---------- Halaman: Pelajaran ---------- */
 function renderLesson({ course, module, lesson }) {
   const wrap = el(`<div class="page lesson-page"></div>`);
-  const seq = lessonSequence();
-  const idx = seq.indexOf(lesson.id);
-  const prevId = idx > 0 ? seq[idx - 1] : null;
-  const nextId = idx < seq.length - 1 ? seq[idx + 1] : null;
+  // Sebelumnya/Berikutnya tetap di dalam satu jalur — tidak melompat ke jalur lain
+  const seq = allLessons(course);
+  const idx = seq.findIndex((l) => l.id === lesson.id);
+  const prevLesson = idx > 0 ? seq[idx - 1] : null;
+  const nextLesson = idx < seq.length - 1 ? seq[idx + 1] : null;
+  const mi = course.modules.indexOf(module);
+  const li = module.lessons.indexOf(lesson);
+  const modulSebelum = mi > 0 ? course.modules[mi - 1] : null;
+  const modulBerikut = mi < course.modules.length - 1 ? course.modules[mi + 1] : null;
   const done = Progress.isDone(lesson.id);
   Progress.touch(lesson.id); // ingat pelajaran terakhir yang dibuka
 
@@ -735,8 +739,20 @@ function renderLesson({ course, module, lesson }) {
       <span class="lvl-badge lvl-${module.level.toLowerCase()}">${esc(module.level)}</span>
       <h1>${esc(lesson.title)}</h1>
       <small>⏱ ${esc(lesson.duration)} ${done ? '• <span class="ok">✓ Selesai</span>' : ""}</small>
+      <span class="lesson-pos">Modul ${mi + 1} dari ${course.modules.length} · ${esc(module.title)} · Pelajaran ${li + 1} dari ${module.lessons.length}</span>
     </header>
   `));
+
+  // Jembatan di awal modul: apa isi modul ini & dari mana kita datang
+  if (li === 0) {
+    wrap.appendChild(el(`
+      <aside class="modul-jembatan masuk">
+        <b>📘 Awal Modul ${mi + 1}: ${esc(module.title)}</b>
+        <p>${esc(module.summary)}</p>
+        ${modulSebelum ? `<small>Sebelumnya kamu menuntaskan Modul ${mi}: ${esc(modulSebelum.title)}.</small>` : ""}
+      </aside>
+    `));
+  }
 
   // Tombol "Dengarkan" — hanya muncul bila ada suara Bahasa Indonesia asli di perangkat.
   if (Speech.supported && Speech.indoVoice()) {
@@ -822,10 +838,25 @@ function renderLesson({ course, module, lesson }) {
     wrap.appendChild(btn);
   }
 
+  // Jembatan di akhir modul: rangkuman & modul yang menyusul
+  if (li === module.lessons.length - 1) {
+    wrap.appendChild(el(`
+      <aside class="modul-jembatan keluar">
+        <b>🎓 Akhir Modul ${mi + 1}: ${esc(module.title)}</b>
+        <p>Ringkasan modul ini: ${esc(module.summary)}</p>
+        ${
+          modulBerikut
+            ? `<p class="mj-lanjut">Berikutnya — <b>Modul ${mi + 2}: ${esc(modulBerikut.title)}</b><br>${esc(modulBerikut.summary)}</p>`
+            : `<p class="mj-lanjut">Ini modul terakhir jalur <b>${esc(course.title)}</b>. 🎉</p>`
+        }
+      </aside>
+    `));
+  }
+
   const nav = el(`<div class="lesson-nav"></div>`);
-  if (prevId) nav.appendChild(el(`<a class="btn ghost" href="#/lesson/${prevId}">← Sebelumnya</a>`));
+  if (prevLesson) nav.appendChild(el(`<a class="btn ghost nav-lesson" href="#/lesson/${prevLesson.id}"><small>← Sebelumnya</small><span>${esc(prevLesson.title)}</span></a>`));
   else nav.appendChild(el(`<span></span>`));
-  if (nextId) nav.appendChild(el(`<a class="btn" href="#/lesson/${nextId}">Berikutnya →</a>`));
+  if (nextLesson) nav.appendChild(el(`<a class="btn nav-lesson nav-next" href="#/lesson/${nextLesson.id}"><small>Berikutnya →</small><span>${esc(nextLesson.title)}</span></a>`));
   else nav.appendChild(el(`<a class="btn" href="#/course/${course.id}">Kembali ke kursus</a>`));
   wrap.appendChild(nav);
 
