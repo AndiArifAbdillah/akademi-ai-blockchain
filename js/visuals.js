@@ -2580,6 +2580,640 @@ DEMOS["latih-xor"] = function (root) {
   draw();
 };
 
+/* ---------- Kripto mini: SHA-256 & ECDSA secp256k1 sungguhan (untuk demo edukasi) ---------- */
+const KriptoMini = (function () {
+  // Konstanta SHA-256: 32 bit pertama pecahan akar pangkat tiga 64 bilangan prima pertama
+  const K = [];
+  (function () {
+    let n = 2;
+    while (K.length < 64) {
+      let prima = true;
+      for (let i = 2; i * i <= n; i++) if (n % i === 0) { prima = false; break; }
+      if (prima) { const x = Math.cbrt(n); K.push(((x - Math.floor(x)) * 4294967296) >>> 0); }
+      n++;
+    }
+  })();
+  function sha256Bytes(bytes) {
+    const H = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];
+    const len = bytes.length;
+    const total = ((len + 9 + 63) >> 6) << 6;
+    const m = new Uint8Array(total);
+    m.set(bytes);
+    m[len] = 0x80;
+    const bitLen = len * 8;
+    m[total - 4] = (bitLen >>> 24) & 255; m[total - 3] = (bitLen >>> 16) & 255;
+    m[total - 2] = (bitLen >>> 8) & 255; m[total - 1] = bitLen & 255;
+    m[total - 5] = Math.floor(bitLen / 4294967296) & 255;
+    const w = new Array(64);
+    const rotr = (x, n) => (x >>> n) | (x << (32 - n));
+    for (let o = 0; o < total; o += 64) {
+      for (let i = 0; i < 16; i++) w[i] = (m[o + 4 * i] << 24) | (m[o + 4 * i + 1] << 16) | (m[o + 4 * i + 2] << 8) | m[o + 4 * i + 3];
+      for (let i = 16; i < 64; i++) {
+        const s1 = rotr(w[i - 2], 17) ^ rotr(w[i - 2], 19) ^ (w[i - 2] >>> 10);
+        const s2 = rotr(w[i - 15], 7) ^ rotr(w[i - 15], 18) ^ (w[i - 15] >>> 3);
+        w[i] = (s1 + w[i - 7] + s2 + w[i - 16]) | 0;
+      }
+      let a = H[0], b = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], hh = H[7];
+      for (let i = 0; i < 64; i++) {
+        const t1 = (hh + (rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25)) + ((e & f) ^ (~e & g)) + K[i] + w[i]) | 0;
+        const t2 = ((rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22)) + ((a & b) ^ (a & c) ^ (b & c))) | 0;
+        hh = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+      }
+      H[0] = (H[0] + a) | 0; H[1] = (H[1] + b) | 0; H[2] = (H[2] + c) | 0; H[3] = (H[3] + d) | 0;
+      H[4] = (H[4] + e) | 0; H[5] = (H[5] + f) | 0; H[6] = (H[6] + g) | 0; H[7] = (H[7] + hh) | 0;
+    }
+    return H.map((x) => (x >>> 0).toString(16).padStart(8, "0")).join("");
+  }
+  const sha256 = (teks) => sha256Bytes(new TextEncoder().encode(String(teks)));
+
+  // Keccak-256 (varian Ethereum, padding 0x01) — jalur 64 bit memakai BigInt
+  const M64 = (1n << 64n) - 1n;
+  const RC = [];
+  (function () {
+    let R = 1;
+    for (let i = 0; i < 24; i++) {
+      let rc = 0n;
+      for (let j = 0; j < 7; j++) {
+        R = ((R << 1) ^ ((R >> 7) * 0x71)) % 256;
+        if (R & 2) rc ^= 1n << BigInt((1 << j) - 1);
+      }
+      RC.push(rc);
+    }
+  })();
+  function keccak256Bytes(bytes) {
+    const rotl = (x, n) => (n === 0n ? x : ((x << n) | (x >> (64n - n))) & M64);
+    const L = Array.from({ length: 5 }, () => [0n, 0n, 0n, 0n, 0n]); // L[x][y]
+    const RATE = 136;
+    const pad = new Uint8Array(Math.floor(bytes.length / RATE) * RATE + RATE);
+    pad.set(bytes);
+    pad[bytes.length] ^= 0x01;
+    pad[pad.length - 1] ^= 0x80;
+    for (let o = 0; o < pad.length; o += RATE) {
+      for (let i = 0; i < RATE / 8; i++) {
+        let v = 0n;
+        for (let b = 7; b >= 0; b--) v = (v << 8n) | BigInt(pad[o + i * 8 + b]);
+        L[i % 5][Math.floor(i / 5)] ^= v;
+      }
+      for (let r = 0; r < 24; r++) {
+        const C = L.map((kol) => kol[0] ^ kol[1] ^ kol[2] ^ kol[3] ^ kol[4]);
+        const D = C.map((_, x) => C[(x + 4) % 5] ^ rotl(C[(x + 1) % 5], 1n));
+        for (let x = 0; x < 5; x++) for (let y = 0; y < 5; y++) L[x][y] ^= D[x];
+        let x = 1, y = 0, kini = L[x][y];
+        for (let t = 0; t < 24; t++) {
+          const xb = y, yb = (2 * x + 3 * y) % 5;
+          x = xb; y = yb;
+          const simpan = L[x][y];
+          L[x][y] = rotl(kini, BigInt(((t + 1) * (t + 2)) / 2 % 64));
+          kini = simpan;
+        }
+        for (let yy = 0; yy < 5; yy++) {
+          const T = [0, 1, 2, 3, 4].map((xx) => L[xx][yy]);
+          for (let xx = 0; xx < 5; xx++) L[xx][yy] = T[xx] ^ (~T[(xx + 1) % 5] & M64 & T[(xx + 2) % 5]);
+        }
+        L[0][0] ^= RC[r];
+      }
+    }
+    let keluar = "";
+    for (let i = 0; i < 4; i++) {
+      let v = L[i % 5][Math.floor(i / 5)];
+      for (let b = 0; b < 8; b++) { keluar += (v & 255n).toString(16).padStart(2, "0"); v >>= 8n; }
+    }
+    return keluar;
+  }
+  const hexKeBytes = (hx) => Uint8Array.from(hx.match(/../g).map((p) => parseInt(p, 16)));
+  // alamat Ethereum: 20 byte terakhir Keccak-256(kunci publik 64 byte), dengan huruf besar-kecil sebagai checksum (EIP-55)
+  function alamatEthereum(Q) {
+    const polos = keccak256Bytes(hexKeBytes(hex(Q[0]) + hex(Q[1]))).slice(-40);
+    const cek = keccak256Bytes(new TextEncoder().encode(polos));
+    return "0x" + polos.split("").map((ch, i) => (parseInt(cek[i], 16) >= 8 ? ch.toUpperCase() : ch)).join("");
+  }
+
+  // secp256k1: y² = x³ + 7 (mod p) — kurva yang dipakai Bitcoin & Ethereum
+  const P = 2n ** 256n - 2n ** 32n - 977n;
+  const N = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
+  const G = [0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798n, 0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8n];
+  const mod = (a, m) => { const r = a % m; return r >= 0n ? r : r + m; };
+  function inv(a, m) {
+    let r0 = mod(a, m), r1 = m, s0 = 1n, s1 = 0n;
+    while (r1 !== 0n) { const q = r0 / r1; [r0, r1] = [r1, r0 - q * r1]; [s0, s1] = [s1, s0 - q * s1]; }
+    return mod(s0, m);
+  }
+  // koordinat Jacobian [X, Y, Z]; Z = 0 berarti titik tak hingga
+  function dbl(pt) {
+    const X = pt[0], Y = pt[1], Z = pt[2];
+    if (Z === 0n || Y === 0n) return [0n, 1n, 0n];
+    const S = mod(4n * X * Y * Y, P), M = mod(3n * X * X, P);
+    const X3 = mod(M * M - 2n * S, P);
+    return [X3, mod(M * (S - X3) - 8n * Y * Y * Y * Y, P), mod(2n * Y * Z, P)];
+  }
+  function add(p1, p2) {
+    if (p1[2] === 0n) return p2;
+    if (p2[2] === 0n) return p1;
+    const Z1s = mod(p1[2] * p1[2], P), Z2s = mod(p2[2] * p2[2], P);
+    const U1 = mod(p1[0] * Z2s, P), U2 = mod(p2[0] * Z1s, P);
+    const S1 = mod(p1[1] * Z2s * p2[2], P), S2 = mod(p2[1] * Z1s * p1[2], P);
+    if (U1 === U2) return S1 === S2 ? dbl(p1) : [0n, 1n, 0n];
+    const Hh = mod(U2 - U1, P), R = mod(S2 - S1, P);
+    const H2 = mod(Hh * Hh, P), H3 = mod(H2 * Hh, P);
+    const X3 = mod(R * R - H3 - 2n * U1 * H2, P);
+    return [X3, mod(R * (U1 * H2 - X3) - S1 * H3, P), mod(Hh * p1[2] * p2[2], P)];
+  }
+  function kali(k, titik) {
+    let hasil = [0n, 1n, 0n], tambah = [titik[0], titik[1], 1n];
+    while (k > 0n) { if (k & 1n) hasil = add(hasil, tambah); tambah = dbl(tambah); k >>= 1n; }
+    return hasil;
+  }
+  function afin(pt) {
+    if (pt[2] === 0n) return null;
+    const zi = inv(pt[2], P), zi2 = mod(zi * zi, P);
+    return [mod(pt[0] * zi2, P), mod(pt[1] * zi2 * zi, P)];
+  }
+  const hex = (n, pj) => n.toString(16).padStart(pj || 64, "0");
+  function acakKunci() {
+    const b = new Uint8Array(32);
+    crypto.getRandomValues(b);
+    return mod(BigInt("0x" + Array.from(b, (x) => x.toString(16).padStart(2, "0")).join("")), N - 1n) + 1n;
+  }
+  const kunciPublik = (priv) => afin(kali(priv, G));
+  const publikHex = (Q) => "04" + hex(Q[0]) + hex(Q[1]);
+  function tandaTangani(pesan, priv) {
+    const z = BigInt("0x" + sha256(pesan)) % N;
+    for (;;) {
+      const k = acakKunci(); // angka sekali pakai: wajib acak & rahasia
+      const R = afin(kali(k, G));
+      const r = R[0] % N;
+      if (r === 0n) continue;
+      let s = mod(inv(k, N) * (z + r * priv), N);
+      if (s === 0n) continue;
+      if (s > N / 2n) s = N - s; // bentuk "low-s" seperti aturan Bitcoin
+      return { r: r, s: s };
+    }
+  }
+  function periksa(pesan, sig, Q) {
+    const r = sig.r, s = sig.s;
+    if (!(r > 0n && r < N && s > 0n && s < N)) return false;
+    const z = BigInt("0x" + sha256(pesan)) % N;
+    const w = inv(s, N);
+    const X = afin(add(kali(mod(z * w, N), G), kali(mod(r * w, N), [Q[0], Q[1]])));
+    return !!X && X[0] % N === r;
+  }
+  return { keccak256: (teks) => keccak256Bytes(new TextEncoder().encode(String(teks))), alamatEthereum: alamatEthereum, sha256: sha256, acakKunci: acakKunci, kunciPublik: kunciPublik, publikHex: publikHex, tandaTangani: tandaTangani, periksa: periksa, hex: hex };
+})();
+
+/* Pembantu tampilan untuk demo kripto */
+const kripPendek = (hx, n) => (hx.length > n * 2 + 1 ? hx.slice(0, n) + "…" + hx.slice(-n) : hx);
+const kripEsc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/* ---------- Demo: SHA-256 sungguhan & efek longsor ---------- */
+DEMOS["hash-sungguhan"] = function (root) {
+  const a = h("textarea", { class: "krip-teks", rows: "2", "aria-label": "Teks A" });
+  const b = h("textarea", { class: "krip-teks", rows: "2", "aria-label": "Teks B" });
+  a.value = "Andi mengirim 5 koin ke Budi";
+  b.value = "Andi mengirim 6 koin ke Budi";
+  const out = h("div", { class: "dm-out" });
+
+  const bitBeda = (x, y) => {
+    let n = 0;
+    for (let i = 0; i < x.length; i++) { let v = parseInt(x[i], 16) ^ parseInt(y[i], 16); while (v) { n += v & 1; v >>= 1; } }
+    return n;
+  };
+  const warnai = (hx, lawan) => hx.split("").map((c, i) => (c === lawan[i] ? '<span class="hx-sama">' + c + "</span>" : '<span class="hx-beda">' + c + "</span>")).join("");
+
+  function draw() {
+    const ha = KriptoMini.sha256(a.value), hb = KriptoMini.sha256(b.value);
+    let karBeda = 0;
+    for (let i = 0; i < 64; i++) if (ha[i] !== hb[i]) karBeda++;
+    const bit = bitBeda(ha, hb);
+    let catatan;
+    if (a.value === b.value) catatan = "<b>Teks A dan B sama persis → hash-nya sama persis.</b> Inilah sifat <i>deterministik</i>: siapa pun, di komputer mana pun, di negara mana pun, akan mendapat 64 karakter yang sama. Karena itu ribuan komputer di jaringan blockchain bisa saling memeriksa tanpa perlu saling percaya.";
+    else catatan = "Teks A dan B hanya berbeda sedikit, tapi <b>sekitar separuh bit hash-nya berubah</b> — tidak ada pola yang bisa dilihat. Inilah <i>efek longsor</i>: siapa pun yang mengubah satu angka saja di sebuah transaksi akan langsung ketahuan, karena sidik jarinya tidak lagi cocok.";
+
+    out.innerHTML =
+      '<div class="krip-judul">SIDIK JARI TEKS A · ' + a.value.length + " karakter masuk</div>" +
+      '<div class="krip-hasil sidik">' + warnai(ha, hb) + "</div>" +
+      '<div class="krip-judul">SIDIK JARI TEKS B · ' + b.value.length + " karakter masuk</div>" +
+      '<div class="krip-hasil sidik">' + warnai(hb, ha) + "</div>" +
+      '<div class="dm-line"><span>Panjang sidik jari</span><b>selalu 64 karakter</b></div>' +
+      '<div class="dm-line"><span>Karakter yang berbeda <i class="dm-sub">(merah)</i></span><b>' + karBeda + " dari 64</b></div>" +
+      '<div class="dm-line"><span>Bit yang berubah</span><b>' + bit + " dari 256 (" + Math.round((bit / 256) * 100) + "%)</b></div>" +
+      '<div class="dm-note">' + catatan + '<br><br><i>Ini SHA-256 sungguhan — fungsi yang sama dengan yang dipakai Bitcoin — dihitung langsung di browsermu.</i></div>';
+  }
+  a.addEventListener("input", draw);
+  b.addEventListener("input", draw);
+
+  const tombol = (teks, aksi) => { const t = h("button", { class: "btn ghost", type: "button", text: teks }); t.onclick = () => { aksi(); draw(); }; return t; };
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "#️⃣ <b>Demo: sidik jari SHA-256 sungguhan</b>" }),
+    h("p", { class: "demo-hint", text: "Ketik apa saja di kedua kotak. Coba ubah satu huruf, satu angka, atau hanya satu spasi — lalu lihat berapa banyak sidik jarinya berubah." }),
+    h("label", { class: "krip-label", text: "Teks A" }), a,
+    h("label", { class: "krip-label", text: "Teks B" }), b,
+    h("div", { class: "demo-controls" }, [
+      tombol("🟰 Samakan B dengan A", () => { b.value = a.value; }),
+      tombol("✏️ Tambah titik di B", () => { b.value = a.value + "."; }),
+      tombol("📚 Coba teks panjang", () => {
+        a.value = "Blockchain adalah buku catatan bersama yang salinannya dipegang ribuan komputer. Setiap halaman berisi sidik jari halaman sebelumnya, sehingga mengubah satu catatan lama akan merusak semua halaman sesudahnya dan langsung ketahuan oleh semua pemegang salinan.";
+        b.value = a.value.replace("ribuan", "ratusan");
+      }),
+    ]),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: menebak PIN dari hash-nya (serangan coba-semua) ---------- */
+DEMOS["tebak-pin"] = function (root) {
+  const pin = h("input", { class: "pc-input", type: "text", inputmode: "numeric", maxlength: "6", value: "4821", "aria-label": "PIN rahasia" });
+  const out = h("div", { class: "dm-out" });
+  const hasil = h("div");
+  let berjalan = false, kecepatan = 0;
+
+  const bersih = () => pin.value.replace(/\D/g, "").slice(0, 6);
+  const angka = (n) => Math.round(n).toLocaleString("id-ID");
+
+  function durasi(detik) {
+    if (detik < 1) return "seketika";
+    if (detik < 60) return angka(detik) + " detik";
+    if (detik < 3600) return (detik / 60).toFixed(1).replace(".", ",") + " menit";
+    if (detik < 86400) return (detik / 3600).toFixed(1).replace(".", ",") + " jam";
+    const tahun = detik / 31557600;
+    if (tahun < 1) return angka(detik / 86400) + " hari";
+    if (tahun < 1e6) return angka(tahun) + " tahun";
+    if (tahun < 1e9) return (tahun / 1e6).toFixed(0) + " juta tahun";
+    const kaliAlamSemesta = tahun / 1.38e10;
+    if (kaliAlamSemesta < 1) return (tahun / 1e9).toFixed(1).replace(".", ",") + " miliar tahun";
+    return "≈ " + (kaliAlamSemesta >= 1e9 ? (kaliAlamSemesta / 1e9).toFixed(0) + " miliar" : angka(kaliAlamSemesta)) + " kali umur alam semesta";
+  }
+
+  function tabel() {
+    const SERANG = 1e9;
+    const baris = [
+      ["PIN 4 digit", 1e4],
+      ["PIN 6 digit", 1e6],
+      ["Password 8 huruf kecil", Math.pow(26, 8)],
+      ["Password 12 karakter campuran", Math.pow(94, 12)],
+      ["Frasa pemulihan 12 kata (acak)", Math.pow(2, 128)],
+    ];
+    return '<div class="krip-judul" style="margin-top:12px">BERAPA LAMA MENCOBA SEMUA KEMUNGKINAN?</div>' +
+      '<div class="dm-sub">Dengan komputer penyerang yang mampu 1 miliar tebakan per detik' + (kecepatan ? " (browsermu tadi: " + angka(kecepatan) + " per detik)" : "") + ":</div>" +
+      baris.map((r) => '<div class="dm-line ' + (r[1] / SERANG > 3.15e7 ? "good" : "bad") + '"><span>' + r[0] + '<br><i class="dm-sub">' + (r[1] < 1e15 ? angka(r[1]) : "≈ " + (r[1] / Math.pow(10, Math.floor(Math.log10(r[1])))).toFixed(1).replace(".", ",") + " × 10^" + Math.floor(Math.log10(r[1]))) + " kemungkinan</i></span><b>" + durasi(r[1] / SERANG) + "</b></div>").join("");
+  }
+
+  function draw() {
+    const p = bersih();
+    out.innerHTML =
+      '<div class="dm-line"><span>Yang disimpan server <i class="dm-sub">(bukan PIN-nya, hanya sidik jarinya)</i></span></div>' +
+      '<div class="krip-hasil sidik">' + (p ? KriptoMini.sha256(p) : "—") + "</div>";
+  }
+
+  const serang = h("button", { class: "btn", type: "button", text: "😈 Serang: coba semua kemungkinan" });
+  serang.onclick = () => {
+    const p = bersih();
+    if (berjalan || !p) return;
+    berjalan = true;
+    const target = KriptoMini.sha256(p);
+    const total = Math.pow(10, p.length);
+    let i = 0;
+    const mulai = performance.now();
+    function potong() {
+      if (!root.isConnected) return;
+      const akhir = Math.min(total, i + 4000);
+      for (; i < akhir; i++) {
+        const tebak = String(i).padStart(p.length, "0");
+        if (KriptoMini.sha256(tebak) === target) {
+          const dtk = (performance.now() - mulai) / 1000;
+          kecepatan = (i + 1) / Math.max(dtk, 0.001);
+          berjalan = false;
+          hasil.innerHTML = '<div class="dm-line big bad"><span>🔓 Ketemu! PIN-nya <b>' + tebak + "</b></span><b>" + angka(i + 1) + " tebakan · " + dtk.toFixed(2).replace(".", ",") + " detik</b></div>" +
+            '<div class="dm-note">Penyerang <b>tidak membalik</b> hash-nya — itu memang mustahil. Ia hanya mencoba <b>semua kemungkinan</b> satu per satu, meng-hash tiap tebakan, lalu mencocokkan. Untuk PIN yang pendek, jumlah kemungkinannya terlalu sedikit sehingga habis dicoba dalam hitungan detik.</div>' + tabel();
+          return;
+        }
+      }
+      hasil.innerHTML = '<div class="dm-line"><span>Mencoba…</span><b>' + angka(i) + " dari " + angka(total) + "</b></div>";
+      setTimeout(potong, 0);
+    }
+    hasil.innerHTML = "";
+    potong();
+  };
+  pin.addEventListener("input", () => { pin.value = bersih(); hasil.innerHTML = ""; draw(); });
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🔓 <b>Demo: hash tidak bisa dibalik — tapi bisa ditebak</b>" }),
+    h("p", { class: "demo-hint", text: "Ketik PIN rahasia (maksimal 6 digit). Server hanya menyimpan hash-nya. Lalu jadilah penyerang yang mencuri hash itu dan coba temukan PIN aslinya." }),
+    h("label", { class: "dm-row" }, [h("span", { text: "PIN rahasia: " }), pin]),
+    out,
+    h("div", { class: "demo-controls" }, [serang]),
+    hasil,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: membuat dompet (kunci privat → kunci publik → alamat) ---------- */
+DEMOS["buat-dompet"] = function (root) {
+  const out = h("div", { class: "dm-out" });
+  let priv, sebelum = null;
+
+  function draw(ubahSatu) {
+    const Q = KriptoMini.kunciPublik(priv);
+    const pubHex = KriptoMini.publikHex(Q);
+    const alamat = KriptoMini.alamatEthereum(Q);
+    const privHex = KriptoMini.hex(priv);
+    const biner = priv.toString(2).padStart(256, "0");
+    let banding = "";
+    if (ubahSatu && sebelum) {
+      let bp = 0, ba = 0;
+      for (let i = 0; i < pubHex.length; i++) if (pubHex[i] !== sebelum.pub[i]) bp++;
+      for (let i = 0; i < alamat.length; i++) if (alamat[i].toLowerCase() !== sebelum.alamat[i].toLowerCase()) ba++;
+      banding = '<div class="dm-line bad"><span>Kunci privat hanya diubah 1 digit, tapi…</span><b>' + bp + " karakter kunci publik & " + ba + " karakter alamat berubah</b></div>";
+    }
+    sebelum = { pub: pubHex, alamat: alamat };
+    out.innerHTML =
+      '<div class="krip-blok"><div class="krip-judul">🔑 1. KUNCI PRIVAT — rahasia mutlak</div>' +
+      '<div class="krip-hasil ttd">' + privHex + "</div>" +
+      '<div class="dm-sub">Hanya angka acak raksasa. Dalam bentuk 256 lemparan koin (1 = gambar, 0 = angka): <span class="krip-mono">' + biner.slice(0, 40) + "…</span></div></div>" +
+      '<div class="krip-panah">⬇ dikalikan dengan titik G di kurva secp256k1 · <b class="ok">maju: mudah</b> · <b class="bad">mundur: mustahil</b></div>' +
+      '<div class="krip-blok"><div class="krip-judul">🔓 2. KUNCI PUBLIK — boleh diketahui orang</div>' +
+      '<div class="krip-hasil sidik">' + pubHex + "</div>" +
+      '<div class="dm-sub">Sepasang angka (koordinat x dan y), diawali 04.</div></div>' +
+      '<div class="krip-panah">⬇ di-hash dengan Keccak-256, diambil 20 byte terakhir · <b class="ok">maju: mudah</b> · <b class="bad">mundur: mustahil</b></div>' +
+      '<div class="krip-blok"><div class="krip-judul">📮 3. ALAMAT ETHEREUM — dibagikan untuk menerima dana</div>' +
+      '<div class="krip-hasil ok">' + alamat + "</div>" +
+      '<div class="dm-sub">Campuran huruf besar-kecilnya adalah <b>checksum</b>: salah ketik satu karakter bisa terdeteksi dompet.</div></div>' +
+      banding +
+      '<div class="dm-note">⚠️ <b>Ini kunci dan alamat dengan format asli</b>, dibuat acak di browsermu dan tidak disimpan ke mana pun. <b>Jangan pernah mengirim dana ke alamat ini</b> — kunci privatnya sudah tampil di layar, dan akan hilang begitu halaman ditutup.<br><br>Peluang dua orang mendapat kunci privat yang sama sekitar <b>1 banding 10<sup>77</sup></b>. Karena itu tidak ada lembaga yang perlu "menerbitkan" kunci: kamu cukup mengacaknya sendiri.</div>';
+  }
+
+  const baru = h("button", { class: "btn", type: "button", text: "🎲 Buat dompet baru" });
+  baru.onclick = () => { priv = KriptoMini.acakKunci(); sebelum = null; draw(false); };
+  const satu = h("button", { class: "btn ghost", type: "button", text: "✏️ Ubah 1 digit terakhir kunci privat" });
+  satu.onclick = () => { priv = priv ^ 1n; if (priv === 0n) priv = 2n; draw(true); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "👛 <b>Demo: begini sebuah dompet crypto lahir</b>" }),
+    h("p", { class: "demo-hint", text: "Tidak ada pendaftaran, tidak ada server. Dompet hanya mengacak satu angka, lalu menghitung dua hal lain darinya — selalu satu arah." }),
+    h("div", { class: "demo-controls" }, [baru, satu]),
+    out,
+  ]));
+  priv = KriptoMini.acakKunci();
+  draw(false);
+};
+
+/* ---------- Demo: tanda tangan digital ECDSA sungguhan ---------- */
+DEMOS["tanda-tangan"] = function (root) {
+  const andi = KriptoMini.acakKunci(), budi = KriptoMini.acakKunci();
+  const kunci = { andi: KriptoMini.kunciPublik(andi), budi: KriptoMini.kunciPublik(budi) };
+  const ASLI = "Andi mengirim 0,5 koin ke Budi";
+  let sig = null, pesanDitandatangani = "";
+
+  const pesan = h("input", { class: "pc-input lebar krip-isi", type: "text", value: ASLI, "aria-label": "Pesan yang ditandatangani" });
+  const diterima = h("input", { class: "pc-input lebar krip-isi", type: "text", value: "", "aria-label": "Pesan yang diterima jaringan" });
+  const pemeriksa = h("select", { class: "pc-input lebar", "aria-label": "Kunci publik pemeriksa" }, [
+    h("option", { value: "andi", text: "Kunci publik Andi" }),
+    h("option", { value: "budi", text: "Kunci publik Budi" }),
+  ]);
+  const hasilTtd = h("div");
+  const hasilCek = h("div");
+
+  function tampilTtd() {
+    hasilTtd.innerHTML = sig
+      ? '<div class="krip-judul">TANDA TANGAN ANDI (dua angka: r dan s)</div>' +
+        '<div class="krip-hasil ttd">r = ' + kripPendek(KriptoMini.hex(sig.r), 16) + "<br>s = " + kripPendek(KriptoMini.hex(sig.s), 16) + "</div>" +
+        '<div class="dm-sub">Kunci privat Andi <b>tidak ikut dikirim</b>. Yang dikirim ke jaringan hanya: pesan + tanda tangan ini + kunci publik Andi.</div>'
+      : '<div class="dm-sub">Belum ditandatangani. Tekan tombol di atas.</div>';
+  }
+
+  function periksa() {
+    if (!sig) { hasilCek.innerHTML = ""; return; }
+    const siapa = pemeriksa.value;
+    const sah = KriptoMini.periksa(diterima.value, sig, kunci[siapa]);
+    let alasan;
+    if (sah) alasan = "Cocok: pesan ini dibuat oleh pemegang kunci privat Andi, dan <b>tidak berubah satu karakter pun</b> sejak ditandatangani.";
+    else if (siapa !== "andi") alasan = "Tanda tangan ini tidak dibuat dengan kunci privat pasangan kunci publik Budi. Seseorang tidak bisa mengaku sebagai Budi hanya dengan menempelkan tanda tangan orang lain.";
+    else alasan = "Pesan yang diterima <b>berbeda</b> dari yang ditandatangani, sehingga hash-nya berbeda dan tanda tangannya tidak lagi cocok. Mengubah jumlah atau penerima pasti ketahuan.";
+    hasilCek.innerHTML =
+      '<div class="dm-line big ' + (sah ? "good" : "bad") + '"><span>' + (sah ? "✅ SAH" : "❌ DITOLAK") + "</span><b>" + (sah ? "diterima jaringan" : "transaksi dibuang") + "</b></div>" +
+      '<div class="dm-note">' + alasan + "</div>";
+  }
+
+  let jeda = null;
+  const periksaNanti = () => { clearTimeout(jeda); jeda = setTimeout(periksa, 120); };
+  diterima.addEventListener("input", periksaNanti);
+  pemeriksa.addEventListener("change", periksa);
+
+  const tandatangani = h("button", { class: "btn", type: "button", text: "✍️ Andi menandatangani" });
+  tandatangani.onclick = () => {
+    pesanDitandatangani = pesan.value;
+    sig = KriptoMini.tandaTangani(pesanDitandatangani, andi);
+    diterima.value = pesanDitandatangani;
+    pemeriksa.value = "andi";
+    tampilTtd();
+    periksa();
+  };
+  const skenario = (teks, aksi) => {
+    const t = h("button", { class: "btn ghost", type: "button", text: teks });
+    t.onclick = () => { if (!sig) tandatangani.onclick(); aksi(); periksa(); };
+    return t;
+  };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "✍️ <b>Demo: tanda tangan digital sungguhan (ECDSA secp256k1)</b>" }),
+    h("p", { class: "demo-hint", text: "Andi dan Budi masing-masing sudah punya sepasang kunci. Andi menandatangani sebuah pesan, lalu jaringan memeriksanya. Setelah itu, jadilah penyerang." }),
+    h("div", { class: "krip-blok" }, [
+      h("div", { class: "krip-judul", text: "1. DI DOMPET ANDI" }),
+      h("label", { class: "pc-row" }, [h("span", { text: "Pesan" }), pesan]),
+      h("div", { class: "demo-controls" }, [tandatangani]),
+      hasilTtd,
+    ]),
+    h("div", { class: "krip-blok" }, [
+      h("div", { class: "krip-judul", text: "2. DIPERIKSA JARINGAN" }),
+      h("label", { class: "pc-row" }, [h("span", { text: "Pesan yang tiba" }), diterima]),
+      h("label", { class: "pc-row" }, [h("span", { text: "Diperiksa dengan" }), pemeriksa]),
+      hasilCek,
+    ]),
+    h("div", { class: "krip-judul", text: "😈 COBA JADI PENYERANG" }),
+    h("div", { class: "demo-controls" }, [
+      skenario("Ubah jumlah jadi 50 koin", () => { diterima.value = diterima.value.replace("0,5", "50"); }),
+      skenario("Ganti penerima jadi Cici", () => { diterima.value = diterima.value.replace("Budi", "Cici"); }),
+      skenario("Mengaku sebagai Budi", () => { pemeriksa.value = "budi"; }),
+      skenario("↺ Kembalikan", () => { diterima.value = pesanDitandatangani; pemeriksa.value = "andi"; }),
+    ]),
+    h("div", { class: "demo-controls" }, [
+      (function () {
+        const t = h("button", { class: "btn ghost", type: "button", text: "🔁 Tanda tangani ulang pesan yang sama" });
+        t.onclick = () => {
+          const lama = sig;
+          tandatangani.onclick();
+          if (lama) hasilTtd.insertAdjacentHTML("beforeend", '<div class="dm-note">Tanda tangan untuk pesan yang <b>sama</b> kini berbeda angkanya — karena setiap penandatanganan memakai angka acak sekali pakai — namun <b>tetap sah</b>. Yang tidak mungkin: membuat tanda tangan sah untuk pesan <b>lain</b> tanpa kunci privat.</div>');
+        };
+        return t;
+      })(),
+    ]),
+  ]));
+  tampilTtd();
+};
+
+/* ---------- Demo: perjalanan satu transaksi ---------- */
+DEMOS["perjalanan-transaksi"] = function (root) {
+  const privA = KriptoMini.acakKunci();
+  const QA = KriptoMini.kunciPublik(privA);
+  const alamatA = KriptoMini.alamatEthereum(QA);
+  const alamatB = KriptoMini.alamatEthereum(KriptoMini.kunciPublik(KriptoMini.acakKunci()));
+  const alamatC = KriptoMini.alamatEthereum(KriptoMini.kunciPublik(KriptoMini.acakKunci()));
+  const SALDO = 2, URUT = 7, URUT_TERPAKAI = [4, 5, 6];
+  const tx = { dari: alamatA, ke: alamatB, jumlah: "0,5", urut: URUT };
+  const teksTx = (t) => "dari: " + t.dari + "\nke: " + t.ke + "\njumlah: " + t.jumlah + " koin\nnomor urut: " + t.urut;
+  const txAsli = teksTx(tx);
+  const txid = KriptoMini.sha256(txAsli);
+  const sig = KriptoMini.tandaTangani(txAsli, privA);
+
+  let langkah = 0, serangan = "tidak";
+  const isi = h("div");
+  const LANGKAH = ["Dompet Andi", "Menyusun transaksi", "ID transaksi", "Menandatangani", "Disiarkan ke jaringan", "Diperiksa node", "Masuk blok"];
+
+  function paketTiba() {
+    const t = Object.assign({}, tx);
+    if (serangan === "jumlah") t.jumlah = "50";
+    if (serangan === "penerima") t.ke = alamatC;
+    return t;
+  }
+  function pemeriksaan() {
+    const t = paketTiba();
+    const teks = teksTx(t);
+    const cek = [
+      ["Kunci publik cocok dengan alamat pengirim", KriptoMini.alamatEthereum(QA) === t.dari, "hash kunci publik = " + kripPendek(KriptoMini.alamatEthereum(QA), 6)],
+      ["Tanda tangan sah untuk isi paket ini", KriptoMini.periksa(teks, sig, QA), "diperiksa dengan kunci publik Andi"],
+      ["Saldo cukup", parseFloat(t.jumlah.replace(",", ".")) <= SALDO, "saldo Andi " + SALDO + " koin, dikirim " + t.jumlah],
+      ["Nomor urut belum pernah dipakai", !(serangan === "ulang" || URUT_TERPAKAI.includes(t.urut)), serangan === "ulang" ? "nomor urut 7 sudah tercatat kemarin" : "terakhir dipakai: 6"],
+    ];
+    return { cek: cek, lolos: cek.every((c) => c[1]), teks: teks };
+  }
+
+  function draw() {
+    const kotak = (judul, konten) => '<div class="krip-blok"><div class="krip-judul">' + judul + "</div>" + konten + "</div>";
+    let html = '<div class="krip-langkah">' + LANGKAH.map((l, i) => '<span class="' + (i === langkah ? "aktif" : i < langkah ? "lewat" : "") + '">' + (i + 1) + "</span>").join("") + "</div>";
+    html += '<div class="krip-judul">LANGKAH ' + (langkah + 1) + " DARI " + LANGKAH.length + ": " + LANGKAH[langkah].toUpperCase() + "</div>";
+    if (langkah === 0) {
+      html += kotak("🔑 KUNCI PRIVAT", '<div class="krip-hasil ttd">•••••••••••••••• (tersimpan di dompet, tidak pernah keluar)</div>') +
+        kotak("🔓 KUNCI PUBLIK", '<div class="krip-hasil sidik">' + kripPendek(KriptoMini.publikHex(QA), 20) + "</div>") +
+        kotak("📮 ALAMAT ANDI", '<div class="krip-hasil ok">' + alamatA + '</div><div class="dm-sub">Saldo tercatat di blockchain: ' + SALDO + " koin.</div>");
+    } else if (langkah === 1) {
+      html += kotak("📝 ISI TRANSAKSI", '<div class="krip-hasil biasa krip-pre">' + kripEsc(txAsli) + "</div>") +
+        '<div class="dm-note">Isinya <b>terbuka, tidak dirahasiakan</b>. <i>Nomor urut</i> dipakai agar transaksi yang sama tidak bisa dikirim dua kali.</div>';
+    } else if (langkah === 2) {
+      html += kotak("#️⃣ SHA-256 DARI ISI TRANSAKSI", '<div class="krip-hasil sidik">' + txid + "</div>") +
+        '<div class="dm-note">Sidik jari ini menjadi <b>ID transaksi</b> — nomor resi yang bisa kamu cari di <i>block explorer</i>. Ubah satu karakter isi transaksi, ID-nya berubah total.</div>';
+    } else if (langkah === 3) {
+      html += kotak("✍️ TANDA TANGAN (r, s)", '<div class="krip-hasil ttd">r = ' + kripPendek(KriptoMini.hex(sig.r), 14) + "<br>s = " + kripPendek(KriptoMini.hex(sig.s), 14) + "</div>") +
+        '<div class="dm-note">Dibuat dari <b>hash isi transaksi + kunci privat Andi</b>. Tanda tangan ini hanya berlaku untuk isi yang persis ini.</div>';
+    } else if (langkah === 4) {
+      const pilih = (kode, teks) => '<label class="krip-pilih"><input type="radio" name="serang" value="' + kode + '"' + (serangan === kode ? " checked" : "") + "> " + teks + "</label>";
+      html += kotak("📦 PAKET YANG BERJALAN DI JARINGAN", '<div class="dm-sub">isi transaksi + tanda tangan + kunci publik Andi — <b>tanpa kunci privat</b></div>') +
+        '<div class="krip-judul">😈 DI TENGAH JALAN, PENYERANG…</div>' +
+        pilih("tidak", "tidak berbuat apa-apa") + pilih("jumlah", "mengubah jumlah menjadi 50 koin") + pilih("penerima", "mengganti penerima ke alamatnya sendiri") + pilih("ulang", "mengirim ulang transaksi lama Andi yang sudah pernah diproses");
+    } else if (langkah === 5) {
+      const p = pemeriksaan();
+      html += kotak("📦 ISI YANG TIBA DI NODE", '<div class="krip-hasil biasa krip-pre">' + kripEsc(p.teks) + "</div>") +
+        p.cek.map((c) => '<div class="dm-line ' + (c[1] ? "good" : "bad") + '"><span>' + (c[1] ? "✅ " : "❌ ") + c[0] + '<br><i class="dm-sub">' + c[2] + "</i></span></div>").join("") +
+        '<div class="dm-line big ' + (p.lolos ? "good" : "bad") + '"><span>' + (p.lolos ? "Diterima — masuk antrean blok" : "Ditolak — tidak akan pernah masuk blok") + "</span></div>";
+    } else {
+      const p = pemeriksaan();
+      if (!p.lolos) {
+        html += '<div class="dm-line big bad"><span>Transaksi ini ditolak di langkah sebelumnya, jadi tidak ada yang masuk blok.</span></div><div class="dm-note">Kembali ke langkah 5 dan pilih "tidak berbuat apa-apa" untuk melihat transaksi yang sah tercatat.</div>';
+      } else {
+        const hashSebelum = "0000" + KriptoMini.sha256("blok 812.344").slice(4);
+        const hashBlok = KriptoMini.sha256(hashSebelum + txid);
+        html += kotak("🧱 BLOK #812.345", '<div class="dm-line"><span>Hash blok sebelumnya</span><b>' + kripPendek(hashSebelum, 8) + '</b></div><div class="dm-line"><span>ID transaksi di dalamnya</span><b>' + kripPendek(txid, 8) + '</b></div><div class="dm-line"><span>Hash blok ini</span><b>' + kripPendek(hashBlok, 8) + "</b></div>") +
+          '<div class="dm-note">Transaksi Andi kini terkunci oleh hash blok, dan blok ini terkunci ke blok sebelumnya. Mengubah transaksinya sekarang berarti merusak hash blok ini dan semua blok sesudahnya. <i>(Disederhanakan: blok sungguhan berisi ribuan transaksi yang diringkas dengan Merkle tree.)</i></div>';
+      }
+    }
+    isi.innerHTML = html;
+    isi.querySelectorAll('input[name="serang"]').forEach((r) => r.addEventListener("change", () => { serangan = r.value; }));
+    mundur.disabled = langkah === 0;
+    maju.disabled = langkah === LANGKAH.length - 1;
+  }
+
+  const mundur = h("button", { class: "btn ghost", type: "button", text: "← Sebelumnya" });
+  const maju = h("button", { class: "btn", type: "button", text: "Langkah berikutnya →" });
+  mundur.onclick = () => { if (langkah > 0) { langkah--; draw(); } };
+  maju.onclick = () => { if (langkah < LANGKAH.length - 1) { langkah++; draw(); } };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🚚 <b>Demo: perjalanan 0,5 koin dari Andi ke Budi</b>" }),
+    h("p", { class: "demo-hint", text: "Semua perhitungan di demo ini sungguhan: kunci, hash, dan tanda tangan dibuat di browsermu. Di langkah 5, kamu bisa menjadi penyerang." }),
+    isi,
+    h("div", { class: "demo-controls" }, [mundur, maju]),
+  ]));
+  draw();
+};
+
+/* ---------- Demo: Merkle tree ---------- */
+DEMOS["pohon-merkle"] = function (root) {
+  const AWAL = ["Andi → Budi: 5", "Budi → Cici: 2", "Cici → Deni: 1", "Deni → Eka: 3"];
+  const isian = AWAL.map((t, i) => h("input", { class: "pc-input lebar krip-isi", type: "text", value: t, "aria-label": "Transaksi " + (i + 1) }));
+  const kanvas = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+  let bukti = -1;
+
+  function hitung(txs) {
+    const d = txs.map((t) => KriptoMini.sha256(t));
+    const a = KriptoMini.sha256(d[0] + d[1]), b = KriptoMini.sha256(d[2] + d[3]);
+    return { daun: d, tengah: [a, b], akar: KriptoMini.sha256(a + b) };
+  }
+  const asli = hitung(AWAL);
+
+  function draw() {
+    const kini = hitung(isian.map((i) => i.value));
+    const kelas = (x, y, peran) => {
+      if (peran) return "vbox " + peran;
+      return "vbox " + (x === y ? "ok" : "bad");
+    };
+    const peranDaun = (i) => (bukti < 0 ? "" : i === bukti ? "accent2 aktif" : i === (bukti ^ 1) ? "accent aktif" : "");
+    const peranTengah = (j) => (bukti < 0 ? "" : j === (bukti >> 1) ? "" : "accent aktif");
+    const kotak = (x, y, w, teks, cls, label) =>
+      '<rect x="' + (x - w / 2) + '" y="' + y + '" width="' + w + '" height="34" rx="8" class="' + cls + '"/>' +
+      '<text x="' + x + '" y="' + (y + 14) + '" text-anchor="middle" class="vt-xs" style="font-size:9.5px">' + label + "</text>" +
+      '<text x="' + x + '" y="' + (y + 27) + '" text-anchor="middle" class="vt-xs krip-mono" style="font-size:10.5px">' + teks.slice(0, 8) + "…</text>";
+    const xd = [65, 195, 325, 455], xt = [130, 390];
+    let g = '<svg viewBox="0 0 520 206" class="viz-svg" role="img" aria-label="Pohon Merkle empat transaksi">';
+    xt.forEach((x, j) => { g += '<line x1="260" y1="44" x2="' + x + '" y2="86" class="vline"/>'; [0, 1].forEach((k) => { g += '<line x1="' + x + '" y1="120" x2="' + xd[j * 2 + k] + '" y2="160" class="vline"/>'; }); });
+    g += kotak(260, 10, 150, kini.akar, kelas(kini.akar, asli.akar), "MERKLE ROOT");
+    xt.forEach((x, j) => { g += kotak(x, 86, 120, kini.tengah[j], kelas(kini.tengah[j], asli.tengah[j], peranTengah(j)), j === 0 ? "hash(1+2)" : "hash(3+4)"); });
+    xd.forEach((x, i) => { g += kotak(x, 160, 112, kini.daun[i], kelas(kini.daun[i], asli.daun[i], peranDaun(i)), "hash Tx" + (i + 1)); });
+    g += "</svg>";
+    kanvas.innerHTML = g;
+
+    const berubah = kini.akar !== asli.akar;
+    let catatan = berubah
+      ? "Satu transaksi diubah → hash-nya berubah (merah) → hash gabungan di atasnya berubah → <b>Merkle root berubah</b>. Karena root tersimpan di header blok, perubahan sekecil apa pun langsung ketahuan."
+      : "Keempat transaksi diringkas menjadi satu Merkle root. Coba ubah satu huruf atau angka di salah satu transaksi.";
+    if (bukti >= 0) {
+      catatan = "<b>Bukti bahwa Tx" + (bukti + 1) + " ada di blok ini</b> hanya butuh 2 hash (biru): hash Tx" + ((bukti ^ 1) + 1) + " dan hash gabungan pasangan lainnya. Dengan keduanya, siapa pun bisa menghitung ulang sampai ke root dan mencocokkannya dengan header blok — tanpa melihat transaksi lain.";
+    }
+    out.innerHTML =
+      '<div class="dm-line ' + (berubah ? "bad" : "good") + '"><span>Merkle root sekarang</span><b class="krip-mono">' + kripPendek(kini.akar, 8) + "</b></div>" +
+      '<div class="dm-line"><span>Merkle root di header blok</span><b class="krip-mono">' + kripPendek(asli.akar, 8) + "</b></div>" +
+      '<div class="dm-note">' + catatan + "</div>";
+  }
+  isian.forEach((i) => i.addEventListener("input", () => { bukti = -1; draw(); }));
+
+  const tombolBukti = [0, 1, 2, 3].map((i) => {
+    const t = h("button", { class: "btn ghost", type: "button", text: "🔎 Buktikan Tx" + (i + 1) });
+    t.onclick = () => { isian.forEach((x, k) => { x.value = AWAL[k]; }); bukti = i; draw(); };
+    return t;
+  });
+  const reset = h("button", { class: "btn ghost", type: "button", text: "↺ Kembalikan" });
+  reset.onclick = () => { isian.forEach((x, k) => { x.value = AWAL[k]; }); bukti = -1; draw(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🌳 <b>Demo: empat transaksi, satu Merkle root</b>" }),
+    h("p", { class: "demo-hint", text: "Setiap kotak berisi 8 karakter pertama hash SHA-256 sungguhan. Ubah salah satu transaksi, atau minta bukti bahwa sebuah transaksi ada di dalam blok." }),
+    h("div", { class: "pc-form" }, isian.map((inp, i) => h("label", { class: "pc-row" }, [h("span", { text: "Tx" + (i + 1) }), inp]))),
+    kanvas,
+    h("div", { class: "demo-controls" }, tombolBukti.concat([reset])),
+    out,
+  ]));
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

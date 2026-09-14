@@ -194,7 +194,7 @@ const BLOCKCHAIN_COURSE = {
       id: "bc-pemula",
       level: "Pemula",
       title: "Dasar-Dasar Blockchain & Bitcoin",
-      summary: "Apa itu blockchain, lahirnya Bitcoin, wallet & kunci, dan bagaimana sebuah transaksi diproses.",
+      summary: "Apa itu blockchain, lahirnya Bitcoin, wallet & kunci, bagaimana transaksi diproses, dan kamus istilah dengan bahasa sehari-hari.",
       lessons: [
         {
           id: "bc-p-1",
@@ -431,195 +431,814 @@ const BLOCKCHAIN_COURSE = {
             },
           ],
         },
-      ],
-    },
-    /* ---------------- MODUL 3: FONDASI KRIPTOGRAFI BLOCKCHAIN ---------------- */
-    {
-      id: "bc-fundamental",
-      level: "Fundamental",
-      title: "Fondasi Kriptografi Blockchain",
-      summary: "Mesin di balik keamanan blockchain: fungsi hash, kunci publik & tanda tangan digital, serta Merkle tree.",
-      lessons: [
         {
-          id: "bc-fund-1",
-          title: "Fungsi Hash — Fondasi Blockchain",
-          duration: "11 menit",
+          id: "bc-p-5",
+          title: "Kamus Istilah Crypto — dengan Bahasa Sehari-hari",
+          duration: "12 menit",
           content: `
-<p>Blockchain berdiri di atas satu alat matematika: <b>fungsi hash kriptografis</b>. Ia mengubah data apa pun menjadi "sidik jari" digital berukuran tetap.</p>
+<p>Belajar crypto sering terasa berat bukan karena konsepnya sulit, tapi karena <b>puluhan istilah datang sekaligus</b>: hash, nonce, seed phrase, node, kunci publik… Pelajaran ini adalah peta. Kamu tidak perlu menghafalnya sekarang — cukup tahu setiap istilah itu <b>bagian dari mana</b>.</p>
 
-<div data-diagram="pipeline" data-stages="Masukan apa pun::1 huruf atau 1 buku|Fungsi hash::diaduk searah|Keluaran::panjangnya selalu sama|Ubah 1 huruf::hasil berubah total" data-caption="Empat sifat hash yang membuat blockchain mungkin"></div>
+<div data-diagram="layers" data-items="Kamu &amp; dompetmu|Transaksi &amp; tanda tangan|Blok, hash &amp; rantai|Jaringan node &amp; konsensus" data-caption="Empat lapisan: dari yang kamu pegang sendiri sampai jaringan global"></div>
 
+<h3>1. Kamu &amp; dompetmu</h3>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th><th>Analogi</th></tr>
+  <tr><td><b>Wallet (dompet)</b></td><td>Aplikasi atau alat yang menyimpan <b>kunci</b>, bukan koin</td><td>Gantungan kunci, bukan brankas</td></tr>
+  <tr><td><b>Kunci privat</b></td><td>Angka rahasia raksasa yang membuktikan kamu pemilik dana</td><td>PIN dan tanda tangan basah sekaligus</td></tr>
+  <tr><td><b>Kunci publik</b></td><td>Dihitung dari kunci privat, boleh dilihat orang, dipakai memeriksa tanda tangan</td><td>Contoh cap resmi yang bisa dicocokkan siapa pun</td></tr>
+  <tr><td><b>Alamat</b></td><td>Versi pendek kunci publik untuk <b>menerima</b> dana</td><td>Nomor rekening</td></tr>
+  <tr><td><b>Seed phrase</b></td><td>12 atau 24 kata yang mewakili semua kunci privatmu</td><td>Kunci induk seluruh brankas</td></tr>
+</table>
 
-<h3>Empat sifat kunci</h3>
-<ul>
-  <li><b>Deterministik</b> — input sama selalu menghasilkan output sama.</li>
-  <li><b>Satu arah</b> — dari output tak mungkin balik ke input asli.</li>
-  <li><b>Efek avalanche</b> — ubah 1 huruf saja, output berubah <b>total</b>.</li>
-  <li><b>Tahan tabrakan</b> — sangat sulit menemukan dua input berbeda dengan hash sama.</li>
-</ul>
-<p>Bitcoin memakai <b>SHA-256</b> (menghasilkan 256 bit / 64 karakter heksadesimal).</p>
+<h3>2. Transaksi &amp; tanda tangan</h3>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th><th>Analogi</th></tr>
+  <tr><td><b>Transaksi</b></td><td>Pesan "pindahkan sekian dari alamat A ke alamat B"</td><td>Slip transfer</td></tr>
+  <tr><td><b>Tanda tangan digital</b></td><td>Bukti matematis bahwa pesan dibuat pemegang kunci privat dan tidak diubah</td><td>Stempel yang bentuknya mengikuti isi surat</td></tr>
+  <tr><td><b>ID transaksi (txid)</b></td><td>Hash dari isi transaksi</td><td>Nomor resi pengiriman</td></tr>
+  <tr><td><b>Fee / gas</b></td><td>Biaya agar transaksimu diproses</td><td>Ongkos kirim</td></tr>
+  <tr><td><b>Konfirmasi</b></td><td>Jumlah blok yang sudah ditumpuk setelah blok berisi transaksimu</td><td>Cap "lunas" yang makin tebal</td></tr>
+</table>
 
-<h3>Coba sendiri — buktikan efek avalanche 👇</h3>
-<div data-demo="js-playground">// hash sederhana untuk demo (bukan SHA-256 asli, tapi sifatnya mirip)
-function hash(s){ let h=0; s.split("").forEach(function(ch){ h=(h*31+ch.charCodeAt(0))>>>0; }); return h.toString(16); }
+<h3>3. Blok, hash &amp; rantai</h3>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th><th>Analogi</th></tr>
+  <tr><td><b>Hash</b></td><td>Sidik jari data: ukurannya tetap, berubah total bila datanya berubah</td><td>Sidik jari manusia</td></tr>
+  <tr><td><b>Blok</b></td><td>Sekumpulan transaksi yang dicatat bersama</td><td>Satu halaman buku kas</td></tr>
+  <tr><td><b>Hash blok sebelumnya</b></td><td>Sidik jari halaman lama yang ditulis di halaman baru</td><td>Segel yang menyambung antar-halaman</td></tr>
+  <tr><td><b>Merkle root</b></td><td>Satu hash yang mewakili semua transaksi dalam blok</td><td>Daftar isi yang disegel</td></tr>
+  <tr><td><b>Nonce</b></td><td>Angka yang diutak-atik penambang; di Ethereum juga nomor urut transaksi akun</td><td>Kombinasi gembok yang dicoba satu per satu</td></tr>
+</table>
 
-console.log("hash('Halo')  = " + hash("Halo"));
-console.log("hash('Halo!') = " + hash("Halo!"));
-console.log("hash('halo')  = " + hash("halo"));
-console.log("Ubah 1 huruf -> hash berubah total (efek avalanche).");</div>
+<h3>4. Jaringan</h3>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th><th>Analogi</th></tr>
+  <tr><td><b>Node</b></td><td>Komputer yang menyimpan salinan blockchain dan memeriksa aturan</td><td>Siswa yang memegang salinan buku kas kelas</td></tr>
+  <tr><td><b>Penambang / validator</b></td><td>Pihak yang menyusun blok baru (lewat PoW atau PoS)</td><td>Juru tulis yang bergiliran</td></tr>
+  <tr><td><b>Konsensus</b></td><td>Cara jaringan sepakat blok mana yang sah</td><td>Aturan musyawarah</td></tr>
+  <tr><td><b>Smart contract</b></td><td>Program yang berjalan di blockchain</td><td>Mesin penjual otomatis</td></tr>
+  <tr><td><b>Token</b></td><td>Aset yang dibuat di atas sebuah blockchain</td><td>Koin permainan di arena</td></tr>
+</table>
+
+<h3>🚩 Tiga salah paham yang paling sering</h3>
+<table class="tbl">
+  <tr><th>Salah paham</th><th>Yang benar</th></tr>
+  <tr><td class="bad-cell">"Koinku tersimpan di dompet HP"</td><td class="ok-cell">Koin tercatat di blockchain. Dompet hanya menyimpan kunci untuk memindahkannya — HP hilang, dana aman selama seed phrase aman</td></tr>
+  <tr><td class="bad-cell">"Data blockchain dienkripsi"</td><td class="ok-cell">Sebagian besar datanya justru terbuka untuk semua orang. Yang dipakai adalah hash dan tanda tangan</td></tr>
+  <tr><td class="bad-cell">"Alamat, kunci publik, dan kunci privat itu sama"</td><td class="ok-cell">Tiga hal berbeda yang dihitung satu arah: privat → publik → alamat. Hanya kunci privat yang wajib rahasia</td></tr>
+</table>
 
 <div class="callout">
-<b>💥 Peran & dampak:</b> Hash <b>mengunci</b> tiap blok ke blok sebelumnya, membuat perubahan sekecil apa pun langsung ketahuan. Hash juga menjadi dasar <b>Proof of Work</b> (menambang = mencari input agar hash memenuhi syarat). Tanpa fungsi hash, tidak ada blockchain.
+<b>💡 Tidak perlu hafal.</b> Modul berikutnya membongkar lapisan pertama sampai ketiga satu per satu — hash, kunci, tanda tangan, dan Merkle tree — lengkap dengan demo yang menghitung semuanya secara sungguhan di browsermu. Kembalilah ke halaman ini kapan pun kamu lupa sebuah istilah.
 </div>
 `,
           keyPoints: [
-            "Fungsi hash mengubah data apa pun jadi sidik jari berukuran tetap.",
-            "Sifat: deterministik, satu arah, efek avalanche, tahan tabrakan.",
-            "Peran: mengunci blok, mendeteksi perubahan, dan fondasi Proof of Work.",
+            "Istilah crypto bisa dikelompokkan jadi empat lapisan: dompet, transaksi, blok & hash, dan jaringan.",
+            "Dompet menyimpan kunci, bukan koin; koin tercatat di blockchain.",
+            "Kunci privat rahasia mutlak; kunci publik dan alamat dihitung darinya secara satu arah dan boleh dibagikan.",
+            "Hash adalah sidik jari data; ID transaksi dan penghubung antar-blok sama-sama memakai hash.",
+            "Blockchain umumnya tidak dienkripsi — isinya terbuka, keamanannya datang dari hash dan tanda tangan.",
+          ],
+          quiz: [
+            {
+              q: "HP berisi aplikasi dompet crypto-mu hilang. Apa yang terjadi pada koinmu?",
+              options: [
+                "Koin tetap tercatat di blockchain dan bisa dipulihkan selama seed phrase aman",
+                "Koin ikut hilang karena tersimpan di dalam memori aplikasi dompet tersebut",
+                "Koin otomatis dikembalikan ke bursa tempat kamu pertama kali membelinya",
+                "Koin terkunci permanen sampai HP yang sama ditemukan dan dinyalakan kembali",
+              ],
+              answer: 0,
+              explain: "Dompet hanya menyimpan kunci. Seed phrase bisa memulihkan kunci itu di perangkat lain.",
+            },
+            {
+              q: "Mana yang boleh kamu bagikan kepada orang yang ingin mengirimimu dana?",
+              options: [
+                "Alamat dompet",
+                "Kunci privat",
+                "Seed phrase",
+                "Kode tanda tangan",
+              ],
+              answer: 0,
+              explain: "Alamat dipakai untuk menerima. Kunci privat dan seed phrase memberi kendali penuh atas dana.",
+            },
+            {
+              q: "Apa itu ID transaksi (txid)?",
+              options: [
+                "Hash dari isi transaksi yang dipakai sebagai nomor resi",
+                "Nomor urut yang diberikan bursa kepada setiap pelanggannya",
+                "Kunci publik pengirim yang ditulis ulang dalam bentuk pendek",
+                "Kode rahasia yang dikirim penerima untuk menyetujui transaksi",
+              ],
+              answer: 0,
+              explain: "Karena memakai hash, mengubah satu karakter isi transaksi akan mengubah ID-nya.",
+            },
+            {
+              q: "Pernyataan \"data blockchain dienkripsi\" — bagaimana yang tepat?",
+              options: [
+                "Keliru: isinya umumnya terbuka, keamanannya dari hash dan tanda tangan",
+                "Benar: semua transaksi dikunci agar hanya pengirim yang bisa membacanya",
+                "Benar: setiap blok dienkripsi ulang oleh penambang sebelum disimpan",
+                "Keliru: blockchain tidak memakai matematika kriptografi sama sekali",
+              ],
+              answer: 0,
+              explain: "Siapa pun bisa membaca transaksi di block explorer — itulah yang membuatnya bisa diperiksa semua orang.",
+            },
+          ],
+        },
+      ],
+    },
+    /* ---------------- MODUL 3: FONDASI KRIPTOGRAFI: HASH, KUNCI & TANDA TANGAN ---------------- */
+    {
+      id: "bc-fundamental",
+      level: "Fundamental",
+      title: "Fondasi Kriptografi: Hash, Kunci & Tanda Tangan",
+      summary: "Dari nol dan dengan demo sungguhan: hash sebagai sidik jari data, kenapa hash tak bisa dibalik, kunci privat–publik–alamat, tanda tangan digital, perjalanan satu transaksi, dan Merkle tree.",
+      lessons: [
+        {
+          id: "bc-fund-1",
+          title: "Hash dari Nol — Sidik Jari untuk Data",
+          duration: "15 menit",
+          content: `
+<p><b>Hash</b> adalah kata yang paling sering muncul di dunia crypto — dan paling jarang dijelaskan dengan baik. Pelajaran ini mulai benar-benar dari nol: apa itu, cara membuatnya dengan tangan, lalu mencoba yang sungguhan.</p>
+
+<div data-diagram="pipeline" data-stages="Data apa saja::teks, foto, file 1 GB|Fungsi hash::diaduk dengan rumus tetap|Sidik jari::selalu 64 karakter|Dipakai untuk::memeriksa &amp; mengunci" data-caption="Hash mengubah data sebesar apa pun menjadi sidik jari berukuran tetap"></div>
+
+<h3>Fundamental: sidik jari untuk data</h3>
+<div class="callout">
+👆 <b>Sidik jarimu</b> jauh lebih kecil dari tubuhmu, tapi cukup untuk memastikan "ini orang yang sama". Dari sidik jari, polisi tidak bisa menggambar wajahmu — tapi bisa mencocokkan apakah dua sidik jari berasal dari orang yang sama.<br><br>
+<b>Hash adalah sidik jari untuk data.</b> Sebuah kalimat, foto, atau file satu gigabyte diubah menjadi deretan pendek berukuran tetap. Dari deretan itu data aslinya tidak bisa dibangun kembali, tapi siapa pun bisa memastikan apakah dua data <b>persis sama</b>.
+</div>
+
+<div class="callout warn">
+🥤 <b>Analogi blender.</b> Memasukkan pisang, susu, dan madu lalu memblendernya itu mudah — dan resep yang sama selalu menghasilkan jus yang sama. Tapi mengembalikan jus menjadi pisang utuh? Mustahil. Hash bekerja seperti blender itu: <b>mudah ke depan, mustahil ke belakang</b>.
+</div>
+
+<h3>Coba buat hash sendiri — dengan tangan</h3>
+<p>Mari buat <b>hash mainan</b>: ganti setiap huruf dengan nomor urutnya (A = 1, B = 2, … Z = 26), jumlahkan, lalu ambil <b>dua digit terakhir</b>.</p>
+<table class="tbl">
+  <tr><th>Kata</th><th>Hitungan</th><th>Hash mainan</th></tr>
+  <tr><td>BUDI</td><td>2 + 21 + 4 + 9 = 36</td><td><b>36</b></td></tr>
+  <tr><td>ANDI</td><td>1 + 14 + 4 + 9 = 28</td><td><b>28</b></td></tr>
+  <tr><td>DIBU</td><td>4 + 9 + 2 + 21 = 36</td><td class="bad-cell"><b>36</b> — sama dengan BUDI!</td></tr>
+  <tr><td>BUDJ</td><td>2 + 21 + 4 + 10 = 37</td><td class="bad-cell"><b>37</b> — hanya beda 1 dari BUDI</td></tr>
+</table>
+
+<p>Sekarang nilai hash mainan kita:</p>
+<table class="tbl">
+  <tr><th>Ujian</th><th>Hash mainan</th></tr>
+  <tr><td>Kata yang sama selalu menghasilkan angka yang sama?</td><td class="ok-cell">✅ Lulus</td></tr>
+  <tr><td>Ukuran hasilnya selalu tetap?</td><td class="ok-cell">✅ Lulus — selalu 2 digit</td></tr>
+  <tr><td>Tidak bisa dibalik?</td><td class="ok-cell">✅ Lulus — angka 36 bisa berasal dari ribuan kata</td></tr>
+  <tr><td>Sulit menemukan dua data dengan hash sama?</td><td class="bad-cell">❌ Gagal — cukup tukar urutan huruf</td></tr>
+  <tr><td>Perubahan kecil mengubah hasil secara total?</td><td class="bad-cell">❌ Gagal — BUDI → BUDJ hanya naik 1</td></tr>
+</table>
+
+<p>Hash mainan gagal dua ujian terakhir, sehingga penipu bisa mengakalinya. Fungsi hash sungguhan seperti <b>SHA-256</b> — yang dipakai Bitcoin — dirancang lulus <b>kelima-limanya</b>. Coba sendiri:</p>
+
+<div data-demo="hash-sungguhan"></div>
+
+<h3>Lima sifat hash — dan kenapa blockchain membutuhkannya</h3>
+<table class="tbl">
+  <tr><th>Sifat</th><th>Artinya</th><th>Kenapa penting di blockchain</th></tr>
+  <tr><td><b>Deterministik</b></td><td>Data sama → hash sama, di komputer mana pun</td><td>Ribuan node bisa memeriksa hal yang sama tanpa saling percaya</td></tr>
+  <tr><td><b>Ukuran tetap</b></td><td>Satu huruf atau satu film tetap 64 karakter</td><td>Blok bisa merujuk data sebesar apa pun secara ringkas</td></tr>
+  <tr><td><b>Satu arah</b></td><td>Dari hash tidak bisa kembali ke datanya</td><td>Sidik jari boleh dipublikasikan tanpa membocorkan isi aslinya</td></tr>
+  <tr><td><b>Efek longsor</b> (avalanche)</td><td>Ubah sedikit saja → sekitar separuh hash berubah</td><td>Perubahan sekecil apa pun pada transaksi lama langsung ketahuan</td></tr>
+  <tr><td><b>Tahan tabrakan</b></td><td>Praktis mustahil menemukan dua data berbeda dengan hash sama</td><td>Satu sidik jari benar-benar mewakili satu data saja</td></tr>
+</table>
+
+<h3>64 karakter itu apa?</h3>
+<p>Hash SHA-256 ditulis dalam <b>heksadesimal</b> — sistem angka yang memakai 16 simbol: 0–9 lalu a–f. Satu karakter heksadesimal mewakili <b>4 bit</b>, jadi 64 karakter = 256 bit. Dari situlah namanya: SHA-<b>256</b>.</p>
+<p>Banyaknya kemungkinan hash adalah 2<sup>256</sup> — sekitar 1 diikuti 77 angka nol. Sebagai pembanding, jumlah butir pasir di seluruh pantai Bumi diperkirakan "hanya" sekitar 1 diikuti 19 angka nol.</p>
+
+<div class="callout warn">
+<b>⚠️ Hash bukan enkripsi.</b> Enkripsi punya kunci dan memang dirancang untuk dibuka kembali. Hash tidak punya kunci dan tidak bisa "dibuka" oleh siapa pun, termasuk pembuatnya. Perbedaan keduanya dibahas tuntas di modul Kriptografi Mendalam.
+</div>
+
+<h3>Di mana hash dipakai?</h3>
+<table class="tbl">
+  <tr><th>Tempat</th><th>Perannya</th></tr>
+  <tr><td>Setiap blok</td><td>Sidik jari blok, sekaligus penyambung ke blok sebelumnya</td></tr>
+  <tr><td>ID transaksi</td><td>Nomor resi yang bisa dicari di block explorer</td></tr>
+  <tr><td>Alamat dompet</td><td>Dibuat dengan meng-hash kunci publik</td></tr>
+  <tr><td>Penambangan</td><td>Menebak angka agar hash blok memenuhi syarat tertentu</td></tr>
+  <tr><td>Di luar crypto</td><td>Memeriksa file unduhan tidak rusak, menyimpan password, mendeteksi file kembar</td></tr>
+</table>
+`,
+          keyPoints: [
+            "Hash adalah sidik jari data: data sebesar apa pun diubah menjadi deretan berukuran tetap.",
+            "Seperti blender: mudah ke depan, mustahil ke belakang — data asli tidak bisa dibangun dari hash.",
+            "Hash mainan (jumlah nomor huruf) gagal karena mudah bertabrakan dan perubahan kecil hanya mengubah hasil sedikit.",
+            "Lima sifat hash sungguhan: deterministik, ukuran tetap, satu arah, efek longsor, dan tahan tabrakan.",
+            "SHA-256 menghasilkan 64 karakter heksadesimal = 256 bit.",
+            "Hash bukan enkripsi: tidak ada kunci dan tidak bisa dibuka oleh siapa pun.",
+            "Hash dipakai untuk mengunci blok, ID transaksi, alamat dompet, dan penambangan.",
+          ],
+          practice: [
+            { type: "number", q: "Dengan hash mainan (A=1, B=2, …, Z=26, jumlahkan), berapa hash kata ADA?", answer: 6, tol: 0.5, hint: "A = 1, D = 4.", solution: "1 + 4 + 1 = 6. Kata DAA juga menghasilkan 6 — contoh tabrakan pada hash mainan." },
+            { type: "number", q: "Satu karakter heksadesimal mewakili 4 bit. Berapa bit dalam 64 karakter?", answer: 256, tol: 0.5, hint: "64 × 4.", solution: "64 × 4 = 256 bit — asal nama SHA-256." },
           ],
           quiz: [
             {
               q: "Apa itu 'efek avalanche' pada fungsi hash?",
               options: [
                 "Perubahan masukan sekecil apa pun mengubah keluarannya secara total",
-                "Hash menjadi makin panjang seiring bertambah besarnya data masukan",
+                "Keluaran hash makin panjang seiring bertambahnya ukuran masukan",
+                "Hash dari data besar dihitung bertahap agar tidak membebani komputer",
                 "Beberapa masukan berbeda sengaja dibuat menghasilkan hash yang sama",
-                "Proses hashing melambat bertahap saat datanya makin besar",
               ],
               answer: 0,
-              explain:
-                "Perubahan 1 bit input mengubah hash total — inti pendeteksian perubahan.",
+              explain: "Karena itu perubahan satu karakter pun di sebuah transaksi langsung terdeteksi.",
             },
             {
               q: "Mengapa sifat 'satu arah' penting?",
               options: [
                 "Agar data asli tidak bisa direkonstruksi kembali dari hash-nya",
-                "Agar proses hashing berjalan lebih cepat daripada enkripsi biasa",
-                "Agar hash yang sama selalu dihasilkan dari masukan yang berbeda",
-                "Agar ukuran hash menyesuaikan diri dengan panjang datanya",
+                "Agar hash hanya bisa dihitung oleh komputer milik penambang",
+                "Agar data yang sama menghasilkan hash yang berbeda setiap kali",
+                "Agar hash bisa dibuka kembali memakai kunci milik pemiliknya",
               ],
               answer: 0,
-              explain: "Sifat satu arah menjaga keamanan; hash tak bisa dibalik ke input.",
+              explain: "Sidik jari bisa dipublikasikan tanpa membocorkan data aslinya.",
+            },
+            {
+              q: "Hash mainan memberi BUDI = 36 dan DIBU = 36. Ujian apa yang gagal?",
+              options: [
+                "Tahan tabrakan — dua data berbeda menghasilkan hash yang sama",
+                "Deterministik — kata yang sama menghasilkan hash yang berbeda",
+                "Ukuran tetap — hasilnya kadang dua digit, kadang tiga digit",
+                "Satu arah — dari angka 36 kata aslinya bisa langsung diketahui",
+              ],
+              answer: 0,
+              explain: "Dua data berbeda dengan sidik jari sama membuat hash tidak bisa dipercaya sebagai pembeda.",
+            },
+            {
+              q: "Apa beda hash dengan enkripsi?",
+              options: [
+                "Hash tidak punya kunci dan tidak bisa dibuka, enkripsi dirancang untuk dibuka dengan kunci",
+                "Hash dipakai untuk teks pendek, enkripsi hanya dipakai untuk file berukuran besar",
+                "Hash selalu bisa dibalik oleh pembuatnya, enkripsi tidak bisa dibalik oleh siapa pun",
+                "Keduanya sama saja, hanya berbeda nama di dunia crypto dan di dunia perbankan",
+              ],
+              answer: 0,
+              explain: "Enkripsi menyembunyikan untuk dibuka lagi; hash menyegel dan tidak pernah dibuka.",
+            },
+          ],
+        },
+        {
+          id: "bc-hash-2",
+          title: "Kenapa Hash Tidak Bisa Dibalik — tapi Bisa Ditebak",
+          duration: "14 menit",
+          content: `
+<p>"Satu arah" terdengar seperti sulap. Komputer bisa menghitung apa saja — kenapa ia tidak bisa menghitung mundur? Dan kalau benar-benar tidak bisa dibalik, kenapa password yang di-hash masih sering dibobol?</p>
+
+<h3>Fundamental: kenapa tidak ada jalan pulang</h3>
+<div class="callout">
+🕒 <b>Analogi jam dinding.</b> Jarum jam menunjuk angka 3. Sudah berapa jam berlalu sejak tengah malam? Bisa 3 jam, 15 jam, 27 jam, 39 jam… Informasinya <b>sudah hilang</b>, sehingga tidak ada rumus yang bisa menjawab dengan pasti.<br><br>
+Hash bekerja dengan cara serupa, tapi jauh lebih ekstrem. SHA-256 mengaduk data dalam <b>64 putaran</b>; setiap putaran mencampur hasil putaran sebelumnya dengan cara yang sengaja dibuat berantakan. Tidak ada yang tahu cara menguraikannya kembali.
+</div>
+
+<p>Akibatnya, hanya ada <b>satu</b> cara untuk "membalik" hash: <b>menebak</b>. Coba sebuah data, hitung hash-nya, bandingkan. Tidak cocok? Coba data lain. Ulangi.</p>
+
+<div class="callout warn">
+<b>Satu arah bukan berarti tak mungkin ditebak.</b> Artinya: tidak ada jalan pintas selain mencoba satu per satu. Karena itu keamanannya sepenuhnya bergantung pada <b>seberapa banyak kemungkinan</b> yang harus dicoba.
+</div>
+
+<div data-demo="tebak-pin"></div>
+
+<h3>Keamanan = banyaknya tebakan yang dibutuhkan</h3>
+<p>Andaikan penyerang punya komputer yang mampu 1 miliar tebakan per detik:</p>
+<table class="tbl">
+  <tr><th>Rahasia</th><th>Banyak kemungkinan</th><th>Waktu mencoba semuanya</th></tr>
+  <tr><td>PIN 6 digit</td><td>1 juta</td><td class="bad-cell">Seketika</td></tr>
+  <tr><td>Password 8 huruf kecil</td><td>± 209 miliar</td><td class="bad-cell">Sekitar 3,5 menit</td></tr>
+  <tr><td>Password 12 karakter campuran</td><td>± 4,8 × 10<sup>23</sup></td><td class="ok-cell">Sekitar 15 juta tahun</td></tr>
+  <tr><td>Seed phrase 12 kata acak</td><td>± 3,4 × 10<sup>38</sup></td><td class="ok-cell">Ratusan miliar kali umur alam semesta</td></tr>
+</table>
+<p>Setiap tambahan satu karakter <b>mengalikan</b> jumlah kemungkinan, bukan menambahnya. Itulah kenapa panjang jauh lebih penting daripada "kerumitan" yang mudah ditebak seperti <i>P@ssw0rd</i>.</p>
+
+<h3>Tiga pelajaran untuk kehidupan sehari-hari</h3>
+<ol>
+  <li><b>Password pendek tetap tidak aman walau disimpan sebagai hash.</b> Kalau database sebuah situs bocor, hash dari password pendek bisa ditebak dalam hitungan menit.</li>
+  <li><b>Situs yang baik menambahkan "garam" (salt).</b> Sebelum di-hash, setiap password dicampur teks acak yang berbeda per pengguna. Dua orang dengan password sama mendapat hash berbeda, dan daftar tebakan yang sudah dihitung sebelumnya jadi tidak berguna.</li>
+  <li><b>Seed phrase aman karena dipilih acak oleh dompet — bukan olehmu.</b> Kata-kata yang kamu pilih sendiri, seperti kutipan lagu atau nama keluarga, masuk ke daftar tebakan penyerang. Dompet yang dibuat dari kalimat pilihan sendiri (<i>brain wallet</i>) sudah berkali-kali dikuras habis.</li>
+</ol>
+
+<h3>Kembali ke blockchain: hash sebagai rantai pengunci</h3>
+<p>Setiap blok menyimpan <b>hash blok sebelumnya</b>. Rantai inilah yang membuat sejarah transaksi sulit dipalsukan:</p>
+
+<div data-diagram="pipeline" data-stages="Blok 1::hash-nya a3f9…|Blok 2::simpan a3f9…, hash 7c21…|Blok 3::simpan 7c21…, hash e804…|Blok 4::simpan e804…" data-caption="Setiap blok memegang sidik jari blok sebelumnya"></div>
+
+<table class="tbl">
+  <tr><th>Kalau penipu mengubah satu transaksi di Blok 2…</th><th>Akibatnya</th></tr>
+  <tr><td>Isi Blok 2 berubah</td><td>Hash Blok 2 berubah total (efek longsor)</td></tr>
+  <tr><td>Blok 3 masih menyimpan hash Blok 2 yang lama</td><td>Sambungan Blok 2 → 3 putus</td></tr>
+  <tr><td>Untuk menutupinya, Blok 3 harus dihitung ulang</td><td>Hash Blok 3 ikut berubah → Blok 4 putus, dan seterusnya</td></tr>
+  <tr><td>Ribuan node memegang salinan yang asli</td><td>Versi palsu langsung terlihat berbeda dan ditolak</td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Penambangan juga memakai prinsip "hanya bisa ditebak".</b> Penambang harus menemukan sebuah angka yang membuat hash blok diawali banyak angka nol. Tidak ada rumusnya — satu-satunya cara adalah mencoba jutaan angka. Kerja keras inilah yang membuat menghitung ulang blok-blok lama menjadi sangat mahal. Cara kerjanya dibahas lengkap di modul Konsensus, Penambangan &amp; Dompet.
+</div>
+`,
+          keyPoints: [
+            "Hash tidak bisa dibalik karena informasinya hilang dan pengadukannya tidak punya jalan pintas — seperti jarum jam yang tak memberi tahu sudah berapa hari berlalu.",
+            "Satu-satunya cara 'membalik' hash adalah menebak satu per satu, jadi keamanannya bergantung pada banyaknya kemungkinan.",
+            "PIN dan password pendek tetap bisa ditebak dalam hitungan detik atau menit walau disimpan sebagai hash.",
+            "Menambah panjang mengalikan jumlah kemungkinan; salt membuat password sama menghasilkan hash berbeda.",
+            "Seed phrase aman karena diacak oleh dompet; kalimat pilihan sendiri mudah ditebak.",
+            "Setiap blok menyimpan hash blok sebelumnya, sehingga mengubah satu blok memutus semua sambungan sesudahnya.",
+          ],
+          practice: [
+            { type: "number", q: "PIN 4 digit (0000–9999) punya berapa kemungkinan?", answer: 10000, tol: 0.5, hint: "Setiap digit punya 10 pilihan: 10 × 10 × 10 × 10.", solution: "10⁴ = 10.000 kemungkinan — habis dicoba dalam sepersekian detik." },
+            { type: "number", q: "Penyerang mencoba 1 miliar tebakan per detik. Password dengan 200 miliar kemungkinan habis dicoba dalam berapa detik?", answer: 200, tol: 0.5, hint: "200.000.000.000 ÷ 1.000.000.000.", solution: "200 detik — kurang dari 4 menit." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa hash SHA-256 tidak bisa dihitung mundur?",
+              options: [
+                "Informasinya hilang saat diaduk dan tidak ada jalan pintas yang diketahui",
+                "Hasil hash langsung dihapus dari memori setelah selesai dihitung",
+                "Rumus SHA-256 dirahasiakan sehingga hanya penambang yang mengetahuinya",
+                "Komputer biasa belum cukup cepat, tetapi komputer bank bisa melakukannya",
+              ],
+              answer: 0,
+              explain: "Rumus SHA-256 justru terbuka untuk umum; yang tidak ada adalah cara menguraikannya kembali.",
+            },
+            {
+              q: "Database sebuah situs bocor dan berisi hash password. Password mana yang paling cepat ditemukan?",
+              options: [
+                "Password pendek yang hanya berisi angka",
+                "Password panjang dari kata-kata acak",
+                "Password 12 karakter campuran acak",
+                "Password acak buatan pengelola sandi",
+              ],
+              answer: 0,
+              explain: "Makin sedikit kemungkinan, makin cepat semua tebakan habis dicoba.",
+            },
+            {
+              q: "Apa fungsi 'salt' saat menyimpan password?",
+              options: [
+                "Membuat password yang sama menghasilkan hash berbeda untuk tiap pengguna",
+                "Membuat hash bisa dibuka kembali jika pengguna lupa password-nya",
+                "Memperpendek hash agar database situs tidak memakan banyak ruang",
+                "Mengenkripsi hash sehingga penyerang tidak dapat melihat isinya",
+              ],
+              answer: 0,
+              explain: "Daftar tebakan yang sudah dihitung sebelumnya jadi tidak berguna.",
+            },
+            {
+              q: "Seseorang mengubah transaksi di Blok 2 dari 10 blok. Kenapa perubahan itu ketahuan?",
+              options: [
+                "Hash Blok 2 berubah sehingga tidak cocok lagi dengan yang tersimpan di Blok 3",
+                "Setiap blok dienkripsi sehingga isinya tidak bisa dibuka tanpa kunci jaringan",
+                "Penambang menyimpan cadangan transaksi di server pusat untuk pemeriksaan",
+                "Blok lama otomatis terkunci permanen setelah lewat waktu satu hari",
+              ],
+              answer: 0,
+              explain: "Sambungan hash putus, dan ribuan node memegang salinan yang asli.",
+            },
+          ],
+        },
+        {
+          id: "bc-kunci-1",
+          title: "Kunci Privat, Kunci Publik & Alamat dari Nol",
+          duration: "14 menit",
+          content: `
+<p>Di pelajaran <b>Wallet, Kunci &amp; Alamat</b> kamu mengenal aturannya: kunci privat dirahasiakan, alamat dibagikan. Sekarang saatnya menjawab pertanyaan yang lebih mendasar: <b>sebenarnya kunci itu apa?</b> Siapa yang membuatnya? Dan kenapa tidak ada yang bisa menebaknya?</p>
+
+<div data-diagram="pipeline" data-stages="Kunci privat::angka acak rahasia|Kunci publik::dihitung dari privat|Alamat::sidik jari kunci publik|Dibagikan::untuk menerima dana" data-caption="Tiga hal berbeda, selalu dihitung satu arah dari kiri ke kanan"></div>
+
+<h3>1. Kunci privat hanyalah angka acak — tapi sangat besar</h3>
+<div class="callout">
+🪙 <b>Lempar koin 256 kali.</b> Tulis 1 setiap muncul gambar dan 0 setiap muncul angka. Deretan 256 angka 0 dan 1 itu <b>sudah merupakan kunci privat</b> yang sah.<br><br>
+Tidak ada bank yang menerbitkannya, tidak ada server yang mencatatnya, tidak ada formulir pendaftaran. Dompetmu cukup mengacak satu angka raksasa.
+</div>
+
+<p>Kenapa tidak ada orang lain yang kebetulan mendapat angka yang sama? Karena banyaknya kemungkinan kunci sekitar <b>10<sup>77</sup></b>. Bahkan kalau seluruh komputer di dunia membuat miliaran kunci per detik sejak awal alam semesta, peluang bertabrakan dengan kuncimu tetap praktis nol.</p>
+
+<div class="callout warn">
+<b>Syaratnya: benar-benar acak.</b> Kunci yang dibuat dari angka yang "terasa acak" bagi manusia — tanggal lahir, kalimat favorit, atau pola keyboard — masuk ke daftar tebakan penyerang. Biarkan dompet tepercaya yang mengacaknya.
+</div>
+
+<h3>2. Dari kunci privat ke kunci publik: mudah maju, mustahil mundur</h3>
+<div class="callout">
+🎨 <b>Analogi mencampur cat.</b> Kuning dicampur biru jadi hijau — mudah. Tapi dari segelas cat hijau, memisahkan kembali kuning dan birunya? Mustahil.<br><br>
+Secara matematis, kunci publik didapat dengan "mengalikan" kunci privat dengan sebuah titik tetap <b>G</b> pada kurva bernama <b>secp256k1</b>. Perkalian ini cepat dihitung, tetapi kebalikannya — mencari kunci privat dari kunci publik — tidak punya cara yang diketahui. Mengapa demikian dibahas di modul Kriptografi Mendalam.
+</div>
+
+<h3>3. Dari kunci publik ke alamat: satu kali hash lagi</h3>
+<p>Kunci publik cukup panjang (130 karakter). Alamat dibuat dengan <b>meng-hash</b> kunci publik lalu mengambil sebagiannya:</p>
+<table class="tbl">
+  <tr><th></th><th>Bitcoin</th><th>Ethereum</th></tr>
+  <tr><td><b>Resep</b></td><td>SHA-256, lalu RIPEMD-160, lalu diberi kode pengecek</td><td>Keccak-256, lalu diambil 20 byte terakhir</td></tr>
+  <tr><td><b>Bentuknya</b></td><td>Diawali bc1… atau 1… atau 3…</td><td>Diawali 0x, 40 karakter heksadesimal</td></tr>
+  <tr><td><b>Pengecek salah ketik</b></td><td>Ada (checksum)</td><td>Ada, lewat campuran huruf besar-kecil</td></tr>
+</table>
+
+<div data-demo="buat-dompet"></div>
+
+<h3>Tiga hal yang sering disamakan</h3>
+<table class="tbl">
+  <tr><th></th><th>Kunci privat</th><th>Kunci publik</th><th>Alamat</th></tr>
+  <tr><td><b>Boleh dibagikan?</b></td><td class="bad-cell">Tidak pernah</td><td>Boleh</td><td class="ok-cell">Ya, untuk menerima dana</td></tr>
+  <tr><td><b>Dipakai untuk</b></td><td>Menandatangani transaksi</td><td>Memeriksa tanda tangan</td><td>Menerima dana</td></tr>
+  <tr><td><b>Kalau diketahui orang lain</b></td><td class="bad-cell">Seluruh dana bisa diambil</td><td>Tidak apa-apa</td><td>Tidak apa-apa (hanya privasi berkurang)</td></tr>
+  <tr><td><b>Analogi</b></td><td>Stempel asli milikmu</td><td>Contoh cap untuk mencocokkan</td><td>Nomor rekening</td></tr>
+</table>
+
+<h3>Lalu seed phrase itu apa?</h3>
+<p>Menulis 64 karakter heksadesimal dengan tangan rawan salah. Karena itu dompet modern menuliskan angka acak raksasa itu sebagai <b>12 atau 24 kata</b> dari daftar baku berisi <b>2.048 kata</b>. Dari satu seed phrase, dompet bisa menurunkan <b>banyak</b> kunci privat — untuk banyak akun dan banyak jenis koin.</p>
+
+<div class="callout warn">
+<b>⚠️ Karena itulah seed phrase sama dengan seluruh isi brankas.</b> Siapa pun yang mengetahuinya bisa membuat ulang semua kuncimu di perangkatnya sendiri dan mengambil seluruh dana — dari jarak jauh, tanpa perlu HP-mu. Tidak ada tombol "lupa password", dan <b>tidak ada petugas resmi mana pun yang akan meminta seed phrase-mu</b>. Siapa pun yang memintanya adalah penipu.
+</div>
+`,
+          keyPoints: [
+            "Kunci privat hanyalah angka acak 256 bit — setara 256 kali lempar koin — yang dibuat sendiri oleh dompet tanpa pendaftaran.",
+            "Banyaknya kemungkinan kunci sekitar 10⁷⁷, sehingga peluang dua orang mendapat kunci sama praktis nol, asalkan benar-benar acak.",
+            "Kunci publik dihitung dari kunci privat lewat perkalian titik di kurva secp256k1: mudah maju, mustahil mundur.",
+            "Alamat dibuat dengan meng-hash kunci publik (Bitcoin: SHA-256 + RIPEMD-160; Ethereum: Keccak-256, 20 byte terakhir).",
+            "Kunci privat tak boleh dibagikan; kunci publik dan alamat boleh.",
+            "Seed phrase adalah 12/24 kata yang mewakili angka acak induk, dan dari sanalah semua kunci diturunkan.",
+            "Siapa pun yang meminta seed phrase adalah penipu.",
+          ],
+          practice: [
+            { type: "number", q: "Kunci privat 256 bit ditulis dalam heksadesimal (4 bit per karakter). Berapa karakternya?", answer: 64, tol: 0.5, hint: "256 ÷ 4.", solution: "256 ÷ 4 = 64 karakter." },
+            { type: "number", q: "Alamat Ethereum panjangnya 20 byte. Satu byte = 2 karakter heksadesimal. Berapa karakter setelah awalan 0x?", answer: 40, tol: 0.5, hint: "20 × 2.", solution: "20 × 2 = 40 karakter." },
+          ],
+          quiz: [
+            {
+              q: "Siapa yang menerbitkan kunci privat sebuah dompet crypto?",
+              options: [
+                "Tidak ada — dompet mengacak angkanya sendiri",
+                "Bursa tempat kamu membuat akun untuk membeli koin",
+                "Penambang yang memproses transaksi pertamamu",
+                "Pengembang blockchain yang mencatat semua pengguna",
+              ],
+              answer: 0,
+              explain: "Karena kemungkinannya sekitar 10⁷⁷, mengacak sendiri sudah cukup aman tanpa lembaga pencatat.",
+            },
+            {
+              q: "Kenapa kunci privat tidak bisa dihitung dari kunci publik?",
+              options: [
+                "Perhitungannya satu arah: mudah maju, tanpa cara yang diketahui untuk mundur",
+                "Kunci publik sengaja dibuat lebih pendek sehingga sebagian informasinya hilang",
+                "Kunci privat disimpan terenkripsi di server pusat milik jaringan blockchain",
+                "Setiap kunci publik diganti otomatis setiap kali sebuah transaksi dikirim",
+              ],
+              answer: 0,
+              explain: "Seperti mencampur cat: hijau mudah dibuat, tapi tak bisa dipisahkan kembali.",
+            },
+            {
+              q: "Bagaimana alamat dompet dibuat?",
+              options: [
+                "Dengan meng-hash kunci publik lalu mengambil sebagiannya",
+                "Dengan memotong kunci privat menjadi beberapa bagian pendek",
+                "Dengan mengenkripsi nama pemilik memakai kunci privatnya",
+                "Dengan meminta nomor unik kepada node terdekat di jaringan",
+              ],
+              answer: 0,
+              explain: "Karena itu alamat lebih pendek dari kunci publik dan juga tidak bisa dibalik.",
+            },
+            {
+              q: "Seseorang yang mengaku 'tim dukungan resmi' meminta seed phrase untuk membantu memulihkan akunmu. Apa yang benar?",
+              options: [
+                "Itu penipuan, karena seed phrase memberi kendali penuh atas seluruh dana",
+                "Aman diberikan asalkan dikirim lewat pesan pribadi dan bukan grup umum",
+                "Aman diberikan sebagian saja, misalnya enam kata pertamanya",
+                "Wajib diberikan karena tim dukungan harus memverifikasi kepemilikan",
+              ],
+              answer: 0,
+              explain: "Tidak ada layanan sah yang membutuhkan seed phrase. Sebagian kata pun sudah memangkas tebakan penyerang secara drastis.",
             },
           ],
         },
         {
           id: "bc-fund-2",
-          title: "Kriptografi Kunci Publik & Tanda Tangan Digital",
-          duration: "12 menit",
+          title: "Tanda Tangan Digital dari Nol",
+          duration: "15 menit",
           content: `
-<p>Bagaimana kamu membuktikan "ini transaksiku" tanpa membocorkan rahasia? Jawabannya: <b>kriptografi kunci publik (asimetris)</b>.</p>
+<p>Di jaringan blockchain tidak ada bank yang mengenalmu. Lalu bagaimana ribuan komputer yakin bahwa pesan <i>"kirim 0,5 koin dari alamat Andi ke Budi"</i> benar-benar dibuat oleh Andi — bukan oleh orang yang mengaku-ngaku?</p>
 
-<div data-diagram="sign" ></div>
+<h3>Fundamental: masalah yang harus dipecahkan</h3>
+<p>Andi butuh bukti yang memenuhi <b>empat syarat sekaligus</b>:</p>
+<table class="tbl">
+  <tr><th>Syarat</th><th>Kenapa</th></tr>
+  <tr><td>Hanya bisa dibuat oleh Andi</td><td>Agar tidak ada yang bisa mengaku sebagai Andi</td></tr>
+  <tr><td>Bisa diperiksa oleh siapa pun</td><td>Karena tidak ada satu pihak pusat yang bertugas memeriksa</td></tr>
+  <tr><td>Tidak membocorkan rahasia Andi</td><td>Kunci privat yang terkirim pasti dicuri</td></tr>
+  <tr><td>Tidak bisa dipindah ke pesan lain</td><td>Agar bukti untuk "0,5 koin" tidak bisa dipakai untuk "50 koin"</td></tr>
+</table>
 
+<h3>Kenapa tanda tangan biasa tidak cukup</h3>
+<p>Tanda tangan basahmu <b>sama persis</b> di setiap dokumen. Cukup dipindai, lalu ditempel ke dokumen lain. Tanda tangan digital memecahkan masalah itu dengan cara yang tidak terduga: <b>ia berbeda untuk setiap pesan</b>.</p>
 
-<h3>Sepasang kunci yang terhubung</h3>
-<ul>
-  <li><b>Private key</b> — rahasia, untuk <b>menandatangani</b>.</li>
-  <li><b>Public key</b> — boleh dibagikan, untuk <b>memverifikasi</b>.</li>
-</ul>
-<p>Keduanya terhubung secara matematis, tapi bersifat <b>satu arah</b>: dari public key mustahil menghitung private key. (Alamat dompet adalah turunan dari public key.)</p>
-
-<h3>Tanda tangan digital</h3>
 <div class="callout">
-<b>Cara kerja:</b> Kamu "menandatangani" transaksi dengan <b>private key</b>. Siapa pun bisa memverifikasi tanda tangan itu dengan <b>public key</b>-mu. Ini membuktikan dua hal sekaligus: (1) kamu pemilik sahnya, dan (2) pesan tidak diubah sedikit pun setelah ditandatangani.
+🔏 <b>Analogi stempel ajaib.</b> Bayangkan Andi punya stempel yang cetakannya <b>berubah bentuk mengikuti isi surat</b>. Setiap orang punya kaca pemeriksa milik Andi (kunci publik) yang hanya cocok bila surat dan capnya sesuai.<br><br>
+Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain → tidak cocok. Buat cap tanpa stempel asli → mustahil. Stempel aslinya (kunci privat) tidak pernah keluar dari laci Andi.
 </div>
 
-<h3>💥 Dampak</h3>
-<ul>
-  <li>Transaksi <b>tidak bisa dipalsukan</b> tanpa private key — inilah keamanan inti crypto.</li>
-  <li>Kamu membuktikan kepemilikan <b>tanpa</b> pernah mengungkap kuncimu.</li>
-  <li>Menjelaskan kenapa "not your keys, not your coins" — siapa yang pegang private key, dialah pemilik.</li>
-</ul>
-<p>Kaitkan dengan pelajaran <b>"Wallet, Kunci, &amp; Alamat"</b> untuk gambaran praktisnya.</p>
+<div data-diagram="sign"></div>
+
+<h3>Tiga langkah, tanpa rumus</h3>
+<table class="tbl">
+  <tr><th>Langkah</th><th>Siapa</th><th>Yang terjadi</th></tr>
+  <tr><td>1. Hash pesan</td><td>Dompet Andi</td><td>Pesan diubah jadi sidik jari 64 karakter</td></tr>
+  <tr><td>2. Tanda tangani</td><td>Dompet Andi</td><td>Sidik jari + kunci privat → dua angka, <b>r</b> dan <b>s</b></td></tr>
+  <tr><td>3. Periksa</td><td>Siapa pun</td><td>Pesan + tanda tangan + kunci publik Andi → <b>sah</b> atau <b>tidak</b></td></tr>
+</table>
+<p>Karena yang ditandatangani adalah <b>hash</b> pesan, efek longsor ikut bekerja: mengubah satu karakter pesan mengubah hash-nya, dan tanda tangan lama langsung tidak cocok.</p>
+
+<div data-demo="tanda-tangan"></div>
+
+<h3>Apa yang dibuktikan — dan apa yang tidak</h3>
+<table class="tbl">
+  <tr><th>✅ Dibuktikan</th><th>❌ Tidak dibuktikan</th></tr>
+  <tr><td>Pesan dibuat pemegang kunci privat pasangan kunci publik tersebut</td><td>Siapa nama orang itu di dunia nyata</td></tr>
+  <tr><td>Isi pesan tidak berubah sejak ditandatangani</td><td>Bahwa isinya dirahasiakan — tanda tangan tidak menyembunyikan apa pun</td></tr>
+  <tr><td>Penanda tangan menyetujui isi pesan itu</td><td>Bahwa penanda tangan tidak sedang ditipu atau dipaksa</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Baris terakhir itu penting.</b> Banyak pencurian crypto tidak membobol matematika sama sekali: korban dibujuk <b>menandatangani sendiri</b> transaksi yang merugikan. Tanda tangannya sah — karena korban memang menandatanganinya. Tanda tangan membuktikan kamu <i>menyetujui</i>, bukan bahwa kamu <i>paham</i> apa yang disetujui.
+</div>
+
+<h3>🔍 Intip matematikanya (versi mainan)</h3>
+<p>Bitcoin dan Ethereum memakai ECDSA dengan angka sepanjang 77 digit. Idenya bisa dirasakan dengan <b>versi mainan berangka kecil</b> (pola RSA). Istilah "sisa bagi" artinya sisa setelah pembagian, misalnya 16 sisa bagi 5 = 1.</p>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Nilai mainan</th></tr>
+  <tr><td>Kunci privat Andi</td><td>d = 7</td></tr>
+  <tr><td>Kunci publik Andi</td><td>e = 3 dan n = 33</td></tr>
+  <tr><td>Hash pesan (disederhanakan)</td><td>4</td></tr>
+  <tr><td><b>Menandatangani:</b> 4<sup>7</sup> sisa bagi 33</td><td>16384 sisa bagi 33 = <b>16</b> → tanda tangan</td></tr>
+  <tr><td><b>Memeriksa:</b> 16<sup>3</sup> sisa bagi 33</td><td>4096 sisa bagi 33 = <b>4</b> → sama dengan hash pesan → <span class="ok">sah</span></td></tr>
+  <tr><td>Pesan diubah sehingga hash-nya 5</td><td>16<sup>3</sup> sisa bagi 33 tetap 4 ≠ 5 → <span class="bad">ditolak</span></td></tr>
+</table>
+<p>Siapa pun bisa <b>memeriksa</b> hanya dengan e dan n. Tapi untuk <b>membuat</b> tanda tangan yang cocok dengan hash 5, dibutuhkan d = 7. Dengan angka sekecil ini, penyerang tentu bisa menebak d — itulah kenapa angka sungguhan dibuat sepanjang puluhan digit sehingga tebakan mustahil habis dicoba.</p>
 `,
           keyPoints: [
-            "Kriptografi asimetris memakai sepasang kunci: private (tanda tangan) & public (verifikasi).",
-            "Dari public key mustahil menurunkan private key (satu arah); alamat = turunan public key.",
-            "Tanda tangan digital membuktikan kepemilikan sah & keutuhan pesan tanpa membocorkan kunci.",
-            "Dampak: transaksi tak bisa dipalsukan tanpa private key — keamanan inti crypto.",
+            "Tanda tangan digital harus hanya bisa dibuat pemilik, bisa diperiksa semua orang, tidak membocorkan kunci, dan tidak bisa dipindah ke pesan lain.",
+            "Berbeda dengan tanda tangan basah, tanda tangan digital berbeda untuk setiap pesan.",
+            "Langkahnya: hash pesan → tanda tangani dengan kunci privat (menghasilkan r dan s) → siapa pun memeriksa dengan kunci publik.",
+            "Mengubah satu karakter pesan membuat tanda tangan lama tidak cocok, karena yang ditandatangani adalah hash-nya.",
+            "Tanda tangan membuktikan persetujuan dan keutuhan pesan, bukan identitas dunia nyata dan bukan kerahasiaan.",
+            "Banyak pencurian terjadi karena korban dibujuk menandatangani sendiri transaksi yang merugikan.",
+          ],
+          practice: [
+            { type: "number", q: "Versi mainan: kunci privat d = 7, n = 33. Berapa tanda tangan untuk hash pesan 2? (2⁷ sisa bagi 33)", answer: 29, tol: 0.5, hint: "2⁷ = 128. Berapa sisanya bila dibagi 33?", solution: "128 − 3 × 33 = 128 − 99 = 29. Periksa: 29³ = 24389, sisa bagi 33 = 2 — cocok dengan hash pesan." },
           ],
           quiz: [
             {
               q: "Kunci mana yang dipakai untuk MENANDATANGANI transaksi?",
-              options: ["Public key", "Private key", "Alamat", "Seed publik"],
-              answer: 1,
-              explain: "Private key menandatangani; public key memverifikasi.",
+              options: [
+                "Private key",
+                "Public key",
+                "Alamat dompet",
+                "ID transaksi",
+              ],
+              answer: 0,
+              explain: "Kunci privat membuat tanda tangan; kunci publik memeriksanya.",
             },
             {
               q: "Apa yang dibuktikan sebuah tanda tangan digital?",
               options: [
                 "Penanda tangan memegang kunci privatnya dan pesannya belum diubah",
-                "Identitas asli penanda tangan berikut data pribadi yang menyertainya",
-                "Pesan tersebut sudah dienkripsi sehingga tak bisa dibaca pihak lain",
-                "Pesan itu dikirim dari perangkat dan lokasi yang memang sah",
+                "Identitas asli penanda tangan sudah diverifikasi oleh lembaga resmi",
+                "Isi pesan sudah dirahasiakan sehingga hanya penerima yang bisa membaca",
+                "Penanda tangan pasti memahami seluruh akibat dari pesan yang disetujuinya",
               ],
               answer: 0,
-              explain:
-                "Tanda tangan membuktikan pemilik sah & integritas pesan tanpa mengungkap kunci.",
+              explain: "Identitas dunia nyata, kerahasiaan, dan pemahaman bukan hal yang dibuktikan tanda tangan.",
+            },
+            {
+              q: "Penyerang menyalin tanda tangan Andi dari transaksi 0,5 koin dan menempelkannya ke transaksi 50 koin. Apa hasilnya?",
+              options: [
+                "Ditolak, karena tanda tangan hanya cocok untuk hash pesan yang ditandatangani",
+                "Diterima, karena tanda tangan Andi tetap sah untuk semua transaksi miliknya",
+                "Diterima sebagian, hanya 0,5 koin yang dikirim sesuai tanda tangan aslinya",
+                "Ditunda, sampai Andi mengonfirmasi ulang lewat pesan ke seluruh node",
+              ],
+              answer: 0,
+              explain: "Isi berbeda → hash berbeda → tanda tangan lama tidak cocok.",
+            },
+            {
+              q: "Kenapa kunci privat Andi tidak ikut dikirim bersama transaksinya?",
+              options: [
+                "Karena pemeriksaan cukup memakai kunci publik, dan kunci privat yang terkirim pasti dicuri",
+                "Karena ukuran kunci privat terlalu besar untuk dimasukkan ke dalam sebuah blok",
+                "Karena kunci privat sudah tersimpan terlebih dahulu di setiap node jaringan",
+                "Karena penambang akan menambahkan kunci privat itu saat menyusun blok baru",
+              ],
+              answer: 0,
+              explain: "Seluruh jaringan bisa membaca paket transaksi; yang dikirim hanya tanda tangan dan kunci publik.",
+            },
+          ],
+        },
+        {
+          id: "bc-tx-1",
+          title: "Perjalanan Satu Transaksi — Hash & Tanda Tangan Bekerja Bersama",
+          duration: "14 menit",
+          content: `
+<p>Kamu sudah mengenal tiga alat secara terpisah: <b>hash</b>, <b>kunci</b>, dan <b>tanda tangan</b>. Pelajaran ini menyatukan ketiganya dengan mengikuti perjalanan <b>0,5 koin dari Andi ke Budi</b> — dari layar HP Andi sampai tercatat permanen di blockchain.</p>
+
+<div data-diagram="pipeline" data-stages="Susun::dari, ke, jumlah|Hash::jadi ID transaksi|Tanda tangani::dengan kunci privat|Diperiksa::oleh ribuan node" data-caption="Empat tahap yang terjadi dalam hitungan detik setiap kali kamu menekan Kirim"></div>
+
+<div data-demo="perjalanan-transaksi"></div>
+
+<h3>Empat pemeriksaan node — masing-masing menangkal satu serangan</h3>
+<table class="tbl">
+  <tr><th>Pemeriksaan</th><th>Menangkal</th></tr>
+  <tr><td>Hash kunci publik cocok dengan alamat pengirim</td><td>Mengaku sebagai pemilik alamat orang lain</td></tr>
+  <tr><td>Tanda tangan sah untuk isi paket</td><td>Mengubah jumlah atau penerima di tengah jalan</td></tr>
+  <tr><td>Saldo pengirim cukup</td><td>Membelanjakan uang yang tidak ada</td></tr>
+  <tr><td>Nomor urut atau koin belum pernah terpakai</td><td>Mengirim ulang transaksi lama dan <i>double spending</i></td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Perhatikan serangan "kirim ulang".</b> Tanda tangannya <b>sah</b> — karena memang tanda tangan asli Andi. Yang menolaknya adalah pemeriksaan keempat. Inilah alasan setiap transaksi Ethereum membawa <b>nomor urut</b> (nonce), dan setiap koin Bitcoin hanya bisa dibelanjakan satu kali.
+</div>
+
+<h3>Yang tidak pernah dikirim</h3>
+<p>Seluruh isi paket — transaksi, tanda tangan, kunci publik — bisa dibaca siapa pun di jaringan. Yang <b>tidak pernah</b> meninggalkan dompet adalah <b>kunci privat</b> dan <b>seed phrase</b>. Karena itu node, penambang, bahkan penyerang yang menyadap seluruh jaringan tetap tidak bisa membuat transaksi baru atas nama Andi.</p>
+
+<h3>Lalu bagaimana pencurian crypto terjadi?</h3>
+<p>Hampir tidak pernah dengan membobol hash atau tanda tangan. Pencuri mengincar <b>manusianya</b>:</p>
+<table class="tbl">
+  <tr><th>Cara</th><th>Yang sebenarnya terjadi</th></tr>
+  <tr><td>Situs atau aplikasi palsu</td><td>Korban mengetik seed phrase di tempat yang salah</td></tr>
+  <tr><td>Malware</td><td>Program jahat membaca kunci dari perangkat korban</td></tr>
+  <tr><td>Tanda tangan jebakan</td><td>Korban menandatangani transaksi yang ternyata memberi izin menguras dana</td></tr>
+  <tr><td>Rekayasa sosial</td><td>Penipu mengaku petugas, teman, atau investor dan membujuk korban mengirim dana</td></tr>
+</table>
+<p>Pembahasan lengkapnya ada di pelajaran <b>Keamanan &amp; Penipuan yang Sering Terjadi</b>.</p>
+
+<h3>Bitcoin dan Ethereum — sekilas bedanya</h3>
+<table class="tbl">
+  <tr><th></th><th>Bitcoin</th><th>Ethereum</th></tr>
+  <tr><td><b>Cara mencatat dana</b></td><td>"Koin-koin" terpisah yang dibelanjakan utuh, sisanya jadi kembalian (UTXO)</td><td>Saldo per akun, seperti rekening</td></tr>
+  <tr><td><b>Anti kirim ulang</b></td><td>Koin yang sudah dibelanjakan tidak bisa dipakai lagi</td><td>Nomor urut (nonce) per akun</td></tr>
+  <tr><td><b>Kesamaannya</b></td><td colspan="2">Keduanya memakai hash sebagai ID dan tanda tangan digital sebagai bukti kepemilikan</td></tr>
+</table>
+`,
+          keyPoints: [
+            "Satu transaksi melewati empat tahap: disusun, di-hash menjadi ID, ditandatangani dengan kunci privat, lalu diperiksa ribuan node.",
+            "Node memeriksa kecocokan kunci publik dengan alamat, keabsahan tanda tangan, kecukupan saldo, dan nomor urut atau koin yang belum terpakai.",
+            "Mengubah jumlah atau penerima di tengah jalan membuat tanda tangan tidak cocok.",
+            "Mengirim ulang transaksi lama tetap bertanda tangan sah, tetapi ditolak lewat nomor urut (Ethereum) atau koin yang sudah terpakai (Bitcoin).",
+            "Kunci privat dan seed phrase tidak pernah dikirim, sehingga menyadap jaringan tidak memungkinkan pemalsuan transaksi.",
+            "Pencurian crypto hampir selalu mengincar manusianya: situs palsu, malware, tanda tangan jebakan, dan rekayasa sosial.",
+          ],
+          quiz: [
+            {
+              q: "Penyerang mengganti alamat penerima di tengah jalan. Pemeriksaan mana yang menolaknya?",
+              options: [
+                "Tanda tangan tidak lagi sah untuk isi paket yang sudah berubah",
+                "Saldo pengirim tidak cukup untuk menanggung alamat penerima baru",
+                "Nomor urut transaksi berubah otomatis ketika penerimanya diganti",
+                "Kunci publik pengirim tidak lagi cocok dengan alamat pengirimnya",
+              ],
+              answer: 0,
+              explain: "Isi berubah → hash berubah → tanda tangan Andi tidak cocok lagi.",
+            },
+            {
+              q: "Transaksi lama Andi dikirim ulang persis sama oleh penyerang. Kenapa tanda tangannya tetap sah?",
+              options: [
+                "Karena isinya tidak diubah sama sekali, sehingga tanda tangan aslinya masih cocok",
+                "Karena penyerang berhasil menebak kunci privat Andi dari transaksi sebelumnya",
+                "Karena tanda tangan digital memang berlaku untuk semua transaksi seorang pemilik",
+                "Karena node tidak memeriksa tanda tangan untuk transaksi yang pernah diterima",
+              ],
+              answer: 0,
+              explain: "Karena itu dibutuhkan pemeriksaan tambahan: nomor urut atau koin yang sudah terpakai.",
+            },
+            {
+              q: "Apa saja yang benar-benar dikirim ke jaringan?",
+              options: [
+                "Isi transaksi, tanda tangan, dan kunci publik",
+                "Isi transaksi, kunci privat, dan seed phrase",
+                "Tanda tangan dan kunci privat yang dienkripsi",
+                "Seed phrase dan alamat penerima saja",
+              ],
+              answer: 0,
+              explain: "Kunci privat dan seed phrase tidak pernah meninggalkan dompet.",
+            },
+            {
+              q: "Seorang korban kehilangan dana setelah menandatangani transaksi di situs palsu. Apa yang sebenarnya terjadi?",
+              options: [
+                "Korban sendiri menandatangani transaksi yang merugikan, jadi tanda tangannya sah",
+                "Penipu membobol fungsi hash sehingga tanda tangan palsu dianggap sah",
+                "Penambang bekerja sama dengan penipu untuk mengubah isi transaksi korban",
+                "Blockchain mengalami gangguan sehingga pemeriksaan tanda tangan terlewat",
+              ],
+              answer: 0,
+              explain: "Matematikanya tetap aman; yang ditipu adalah manusianya.",
             },
           ],
         },
         {
           id: "bc-fund-3",
-          title: "Merkle Tree & Struktur Blok",
+          title: "Merkle Tree — Satu Hash untuk Ribuan Transaksi",
           duration: "12 menit",
           content: `
-<p>Satu blok bisa berisi ribuan transaksi. Bagaimana meringkasnya menjadi satu sidik jari & memverifikasinya secara efisien? Jawabannya: <b>Merkle Tree</b>.</p>
+<p>Satu blok Bitcoin bisa berisi lebih dari 2.000 transaksi, sementara header bloknya hanya 80 byte. Bagaimana ribuan transaksi itu bisa "disegel" dengan satu sidik jari kecil — dan bagaimana HP bisa memastikan transaksinya ada di dalam blok tanpa mengunduh semuanya?</p>
 
-<div data-diagram="layers" data-items="Merkle Root (1 hash)|Hash Pasangan|Hash Tiap Transaksi" data-caption="Merkle tree meringkas semua transaksi"></div>
-
-
-<h3>Cara kerja (pohon hash)</h3>
-<ol>
-  <li>Tiap transaksi di-hash.</li>
-  <li>Hash-hash itu dipasangkan lalu di-hash lagi bersama.</li>
-  <li>Diulang naik terus sampai tersisa <b>satu hash puncak</b> = <b>Merkle Root</b>.</li>
-</ol>
-<p>Merkle root ini disimpan di <b>header blok</b> dan mewakili SELURUH transaksi. Ubah satu transaksi saja → seluruh jalur hash berubah → Merkle root berubah → ketahuan.</p>
-
+<h3>Fundamental: bagan turnamen</h3>
 <div class="callout">
-<b>Manfaat besar:</b> Kita bisa membuktikan sebuah transaksi ada di dalam blok <b>tanpa mengunduh semua transaksi</b> — cukup jalur hash pendek menuju root. Ini yang memungkinkan dompet ringan (SPV) di HP.
+⚽ <b>Bayangkan bagan turnamen sistem gugur.</b> Delapan tim bertanding berpasangan, pemenangnya naik, berpasangan lagi, sampai tersisa satu juara di puncak.<br><br>
+<b>Merkle tree</b> bekerja dengan bentuk yang sama, hanya saja yang "naik" adalah hash:<br>
+1. Setiap transaksi di-hash<br>
+2. Hash-hash itu dipasangkan, lalu setiap pasangan di-hash bersama<br>
+3. Diulang naik sampai tersisa satu hash di puncak: <b>Merkle root</b>
 </div>
 
-<h3>Isi sebuah blok</h3>
-<ul>
-  <li><b>Header</b>: hash blok sebelumnya, Merkle root, timestamp, nonce.</li>
-  <li><b>Badan</b>: daftar transaksi.</li>
-</ul>
+<div data-demo="pohon-merkle"></div>
 
-<h3>💥 Dampak</h3>
-<p>Merkle tree membuat blockchain <b>efisien & terverifikasi</b> pada skala besar — ringkas untuk disimpan, cepat untuk diperiksa, dan tetap anti-manipulasi.</p>
+<h3>Kenapa tidak di-hash sekaligus saja?</h3>
+<p>Bisa saja semua transaksi digabung lalu di-hash sekali. Hasilnya juga menyegel semuanya. Masalahnya muncul saat seseorang ingin <b>membuktikan satu transaksi</b> ada di dalam blok: ia harus menunjukkan <b>seluruh</b> transaksi lain agar hash-nya bisa dihitung ulang.</p>
+<p>Dengan Merkle tree, cukup menunjukkan hash "tetangga" di sepanjang jalur menuju puncak:</p>
+<table class="tbl">
+  <tr><th>Transaksi dalam blok</th><th>Hash yang dibutuhkan untuk bukti</th></tr>
+  <tr><td>4</td><td>2</td></tr>
+  <tr><td>1.000</td><td>10</td></tr>
+  <tr><td>1.000.000</td><td>20</td></tr>
+  <tr><td>1.000.000.000</td><td>30</td></tr>
+</table>
+<p>Setiap kali jumlah transaksi menjadi dua kali lipat, bukti hanya bertambah <b>satu</b> hash.</p>
+
+<h3>Isi sebuah blok</h3>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Isinya</th><th>Fungsinya</th></tr>
+  <tr><td rowspan="4"><b>Header</b> (kecil)</td><td>Hash blok sebelumnya</td><td>Menyambung ke rantai</td></tr>
+  <tr><td>Merkle root</td><td>Menyegel semua transaksi</td></tr>
+  <tr><td>Waktu</td><td>Kapan blok dibuat</td></tr>
+  <tr><td>Nonce &amp; target</td><td>Bukti kerja penambang</td></tr>
+  <tr><td><b>Badan</b> (besar)</td><td>Daftar transaksi</td><td>Isi yang disegel oleh Merkle root</td></tr>
+</table>
+
+<div class="callout">
+<b>📱 Dompet ringan (SPV).</b> Menyimpan seluruh blockchain Bitcoin butuh ratusan gigabyte. Dompet di HP cukup menyimpan <b>header</b> semua blok — hanya puluhan megabyte — lalu meminta bukti Merkle untuk transaksi miliknya. Dengan beberapa hash saja, HP bisa memastikan sendiri bahwa transaksinya benar-benar tercatat.
+</div>
+
+<div class="callout warn">
+<b>Catatan jujur:</b> demo di atas menyederhanakan beberapa hal. Bitcoin menggabungkan hash dalam bentuk byte (bukan teks) dan memakai SHA-256 dua kali; bila jumlah transaksi ganjil, hash terakhir dipasangkan dengan dirinya sendiri. Prinsipnya tetap sama persis.
+</div>
 `,
           keyPoints: [
-            "Merkle tree mem-hash transaksi berpasangan berulang hingga satu Merkle root.",
-            "Merkle root di header blok mewakili semua transaksi; satu perubahan mengubah root.",
-            "Manfaat: verifikasi ringkas (dompet ringan/SPV) tanpa mengunduh semua transaksi.",
-            "Blok terdiri dari header (prev hash, Merkle root, timestamp, nonce) + daftar transaksi.",
+            "Merkle tree meng-hash transaksi berpasangan berulang kali seperti bagan turnamen sampai tersisa satu Merkle root.",
+            "Merkle root di header blok menyegel semua transaksi; mengubah satu transaksi mengubah jalurnya sampai ke root.",
+            "Membuktikan satu transaksi ada di blok hanya butuh hash tetangga di sepanjang jalur: 20 hash untuk sejuta transaksi.",
+            "Header blok berisi hash blok sebelumnya, Merkle root, waktu, dan nonce/target; badannya berisi daftar transaksi.",
+            "Dompet ringan (SPV) cukup menyimpan header dan meminta bukti Merkle, tanpa mengunduh seluruh blockchain.",
+          ],
+          practice: [
+            { type: "number", q: "Sebuah blok berisi 16 transaksi. Berapa hash yang dibutuhkan untuk membuktikan satu transaksi ada di dalamnya?", answer: 4, tol: 0.5, hint: "Berapa kali 2 dikalikan dirinya sendiri sampai menjadi 16?", solution: "16 = 2⁴, jadi dibutuhkan 4 hash tetangga." },
           ],
           quiz: [
             {
               q: "Apa itu Merkle root?",
               options: [
                 "Satu hash puncak yang mewakili seluruh transaksi di dalam blok",
-                "Blok pertama dalam rantai yang jadi titik awal seluruh jaringan",
-                "Kunci utama yang dipakai menandatangani semua transaksi di blok",
-                "Daftar lengkap alamat pengirim dan penerima pada sebuah blok",
+                "Transaksi pertama di setiap blok yang berisi hadiah penambang",
+                "Hash blok paling awal yang menjadi fondasi seluruh blockchain",
+                "Daftar alamat dompet yang pernah menerima dana di dalam blok",
               ],
               answer: 0,
-              explain: "Merkle root meringkas semua transaksi menjadi satu hash di header blok.",
+              explain: "Karena tersimpan di header, satu hash ini menyegel ribuan transaksi sekaligus.",
             },
             {
               q: "Manfaat utama Merkle tree?",
               options: [
                 "Memverifikasi satu transaksi tanpa perlu mengunduh seluruh data blok",
-                "Memampatkan ukuran blok sehingga muat lebih banyak transaksi",
-                "Mengurutkan transaksi berdasarkan besarnya biaya yang dibayarkan",
-                "Mengenkripsi isi transaksi agar hanya penerima yang bisa membaca",
+                "Mempercepat penambangan dengan membagi transaksi ke beberapa penambang",
+                "Menyembunyikan isi transaksi agar hanya pengirim yang bisa membacanya",
+                "Mengurangi biaya transaksi dengan menggabungkan beberapa pengiriman",
               ],
               answer: 0,
-              explain:
-                "Merkle tree memungkinkan bukti keanggotaan ringkas — dasar dompet ringan.",
+              explain: "Inilah yang memungkinkan dompet ringan di HP.",
+            },
+            {
+              q: "Satu transaksi di sebuah blok diubah. Apa yang terjadi pada Merkle tree-nya?",
+              options: [
+                "Hash transaksi itu, hash gabungan di atasnya, dan Merkle root ikut berubah",
+                "Hanya hash transaksi itu yang berubah, hash lain tetap sama seperti semula",
+                "Seluruh hash di pohon dihitung ulang tetapi Merkle root dijaga tetap sama",
+                "Tidak ada yang berubah karena Merkle tree hanya dihitung saat blok dibuat",
+              ],
+              answer: 0,
+              explain: "Perubahan merambat sepanjang jalur sampai ke puncak, sehingga root di header tidak lagi cocok.",
+            },
+            {
+              q: "Jumlah transaksi dalam blok naik dari 1.000 menjadi 2.000. Bagaimana ukuran bukti Merkle-nya?",
+              options: [
+                "Bertambah hanya satu hash",
+                "Menjadi dua kali lebih besar",
+                "Bertambah seribu hash",
+                "Tidak berubah sama sekali",
+              ],
+              answer: 0,
+              explain: "Setiap penggandaan jumlah transaksi hanya menambah satu tingkat pada pohon.",
             },
           ],
         },

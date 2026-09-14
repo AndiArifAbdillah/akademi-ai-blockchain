@@ -1299,6 +1299,19 @@ const GLOSSARY = [
   ["Resesi", "Kemerosotan ekonomi; sering didefinisikan sebagai PDB riil menyusut dua kuartal berturut-turut."],
   ["Bisnis Siklikal", "Bisnis yang naik-turun tajam mengikuti siklus ekonomi (properti, otomotif, barang mewah)."],
   ["Bisnis Defensif", "Bisnis yang relatif stabil di segala kondisi (makanan pokok, obat, listrik)."],
+  ["Konvergen", "Saat latihan model mengerucut dan berhenti di satu titik: melanjutkan latihan hampir tidak lagi menurunkan loss. Konvergen belum tentu bagus — bisa ke titik yang buruk atau sambil menghafal."],
+  ["SHA-256", "Fungsi hash yang dipakai Bitcoin: mengubah data apa pun menjadi 64 karakter heksadesimal (256 bit)."],
+  ["Heksadesimal", "Sistem angka dengan 16 simbol (0–9 dan a–f); satu karakter mewakili 4 bit."],
+  ["Efek Longsor", "Sifat hash: mengubah sedikit saja data membuat sekitar separuh hash berubah (avalanche effect)."],
+  ["Kunci Privat", "Angka acak raksasa yang rahasia; dipakai menandatangani transaksi. Siapa yang memegangnya menguasai dananya."],
+  ["Kunci Publik", "Dihitung satu arah dari kunci privat; boleh diketahui orang dan dipakai untuk memeriksa tanda tangan."],
+  ["Tanda Tangan Digital", "Bukti matematis bahwa pesan dibuat pemegang kunci privat dan tidak diubah; berbeda untuk setiap pesan."],
+  ["Merkle Root", "Satu hash di header blok yang mewakili semua transaksi di dalam blok."],
+  ["ID Transaksi", "Hash dari isi transaksi (txid), dipakai seperti nomor resi di block explorer."],
+  ["Salt", "Teks acak yang dicampurkan ke password sebelum di-hash agar password sama menghasilkan hash berbeda."],
+  ["Brain Wallet", "Dompet yang kuncinya dibuat dari kalimat pilihan sendiri — mudah ditebak dan sering dikuras."],
+  ["Keccak-256", "Fungsi hash yang dipakai Ethereum, antara lain untuk membuat alamat dari kunci publik."],
+  ["UTXO", "Cara Bitcoin mencatat dana sebagai koin-koin terpisah yang dibelanjakan utuh; sisanya menjadi kembalian."],
 ];
 
 function renderGlossary() {

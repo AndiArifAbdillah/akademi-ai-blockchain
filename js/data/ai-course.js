@@ -934,6 +934,21 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
   <li><b>Learning rate</b> = besar langkah. Terlalu besar → melompati lembah; terlalu kecil → sangat lambat.</li>
 </ul>
 
+<h3>Kapan berhenti? Saat sudah "konvergen"</h3>
+<div class="callout">
+<b>Konvergen</b> artinya langkah-langkahnya <b>mengerucut ke satu titik</b>. Awalnya setiap langkah menurunkan loss cukup banyak; makin dekat ke dasar lembah, perubahannya makin kecil — sampai hampir diam. Saat itu model disebut <b>sudah konvergen</b>: melanjutkan latihan nyaris tidak menurunkan loss lagi.<br><br>
+Contoh deret loss yang konvergen: 0,73 → 0,24 → 0,06 → 0,02 → 0,006 → 0,005 → 0,005 …
+</div>
+<table class="tbl">
+  <tr><th>Keadaan</th><th>Yang terlihat</th><th>Penyebab umum</th></tr>
+  <tr><td class="ok-cell"><b>Konvergen</b></td><td>Loss turun lalu mendatar</td><td>Learning rate pas</td></tr>
+  <tr><td class="bad-cell"><b>Gagal konvergen</b></td><td>Loss naik-turun makin liar, bahkan meledak</td><td>Learning rate terlalu besar — langkahnya melompati lembah bolak-balik</td></tr>
+  <tr><td><b>Belum konvergen</b></td><td>Loss masih terus turun saat latihan dihentikan</td><td>Latihan terlalu singkat atau learning rate terlalu kecil</td></tr>
+</table>
+<div class="callout warn">
+<b>⚠️ Konvergen belum tentu bagus.</b> Model bisa berhenti di lembah yang dangkal (bukan yang terdalam), atau konvergen sambil <b>menghafal</b> data latih. Karena itu hasil akhirnya tetap harus diuji dengan data yang belum pernah dilihat model.
+</div>
+
 <h3>Coba sendiri — jalankan gradient descent 👇</h3>
 <p>Kita cari nilai x yang meminimalkan fungsi f(x) = (x − 3)². Jawabannya jelas x = 3; lihat AI "menemukannya" sendiri:</p>
 <div data-demo="js-playground">// f(x) = (x - 3)^2, turunannya f'(x) = 2*(x - 3)

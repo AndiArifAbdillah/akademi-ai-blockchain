@@ -945,3 +945,20 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
 .lesson-nav .nav-next { align-items: flex-end; text-align: right; margin-left: auto; }
 .lesson-nav .nav-lesson small { font-size: .72rem; opacity: .8; font-weight: 500; }
 .lesson-nav .nav-lesson span { white-space: normal; overflow-wrap: anywhere; }
+
+/* ---------- Demo kripto dari nol (hash, dompet, tanda tangan, Merkle) ---------- */
+.krip-label { display: block; font-size: .8rem; font-weight: 700; color: var(--muted); margin: 10px 0 4px; }
+.krip-teks { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); font: inherit; resize: vertical; }
+.krip-hasil .hx-beda { color: var(--bad); font-weight: 700; }
+.krip-hasil .hx-sama { opacity: .45; }
+.krip-panah { font-size: .8rem; color: var(--muted); text-align: center; padding: 2px 0 8px; }
+.krip-panah .ok { color: var(--ok); }
+.krip-panah .bad { color: var(--bad); }
+.krip-mono { font-family: "Consolas", "Courier New", monospace; }
+.krip-pre { white-space: pre-wrap; }
+.krip-isi { flex: 1; min-width: 0; }
+.krip-pilih { display: block; padding: 6px 0; font-size: .92rem; cursor: pointer; }
+.krip-langkah { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.krip-langkah span { width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: .78rem; font-weight: 700; background: var(--surface-2); border: 1px solid var(--border); }
+.krip-langkah span.lewat { background: color-mix(in srgb, var(--ok) 22%, var(--surface-2)); }
+.krip-langkah span.aktif { background: var(--primary); border-color: var(--primary); color: #fff; }
