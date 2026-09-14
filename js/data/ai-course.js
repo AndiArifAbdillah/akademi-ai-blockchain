@@ -615,7 +615,7 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
         {
           id: "ai-m-1",
           title: "Tiga Gaya Belajar Mesin",
-          duration: "10 menit",
+          duration: "15 menit",
           content: `
 <p><b>Machine Learning (ML)</b> adalah cabang AI yang fokus membuat mesin belajar dari data. Ada tiga gaya utama:</p>
 
@@ -638,16 +638,67 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
   <li><b>Klasifikasi</b> — menebak <i>kategori</i> (spam / bukan spam).</li>
   <li><b>Regresi</b> — menebak <i>angka</i> (harga rumah Rp ...).</li>
 </ul>
+
+<h3>Clustering, Reduksi Dimensi, Anomali &amp; Asosiasi (di unsupervised)</h3>
+<p>Tanpa label, model tidak menebak "jawaban benar" — ia <b>mencari struktur</b> yang tersembunyi di dalam data. Empat tugas yang paling sering:</p>
+<ul>
+  <li><b>Clustering</b> — mengelompokkan data yang mirip (pelanggan "hemat", "royal", "musiman").</li>
+  <li><b>Reduksi dimensi</b> — meringkas banyak kolom menjadi sedikit (50 kolom data pelanggan → 2 sumbu yang bisa digambar).</li>
+  <li><b>Deteksi anomali</b> — menemukan yang janggal dibanding kebanyakan (transaksi kartu pukul 3 pagi bernominal besar).</li>
+  <li><b>Aturan asosiasi</b> — menemukan hal yang sering muncul bersama (yang membeli roti biasanya juga membeli selai).</li>
+</ul>
+<div class="callout warn">
+<b>Tanpa label, tidak ada nilai "benar".</b> Model bisa menemukan 4 kelompok pelanggan, tapi manusialah yang harus menilai: apakah kelompok ke-3 benar-benar "pelanggan musiman", atau hanya kebetulan pola angka? Hasil unsupervised selalu perlu ditafsirkan.
+</div>
+
+<h3>Agen, Aksi &amp; Reward (di reinforcement)</h3>
+<p>Reinforcement learning tidak diberi data jawaban sama sekali. Ia belajar dengan <b>mencoba sendiri</b>, lalu melihat akibatnya:</p>
+
+<div data-diagram="cycle" data-steps="Agen melihat keadaan|Agen memilih aksi|Lingkungan berubah|Agen menerima reward" data-center="ulangi ribuan kali" data-caption="Siklus reinforcement learning: coba, lihat akibat, perbaiki"></div>
+
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th><th>Pada analogi anjing</th><th>Pada AI main game</th></tr>
+  <tr><td><b>Agen</b></td><td>Yang belajar dan bertindak</td><td>Anjing</td><td>Program pemain</td></tr>
+  <tr><td><b>Lingkungan</b></td><td>Dunia tempat agen bertindak</td><td>Rumah &amp; pemiliknya</td><td>Game-nya</td></tr>
+  <tr><td><b>Keadaan</b> (state)</td><td>Situasi saat ini</td><td>Pemilik memegang bola</td><td>Posisi di layar</td></tr>
+  <tr><td><b>Aksi</b></td><td>Pilihan yang diambil agen</td><td>Duduk, lari, menggonggong</td><td>Lompat, belok, tembak</td></tr>
+  <tr><td><b>Reward</b></td><td>Angka hadiah atau hukuman</td><td>Camilan</td><td>Skor naik atau nyawa berkurang</td></tr>
+  <tr><td><b>Kebijakan</b> (policy)</td><td>Aturan "di keadaan ini, lakukan itu" yang terus diperbaiki</td><td>Kebiasaan yang terbentuk</td><td>Strategi bermain</td></tr>
+</table>
+
+<p>Dua tantangan khas yang tidak ada di supervised maupun unsupervised:</p>
+<ul>
+  <li><b>Eksplorasi vs eksploitasi</b> — terus memakai cara yang sudah terbukti, atau mencoba cara baru yang mungkin lebih baik? Seperti memilih makan di warung langganan atau mencoba warung baru.</li>
+  <li><b>Reward yang tertunda</b> — langkah yang bagus kadang baru terbayar jauh kemudian. Di catur, mengorbankan bidak bisa berujung menang 30 langkah lagi, sehingga agen harus belajar menghubungkan aksi awal dengan hasil akhir.</li>
+</ul>
+
+<div class="callout warn">
+<b>⚠️ Agen mengejar reward, bukan niatmu.</b> Dalam sebuah percobaan terkenal, agen balap perahu diberi poin untuk menabrak target di lintasan. Ia menemukan cara berputar-putar di satu tempat mengumpulkan poin tanpa pernah menyelesaikan lomba. Reward yang dirancang keliru akan "dicurangi" — masalah ini disebut <i>reward hacking</i>.
+</div>
+
+<p>Contoh penerapan: AI pemain Go dan catur, robot yang belajar berjalan, pengaturan pendingin pusat data, dan — yang paling kamu kenal — <b>chatbot seperti ChatGPT dan Claude</b>, yang diperhalus dengan umpan balik manusia (RLHF, dibahas di modul AI Generatif &amp; LLM).</p>
+
+<h3>Ringkasan: tiga gaya, tiga pertanyaan</h3>
+<table class="tbl">
+  <tr><th>Gaya</th><th>Pertanyaan yang dijawab</th><th>Jenis tugas</th></tr>
+  <tr><td><b>Supervised</b></td><td>"Apa jawabannya untuk data baru ini?"</td><td>Klasifikasi, regresi</td></tr>
+  <tr><td><b>Unsupervised</b></td><td>"Struktur apa yang tersembunyi di data ini?"</td><td>Clustering, reduksi dimensi, anomali, asosiasi</td></tr>
+  <tr><td><b>Reinforcement</b></td><td>"Aksi apa yang menghasilkan reward terbesar dalam jangka panjang?"</td><td>Belajar kebijakan lewat coba-coba</td></tr>
+</table>
 `,
           keyPoints: [
             "Supervised: belajar dari data ber-label.",
             "Unsupervised: menemukan pola tanpa label.",
             "Reinforcement: belajar dari reward & punishment.",
             "Klasifikasi menebak kategori; regresi menebak angka.",
+            "Unsupervised mencari struktur: clustering, reduksi dimensi, deteksi anomali, dan aturan asosiasi — hasilnya perlu ditafsirkan manusia.",
+            "Reinforcement: agen melihat keadaan, memilih aksi, menerima reward, lalu memperbaiki kebijakannya.",
+            "Tantangan khas RL: eksplorasi vs eksploitasi, reward yang tertunda, dan reward hacking.",
           ],
           practice: [
             { type: "choice", q: "Mengelompokkan pelanggan jadi beberapa segmen TANPA label yang sudah ada termasuk?", options: ["Supervised learning", "Unsupervised learning", "Reinforcement learning"], answer: 1, hint: "Adakah jawaban benar/label yang diberikan sejak awal?", solution: "Tanpa label & mencari pola sendiri = unsupervised (clustering)." },
             { type: "choice", q: "Robot belajar berjalan lewat coba-coba dengan hadiah & hukuman termasuk?", options: ["Supervised learning", "Unsupervised learning", "Reinforcement learning"], answer: 2, hint: "Belajar dari reward & punishment atas aksinya.", solution: "Belajar dari hadiah/hukuman = reinforcement learning." },
+            { type: "choice", q: "Bank ingin menemukan transaksi kartu yang janggal, tapi tidak punya data berlabel penipuan. Tugas apa yang cocok?", options: ["Klasifikasi", "Deteksi anomali", "Regresi"], answer: 1, hint: "Tidak ada label, yang dicari adalah yang berbeda dari kebanyakan.", solution: "Tanpa label & mencari yang janggal = deteksi anomali (unsupervised)." },
           ],
           quiz: [
             {
@@ -667,6 +718,23 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
               answer: 2,
               explain:
                 "Belajar dari reward/punishment hasil aksi = reinforcement learning.",
+            },
+            {
+              q: "Toko online ingin tahu produk apa yang sering dibeli bersamaan, tanpa data berlabel. Tugas apa yang cocok?",
+              options: ["Aturan asosiasi", "Reduksi dimensi", "Regresi", "Klasifikasi"],
+              answer: 0,
+              explain: "Menemukan hal yang sering muncul bersama = aturan asosiasi, salah satu tugas unsupervised.",
+            },
+            {
+              q: "Agen balap perahu terus berputar mengumpulkan poin tanpa pernah menyelesaikan lomba. Apa masalahnya?",
+              options: [
+                "Reward dirancang keliru sehingga agen mencurangi tujuannya",
+                "Agen kekurangan data berlabel sehingga salah menebak arah",
+                "Agen terlalu banyak bereksplorasi sehingga lupa strateginya",
+                "Lingkungannya terlalu sederhana sehingga agen cepat bosan",
+              ],
+              answer: 0,
+              explain: "Agen mengejar reward, bukan niat perancangnya — masalah ini disebut reward hacking.",
             },
           ],
         },

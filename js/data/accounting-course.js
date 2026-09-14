@@ -1549,7 +1549,373 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
         },
       ],
     },
-    /* ---------------- MODUL 6: BIAYA, ANGGARAN & PAJAK ---------------- */
+    /* ---------------- MODUL 6: EKONOMI MIKRO: PERMINTAAN, PENAWARAN & HARGA ---------------- */
+    {
+      id: "acc-mikro",
+      level: "Mikro",
+      title: "Ekonomi Mikro: Permintaan, Penawaran & Harga",
+      summary: "Bagaimana harga terbentuk: hukum permintaan & penawaran, harga keseimbangan, pergeseran kurva, harga yang diatur, dan elastisitas — bekal untuk menentukan harga jual dan memahami inflasi.",
+      lessons: [
+        {
+          id: "acc-mik-1",
+          title: "Permintaan & Penawaran dari Nol",
+          duration: "15 menit",
+          content: `
+<p>Siapa yang menentukan harga cabai di pasar? Bukan pemerintah, bukan pedagang terbesar, bukan juga pembeli. Harga itu <b>terbentuk sendiri</b> dari tarik-menarik ribuan pembeli dan penjual. Memahami tarik-menarik ini adalah dasar untuk memahami harga jual bisnismu, inflasi, suku bunga, sampai harga saham dan crypto.</p>
+
+<div data-diagram="vs" data-left="Hukum Permintaan::Harga naik::→ ingin membeli lebih sedikit" data-right="Hukum Penawaran::Harga naik::→ ingin menjual lebih banyak" data-caption="Dua kekuatan yang bergerak berlawanan arah"></div>
+
+<h3>1. Hukum permintaan: makin mahal, makin sedikit yang dibeli</h3>
+<p><b>Permintaan</b> adalah berapa banyak barang yang <b>ingin dan mampu</b> dibeli pembeli pada setiap tingkat harga. Contoh permintaan cabai di sebuah pasar dalam sehari:</p>
+<table class="tbl">
+  <tr><th>Harga per kg</th><th>Jumlah yang ingin dibeli</th></tr>
+  <tr><td>Rp20.000</td><td>80 kg</td></tr>
+  <tr><td>Rp30.000</td><td>60 kg</td></tr>
+  <tr><td>Rp40.000</td><td>40 kg</td></tr>
+</table>
+<p>Kenapa jumlahnya turun saat harga naik? Karena <b>uang pembeli terbatas</b>, ada <b>pilihan pengganti</b> (cabai keriting, saus sambal botolan), dan sebagian pembeli memilih <b>mengurangi</b> pemakaian.</p>
+
+<h3>2. Hukum penawaran: makin mahal, makin banyak yang dijual</h3>
+<p><b>Penawaran</b> adalah berapa banyak barang yang <b>ingin dijual</b> penjual pada setiap tingkat harga.</p>
+<table class="tbl">
+  <tr><th>Harga per kg</th><th>Jumlah yang ingin dijual</th></tr>
+  <tr><td>Rp20.000</td><td>30 kg</td></tr>
+  <tr><td>Rp30.000</td><td>60 kg</td></tr>
+  <tr><td>Rp40.000</td><td>90 kg</td></tr>
+</table>
+<p>Kenapa jumlahnya naik saat harga naik? Karena menjual <b>lebih menguntungkan</b>, petani yang biaya tanamnya tinggi kini <b>ikut untung</b> sehingga mau menjual, dan pedagang <b>mengeluarkan stok</b> yang tadinya disimpan.</p>
+
+<div class="callout">
+<b>Satu syarat penting: "hal lain dianggap tetap".</b> Kedua hukum ini hanya berlaku bila yang berubah <b>hanya harga barang itu sendiri</b>. Kalau musim ikut berubah atau penghasilan pembeli naik, ceritanya berbeda — itu dibahas di pelajaran berikutnya. Para ekonom menyebut syarat ini <i>ceteris paribus</i>.
+</div>
+
+<h3>3. Titik temu: harga keseimbangan</h3>
+<p>Lihat kedua tabel di atas. Di harga <b>Rp30.000</b>, pembeli ingin 60 kg dan penjual ingin menjual 60 kg — <b>sama persis</b>. Di situlah harga pasar cenderung berhenti.</p>
+
+<div data-demo="pasar-keseimbangan"></div>
+
+<table class="tbl">
+  <tr><th>Keadaan</th><th>Yang terjadi di pasar</th><th>Arah harga</th></tr>
+  <tr><td><b>Harga terlalu tinggi</b></td><td>Barang menumpuk tak laku (surplus)</td><td>Penjual menurunkan harga ⬇</td></tr>
+  <tr><td><b>Harga terlalu rendah</b></td><td>Pembeli berebut, barang habis (kekurangan)</td><td>Harga terdorong naik ⬆</td></tr>
+  <tr><td><b>Harga keseimbangan</b></td><td>Semua yang ingin membeli di harga itu mendapat barang</td><td>Cenderung stabil</td></tr>
+</table>
+
+<div class="callout warn">
+<b>💡 Harga adalah sinyal.</b> Harga yang tinggi berkata kepada penjual "bawa lebih banyak barang" dan kepada pembeli "berhemat". Harga yang rendah berkata sebaliknya. Tanpa satu pun rapat atau perintah, jutaan orang menyesuaikan keputusannya — itulah kekuatan (dan juga keterbatasan) sebuah pasar.
+</div>
+
+<h3>Di mana kamu melihatnya setiap hari</h3>
+<table class="tbl">
+  <tr><th>Contoh</th><th>Tarik-menariknya</th></tr>
+  <tr><td>Tarif ojek online naik saat hujan</td><td>Permintaan melonjak, pengemudi yang mau jalan berkurang</td></tr>
+  <tr><td>Harga tiket pesawat saat libur panjang</td><td>Kursi terbatas, yang ingin terbang jauh lebih banyak</td></tr>
+  <tr><td>Harga saham dan crypto</td><td>Setiap detik, harga adalah titik temu antara yang ingin membeli dan yang ingin menjual</td></tr>
+  <tr><td>Gaji ahli AI yang tinggi</td><td>Banyak perusahaan membutuhkan, orang yang menguasainya masih sedikit</td></tr>
+</table>
+`,
+          keyPoints: [
+            "Harga pasar terbentuk dari tarik-menarik pembeli dan penjual, bukan ditetapkan satu pihak.",
+            "Hukum permintaan: harga naik → jumlah yang ingin dibeli turun, karena uang terbatas dan ada pengganti.",
+            "Hukum penawaran: harga naik → jumlah yang ingin dijual naik, karena menjual lebih menguntungkan.",
+            "Kedua hukum berlaku bila hal lain dianggap tetap (ceteris paribus).",
+            "Harga keseimbangan adalah harga ketika jumlah diminta sama dengan jumlah ditawarkan.",
+            "Harga di atas keseimbangan menimbulkan surplus dan tekanan turun; di bawahnya menimbulkan kekurangan dan tekanan naik.",
+            "Harga adalah sinyal yang mengatur keputusan jutaan orang tanpa perintah terpusat.",
+          ],
+          practice: [
+            { type: "number", q: "Permintaan: Qd = 120 − 2P. Penawaran: Qs = −30 + 3P (P dalam ribu rupiah). Berapa harga keseimbangannya (ribu rupiah)?", answer: 30, tol: 0.5, hint: "Samakan: 120 − 2P = −30 + 3P.", solution: "150 = 5P → P = 30, yaitu Rp30.000/kg, dengan jumlah 60 kg." },
+            { type: "number", q: "Dengan rumus yang sama, berapa kg kelebihan pasokan bila harga ditahan di Rp40.000?", answer: 50, tol: 0.5, hint: "Hitung Qd dan Qs pada P = 40, lalu kurangkan.", solution: "Qd = 120 − 80 = 40 kg; Qs = −30 + 120 = 90 kg. Surplus = 90 − 40 = 50 kg." },
+          ],
+          quiz: [
+            {
+              q: "Harga cabai sedang di atas harga keseimbangan. Apa yang cenderung terjadi?",
+              options: [
+                "Cabai menumpuk tak laku sehingga penjual menurunkan harga",
+                "Pembeli berebut cabai sehingga harganya terdorong makin naik",
+                "Jumlah yang ingin dibeli bertambah karena harganya lebih tinggi",
+                "Pemerintah otomatis menetapkan harga baru untuk menyamakannya",
+              ],
+              answer: 0,
+              explain: "Di atas keseimbangan, jumlah ditawarkan melebihi jumlah diminta — surplus menekan harga turun.",
+            },
+            {
+              q: "Kenapa jumlah yang ingin dijual naik ketika harga naik?",
+              options: [
+                "Menjual jadi lebih menguntungkan, termasuk bagi penjual yang biayanya tinggi",
+                "Pembeli otomatis membeli lebih banyak setiap kali harga barang naik",
+                "Biaya produksi setiap penjual ikut turun ketika harga di pasar naik",
+                "Penjual wajib menjual semua stoknya bila harga melewati batas tertentu",
+              ],
+              answer: 0,
+              explain: "Harga yang lebih tinggi menutup biaya lebih banyak penjual, sehingga pasokan bertambah.",
+            },
+            {
+              q: "Apa arti 'ceteris paribus' dalam hukum permintaan?",
+              options: [
+                "Hanya harga barang itu yang berubah, hal lain dianggap tetap",
+                "Harga barang selalu kembali ke keseimbangan dalam satu hari",
+                "Pembeli dan penjual memiliki informasi yang sama persis",
+                "Semua penjual menjual barang dengan kualitas yang sama",
+              ],
+              answer: 0,
+              explain: "Bila faktor lain ikut berubah — musim, penghasilan, tren — kurvanya sendiri yang bergeser.",
+            },
+            {
+              q: "Tarif ojek online naik saat hujan deras. Penjelasan yang paling tepat?",
+              options: [
+                "Permintaan melonjak sementara pengemudi yang mau jalan berkurang",
+                "Biaya bensin naik mendadak setiap kali hujan turun di kota",
+                "Aplikasi menaikkan tarif karena pemerintah mewajibkannya",
+                "Pengemudi sepakat bersama-sama menaikkan tarif saat hujan",
+              ],
+              answer: 0,
+              explain: "Kedua sisi pasar bergeser sekaligus, sehingga harga keseimbangan naik.",
+            },
+          ],
+        },
+        {
+          id: "acc-mik-2",
+          title: "Kenapa Harga Naik atau Turun? Pergeseran Kurva & Harga yang Diatur",
+          duration: "15 menit",
+          content: `
+<p>Harga cabai bisa naik dua kali lipat dalam sebulan, lalu jatuh lagi. Tiket pesawat mahal menjelang Lebaran. Minyak goreng pernah langka justru setelah harganya dibatasi. Semua itu bisa dijelaskan dengan satu alat: <b>kurva yang bergeser</b>.</p>
+
+<h3>Fundamental: bergerak di kurva vs kurvanya bergeser</h3>
+<p>Ini sumber kebingungan paling umum dalam ekonomi:</p>
+<table class="tbl">
+  <tr><th></th><th>Bergerak di sepanjang kurva</th><th>Kurvanya bergeser</th></tr>
+  <tr><td><b>Penyebab</b></td><td>Harga barang itu sendiri berubah</td><td>Hal lain berubah: musim, penghasilan, tren, biaya</td></tr>
+  <tr><td><b>Contoh</b></td><td>Cabai lebih mahal → orang membeli lebih sedikit</td><td>Menjelang Lebaran → di <b>setiap</b> harga, orang ingin membeli lebih banyak</td></tr>
+  <tr><td><b>Istilah</b></td><td>"Jumlah yang diminta" berubah</td><td>"Permintaan" berubah</td></tr>
+</table>
+
+<h3>Apa yang menggeser permintaan?</h3>
+<table class="tbl">
+  <tr><th>Penggeser</th><th>Contoh</th></tr>
+  <tr><td>Penghasilan pembeli</td><td>Gajian dan THR → belanja naik</td></tr>
+  <tr><td>Selera & tren</td><td>Minuman viral di media sosial</td></tr>
+  <tr><td>Harga barang pengganti</td><td>Daging sapi mahal → permintaan ayam naik</td></tr>
+  <tr><td>Harga barang pelengkap</td><td>Harga mobil listrik turun → permintaan pengisian daya naik</td></tr>
+  <tr><td>Ekspektasi</td><td>"Besok pasti naik" → orang memborong hari ini</td></tr>
+  <tr><td>Jumlah pembeli</td><td>Musim wisata, perumahan baru di sekitar toko</td></tr>
+</table>
+
+<h3>Apa yang menggeser penawaran?</h3>
+<table class="tbl">
+  <tr><th>Penggeser</th><th>Contoh</th></tr>
+  <tr><td>Biaya bahan, BBM & upah</td><td>Harga pupuk naik → petani menanam lebih sedikit</td></tr>
+  <tr><td>Teknologi</td><td>Mesin baru menekan biaya per unit</td></tr>
+  <tr><td>Cuaca & musim</td><td>Hujan berkepanjangan → panen cabai gagal</td></tr>
+  <tr><td>Jumlah penjual</td><td>Banyak pesaing baru masuk pasar</td></tr>
+  <tr><td>Pajak & subsidi</td><td>Subsidi pupuk menurunkan biaya tanam</td></tr>
+</table>
+
+<div data-demo="geser-kurva"></div>
+
+<h3>Membaca penyebab dari arah harga dan jumlah</h3>
+<table class="tbl">
+  <tr><th>Yang terjadi</th><th>Harga</th><th>Jumlah terjual</th></tr>
+  <tr><td>Permintaan naik</td><td>⬆ naik</td><td>⬆ naik</td></tr>
+  <tr><td>Permintaan turun</td><td>⬇ turun</td><td>⬇ turun</td></tr>
+  <tr><td>Penawaran naik</td><td>⬇ turun</td><td>⬆ naik</td></tr>
+  <tr><td>Penawaran turun</td><td>⬆ naik</td><td>⬇ turun</td></tr>
+</table>
+<p>Kalau kamu mendengar "harga naik", jangan langsung menyimpulkan penyebabnya. <b>Lihat juga jumlah yang terjual</b>: naik bersama berarti permintaan yang menarik; bergerak berlawanan berarti pasokan yang tersendat.</p>
+
+<h3>Saat harga diatur: batas atas dan batas bawah</h3>
+<table class="tbl">
+  <tr><th></th><th>Harga maksimum (mis. HET)</th><th>Harga minimum (mis. harga dasar)</th></tr>
+  <tr><td><b>Tujuan</b></td><td>Melindungi pembeli dari harga tinggi</td><td>Melindungi penjual dari harga terlalu rendah</td></tr>
+  <tr><td><b>Berpengaruh bila</b></td><td>Dipasang di bawah harga keseimbangan</td><td>Dipasang di atas harga keseimbangan</td></tr>
+  <tr><td><b>Efek samping</b></td><td class="bad-cell">Kekurangan: rak kosong, antrean, penimbunan, pasar gelap</td><td class="bad-cell">Kelebihan: barang tak terserap, perlu dibeli pemerintah</td></tr>
+</table>
+
+<div class="callout warn">
+<b>📰 Kisah minyak goreng 2022.</b> Saat harga minyak sawit dunia melonjak di awal 2022, pemerintah menetapkan harga eceran tertinggi minyak goreng. Di banyak daerah, minyak goreng justru sulit ditemukan dan antrean panjang muncul. Setelah HET minyak goreng kemasan dicabut pada Maret 2022, barangnya kembali ada di rak — dengan harga yang jauh lebih tinggi.<br><br>
+<b>Bukan berarti mengatur harga selalu salah.</b> Pemerintah menimbang keterjangkauan bagi warga berpenghasilan rendah. Pilihan lain — seperti bantuan langsung kepada yang membutuhkan atau menambah pasokan — punya kelebihan dan kekurangannya sendiri. Yang perlu diingat: <b>menahan harga tanpa menambah pasokan hampir selalu menimbulkan kelangkaan</b>.
+</div>
+
+<h3>Kacamata yang sama untuk crypto dan saham</h3>
+<ul>
+  <li><b>Pasokan Bitcoin tetap dan terjadwal</b>, sehingga hampir semua gerakan harganya berasal dari <b>pergeseran permintaan</b> — sentimen, likuiditas global, berita. Itu salah satu alasan harganya sangat bergejolak.</li>
+  <li><b>Token yang dibuka jadwal kuncinya</b> (<i>token unlock</i>) menambah penawaran di pasar — dibahas di pelajaran dilusi token pada jalur Crypto.</li>
+  <li><b>Harga saham hari ini</b> adalah titik temu pembeli dan penjual hari itu — bukan otomatis "nilai wajar" bisnisnya.</li>
+</ul>
+`,
+          keyPoints: [
+            "Perubahan harga barang itu sendiri = bergerak di sepanjang kurva; perubahan hal lain = kurvanya bergeser.",
+            "Permintaan digeser penghasilan, tren, harga barang pengganti & pelengkap, ekspektasi, dan jumlah pembeli.",
+            "Penawaran digeser biaya bahan & upah, teknologi, cuaca, jumlah penjual, serta pajak & subsidi.",
+            "Permintaan naik: harga dan jumlah naik bersama; penawaran turun: harga naik tapi jumlah turun.",
+            "Harga maksimum di bawah keseimbangan menimbulkan kekurangan; harga minimum di atasnya menimbulkan kelebihan.",
+            "Menahan harga tanpa menambah pasokan hampir selalu menimbulkan kelangkaan.",
+            "Pasokan Bitcoin tetap, sehingga gejolak harganya terutama berasal dari pergeseran permintaan.",
+          ],
+          practice: [
+            { type: "number", q: "Penawaran turun menjadi Qs = −60 + 3P, permintaan tetap Qd = 120 − 2P. Berapa harga keseimbangan baru (ribu rupiah)?", answer: 36, tol: 0.5, hint: "Samakan: 120 − 2P = −60 + 3P.", solution: "180 = 5P → P = 36. Harga naik dari 30 ke 36, jumlah turun dari 60 ke 48 kg." },
+            { type: "choice", q: "Harga daging sapi melonjak. Apa yang terjadi pada kurva permintaan daging ayam?", options: ["Bergeser ke kanan (permintaan naik)", "Bergeser ke kiri (permintaan turun)", "Tidak bergeser, hanya bergerak di sepanjang kurva"], answer: 0, hint: "Ayam adalah pengganti daging sapi.", solution: "Harga barang pengganti naik → orang beralih → permintaan ayam bergeser ke kanan." },
+          ],
+          quiz: [
+            {
+              q: "Harga cabai naik dan jumlah cabai yang terjual turun. Penyebab yang paling mungkin?",
+              options: [
+                "Penawaran turun, misalnya karena panen gagal",
+                "Permintaan naik, misalnya karena menjelang Lebaran",
+                "Permintaan turun, misalnya karena tren memasak berubah",
+                "Penawaran naik, misalnya karena panen sangat melimpah",
+              ],
+              answer: 0,
+              explain: "Harga dan jumlah bergerak berlawanan menandakan pergeseran penawaran ke kiri.",
+            },
+            {
+              q: "Mana yang merupakan pergerakan di sepanjang kurva permintaan, bukan pergeseran kurva?",
+              options: [
+                "Harga kopi naik sehingga orang membeli kopi lebih sedikit",
+                "Penghasilan warga naik sehingga pembelian kopi bertambah",
+                "Kopi menjadi tren di media sosial sehingga peminatnya naik",
+                "Harga teh turun drastis sehingga peminum kopi beralih ke teh",
+              ],
+              answer: 0,
+              explain: "Hanya perubahan harga barang itu sendiri yang menggerakkan titik di sepanjang kurvanya.",
+            },
+            {
+              q: "Harga maksimum ditetapkan di bawah harga keseimbangan. Apa efek samping yang paling mungkin?",
+              options: [
+                "Barang menjadi langka karena jumlah diminta melebihi jumlah ditawarkan",
+                "Barang menumpuk karena penjual terdorong membawa lebih banyak barang",
+                "Harga keseimbangan baru langsung terbentuk tepat di angka harga maksimum",
+                "Tidak ada efek karena harga maksimum hanya berlaku bagi pedagang besar",
+              ],
+              answer: 0,
+              explain: "Di harga yang ditahan rendah, pembeli ingin lebih banyak sementara penjual menawarkan lebih sedikit.",
+            },
+            {
+              q: "Kenapa gerakan harga Bitcoin terutama berasal dari sisi permintaan?",
+              options: [
+                "Karena pasokannya tetap dan terjadwal sehingga hampir tak bereaksi terhadap harga",
+                "Karena penambang wajib menjual semua koin baru pada harga yang ditetapkan",
+                "Karena permintaan Bitcoin selalu stabil dan tidak dipengaruhi sentimen",
+                "Karena bursa crypto menentukan sendiri harga Bitcoin setiap harinya",
+              ],
+              answer: 0,
+              explain: "Bila penawaran nyaris kaku, setiap pergeseran permintaan langsung terlihat sebagai gerakan harga.",
+            },
+          ],
+        },
+        {
+          id: "acc-mik-3",
+          title: "Elastisitas — Seberapa Peka Pembeli terhadap Harga",
+          duration: "14 menit",
+          content: `
+<p>Sebuah warung kopi menaikkan harga 10%. Apakah pendapatannya naik 10%? Hampir pasti tidak — sebagian pelanggan akan pergi. Pertanyaannya: <b>berapa banyak</b>? Jawaban atas pertanyaan itu menentukan apakah menaikkan harga membuat bisnis lebih kaya atau justru lebih miskin.</p>
+
+<h3>Fundamental: seberapa "melar" reaksi pembeli</h3>
+<div class="callout">
+🎈 <b>Bayangkan karet gelang.</b> Karet yang elastis melar jauh saat ditarik sedikit; tali yang kaku hampir tidak berubah.<br><br>
+<b>Elastisitas harga</b> mengukur seberapa jauh jumlah yang dibeli "melar" saat harga ditarik:<br>
+<b>Elastisitas = % perubahan jumlah ÷ % perubahan harga</b> (dibaca tanpa tanda minus)
+</div>
+
+<table class="tbl">
+  <tr><th>Harga naik</th><th>Jumlah terjual turun</th><th>Elastisitas</th><th>Sebutan</th></tr>
+  <tr><td>10%</td><td>20%</td><td>2</td><td><b>Elastis</b> — pembeli sangat peka</td></tr>
+  <tr><td>10%</td><td>10%</td><td>1</td><td><b>Uniter</b></td></tr>
+  <tr><td>10%</td><td>2%</td><td>0,2</td><td><b>Inelastis</b> — pembeli sulit menghindar</td></tr>
+</table>
+
+<div data-demo="elastisitas-harga"></div>
+
+<h3>Aturan emas pendapatan</h3>
+<table class="tbl">
+  <tr><th>Jika permintaan…</th><th>Menaikkan harga</th><th>Menurunkan harga</th></tr>
+  <tr><td><b>Inelastis</b> (&lt; 1)</td><td class="ok-cell">Pendapatan naik</td><td class="bad-cell">Pendapatan turun</td></tr>
+  <tr><td><b>Elastis</b> (&gt; 1)</td><td class="bad-cell">Pendapatan turun</td><td class="ok-cell">Pendapatan naik</td></tr>
+</table>
+<p>Inilah alasan diskon besar-besaran masuk akal untuk barang yang elastis — lonjakan pembeli menutup potongan harga — tetapi tidak masuk akal untuk garam.</p>
+
+<h3>Apa yang membuat permintaan elastis atau inelastis?</h3>
+<table class="tbl">
+  <tr><th>Faktor</th><th>Cenderung inelastis</th><th>Cenderung elastis</th></tr>
+  <tr><td>Ada pengganti?</td><td>Sulit dicari (obat tertentu)</td><td>Banyak pilihan (merek kopi)</td></tr>
+  <tr><td>Kebutuhan atau keinginan?</td><td>Kebutuhan pokok (beras)</td><td>Keinginan (liburan)</td></tr>
+  <tr><td>Porsi dari pengeluaran</td><td>Kecil (garam, korek api)</td><td>Besar (mobil, rumah)</td></tr>
+  <tr><td>Waktu</td><td>Jangka pendek (bensin besok pagi)</td><td>Jangka panjang (pindah ke kendaraan listrik)</td></tr>
+  <tr><td>Kebiasaan & biaya berpindah</td><td>Tinggi (aplikasi yang semua datamu ada di sana)</td><td>Rendah (pindah warung sebelah)</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Elastisitas kategori ≠ elastisitas merekmu.</b> Beras sebagai kategori sangat inelastis, tapi satu merek beras bisa sangat elastis — pembeli mudah pindah ke merek lain di rak yang sama. Yang menentukan nasib bisnismu adalah elastisitas <b>produkmu sendiri</b>.
+</div>
+
+<h3>Jembatan ke analisis bisnis</h3>
+<p>Istilah <b>pricing power</b> yang akan kamu temui di modul Kualitas Bisnis sebenarnya adalah <b>permintaan yang inelastis terhadap produk sebuah perusahaan</b>. Perusahaan seperti itu bisa meneruskan kenaikan biaya ke pelanggan tanpa kehilangan banyak penjualan — sangat berharga saat inflasi. Sumbernya biasanya merek yang dipercaya, tidak adanya pengganti, atau biaya berpindah yang tinggi.</p>
+
+<h3>Siapa yang sebenarnya menanggung pajak?</h3>
+<p>Ketika pemerintah mengenakan cukai, siapa yang membayar lebih banyak — penjual atau pembeli? Jawabannya bergantung pada elastisitas. Untuk barang yang permintaannya <b>inelastis</b> seperti rokok, pembeli tetap membeli walau harganya naik, sehingga sebagian besar beban cukai berpindah ke pembeli dan penerimaan negara tetap besar. Karena itu cukai biasanya dikenakan pada barang yang permintaannya kaku.</p>
+`,
+          keyPoints: [
+            "Elastisitas harga = % perubahan jumlah ÷ % perubahan harga; di atas 1 elastis, di bawah 1 inelastis.",
+            "Permintaan inelastis: menaikkan harga menaikkan pendapatan; permintaan elastis: menaikkan harga menurunkan pendapatan.",
+            "Permintaan cenderung inelastis bila pengganti sulit dicari, barangnya kebutuhan pokok, porsinya kecil, jangka pendek, dan biaya berpindah tinggi.",
+            "Elastisitas satu merek bisa jauh lebih tinggi daripada elastisitas kategori barangnya.",
+            "Pricing power adalah permintaan yang inelastis terhadap produk perusahaan itu sendiri.",
+            "Beban pajak atau cukai lebih banyak jatuh ke pembeli bila permintaannya inelastis.",
+          ],
+          practice: [
+            { type: "number", q: "Harga naik 5% dan jumlah terjual turun 10%. Berapa elastisitasnya?", answer: 2, tol: 0.05, hint: "10 ÷ 5.", solution: "10 ÷ 5 = 2 → elastis. Kenaikan harga ini menurunkan pendapatan." },
+            { type: "number", q: "Harga beras naik 10%, jumlah terjual turun 2%. Kira-kira berapa persen perubahan pendapatannya? (gunakan % harga + % jumlah)", answer: 8, tol: 0.5, hint: "+10% dan −2%.", solution: "Sekitar +10% − 2% = +8%. Hitungan tepatnya 1,10 × 0,98 − 1 = 7,8%." },
+          ],
+          quiz: [
+            {
+              q: "Sebuah produk punya elastisitas 0,3. Apa yang terjadi pada pendapatan jika harganya dinaikkan?",
+              options: [
+                "Naik, karena jumlah terjual turun jauh lebih sedikit dari kenaikan harga",
+                "Turun, karena setiap kenaikan harga selalu mengurangi pendapatan",
+                "Tetap, karena kenaikan harga dan penurunan jumlah selalu seimbang",
+                "Tidak bisa diperkirakan tanpa mengetahui biaya produksinya",
+              ],
+              answer: 0,
+              explain: "Elastisitas di bawah 1 berarti permintaan inelastis.",
+            },
+            {
+              q: "Kenapa satu merek beras bisa elastis padahal beras sebagai kategori inelastis?",
+              options: [
+                "Pembeli tetap butuh beras, tapi mudah pindah ke merek lain di rak yang sama",
+                "Merek beras yang lebih mahal selalu memiliki kualitas yang lebih buruk",
+                "Elastisitas kategori dan elastisitas merek selalu bernilai persis sama",
+                "Pemerintah mengatur harga semua merek beras dengan cara berbeda-beda",
+              ],
+              answer: 0,
+              explain: "Kebutuhan akan beras kaku, tapi pilihan antar-merek sangat terbuka.",
+            },
+            {
+              q: "Mana yang paling menggambarkan pricing power sebuah perusahaan?",
+              options: [
+                "Bisa menaikkan harga tanpa kehilangan banyak pelanggan",
+                "Bisa menurunkan harga lebih rendah dari semua pesaingnya",
+                "Menjual produk dengan harga tertinggi di seluruh industrinya",
+                "Mendapat izin pemerintah untuk menetapkan harga sendiri",
+              ],
+              answer: 0,
+              explain: "Pricing power adalah permintaan yang inelastis terhadap produk perusahaan itu.",
+            },
+            {
+              q: "Kenapa cukai biasanya dikenakan pada barang seperti rokok?",
+              options: [
+                "Permintaannya inelastis sehingga penerimaan tetap besar walau harga naik",
+                "Permintaannya elastis sehingga konsumsi langsung hilang setelah dikenai cukai",
+                "Penjualnya menanggung seluruh cukai sehingga harga di pasar tidak berubah",
+                "Barang tersebut tidak memiliki biaya produksi sehingga mudah dikenai pajak",
+              ],
+              answer: 0,
+              explain: "Pembeli tetap membeli meski harga naik, jadi dasar penerimaan cukai tidak cepat menyusut.",
+            },
+          ],
+        },
+      ],
+    },
+    /* ---------------- MODUL 7: BIAYA, ANGGARAN & PAJAK ---------------- */
     {
       id: "acc-terapan",
       level: "Terapan",
@@ -2101,7 +2467,7 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
         },
       ],
     },
-    /* ---------------- MODUL 7: PENGENDALIAN, KECURANGAN & AUDIT ---------------- */
+    /* ---------------- MODUL 8: PENGENDALIAN, KECURANGAN & AUDIT ---------------- */
     {
       id: "acc-audit",
       level: "Audit",
@@ -2398,7 +2764,7 @@ Laporan keuangan dibuat oleh <b>manajemen</b> — pihak yang justru <b>berkepent
         },
       ],
     },
-    /* ---------------- MODUL 8: NILAI WAKTU UANG & DCF ---------------- */
+    /* ---------------- MODUL 9: NILAI WAKTU UANG & DCF ---------------- */
     {
       id: "acc-matematika",
       level: "Matematika",
@@ -2860,7 +3226,7 @@ Tanpa FCF, DCF tidak punya bahan. Tanpa DCF, FCF hanya angka tahunan tanpa kesim
         },
       ],
     },
-    /* ---------------- MODUL 9: VALUASI RELATIF & MULTIPLES ---------------- */
+    /* ---------------- MODUL 10: VALUASI RELATIF & MULTIPLES ---------------- */
     {
       id: "acc-lanjutan",
       level: "Lanjutan",
@@ -3276,7 +3642,7 @@ if (targetPE > rataPE) {
         },
       ],
     },
-    /* ---------------- MODUL 10: KUALITAS BISNIS & KEUNGGULAN KOMPETITIF ---------------- */
+    /* ---------------- MODUL 11: KUALITAS BISNIS & KEUNGGULAN KOMPETITIF ---------------- */
     {
       id: "acc-kualitas",
       level: "Kualitas",
@@ -3940,7 +4306,7 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
         },
       ],
     },
-    /* ---------------- MODUL 11: MENGANALISIS BANK & LEMBAGA KEUANGAN ---------------- */
+    /* ---------------- MODUL 12: MENGANALISIS BANK & LEMBAGA KEUANGAN ---------------- */
     {
       id: "acc-bank",
       level: "Perbankan",
@@ -4621,7 +4987,7 @@ Biasanya jawabannya: ROE-nya rendah karena biaya dananya mahal (CASA rendah), at
         },
       ],
     },
-    /* ---------------- MODUL 12: MENILAI PROSPEK & RISIKO MASA DEPAN ---------------- */
+    /* ---------------- MODUL 13: MENILAI PROSPEK & RISIKO MASA DEPAN ---------------- */
     {
       id: "acc-prospek",
       level: "Prospek",
@@ -5046,7 +5412,7 @@ Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kala
         },
       ],
     },
-    /* ---------------- MODUL 13: MEMBACA LAPORAN & MEMBANGUN BISNIS ---------------- */
+    /* ---------------- MODUL 14: MEMBACA LAPORAN & MEMBANGUN BISNIS ---------------- */
     {
       id: "acc-proyek",
       level: "Proyek",
@@ -5457,7 +5823,7 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
         },
       ],
     },
-    /* ---------------- MODUL 14: DUNIA INVESTASI & PENGELOLAAN DANA ---------------- */
+    /* ---------------- MODUL 15: DUNIA INVESTASI & PENGELOLAAN DANA ---------------- */
     {
       id: "acc-investasi",
       level: "Investasi",
@@ -6042,12 +6408,12 @@ Bedanya hanya nol di belakang angkanya.
         },
       ],
     },
-    /* ---------------- MODUL 15: EKONOMI MAKRO UNTUK BISNIS ---------------- */
+    /* ---------------- MODUL 16: EKONOMI MAKRO UNTUK BISNIS ---------------- */
     {
       id: "acc-makro",
       level: "Makro",
       title: "Ekonomi Makro untuk Bisnis",
-      summary: "Zoom out ke seluruh negara: PDB, inflasi, suku bunga, kebijakan fiskal & moneter, kurs, dan siklus ekonomi.",
+      summary: "Zoom out ke seluruh negara: PDB, inflasi beserta penyebab & cara mengukurnya, suku bunga, kebijakan fiskal, hiperinflasi, kurs, melindungi uang & bisnis dari inflasi, dan siklus ekonomi.",
       lessons: [
         {
           id: "acc-mak-1",
@@ -6224,6 +6590,120 @@ console.log("Ubah angka inflasi jadi 0.08 lalu jalankan lagi - lihat bedanya.");
               ],
               answer: 0,
               explain: "Bunga riil = 3% − 5% = −2%.",
+            },
+          ],
+        },
+        {
+          id: "acc-inf-1",
+          title: "Kenapa Harga Naik? Penyebab & Cara Mengukur Inflasi",
+          duration: "15 menit",
+          content: `
+<p>Di pelajaran sebelumnya kamu mengenal inflasi sebagai kenaikan harga secara umum yang menggerus daya beli. Sekarang dua pertanyaan yang lebih dalam: <b>kenapa</b> harga-harga bisa naik bersamaan, dan <b>bagaimana</b> angka inflasi yang diumumkan setiap bulan itu dihitung?</p>
+
+<h3>Tiga penyebab inflasi</h3>
+<div data-diagram="compare3" data-cols="Tarikan permintaan::uang &amp; belanja melonjak::permintaan bergeser kanan|Dorongan biaya::BBM, panen, kurs::penawaran bergeser kiri|Ekspektasi::semua mengira harga naik::lalu benar-benar terjadi" data-caption="Tiga jalan menuju harga yang naik bersamaan"></div>
+
+<table class="tbl">
+  <tr><th>Penyebab</th><th>Yang terjadi</th><th>Contoh</th></tr>
+  <tr><td><b>Tarikan permintaan</b> (demand-pull)</td><td>Terlalu banyak uang mengejar barang yang jumlahnya tidak cukup bertambah. Di kacamata permintaan-penawaran: permintaan seluruh ekonomi bergeser ke kanan</td><td>Kredit sangat murah dan belanja besar-besaran saat pabrik sudah bekerja penuh</td></tr>
+  <tr><td><b>Dorongan biaya</b> (cost-push)</td><td>Biaya produksi naik sehingga penawaran bergeser ke kiri</td><td>Harga BBM dinaikkan, gagal panen, rupiah melemah sehingga bahan impor mahal</td></tr>
+  <tr><td><b>Ekspektasi</b></td><td>Orang yakin harga akan naik: pekerja meminta gaji lebih tinggi, pedagang menaikkan harga lebih dulu — dan keyakinan itu mewujudkan dirinya sendiri</td><td>Spiral upah-harga</td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Kenapa ekspektasi begitu penting?</b> Dua penyebab pertama bisa mereda sendiri: panen membaik, harga BBM dunia turun. Ekspektasi yang sudah terbentuk jauh lebih sulit dihentikan. Karena itu bank sentral bekerja keras menjaga <b>kepercayaan</b> bahwa inflasi akan tetap rendah — sesuatu yang dibahas di pelajaran berikutnya tentang kebijakan moneter.
+</div>
+
+<h3>Cara mengukurnya: sekeranjang belanja</h3>
+<p>BPS memantau harga ratusan barang dan jasa yang biasa dibeli rumah tangga, lalu menggabungkannya menjadi <b>Indeks Harga Konsumen (IHK)</b>. Setiap kelompok diberi <b>bobot</b> sesuai besarnya bagian pengeluaran rumah tangga untuk kelompok itu.</p>
+<p style="text-align:center"><b>Inflasi tahunan = (IHK tahun ini ÷ IHK tahun lalu − 1) × 100%</b><br>Contoh: IHK naik dari 110 menjadi 115,5 → (115,5 ÷ 110 − 1) × 100% = <b>5%</b></p>
+
+<div data-demo="keranjang-ihk"></div>
+
+<h3>Tiga komponen yang dipantau di Indonesia</h3>
+<table class="tbl">
+  <tr><th>Komponen</th><th>Isinya</th><th>Kenapa dipisahkan</th></tr>
+  <tr><td><b>Inti</b></td><td>Barang & jasa yang harganya bergerak mengikuti kondisi ekonomi secara umum</td><td>Paling mencerminkan tekanan permintaan dan ekspektasi — inilah yang paling diperhatikan bank sentral</td></tr>
+  <tr><td><b>Harga yang diatur pemerintah</b></td><td>BBM, tarif listrik, tarif angkutan, rokok</td><td>Berubah karena keputusan kebijakan, bukan tarik-menarik pasar sehari-hari</td></tr>
+  <tr><td><b>Harga bergejolak</b></td><td>Pangan seperti cabai, bawang, beras</td><td>Naik-turun tajam karena cuaca dan musim, sering berbalik sendiri</td></tr>
+</table>
+
+<h3>Tiga angka yang sering tertukar</h3>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Dibandingkan dengan</th><th>Contoh berita</th></tr>
+  <tr><td><b>Bulanan</b> (month-to-month)</td><td>Bulan sebelumnya</td><td>"Inflasi Mei 0,3%"</td></tr>
+  <tr><td><b>Tahun kalender</b> (year-to-date)</td><td>Desember tahun lalu</td><td>"Inflasi Januari–Mei 1,2%"</td></tr>
+  <tr><td><b>Tahunan</b> (year-on-year)</td><td>Bulan yang sama tahun lalu</td><td>"Inflasi tahunan 2,8%"</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ "Inflasi turun" bukan berarti harga turun.</b> Kalau inflasi turun dari 5% menjadi 3%, harga <b>tetap naik</b> — hanya lebih lambat. Harga baru benar-benar turun bila terjadi <b>deflasi</b> (inflasi negatif).
+</div>
+
+<h3>Kenapa angka resmi terasa beda dengan dompetmu?</h3>
+<ul>
+  <li><b>Keranjangmu berbeda.</b> Mahasiswa yang banyak mengeluarkan uang untuk kos dan transportasi merasakan inflasi yang berbeda dari keluarga dengan anak kecil.</li>
+  <li><b>Barang yang sering dibeli paling terasa.</b> Cabai naik 50% lebih mudah diingat daripada harga televisi yang pelan-pelan turun.</li>
+  <li><b>Shrinkflation.</b> Harga bungkus tetap, tapi isinya dikurangi. Secara harga per gram, itu tetap kenaikan harga yang tersembunyi.</li>
+</ul>
+`,
+          keyPoints: [
+            "Tiga penyebab inflasi: tarikan permintaan (permintaan bergeser kanan), dorongan biaya (penawaran bergeser kiri), dan ekspektasi.",
+            "Ekspektasi paling sulit dihentikan, sehingga bank sentral sangat menjaga kepercayaan terhadap inflasi yang rendah.",
+            "Inflasi diukur dari IHK: harga sekeranjang barang & jasa yang diberi bobot sesuai porsi pengeluaran rumah tangga.",
+            "Inflasi tahunan = (IHK tahun ini ÷ IHK tahun lalu − 1) × 100%.",
+            "Di Indonesia dipantau tiga komponen: inti, harga yang diatur pemerintah, dan harga bergejolak.",
+            "Bedakan inflasi bulanan, tahun kalender, dan tahunan.",
+            "Inflasi turun bukan berarti harga turun — harga tetap naik, hanya lebih lambat.",
+          ],
+          practice: [
+            { type: "number", q: "IHK tahun lalu 110 dan tahun ini 115,5. Berapa inflasi tahunannya (%)?", answer: 5, tol: 0.05, hint: "115,5 ÷ 110 − 1.", solution: "115,5 ÷ 110 = 1,05 → inflasi 5%." },
+            { type: "number", q: "Kelompok makanan berbobot 33% dan harganya naik 6%. Berapa andilnya terhadap inflasi (poin persen)?", answer: 1.98, tol: 0.01, hint: "0,33 × 6.", solution: "0,33 × 6 = 1,98 poin persen." },
+          ],
+          quiz: [
+            {
+              q: "Harga BBM dinaikkan sehingga ongkos angkut semua barang ikut naik. Termasuk penyebab inflasi apa?",
+              options: [
+                "Dorongan biaya, karena biaya produksi naik dan penawaran bergeser ke kiri",
+                "Tarikan permintaan, karena masyarakat tiba-tiba ingin membeli lebih banyak",
+                "Ekspektasi, karena pedagang menaikkan harga sebelum biayanya naik",
+                "Deflasi, karena daya beli masyarakat berkurang setelah BBM naik",
+              ],
+              answer: 0,
+              explain: "Kenaikan biaya yang diteruskan ke harga adalah inflasi dorongan biaya.",
+            },
+            {
+              q: "Inflasi tahunan turun dari 5% menjadi 3%. Apa artinya bagi harga-harga?",
+              options: [
+                "Harga masih naik, hanya kecepatannya lebih lambat",
+                "Harga turun rata-rata 2% dibanding tahun lalu",
+                "Harga kembali ke tingkat yang sama dengan tahun lalu",
+                "Harga barang pokok turun, barang lainnya tetap naik",
+              ],
+              answer: 0,
+              explain: "Hanya deflasi yang membuat harga benar-benar turun.",
+            },
+            {
+              q: "Kenapa bank sentral paling memperhatikan inflasi inti?",
+              options: [
+                "Karena paling mencerminkan tekanan permintaan dan ekspektasi, bukan guncangan musiman",
+                "Karena inflasi inti mencakup harga BBM dan tarif listrik yang ditetapkan pemerintah",
+                "Karena inflasi inti selalu lebih tinggi daripada harga pangan yang bergejolak",
+                "Karena inflasi inti adalah satu-satunya komponen yang dihitung oleh BPS",
+              ],
+              answer: 0,
+              explain: "Harga pangan dan harga yang diatur sering berubah karena cuaca atau keputusan kebijakan.",
+            },
+            {
+              q: "Harga sebungkus keripik tetap Rp10.000, tapi isinya turun dari 100 gram menjadi 80 gram. Apa yang terjadi?",
+              options: [
+                "Kenaikan harga tersembunyi, karena harga per gram naik 25%",
+                "Tidak ada inflasi, karena harga di label tidak berubah",
+                "Deflasi, karena jumlah barang yang diterima pembeli turun",
+                "Penurunan permintaan, karena pembeli membeli lebih sedikit",
+              ],
+              answer: 0,
+              explain: "Rp10.000 untuk 80 gram = Rp125/gram, naik dari Rp100/gram — shrinkflation.",
             },
           ],
         },
@@ -6442,6 +6922,118 @@ console.log("Itu artinya B punya jauh lebih banyak dana untuk membangun.");</div
           ],
         },
         {
+          id: "acc-inf-2",
+          title: "Hiperinflasi — Saat Uang Kehilangan Makna",
+          duration: "14 menit",
+          content: `
+<p>Inflasi yang sehat hanya beberapa persen setahun. Tapi sejarah mencatat masa ketika harga naik puluhan persen <b>setiap bulan</b> — bahkan setiap hari. Keadaan ini disebut <b>hiperinflasi</b>, dan Indonesia pernah mengalaminya. Memahami bagaimana ia terjadi menjelaskan kenapa aturan tentang anggaran negara dan bank sentral dibuat begitu ketat.</p>
+
+<div data-diagram="timeline" data-events="1923::Jerman: harga berlipat tiap beberapa hari|1966::Indonesia: inflasi sekitar 600%|1998::Indonesia: inflasi 77,6%|2008::Zimbabwe: 231 juta persen setahun|2018::Venezuela: ratusan ribu persen" data-caption="Beberapa episode inflasi ekstrem"></div>
+
+<h3>Fundamental: spiral yang memakan dirinya sendiri</h3>
+<p>Hiperinflasi sering didefinisikan sebagai kenaikan harga <b>lebih dari 50% per bulan</b>. Polanya hampir selalu sama:</p>
+
+<div data-diagram="cycle" data-steps="Pemerintah defisit besar|Bank sentral mencetak uang|Harga melonjak|Orang cepat-cepat belanja" data-center="kepercayaan runtuh" data-caption="Setiap putaran membuat putaran berikutnya lebih cepat"></div>
+
+<ol>
+  <li><b>Pemerintah membelanjakan jauh lebih banyak dari penerimaannya</b> — karena perang, krisis, atau salah kelola — dan tidak bisa lagi meminjam.</li>
+  <li><b>Kekurangannya ditutup dengan mencetak uang.</b> Jumlah uang bertambah cepat, sementara barang tidak bertambah.</li>
+  <li><b>Harga naik</b>, sehingga pemerintah butuh uang lebih banyak lagi untuk membayar hal yang sama.</li>
+  <li><b>Orang berhenti memercayai uang.</b> Gaji langsung dibelanjakan hari itu juga sebelum nilainya turun. Uang berpindah tangan makin cepat, dan harga naik makin cepat lagi.</li>
+</ol>
+
+<div class="callout warn">
+<b>Pasokan barang yang runtuh memperparah segalanya.</b> Perang yang merusak pabrik, lahan pertanian yang tak lagi berproduksi, atau kontrol harga yang membuat produsen berhenti menjual — ingat pelajaran tentang harga yang diatur — membuat barang makin langka tepat saat uang makin banyak.
+</div>
+
+<h3>Kisah-kisah yang tercatat</h3>
+<table class="tbl">
+  <tr><th>Episode</th><th>Apa yang terjadi</th></tr>
+  <tr><td><b>Jerman 1923</b></td><td>Beban biaya perang dan pampasan ditutup dengan mencetak uang. Pada puncaknya harga berlipat ganda setiap beberapa hari; pada November 1923 satu dolar AS setara sekitar 4,2 triliun mark</td></tr>
+  <tr><td><b>Indonesia 1960-an</b></td><td>Defisit anggaran yang besar dibiayai pencetakan uang. Pada Desember 1965, uang Rp1.000 lama ditetapkan setara Rp1 uang baru. Inflasi 1966 mencapai sekitar 600%, lalu baru terkendali beberapa tahun kemudian lewat disiplin anggaran</td></tr>
+  <tr><td><b>Indonesia 1998</b></td><td>Krisis moneter: rupiah anjlok dari sekitar Rp2.500 hingga pernah hampir Rp17.000 per dolar, dan inflasi 1998 mencapai 77,6%. Sangat tinggi dan menyakitkan — meski belum tergolong hiperinflasi menurut definisi 50% per bulan</td></tr>
+  <tr><td><b>Zimbabwe 2008</b></td><td>Produksi pertanian runtuh dan uang terus dicetak. Angka resmi terakhir mencatat inflasi tahunan 231 juta persen; uang kertas 100 triliun dolar Zimbabwe sempat diterbitkan, sebelum negara itu beralih memakai mata uang asing</td></tr>
+  <tr><td><b>Venezuela 2010-an</b></td><td>Anjloknya harga minyak, defisit besar, dan pencetakan uang. Bank sentralnya mencatat inflasi 2018 sekitar 130.000%; jutaan warga meninggalkan negaranya</td></tr>
+</table>
+
+<h3>Kenapa aturannya dibuat ketat</h3>
+<table class="tbl">
+  <tr><th>Pengaman</th><th>Maksudnya</th></tr>
+  <tr><td>Batas defisit anggaran</td><td>Undang-undang keuangan negara di Indonesia membatasi defisit APBN sekitar 3% dari PDB (sempat dilonggarkan sementara saat pandemi)</td></tr>
+  <tr><td>Bank sentral yang independen</td><td>Bank Indonesia pada dasarnya tidak boleh membiayai defisit pemerintah secara langsung — agar "mencetak uang untuk menutup anggaran" tidak menjadi jalan pintas</td></tr>
+  <tr><td>Target inflasi yang diumumkan</td><td>Menjaga ekspektasi masyarakat tetap tenang</td></tr>
+</table>
+
+<h3>Bagaimana hiperinflasi berakhir</h3>
+<p>Hampir selalu lewat kombinasi yang menyakitkan: <b>anggaran diseimbangkan</b>, pencetakan uang dihentikan, <b>mata uang baru</b> atau mata uang asing dipakai, dan <b>kepercayaan dibangun ulang</b> — yang butuh bertahun-tahun. Yang paling dirugikan biasanya penabung dan pekerja bergaji tetap, karena tabungan dan gaji mereka menguap lebih cepat daripada harga barang.</p>
+
+<h3>Hubungannya dengan crypto</h3>
+<p>Blok pertama Bitcoin (2009) menyimpan judul berita koran tentang dana talangan bank — penanda bahwa Bitcoin lahir dari ketidakpercayaan pada uang yang bisa dicetak tanpa batas. Di negara dengan inflasi sangat tinggi, sebagian warga memang beralih ke <b>stablecoin berbasis dolar</b> untuk menyimpan nilai.</p>
+<div class="callout">
+<b>Tapi pisahkan narasi dari kenyataan.</b> Pasokan Bitcoin yang terbatas tidak otomatis membuat daya belinya stabil — harganya bisa turun lebih dari separuh dalam setahun. Stablecoin mewarisi inflasi dolar dan bergantung pada kepercayaan kepada penerbitnya. Keduanya bisa menjadi alat, bukan jaminan.
+</div>
+`,
+          keyPoints: [
+            "Hiperinflasi sering didefinisikan sebagai kenaikan harga lebih dari 50% per bulan.",
+            "Polanya: defisit besar yang ditutup dengan mencetak uang, harga melonjak, lalu kepercayaan terhadap uang runtuh sehingga spiral makin cepat.",
+            "Pasokan barang yang runtuh dan kontrol harga memperparah hiperinflasi.",
+            "Indonesia mengalami inflasi sekitar 600% pada 1966 (dengan penggantian Rp1.000 lama menjadi Rp1 baru pada 1965) dan 77,6% saat krisis 1998.",
+            "Pengamannya: batas defisit anggaran, bank sentral yang tidak membiayai defisit secara langsung, dan target inflasi.",
+            "Hiperinflasi berakhir lewat disiplin anggaran, mata uang baru atau asing, dan kepercayaan yang dibangun ulang bertahun-tahun.",
+            "Pasokan Bitcoin yang terbatas tidak menjamin daya beli stabil; stablecoin bergantung pada dolar dan penerbitnya.",
+          ],
+          practice: [
+            { type: "number", q: "Harga naik 50% setiap bulan. Setelah 12 bulan, harga menjadi kira-kira berapa kali lipat? (bulatkan)", answer: 130, tol: 1, hint: "1,5 dipangkatkan 12.", solution: "1,5¹² ≈ 129,7 — sekitar 130 kali lipat dalam setahun." },
+            { type: "number", q: "Pada 1965 uang Rp1.000 lama ditetapkan setara Rp1 baru. Tabungan Rp250.000 uang lama menjadi berapa rupiah baru?", answer: 250, tol: 0.5, hint: "Bagi dengan 1.000.", solution: "Rp250.000 ÷ 1.000 = Rp250 uang baru." },
+          ],
+          quiz: [
+            {
+              q: "Apa pemicu yang paling sering muncul dalam kisah hiperinflasi?",
+              options: [
+                "Defisit anggaran besar yang ditutup dengan mencetak uang",
+                "Pertumbuhan ekonomi yang terlalu cepat selama beberapa tahun",
+                "Suku bunga bank sentral yang dinaikkan terlalu tinggi",
+                "Harga barang impor yang turun terlalu drastis dalam setahun",
+              ],
+              answer: 0,
+              explain: "Uang bertambah jauh lebih cepat daripada barang, lalu kepercayaan runtuh.",
+            },
+            {
+              q: "Kenapa orang cepat-cepat membelanjakan gajinya saat hiperinflasi — dan apa akibatnya?",
+              options: [
+                "Nilai uang cepat turun, dan belanja yang serentak mempercepat kenaikan harga",
+                "Toko memberi diskon besar, sehingga harga-harga perlahan kembali turun",
+                "Bank menutup semua rekening, sehingga uang tunai wajib dibelanjakan",
+                "Pemerintah mewajibkannya, sehingga pencetakan uang bisa dihentikan",
+              ],
+              answer: 0,
+              explain: "Uang yang berpindah tangan makin cepat memperkuat spiral kenaikan harga.",
+            },
+            {
+              q: "Kenapa Bank Indonesia pada dasarnya dilarang membiayai defisit pemerintah secara langsung?",
+              options: [
+                "Agar mencetak uang untuk menutup anggaran tidak menjadi jalan pintas",
+                "Agar pemerintah wajib meminjam seluruh kebutuhannya dari luar negeri",
+                "Agar Bank Indonesia bisa memperoleh keuntungan dari bunga pinjaman",
+                "Agar APBN tidak boleh mengalami defisit sama sekali setiap tahunnya",
+              ],
+              answer: 0,
+              explain: "Pengaman ini lahir dari pelajaran pahit episode inflasi ekstrem.",
+            },
+            {
+              q: "Seseorang berkata \"pasokan Bitcoin terbatas, jadi pasti aman dari inflasi\". Tanggapan yang paling tepat?",
+              options: [
+                "Pasokan terbatas tidak menjamin daya beli stabil karena harganya bisa jatuh tajam",
+                "Benar, karena aset berpasokan terbatas selalu naik lebih cepat dari inflasi",
+                "Benar, karena harga Bitcoin dikaitkan secara resmi dengan indeks harga konsumen",
+                "Keliru, karena pasokan Bitcoin sebenarnya bisa ditambah kapan saja oleh penambang",
+              ],
+              answer: 0,
+              explain: "Pasokannya memang terjadwal, tetapi harganya ditentukan permintaan yang sangat bergejolak.",
+            },
+          ],
+        },
+        {
           id: "acc-mak-5",
           title: "Kurs & Risiko Nilai Tukar",
           duration: "12 menit",
@@ -6523,6 +7115,126 @@ console.log("Itu artinya B punya jauh lebih banyak dana untuk membangun.");</div
               answer: 0,
               explain:
                 "Ketidaksesuaian mata uang membuat beban utang melonjak saat kurs bergerak.",
+            },
+          ],
+        },
+        {
+          id: "acc-inf-3",
+          title: "Melindungi Uang & Bisnis dari Inflasi",
+          duration: "15 menit",
+          content: `
+<p>Inflasi bekerja diam-diam: angka di rekening tidak berkurang, laporan keuangan terlihat tumbuh — padahal yang bisa dibeli justru menyusut. Pelajaran ini membahas cara berpikir yang melindungi keuangan pribadi dan bisnis, lengkap dengan cara inflasi mengelabui laporan keuangan.</p>
+
+<h3>Fundamental: selalu pikirkan angka riil</h3>
+<div class="callout">
+<b>Imbal hasil riil = (1 + imbal hasil bersih) ÷ (1 + inflasi) − 1</b><br><br>
+Cara cepatnya: imbal hasil bersih − inflasi. Untuk angka kecil hasilnya hampir sama; untuk angka besar gunakan rumus lengkap.<br><br>
+Contoh deposito berbunga 4,5% yang dipotong pajak bunga 20% → bersih 3,6%. Dengan inflasi 3%: (1,036 ÷ 1,03) − 1 = <b>0,58% per tahun</b>. Angkanya bertambah 3,6%, tapi daya belinya hanya naik sedikit sekali.
+</div>
+
+<div data-demo="inflasi-riil"></div>
+
+<h3>Aturan 72: kapan daya beli tinggal separuh?</h3>
+<p style="text-align:center"><b>Tahun sampai daya beli uang tunai tinggal separuh ≈ 72 ÷ inflasi</b></p>
+<table class="tbl">
+  <tr><th>Inflasi per tahun</th><th>Daya beli tinggal separuh setelah</th></tr>
+  <tr><td>3%</td><td>sekitar 24 tahun</td></tr>
+  <tr><td>6%</td><td>sekitar 12 tahun</td></tr>
+  <tr><td>12%</td><td>sekitar 6 tahun</td></tr>
+</table>
+
+<h3>Aset dan inflasi — tanpa janji manis</h3>
+<table class="tbl">
+  <tr><th>Tempat menyimpan</th><th>Saat inflasi</th><th>Catatan jujur</th></tr>
+  <tr><td>Uang tunai</td><td class="bad-cell">Pasti kalah</td><td>Tetap perlu sebagai dana darurat dan kebutuhan harian</td></tr>
+  <tr><td>Tabungan & deposito</td><td>Sering hanya sedikit di atas atau di bawah inflasi setelah pajak</td><td>Aman nilai nominalnya dan mudah dicairkan</td></tr>
+  <tr><td>Obligasi berbunga tetap</td><td>Dirugikan bila inflasi naik melebihi perkiraan</td><td>Bunganya tidak ikut naik</td></tr>
+  <tr><td>Saham</td><td>Bisnis dengan pricing power bisa meneruskan kenaikan biaya</td><td>Jangka pendek bisa turun tajam, terutama saat suku bunga dinaikkan</td></tr>
+  <tr><td>Properti & emas</td><td>Sering bertahan dalam jangka panjang</td><td>Bisa stagnan bertahun-tahun; ada biaya dan tidak selalu mudah dijual</td></tr>
+  <tr><td>Crypto</td><td>Belum terbukti</td><td>Pada 2022, saat inflasi AS mencapai sekitar 9%, harga Bitcoin justru turun lebih dari separuh</td></tr>
+  <tr><td>Kemampuan dirimu</td><td class="ok-cell">Penghasilan yang tumbuh lebih cepat dari inflasi</td><td>Sering menjadi "aset" dengan imbal hasil terbaik di usia muda</td></tr>
+</table>
+<p><i>Tabel ini alat berpikir, bukan saran investasi. Setiap aset punya risikonya sendiri.</i></p>
+
+<h3>Bagaimana inflasi mengelabui laporan keuangan</h3>
+<p>Laporan keuangan dicatat dalam rupiah nominal. Saat inflasi tinggi, empat hal ini sering menyesatkan:</p>
+<table class="tbl">
+  <tr><th>Jebakan</th><th>Contoh</th><th>Yang sebenarnya terjadi</th></tr>
+  <tr><td><b>Pertumbuhan semu</b></td><td>Pendapatan naik 8% saat inflasi 6%</td><td>Pertumbuhan riilnya hanya sekitar 1,9% — sebagian besar hanya harga yang naik</td></tr>
+  <tr><td><b>Laba persediaan</b></td><td>Stok dibeli Rp10.000/unit, harga penggantinya kini Rp11.000, dijual Rp15.000. Dengan FIFO laba tercatat Rp5.000</td><td>Laba "operasional" sebenarnya Rp4.000; Rp1.000 sisanya habis untuk membeli stok pengganti yang lebih mahal</td></tr>
+  <tr><td><b>Penyusutan terlalu kecil</b></td><td>Mesin Rp1 miliar dibeli 10 tahun lalu disusutkan Rp100 juta per tahun</td><td>Dengan inflasi 4% per tahun, mesin penggantinya kini sekitar Rp1,48 miliar. Laba terlihat lebih besar dari kemampuan bisnis mengganti asetnya</td></tr>
+  <tr><td><b>Utang bunga tetap</b></td><td>Pinjaman Rp1 miliar dengan bunga tetap</td><td>Nilai riil utangnya menyusut — menguntungkan peminjam dan merugikan pemberi pinjaman</td></tr>
+</table>
+<div class="callout warn">
+<b>Cara membaca yang aman:</b> bandingkan pertumbuhan dengan inflasi, periksa apakah Free Cash Flow ikut naik (bukan hanya laba), dan waspadai bisnis padat aset yang laporannya tampak sehat tapi kasnya selalu habis untuk mengganti mesin.
+</div>
+
+<h3>Strategi bisnis menghadapi inflasi</h3>
+<ul>
+  <li><b>Bangun pricing power</b> — merek, kualitas, dan layanan yang membuat pelanggan tidak mudah pindah saat harga disesuaikan.</li>
+  <li><b>Tulis klausul penyesuaian harga</b> di kontrak jangka panjang, misalnya dikaitkan dengan inflasi.</li>
+  <li><b>Kelola persediaan dan modal kerja</b> — stok yang terlalu tipis rawan kehabisan, yang terlalu tebal mengikat kas.</li>
+  <li><b>Pertimbangkan jenis utang</b> — bunga tetap melindungi dari kenaikan suku bunga, bunga mengambang lebih murah di awal tapi berisiko.</li>
+  <li><b>Pantau inflasi negara pemasok dan kurs</b> — bahan impor bisa naik walau inflasi dalam negeri rendah.</li>
+</ul>
+`,
+          keyPoints: [
+            "Imbal hasil riil = (1 + imbal hasil bersih) ÷ (1 + inflasi) − 1; pajak bisa menghabiskan sebagian besar selisihnya.",
+            "Aturan 72: daya beli uang tunai tinggal separuh setelah sekitar 72 ÷ inflasi tahun.",
+            "Tidak ada aset yang pasti menang melawan inflasi; uang tunai pasti kalah, crypto belum terbukti, dan kemampuan diri sering menjadi aset terbaik.",
+            "Inflasi membuat pertumbuhan pendapatan tampak lebih besar dari pertumbuhan riil.",
+            "Dengan FIFO saat inflasi, sebagian laba hanyalah laba persediaan yang habis untuk membeli stok pengganti.",
+            "Penyusutan berbasis harga perolehan lama membuat laba tampak lebih besar dari kemampuan mengganti aset.",
+            "Inflasi menguntungkan peminjam berbunga tetap dan merugikan pemberi pinjaman.",
+          ],
+          practice: [
+            { type: "number", q: "Imbal hasil bersih 6% per tahun dan inflasi 4%. Berapa imbal hasil riilnya (%)? (2 desimal)", answer: 1.92, tol: 0.02, hint: "1,06 ÷ 1,04 − 1.", solution: "1,06 ÷ 1,04 = 1,0192 → 1,92% per tahun (cara cepat memberi 2%)." },
+            { type: "number", q: "Dengan aturan 72, jika inflasi 8% per tahun, daya beli uang tunai tinggal separuh setelah berapa tahun?", answer: 9, tol: 0.1, hint: "72 ÷ 8.", solution: "72 ÷ 8 = 9 tahun." },
+          ],
+          quiz: [
+            {
+              q: "Deposito berbunga 5%, dipotong pajak 20%, dan inflasi 4%. Bagaimana daya beli uangmu?",
+              options: [
+                "Hampir tidak bertambah, karena hasil bersihnya hanya 4% dan setara inflasi",
+                "Bertambah sekitar 5% per tahun, sesuai bunga yang tertulis di bilyet",
+                "Bertambah sekitar 1% per tahun, karena pajak tidak memengaruhi daya beli",
+                "Berkurang sekitar 4% per tahun, karena seluruh bunga habis untuk pajak",
+              ],
+              answer: 0,
+              explain: "5% × 0,8 = 4% bersih; dikurangi inflasi 4% → imbal hasil riil sekitar nol.",
+            },
+            {
+              q: "Pendapatan sebuah perusahaan naik 8% saat inflasi 6%. Kesimpulan yang paling tepat?",
+              options: [
+                "Pertumbuhan riilnya hanya sekitar 2%, sebagian besar hanya kenaikan harga",
+                "Perusahaan tumbuh pesat karena pendapatan naik lebih dari 5% setahun",
+                "Perusahaan menyusut karena pendapatannya tumbuh lebih lambat dari inflasi",
+                "Pertumbuhan riilnya 14% karena inflasi ikut menambah pendapatan",
+              ],
+              answer: 0,
+              explain: "(1,08 ÷ 1,06) − 1 ≈ 1,9% — itulah pertumbuhan volume dan nilai yang sebenarnya.",
+            },
+            {
+              q: "Kenapa laba perusahaan yang memakai FIFO bisa terlihat lebih tinggi saat inflasi?",
+              options: [
+                "Karena HPP memakai harga stok lama yang lebih murah, padahal stok pengganti lebih mahal",
+                "Karena FIFO membolehkan perusahaan menaikkan harga jual lebih cepat dari pesaing",
+                "Karena FIFO menghapus biaya persediaan dari laporan laba rugi saat inflasi",
+                "Karena FIFO membuat pajak penghasilan perusahaan menjadi nol selama inflasi",
+              ],
+              answer: 0,
+              explain: "Selisih itu adalah laba persediaan yang habis untuk membeli stok baru.",
+            },
+            {
+              q: "Siapa yang diuntungkan bila inflasi ternyata jauh lebih tinggi dari perkiraan saat pinjaman berbunga tetap disepakati?",
+              options: [
+                "Peminjam, karena nilai riil utangnya menyusut",
+                "Pemberi pinjaman, karena bunganya ikut naik",
+                "Keduanya, karena nilai nominal pinjaman tetap",
+                "Tidak ada, karena bunga tetap selalu disesuaikan",
+              ],
+              answer: 0,
+              explain: "Cicilan tetap dibayar dengan uang yang daya belinya makin kecil.",
             },
           ],
         },
@@ -6625,7 +7337,7 @@ console.log("Itu artinya B punya jauh lebih banyak dana untuk membangun.");</div
         },
       ],
     },
-    /* ---------------- MODUL 16: MASA DEPAN AKUNTANSI & PEKERJAAN KEUANGAN ---------------- */
+    /* ---------------- MODUL 17: MASA DEPAN AKUNTANSI & PEKERJAAN KEUANGAN ---------------- */
     {
       id: "acc-arah",
       level: "Arah",

@@ -22,7 +22,7 @@ const MODULE_ORDER = [
   "bc-forensik", "bc-pelengkap", "bc-ekonomi", "bc-arah",
   // 📊 Akuntansi
   "acc-dasar", "acc-pemula", "acc-menengah", "acc-pendalaman", "acc-fundamental",
-  "acc-terapan", "acc-audit", "acc-matematika", "acc-lanjutan", "acc-kualitas",
+  "acc-mikro", "acc-terapan", "acc-audit", "acc-matematika", "acc-lanjutan", "acc-kualitas",
   "acc-bank", "acc-prospek", "acc-proyek", "acc-investasi", "acc-makro", "acc-arah",
 ];
 (function urutkanModul() {
@@ -1312,6 +1312,18 @@ const GLOSSARY = [
   ["Brain Wallet", "Dompet yang kuncinya dibuat dari kalimat pilihan sendiri — mudah ditebak dan sering dikuras."],
   ["Keccak-256", "Fungsi hash yang dipakai Ethereum, antara lain untuk membuat alamat dari kunci publik."],
   ["UTXO", "Cara Bitcoin mencatat dana sebagai koin-koin terpisah yang dibelanjakan utuh; sisanya menjadi kembalian."],
+  ["Permintaan", "Banyaknya barang yang ingin dan mampu dibeli pada setiap tingkat harga."],
+  ["Penawaran", "Banyaknya barang yang ingin dijual penjual pada setiap tingkat harga."],
+  ["Harga Keseimbangan", "Harga ketika jumlah yang diminta sama dengan jumlah yang ditawarkan."],
+  ["Ceteris Paribus", "Syarat \"hal lain dianggap tetap\" — hanya satu faktor yang diubah saat menganalisis."],
+  ["Surplus", "Kelebihan pasokan: pada harga tertentu barang yang ditawarkan melebihi yang diminta."],
+  ["Elastisitas Harga", "Persentase perubahan jumlah dibeli dibagi persentase perubahan harga; di atas 1 elastis, di bawah 1 inelastis."],
+  ["HET", "Harga Eceran Tertinggi — batas harga maksimum yang ditetapkan pemerintah."],
+  ["Inflasi Inti", "Komponen inflasi di luar harga pangan bergejolak dan harga yang diatur pemerintah; paling mencerminkan tekanan permintaan."],
+  ["Shrinkflation", "Kenaikan harga tersembunyi: harga kemasan tetap, tetapi isinya dikurangi."],
+  ["Hiperinflasi", "Inflasi ekstrem, sering didefinisikan sebagai kenaikan harga lebih dari 50% per bulan."],
+  ["Imbal Hasil Riil", "Imbal hasil setelah memperhitungkan inflasi: (1 + hasil bersih) ÷ (1 + inflasi) − 1."],
+  ["Sanering", "Pemotongan nilai uang oleh negara, misalnya uang Rp1.000 lama ditetapkan setara Rp1 baru pada 1965."],
 ];
 
 function renderGlossary() {

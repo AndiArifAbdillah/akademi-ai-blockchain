@@ -3214,6 +3214,382 @@ DEMOS["pohon-merkle"] = function (root) {
   draw();
 };
 
+
+/* ---------- Pembantu grafik permintaan & penawaran ----------
+   Permintaan: Qd = a − 2P   ·   Penawaran: Qs = c + 3P   (P = ribu Rp/kg, Q = kg/hari) */
+const PASAR = { a: 120, c: -30, PMAKS: 70, QMAKS: 160 };
+const pasarX = (q) => 52 + (q / PASAR.QMAKS) * 450;
+const pasarY = (p) => 226 - (p / PASAR.PMAKS) * 206;
+const pasarQd = (a, p) => a - 2 * p;
+const pasarQs = (c, p) => c + 3 * p;
+const pasarSeimbang = (a, c) => { const p = (a - c) / 5; return { p: p, q: a - 2 * p }; };
+function pasarJalur(fnQ) {
+  let d = "", baru = true;
+  for (let p = 0; p <= PASAR.PMAKS + 0.001; p += 0.5) {
+    const q = fnQ(p);
+    if (q < 0 || q > PASAR.QMAKS) { baru = true; continue; }
+    d += (baru ? "M" : "L") + pasarX(q).toFixed(1) + " " + pasarY(p).toFixed(1) + " ";
+    baru = false;
+  }
+  return d;
+}
+function pasarKerangka() {
+  let g = '<line x1="52" y1="226" x2="506" y2="226" class="vaxis"/><line x1="52" y1="16" x2="52" y2="226" class="vaxis"/>';
+  for (let p = 0; p <= 70; p += 10) g += '<text x="46" y="' + (pasarY(p) + 4).toFixed(1) + '" text-anchor="end" class="vt-xs">' + p + "</text>";
+  for (let q = 0; q <= 160; q += 40) g += '<text x="' + pasarX(q).toFixed(1) + '" y="242" text-anchor="middle" class="vt-xs">' + q + "</text>";
+  g += '<text x="279" y="258" text-anchor="middle" class="vt-xs">Jumlah (kg per hari)</text>';
+  g += '<text x="14" y="121" text-anchor="middle" class="vt-xs" transform="rotate(-90 14 121)">Harga (ribu Rp/kg)</text>';
+  return g;
+}
+const rb = (v) => (Math.round(v * 10) / 10).toString().replace(".", ",");
+
+/* ---------- Demo: keseimbangan pasar ---------- */
+DEMOS["pasar-keseimbangan"] = function (root) {
+  let harga = 40, pemutar = null;
+  const kanvas = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+  const sl = h("input", { type: "range", min: "10", max: "55", step: "1", value: "40", class: "dm-range" });
+  const lb = h("b", { text: "Rp40.000" });
+
+  function draw() {
+    const qd = pasarQd(PASAR.a, harga), qs = Math.max(0, pasarQs(PASAR.c, harga));
+    const e = pasarSeimbang(PASAR.a, PASAR.c);
+    let g = '<svg viewBox="0 0 520 266" class="viz-svg" role="img" aria-label="Kurva permintaan dan penawaran cabai">' + pasarKerangka();
+    g += '<path d="' + pasarJalur((p) => pasarQd(PASAR.a, p)) + '" class="garis-permintaan"/>';
+    g += '<path d="' + pasarJalur((p) => pasarQs(PASAR.c, p)) + '" class="garis-penawaran"/>';
+    g += '<text x="' + pasarX(112).toFixed(1) + '" y="' + (pasarY(4) - 8).toFixed(1) + '" class="vt-xs teks-permintaan">Permintaan</text>';
+    g += '<text x="' + pasarX(128).toFixed(1) + '" y="' + (pasarY(52) - 6).toFixed(1) + '" class="vt-xs teks-penawaran">Penawaran</text>';
+    g += '<line x1="52" y1="' + pasarY(e.p) + '" x2="' + pasarX(e.q) + '" y2="' + pasarY(e.p) + '" class="vline dim"/><line x1="' + pasarX(e.q) + '" y1="' + pasarY(e.p) + '" x2="' + pasarX(e.q) + '" y2="226" class="vline dim"/>';
+    g += '<circle cx="' + pasarX(e.q) + '" cy="' + pasarY(e.p) + '" r="6" class="titik-lancar"/>';
+    g += '<line x1="52" y1="' + pasarY(harga).toFixed(1) + '" x2="506" y2="' + pasarY(harga).toFixed(1) + '" class="garis-ambang"/>';
+    if (qd !== qs) g += '<line x1="' + pasarX(Math.min(qd, qs)).toFixed(1) + '" y1="' + pasarY(harga).toFixed(1) + '" x2="' + pasarX(Math.max(qd, qs)).toFixed(1) + '" y2="' + pasarY(harga).toFixed(1) + '" class="garis-selisih"/>';
+    g += '<circle cx="' + pasarX(qd).toFixed(1) + '" cy="' + pasarY(harga).toFixed(1) + '" r="5" class="titik-permintaan"/><circle cx="' + pasarX(qs).toFixed(1) + '" cy="' + pasarY(harga).toFixed(1) + '" r="5" class="titik-penawaran"/>';
+    g += "</svg>";
+    kanvas.innerHTML = g;
+
+    let status, catatan;
+    if (qs > qd) {
+      status = '<div class="dm-line big bad"><span>📦 Kelebihan pasokan (surplus)</span><b>' + (qs - qd) + " kg tak laku</b></div>";
+      catatan = "Pada harga ini penjual membawa lebih banyak cabai daripada yang mau dibeli. Cabai menumpuk dan bisa busuk, jadi penjual <b>mulai menurunkan harga</b>. Saat harga turun, lebih banyak pembeli tertarik dan sebagian penjual menahan barangnya — selisihnya mengecil.";
+    } else if (qd > qs) {
+      status = '<div class="dm-line big bad"><span>🏃 Kekurangan (shortage)</span><b>' + (qd - qs) + " kg kurang</b></div>";
+      catatan = "Pada harga ini lebih banyak orang ingin membeli daripada cabai yang tersedia. Pembeli berebut dan sebagian rela membayar lebih, jadi <b>harga terdorong naik</b>. Harga yang lebih tinggi menarik penjual membawa lebih banyak cabai — selisihnya mengecil.";
+    } else {
+      status = '<div class="dm-line big good"><span>⚖️ Seimbang</span><b>' + qd + " kg terjual</b></div>";
+      catatan = "Di harga <b>Rp" + (e.p * 1000).toLocaleString("id-ID") + "/kg</b>, jumlah yang ingin dibeli sama persis dengan jumlah yang ingin dijual. Tidak ada yang menumpuk, tidak ada yang berebut. Inilah <b>harga keseimbangan</b> — tidak ditetapkan siapa pun, melainkan terbentuk dari tarik-menarik pembeli dan penjual.";
+    }
+    out.innerHTML =
+      '<div class="dm-line"><span>🛒 Pembeli ingin membeli <i class="dm-sub">(titik biru)</i></span><b>' + qd + " kg</b></div>" +
+      '<div class="dm-line"><span>🧺 Penjual ingin menjual <i class="dm-sub">(titik oranye)</i></span><b>' + qs + " kg</b></div>" +
+      status + '<div class="dm-note">' + catatan + "</div>";
+    lb.textContent = "Rp" + (harga * 1000).toLocaleString("id-ID");
+    sl.value = String(harga);
+  }
+  function berhenti() { if (pemutar) { clearInterval(pemutar); pemutar = null; } }
+  sl.oninput = () => { berhenti(); harga = parseInt(sl.value, 10); draw(); };
+  const jalan = h("button", { class: "btn", type: "button", text: "▶ Biarkan pasar bekerja" });
+  jalan.onclick = () => {
+    berhenti();
+    pemutar = setInterval(() => {
+      if (!root.isConnected) { berhenti(); return; }
+      const e = pasarSeimbang(PASAR.a, PASAR.c).p;
+      if (harga === e) { berhenti(); return; }
+      harga += harga > e ? -1 : 1;
+      draw();
+    }, 260);
+  };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🌶️ <b>Demo: harga cabai di sebuah pasar</b>" }),
+    h("p", { class: "demo-hint", text: "Garis biru = berapa kg yang ingin dibeli pembeli di setiap harga. Garis oranye = berapa kg yang ingin dijual pedagang. Geser harganya, atau biarkan pasar mencari harganya sendiri." }),
+    kanvas,
+    h("label", { class: "dm-row" }, [h("span", { text: "Harga per kg: " }), sl, lb]),
+    h("div", { class: "demo-controls" }, [jalan]),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: pergeseran kurva & harga eceran tertinggi ---------- */
+DEMOS["geser-kurva"] = function (root) {
+  const s = { dD: 0, dS: 0, het: false, nilaiHet: 25, cerita: "" };
+  const kanvas = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+  const rentang = (label, attrs, kunci, format) => {
+    const inp = h("input", Object.assign({ type: "range", class: "dm-range" }, attrs));
+    const b = h("b", { text: format(parseFloat(attrs.value)) });
+    inp.oninput = () => { s[kunci] = parseFloat(inp.value); s.cerita = ""; b.textContent = format(s[kunci]); draw(); };
+    return { el: h("label", { class: "dm-row" }, [h("span", { text: label }), inp, b]), inp: inp, b: b, format: format };
+  };
+  const tanda = (v) => (v > 0 ? "+" : "") + v + " kg";
+  const rD = rentang("Permintaan bergeser: ", { min: "-40", max: "40", step: "5", value: "0" }, "dD", tanda);
+  const rS = rentang("Penawaran bergeser: ", { min: "-40", max: "40", step: "5", value: "0" }, "dS", tanda);
+  const rH = rentang("Batas harga (HET): ", { min: "10", max: "50", step: "1", value: "25" }, "nilaiHet", (v) => "Rp" + (v * 1000).toLocaleString("id-ID"));
+  const cek = h("input", { type: "checkbox" });
+  cek.onchange = () => { s.het = cek.checked; s.cerita = ""; draw(); };
+
+  function setel(dD, dS, het, cerita) {
+    s.dD = dD; s.dS = dS; s.het = het; s.cerita = cerita;
+    rD.inp.value = dD; rD.b.textContent = rD.format(dD);
+    rS.inp.value = dS; rS.b.textContent = rS.format(dS);
+    cek.checked = het;
+    draw();
+  }
+
+  function draw() {
+    const a = PASAR.a + s.dD, c = PASAR.c + s.dS;
+    const lama = pasarSeimbang(PASAR.a, PASAR.c), baru = pasarSeimbang(a, c);
+    let g = '<svg viewBox="0 0 520 266" class="viz-svg" role="img" aria-label="Pergeseran kurva permintaan dan penawaran">' + pasarKerangka();
+    g += '<path d="' + pasarJalur((p) => pasarQd(PASAR.a, p)) + '" class="garis-permintaan pudar"/>';
+    g += '<path d="' + pasarJalur((p) => pasarQs(PASAR.c, p)) + '" class="garis-penawaran pudar"/>';
+    g += '<path d="' + pasarJalur((p) => pasarQd(a, p)) + '" class="garis-permintaan"/>';
+    g += '<path d="' + pasarJalur((p) => pasarQs(c, p)) + '" class="garis-penawaran"/>';
+    g += '<circle cx="' + pasarX(lama.q).toFixed(1) + '" cy="' + pasarY(lama.p).toFixed(1) + '" r="5" class="titik-pudar"/>';
+    const binding = s.het && s.nilaiHet < baru.p;
+    if (s.het) {
+      g += '<line x1="52" y1="' + pasarY(s.nilaiHet).toFixed(1) + '" x2="506" y2="' + pasarY(s.nilaiHet).toFixed(1) + '" class="garis-ambang"/>';
+      g += '<text x="502" y="' + (pasarY(s.nilaiHet) - 6).toFixed(1) + '" text-anchor="end" class="vt-xs">HET</text>';
+    }
+    if (binding) {
+      const qd = pasarQd(a, s.nilaiHet), qs = Math.max(0, pasarQs(c, s.nilaiHet));
+      g += '<line x1="' + pasarX(qs).toFixed(1) + '" y1="' + pasarY(s.nilaiHet).toFixed(1) + '" x2="' + pasarX(Math.min(qd, PASAR.QMAKS)).toFixed(1) + '" y2="' + pasarY(s.nilaiHet).toFixed(1) + '" class="garis-selisih"/>';
+    } else {
+      g += '<circle cx="' + pasarX(baru.q).toFixed(1) + '" cy="' + pasarY(baru.p).toFixed(1) + '" r="6" class="titik-lancar"/>';
+    }
+    g += "</svg>";
+    kanvas.innerHTML = g;
+
+    const persen = (x, y) => ((y / x - 1) * 100).toFixed(0);
+    let html =
+      '<div class="dm-line"><span>Harga keseimbangan</span><b>Rp' + (lama.p * 1000).toLocaleString("id-ID") + " → Rp" + Math.round(baru.p * 1000).toLocaleString("id-ID") + (baru.p !== lama.p ? " (" + (baru.p > lama.p ? "+" : "") + persen(lama.p, baru.p) + "%)" : "") + "</b></div>" +
+      '<div class="dm-line"><span>Jumlah terjual</span><b>' + rb(lama.q) + " kg → " + rb(binding ? Math.max(0, pasarQs(c, s.nilaiHet)) : baru.q) + " kg</b></div>";
+    if (binding) {
+      const qd = pasarQd(a, s.nilaiHet), qs = Math.max(0, pasarQs(c, s.nilaiHet));
+      html += '<div class="dm-line big bad"><span>🚫 Barang langka</span><b>' + rb(qd - qs) + " kg kekurangan</b></div>" +
+        '<div class="dm-note">Harga dipaksa tidak boleh lebih dari Rp' + (s.nilaiHet * 1000).toLocaleString("id-ID") + ". Di harga itu pembeli ingin <b>" + rb(qd) + " kg</b>, tapi pedagang hanya mau menjual <b>" + rb(qs) + " kg</b> — sebagian merugi bila menjual semurah itu. Hasilnya bukan cabai murah untuk semua orang, melainkan <b>rak kosong, antrean, penimbunan, dan pasar gelap</b> dengan harga di atas HET.</div>";
+    } else {
+      let catatan = s.cerita;
+      if (!catatan) {
+        if (s.dD === 0 && s.dS === 0) catatan = "Kurva pudar adalah keadaan awal. Geser salah satu kurva, atau pilih sebuah kejadian di atas.";
+        else if (s.dD !== 0 && s.dS === 0) catatan = s.dD > 0 ? "Permintaan naik: harga <b>dan</b> jumlah terjual sama-sama naik." : "Permintaan turun: harga <b>dan</b> jumlah terjual sama-sama turun.";
+        else if (s.dS !== 0 && s.dD === 0) catatan = s.dS > 0 ? "Penawaran naik: harga turun, jumlah terjual naik — keduanya bergerak berlawanan." : "Penawaran turun: harga naik, jumlah terjual turun — keduanya bergerak berlawanan.";
+        else catatan = "Dua kurva bergeser bersamaan: arah salah satunya (harga atau jumlah) bergantung pada pergeseran mana yang lebih besar.";
+      }
+      html += '<div class="dm-note">' + catatan + "</div>";
+    }
+    out.innerHTML = html;
+  }
+
+  const kejadian = (teks, aksi) => { const t = h("button", { class: "btn ghost", type: "button", text: teks }); t.onclick = aksi; return t; };
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "📉 <b>Demo: apa yang terjadi saat kurvanya bergeser?</b>" }),
+    h("p", { class: "demo-hint", text: "Pasar cabai yang sama. Pilih sebuah kejadian dan bandingkan harga serta jumlah terjual sebelum dan sesudahnya." }),
+    h("div", { class: "demo-controls" }, [
+      kejadian("🌧️ Hujan terus, panen gagal", () => setel(0, -30, false, "Panen gagal <b>menggeser penawaran ke kiri</b>: pada harga berapa pun, cabai yang tersedia lebih sedikit. Harga naik, <b>jumlah terjual turun</b>. Pembeli yang tetap membeli adalah yang paling membutuhkan atau paling mampu membayar.")),
+      kejadian("🎉 Menjelang Lebaran", () => setel(30, 0, false, "Semua orang memasak <b>menggeser permintaan ke kanan</b>. Harga naik, dan kali ini <b>jumlah terjual juga naik</b> — pedagang terdorong membawa lebih banyak barang. Harga sama-sama naik seperti saat panen gagal, tapi penyebabnya berbeda: lihat arah jumlahnya.")),
+      kejadian("🚜 Panen raya", () => setel(0, 35, false, "Panen melimpah <b>menggeser penawaran ke kanan</b>. Harga jatuh dan jumlah terjual naik. Petani bisa rugi walau panennya besar — inilah alasan harga komoditas pertanian sering naik-turun tajam.")),
+      kejadian("🏷️ Pemerintah menetapkan HET", () => { setel(0, -30, true, ""); rH.inp.value = 25; s.nilaiHet = 25; rH.b.textContent = rH.format(25); draw(); }),
+      kejadian("↺ Awal", () => setel(0, 0, false, "")),
+    ]),
+    kanvas,
+    rD.el, rS.el,
+    h("label", { class: "dm-row" }, [cek, h("span", { text: " Pasang harga eceran tertinggi (HET)" })]),
+    rH.el,
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: elastisitas harga & pendapatan ---------- */
+DEMOS["elastisitas-harga"] = function (root) {
+  const PRODUK = {
+    beras: { nama: "Beras", e: 0.2, harga: 14000, jumlah: 1000, satuan: "kg" },
+    kopi: { nama: "Kopi susu kekinian", e: 2.0, harga: 25000, jumlah: 400, satuan: "gelas" },
+    tiket: { nama: "Tiket bioskop", e: 1.0, harga: 50000, jumlah: 300, satuan: "tiket" },
+  };
+  let pilih = "kopi", e = PRODUK.kopi.e, ubah = 10;
+  const out = h("div", { class: "dm-out" });
+  const slE = h("input", { type: "range", min: "0", max: "3", step: "0.1", value: String(e), class: "dm-range" });
+  const lbE = h("b", { text: rb(e) });
+  const slU = h("input", { type: "range", min: "-30", max: "30", step: "5", value: "10", class: "dm-range" });
+  const lbU = h("b", { text: "+10%" });
+  const rp = (v) => "Rp" + Math.round(v).toLocaleString("id-ID");
+
+  function draw() {
+    const p = PRODUK[pilih];
+    const hargaBaru = p.harga * (1 + ubah / 100);
+    const jumlahBaru = p.jumlah * Math.pow(1 + ubah / 100, -e);
+    const pendLama = p.harga * p.jumlah, pendBaru = hargaBaru * jumlahBaru;
+    const dPend = (pendBaru / pendLama - 1) * 100;
+    const maks = Math.max(pendLama, pendBaru);
+    const jenis = e < 0.95 ? "inelastis" : e > 1.05 ? "elastis" : "uniter (elastisitas ≈ 1)";
+    let catatan;
+    if (ubah === 0) catatan = "Geser perubahan harga untuk melihat reaksi pembeli.";
+    else if (jenis === "inelastis") catatan = "Pembeli <b>sulit menghindar</b> — mereka tetap butuh, dan pilihan penggantinya sedikit. Jumlah terjual hanya berubah " + Math.abs((jumlahBaru / p.jumlah - 1) * 100).toFixed(1).replace(".", ",") + "%, sehingga pendapatan bergerak <b>searah dengan harga</b>. Inilah wujud nyata <i>pricing power</i>.";
+    else if (jenis === "elastis") catatan = "Pembeli <b>sangat peka harga</b> — banyak pilihan pengganti dan barangnya tidak wajib. Jumlah terjual berubah jauh lebih besar dari perubahan harga, sehingga pendapatan bergerak <b>berlawanan dengan harga</b>. Menaikkan harga justru merugikan.";
+    else catatan = "Perubahan jumlah terjual kira-kira setara dengan perubahan harga, sehingga pendapatan <b>hampir tidak berubah</b>.";
+    out.innerHTML =
+      '<div class="dm-line"><span>Jenis permintaan</span><b>' + jenis + "</b></div>" +
+      '<div class="dm-line"><span>Harga</span><b>' + rp(p.harga) + " → " + rp(hargaBaru) + "</b></div>" +
+      '<div class="dm-line"><span>Jumlah terjual per hari</span><b>' + rb(p.jumlah) + " → " + rb(jumlahBaru) + " " + p.satuan + "</b></div>" +
+      '<div class="dm-bar"><span>Sebelum</span><div class="dm-track"><div class="dm-fill" style="width:' + ((pendLama / maks) * 100).toFixed(1) + '%"></div></div><b>' + rb(pendLama / 1e6) + " jt</b></div>" +
+      '<div class="dm-bar"><span>Sesudah</span><div class="dm-track"><div class="dm-fill ' + (dPend >= 0 ? "ok" : "bad") + '" style="width:' + ((pendBaru / maks) * 100).toFixed(1) + '%"></div></div><b>' + rb(pendBaru / 1e6) + " jt</b></div>" +
+      '<div class="dm-line big ' + (dPend >= 0 ? "good" : "bad") + '"><span>Pendapatan per hari</span><b>' + (dPend >= 0 ? "+" : "") + dPend.toFixed(1).replace(".", ",") + "%</b></div>" +
+      '<div class="dm-note">' + catatan + "<br><br><i>Angka elastisitas tiap produk adalah ilustrasi untuk memahami konsep.</i></div>";
+  }
+  const tombolProduk = Object.keys(PRODUK).map((k) => {
+    const t = h("button", { class: "btn ghost", type: "button", text: PRODUK[k].nama });
+    t.onclick = () => { pilih = k; e = PRODUK[k].e; slE.value = String(e); lbE.textContent = rb(e); draw(); };
+    return t;
+  });
+  slE.oninput = () => { e = parseFloat(slE.value); lbE.textContent = rb(e); draw(); };
+  slU.oninput = () => { ubah = parseInt(slU.value, 10); lbU.textContent = (ubah > 0 ? "+" : "") + ubah + "%"; draw(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🧮 <b>Demo: naikkan harga — pendapatan naik atau turun?</b>" }),
+    h("p", { class: "demo-hint", text: "Pilih produk, lalu ubah harganya. Elastisitas menunjukkan seberapa besar jumlah terjual bereaksi terhadap perubahan harga." }),
+    h("div", { class: "demo-controls" }, tombolProduk),
+    h("label", { class: "dm-row" }, [h("span", { text: "Perubahan harga: " }), slU, lbU]),
+    h("label", { class: "dm-row" }, [h("span", { text: "Elastisitas: " }), slE, lbE]),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: keranjang IHK & andil inflasi ---------- */
+DEMOS["keranjang-ihk"] = function (root) {
+  const KEL = [
+    { nama: "Makanan & minuman", bobot: 33, awal: 6 },
+    { nama: "Perumahan, air, listrik", bobot: 20, awal: 3 },
+    { nama: "Transportasi", bobot: 12, awal: 2 },
+    { nama: "Pendidikan", bobot: 6, awal: 4 },
+    { nama: "Kesehatan", bobot: 4, awal: 3 },
+    { nama: "Lainnya", bobot: 25, awal: 2 },
+  ];
+  const ubah = KEL.map((k) => k.awal);
+  const IHK_LALU = 110;
+  const out = h("div", { class: "dm-out" });
+  const slider = KEL.map((k, i) => {
+    const inp = h("input", { type: "range", min: "-10", max: "30", step: "1", value: String(k.awal), class: "dm-range" });
+    const b = h("b", { text: (k.awal > 0 ? "+" : "") + k.awal + "%" });
+    inp.oninput = () => { ubah[i] = parseInt(inp.value, 10); b.textContent = (ubah[i] > 0 ? "+" : "") + ubah[i] + "%"; draw(); };
+    return { el: h("label", { class: "dm-row" }, [h("span", { text: k.nama + " (bobot " + k.bobot + "%)" }), inp, b]), inp: inp, b: b };
+  });
+
+  function draw() {
+    const andil = KEL.map((k, i) => (k.bobot / 100) * ubah[i]);
+    const inflasi = andil.reduce((x, y) => x + y, 0);
+    const maks = Math.max(0.01, ...andil.map(Math.abs));
+    const urut = KEL.map((k, i) => ({ nama: k.nama, andil: andil[i] })).sort((x, y) => Math.abs(y.andil) - Math.abs(x.andil));
+    let catatan;
+    if (inflasi > 0.05) catatan = "Inflasi " + inflasi.toFixed(2).replace(".", ",") + "% artinya <b>harga keranjang rata-rata naik</b> sebesar itu dibanding tahun lalu. Perhatikan: kelompok berbobot besar seperti makanan memberi andil jauh lebih besar walau kenaikan harganya sama dengan kelompok lain.";
+    else if (inflasi < -0.05) catatan = "Angka negatif berarti <b>deflasi</b>: harga keranjang rata-rata turun.";
+    else catatan = "Harga keranjang hampir tidak berubah.";
+    out.innerHTML =
+      '<div class="dm-line"><span>IHK tahun lalu → tahun ini</span><b>' + IHK_LALU + " → " + (IHK_LALU * (1 + inflasi / 100)).toFixed(2).replace(".", ",") + "</b></div>" +
+      '<div class="dm-line big ' + (inflasi > 4 ? "bad" : "good") + '"><span>Inflasi tahunan</span><b>' + inflasi.toFixed(2).replace(".", ",") + "%</b></div>" +
+      '<div class="krip-judul" style="margin-top:10px">ANDIL TIAP KELOMPOK (poin persen)</div>' +
+      urut.map((u) => '<div class="dm-bar"><span>' + u.nama + '</span><div class="dm-track"><div class="dm-fill ' + (u.andil < 0 ? "ok" : "") + '" style="width:' + Math.max(1, (Math.abs(u.andil) / maks) * 100).toFixed(1) + '%"></div></div><b>' + (u.andil >= 0 ? "+" : "") + u.andil.toFixed(2).replace(".", ",") + "</b></div>").join("") +
+      '<div class="dm-note">' + catatan + "<br><br><i>Bobot di demo ini adalah ilustrasi. BPS menentukan bobot sungguhan dari Survei Biaya Hidup — seberapa besar bagian pengeluaran rumah tangga untuk tiap kelompok.</i></div>";
+  }
+  const skenario = (teks, nilai) => {
+    const t = h("button", { class: "btn ghost", type: "button", text: teks });
+    t.onclick = () => { nilai.forEach((v, i) => { ubah[i] = v; slider[i].inp.value = v; slider[i].b.textContent = (v > 0 ? "+" : "") + v + "%"; }); draw(); };
+    return t;
+  };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🧺 <b>Demo: menghitung inflasi dari sekeranjang belanja</b>" }),
+    h("p", { class: "demo-hint", text: "Atur kenaikan harga tiap kelompok dibanding tahun lalu. Inflasi adalah rata-rata kenaikan itu, ditimbang menurut besarnya bagian pengeluaran." }),
+    h("div", { class: "demo-controls" }, [
+      skenario("🌶️ Harga pangan melonjak", [18, 3, 2, 4, 3, 2]),
+      skenario("⛽ Harga BBM dinaikkan", [6, 3, 20, 4, 3, 2]),
+      skenario("😌 Tahun yang tenang", [2, 2, 1, 3, 2, 1]),
+      skenario("↺ Awal", KEL.map((k) => k.awal)),
+    ]),
+    h("div", { class: "pc-form" }, slider.map((x) => x.el)),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: imbal hasil vs inflasi (nilai nominal vs daya beli) ---------- */
+DEMOS["inflasi-riil"] = function (root) {
+  const AWAL = 10;
+  const s = { r: 4.5, i: 3, pajak: true, n: 10 };
+  const kanvas = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+  const kontrol = {};
+  const rentang = (label, kunci, attrs, format) => {
+    const inp = h("input", Object.assign({ type: "range", class: "dm-range" }, attrs));
+    const b = h("b", { text: format(s[kunci]) });
+    inp.value = String(s[kunci]);
+    inp.oninput = () => { s[kunci] = parseFloat(inp.value); b.textContent = format(s[kunci]); draw(); };
+    kontrol[kunci] = { inp: inp, b: b, format: format };
+    return h("label", { class: "dm-row" }, [h("span", { text: label }), inp, b]);
+  };
+  const persen = (v) => rb(v) + "%";
+  const cek = h("input", { type: "checkbox" });
+  cek.checked = s.pajak;
+  cek.onchange = () => { s.pajak = cek.checked; draw(); };
+
+  function draw() {
+    const bersih = (s.r / 100) * (s.pajak ? 0.8 : 1);
+    const inf = s.i / 100;
+    const nominal = [], riil = [];
+    for (let t = 0; t <= s.n; t++) {
+      nominal.push(AWAL * Math.pow(1 + bersih, t));
+      riil.push(nominal[t] / Math.pow(1 + inf, t));
+    }
+    const riilTahunan = ((1 + bersih) / (1 + inf) - 1) * 100;
+    const yMaks = Math.max(AWAL * 1.2, ...nominal) * 1.05;
+    const yMin = Math.min(AWAL * 0.5, ...riil) * 0.95;
+    const gx = (t) => 52 + (t / s.n) * 450;
+    const gy = (v) => 220 - ((v - yMin) / (yMaks - yMin)) * 200;
+    const jalur = (arr) => arr.map((v, t) => (t ? "L" : "M") + gx(t).toFixed(1) + " " + gy(v).toFixed(1)).join(" ");
+    let g = '<svg viewBox="0 0 520 256" class="viz-svg" role="img" aria-label="Nilai nominal dan daya beli uang">';
+    g += '<line x1="52" y1="220" x2="506" y2="220" class="vaxis"/><line x1="52" y1="16" x2="52" y2="220" class="vaxis"/>';
+    g += '<line x1="52" y1="' + gy(AWAL).toFixed(1) + '" x2="506" y2="' + gy(AWAL).toFixed(1) + '" class="vline dim"/>';
+    g += '<text x="56" y="' + (gy(AWAL) - 5).toFixed(1) + '" class="vt-xs">daya beli awal Rp10 jt</text>';
+    g += '<path d="' + jalur(nominal) + '" class="vline aktif"/>';
+    g += '<path d="' + jalur(riil) + '" class="garis-riil"/>';
+    g += '<text x="502" y="' + (gy(nominal[s.n]) - 6).toFixed(1) + '" text-anchor="end" class="vt-xs">angka di rekening</text>';
+    g += '<text x="502" y="' + (gy(riil[s.n]) + 14).toFixed(1) + '" text-anchor="end" class="vt-xs">daya beli sebenarnya</text>';
+    g += '<text x="279" y="246" text-anchor="middle" class="vt-xs">Tahun ke-0 sampai ke-' + s.n + "</text></svg>";
+    kanvas.innerHTML = g;
+
+    const separuh = inf > 0 ? Math.log(2) / Math.log(1 + inf) : Infinity;
+    out.innerHTML =
+      '<div class="dm-line"><span>Imbal hasil setelah pajak</span><b>' + rb(bersih * 100) + "% per tahun</b></div>" +
+      '<div class="dm-line"><span>Angka di rekening setelah ' + s.n + " tahun</span><b>Rp" + rb(nominal[s.n]) + " jt</b></div>" +
+      '<div class="dm-line big ' + (riil[s.n] >= AWAL ? "good" : "bad") + '"><span>Daya belinya, dalam rupiah hari ini</span><b>Rp' + rb(riil[s.n]) + " jt</b></div>" +
+      '<div class="dm-line ' + (riilTahunan >= 0 ? "good" : "bad") + '"><span>Imbal hasil riil per tahun<br><i class="dm-sub">(1 + hasil bersih) ÷ (1 + inflasi) − 1</i></span><b>' + (riilTahunan >= 0 ? "+" : "") + riilTahunan.toFixed(2).replace(".", ",") + "%</b></div>" +
+      '<div class="dm-line"><span>Uang tunai tanpa bunga kehilangan separuh daya beli dalam</span><b>' + (isFinite(separuh) ? rb(separuh) + " tahun" : "—") + "</b></div>" +
+      '<div class="dm-note">' + (riilTahunan < 0
+        ? "Angka di rekening bertambah, tapi <b>yang bisa dibeli justru berkurang</b>. Imbal hasil yang kalah dari inflasi adalah kerugian yang tidak terlihat di buku tabungan."
+        : "Daya beli bertambah karena imbal hasil bersih mengalahkan inflasi. Perhatikan betapa kecilnya selisih itu dibanding angka nominalnya — dan betapa besar pengaruh pajak.") +
+        "<br><br><i>Angka ilustrasi untuk memahami konsep, bukan saran investasi. Imbal hasil aset berisiko tidak pasti dan bisa negatif.</i></div>";
+  }
+  const preset = (teks, r, pajak) => {
+    const t = h("button", { class: "btn ghost", type: "button", text: teks });
+    t.onclick = () => { s.r = r; s.pajak = pajak; cek.checked = pajak; kontrol.r.inp.value = String(r); kontrol.r.b.textContent = kontrol.r.format(r); draw(); };
+    return t;
+  };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "📉 <b>Demo: angka di rekening vs daya beli sebenarnya</b>" }),
+    h("p", { class: "demo-hint", text: "Rp10 juta disimpan selama beberapa tahun. Garis biru = angka yang tertulis. Garis merah = berapa banyak barang yang sebenarnya bisa dibeli dengan uang itu." }),
+    h("div", { class: "demo-controls" }, [preset("💵 Uang tunai di rumah", 0, false), preset("🏦 Deposito 4,5% (kena pajak)", 4.5, true), preset("📈 Aset tumbuh 9% per tahun", 9, false)]),
+    kanvas,
+    rentang("Imbal hasil nominal: ", "r", { min: "0", max: "15", step: "0.5" }, persen),
+    rentang("Inflasi per tahun: ", "i", { min: "0", max: "15", step: "0.5" }, persen),
+    rentang("Lama menyimpan: ", "n", { min: "1", max: "30", step: "1" }, (v) => v + " tahun"),
+    h("label", { class: "dm-row" }, [cek, h("span", { text: " Potong pajak bunga 20%" })]),
+    out,
+  ]));
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

@@ -198,6 +198,7 @@ a:hover { text-decoration: underline; }
 .lvl-arah { background: #dbeafe; color: #1e40af; }
 .lvl-algoritma { background: #ffedd5; color: #9a3412; }
 .lvl-ensemble { background: #ccfbf1; color: #115e59; }
+.lvl-mikro { background: #fef9c3; color: #854d0e; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .lvl-pemula { background: #14331f; color: #4ade80; }
   :root:not([data-theme="light"]) .lvl-menengah { background: #3a2c0c; color: #fbbf24; }
@@ -224,6 +225,7 @@ a:hover { text-decoration: underline; }
   :root:not([data-theme="light"]) .lvl-arah { background: #10203d; color: #93c5fd; }
   :root:not([data-theme="light"]) .lvl-algoritma { background: #33190a; color: #fdba74; }
   :root:not([data-theme="light"]) .lvl-ensemble { background: #0d2b28; color: #5eead4; }
+  :root:not([data-theme="light"]) .lvl-mikro { background: #2e2a0c; color: #fde047; }
 }
 
 .lesson-list { list-style: none; margin: 0; padding: 0; }
@@ -694,6 +696,7 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
 :root[data-theme="dark"] .lvl-arah { background: #10203d; color: #93c5fd; }
 :root[data-theme="dark"] .lvl-algoritma { background: #33190a; color: #fdba74; }
 :root[data-theme="dark"] .lvl-ensemble { background: #0d2b28; color: #5eead4; }
+:root[data-theme="dark"] .lvl-mikro { background: #2e2a0c; color: #fde047; }
 
 /* ============================================================
    LAPISAN TAMPILAN — aurora, cincin progres, bilah baca,
@@ -962,3 +965,15 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
 .krip-langkah span { width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: .78rem; font-weight: 700; background: var(--surface-2); border: 1px solid var(--border); }
 .krip-langkah span.lewat { background: color-mix(in srgb, var(--ok) 22%, var(--surface-2)); }
 .krip-langkah span.aktif { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+/* ---------- Grafik permintaan-penawaran & inflasi ---------- */
+.garis-permintaan { stroke: var(--primary); stroke-width: 3; fill: none; }
+.garis-penawaran { stroke: #f97316; stroke-width: 3; fill: none; }
+.garis-permintaan.pudar, .garis-penawaran.pudar { stroke-width: 2; stroke-dasharray: 6 5; opacity: .45; }
+.teks-permintaan { fill: var(--primary); font-weight: 700; }
+.teks-penawaran { fill: #f97316; font-weight: 700; }
+.titik-permintaan { fill: var(--primary); stroke: var(--surface); stroke-width: 1.5; }
+.titik-penawaran { fill: #f97316; stroke: var(--surface); stroke-width: 1.5; }
+.titik-pudar { fill: var(--muted); opacity: .5; }
+.garis-selisih { stroke: var(--bad); stroke-width: 6; stroke-linecap: round; opacity: .55; }
+.garis-riil { stroke: var(--bad); stroke-width: 3; fill: none; }
