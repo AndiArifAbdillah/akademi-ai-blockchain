@@ -14,7 +14,7 @@ const COURSES = [AI_COURSE, BLOCKCHAIN_COURSE, ACCOUNTING_COURSE];
 const MODULE_ORDER = [
   // 🤖 AI
   "ai-dasar", "ai-pemula", "ai-menengah", "ai-fundamental", "ai-matematika",
-  "ai-tools", "ai-pendalaman", "ai-algoritma", "ai-ensemble", "ai-arsitektur",
+  "ai-tools", "ai-pendalaman", "ai-algoritma", "ai-ensemble", "ai-arsitektur", "ai-rl",
   "ai-mahir", "ai-lanjutan", "ai-proyek", "ai-terapan", "ai-ekonomi", "ai-arah",
   // ⛓️ Blockchain
   "bc-dasar", "bc-pemula", "bc-fundamental", "bc-pendalaman", "bc-matematika",
@@ -1324,6 +1324,18 @@ const GLOSSARY = [
   ["Hiperinflasi", "Inflasi ekstrem, sering didefinisikan sebagai kenaikan harga lebih dari 50% per bulan."],
   ["Imbal Hasil Riil", "Imbal hasil setelah memperhitungkan inflasi: (1 + hasil bersih) ÷ (1 + inflasi) − 1."],
   ["Sanering", "Pemotongan nilai uang oleh negara, misalnya uang Rp1.000 lama ditetapkan setara Rp1 baru pada 1965."],
+  ["Reward", "Angka hadiah atau hukuman yang diterima agen reinforcement learning setelah bertindak."],
+  ["Reward Hacking", "Saat agen menemukan cara mendapat reward tinggi tanpa melakukan hal yang sebenarnya diinginkan perancangnya."],
+  ["Multi-Armed Bandit", "Masalah memilih berulang di antara beberapa pilihan yang nilainya belum diketahui, sambil menyeimbangkan eksplorasi dan eksploitasi."],
+  ["ε-greedy", "Aturan memilih: dengan peluang ε mencoba aksi acak (eksplorasi), selebihnya memilih aksi yang perkiraannya terbaik."],
+  ["Faktor Diskon", "Angka γ antara 0 dan 1 yang mengecilkan bobot reward masa depan dalam reinforcement learning."],
+  ["Q-Learning", "Algoritma RL yang memperbarui tabel nilai aksi: Q baru = Q lama + α × (reward + γ × Q terbaik berikutnya − Q lama)."],
+  ["Nilai Q", "Perkiraan seberapa bagus sebuah aksi dari keadaan tertentu, termasuk semua reward masa depan yang didiskon."],
+  ["SARSA", "Varian Q-learning yang ikut memperhitungkan langkah acak agen sendiri, sehingga cenderung memilih jalan lebih aman."],
+  ["DQN", "Deep Q-Network: neural network yang menggantikan tabel Q; terkenal karena belajar puluhan game Atari dari piksel layar."],
+  ["PPO", "Proximal Policy Optimization: algoritma RL berbasis kebijakan yang banyak dipakai, termasuk dalam RLHF."],
+  ["Self-Play", "Cara berlatih dengan melawan salinan diri sendiri, seperti yang dipakai AlphaZero."],
+  ["Model Penilai", "Model yang dilatih dari peringkat buatan manusia untuk memberi skor jawaban; menjadi sumber reward dalam RLHF."],
 ];
 
 function renderGlossary() {

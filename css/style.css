@@ -198,6 +198,7 @@ a:hover { text-decoration: underline; }
 .lvl-arah { background: #dbeafe; color: #1e40af; }
 .lvl-algoritma { background: #ffedd5; color: #9a3412; }
 .lvl-ensemble { background: #ccfbf1; color: #115e59; }
+.lvl-reinforcement { background: #ffe4e6; color: #9f1239; }
 .lvl-mikro { background: #fef9c3; color: #854d0e; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .lvl-pemula { background: #14331f; color: #4ade80; }
@@ -225,6 +226,7 @@ a:hover { text-decoration: underline; }
   :root:not([data-theme="light"]) .lvl-arah { background: #10203d; color: #93c5fd; }
   :root:not([data-theme="light"]) .lvl-algoritma { background: #33190a; color: #fdba74; }
   :root:not([data-theme="light"]) .lvl-ensemble { background: #0d2b28; color: #5eead4; }
+  :root:not([data-theme="light"]) .lvl-reinforcement { background: #3b0d18; color: #fda4af; }
   :root:not([data-theme="light"]) .lvl-mikro { background: #2e2a0c; color: #fde047; }
 }
 
@@ -696,6 +698,7 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
 :root[data-theme="dark"] .lvl-arah { background: #10203d; color: #93c5fd; }
 :root[data-theme="dark"] .lvl-algoritma { background: #33190a; color: #fdba74; }
 :root[data-theme="dark"] .lvl-ensemble { background: #0d2b28; color: #5eead4; }
+:root[data-theme="dark"] .lvl-reinforcement { background: #3b0d18; color: #fda4af; }
 :root[data-theme="dark"] .lvl-mikro { background: #2e2a0c; color: #fde047; }
 
 /* ============================================================
@@ -977,3 +980,8 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
 .titik-pudar { fill: var(--muted); opacity: .5; }
 .garis-selisih { stroke: var(--bad); stroke-width: 6; stroke-linecap: round; opacity: .55; }
 .garis-riil { stroke: var(--bad); stroke-width: 3; fill: none; }
+
+/* ---------- Demo reinforcement learning ---------- */
+.rl-sel { fill: var(--surface); stroke: var(--border); stroke-width: 1; }
+.rl-dinding { fill: var(--muted); opacity: .55; }
+.rl-jejak { fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }

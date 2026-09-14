@@ -3590,6 +3590,286 @@ DEMOS["inflasi-riil"] = function (root) {
   draw();
 };
 
+
+/* Pengacak berbenih untuk demo reinforcement learning */
+function rlPengacak(benih) {
+  let a = benih >>> 0;
+  return function () {
+    a |= 0; a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const rlKoma = (v, d) => v.toFixed(d).replace(".", ",");
+
+/* ---------- Demo: eksplorasi vs eksploitasi (empat warung) ---------- */
+DEMOS["rl-bandit"] = function (root) {
+  const NAMA = ["Warung A", "Warung B", "Warung C", "Warung D"];
+  const RATA = [5, 7.5, 4, 6.5];
+  const HARI_MANUAL = 30;
+  const normal = (rnd) => { const u = 1 - rnd(), v = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+  const rasa = (a, rnd) => Math.max(1, Math.min(10, RATA[a] + 2 * normal(rnd)));
+
+  // --- bagian 1: kamu yang memilih ---
+  let rndManual = rlPengacak(Date.now() % 100000);
+  let hari = 0, kunjung = [0, 0, 0, 0], jumlah = [0, 0, 0, 0], total = 0, terakhir = null;
+  const papan = h("div", { class: "dm-out" });
+  const tombolWarung = NAMA.map((n, i) => {
+    const t = h("button", { class: "btn", type: "button", text: "🍜 " + n });
+    t.onclick = () => {
+      if (hari >= HARI_MANUAL) return;
+      const r = rasa(i, rndManual);
+      hari++; kunjung[i]++; jumlah[i] += r; total += r; terakhir = { i: i, r: r };
+      gambarManual();
+    };
+    return t;
+  });
+  const ulangManual = h("button", { class: "btn ghost", type: "button", text: "↺ Mulai lagi" });
+  ulangManual.onclick = () => { rndManual = rlPengacak(Date.now() % 100000); hari = 0; kunjung = [0, 0, 0, 0]; jumlah = [0, 0, 0, 0]; total = 0; terakhir = null; gambarManual(); };
+
+  function gambarManual() {
+    const selesai = hari >= HARI_MANUAL;
+    tombolWarung.forEach((t) => { t.disabled = selesai; });
+    let html = '<div class="dm-line"><span>Hari</span><b>' + hari + " dari " + HARI_MANUAL + "</b></div>";
+    if (terakhir) html += '<div class="dm-line"><span>Makan di ' + NAMA[terakhir.i] + " hari ini</span><b>skor rasa " + rlKoma(terakhir.r, 1) + "</b></div>";
+    html += NAMA.map((n, i) => '<div class="dm-line"><span>' + n + '<br><i class="dm-sub">' + kunjung[i] + " kali dikunjungi" + (selesai ? " · rata-rata sebenarnya " + rlKoma(RATA[i], 1) : "") + "</i></span><b>" + (kunjung[i] ? "perkiraanmu " + rlKoma(jumlah[i] / kunjung[i], 1) : "belum dicoba") + "</b></div>").join("");
+    if (selesai) {
+      const maks = 7.5 * HARI_MANUAL;
+      html += '<div class="dm-line big ' + (total / maks > 0.9 ? "good" : "bad") + '"><span>Total kepuasanmu</span><b>' + rlKoma(total, 0) + " dari sekitar " + maks + " (bila tahu jawabannya sejak awal)</b></div>" +
+        '<div class="dm-note">Warung terbaik adalah <b>Warung B</b>. Perhatikan: satu kali makan bisa menipu — rasanya naik-turun setiap hari. Apakah kamu terlalu cepat berhenti mencoba, atau terlalu lama berkeliling?</div>';
+    } else {
+      html += '<div class="dm-note">Setiap warung punya rata-rata rasa yang dirahasiakan, dan rasanya naik-turun setiap hari. Kamu punya ' + HARI_MANUAL + " kali makan siang. Tujuanmu: total kepuasan sebesar mungkin.</div>";
+    }
+    papan.innerHTML = html;
+  }
+
+  // --- bagian 2: agen dengan epsilon ---
+  function simulasi(eps, tahun, benih) {
+    const rnd = rlPengacak(benih);
+    let skor = 0, terbaik = 0;
+    for (let s = 0; s < tahun; s++) {
+      const n = [0, 0, 0, 0], est = [0, 0, 0, 0];
+      for (let t = 0; t < 365; t++) {
+        let a;
+        if (rnd() < eps) a = Math.floor(rnd() * 4);
+        else { a = 0; for (let i = 1; i < 4; i++) if (est[i] > est[a]) a = i; }
+        const r = rasa(a, rnd);
+        n[a]++; est[a] += (r - est[a]) / n[a];
+        skor += r; if (a === 1) terbaik++;
+      }
+    }
+    return { skor: skor / (tahun * 365), terbaik: terbaik / (tahun * 365) };
+  }
+  const TITIK = [0, 0.02, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.75, 0.9, 1];
+  const kurva = TITIK.map((e) => simulasi(e, 120, 11));
+  let eps = 0;
+  const kanvas = h("div", { class: "dm-viz" });
+  const hasil = h("div", { class: "dm-out" });
+  const sl = h("input", { type: "range", min: "0", max: "1", step: "0.05", value: "0", class: "dm-range" });
+  const lb = h("b", { text: "0%" });
+
+  function gambarAgen() {
+    const r = simulasi(eps, 200, 23);
+    const gx = (e) => 52 + e * 450;
+    const gy = (v) => 200 - ((v - 4.5) / 3) * 180;
+    let g = '<svg viewBox="0 0 520 236" class="viz-svg" role="img" aria-label="Skor rata-rata terhadap tingkat eksplorasi">';
+    g += '<line x1="52" y1="200" x2="506" y2="200" class="vaxis"/><line x1="52" y1="14" x2="52" y2="200" class="vaxis"/>';
+    [5, 6, 7].forEach((v) => { g += '<text x="46" y="' + (gy(v) + 4).toFixed(1) + '" text-anchor="end" class="vt-xs">' + v + "</text>"; });
+    [0, 0.25, 0.5, 0.75, 1].forEach((e) => { g += '<text x="' + gx(e).toFixed(1) + '" y="216" text-anchor="middle" class="vt-xs">' + Math.round(e * 100) + "%</text>"; });
+    g += '<line x1="52" y1="' + gy(7.5).toFixed(1) + '" x2="506" y2="' + gy(7.5).toFixed(1) + '" class="garis-terbaik"/>';
+    g += '<text x="502" y="' + (gy(7.5) - 5).toFixed(1) + '" text-anchor="end" class="vt-xs">skor bila langsung tahu warung terbaik</text>';
+    g += '<path d="' + TITIK.map((e, i) => (i ? "L" : "M") + gx(e).toFixed(1) + " " + gy(kurva[i].skor).toFixed(1)).join(" ") + '" class="vline aktif"/>';
+    g += '<circle cx="' + gx(eps).toFixed(1) + '" cy="' + gy(r.skor).toFixed(1) + '" r="7" class="titik-lancar"/>';
+    g += '<text x="279" y="232" text-anchor="middle" class="vt-xs">Porsi hari untuk mencoba warung acak (ε)</text></svg>';
+    kanvas.innerHTML = g;
+
+    let catatan;
+    if (eps === 0) catatan = "<b>Tanpa eksplorasi, agen terjebak.</b> Semua perkiraan awalnya nol, jadi agen mencoba Warung A, mendapat skor lumayan, dan tidak pernah lagi mencoba warung lain — padahal Warung B jauh lebih enak. Skor \"lumayan pertama\" menjadi penjara.";
+    else if (eps <= 0.2) catatan = "<b>Sedikit eksplorasi sudah cukup.</b> Sesekali mencoba warung acak membuat perkiraan semua warung makin akurat, sehingga agen menemukan Warung B dan menghabiskan sebagian besar harinya di sana.";
+    else catatan = "<b>Terlalu banyak eksplorasi juga merugi.</b> Agen sudah tahu Warung B yang terbaik, tapi masih menghabiskan banyak hari di warung acak yang kurang enak. Hasilnya turun lagi.";
+    hasil.innerHTML =
+      '<div class="dm-line"><span>Skor rasa rata-rata per hari</span><b>' + rlKoma(r.skor, 2) + "</b></div>" +
+      '<div class="dm-line"><span>Hari yang dihabiskan di warung terbaik</span><b>' + Math.round(r.terbaik * 100) + "%</b></div>" +
+      '<div class="dm-note">' + catatan + "<br><br><i>Setiap titik adalah rata-rata dari ratusan simulasi setahun penuh, supaya tidak bergantung pada keberuntungan.</i></div>";
+  }
+  sl.oninput = () => { eps = parseFloat(sl.value); lb.textContent = Math.round(eps * 100) + "%"; gambarAgen(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🍜 <b>Demo: dilema warung makan — mencoba yang baru atau setia pada yang dikenal?</b>" }),
+    h("p", { class: "demo-hint", text: "Bagian 1: kamu yang memilih. Bagian 2: lihat bagaimana sebuah agen RL memilih, dengan porsi eksplorasi yang bisa kamu atur." }),
+    h("div", { class: "krip-judul", text: "1. KAMU YANG MEMILIH" }),
+    h("div", { class: "demo-controls" }, tombolWarung.concat([ulangManual])),
+    papan,
+    h("div", { class: "krip-judul", style: "margin-top:16px", text: "2. AGEN DENGAN ATURAN ε-GREEDY" }),
+    h("p", { class: "demo-hint", text: "Setiap hari: dengan peluang ε, agen mencoba warung acak (eksplorasi). Selebihnya ia pergi ke warung dengan perkiraan terbaik (eksploitasi)." }),
+    kanvas,
+    h("label", { class: "dm-row" }, [h("span", { text: "Eksplorasi (ε): " }), sl, lb]),
+    hasil,
+  ]));
+  gambarManual();
+  gambarAgen();
+};
+
+/* ---------- Demo: Q-learning — robot mencari jalan di tepi jurang ---------- */
+DEMOS["rl-grid"] = function (root) {
+  const PETA = [
+    ".......",
+    ".#.#.#.",
+    ".......",
+    "SXXXXXG",
+  ];
+  const W = 7, HT = 4, UK = 70, X0 = 15, Y0 = 8;
+  const AKSI = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+  const PANAH = ["↑", "→", "↓", "←"];
+  const MULAI = { x: 0, y: 3 };
+  const ALPHA = 0.5, GAMMA = 0.9;
+  const s = { eps: 0.2, benih: 7 };
+  let Q, rnd, riwayat, episode, robot, jejak, pemutar = null, catatanUji = "";
+
+  const sel = (x, y) => PETA[y][x];
+  function langkah(x, y, a) {
+    let nx = x + AKSI[a][0], ny = y + AKSI[a][1];
+    if (nx < 0 || ny < 0 || nx >= W || ny >= HT || sel(nx, ny) === "#") { nx = x; ny = y; }
+    const c = sel(nx, ny);
+    if (c === "X") return { x: nx, y: ny, r: -10, selesai: true, jatuh: true };
+    if (c === "G") return { x: nx, y: ny, r: 10, selesai: true, jatuh: false };
+    return { x: nx, y: ny, r: -1, selesai: false, jatuh: false };
+  }
+  function pilih(x, y, eksplorasi) {
+    if (eksplorasi && rnd() < s.eps) return Math.floor(rnd() * 4);
+    const q = Q[y * W + x], m = Math.max(...q);
+    const calon = [0, 1, 2, 3].filter((i) => q[i] === m);
+    return calon[Math.floor(rnd() * calon.length)];
+  }
+  function perbarui(x, y, a, h2) {
+    const q = Q[y * W + x];
+    const target = h2.r + (h2.selesai ? 0 : GAMMA * Math.max(...Q[h2.y * W + h2.x]));
+    q[a] += ALPHA * (target - q[a]);
+  }
+  function ulang() {
+    Q = Array.from({ length: W * HT }, () => [0, 0, 0, 0]);
+    rnd = rlPengacak(s.benih);
+    riwayat = []; episode = 0; robot = null; jejak = []; catatanUji = "";
+  }
+  function satuEpisodeCepat() {
+    let x = MULAI.x, y = MULAI.y, total = 0, n = 0, jatuh = false, sampai = false;
+    for (; n < 100; n++) {
+      const a = pilih(x, y, true);
+      const h2 = langkah(x, y, a);
+      perbarui(x, y, a, h2);
+      total += h2.r; x = h2.x; y = h2.y;
+      if (h2.selesai) { jatuh = h2.jatuh; sampai = !h2.jatuh; n++; break; }
+    }
+    episode++;
+    riwayat.push({ total: total, n: n, jatuh: jatuh, sampai: sampai });
+  }
+
+  const kanvas = h("div", { class: "dm-viz" });
+  const grafik = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+
+  function draw() {
+    let g = '<svg viewBox="0 0 520 300" class="viz-svg" role="img" aria-label="Dunia kotak robot dan nilai Q">';
+    for (let y = 0; y < HT; y++) {
+      for (let x = 0; x < W; x++) {
+        const px = X0 + x * UK, py = Y0 + y * UK, c = sel(x, y);
+        g += '<rect x="' + px + '" y="' + py + '" width="' + UK + '" height="' + UK + '" class="rl-sel"/>';
+        if (c === "#") { g += '<rect x="' + (px + 3) + '" y="' + (py + 3) + '" width="' + (UK - 6) + '" height="' + (UK - 6) + '" rx="6" class="rl-dinding"/>'; continue; }
+        if (c === "X") { g += '<rect x="' + (px + 3) + '" y="' + (py + 3) + '" width="' + (UK - 6) + '" height="' + (UK - 6) + '" rx="6" class="sel-satu" fill-opacity="0.35"/><text x="' + (px + UK / 2) + '" y="' + (py + UK / 2 + 9) + '" text-anchor="middle" style="font-size:24px">🕳️</text>'; continue; }
+        if (c === "G") { g += '<rect x="' + (px + 3) + '" y="' + (py + 3) + '" width="' + (UK - 6) + '" height="' + (UK - 6) + '" rx="6" class="sel-nol" fill-opacity="0.45"/><text x="' + (px + UK / 2) + '" y="' + (py + UK / 2 + 9) + '" text-anchor="middle" style="font-size:24px">🏁</text>'; continue; }
+        const q = Q[y * W + x], v = Math.max(...q), dikenal = q.some((n) => n !== 0);
+        if (dikenal) {
+          const kuat = Math.min(1, Math.abs(v) / 10) * 0.55 + 0.05;
+          g += '<rect x="' + (px + 3) + '" y="' + (py + 3) + '" width="' + (UK - 6) + '" height="' + (UK - 6) + '" rx="6" class="' + (v >= 0 ? "sel-nol" : "sel-satu") + '" fill-opacity="' + kuat.toFixed(2) + '"/>';
+          g += '<text x="' + (px + UK / 2) + '" y="' + (py + UK / 2 + 4) + '" text-anchor="middle" class="vt-bold" style="font-size:22px">' + PANAH[q.indexOf(v)] + "</text>";
+          g += '<text x="' + (px + UK - 6) + '" y="' + (py + UK - 7) + '" text-anchor="end" class="vt-xs" style="font-size:10px">' + rlKoma(v, 1) + "</text>";
+        }
+        if (c === "S") g += '<text x="' + (px + 6) + '" y="' + (py + 15) + '" class="vt-xs" style="font-size:10px">MULAI</text>';
+      }
+    }
+    if (jejak.length > 1) g += '<polyline points="' + jejak.map((p) => (X0 + p.x * UK + UK / 2) + "," + (Y0 + p.y * UK + UK / 2)).join(" ") + '" class="rl-jejak"/>';
+    if (robot) g += '<text x="' + (X0 + robot.x * UK + UK / 2) + '" y="' + (Y0 + robot.y * UK + UK / 2 + 10) + '" text-anchor="middle" style="font-size:28px">🤖</text>';
+    g += '<text x="260" y="296" text-anchor="middle" class="vt-xs">Panah = aksi terbaik · angka = nilai Q · hijau baik, merah buruk</text></svg>';
+    kanvas.innerHTML = g;
+
+    // grafik total reward per episode
+    const data = riwayat.slice(-150);
+    const gx = (i) => 40 + (data.length > 1 ? (i / (data.length - 1)) * 470 : 0);
+    const gy = (v) => 110 - ((Math.max(-40, Math.min(5, v)) + 40) / 45) * 96;
+    let c = '<svg viewBox="0 0 520 132" class="viz-svg" role="img" aria-label="Total reward per episode">';
+    c += '<line x1="40" y1="110" x2="512" y2="110" class="vaxis"/><line x1="40" y1="10" x2="40" y2="110" class="vaxis"/>';
+    c += '<line x1="40" y1="' + gy(3).toFixed(1) + '" x2="512" y2="' + gy(3).toFixed(1) + '" class="garis-terbaik"/><text x="508" y="' + (gy(3) - 4).toFixed(1) + '" text-anchor="end" class="vt-xs">terbaik mungkin: +3</text>';
+    [0, -20, -40].forEach((v) => { c += '<text x="34" y="' + (gy(v) + 4).toFixed(1) + '" text-anchor="end" class="vt-xs">' + v + "</text>"; });
+    data.forEach((r, i) => { c += '<circle cx="' + gx(i).toFixed(1) + '" cy="' + gy(r.total).toFixed(1) + '" r="3" class="' + (r.jatuh ? "titik-pencilan" : "titik-lancar") + '"/>'; });
+    c += '<text x="276" y="128" text-anchor="middle" class="vt-xs">Total reward tiap episode latihan (merah = jatuh ke lubang)</text></svg>';
+    grafik.innerHTML = data.length ? c : "";
+
+    const akhir = riwayat.slice(-10);
+    const qm = Q[MULAI.y * W + MULAI.x];
+    let catatan = catatanUji;
+    if (!catatan) {
+      if (episode === 0) catatan = "Robot belum tahu apa-apa: tabel Q masih berisi nol semua. Ia hanya tahu empat aksi (atas, kanan, bawah, kiri). Setiap langkah bernilai −1, jatuh ke lubang −10, sampai di bendera +10.";
+      else if (episode < 15) catatan = "Awalnya robot berkeliaran dan sering jatuh. Tapi setiap kejadian tercatat: kotak di tepi lubang mulai berwarna merah, dan kotak di dekat bendera mulai hijau.";
+      else catatan = "Perhatikan <b>nilai hijau merambat mundur</b> dari bendera ke titik mulai — setiap kotak belajar dari perkiraan kotak sesudahnya. Robot masih kadang jatuh saat latihan karena ε membuatnya sesekali melangkah acak.";
+    }
+    out.innerHTML =
+      '<div class="dm-line"><span>Episode latihan</span><b>' + episode + "</b></div>" +
+      (riwayat.length ? '<div class="dm-line ' + (riwayat[riwayat.length - 1].sampai ? "good" : "bad") + '"><span>Episode terakhir</span><b>' + (riwayat[riwayat.length - 1].sampai ? "sampai 🏁" : riwayat[riwayat.length - 1].jatuh ? "jatuh 🕳️" : "kehabisan langkah") + " · " + riwayat[riwayat.length - 1].n + " langkah · total " + riwayat[riwayat.length - 1].total + "</b></div>" : "") +
+      (akhir.length ? '<div class="dm-line"><span>Jatuh dalam 10 episode terakhir</span><b>' + akhir.filter((r) => r.jatuh).length + " kali</b></div>" : "") +
+      '<div class="dm-line teks"><span>Isi tabel Q di titik mulai</span><b>↑ ' + rlKoma(qm[0], 1) + " · → " + rlKoma(qm[1], 1) + " · ↓ " + rlKoma(qm[2], 1) + " · ← " + rlKoma(qm[3], 1) + "</b></div>" +
+      '<div class="dm-note">' + catatan + "</div>";
+  }
+
+  function berhenti() { if (pemutar) { clearInterval(pemutar); pemutar = null; } }
+  function animasi(eksplorasi, perbaruiQ, selesai) {
+    berhenti();
+    let x = MULAI.x, y = MULAI.y, total = 0, n = 0;
+    robot = { x: x, y: y }; jejak = [{ x: x, y: y }];
+    draw();
+    pemutar = setInterval(() => {
+      if (!root.isConnected) { berhenti(); return; }
+      const a = pilih(x, y, eksplorasi);
+      const h2 = langkah(x, y, a);
+      if (perbaruiQ) perbarui(x, y, a, h2);
+      total += h2.r; n++; x = h2.x; y = h2.y;
+      robot = { x: x, y: y }; jejak.push({ x: x, y: y });
+      if (h2.selesai || n >= 60) { berhenti(); selesai({ total: total, n: n, jatuh: h2.jatuh, sampai: h2.selesai && !h2.jatuh }); }
+      draw();
+    }, 140);
+  }
+
+  const t1 = h("button", { class: "btn", type: "button", text: "▶ Latih 1 episode (pelan)" });
+  t1.onclick = () => { catatanUji = ""; animasi(true, true, (r) => { episode++; riwayat.push(r); }); };
+  const t50 = h("button", { class: "btn", type: "button", text: "⏩ Latih 50 episode" });
+  t50.onclick = () => { berhenti(); catatanUji = ""; for (let i = 0; i < 50; i++) satuEpisodeCepat(); robot = null; jejak = []; draw(); };
+  const tUji = h("button", { class: "btn ghost", type: "button", text: "🚶 Uji robot (tanpa eksplorasi)" });
+  tUji.onclick = () => {
+    animasi(false, false, (r) => {
+      if (r.sampai && r.total === 3) catatanUji = "<b>Robot menemukan jalan terbaik: 8 langkah, total +3.</b> Perhatikan, jalannya tepat di tepi lubang — itulah jalan terpendek. Tidak ada yang mengajarinya; ia menyimpulkan sendiri dari ribuan langkah coba-coba.<br><br>Tapi lihat grafik: <b>selama latihan, jalan ini membuatnya sering jatuh</b>, karena langkah acak di tepi lubang berakibat fatal. Karena itu robot sungguhan dilatih di simulasi, bukan di gudang yang asli.";
+      else if (r.sampai) catatanUji = "Robot sampai di bendera dengan total " + r.total + ", tapi belum lewat jalan terpendek. Latih lebih banyak episode agar perkiraannya makin akurat.";
+      else catatanUji = "Robot belum bisa sampai tanpa bantuan langkah acak — tabel Q-nya belum cukup terisi. Latih lebih banyak episode, lalu uji lagi.";
+    });
+  };
+  const tUlang = h("button", { class: "btn ghost", type: "button", text: "↺ Ulang dari nol" });
+  tUlang.onclick = () => { berhenti(); s.benih = 1 + Math.floor(Math.random() * 100000); ulang(); draw(); };
+  const sl = h("input", { type: "range", min: "0", max: "0.5", step: "0.05", value: "0.2", class: "dm-range" });
+  const lb = h("b", { text: "20%" });
+  sl.oninput = () => { s.eps = parseFloat(sl.value); lb.textContent = Math.round(s.eps * 100) + "%"; };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🤖 <b>Demo: Q-learning — robot belajar mencapai bendera</b>" }),
+    h("p", { class: "demo-hint", text: "Robot mulai di kiri bawah dan harus mencapai bendera tanpa jatuh ke lubang. Tidak ada yang memberi tahu jalannya — ia hanya menerima angka reward setiap melangkah." }),
+    kanvas,
+    h("div", { class: "demo-controls" }, [t1, t50, tUji, tUlang]),
+    h("label", { class: "dm-row" }, [h("span", { text: "Eksplorasi saat latihan (ε): " }), sl, lb]),
+    grafik,
+    out,
+  ]));
+  ulang();
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

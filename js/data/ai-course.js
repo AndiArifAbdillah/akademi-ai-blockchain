@@ -676,7 +676,7 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
 <b>⚠️ Agen mengejar reward, bukan niatmu.</b> Dalam sebuah percobaan terkenal, agen balap perahu diberi poin untuk menabrak target di lintasan. Ia menemukan cara berputar-putar di satu tempat mengumpulkan poin tanpa pernah menyelesaikan lomba. Reward yang dirancang keliru akan "dicurangi" — masalah ini disebut <i>reward hacking</i>.
 </div>
 
-<p>Contoh penerapan: AI pemain Go dan catur, robot yang belajar berjalan, pengaturan pendingin pusat data, dan — yang paling kamu kenal — <b>chatbot seperti ChatGPT dan Claude</b>, yang diperhalus dengan umpan balik manusia (RLHF, dibahas di modul AI Generatif &amp; LLM).</p>
+<p>Contoh penerapan: AI pemain Go dan catur, robot yang belajar berjalan, pengaturan pendingin pusat data, dan — yang paling kamu kenal — <b>chatbot seperti ChatGPT dan Claude</b>, yang diperhalus dengan umpan balik manusia (RLHF). Cara kerja RL — dari dilema eksplorasi sampai robot yang belajar mencari jalan — dibahas mendalam di modul <b>Reinforcement Learning</b>, lalu RLHF di modul AI Generatif &amp; LLM.</p>
 
 <h3>Ringkasan: tiga gaya, tiga pertanyaan</h3>
 <table class="tbl">
@@ -4805,7 +4805,415 @@ Kesimpulan model: "dia" merujuk pada "Kucing".</pre>
         },
       ],
     },
-    /* ---------------- MODUL 11: AI GENERATIF & LLM ---------------- */
+    /* ---------------- MODUL 11: REINFORCEMENT LEARNING: BELAJAR DARI COBA-COBA ---------------- */
+    {
+      id: "ai-rl",
+      level: "Reinforcement",
+      title: "Reinforcement Learning: Belajar dari Coba-Coba",
+      summary: "Dilema eksplorasi & reward jangka panjang, Q-learning dengan robot yang belajar mencari jalan, lalu Deep RL: AlphaGo, robot, dan RL di balik cara chatbot dilatih.",
+      lessons: [
+        {
+          id: "ai-rl-1",
+          title: "Reinforcement Learning dari Nol — Dilema Warung & Reward Jangka Panjang",
+          duration: "15 menit",
+          content: `
+<p>Di pelajaran <b>Tiga Gaya Belajar Mesin</b> kamu sudah mengenal kosakatanya: agen, keadaan, aksi, reward, dan kebijakan. Modul ini membongkar <b>cara kerjanya</b> — dimulai dari dua pertanyaan yang juga kamu hadapi setiap hari: <i>coba yang baru atau setia pada yang dikenal?</i> dan <i>untung sekarang atau untung nanti?</i></p>
+
+<div data-diagram="cycle" data-steps="Lihat keadaan|Pilih aksi|Terima reward|Perbarui perkiraan" data-center="agen RL" data-caption="Setiap putaran, agen memperbaiki perkiraannya tentang aksi mana yang paling menguntungkan"></div>
+
+<h3>Fundamental: belajar tanpa kunci jawaban</h3>
+<div class="callout">
+Di <b>supervised learning</b>, model diberi tahu jawaban yang benar: "foto ini kucing". Di <b>reinforcement learning</b>, tidak ada yang memberi tahu aksi mana yang benar. Agen hanya menerima <b>angka reward</b> setelah bertindak — dan harus menyimpulkan sendiri aksi apa yang membuat angka itu besar.<br><br>
+Bayangkan belajar memasak tanpa resep. Kamu hanya diberi nilai 1–10 oleh orang yang mencicipi. Tidak ada yang bilang "garamnya kebanyakan". Kamu harus mencoba, mengingat nilainya, lalu menyimpulkan sendiri.
+</div>
+
+<h3>Tantangan 1: dilema warung makan</h3>
+<p>Ada empat warung di dekat kampus. Setiap warung punya rata-rata rasa yang tidak kamu ketahui, dan rasanya naik-turun setiap hari. Kamu punya jatah makan siang terbatas. Coba sendiri:</p>
+
+<div data-demo="rl-bandit"></div>
+
+<p>Masalah ini begitu mendasar sampai punya nama sendiri: <b>multi-armed bandit</b>, diambil dari istilah mesin judi berlengan banyak. Ada dua hal yang dikerjakan agen:</p>
+
+<table class="tbl">
+  <tr><th>Tugas</th><th>Caranya</th></tr>
+  <tr><td><b>Memperkirakan nilai tiap pilihan</b></td><td>Menghitung rata-rata reward yang pernah diterima dari pilihan itu</td></tr>
+  <tr><td><b>Memilih</b></td><td>Menyeimbangkan <b>eksploitasi</b> (pilih yang perkiraannya terbaik) dan <b>eksplorasi</b> (sesekali mencoba yang lain)</td></tr>
+</table>
+
+<h3>Memperbarui perkiraan tanpa menyimpan semua riwayat</h3>
+<p>Agen tidak perlu mencatat semua nilai makan siang. Cukup satu rumus kecil:</p>
+<div class="callout">
+<b>perkiraan baru = perkiraan lama + (reward hari ini − perkiraan lama) ÷ jumlah kunjungan</b><br><br>
+Contoh: perkiraanmu untuk Warung B adalah 6 setelah 3 kunjungan. Kunjungan ke-4 kamu memberi nilai 8.<br>
+Perkiraan baru = 6 + (8 − 6) ÷ 4 = <b>6,5</b>
+</div>
+<p>Perhatikan bagian <b>(reward − perkiraan lama)</b>. Itu adalah <b>kejutan</b>: seberapa jauh kenyataan berbeda dari dugaan. Kejutan positif menaikkan perkiraan, kejutan negatif menurunkannya. Hampir semua algoritma RL — termasuk Q-learning di pelajaran berikutnya — dibangun di atas ide "geser perkiraan sedikit ke arah kejutan" ini.</p>
+
+<h3>Aturan ε-greedy — sederhana tapi ampuh</h3>
+<table class="tbl">
+  <tr><th>Nilai ε</th><th>Perilaku</th><th>Hasil</th></tr>
+  <tr><td>0%</td><td>Selalu pilih yang perkiraannya terbaik</td><td class="bad-cell">Terjebak pada pilihan "lumayan" pertama</td></tr>
+  <tr><td>5–20%</td><td>Kadang-kadang mencoba acak</td><td class="ok-cell">Menemukan pilihan terbaik lalu memanfaatkannya</td></tr>
+  <tr><td>100%</td><td>Selalu acak</td><td class="bad-cell">Tidak pernah memanfaatkan yang sudah dipelajari</td></tr>
+</table>
+
+<div class="callout warn">
+<b>💡 Kamu bertemu masalah bandit setiap hari tanpa sadar.</b> Aplikasi berita memilih judul mana yang ditampilkan, toko daring memilih promo mana yang diuji, dan iklan memilih gambar mana yang dipasang — semuanya menyeimbangkan "yang sudah terbukti laku" dengan "yang belum dicoba". Banyak perusahaan menjalankan algoritma bandit, bukan sekadar uji A/B biasa.
+</div>
+
+<h3>Tantangan 2: untung sekarang atau untung nanti?</h3>
+<p>Warung makan hanya punya satu langkah: pilih, makan, dapat nilai. Tapi kebanyakan masalah nyata punya <b>urutan langkah</b>, dan reward besar sering baru datang di akhir. Robot yang berjalan menuju pintu baru mendapat hadiah saat sampai. Pemain catur baru tahu menang atau kalah setelah puluhan langkah.</p>
+
+<p>Karena itu agen tidak mengejar reward hari ini saja, melainkan <b>jumlah reward dari sekarang sampai akhir</b> — disebut <b>return</b>. Reward yang lebih jauh di masa depan diberi bobot lebih kecil memakai <b>faktor diskon γ</b> (gamma), angka antara 0 dan 1:</p>
+
+<div class="callout">
+<b>return = r₁ + γ·r₂ + γ²·r₃ + …</b><br><br>
+Contoh dengan γ = 0,9 dan tiga langkah berreward −1, −1, lalu +10:<br>
+return = −1 + 0,9 × (−1) + 0,81 × 10 = −1 − 0,9 + 8,1 = <b>6,2</b>
+</div>
+
+<table class="tbl">
+  <tr><th>γ</th><th>Sifat agen</th><th>Mirip manusia yang…</th></tr>
+  <tr><td>Mendekati 0</td><td>Rabun jauh: hanya peduli reward langkah berikutnya</td><td>Menghabiskan gaji hari ini juga</td></tr>
+  <tr><td>0,9–0,99</td><td>Seimbang: mau berkorban sedikit sekarang demi hasil besar nanti</td><td>Menabung dan belajar</td></tr>
+  <tr><td>Tepat 1</td><td>Semua masa depan sama penting — bisa bermasalah bila tugasnya tak pernah berakhir</td><td>Menunda kesenangan tanpa batas</td></tr>
+</table>
+
+<div class="callout">
+<b>Kaitkan dengan jalur Akuntansi:</b> ini persis ide <b>nilai waktu uang</b>. Uang Rp100 ribu tahun depan bernilai lebih kecil dari Rp100 ribu hari ini, sehingga arus kas masa depan didiskon. Reward masa depan di RL didiskon dengan logika yang sama.
+</div>
+`,
+          keyPoints: [
+            "Reinforcement learning belajar tanpa kunci jawaban: agen hanya menerima angka reward dan harus menyimpulkan sendiri aksi yang baik.",
+            "Masalah multi-armed bandit: memperkirakan nilai tiap pilihan sambil menyeimbangkan eksplorasi dan eksploitasi.",
+            "Perkiraan baru = perkiraan lama + (reward − perkiraan lama) ÷ jumlah kunjungan; bagian dalam kurung adalah 'kejutan'.",
+            "ε-greedy: dengan peluang ε mencoba acak, selebihnya memilih yang terbaik. Tanpa eksplorasi agen terjebak, terlalu banyak eksplorasi juga merugi.",
+            "Pada masalah berurutan, agen mengejar return: jumlah reward dari sekarang sampai akhir, didiskon dengan faktor γ.",
+            "γ kecil membuat agen rabun jauh; γ besar membuatnya mau berkorban sekarang demi hasil nanti — mirip nilai waktu uang.",
+          ],
+          practice: [
+            { type: "number", q: "Perkiraan nilai sebuah warung 6 setelah 3 kunjungan. Kunjungan ke-4 bernilai 8. Berapa perkiraan barunya?", answer: 6.5, tol: 0.05, hint: "6 + (8 − 6) ÷ 4.", solution: "6 + 2 ÷ 4 = 6 + 0,5 = 6,5." },
+            { type: "number", q: "Tiga langkah pertama bernilai 0, lalu langkah keempat memberi +10. Dengan γ = 0,9, berapa return-nya? (2 desimal)", answer: 7.29, tol: 0.01, hint: "Reward langkah keempat dikalikan γ³ = 0,9 × 0,9 × 0,9.", solution: "0 + 0 + 0 + 0,9³ × 10 = 0,729 × 10 = 7,29." },
+          ],
+          quiz: [
+            {
+              q: "Apa beda utama reinforcement learning dengan supervised learning?",
+              options: [
+                "RL tidak diberi aksi yang benar, hanya angka reward setelah bertindak",
+                "RL selalu memakai data berlabel yang jauh lebih banyak dari supervised",
+                "RL hanya bisa dipakai untuk game, sedangkan supervised untuk bisnis",
+                "RL tidak memerlukan komputer karena belajar langsung dari manusia",
+              ],
+              answer: 0,
+              explain: "Agen harus menyimpulkan sendiri aksi mana yang membuat reward besar.",
+            },
+            {
+              q: "Agen dengan ε = 0% mencoba Warung A dan mendapat nilai lumayan. Apa yang terjadi selanjutnya?",
+              options: [
+                "Ia terus kembali ke Warung A dan tidak pernah menemukan warung yang lebih enak",
+                "Ia mencoba semua warung secara bergiliran sampai menemukan yang terbaik",
+                "Ia berpindah ke warung acak setiap hari karena belum yakin dengan pilihannya",
+                "Ia berhenti makan siang karena tidak punya cukup data untuk memutuskan",
+              ],
+              answer: 0,
+              explain: "Tanpa eksplorasi, pilihan 'lumayan' pertama menjadi penjara.",
+            },
+            {
+              q: "Dalam rumus perkiraan baru, apa arti bagian (reward − perkiraan lama)?",
+              options: [
+                "Kejutan: seberapa jauh kenyataan berbeda dari dugaan agen",
+                "Keuntungan bersih setelah dikurangi biaya melakukan aksi",
+                "Jumlah kunjungan yang masih dibutuhkan agar perkiraan akurat",
+                "Selisih antara reward terbesar dan terkecil yang pernah diterima",
+              ],
+              answer: 0,
+              explain: "Perkiraan digeser sedikit ke arah kejutan — ide dasar hampir semua algoritma RL.",
+            },
+            {
+              q: "Agen memakai γ yang sangat kecil, mendekati 0. Bagaimana perilakunya?",
+              options: [
+                "Rabun jauh: hanya mengejar reward langkah berikutnya dan mengabaikan hasil akhir",
+                "Sangat sabar: rela menunggu lama demi reward terbesar di akhir permainan",
+                "Selalu memilih aksi acak karena semua reward dianggap sama nilainya",
+                "Berhenti belajar karena reward masa depan tidak lagi dapat dihitung",
+              ],
+              answer: 0,
+              explain: "Reward masa depan dikalikan γ berulang kali, sehingga nyaris tak berarti bila γ kecil.",
+            },
+          ],
+        },
+        {
+          id: "ai-rl-2",
+          title: "Q-Learning — Robot yang Belajar Mencari Jalan Sendiri",
+          duration: "16 menit",
+          content: `
+<p>Di pelajaran sebelumnya, agen hanya memperkirakan nilai empat warung. Sekarang dunianya lebih rumit: seekor robot harus berjalan melewati banyak kotak menuju bendera, dan setiap langkahnya memengaruhi langkah berikutnya. Algoritma yang akan kita pakai adalah salah satu yang paling terkenal dalam sejarah RL: <b>Q-learning</b>.</p>
+
+<div data-diagram="pipeline" data-stages="Di kotak ini::lihat tabel Q|Pilih aksi::terbaik atau acak (ε)|Terima reward::−1, −10, atau +10|Perbarui Q::geser ke arah kejutan" data-caption="Satu langkah Q-learning — diulang ribuan kali"></div>
+
+<h3>Fundamental: tabel Q = buku catatan nilai aksi</h3>
+<div class="callout">
+Bayangkan robot membawa <b>buku catatan</b>. Setiap halaman mewakili satu kotak, dan setiap halaman punya empat baris: atas, kanan, bawah, kiri. Di setiap baris tertulis satu angka: <b>"seberapa bagus kalau aku mengambil aksi ini dari kotak ini, sampai permainan selesai?"</b><br><br>
+Angka itu disebut <b>nilai Q</b> (Q dari <i>quality</i>). Awalnya semua angka nol karena robot belum tahu apa-apa. Setelah buku terisi dengan benar, cara bermain terbaik sangat mudah: di setiap kotak, pilih baris dengan angka tertinggi.
+</div>
+
+<h3>Rumus pembaruan — dengan bahasa sehari-hari</h3>
+<p>Setiap kali robot melangkah, ia memperbarui satu angka di bukunya:</p>
+<div class="callout">
+<b>Q baru = Q lama + α × (target − Q lama)</b><br>
+<b>target = reward langkah ini + γ × nilai Q terbaik di kotak berikutnya</b>
+</div>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Artinya</th></tr>
+  <tr><td><b>reward langkah ini</b></td><td>Apa yang langsung didapat: −1 per langkah, −10 jatuh ke lubang, +10 sampai bendera</td></tr>
+  <tr><td><b>γ × Q terbaik berikutnya</b></td><td>"Dari tempatku sekarang, seberapa bagus masa depanku?" — diambil dari catatannya sendiri</td></tr>
+  <tr><td><b>target − Q lama</b></td><td>Kejutan — ide yang sama dengan dilema warung</td></tr>
+  <tr><td><b>α</b> (alpha)</td><td>Seberapa besar catatan digeser setiap kali. Di demo: 0,5</td></tr>
+</table>
+
+<p><b>Contoh hitung</b> dengan α = 0,5 dan γ = 0,9, saat tabel masih nol semua:</p>
+<table class="tbl">
+  <tr><th>Kejadian</th><th>Hitungan</th><th>Q baru</th></tr>
+  <tr><td>Robot di kotak tepat di atas bendera, melangkah ↓ dan sampai (+10, permainan selesai)</td><td>0 + 0,5 × (10 − 0)</td><td><b>5</b></td></tr>
+  <tr><td>Di episode lain, robot di kotak sebelah kirinya melangkah → (−1), tiba di kotak yang Q terbaiknya 5</td><td>0 + 0,5 × (−1 + 0,9 × 5 − 0)</td><td><b>1,75</b></td></tr>
+</table>
+<p>Perhatikan: kotak kedua belum pernah melihat bendera, tapi ia sudah "tahu" arah kanan itu bagus — karena <b>meminjam perkiraan</b> dari kotak sesudahnya. Beginilah kabar baik tentang bendera <b>merambat mundur</b>, kotak demi kotak, sampai ke titik mulai.</p>
+
+<div data-demo="rl-grid"></div>
+
+<h3>Apa yang terjadi di demo tadi</h3>
+<table class="tbl">
+  <tr><th>Tahap</th><th>Yang terlihat</th></tr>
+  <tr><td>Episode awal</td><td>Robot berkeliaran dan sering jatuh. Kotak di tepi lubang cepat berwarna merah</td></tr>
+  <tr><td>Puluhan episode</td><td>Nilai hijau merambat mundur dari bendera; panah mulai menunjuk arah yang masuk akal</td></tr>
+  <tr><td>Setelah konvergen</td><td>Nilai di jalur terbaik mendekati 10 → 8 → 6,2 → 4,6 → … dan robot menemukan jalan 8 langkah dengan total +3</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Pelajaran penting dari tepi jurang.</b> Jalan terbaik yang ditemukan robot berada <b>tepat di sebelah lubang</b> — karena itulah jalan terpendek. Tapi selama latihan, ε membuat robot sesekali melangkah acak, dan langkah acak di tepi lubang berakibat fatal. Q-learning mempelajari jalan terbaik <i>seandainya robot tidak pernah salah langkah</i>, bukan jalan teraman untuk robot yang masih belajar.<br><br>
+Varian lain bernama <b>SARSA</b> ikut memperhitungkan langkah acaknya sendiri, sehingga cenderung memilih jalan yang menjauhi lubang. Di dunia nyata, inilah alasan robot dan mobil otonom dilatih di <b>simulasi</b> dulu: jatuh ribuan kali di dunia maya itu murah.
+</div>
+
+<h3>Mencoba sendiri di Python</h3>
+<p>Pustaka <b>gymnasium</b> menyediakan dunia latihan siap pakai, termasuk soal tepi jurang yang sama (di sana lubangnya bernilai −100 dan robot dikembalikan ke awal):</p>
+<pre class="code">import gymnasium as gym
+import numpy as np
+
+env = gym.make("CliffWalking-v0")    # nomor versi bisa berbeda di pustaka terbaru
+Q = np.zeros((env.observation_space.n, env.action_space.n))
+alpha, gamma, eps = 0.5, 0.9, 0.1
+rng = np.random.default_rng(0)
+
+for episode in range(500):
+    s, _ = env.reset()
+    selesai = False
+    while not selesai:
+        if eps > rng.random():
+            a = env.action_space.sample()      # eksplorasi
+        else:
+            a = int(np.argmax(Q[s]))           # eksploitasi
+        s2, r, terminated, truncated, _ = env.step(a)
+        target = r + (0 if terminated else gamma * np.max(Q[s2]))
+        Q[s, a] += alpha * (target - Q[s, a])  # geser ke arah kejutan
+        s, selesai = s2, terminated or truncated</pre>
+
+<h3>Batas tabel Q</h3>
+<p>Dunia demo punya 28 kotak × 4 aksi = <b>112 angka</b>. Mudah. Tapi bagaimana dengan dunia sungguhan?</p>
+<table class="tbl">
+  <tr><th>Masalah</th><th>Banyak keadaan</th><th>Tabel Q?</th></tr>
+  <tr><td>Robot di demo</td><td>28</td><td class="ok-cell">Muat</td></tr>
+  <tr><td>Catur</td><td>Sekitar 10<sup>44</sup> posisi</td><td class="bad-cell">Mustahil</td></tr>
+  <tr><td>Go</td><td>Sekitar 10<sup>170</sup> posisi</td><td class="bad-cell">Mustahil</td></tr>
+  <tr><td>Game dari gambar layar</td><td>Setiap susunan piksel berbeda</td><td class="bad-cell">Mustahil</td></tr>
+</table>
+<p>Selain tidak muat, tabel juga tidak bisa <b>menyamaratakan</b>: dua posisi catur yang hampir sama dianggap dua halaman yang sama sekali asing. Jalan keluarnya adalah mengganti tabel dengan <b>neural network</b> — topik pelajaran berikutnya.</p>
+`,
+          keyPoints: [
+            "Tabel Q menyimpan perkiraan 'seberapa bagus aksi ini dari keadaan ini sampai akhir'; kebijakan terbaik = pilih aksi dengan nilai Q tertinggi.",
+            "Q baru = Q lama + α × (target − Q lama), dengan target = reward + γ × Q terbaik di keadaan berikutnya.",
+            "Keadaan yang belum pernah melihat hadiah tetap belajar dengan meminjam perkiraan keadaan sesudahnya, sehingga nilai merambat mundur.",
+            "Q-learning mempelajari jalan terbaik seolah agen tak pernah salah langkah; karena itu saat latihan dengan ε ia bisa sering jatuh di tepi jurang.",
+            "SARSA ikut memperhitungkan langkah acaknya sendiri sehingga cenderung memilih jalan yang lebih aman.",
+            "Tabel Q tidak muat untuk catur, Go, atau gambar layar, dan tidak bisa menyamaratakan keadaan yang mirip.",
+          ],
+          practice: [
+            { type: "number", q: "Q lama = 2, reward = −1, Q terbaik di keadaan berikutnya = 6, α = 0,5, γ = 0,9. Berapa Q baru?", answer: 3.2, tol: 0.01, hint: "Target = −1 + 0,9 × 6. Lalu Q baru = 2 + 0,5 × (target − 2).", solution: "Target = −1 + 5,4 = 4,4. Q baru = 2 + 0,5 × 2,4 = 3,2." },
+            { type: "number", q: "Sebuah dunia kotak berukuran 10 × 10 dengan 4 aksi. Berapa banyak angka dalam tabel Q-nya?", answer: 400, tol: 0.5, hint: "Jumlah keadaan × jumlah aksi.", solution: "100 × 4 = 400 angka." },
+          ],
+          quiz: [
+            {
+              q: "Apa yang disimpan dalam satu sel tabel Q?",
+              options: [
+                "Perkiraan seberapa bagus sebuah aksi dari keadaan tertentu sampai akhir",
+                "Jumlah berapa kali robot pernah mengunjungi sebuah kotak selama latihan",
+                "Reward yang langsung didapat saat robot melangkah ke kotak tersebut",
+                "Peluang robot jatuh ke lubang apabila berada di kotak tersebut",
+              ],
+              answer: 0,
+              explain: "Nilai Q memperhitungkan reward sekarang sekaligus masa depan yang didiskon.",
+            },
+            {
+              q: "Kotak yang belum pernah dilewati robot menuju bendera tetap mendapat nilai positif. Kenapa?",
+              options: [
+                "Karena targetnya meminjam nilai Q terbaik dari kotak sesudahnya",
+                "Karena semua kotak kosong otomatis diberi nilai awal yang positif",
+                "Karena robot diberi peta lengkap sebelum latihan dimulai",
+                "Karena nilai bendera disalin ke semua kotak pada akhir episode",
+              ],
+              answer: 0,
+              explain: "Kabar baik tentang bendera merambat mundur, kotak demi kotak.",
+            },
+            {
+              q: "Robot yang dilatih Q-learning dengan ε = 20% sering jatuh di tepi jurang saat latihan. Apa penjelasan yang tepat?",
+              options: [
+                "Jalan terbaiknya memang di tepi jurang, dan langkah acak dari ε di situ berakibat fatal",
+                "Q-learning gagal belajar karena reward −10 terlalu kecil dibanding reward +10",
+                "Robot sengaja mencari lubang karena nilai Q di tepi jurang selalu paling tinggi",
+                "Tabel Q terhapus di setiap episode sehingga robot harus belajar dari awal lagi",
+              ],
+              answer: 0,
+              explain: "Q-learning menilai jalan seolah tak pernah salah langkah; SARSA memperhitungkan eksplorasinya sendiri.",
+            },
+            {
+              q: "Kenapa tabel Q tidak dipakai untuk mengajari AI bermain Go?",
+              options: [
+                "Banyak posisinya sekitar 10¹⁷⁰, tidak muat, dan tabel tak bisa menyamaratakan posisi yang mirip",
+                "Go hanya punya empat aksi sehingga tabel Q terlalu sederhana untuk menangkap strateginya",
+                "Go tidak memberikan reward apa pun sehingga nilai Q tidak dapat diperbarui",
+                "Tabel Q hanya bisa dipakai untuk robot fisik, bukan untuk permainan papan",
+              ],
+              answer: 0,
+              explain: "Karena itu tabel diganti neural network yang bisa memperkirakan nilai posisi yang belum pernah dilihat.",
+            },
+          ],
+        },
+        {
+          id: "ai-rl-3",
+          title: "Dari Tabel ke Deep RL — AlphaGo, Robot & Cara Chatbot Dilatih",
+          duration: "15 menit",
+          content: `
+<p>Tabel Q bekerja untuk 28 kotak, tapi tidak untuk catur, Go, atau game yang dilihat dari piksel layar. Pelajaran ini menunjukkan bagaimana <b>neural network</b> menggantikan tabel — dan bagaimana ide itu melahirkan AlphaGo, robot yang berjalan, sampai cara ChatGPT dan Claude diajari menjawab dengan baik.</p>
+
+<div data-diagram="timeline" data-events="1992::TD-Gammon main backgammon|2015::DQN belajar 49 game Atari|2016::AlphaGo kalahkan Lee Sedol|2017::AlphaZero belajar tanpa manusia|2019::Menang di Dota 2 &amp; StarCraft|2022::RLHF di balik ChatGPT" data-caption="Tonggak reinforcement learning — dari papan permainan ke asisten AI"></div>
+
+<h3>Fundamental: ganti buku catatan dengan "penaksir"</h3>
+<div class="callout">
+Tabel Q ibarat buku yang harus punya satu halaman untuk <b>setiap</b> keadaan. Neural network ibarat <b>penaksir berpengalaman</b>: diberi keadaan apa pun — bahkan yang belum pernah dilihat — ia bisa memperkirakan nilai setiap aksi, karena belajar mengenali pola dari keadaan-keadaan yang mirip.<br><br>
+Cara belajarnya tetap sama persis dengan pelajaran sebelumnya: hitung target, ukur kejutan, geser sedikit. Bedanya, yang digeser bukan satu sel tabel, melainkan <b>bobot jaringan</b> — memakai gradient descent yang sudah kamu kenal.
+</div>
+
+<h3>Dua keluarga besar Deep RL</h3>
+<div data-diagram="compare3" data-cols="Berbasis nilai::Menaksir nilai tiap aksi::Contoh: DQN|Berbasis kebijakan::Langsung belajar bertindak::Contoh: REINFORCE|Aktor-kritik::Gabungan nilai &amp; kebijakan::Contoh: PPO, SAC" data-caption="Tiga cara menggabungkan neural network dengan reinforcement learning"></div>
+
+<table class="tbl">
+  <tr><th></th><th>Berbasis nilai (mis. DQN)</th><th>Berbasis kebijakan &amp; aktor-kritik (mis. PPO)</th></tr>
+  <tr><td><b>Yang dipelajari</b></td><td>"Seberapa bagus aksi ini?"</td><td>"Aksi mana yang sebaiknya dipilih, dan seberapa yakin?"</td></tr>
+  <tr><td><b>Cocok untuk</b></td><td>Pilihan aksi sedikit dan terpisah (tombol game)</td><td>Aksi yang banyak atau bernilai kontinu (sudut sendi robot, kata berikutnya)</td></tr>
+  <tr><td><b>Kelemahan</b></td><td>Sulit untuk aksi kontinu</td><td>Butuh sangat banyak percobaan</td></tr>
+</table>
+
+<h3>AlphaGo dan AlphaZero — belajar dengan melawan diri sendiri</h3>
+<table class="tbl">
+  <tr><th></th><th>AlphaGo (2016)</th><th>AlphaZero (2017)</th></tr>
+  <tr><td><b>Bekal awal</b></td><td>Mempelajari jutaan langkah dari pertandingan pemain manusia</td><td>Hanya aturan permainan</td></tr>
+  <tr><td><b>Cara berlatih</b></td><td>Lalu bertanding melawan dirinya sendiri</td><td>Sepenuhnya melawan dirinya sendiri (<i>self-play</i>)</td></tr>
+  <tr><td><b>Hasil</b></td><td>Mengalahkan juara dunia Lee Sedol 4–1</td><td>Menguasai Go, catur, dan shogi dengan satu algoritma yang sama</td></tr>
+</table>
+
+<div class="callout">
+<b>♟️ Kenapa self-play begitu ampuh?</b> Lawan selalu setara: setiap kali agen membaik, lawannya — dirinya sendiri — ikut membaik. Agen tidak dibatasi oleh kebiasaan manusia, sehingga AlphaGo sempat memainkan langkah ke-37 yang awalnya dianggap aneh oleh para ahli, lalu terbukti jenius.
+</div>
+
+<h3>Menghubungkan ke chatbot: RLHF</h3>
+<p>Di modul berikutnya, pelajaran <b>RLHF &amp; Alignment</b> menjelaskan bagaimana chatbot dilatih agar membantu dan aman. Dengan bekal modul ini, kamu kini bisa melihat bahwa itu <b>masalah RL biasa</b> dengan beberapa bagian yang diganti:</p>
+<table class="tbl">
+  <tr><th>Istilah RL</th><th>Di robot demo</th><th>Di chatbot</th></tr>
+  <tr><td><b>Agen</b></td><td>Robot</td><td>Model bahasa</td></tr>
+  <tr><td><b>Keadaan</b></td><td>Posisi kotak</td><td>Pertanyaan dan kata-kata yang sudah ditulis</td></tr>
+  <tr><td><b>Aksi</b></td><td>Atas, kanan, bawah, kiri</td><td>Memilih kata berikutnya</td></tr>
+  <tr><td><b>Reward</b></td><td>−1, −10, +10 dari aturan dunia</td><td>Skor dari <b>model penilai</b> yang dilatih dari peringkat buatan manusia</td></tr>
+  <tr><td><b>Algoritma</b></td><td>Q-learning</td><td>Umumnya keluarga berbasis kebijakan, misalnya PPO</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Reward hacking muncul lagi di sini.</b> Model penilai hanyalah tiruan selera manusia, bukan selera manusia itu sendiri. Chatbot bisa belajar "mengakali" penilainya — misalnya menjawab terlalu panjang atau terlalu memuji — karena itu yang disukai penilai. Karena itu pelatihannya diberi rem agar model tidak menjauh terlalu jauh dari perilaku awalnya.
+</div>
+
+<p>Tren terbaru memperluas ide ini: model penalaran dilatih dengan RL pada soal yang jawabannya <b>bisa diperiksa otomatis</b> — soal matematika yang hasilnya bisa dicocokkan, atau kode yang bisa dijalankan dan diuji. Reward-nya bukan lagi selera manusia, melainkan "jawabannya benar atau tidak".</p>
+
+<h3>Kenapa RL tidak dipakai di mana-mana?</h3>
+<table class="tbl">
+  <tr><th>Tantangan</th><th>Artinya</th></tr>
+  <tr><td><b>Rakus percobaan</b></td><td>AlphaZero bermain jutaan pertandingan melawan dirinya sendiri. Dunia nyata jarang memberi kesempatan sebanyak itu</td></tr>
+  <tr><td><b>Merancang reward itu sulit</b></td><td>Reward yang sedikit keliru akan dicurangi (reward hacking)</td></tr>
+  <tr><td><b>Eksplorasi berbahaya</b></td><td>Robot atau mobil tidak boleh "mencoba acak" di jalan raya → dilatih di simulasi</td></tr>
+  <tr><td><b>Simulasi ≠ kenyataan</b></td><td>Robot yang lincah di simulasi bisa canggung di dunia nyata karena gesekan dan cahaya berbeda</td></tr>
+  <tr><td><b>Pelatihan tidak stabil</b></td><td>Hasil bisa sangat berbeda hanya karena pengacak awal yang berbeda</td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Pegangan praktis:</b> kalau kamu punya data berisi jawaban yang benar, pakai <b>supervised learning</b> — jauh lebih murah dan stabil. Pakai RL bila keputusan <b>berurutan</b>, akibatnya <b>tertunda</b>, dan tidak ada yang bisa memberi kunci jawaban. Untuk keputusan satu langkah seperti memilih promo atau judul berita, algoritma <b>bandit</b> dari pelajaran pertama modul ini sering sudah cukup.
+</div>
+`,
+          keyPoints: [
+            "Deep RL mengganti tabel Q dengan neural network yang bisa menaksir nilai keadaan yang belum pernah dilihat; cara belajarnya tetap: target, kejutan, geser sedikit.",
+            "Berbasis nilai (DQN) menaksir nilai tiap aksi; berbasis kebijakan (PPO) langsung belajar cara bertindak; aktor-kritik menggabungkan keduanya.",
+            "AlphaGo belajar dari permainan manusia lalu self-play; AlphaZero hanya diberi aturan dan belajar sepenuhnya lewat self-play.",
+            "RLHF adalah masalah RL: agennya model bahasa, aksinya memilih kata, reward-nya dari model penilai hasil peringkat manusia.",
+            "Reward hacking juga terjadi pada chatbot, karena model penilai hanya tiruan selera manusia.",
+            "RL rakus percobaan, sulit dirancang reward-nya, berbahaya bila bereksplorasi di dunia nyata, dan tidak stabil.",
+            "Punya kunci jawaban → supervised; keputusan berurutan dengan akibat tertunda → RL; keputusan satu langkah → bandit.",
+          ],
+          quiz: [
+            {
+              q: "Apa keunggulan utama neural network dibanding tabel Q?",
+              options: [
+                "Bisa menaksir nilai keadaan yang belum pernah dilihat dengan mengenali pola yang mirip",
+                "Tidak lagi memerlukan reward sehingga agen bisa belajar tanpa umpan balik apa pun",
+                "Selalu menemukan kebijakan terbaik dalam satu episode latihan saja",
+                "Tidak memerlukan eksplorasi karena semua aksi sudah dinilai sejak awal",
+              ],
+              answer: 0,
+              explain: "Tabel memperlakukan setiap keadaan sebagai halaman asing; jaringan bisa menyamaratakan.",
+            },
+            {
+              q: "Apa perbedaan AlphaZero dengan AlphaGo versi pertama?",
+              options: [
+                "AlphaZero hanya diberi aturan dan belajar sepenuhnya dengan melawan dirinya sendiri",
+                "AlphaZero mempelajari lebih banyak pertandingan manusia sebelum mulai berlatih",
+                "AlphaZero memakai tabel Q raksasa sebagai pengganti neural network",
+                "AlphaZero hanya bisa bermain Go, sedangkan AlphaGo menguasai catur dan shogi",
+              ],
+              answer: 0,
+              explain: "Tanpa bekal permainan manusia, ia menguasai Go, catur, dan shogi dengan satu algoritma.",
+            },
+            {
+              q: "Dalam RLHF untuk chatbot, dari mana reward berasal?",
+              options: [
+                "Dari model penilai yang dilatih memakai peringkat jawaban buatan manusia",
+                "Dari jumlah kata dalam jawaban, makin panjang makin tinggi reward-nya",
+                "Dari aturan permainan yang ditulis tetap oleh pengembang sejak awal",
+                "Dari pengguna yang menilai setiap jawaban secara langsung saat mengobrol",
+              ],
+              answer: 0,
+              explain: "Karena penilainya tiruan selera manusia, reward hacking tetap bisa terjadi.",
+            },
+            {
+              q: "Sebuah toko punya data ribuan transaksi berlabel 'penipuan' atau 'bukan'. Pendekatan mana yang paling masuk akal?",
+              options: [
+                "Supervised learning, karena kunci jawabannya sudah tersedia",
+                "Reinforcement learning, karena penipuan adalah masalah berurutan",
+                "Algoritma bandit, karena setiap transaksi adalah pilihan promo",
+                "Self-play, agar model melawan dirinya sendiri sebagai penipu",
+              ],
+              answer: 0,
+              explain: "Bila jawaban benar sudah ada, supervised jauh lebih murah dan stabil daripada RL.",
+            },
+          ],
+        },
+      ],
+    },
+    /* ---------------- MODUL 12: AI GENERATIF & LLM ---------------- */
     {
       id: "ai-mahir",
       level: "Mahir",
@@ -5024,6 +5432,7 @@ Keduanya berlatih bersamaan: pemalsu makin pintar memalsukan, polisi makin jeli 
 
 
 <h3>RLHF (Reinforcement Learning from Human Feedback)</h3>
+<p>Ingat modul <b>Reinforcement Learning</b>: agen memilih aksi dan mengejar reward. Di RLHF, agennya adalah model bahasa, aksinya memilih kata, dan reward-nya berasal dari penilaian manusia:</p>
 <ol>
   <li>Model menghasilkan beberapa jawaban.</li>
   <li><b>Manusia memberi peringkat</b>: mana jawaban yang lebih baik/aman.</li>
@@ -5143,7 +5552,7 @@ Suara adalah <b>getaran udara</b>. Mikrofon mengubahnya jadi gelombang, lalu kom
         },
       ],
     },
-    /* ---------------- MODUL 12: MEMBANGUN APLIKASI AI ---------------- */
+    /* ---------------- MODUL 13: MEMBANGUN APLIKASI AI ---------------- */
     {
       id: "ai-lanjutan",
       level: "Lanjutan",
@@ -5466,7 +5875,7 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
         },
       ],
     },
-    /* ---------------- MODUL 13: PROYEK PRODUKSI AI ---------------- */
+    /* ---------------- MODUL 14: PROYEK PRODUKSI AI ---------------- */
     {
       id: "ai-proyek",
       level: "Proyek",
@@ -5916,7 +6325,7 @@ console.log(hasil.content);</pre>
         },
       ],
     },
-    /* ---------------- MODUL 14: PRODUKSI, ETIKA & EKOSISTEM AI ---------------- */
+    /* ---------------- MODUL 15: PRODUKSI, ETIKA & EKOSISTEM AI ---------------- */
     {
       id: "ai-terapan",
       level: "Terapan",
@@ -6317,7 +6726,7 @@ Daftar di atas mudah membuat kewalahan. Jangan terjebak <b>"belajar pustaka"</b>
         },
       ],
     },
-    /* ---------------- MODUL 15: EKONOMI & BISNIS AI ---------------- */
+    /* ---------------- MODUL 16: EKONOMI & BISNIS AI ---------------- */
     {
       id: "ai-ekonomi",
       level: "Ekonomi",
@@ -6631,7 +7040,7 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
         },
       ],
     },
-    /* ---------------- MODUL 16: MASA DEPAN AI ---------------- */
+    /* ---------------- MODUL 17: MASA DEPAN AI ---------------- */
     {
       id: "ai-arah",
       level: "Arah",
