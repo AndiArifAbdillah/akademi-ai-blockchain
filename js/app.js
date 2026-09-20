@@ -88,11 +88,25 @@ const Progress = {
     if (typeof this.data.perisaiDiberiPada !== "number") this.data.perisaiDiberiPada = 0;
     if (!this.data.tonggak) this.data.tonggak = [];     // tonggak runtun yang sudah dirayakan
     if (typeof this.data.xp !== "number") this.data.xp = 0;
+    if (typeof this.data.kunciKuis !== "boolean") this.data.kunciKuis = true; // kunci tombol Berikutnya sampai kuis benar semua
   },
   save() {
     localStorage.setItem(STORE_KEY, JSON.stringify(this.data));
   },
   isDone(lessonId) {
+    return !!this.data.completed[lessonId];
+  },
+  // Simpan skor percobaan kuis tanpa menandai pelajaran selesai
+  simpanSkor(lessonId, score) {
+    this.data.scores[lessonId] = score;
+    this.save();
+  },
+  setKunciKuis(v) {
+    this.data.kunciKuis = !!v;
+    this.save();
+  },
+  // Pelajaran berkuis baru terbuka bila kuisnya sudah benar semua (tersimpan sebagai selesai)
+  kuisLulus(lessonId) {
     return !!this.data.completed[lessonId];
   },
   markDone(lessonId, score) {
@@ -186,12 +200,13 @@ const Progress = {
     if (typeof this.data.perisaiDiberiPada !== "number") this.data.perisaiDiberiPada = 0;
     if (!this.data.tonggak) this.data.tonggak = [];
     if (typeof this.data.xp !== "number") this.data.xp = 0;
+    if (typeof this.data.kunciKuis !== "boolean") this.data.kunciKuis = true;
     this.save();
   },
   reset() {
     this.data = {
       completed: {}, scores: {}, hari: {}, target: 1, runtunTerbaik: 0,
-      ulangan: {}, perisai: 0, perisaiPakai: {}, perisaiDiberiPada: 0, tonggak: [], xp: 0,
+      ulangan: {}, perisai: 0, perisaiPakai: {}, perisaiDiberiPada: 0, tonggak: [], xp: 0, kunciKuis: true,
     };
     this.save();
   },
@@ -509,6 +524,7 @@ function kartuDisiplin() {
         </label>
         <label>Ingatkan pukul <input type="time" class="dis-jam" value="19:00"></label>
         <button class="btn ghost dis-ics" type="button">📅 Pasang pengingat</button>
+        <label class="dis-kunci"><input type="checkbox" class="dis-kunci-kuis" ${Progress.data.kunciKuis ? "checked" : ""}> 🔒 Kunci tombol "Berikutnya" sampai kuis benar semua</label>
       </div>
       <p class="dis-catatan">Pengingat dipasang sebagai acara harian berulang di aplikasi kalender HP-mu — cara yang paling andal, karena situs ini berjalan tanpa server.</p>
     </section>
@@ -517,6 +533,9 @@ function kartuDisiplin() {
   kartu.querySelector(".dis-target").onchange = (e) => {
     Progress.setTarget(e.target.value);
     router();
+  };
+  kartu.querySelector(".dis-kunci-kuis").onchange = (e) => {
+    Progress.setKunciKuis(e.target.checked);
   };
   kartu.querySelector(".dis-ics").onclick = () => {
     const jam = (kartu.querySelector(".dis-jam").value || "19:00").split(":");
@@ -729,6 +748,7 @@ function renderLesson({ course, module, lesson }) {
   const modulSebelum = mi > 0 ? course.modules[mi - 1] : null;
   const modulBerikut = mi < course.modules.length - 1 ? course.modules[mi + 1] : null;
   const done = Progress.isDone(lesson.id);
+  let bukaKunci = null; // diisi saat tombol navigasi dibuat; dipanggil bila kuis lulus
   Progress.touch(lesson.id); // ingat pelajaran terakhir yang dibuka
 
   wrap.appendChild(el(`
@@ -828,7 +848,7 @@ function renderLesson({ course, module, lesson }) {
   }
 
   if (lesson.quiz && lesson.quiz.length) {
-    wrap.appendChild(renderQuiz(lesson));
+    wrap.appendChild(renderQuiz(lesson, () => { if (bukaKunci) bukaKunci(); }));
   } else {
     const btn = el(`<button class="btn primary">Tandai Selesai ✓</button>`);
     btn.onclick = () => {
@@ -856,15 +876,46 @@ function renderLesson({ course, module, lesson }) {
   const nav = el(`<div class="lesson-nav"></div>`);
   if (prevLesson) nav.appendChild(el(`<a class="btn ghost nav-lesson" href="#/lesson/${prevLesson.id}"><small>← Sebelumnya</small><span>${esc(prevLesson.title)}</span></a>`));
   else nav.appendChild(el(`<span></span>`));
-  if (nextLesson) nav.appendChild(el(`<a class="btn nav-lesson nav-next" href="#/lesson/${nextLesson.id}"><small>Berikutnya →</small><span>${esc(nextLesson.title)}</span></a>`));
-  else nav.appendChild(el(`<a class="btn" href="#/course/${course.id}">Kembali ke kursus</a>`));
+  let tombolNext = null;
+  if (nextLesson) {
+    tombolNext = el(`<a class="btn nav-lesson nav-next" href="#/lesson/${nextLesson.id}"><small>Berikutnya →</small><span>${esc(nextLesson.title)}</span></a>`);
+    nav.appendChild(tombolNext);
+  } else nav.appendChild(el(`<a class="btn" href="#/course/${course.id}">Kembali ke kursus</a>`));
+
+  // Kunci tombol "Berikutnya" sampai kuis pelajaran ini benar semua
+  const perluKuis = !!(lesson.quiz && lesson.quiz.length) && Progress.data.kunciKuis && !Progress.kuisLulus(lesson.id);
+  const gembok = el(`
+    <p class="nav-kunci"${perluKuis ? "" : " hidden"}>🔒 Jawab <b>semua soal kuis dengan benar</b> untuk membuka pelajaran berikutnya.
+    Masih bisa melompat lewat daftar pelajaran di halaman kursus.</p>
+  `);
+  function kunciNav(kunci) {
+    if (!tombolNext) return;
+    tombolNext.classList.toggle("terkunci", kunci);
+    if (kunci) tombolNext.setAttribute("aria-disabled", "true");
+    else tombolNext.removeAttribute("aria-disabled");
+    gembok.hidden = !kunci;
+  }
+  if (tombolNext) {
+    kunciNav(perluKuis);
+    tombolNext.addEventListener("click", (e) => {
+      if (tombolNext.classList.contains("terkunci")) {
+        e.preventDefault();
+        const kuisEl = wrap.querySelector(".quiz");
+        if (kuisEl) kuisEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        gembok.classList.add("goyang");
+        setTimeout(() => gembok.classList.remove("goyang"), 600);
+      }
+    });
+  }
+  bukaKunci = () => kunciNav(false);
+  wrap.appendChild(gembok);
   wrap.appendChild(nav);
 
   return wrap;
 }
 
 /* ---------- Komponen: Kuis ---------- */
-function renderQuiz(lesson) {
+function renderQuiz(lesson, onLulus) {
   const box = el(`
     <section class="quiz">
       <h3>📝 Kuis — uji pemahamanmu</h3>
@@ -879,8 +930,15 @@ function renderQuiz(lesson) {
   lesson.quiz.forEach((q, qi) => {
     const qEl = el(`<div class="q"><p class="q-text"><b>${qi + 1}.</b> ${esc(q.q)}</p><div class="opts"></div><div class="explain" hidden></div></div>`);
     const opts = qEl.querySelector(".opts");
-    q.options.forEach((opt, oi) => {
-      const o = el(`<button class="opt" data-qi="${qi}" data-oi="${oi}">${esc(opt)}</button>`);
+    // Urutan pilihan diacak ulang setiap percobaan, supaya mengulang kuis tidak bisa
+    // diselesaikan hanya dengan mengingat POSISI jawaban yang tadi ditandai benar.
+    const urutan = q.options.map((_, i) => i);
+    for (let i = urutan.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [urutan[i], urutan[j]] = [urutan[j], urutan[i]];
+    }
+    urutan.forEach((oi) => {
+      const o = el(`<button class="opt" data-qi="${qi}" data-oi="${oi}">${esc(q.options[oi])}</button>`);
       o.onclick = () => {
         if (box.classList.contains("locked")) return;
         chosen[qi] = oi;
@@ -902,7 +960,8 @@ function renderQuiz(lesson) {
     const qEls = qWrap.querySelectorAll(".q");
     lesson.quiz.forEach((q, qi) => {
       const opts = qEls[qi].querySelectorAll(".opt");
-      opts.forEach((b, oi) => {
+      opts.forEach((b) => {
+        const oi = parseInt(b.dataset.oi, 10);
         if (oi === q.answer) b.classList.add("correct");
         else if (oi === chosen[qi]) b.classList.add("wrong");
         b.disabled = true;
@@ -915,15 +974,21 @@ function renderQuiz(lesson) {
     });
 
     const total = lesson.quiz.length;
-    const pass = correct >= Math.ceil(total / 2);
-    Progress.markDone(lesson.id, { correct, total });
+    const lulus = correct === total;
+    if (lulus) Progress.markDone(lesson.id, { correct, total });
+    else Progress.simpanSkor(lesson.id, { correct, total });
+    if (lulus && typeof onLulus === "function") onLulus();
 
     const res = box.querySelector(".quiz-result");
     res.hidden = false;
-    res.className = "quiz-result " + (pass ? "good" : "meh");
+    res.className = "quiz-result " + (lulus ? "good" : "meh");
     res.innerHTML = `
       <b>Skor: ${correct}/${total}.</b>
-      ${pass ? "Hebat! Pelajaran ini ditandai selesai ✓" : "Pelajaran tetap ditandai selesai, tapi coba baca ulang bagian yang keliru ya."}
+      ${
+        lulus
+          ? "Semua benar! Pelajaran ini ditandai selesai ✓ dan tombol <b>Berikutnya</b> sudah terbuka."
+          : `Kurang ${total - correct} lagi. Baca penjelasan di tiap soal, lalu ulangi — <b>semua soal harus benar</b> agar pelajaran ini dihitung selesai.`
+      }
       <br><button class="btn ghost retry">Ulangi Kuis</button>
     `;
     res.querySelector(".retry").onclick = () => {

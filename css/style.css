@@ -986,3 +986,11 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
 .rl-dinding { fill: var(--muted); opacity: .55; }
 .rl-jejak { fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
 .demo-controls .btn.aktif { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+/* ---------- Kunci tombol Berikutnya sampai kuis benar ---------- */
+.nav-lesson.terkunci { opacity: .45; cursor: not-allowed; filter: grayscale(1); }
+.nav-lesson.terkunci:hover { transform: none; }
+.nav-kunci { margin: 22px 0 -8px; padding: 12px 14px; border-radius: 12px; font-size: .92rem; background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--warn); }
+.nav-kunci.goyang { animation: kunciGoyang .45s; }
+@keyframes kunciGoyang { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.dis-kunci { display: flex; align-items: center; gap: 8px; font-size: .9rem; }
