@@ -3870,6 +3870,110 @@ DEMOS["rl-grid"] = function (root) {
   draw();
 };
 
+
+/* ---------- Demo: fungsi aktivasi, turunannya, dan efek bertumpuk ---------- */
+DEMOS["aktivasi"] = function (root) {
+  const sig = (x) => 1 / (1 + Math.exp(-x));
+  const FUNGSI = {
+    Sigmoid: { f: sig, rumus: "1 ÷ (1 + e⁻ˣ)", keluaran: "0 … 1", pakai: "lapisan keluaran untuk ya/tidak" },
+    Tanh: { f: Math.tanh, rumus: "(eˣ − e⁻ˣ) ÷ (eˣ + e⁻ˣ)", keluaran: "−1 … 1", pakai: "lapisan tersembunyi model lama, gerbang LSTM" },
+    ReLU: { f: (x) => Math.max(0, x), rumus: "maks(0, x)", keluaran: "0 … ∞", pakai: "lapisan tersembunyi (pilihan bawaan)" },
+    "Leaky ReLU": { f: (x) => (x >= 0 ? x : 0.01 * x), rumus: "x bila positif, 0,01x bila negatif", keluaran: "−∞ … ∞", pakai: "pengganti ReLU saat neuron mati" },
+    GELU: { f: (x) => 0.5 * x * (1 + Math.tanh(Math.sqrt(2 / Math.PI) * (x + 0.044715 * x * x * x))), rumus: "0,5x × (1 + tanh(…))", keluaran: "≈ −0,17 … ∞", pakai: "Transformer (GPT, BERT)" },
+  };
+  let nama = "Sigmoid", x = 1, lapisan = 6;
+
+  const turunan = (f, t) => (f(t + 1e-5) - f(t - 1e-5)) / 2e-5;
+  const koma = (v, d) => v.toFixed(d).replace(".", ",");
+  function kecil(v) {
+    if (v === 0) return "0";
+    if (Math.abs(v) >= 0.001) return koma(v, 4);
+    const e = v.toExponential(2).split("e");
+    return koma(parseFloat(e[0]), 2) + " × 10^" + parseInt(e[1], 10);
+  }
+
+  const kanvas = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+  const XMIN = -6, XMAX = 6, YMIN = -1.6, YMAX = 2.6;
+  const px = (v) => 44 + ((v - XMIN) / (XMAX - XMIN)) * 460;
+  const py = (v) => 214 - ((v - YMIN) / (YMAX - YMIN)) * 196;
+
+  function jalur(fn) {
+    let d = "";
+    for (let t = XMIN; t <= XMAX + 0.001; t += 0.1) {
+      const y = Math.max(YMIN - 1, Math.min(YMAX + 1, fn(t)));
+      d += (d ? "L" : "M") + px(t).toFixed(1) + " " + py(y).toFixed(1) + " ";
+    }
+    return d;
+  }
+
+  function draw() {
+    const F = FUNGSI[nama];
+    const fx = F.f(x), dfx = turunan(F.f, x);
+    let g = '<svg viewBox="0 0 520 240" class="viz-svg" role="img" aria-label="Grafik fungsi aktivasi dan turunannya">';
+    g += '<line x1="44" y1="' + py(0).toFixed(1) + '" x2="504" y2="' + py(0).toFixed(1) + '" class="vaxis"/>';
+    g += '<line x1="' + px(0).toFixed(1) + '" y1="18" x2="' + px(0).toFixed(1) + '" y2="214" class="vaxis"/>';
+    [-1, 1, 2].forEach((v) => { g += '<text x="' + (px(0) - 6).toFixed(1) + '" y="' + (py(v) + 4).toFixed(1) + '" text-anchor="end" class="vt-xs">' + v + "</text>"; });
+    [-4, -2, 2, 4].forEach((v) => { g += '<text x="' + px(v).toFixed(1) + '" y="' + (py(0) + 14).toFixed(1) + '" text-anchor="middle" class="vt-xs">' + v + "</text>"; });
+    g += '<path d="' + jalur((t) => turunan(F.f, t)) + '" class="garis-terbaik"/>';
+    g += '<path d="' + jalur(F.f) + '" class="vline aktif"/>';
+    g += '<line x1="' + px(x).toFixed(1) + '" y1="18" x2="' + px(x).toFixed(1) + '" y2="214" class="garis-ambang"/>';
+    g += '<circle cx="' + px(x).toFixed(1) + '" cy="' + py(Math.max(YMIN, Math.min(YMAX, fx))).toFixed(1) + '" r="6" class="titik-lancar"/>';
+    g += '<text x="504" y="30" text-anchor="end" class="vt-xs">— biru: f(x) · - - hijau: turunan f′(x)</text>';
+    g += '<text x="274" y="236" text-anchor="middle" class="vt-xs">nilai yang masuk ke neuron (x)</text></svg>';
+    kanvas.innerHTML = g;
+
+    const berantai = Math.pow(dfx, lapisan);
+    let catatan;
+    if (nama === "Sigmoid" || nama === "Tanh") {
+      catatan = Math.abs(dfx) < 0.05
+        ? "<b>Di sini kurvanya nyaris datar — neuron sedang jenuh.</b> Turunannya hampir nol, jadi sinyal belajar yang dikirim mundur lewat aturan rantai ikut mengecil. Bobot di lapisan awal nyaris tidak berubah, dan jaringan terasa 'berhenti belajar'."
+        : "Turunan " + nama + " terbesar hanya <b>" + (nama === "Sigmoid" ? "0,25" : "1,0") + "</b>, tepat di tengah. " + (nama === "Sigmoid" ? "Karena setiap lapisan mengalikan angka di bawah 1, sinyal belajar menyusut cepat saat jaringannya dalam — inilah <i>vanishing gradient</i>." : "Tanh lebih baik dari sigmoid karena berpusat di nol, tapi kedua ujungnya tetap jenuh.");
+    } else if (nama === "ReLU") {
+      catatan = x >= 0
+        ? "<b>Di sisi positif, turunannya tepat 1.</b> Sinyal belajar diteruskan utuh berapa pun dalamnya jaringan — inilah alasan ReLU membuat jaringan dalam bisa dilatih."
+        : "<b>Di sisi negatif, keluarannya 0 dan turunannya 0.</b> Neuron yang selalu menerima nilai negatif tidak pernah diperbaiki lagi — disebut <i>neuron mati</i> (dead ReLU). Coba Leaky ReLU untuk melihat perbaikannya.";
+    } else if (nama === "Leaky ReLU") {
+      catatan = "Sama seperti ReLU di sisi positif, tapi sisi negatifnya <b>tidak benar-benar nol</b> (kemiringan 0,01). Neuron yang terlanjur negatif masih punya jalan untuk kembali hidup.";
+    } else {
+      catatan = "GELU melengkung halus di sekitar nol dan membiarkan sebagian kecil nilai negatif lewat. Dipakai di hampir semua Transformer modern. Perhatikan turunannya bisa <b>sedikit di atas 1</b> di daerah tertentu.";
+    }
+
+    out.innerHTML =
+      '<div class="dm-line"><span>Rumus</span><b>' + F.rumus + "</b></div>" +
+      '<div class="dm-line"><span>Rentang keluaran</span><b>' + F.keluaran + "</b></div>" +
+      '<div class="dm-line"><span>Biasa dipakai di</span><b>' + F.pakai + "</b></div>" +
+      '<div class="dm-line big"><span>f(' + koma(x, 1) + ")</span><b>" + koma(fx, 3) + "</b></div>" +
+      '<div class="dm-line ' + (Math.abs(dfx) < 0.05 ? "bad" : "good") + '"><span>Turunan f′(' + koma(x, 1) + ') <i class="dm-sub">seberapa besar sinyal belajar diteruskan</i></span><b>' + koma(dfx, 4) + "</b></div>" +
+      '<div class="dm-line teks ' + (Math.abs(berantai) < 0.001 ? "bad" : "") + '"><span>Sinyal setelah melewati ' + lapisan + ' lapisan <i class="dm-sub">turunan dikalikan berulang lewat aturan rantai</i></span><b>' + koma(dfx, 3) + "<sup>" + lapisan + "</sup> = " + kecil(berantai) + "</b></div>" +
+      '<div class="dm-note">' + catatan + "</div>";
+  }
+
+  const tombol = Object.keys(FUNGSI).map((n) => {
+    const t = h("button", { class: "btn ghost", type: "button", text: n });
+    t.onclick = () => { nama = n; tombol.forEach((b) => b.classList.toggle("aktif", b.textContent === n)); draw(); };
+    return t;
+  });
+  tombol[0].classList.add("aktif");
+  const slX = h("input", { type: "range", min: "-6", max: "6", step: "0.1", value: "1", class: "dm-range" });
+  const lbX = h("b", { text: "1,0" });
+  slX.oninput = () => { x = parseFloat(slX.value); lbX.textContent = koma(x, 1); draw(); };
+  const slL = h("input", { type: "range", min: "1", max: "12", step: "1", value: "6", class: "dm-range" });
+  const lbL = h("b", { text: "6" });
+  slL.oninput = () => { lapisan = parseInt(slL.value, 10); lbL.textContent = slL.value; draw(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "📈 <b>Demo: bandingkan fungsi aktivasi dan turunannya</b>" }),
+    h("p", { class: "demo-hint", text: "Garis biru = nilai yang keluar dari neuron. Garis hijau putus-putus = turunannya, yaitu seberapa besar sinyal belajar yang bisa lewat. Geser x ke ujung kiri atau kanan dan perhatikan apa yang terjadi." }),
+    h("div", { class: "demo-controls" }, tombol),
+    kanvas,
+    h("label", { class: "dm-row" }, [h("span", { text: "Nilai masuk (x): " }), slX, lbX]),
+    h("label", { class: "dm-row" }, [h("span", { text: "Jumlah lapisan bertumpuk: " }), slL, lbL]),
+    out,
+  ]));
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

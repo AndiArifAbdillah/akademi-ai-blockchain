@@ -1497,8 +1497,123 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
       id: "bc-matematika",
       level: "Matematika",
       title: "Matematika Kunci & Penambangan",
-      summary: "Membaca simbol, aritmetika modulo & fungsi satu arah, serta peluang penambangan & serangan 51%.",
+      summary: "Untuk apa matematika di crypto, membaca simbol, aritmetika modulo & fungsi satu arah, serta peluang penambangan & serangan 51%.",
       lessons: [
+        {
+          id: "bc-mat-intro",
+          title: "Untuk Apa Belajar Matematika di Crypto?",
+          duration: "12 menit",
+          content: `
+<p>Di dunia keuangan biasa, yang menjaga uangmu adalah <b>lembaga</b>: bank, otoritas, dan hukum. Di crypto, penjaganya diganti oleh <b>matematika</b>. Karena itu pertanyaan "buat apa belajar rumusnya?" punya jawaban yang tidak berlaku di bidang lain: <b>rumus itulah pengganti satpam, brankas, dan notarisnya</b>.</p>
+
+<div data-diagram="pipeline" data-stages="Simbol::agar rumus terbaca|Modulo::kenapa kunci aman|Peluang::risiko penambangan|Rumus AMM::untung-rugi di DeFi" data-caption="Empat bekal matematika di jalur ini, dan kegunaannya masing-masing"></div>
+
+<h3>Tiga tingkat, tiga kebutuhan</h3>
+<table class="tbl">
+  <tr><th>Kamu ingin…</th><th>Yang perlu dipahami</th><th>Tanpa itu kamu berisiko…</th></tr>
+  <tr><td><b>Menyimpan &amp; mengirim koin</b></td><td>Urutan besar angka (kenapa kunci tidak bisa ditebak) dan peluang dasar</td><td>Percaya pada janji "pasti untung", atau panik oleh isu teknis yang sebenarnya tidak berdasar</td></tr>
+  <tr><td><b>Menilai proyek sebelum ikut</b></td><td>Persen, bunga majemuk, dilusi token, slippage &amp; impermanent loss</td><td>Tertipu angka imbal hasil besar yang sebenarnya dibayar dari emisi token</td></tr>
+  <tr><td><b>Membangun atau mengaudit sistem</b></td><td>Aritmetika modulo, fungsi satu arah, kurva eliptik</td><td>Menulis kode yang tampak jalan tapi bocor keamanannya</td></tr>
+</table>
+
+<div class="callout">
+<b>Modul ini menyasar dua tingkat pertama.</b> Tujuannya bukan membuatmu bisa membuat algoritma kriptografi sendiri — itu pekerjaan yang sangat khusus dan sebaiknya tidak dilakukan sendirian. Tujuannya agar kamu <b>tahu apa yang menjaga uangmu</b>, dan bisa membedakan janji yang masuk akal dari yang mustahil.
+</div>
+
+<h3>Lima saat matematika benar-benar menyelamatkanmu</h3>
+<table class="tbl">
+  <tr><th>Pertanyaan atau kejadian</th><th>Jawabannya ada di matematika</th><th>Bekalnya</th></tr>
+  <tr><td>"Kunci publikku dilihat semua orang. Kenapa kunci privatku tetap aman?"</td><td>Menghitungnya hanya mudah satu arah, dan jumlah kemungkinannya sekitar 10⁷⁷</td><td>Fungsi satu arah</td></tr>
+  <tr><td>"Platform ini menjanjikan imbal hasil 1% per hari"</td><td>Itu berarti sekitar 38 kali lipat dalam setahun — tanyakan dari mana uangnya</td><td>Bunga majemuk</td></tr>
+  <tr><td>"Aku menyediakan likuiditas, harga malah naik, tapi aset saya berkurang"</td><td>Rumus x · y = k memaksa komposisi asetmu berubah saat harga bergerak</td><td>Rumus AMM</td></tr>
+  <tr><td>"Seberapa mungkin jaringan ini diserang 51%?"</td><td>Peluang dan biaya menyewa daya komputasi bisa dihitung, tidak perlu ditebak</td><td>Peluang</td></tr>
+  <tr><td>"Kenapa harga yang kudapat berbeda dari yang tertulis?"</td><td>Makin besar transaksimu dibanding kolam likuiditas, makin besar selisihnya</td><td>Slippage</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Penipuan crypto hampir selalu punya cacat matematis.</b> Janji imbal hasil tetap yang tinggi, "bunga harian", atau skema yang membayar peserta lama dari uang peserta baru — semuanya runtuh begitu angkanya dihitung sampai akhir. Kemampuan menghitung sederhana melindungi lebih banyak orang daripada kemampuan membaca kode.
+</div>
+
+<h3>Yang TIDAK perlu kamu lakukan</h3>
+<table class="tbl">
+  <tr><th>Tidak perlu</th><th>Alasannya</th></tr>
+  <tr><td>Menghafal rumus ECDSA</td><td>Dompet sudah menjalankannya; yang penting kamu paham sifatnya</td></tr>
+  <tr><td>Menghitung modulo bilangan raksasa dengan tangan</td><td>Contoh berangka kecil sudah cukup untuk memahami idenya</td></tr>
+  <tr><td>Membuat kurva atau algoritma kriptografi sendiri</td><td>Standar yang dipakai dunia sudah diuji puluhan tahun — membuat sendiri justru berbahaya</td></tr>
+</table>
+
+<h3>Peta bekal matematika di jalur ini</h3>
+<table class="tbl">
+  <tr><th>Pelajaran</th><th>Membuat kamu paham…</th></tr>
+  <tr><td><b>Membaca Simbol Matematika Kripto</b></td><td>Arti mod, pangkat, dan simbol lain yang muncul di penjelasan teknis</td></tr>
+  <tr><td><b>Aritmetika Modulo &amp; Fungsi Satu Arah</b></td><td>Kenapa kunci publik boleh dibagikan tanpa membahayakan kunci privat</td></tr>
+  <tr><td><b>Peluang Penambangan &amp; Serangan 51%</b></td><td>Kenapa menambang itu lotere, dan kapan sebuah jaringan benar-benar rawan</td></tr>
+  <tr><td><b>Matematika AMM</b> (di modul DeFi)</td><td>Dari mana slippage dan impermanent loss berasal</td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Kalau waktumu terbatas, dahulukan dua hal:</b> <b>bunga majemuk</b> (untuk menilai janji imbal hasil) dan <b>urutan besar angka</b> (untuk paham kenapa kunci aman). Dua hal ini saja sudah menutup sebagian besar risiko yang dihadapi pemula di crypto.
+</div>
+`,
+          keyPoints: [
+            "Di crypto, matematika menggantikan peran lembaga: ia yang menjaga kepemilikan dan aturan.",
+            "Pemakai biasa cukup paham urutan besar angka dan peluang; penilai proyek butuh persen, bunga majemuk, dilusi, dan rumus AMM.",
+            "Membuat algoritma kriptografi sendiri berbahaya — standar yang sudah teruji jauh lebih aman.",
+            "Janji imbal hasil tetap yang tinggi biasanya runtuh begitu dihitung dengan bunga majemuk.",
+            "Slippage dan impermanent loss berasal dari rumus x · y = k, bukan dari kecurangan bursa.",
+            "Prioritas bagi pemula: bunga majemuk dan urutan besar angka.",
+          ],
+          practice: [
+            { type: "number", q: "Sebuah platform menjanjikan imbal hasil 1% per hari (berbunga majemuk). Kira-kira menjadi berapa kali lipat dalam 365 hari?", answer: 37.8, tol: 1.5, hint: "1,01 dipangkatkan 365.", solution: "1,01³⁶⁵ ≈ 37,8 kali lipat. Uang Rp1 juta menjadi hampir Rp38 juta dalam setahun — pertanyaan wajibnya: dari mana uang sebanyak itu berasal?" },
+            { type: "choice", q: "Sebuah proyek menjanjikan 'imbal hasil tetap 3% per bulan, tanpa risiko'. Apa pertanyaan pertama yang paling tepat?", options: ["Dari mana pendapatan untuk membayarnya?", "Berapa minimal setoran awalnya?", "Apakah situsnya terlihat profesional?"], answer: 0, hint: "Imbal hasil harus datang dari suatu sumber pendapatan.", solution: "3% per bulan berarti sekitar 42% setahun. Kalau uangnya tidak berasal dari pendapatan nyata, ia hanya bisa berasal dari setoran peserta baru." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa matematika lebih menentukan di crypto dibanding di perbankan biasa?",
+              options: [
+                "Karena matematika menggantikan peran lembaga yang biasanya menjaga uang dan aturan",
+                "Karena semua pengguna crypto diwajibkan menghitung transaksinya secara manual",
+                "Karena harga aset crypto ditentukan oleh rumus resmi yang ditetapkan pemerintah",
+                "Karena dompet crypto menolak bekerja bila penggunanya belum belajar matematika",
+              ],
+              answer: 0,
+              explain: "Tidak ada bank atau otoritas yang menjamin; jaminannya adalah sifat matematis kuncinya.",
+            },
+            {
+              q: "Mana yang TIDAK perlu dikuasai pemakai crypto biasa?",
+              options: [
+                "Merancang algoritma kriptografi sendiri",
+                "Memahami bahwa jumlah kemungkinan kunci sangat besar",
+                "Menghitung imbal hasil dengan bunga majemuk",
+                "Memahami bahwa transaksi besar menimbulkan slippage",
+              ],
+              answer: 0,
+              explain: "Membuat kriptografi sendiri justru berbahaya; standar yang teruji jauh lebih aman.",
+            },
+            {
+              q: "Sebuah platform menjanjikan 1% per hari. Kesimpulan matematis yang tepat?",
+              options: [
+                "Itu sekitar 38 kali lipat setahun, sehingga sumber dananya wajib dipertanyakan",
+                "Itu hanya 365% setahun, angka yang biasa dalam investasi berisiko tinggi",
+                "Itu aman selama platformnya membayar tepat waktu selama beberapa bulan",
+                "Itu mustahil dihitung karena imbal hasil harian tidak bisa dijumlahkan",
+              ],
+              answer: 0,
+              explain: "Bunga majemuk membuat angka harian kecil menjadi sangat besar dalam setahun.",
+            },
+            {
+              q: "Kamu menyediakan likuiditas di AMM, harga token naik, tapi nilai asetmu tertinggal dibanding sekadar menyimpannya. Konsep apa itu?",
+              options: [
+                "Impermanent loss, akibat rumus x · y = k yang mengubah komposisi asetmu",
+                "Slippage, akibat transaksimu terlalu besar dibanding kolam likuiditas",
+                "Dilusi token, akibat proyek menerbitkan token baru terus-menerus",
+                "Serangan 51%, akibat penambang menguasai mayoritas daya komputasi",
+              ],
+              answer: 0,
+              explain: "Kolam otomatis menjual token yang naik dan membeli yang turun demi menjaga hasil kali tetap.",
+            },
+          ],
+        },
         {
           id: "bc-mat-0",
           title: "Membaca Simbol Matematika Kripto",

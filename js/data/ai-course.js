@@ -1188,8 +1188,137 @@ console.log("=> Konvergen menuju x = 3 (titik minimum). Itulah 'belajar'.");</di
       id: "ai-matematika",
       level: "Matematika",
       title: "Matematika di Balik AI",
-      summary: "Membaca simbol, vektor & dot product, turunan, fungsi aktivasi & loss, dan probabilitas.",
+      summary: "Untuk apa matematika AI dipelajari, membaca simbol, vektor & dot product, turunan, fungsi aktivasi & loss, sigmoid vs ReLU, dan probabilitas.",
       lessons: [
+        {
+          id: "ai-mat-intro",
+          title: "Untuk Apa Sebenarnya Belajar Matematika AI?",
+          duration: "13 menit",
+          content: `
+<p>Pertanyaan yang wajar sebelum masuk modul ini: <b>apa gunanya?</b> Toh kamu bisa memakai ChatGPT tanpa tahu satu rumus pun, dan bisa melatih model dengan tiga baris scikit-learn. Jawabannya jujur: <b>tergantung sejauh mana kamu ingin melangkah</b> — dan pelajaran ini memetakannya, termasuk bagian yang boleh kamu lewati.</p>
+
+<div data-diagram="pipeline" data-stages="Simbol::agar rumus terbaca|Vektor::makna jadi angka|Turunan::cara model belajar|Loss::apa yang dikejar|Peluang::cara membaca hasil" data-caption="Lima bekal di modul ini, dan satu kalimat kegunaan masing-masing"></div>
+
+<h3>Tiga tingkat pemakai AI</h3>
+<table class="tbl">
+  <tr><th>Kamu ingin…</th><th>Matematika yang dibutuhkan</th><th>Tanpa itu kamu akan…</th></tr>
+  <tr><td><b>Memakai alat AI</b> (ChatGPT, Claude, alat gambar)</td><td class="ok-cell">Hampir tidak ada</td><td>Baik-baik saja. Cukup paham batasnya: AI bisa salah dengan percaya diri</td></tr>
+  <tr><td><b>Melatih model sendiri</b> untuk data tempat kerjamu</td><td>Arti turunan, loss, peluang, dan vektor — <b>bukan</b> cara menghitungnya manual</td><td>Bisa menjalankan kode, tapi buntu saat hasilnya aneh dan tidak tahu kenop mana yang harus diputar</td></tr>
+  <tr><td><b>Merancang model baru</b> atau membaca makalah penelitian</td><td>Aljabar linear, kalkulus, statistik secara serius</td><td>Hanya bisa menyalin karya orang lain, tidak bisa memperbaikinya</td></tr>
+</table>
+
+<div class="callout">
+<b>Modul ini menyasar tingkat kedua.</b> Tujuannya bukan membuatmu jago menghitung — komputer jauh lebih cepat. Tujuannya membuatmu <b>bisa membaca rumus dan tahu kenop mana yang berpengaruh</b> saat modelmu berperilaku aneh.
+</div>
+
+<h3>Lima saat matematika benar-benar menyelamatkanmu</h3>
+<p>Semua ini kejadian sehari-hari yang dialami orang yang melatih model:</p>
+<table class="tbl">
+  <tr><th>Yang kamu lihat di layar</th><th>Apa yang sebenarnya terjadi</th><th>Bekalnya</th></tr>
+  <tr><td>"Loss tidak turun sama sekali, model seperti tidak belajar"</td><td>Langkah belajar terlalu kecil, atau gradien tersumbat di fungsi aktivasi</td><td>Turunan &amp; aktivasi</td></tr>
+  <tr><td>"Loss malah meledak jadi NaN"</td><td>Langkah belajar terlalu besar, atau input belum diskalakan</td><td>Turunan &amp; vektor</td></tr>
+  <tr><td>"Akurasi 99%, tapi atasanku bilang modelnya tidak berguna"</td><td>Kasus yang dicari hanya 1% — menebak 'tidak ada' saja sudah 99%</td><td>Peluang &amp; metrik</td></tr>
+  <tr><td>"Chatbot RAG-ku mengambil dokumen yang tidak nyambung"</td><td>Kemiripan diukur dengan cara yang keliru, atau teks dipotong terlalu panjang</td><td>Vektor &amp; dot product</td></tr>
+  <tr><td>"Model regresi malah dilatih dengan loss klasifikasi"</td><td>Fungsi loss tidak cocok dengan jenis tugasnya</td><td>Fungsi loss</td></tr>
+</table>
+<p>Perhatikan pola pentingnya: <b>tidak satu pun dari masalah ini yang bisa diselesaikan dengan menambah data atau mengganti pustaka.</b> Semuanya butuh tahu apa yang sedang dihitung di balik layar.</p>
+
+<h3>Yang TIDAK perlu kamu lakukan</h3>
+<table class="tbl">
+  <tr><th>Tidak perlu</th><th>Alasannya</th></tr>
+  <tr><td>Menghafal tabel turunan</td><td>Pustaka menghitung turunan sendiri secara otomatis</td></tr>
+  <tr><td>Membuktikan teorema</td><td>Itu pekerjaan peneliti, bukan praktisi</td></tr>
+  <tr><td>Mengalikan matriks besar dengan tangan</td><td>Satu baris kode selesai dalam mikrodetik</td></tr>
+  <tr><td>Menguasai semuanya sebelum mulai coding</td><td>Justru sebaliknya: kode dulu, lalu balik ke rumus saat menemui masalah</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Jebakan yang umum:</b> menunda praktik sampai "matematikanya beres dulu". Banyak orang berhenti di situ. Cara yang lebih berhasil: pelajari secukupnya agar rumus <b>terbaca</b>, lalu kembali ke modul ini setiap kali menemui istilah yang tidak kamu pahami di lapangan.
+</div>
+
+<h3>Peta modul ini — apa yang dibuka tiap pelajaran</h3>
+<table class="tbl">
+  <tr><th>Pelajaran</th><th>Membuat kamu paham…</th></tr>
+  <tr><td><b>Membaca Simbol</b></td><td>Arti f(x), Σ, α, σ, ŷ — supaya rumus di mana pun berhenti terasa menakutkan</td></tr>
+  <tr><td><b>Vektor &amp; Dot Product</b></td><td>Bagaimana kata dan dokumen menjadi angka, dan bagaimana pencarian RAG menilai "mirip"</td></tr>
+  <tr><td><b>Turunan &amp; Gradient Descent</b></td><td>Bagaimana model belajar, dan kenapa learning rate adalah kenop terpenting</td></tr>
+  <tr><td><b>Fungsi Aktivasi &amp; Loss</b></td><td>Apa yang sebenarnya dikejar model saat dilatih, dan cara memilih lapisan keluaran</td></tr>
+  <tr><td><b>Sigmoid, ReLU &amp; Kawan-Kawan</b></td><td>Kenapa jaringan dalam dulu gagal dilatih, dan kenapa satu fungsi sederhana mengubah segalanya</td></tr>
+  <tr><td><b>Probabilitas untuk AI</b></td><td>Kenapa akurasi menipu, dan apa arti angka <i>temperature</i> pada chatbot</td></tr>
+</table>
+
+<h3>Kalau waktumu sangat terbatas</h3>
+<p>Ini urutan minimum yang memberi manfaat paling besar per menit belajar:</p>
+<ol>
+  <li><b>Arti simbol</b> — tanpa ini, semua bacaan lain jadi lambat</li>
+  <li><b>Arti turunan</b> (kemiringan, arah menurun) — bukan cara menghitungnya</li>
+  <li><b>Peluang dasar &amp; metrik</b> — agar tidak tertipu akurasi</li>
+  <li><b>Dot product</b> — begitu kamu menyentuh embedding atau RAG</li>
+</ol>
+
+<div class="callout">
+<b>💡 Cara membaca modul ini.</b> Setiap pelajaran dimulai dari analogi sehari-hari, lalu satu contoh hitung kecil, lalu demo yang bisa kamu geser sendiri. Kalau ada bagian yang terasa berat, lewati dulu bagian rumusnya dan mainkan demonya — sering kali pemahamannya justru datang dari situ.
+</div>
+`,
+          keyPoints: [
+            "Untuk sekadar memakai alat AI, matematika hampir tidak dibutuhkan; yang penting tahu batasnya.",
+            "Untuk melatih model sendiri, yang dibutuhkan adalah ARTI turunan, loss, peluang, dan vektor — bukan kemampuan menghitung manual.",
+            "Untuk merancang model baru atau membaca makalah, dibutuhkan aljabar linear, kalkulus, dan statistik secara serius.",
+            "Masalah umum seperti loss tidak turun, loss NaN, akurasi menipu, dan RAG salah ambil dokumen tidak bisa diselesaikan dengan menambah data — semuanya butuh paham yang dihitung di balik layar.",
+            "Tidak perlu menghafal tabel turunan, membuktikan teorema, atau menghitung matriks manual.",
+            "Jangan menunda praktik sampai matematikanya beres; kode dulu, lalu kembali ke rumus saat menemui masalah.",
+          ],
+          practice: [
+            { type: "choice", q: "Model deteksi penipuan punya akurasi 99%, padahal penipuan hanya 1% dari transaksi. Apa yang pertama kamu periksa?", options: ["Precision & recall untuk kelas penipuan", "Menambah jumlah lapisan model", "Mengganti pustaka ke yang lebih baru"], answer: 0, hint: "Menebak 'bukan penipuan' terus-menerus sudah menghasilkan 99%.", solution: "Pada data timpang, akurasi menipu. Yang bermakna adalah seberapa banyak penipuan yang tertangkap (recall) dan seberapa tepat penandaannya (precision)." },
+            { type: "choice", q: "Loss model berubah menjadi NaN di langkah-langkah pertama. Bekal matematika mana yang paling membantu?", options: ["Memahami learning rate & skala input", "Memahami pembuktian teorema limit", "Memahami cara mengalikan matriks manual"], answer: 0, hint: "Apa yang membuat angka meledak saat melangkah?", solution: "Langkah yang terlalu besar atau input bernilai sangat besar membuat perhitungan meledak. Ini soal turunan & penskalaan, bukan soal teorema." },
+          ],
+          quiz: [
+            {
+              q: "Apa tujuan utama belajar matematika di modul ini?",
+              options: [
+                "Bisa membaca rumus dan tahu kenop mana yang berpengaruh saat model bermasalah",
+                "Bisa menghitung turunan dan perkalian matriks lebih cepat daripada komputer",
+                "Bisa membuktikan teorema agar hasil model dijamin selalu benar",
+                "Bisa menghafal semua rumus sebelum boleh menulis baris kode pertama",
+              ],
+              answer: 0,
+              explain: "Perhitungannya dikerjakan pustaka; yang tidak bisa digantikan adalah penilaianmu saat hasilnya aneh.",
+            },
+            {
+              q: "Seseorang hanya ingin memakai ChatGPT untuk pekerjaan sehari-hari. Apa yang paling perlu ia pahami?",
+              options: [
+                "Batas alatnya — bahwa AI bisa salah dengan sangat percaya diri",
+                "Turunan parsial dan aturan rantai pada jaringan dalam",
+                "Cara menurunkan rumus backpropagation dari awal",
+                "Aljabar linear untuk perkalian matriks berukuran besar",
+              ],
+              answer: 0,
+              explain: "Untuk tingkat pemakai, matematika hampir tidak dibutuhkan; kesadaran akan batas alat jauh lebih berharga.",
+            },
+            {
+              q: "Kenapa menunda praktik sampai 'matematikanya beres dulu' tidak dianjurkan?",
+              options: [
+                "Karena banyak orang berhenti di situ; rumus lebih mudah saat bertemu masalah nyata",
+                "Karena matematika sama sekali tidak dipakai dalam pekerjaan machine learning",
+                "Karena pustaka modern akan menolak berjalan bila penggunanya paham matematika",
+                "Karena rumus AI berubah setiap tahun sehingga tidak ada gunanya dipelajari",
+              ],
+              answer: 0,
+              explain: "Urutan yang berhasil: kode dulu, lalu kembali ke rumus saat menemui istilah yang membingungkan.",
+            },
+            {
+              q: "Chatbot RAG mengambil dokumen yang tidak nyambung dengan pertanyaan. Bekal mana yang paling relevan?",
+              options: [
+                "Vektor & dot product, karena kemiripan dokumen diukur dari situ",
+                "Fungsi loss, karena dokumen dipilih dengan meminimalkan loss",
+                "Faktor diskon, karena dokumen lama bernilai lebih rendah",
+                "Turunan, karena pencarian dokumen memakai gradient descent",
+              ],
+              answer: 0,
+              explain: "Pencarian RAG menilai kemiripan arah vektor antara pertanyaan dan potongan dokumen.",
+            },
+          ],
+        },
         {
           id: "ai-mat-0",
           title: "Membaca Simbol Matematika",
@@ -1535,6 +1664,8 @@ console.log("-----");
 console.log("Totalnya selalu 100% - itulah gunanya softmax.");
 console.log("Perhatikan: selisih skor kecil bisa jadi selisih peluang besar (efek eksponensial).");</div>
 
+<p>Perbandingan lengkapnya — termasuk tanh, Leaky ReLU, GELU, dan alasan ReLU mengubah sejarah deep learning — ada di <b>pelajaran berikutnya</b>.</p>
+
 <h3>Fungsi loss — mengukur kesalahan</h3>
 <table class="tbl">
   <tr><th>Loss</th><th>Rumus</th><th>Untuk</th></tr>
@@ -1579,6 +1710,151 @@ console.log("Perhatikan: selisih skor kecil bisa jadi selisih peluang besar (efe
               options: ["ReLU", "Softmax", "MSE", "Turunan"],
               answer: 1,
               explain: "Softmax menormalkan skor menjadi distribusi peluang.",
+            },
+          ],
+        },
+        {
+          id: "ai-mat-5",
+          title: "Sigmoid, ReLU & Kawan-Kawan — Memilih Fungsi Aktivasi",
+          duration: "15 menit",
+          content: `
+<p>Di pelajaran sebelumnya kamu melihat bahwa tanpa fungsi aktivasi, menumpuk seratus lapisan sama saja dengan satu lapisan. Sekarang kita bandingkan fungsi-fungsinya satu per satu — karena pilihan ini pernah menjadi <b>penghalang terbesar</b> perkembangan deep learning, dan sampai sekarang masih menentukan apakah modelmu bisa dilatih atau macet.</p>
+
+<h3>Fundamental: aktivasi adalah "keran" di setiap neuron</h3>
+<div class="callout">
+🚰 Setiap neuron menjumlahkan sinyal masuk, lalu melewatkannya ke sebuah <b>keran</b>. Keran itulah fungsi aktivasi. Ia menentukan dua hal:<br><br>
+1. <b>Berapa nilai yang diteruskan ke depan</b> saat model menebak<br>
+2. <b>Berapa besar sinyal perbaikan yang bisa lewat mundur</b> saat model belajar — dan ini ditentukan oleh <b>turunannya</b><br><br>
+Kalau turunannya nyaris nol, keran itu tertutup: sinyal belajar tidak bisa lewat, dan lapisan-lapisan di belakangnya berhenti memperbaiki diri.
+</div>
+
+<h3>1. Sigmoid — si kurva S</h3>
+<p style="text-align:center"><b>σ(x) = 1 ÷ (1 + e⁻ˣ)</b></p>
+<table class="tbl">
+  <tr><th>x</th><th>σ(x)</th><th>Turunan σ′(x)</th></tr>
+  <tr><td>−6</td><td>0,0025</td><td class="bad-cell">0,0025</td></tr>
+  <tr><td>0</td><td>0,5</td><td class="ok-cell">0,25 (paling besar)</td></tr>
+  <tr><td>2</td><td>0,881</td><td>0,105</td></tr>
+  <tr><td>6</td><td>0,9975</td><td class="bad-cell">0,0025</td></tr>
+</table>
+<p>Kelebihannya jelas: keluarannya selalu di antara 0 dan 1, sehingga bisa dibaca sebagai <b>peluang</b>. Itulah kenapa sigmoid masih menjadi pilihan di <b>lapisan keluaran</b> untuk pertanyaan ya/tidak.</p>
+
+<div data-demo="aktivasi"></div>
+
+<h3>Masalah besar sigmoid: sinyal belajar yang menguap</h3>
+<div class="callout warn">
+Perhatikan angka tadi: turunan sigmoid <b>paling besar pun hanya 0,25</b>. Saat sinyal belajar dikirim mundur lewat aturan rantai, setiap lapisan mengalikannya dengan angka itu:<br><br>
+2 lapisan: 0,25² = 0,0625<br>
+4 lapisan: 0,25⁴ ≈ 0,0039<br>
+10 lapisan: 0,25¹⁰ ≈ <b>0,00000095</b><br><br>
+Sinyal yang sampai ke lapisan pertama tinggal <b>sepersejuta</b>. Lapisan awal praktis berhenti belajar. Inilah <b>vanishing gradient</b> — alasan jaringan dalam sangat sulit dilatih sampai awal 2010-an.
+</div>
+
+<h3>2. Tanh — sigmoid yang digeser</h3>
+<p>Bentuknya sama-sama S, tapi keluarannya <b>−1 sampai 1</b> dan berpusat di nol, sehingga pelatihan biasanya lebih stabil. Turunan terbesarnya 1, lebih baik daripada 0,25. Tapi kedua ujungnya <b>tetap jenuh</b>, sehingga masalah dasarnya belum hilang. Tanh masih dipakai di dalam gerbang LSTM.</p>
+
+<h3>3. ReLU — solusi sederhana yang mengubah segalanya</h3>
+<p style="text-align:center"><b>ReLU(x) = maks(0, x)</b> — "kalau negatif jadikan nol, kalau positif biarkan apa adanya"</p>
+<table class="tbl">
+  <tr><th>Kelebihan</th><th>Penjelasan</th></tr>
+  <tr><td><b>Turunannya tepat 1</b> di sisi positif</td><td>Sinyal belajar diteruskan utuh, berapa pun dalamnya jaringan — masalah menguap teratasi</td></tr>
+  <tr><td><b>Sangat murah dihitung</b></td><td>Hanya membandingkan dengan nol; tidak ada eksponensial seperti sigmoid</td></tr>
+  <tr><td><b>Menghasilkan kejarangan</b></td><td>Sebagian neuron bernilai nol, membuat jaringan lebih efisien</td></tr>
+</table>
+<p>Perubahan sesederhana ini adalah salah satu kunci lompatan deep learning pada 2012, ketika model pengenal gambar AlexNet memakainya dan mengalahkan pendekatan lama secara telak.</p>
+
+<div class="callout warn">
+<b>⚠️ Harga yang dibayar: neuron mati (dead ReLU).</b> Di sisi negatif, keluarannya nol <b>dan</b> turunannya nol. Neuron yang terlanjur selalu menerima nilai negatif tidak akan pernah diperbaiki lagi — ia mati permanen. Penyebab paling sering: <b>learning rate terlalu besar</b> yang mendorong bobot terlalu jauh ke negatif sekaligus.
+</div>
+
+<h3>4. Leaky ReLU &amp; GELU — penyempurnaan</h3>
+<table class="tbl">
+  <tr><th>Fungsi</th><th>Idenya</th><th>Dipakai di</th></tr>
+  <tr><td><b>Leaky ReLU</b></td><td>Sisi negatif tidak benar-benar nol, tapi dikalikan 0,01 — sehingga neuron mati bisa hidup kembali</td><td>Pengganti ReLU saat banyak neuron mati</td></tr>
+  <tr><td><b>GELU</b> / SiLU</td><td>Melengkung halus di sekitar nol; sebagian kecil nilai negatif dibiarkan lewat</td><td>Hampir semua Transformer modern (GPT, BERT)</td></tr>
+</table>
+
+<h3>Cara memilih — tabel yang bisa kamu pakai langsung</h3>
+<table class="tbl">
+  <tr><th>Posisi di jaringan</th><th>Pilihan</th><th>Alasan</th></tr>
+  <tr><td>Lapisan tersembunyi (umum)</td><td class="ok-cell"><b>ReLU</b></td><td>Cepat, sederhana, dan hampir selalu bekerja</td></tr>
+  <tr><td>Lapisan tersembunyi Transformer</td><td><b>GELU</b></td><td>Sedikit lebih baik pada model bahasa besar</td></tr>
+  <tr><td>Gerbang di dalam LSTM</td><td><b>Sigmoid &amp; tanh</b></td><td>Gerbang memang butuh nilai 0–1 sebagai "seberapa terbuka"</td></tr>
+  <tr><td>Keluaran: ya/tidak</td><td><b>Sigmoid</b> (1 neuron)</td><td>Hasilnya langsung terbaca sebagai peluang</td></tr>
+  <tr><td>Keluaran: pilih 1 dari banyak kelas</td><td><b>Softmax</b></td><td>Semua peluang berjumlah 100%</td></tr>
+  <tr><td>Keluaran: menebak angka</td><td><b>Tanpa aktivasi</b></td><td>Harga rumah tidak boleh dipaksa masuk rentang 0–1</td></tr>
+</table>
+
+<pre class="code">from tensorflow import keras
+
+model = keras.Sequential([
+    keras.layers.Input(shape=(20,)),
+    keras.layers.Dense(64, activation="relu"),      # tersembunyi: ReLU
+    keras.layers.Dense(32, activation="relu"),
+    keras.layers.Dense(1, activation="sigmoid"),    # keluaran: peluang ya/tidak
+])</pre>
+
+<div class="callout">
+<b>💡 Jangan tertukar:</b> <b>fungsi aktivasi</b> menentukan bentuk sinyal <i>di dalam</i> jaringan, sedangkan <b>fungsi loss</b> mengukur seberapa salah hasil akhirnya. Keduanya sering disebut bersamaan, tapi perannya berbeda — dan salah memilih salah satunya membuat model gagal belajar dengan gejala yang mirip.
+</div>
+`,
+          keyPoints: [
+            "Fungsi aktivasi menentukan nilai yang diteruskan ke depan sekaligus besar sinyal belajar yang bisa lewat mundur (lewat turunannya).",
+            "Sigmoid menghasilkan 0–1 sehingga cocok sebagai peluang, tetapi jenuh di kedua ujung dan turunan terbesarnya hanya 0,25.",
+            "Karena 0,25 dikalikan berulang tiap lapisan, sinyal belajar menguap pada jaringan dalam — vanishing gradient (0,25¹⁰ ≈ 0,00000095).",
+            "Tanh berpusat di nol dan turunan maksimumnya 1, tetapi kedua ujungnya tetap jenuh.",
+            "ReLU = maks(0, x): turunannya 1 di sisi positif, murah dihitung, dan menjadi kunci lompatan deep learning 2012.",
+            "Kelemahan ReLU adalah neuron mati di sisi negatif, sering dipicu learning rate yang terlalu besar; Leaky ReLU dan GELU memperbaikinya.",
+            "Pilihan praktis: ReLU untuk lapisan tersembunyi, GELU untuk Transformer, sigmoid/softmax/tanpa aktivasi untuk keluaran sesuai tugas.",
+          ],
+          practice: [
+            { type: "number", q: "Berapa nilai sigmoid(0)?", answer: 0.5, tol: 0.01, hint: "1 ÷ (1 + e⁰), dan e⁰ = 1.", solution: "1 ÷ (1 + 1) = 0,5 — itulah kenapa 0 berarti 'ragu-ragu' pada keluaran sigmoid." },
+            { type: "number", q: "Turunan sigmoid paling besar 0,25. Berapa hasilnya setelah dikalikan berantai 4 lapisan? (4 desimal)", answer: 0.0039, tol: 0.0002, hint: "0,25 × 0,25 × 0,25 × 0,25.", solution: "0,25⁴ = 0,00390625 ≈ 0,0039. Sinyal belajarnya tinggal sekitar 0,4%." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa sigmoid menyulitkan pelatihan jaringan yang dalam?",
+              options: [
+                "Turunannya paling besar 0,25, sehingga sinyal belajar menyusut tiap lapisan",
+                "Keluarannya bisa bernilai negatif sehingga bobot menjadi tidak stabil",
+                "Perhitungannya memerlukan pembagian dengan nol pada titik tertentu",
+                "Bentuknya lurus sehingga tidak menambahkan ketaklinieran apa pun",
+              ],
+              answer: 0,
+              explain: "Sepuluh lapisan membuat sinyal tinggal sekitar sepersejuta — vanishing gradient.",
+            },
+            {
+              q: "Apa keunggulan utama ReLU dibanding sigmoid di lapisan tersembunyi?",
+              options: [
+                "Turunannya 1 di sisi positif sehingga sinyal belajar diteruskan utuh",
+                "Keluarannya selalu di antara 0 dan 1 sehingga bisa dibaca sebagai peluang",
+                "Ia melengkung halus sehingga tidak pernah menghasilkan nilai nol",
+                "Ia menjamin model tidak akan pernah mengalami overfitting",
+              ],
+              answer: 0,
+              explain: "Selain itu ReLU sangat murah dihitung karena hanya membandingkan dengan nol.",
+            },
+            {
+              q: "Apa itu 'neuron mati' pada ReLU?",
+              options: [
+                "Neuron yang selalu menerima nilai negatif sehingga keluaran dan turunannya nol terus",
+                "Neuron yang bobotnya menjadi tak terhingga karena learning rate terlalu kecil",
+                "Neuron yang dihapus otomatis oleh pustaka saat pelatihan berlangsung",
+                "Neuron yang keluarannya selalu satu sehingga tidak membedakan masukan",
+              ],
+              answer: 0,
+              explain: "Karena turunannya nol, neuron itu tidak pernah diperbaiki lagi. Leaky ReLU memberinya kemiringan kecil.",
+            },
+            {
+              q: "Model menebak harga rumah (angka bebas). Aktivasi apa yang tepat di lapisan keluaran?",
+              options: [
+                "Tanpa aktivasi",
+                "Sigmoid",
+                "Softmax",
+                "ReLU pada semua keluaran",
+              ],
+              answer: 0,
+              explain: "Sigmoid akan memaksa hasilnya ke rentang 0–1, dan softmax dipakai untuk memilih satu dari banyak kelas.",
             },
           ],
         },

@@ -2769,8 +2769,126 @@ Laporan keuangan dibuat oleh <b>manajemen</b> — pihak yang justru <b>berkepent
       id: "acc-matematika",
       level: "Matematika",
       title: "Nilai Waktu Uang & DCF",
-      summary: "Membaca simbol rumus keuangan, FV & PV, NPV & IRR, anuitas & perpetuitas — lalu memakai semuanya untuk menilai bisnis dengan DCF.",
+      summary: "Untuk apa matematika keuangan dipelajari, membaca simbolnya, FV & PV, NPV & IRR, anuitas & perpetuitas — lalu memakai semuanya untuk menilai bisnis dengan DCF.",
       lessons: [
+        {
+          id: "acc-mat-intro",
+          title: "Untuk Apa Belajar Matematika Keuangan?",
+          duration: "12 menit",
+          content: `
+<p>Sebagian besar keputusan uang yang penting dalam hidup — mengambil cicilan, menaikkan harga jual, membeli mesin, atau menilai sebuah bisnis — <b>tidak bisa diputuskan dengan perasaan</b>. Semuanya bermuara pada satu pertanyaan yang sama: <i>uang keluar sekarang, imbalannya datang nanti. Apakah setimpal?</i> Modul ini memberi alat untuk menjawabnya.</p>
+
+<div data-diagram="pipeline" data-stages="Simbol::agar rumus terbaca|Nilai waktu::uang hari ini vs nanti|NPV &amp; IRR::layak atau tidak|DCF::menilai sebuah bisnis" data-caption="Empat bekal di modul ini, dan pertanyaan yang dijawab masing-masing"></div>
+
+<h3>Tiga tingkat, tiga kebutuhan</h3>
+<table class="tbl">
+  <tr><th>Kamu ingin…</th><th>Yang perlu dipahami</th><th>Tanpa itu kamu berisiko…</th></tr>
+  <tr><td><b>Mengelola uang pribadi</b></td><td>Persen, bunga majemuk, dan pengaruh inflasi</td><td>Tertipu "cicilan 0%" dan "bunga 2% per bulan" yang terdengar kecil</td></tr>
+  <tr><td><b>Menjalankan usaha</b></td><td>Titik impas, nilai waktu uang, dan kelayakan investasi (NPV)</td><td>Merasa untung padahal kas habis, atau membeli alat yang tak pernah balik modal</td></tr>
+  <tr><td><b>Menilai bisnis atau saham</b></td><td>NPV, IRR, anuitas, terminal value, dan DCF</td><td>Membeli sesuatu tanpa tahu berapa nilai wajarnya</td></tr>
+</table>
+
+<div class="callout">
+<b>Satu ide yang menyatukan semuanya: uang punya harga waktu.</b> Rp1 juta hari ini tidak sama dengan Rp1 juta tahun depan — karena hari ini uang itu bisa dipakai, dibungakan, atau dipakai membayar utang. Hampir semua rumus di modul ini hanyalah cara rapi untuk memperhitungkan kenyataan sederhana tersebut.
+</div>
+
+<h3>Lima saat matematika benar-benar menyelamatkanmu</h3>
+<table class="tbl">
+  <tr><th>Situasi sehari-hari</th><th>Yang sebenarnya terjadi</th><th>Bekalnya</th></tr>
+  <tr><td>"Cicilan 0%, tapi harga tunainya lebih murah"</td><td>Bunganya disembunyikan di dalam harga, bukan dihapus</td><td>Nilai waktu uang</td></tr>
+  <tr><td>"Pinjaman ini cuma 2% per bulan"</td><td>Setara sekitar 27% setahun bila berbunga majemuk</td><td>Bunga majemuk</td></tr>
+  <tr><td>"Omzet naik 50% dalam 3 tahun, hebat!"</td><td>Setara sekitar 14,5% per tahun — bandingkan dulu dengan inflasi</td><td>CAGR</td></tr>
+  <tr><td>"Mesin ini balik modal 3 tahun, ambil saja"</td><td>Balik modal cepat belum berarti menguntungkan setelah biaya modal diperhitungkan</td><td>NPV &amp; hurdle rate</td></tr>
+  <tr><td>"Laba naik terus, tapi rekening menipis"</td><td>Laba dicatat saat terjadi, bukan saat uangnya diterima</td><td>Arus kas vs laba</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Kesalahan paling mahal dalam keuangan pribadi</b> hampir selalu berasal dari meremehkan bunga majemuk: bunga kartu kredit yang berbunga lagi, pinjaman harian, atau menunda menabung. Ironisnya, rumus yang sama juga bekerja untuk keuntunganmu bila arahnya dibalik.
+</div>
+
+<h3>Yang TIDAK perlu kamu lakukan</h3>
+<table class="tbl">
+  <tr><th>Tidak perlu</th><th>Alasannya</th></tr>
+  <tr><td>Menghafal tabel anuitas</td><td>Spreadsheet menghitungnya dalam sedetik</td></tr>
+  <tr><td>Menghitung IRR dengan tangan</td><td>Rumusnya memang diselesaikan dengan coba-coba oleh komputer</td></tr>
+  <tr><td>Menghafal semua rasio keuangan</td><td>Yang penting tahu pertanyaan apa yang dijawab tiap rasio</td></tr>
+  <tr><td>Belajar kalkulus</td><td>Keuangan praktis cukup dengan perkalian, pembagian, dan pangkat</td></tr>
+</table>
+
+<h3>Peta modul ini</h3>
+<table class="tbl">
+  <tr><th>Pelajaran</th><th>Membuat kamu bisa…</th></tr>
+  <tr><td><b>Membaca Simbol Matematika Keuangan</b></td><td>Membaca PV, FV, r, n, CF tanpa bingung</td></tr>
+  <tr><td><b>Nilai Waktu Uang: FV &amp; PV</b></td><td>Membandingkan uang hari ini dengan uang tahun depan secara adil</td></tr>
+  <tr><td><b>NPV &amp; IRR</b></td><td>Memutuskan sebuah proyek layak dijalankan atau tidak</td></tr>
+  <tr><td><b>Anuitas, Perpetuitas &amp; Terminal Value</b></td><td>Menilai pembayaran berulang, seperti cicilan atau sewa</td></tr>
+  <tr><td><b>DCF</b></td><td>Menaksir nilai wajar sebuah bisnis dari arus kas masa depannya</td></tr>
+</table>
+<p>Persen &amp; CAGR sudah dibahas lebih awal di modul <b>Membaca Rasio &amp; Metrik Kinerja</b>, karena kamu membutuhkannya sejak pelajaran rasio.</p>
+
+<div class="callout">
+<b>💡 Kalau waktumu terbatas,</b> kuasai dua hal ini lebih dulu: <b>bunga majemuk</b> dan <b>nilai waktu uang</b>. Keduanya langsung terpakai untuk keputusan pribadi hari ini juga — memilih cicilan, menilai tawaran investasi, dan memutuskan kapan sebaiknya melunasi utang.
+</div>
+`,
+          keyPoints: [
+            "Hampir semua keputusan uang bermuara pada satu pertanyaan: uang keluar sekarang, imbalannya nanti — apakah setimpal?",
+            "Ide pemersatu modul ini adalah nilai waktu uang: Rp1 juta hari ini tidak sama dengan Rp1 juta tahun depan.",
+            "Untuk keuangan pribadi cukup persen, bunga majemuk, dan inflasi; untuk usaha ditambah titik impas dan NPV; untuk menilai bisnis ditambah IRR, anuitas, dan DCF.",
+            "Bunga 2% per bulan setara sekitar 27% setahun bila berbunga majemuk.",
+            "Pertumbuhan omzet 50% dalam 3 tahun setara sekitar 14,5% per tahun (CAGR).",
+            "Tidak perlu menghafal tabel anuitas atau menghitung IRR manual — spreadsheet mengerjakannya.",
+          ],
+          practice: [
+            { type: "number", q: "Pinjaman berbunga 2% per bulan (majemuk). Berapa persen setara per tahun? (1 desimal)", answer: 26.8, tol: 0.5, hint: "1,02 dipangkatkan 12, lalu dikurangi 1.", solution: "1,02¹² = 1,268 → sekitar 26,8% per tahun, bukan 24%." },
+            { type: "number", q: "Omzet naik dari 100 menjadi 150 dalam 3 tahun. Berapa pertumbuhan rata-rata per tahun (CAGR) dalam %? (1 desimal)", answer: 14.5, tol: 0.4, hint: "Akar pangkat 3 dari 1,5 lalu dikurangi 1.", solution: "1,5^(1/3) = 1,1447 → sekitar 14,5% per tahun." },
+          ],
+          quiz: [
+            {
+              q: "Apa ide yang menyatukan hampir semua rumus di modul ini?",
+              options: [
+                "Uang punya harga waktu: uang hari ini tidak sama nilainya dengan uang nanti",
+                "Semua bisnis pada akhirnya akan menghasilkan laba bila bertahan cukup lama",
+                "Harga aset selalu kembali ke rata-rata setelah beberapa tahun berjalan",
+                "Biaya selalu bisa ditekan sampai nol bila perusahaan cukup efisien",
+              ],
+              answer: 0,
+              explain: "Dari PV, NPV, sampai DCF, semuanya cara rapi memperhitungkan kenyataan itu.",
+            },
+            {
+              q: "Sebuah toko menawarkan 'cicilan 0%', tetapi harga tunainya lebih murah. Kesimpulan yang tepat?",
+              options: [
+                "Bunganya disembunyikan di dalam harga, bukan benar-benar tidak ada",
+                "Cicilan itu selalu lebih menguntungkan karena tidak ada bunga sama sekali",
+                "Selisih harga itu hanya biaya administrasi yang tidak berkaitan dengan bunga",
+                "Harga tunai lebih murah karena kualitas barangnya berbeda dari yang dicicil",
+              ],
+              answer: 0,
+              explain: "Membandingkan keduanya secara adil membutuhkan nilai waktu uang.",
+            },
+            {
+              q: "Mana yang TIDAK perlu dikuasai untuk keuangan praktis?",
+              options: [
+                "Menghitung IRR dengan tangan",
+                "Memahami bunga majemuk",
+                "Membedakan laba dan arus kas",
+                "Memahami arti nilai sekarang (PV)",
+              ],
+              answer: 0,
+              explain: "IRR memang diselesaikan dengan coba-coba oleh komputer; yang penting kamu tahu artinya.",
+            },
+            {
+              q: "Sebuah mesin balik modal dalam 3 tahun. Kenapa itu belum cukup untuk menyatakannya layak?",
+              options: [
+                "Karena biaya modal dan arus kas setelah tahun ketiga belum diperhitungkan",
+                "Karena periode balik modal harus selalu kurang dari satu tahun agar layak",
+                "Karena mesin selalu kehilangan seluruh nilainya setelah tiga tahun dipakai",
+                "Karena balik modal hanya berlaku untuk usaha yang sudah menghasilkan laba",
+              ],
+              answer: 0,
+              explain: "NPV memperhitungkan seluruh arus kas dan biaya modal, bukan sekadar kapan modal kembali.",
+            },
+          ],
+        },
         {
           id: "acc-mat-0",
           title: "Membaca Simbol Matematika Keuangan",
