@@ -4220,6 +4220,94 @@ DEMOS["jurnal-harian"] = function (root) {
   gambar();
 };
 
+
+/* ---------- Demo: dampak jurnal penyesuaian terhadap laba & neraca ---------- */
+DEMOS["penyesuaian-dampak"] = function (root) {
+  const AWAL = {
+    Kas: 30, "Piutang Usaha": 0, Perlengkapan: 6, "Sewa Dibayar di Muka": 36, Peralatan: 60, "Akumulasi Penyusutan": 0,
+    "Utang Gaji": 0, "Pendapatan Diterima di Muka": 12, Modal: 90,
+    "Pendapatan Jasa": 50, "Beban Gaji": 20, "Beban Sewa": 0, "Beban Perlengkapan": 0, "Beban Penyusutan": 0,
+  };
+  const SESUAI = [
+    { j: "Sewa dibayar di muka sudah terpakai 3 bulan", d: "Beban Sewa", k: "Sewa Dibayar di Muka", n: 9,
+      e: "Rp36 jt untuk 12 bulan = Rp3 jt per bulan. Tiga bulan berjalan berarti Rp9 jt manfaatnya sudah habis.", lewat: "Aset terlalu besar dan beban terlalu kecil — laba tampak lebih tinggi." },
+    { j: "Perlengkapan tersisa tinggal Rp2 jt (dibeli Rp6 jt)", d: "Beban Perlengkapan", k: "Perlengkapan", n: 4,
+      e: "Yang dihitung bukan yang dibeli, melainkan yang sudah terpakai: Rp6 jt − Rp2 jt = Rp4 jt.", lewat: "Kertas, tinta, dan bahan habis pakai seolah masih utuh di gudang." },
+    { j: "Penyusutan peralatan tahun ini Rp12 jt", d: "Beban Penyusutan", k: "Akumulasi Penyusutan", n: 12,
+      e: "Peralatan Rp60 jt dengan umur 5 tahun: Rp60 jt ÷ 5 = Rp12 jt per tahun. Tidak ada kas yang keluar, tapi nilainya memang berkurang.", lewat: "Peralatan seolah tak pernah aus — laba dan aset sama-sama kebesaran." },
+    { j: "Gaji bulan terakhir Rp5 jt belum dibayar", d: "Beban Gaji", k: "Utang Gaji", n: 5,
+      e: "Karyawan sudah bekerja, jadi bebannya milik periode ini walau kasnya baru keluar bulan depan.", lewat: "Beban dan utang sama-sama tersembunyi — laba tampak lebih besar." },
+    { j: "Dari uang muka pelanggan Rp12 jt, jasa senilai Rp8 jt sudah dikerjakan", d: "Pendapatan Diterima di Muka", k: "Pendapatan Jasa", n: 8,
+      e: "Kewajiban berkurang karena sebagian jasa sudah ditunaikan, dan barulah bagian itu menjadi pendapatan.", lewat: "Pendapatan yang sudah benar-benar dihasilkan malah tidak tercatat." },
+    { j: "Jasa Rp4 jt sudah selesai tapi belum ditagih", d: "Piutang Usaha", k: "Pendapatan Jasa", n: 4,
+      e: "Pendapatan diakui saat jasa selesai; haknya dicatat sebagai piutang.", lewat: "Pendapatan periode ini tercatat lebih kecil dari yang sebenarnya." },
+  ];
+  const AKUN_KREDIT = ["Akumulasi Penyusutan", "Utang Gaji", "Pendapatan Diterima di Muka", "Pendapatan Jasa", "Modal"];
+  const aktif = SESUAI.map(() => false);
+
+  function saldo() {
+    const s = Object.assign({}, AWAL);
+    SESUAI.forEach((p, i) => {
+      if (!aktif[i]) return;
+      s[p.k] += AKUN_KREDIT.indexOf(p.k) >= 0 ? p.n : -p.n;
+      s[p.d] += AKUN_KREDIT.indexOf(p.d) >= 0 ? -p.n : p.n;
+    });
+    const aset = s.Kas + s["Piutang Usaha"] + s.Perlengkapan + s["Sewa Dibayar di Muka"] + s.Peralatan - s["Akumulasi Penyusutan"];
+    const kewajiban = s["Utang Gaji"] + s["Pendapatan Diterima di Muka"];
+    const pendapatan = s["Pendapatan Jasa"];
+    const beban = s["Beban Gaji"] + s["Beban Sewa"] + s["Beban Perlengkapan"] + s["Beban Penyusutan"];
+    return { s: s, aset: aset, kewajiban: kewajiban, pendapatan: pendapatan, beban: beban, laba: pendapatan - beban, ekuitas: s.Modal + pendapatan - beban };
+  }
+
+  const rp = (v) => "Rp" + v + " jt";
+  const out = h("div", { class: "dm-out" });
+  const daftar = h("div", { class: "pc-form" });
+
+  const kotak = SESUAI.map((p, i) => {
+    const c = h("input", { type: "checkbox" });
+    c.onchange = () => { aktif[i] = c.checked; draw(); };
+    const baris = h("label", { class: "krip-pilih" }, [c, h("span", { html: " <b>" + p.j + "</b><br><i class=\"dm-sub\">Debit " + p.d + " " + rp(p.n) + " · Kredit " + p.k + " " + rp(p.n) + "</i>" })]);
+    return { c: c, el: baris };
+  });
+  kotak.forEach((k) => daftar.appendChild(k.el));
+
+  function draw() {
+    const H = saldo();
+    const belumSemua = aktif.filter(Boolean).length;
+    const semua = (function () { const simpan = aktif.slice(); aktif.forEach((_, i) => { aktif[i] = true; }); const r = saldo(); simpan.forEach((v, i) => { aktif[i] = v; }); return r; })();
+    const belum = (function () { const simpan = aktif.slice(); aktif.forEach((_, i) => { aktif[i] = false; }); const r = saldo(); simpan.forEach((v, i) => { aktif[i] = v; }); return r; })();
+
+    const dilewati = SESUAI.filter((_, i) => !aktif[i]);
+    out.innerHTML =
+      '<div class="dm-line"><span>Laba menurut catatan harian <i class="dm-sub">sebelum penyesuaian apa pun</i></span><b>' + rp(belum.laba) + "</b></div>" +
+      '<div class="dm-line big ' + (belumSemua === SESUAI.length ? "good" : "bad") + '"><span>Laba setelah ' + belumSemua + " dari " + SESUAI.length + " penyesuaian</span><b>" + rp(H.laba) + "</b></div>" +
+      '<div class="dm-line"><span>Laba yang sebenarnya <i class="dm-sub">bila semua penyesuaian dikerjakan</i></span><b>' + rp(semua.laba) + "</b></div>" +
+      '<div class="dm-line"><span>Total aset</span><b>' + rp(H.aset) + "</b></div>" +
+      '<div class="dm-line"><span>Total kewajiban</span><b>' + rp(H.kewajiban) + "</b></div>" +
+      '<div class="dm-line ' + (Math.abs(H.aset - (H.kewajiban + H.ekuitas)) < 0.001 ? "good" : "bad") + '"><span>Aset = Kewajiban + Ekuitas</span><b>' + rp(H.aset) + " = " + rp(H.kewajiban) + " + " + rp(H.ekuitas) + "</b></div>" +
+      '<div class="dm-note">' +
+      (dilewati.length === 0
+        ? "<b>Semua penyesuaian sudah dikerjakan.</b> Laba Rp" + semua.laba + " jt inilah angka yang layak masuk laporan — mencerminkan manfaat yang benar-benar terpakai dan jasa yang benar-benar dikerjakan, bukan sekadar uang yang kebetulan bergerak."
+        : "<b>Masih ada " + dilewati.length + " penyesuaian yang dilewati.</b> Akibatnya: " + dilewati.map((p) => p.lewat).join(" ") +
+          "<br><br>Tanpa penyesuaian sama sekali, laba tampak <b>" + rp(belum.laba) + "</b> padahal sebenarnya <b>" + rp(semua.laba) + "</b> — " + (belum.laba / semua.laba).toFixed(1).replace(".", ",") + " kali lipat.") +
+      "<br><br><i>Perhatikan: tidak ada satu pun penyesuaian yang menyentuh akun Kas, dan persamaan akuntansinya tetap seimbang setiap saat.</i></div>";
+  }
+
+  const semuaBtn = h("button", { class: "btn", type: "button", text: "✅ Terapkan semua" });
+  semuaBtn.onclick = () => { kotak.forEach((k, i) => { k.c.checked = true; aktif[i] = true; }); draw(); };
+  const kosong = h("button", { class: "btn ghost", type: "button", text: "↺ Kosongkan" });
+  kosong.onclick = () => { kotak.forEach((k, i) => { k.c.checked = false; aktif[i] = false; }); draw(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🧾 <b>Demo: apa yang terjadi bila penyesuaian dilewati</b>" }),
+    h("p", { class: "demo-hint", text: "Sebuah usaha jasa menutup tahun pertamanya. Catatan hariannya sudah rapi, tetapi enam hal di bawah ini belum dicatat karena tidak ada uang yang bergerak. Centang satu per satu." }),
+    daftar,
+    h("div", { class: "demo-controls" }, [semuaBtn, kosong]),
+    out,
+  ]));
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

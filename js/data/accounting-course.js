@@ -595,7 +595,7 @@ Pertanyaan "sudah bayar atau belum" tidak menentukan jenis akunnya — ia hanya 
       id: "acc-menengah",
       level: "Menengah",
       title: "Siklus & Laporan Keuangan",
-      summary: "Dari jurnal & buku besar sampai laporan laba rugi, neraca, arus kas — ditutup satu contoh kasus lengkap.",
+      summary: "Dari jurnal & buku besar, jurnal penyesuaian, sampai laporan laba rugi, neraca, arus kas — ditutup satu contoh kasus lengkap.",
       lessons: [
         {
           id: "acc-m-1",
@@ -664,7 +664,7 @@ Pertanyaan "sudah bayar atau belum" tidak menentukan jenis akunnya — ia hanya 
   <li><b>Jurnal</b> — catat transaksi urut waktu.</li>
   <li><b>Posting ke buku besar</b> — kelompokkan per akun.</li>
   <li><b>Neraca saldo (trial balance)</b> — cek total debit = total kredit.</li>
-  <li><b>Jurnal penyesuaian</b> — sesuaikan hal seperti penyusutan & beban dibayar di muka.</li>
+  <li><b>Jurnal penyesuaian</b> — sesuaikan hal seperti penyusutan & beban dibayar di muka (dibahas tuntas di pelajaran berikutnya).</li>
   <li><b>Laporan keuangan</b> — susun laba rugi, neraca, arus kas.</li>
   <li><b>Jurnal penutup</b> — nol-kan akun sementara (pendapatan & beban) untuk periode baru.</li>
 </ol>
@@ -705,6 +705,141 @@ Pertanyaan "sudah bayar atau belum" tidak menentukan jenis akunnya — ia hanya 
               answer: 0,
               explain:
                 "Akun pendapatan & beban dinolkan agar periode berikutnya mulai dari nol.",
+            },
+          ],
+        },
+        {
+          id: "acc-m-5",
+          title: "Jurnal Penyesuaian — Merapikan Catatan Sebelum Laporan",
+          duration: "16 menit",
+          content: `
+<p>Di pelajaran Siklus Akuntansi, ada satu langkah yang disebut sekilas lalu dilewati: <b>jurnal penyesuaian</b>. Padahal inilah langkah yang membedakan catatan kas warungan dengan laporan keuangan yang benar — dan juga tempat paling sering terjadinya manipulasi laba.</p>
+
+<h3>Sekilas ulang: apa itu jurnal?</h3>
+<div class="callout">
+<b>Jurnal</b> adalah buku harian keuangan: catatan <b>berurutan waktu</b> tentang setiap transaksi, lengkap dengan akun yang didebit dan dikredit. Satu catatan disebut <i>entri jurnal</i>.<br><br>
+Jurnal menjawab <b>"kapan dan apa yang terjadi"</b>. Setelah dicatat, angkanya dipindahkan (<i>posting</i>) ke <b>buku besar</b>, yang menjawab <b>"berapa saldo tiap akun sekarang"</b>. Keduanya berisi data yang sama, hanya disusun dengan cara berbeda: jurnal menurut waktu, buku besar menurut akun.
+</div>
+
+<h3>Kenapa perlu disesuaikan?</h3>
+<p>Catatan harian hanya dibuat saat ada <b>bukti transaksi</b>: nota, faktur, transfer. Masalahnya, beberapa hal terjadi <b>diam-diam</b>, tanpa nota dan tanpa uang bergerak:</p>
+<table class="tbl">
+  <tr><th>Yang terjadi diam-diam</th><th>Bukti transaksinya?</th></tr>
+  <tr><td>Waktu sewa berjalan sebulan</td><td>Tidak ada — kalender tidak mengirim nota</td></tr>
+  <tr><td>Peralatan makin aus dipakai</td><td>Tidak ada</td></tr>
+  <tr><td>Karyawan sudah bekerja, gajinya dibayar bulan depan</td><td>Belum ada</td></tr>
+  <tr><td>Jasa untuk pelanggan yang sudah membayar di muka akhirnya dikerjakan</td><td>Tidak ada</td></tr>
+</table>
+<p><b>Jurnal penyesuaian</b> dibuat di akhir periode untuk mencatat hal-hal itu, supaya laporan mencerminkan <b>apa yang benar-benar terjadi</b>, bukan sekadar apa yang kebetulan melibatkan uang tunai.</p>
+
+<div data-diagram="pipeline" data-stages="Transaksi harian::ada nota, ada kas|Neraca saldo::debit = kredit|Penyesuaian::hal yang terjadi diam-diam|Laporan::angka yang jujur" data-caption="Penyesuaian adalah saringan terakhir sebelum angka menjadi laporan"></div>
+
+<h3>Lima jenis penyesuaian yang selalu muncul</h3>
+<table class="tbl">
+  <tr><th>Jenis</th><th>Contoh</th><th>Jurnalnya</th></tr>
+  <tr><td><b>1. Beban dibayar di muka</b></td><td>Sewa setahun Rp36 jt, 3 bulan sudah berjalan</td><td>Debit Beban Sewa 9 jt<br>Kredit Sewa Dibayar di Muka 9 jt</td></tr>
+  <tr><td><b>2. Perlengkapan terpakai</b></td><td>Dibeli Rp6 jt, tersisa Rp2 jt</td><td>Debit Beban Perlengkapan 4 jt<br>Kredit Perlengkapan 4 jt</td></tr>
+  <tr><td><b>3. Penyusutan</b></td><td>Peralatan Rp60 jt, umur 5 tahun</td><td>Debit Beban Penyusutan 12 jt<br>Kredit Akumulasi Penyusutan 12 jt</td></tr>
+  <tr><td><b>4. Beban terutang</b></td><td>Gaji Rp5 jt belum dibayar</td><td>Debit Beban Gaji 5 jt<br>Kredit Utang Gaji 5 jt</td></tr>
+  <tr><td><b>5. Pendapatan</b> diterima di muka / masih harus diterima</td><td>Uang muka Rp12 jt, jasa terpakai Rp8 jt</td><td>Debit Pendapatan Diterima di Muka 8 jt<br>Kredit Pendapatan Jasa 8 jt</td></tr>
+</table>
+
+<div class="callout warn">
+<b>🔑 Dua ciri yang selalu benar untuk setiap jurnal penyesuaian:</b><br><br>
+<b>1. Tidak pernah menyentuh akun Kas.</b> Kalau ada kas bergerak, itu transaksi biasa, bukan penyesuaian. Ini cara tercepat memeriksa apakah jurnalmu masuk akal.<br><br>
+<b>2. Selalu menyentuh satu akun laba rugi dan satu akun neraca.</b> Satu sisi berupa pendapatan atau beban, sisi lainnya berupa aset atau kewajiban.
+</div>
+
+<h3>Lihat sendiri akibatnya bila dilewati</h3>
+
+<div data-demo="penyesuaian-dampak"></div>
+
+<h3>Kenapa ini penting — dan kenapa sering disalahgunakan</h3>
+<table class="tbl">
+  <tr><th>Penyesuaian yang dilewati</th><th>Akibat pada laporan</th></tr>
+  <tr><td>Penyusutan tidak dicatat</td><td>Beban terlalu kecil, aset terlalu besar → laba tampak lebih besar</td></tr>
+  <tr><td>Gaji terutang tidak dicatat</td><td>Beban dan utang sama-sama tersembunyi → laba tampak lebih besar</td></tr>
+  <tr><td>Sewa dibayar di muka tidak dipindahkan</td><td>Aset tampak utuh padahal manfaatnya sudah terpakai</td></tr>
+  <tr><td>Pendapatan diterima di muka langsung diakui sebagai pendapatan</td><td>Pendapatan diakui terlalu cepat, padahal jasanya belum dikerjakan</td></tr>
+</table>
+<p>Perhatikan arah kesalahannya: hampir semuanya membuat <b>laba terlihat lebih besar</b>. Karena itu, dalam pemeriksaan laporan keuangan, jurnal penyesuaian termasuk bagian yang paling diteliti — pembahasan lengkapnya ada di modul <b>Pengendalian, Kecurangan &amp; Audit</b>.</p>
+
+<h3>Setelah penyesuaian: neraca saldo yang baru</h3>
+<p>Setelah semua penyesuaian diposting, disusun <b>neraca saldo setelah penyesuaian</b>. Dari sinilah laporan keuangan dibuat:</p>
+<table class="tbl">
+  <tr><th>Akun</th><th>Masuk ke laporan…</th></tr>
+  <tr><td>Pendapatan &amp; beban (termasuk hasil penyesuaian)</td><td>Laba Rugi</td></tr>
+  <tr><td>Aset, kewajiban, ekuitas</td><td>Neraca</td></tr>
+</table>
+<p>Setelah laporan selesai, akun pendapatan dan beban di-nol-kan lewat <b>jurnal penutup</b>, dan siklus dimulai lagi untuk periode berikutnya.</p>
+
+<div class="callout">
+<b>🧭 Daftar periksa akhir bulan yang bisa langsung kamu pakai:</b><br>
+1. Adakah yang <b>dibayar di muka</b> dan sebagian manfaatnya sudah terpakai?<br>
+2. Berapa <b>sisa perlengkapan</b> sebenarnya di gudang?<br>
+3. Sudahkah <b>penyusutan</b> bulan ini dicatat?<br>
+4. Adakah <b>gaji, listrik, atau bunga</b> yang sudah terjadi tapi belum dibayar?<br>
+5. Adakah <b>uang muka pelanggan</b> yang jasanya sudah dikerjakan?<br>
+6. Adakah <b>pekerjaan selesai</b> yang belum sempat ditagih?
+</div>
+`,
+          keyPoints: [
+            "Jurnal adalah catatan transaksi berurutan waktu; buku besar menyusun data yang sama menurut akun.",
+            "Jurnal penyesuaian mencatat hal yang terjadi tanpa nota dan tanpa kas bergerak: waktu berjalan, aset aus, jasa terpakai.",
+            "Lima jenis utama: beban dibayar di muka, perlengkapan terpakai, penyusutan, beban terutang, dan pendapatan diterima di muka atau masih harus diterima.",
+            "Ciri jurnal penyesuaian: tidak pernah menyentuh Kas, dan selalu menyentuh satu akun laba rugi serta satu akun neraca.",
+            "Penyesuaian yang dilewati hampir selalu membuat laba tampak lebih besar dari yang sebenarnya.",
+            "Setelah penyesuaian disusun neraca saldo setelah penyesuaian, lalu laporan keuangan, lalu jurnal penutup.",
+          ],
+          practice: [
+            { type: "number", q: "Peralatan Rp60 juta disusutkan garis lurus selama 5 tahun. Berapa juta beban penyusutan per tahun?", answer: 12, tol: 0.5, hint: "Nilai peralatan dibagi umur pemakaian.", solution: "Rp60 juta ÷ 5 tahun = Rp12 juta per tahun." },
+            { type: "number", q: "Perlengkapan dibeli Rp6 juta, sisa di gudang akhir bulan Rp2,5 juta. Berapa juta beban perlengkapan bulan ini?", answer: 3.5, tol: 0.1, hint: "Yang dihitung adalah yang terpakai, bukan yang dibeli.", solution: "Rp6 juta − Rp2,5 juta = Rp3,5 juta terpakai." },
+            { type: "choice", q: "Sebuah jurnal penyesuaian yang benar TIDAK pernah menyentuh akun apa?", options: ["Kas", "Beban Sewa", "Utang Gaji", "Pendapatan Jasa"], answer: 0, hint: "Kalau ada uang bergerak, itu transaksi biasa.", solution: "Penyesuaian mencatat hal yang terjadi tanpa pergerakan kas; kalau kas ikut berubah, berarti itu transaksi biasa." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa jurnal penyesuaian diperlukan di akhir periode?",
+              options: [
+                "Karena ada hal yang terjadi tanpa nota dan tanpa kas bergerak, seperti waktu sewa berjalan",
+                "Karena total debit dan kredit pada neraca saldo biasanya tidak pernah seimbang",
+                "Karena akun pendapatan dan beban harus dinolkan sebelum periode berikutnya",
+                "Karena kas di bank selalu berbeda dengan catatan sehingga harus dicocokkan",
+              ],
+              answer: 0,
+              explain: "Menolkan akun sementara adalah tugas jurnal penutup, bukan jurnal penyesuaian.",
+            },
+            {
+              q: "Sewa dibayar di muka Rp36 juta untuk 12 bulan. Setelah 3 bulan, jurnal penyesuaiannya?",
+              options: [
+                "Debit Beban Sewa Rp9 juta, Kredit Sewa Dibayar di Muka Rp9 juta",
+                "Debit Sewa Dibayar di Muka Rp9 juta, Kredit Kas Rp9 juta",
+                "Debit Beban Sewa Rp36 juta, Kredit Kas Rp36 juta",
+                "Debit Kas Rp27 juta, Kredit Sewa Dibayar di Muka Rp27 juta",
+              ],
+              answer: 0,
+              explain: "Tiga bulan × Rp3 juta manfaat sudah terpakai; kas tidak bergerak sama sekali.",
+            },
+            {
+              q: "Sebuah perusahaan tidak mencatat penyusutan dan gaji terutang. Apa dampaknya pada laporan?",
+              options: [
+                "Laba tampak lebih besar dari yang sebenarnya",
+                "Laba tampak lebih kecil karena bebannya menumpuk",
+                "Laba tidak terpengaruh karena keduanya bukan kas",
+                "Neraca menjadi tidak seimbang sehingga mudah ketahuan",
+              ],
+              answer: 0,
+              explain: "Beban yang tidak dicatat membuat laba menggelembung — pola yang sering diperiksa auditor.",
+            },
+            {
+              q: "Pelanggan membayar di muka Rp12 juta; sampai akhir bulan jasa senilai Rp8 juta sudah dikerjakan. Penyesuaiannya?",
+              options: [
+                "Debit Pendapatan Diterima di Muka Rp8 juta, Kredit Pendapatan Jasa Rp8 juta",
+                "Debit Kas Rp8 juta, Kredit Pendapatan Jasa Rp8 juta",
+                "Debit Pendapatan Jasa Rp12 juta, Kredit Kas Rp12 juta",
+                "Debit Piutang Usaha Rp8 juta, Kredit Pendapatan Diterima di Muka Rp8 juta",
+              ],
+              answer: 0,
+              explain: "Kewajiban berkurang sebesar jasa yang sudah ditunaikan, dan bagian itulah yang menjadi pendapatan.",
             },
           ],
         },
