@@ -906,7 +906,7 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
       id: "ai-fundamental",
       level: "Fundamental",
       title: "Fundamental & Metrik AI",
-      summary: "Cara mengukur kualitas model, loss & gradient descent, parameter & token, serta bias-variance.",
+      summary: "Cara mengukur kualitas model (akurasi, precision, recall, ROC & AUC), loss & gradient descent, parameter & token, serta bias-variance.",
       lessons: [
         {
           id: "ai-fund-1",
@@ -938,7 +938,7 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
 </table>
 
 <div class="callout">
-<b>F1-score</b> = penyeimbang precision & recall dalam satu angka. Ada <b>trade-off</b>: filter spam terlalu galak (recall tinggi) bisa membuang email penting (precision turun).
+<b>F1-score</b> = penyeimbang precision & recall dalam satu angka. Ada <b>trade-off</b>: filter spam terlalu galak (recall tinggi) bisa membuang email penting (precision turun). Cara menilai model <b>tanpa mengunci satu ambang</b> — kurva ROC dan AUC — dibahas di pelajaran berikutnya.
 </div>
 
 <h3>💥 Dampak</h3>
@@ -977,6 +977,150 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
               ],
               answer: 0,
               explain: "Precision = TP ÷ (TP+FP), mengukur keandalan prediksi positif.",
+            },
+          ],
+        },
+        {
+          id: "ai-fund-5",
+          title: "Kurva ROC & AUC — Menilai Model Tanpa Terpaku Satu Ambang",
+          duration: "15 menit",
+          content: `
+<p>Precision dan recall di pelajaran sebelumnya punya satu kelemahan: keduanya <b>berubah begitu kamu menggeser ambang keputusan</b>. Lalu bagaimana membandingkan dua model secara adil, kalau angkanya bergantung pada ambang yang belum kamu tentukan? Di situlah <b>ROC</b> dan <b>AUC</b> masuk — dua istilah yang muncul di hampir semua laporan model, termasuk di pelajaran XGBoost nanti.</p>
+
+<h3>Fundamental: model sebenarnya memberi skor, bukan keputusan</h3>
+<div class="callout">
+Model klasifikasi tidak langsung berkata "ini penipuan". Ia memberi <b>skor</b> atau peluang, misalnya 0,82. Keputusan baru muncul setelah skor itu dibandingkan dengan sebuah <b>ambang</b>.<br><br>
+Artinya, satu model yang sama bisa berperilaku galak atau longgar hanya dengan menggeser ambang. Maka pertanyaan "seberapa bagus model ini?" sebaiknya dijawab <b>tanpa mengunci satu ambang</b>.
+</div>
+
+<h3>Dua angka yang dipakai kurva ROC</h3>
+<table class="tbl">
+  <tr><th>Angka</th><th>Rumus</th><th>Artinya dalam kalimat</th></tr>
+  <tr><td><b>TPR</b> (recall)</td><td>TP ÷ (TP + FN)</td><td>Dari semua kasus yang benar-benar positif, berapa persen tertangkap?</td></tr>
+  <tr><td><b>FPR</b></td><td>FP ÷ (FP + TN)</td><td>Dari semua kasus yang sebenarnya negatif, berapa persen salah ditandai?</td></tr>
+</table>
+<p><b>Kurva ROC</b> adalah jejak yang terbentuk bila kita mencoba <b>semua ambang dari yang paling longgar sampai paling galak</b>, lalu menandai pasangan (FPR, TPR) di setiap ambang.</p>
+
+<div data-demo="roc-auc"></div>
+
+<h3>Membaca kurvanya</h3>
+<table class="tbl">
+  <tr><th>Yang terlihat</th><th>Artinya</th></tr>
+  <tr><td>Kurva menempel garis diagonal</td><td>Model tidak lebih baik daripada menebak acak</td></tr>
+  <tr><td>Kurva melengkung ke pojok kiri atas</td><td>Banyak yang tertangkap dengan sedikit alarm palsu — inilah yang diinginkan</td></tr>
+  <tr><td>Pojok kiri bawah</td><td>Ambang sangat galak: nyaris tidak ada alarm, tapi banyak yang terlewat</td></tr>
+  <tr><td>Pojok kanan atas</td><td>Ambang sangat longgar: semua tertangkap, tapi semuanya ikut ditandai</td></tr>
+</table>
+
+<h3>AUC — meringkas seluruh kurva jadi satu angka</h3>
+<div class="callout">
+<b>AUC</b> (<i>Area Under the Curve</i>) adalah <b>luas daerah di bawah kurva ROC</b>. Karena kotaknya berukuran 1 × 1, nilainya selalu antara 0 dan 1.<br><br>
+Ada satu cara membacanya yang jauh lebih mudah diingat:<br>
+<b>AUC = peluang model memberi skor lebih tinggi pada satu kasus positif acak dibanding satu kasus negatif acak.</b><br><br>
+AUC 0,92 berarti: ambil satu penipuan dan satu transaksi normal secara acak, maka 92% dari waktu model memberi skor lebih tinggi untuk yang penipuan. Di demo di atas, kedua cara menghitung itu selalu menghasilkan angka yang sama persis.
+</div>
+
+<table class="tbl">
+  <tr><th>AUC</th><th>Tafsiran kasar</th></tr>
+  <tr><td class="bad-cell">0,5</td><td>Setara menebak acak</td></tr>
+  <tr><td>0,6 – 0,7</td><td>Lemah, tapi kadang masih berguna untuk menyaring</td></tr>
+  <tr><td>0,7 – 0,8</td><td>Lumayan; umum pada masalah sosial dan kredit</td></tr>
+  <tr><td class="ok-cell">0,8 – 0,9</td><td>Baik</td></tr>
+  <tr><td>Di atas 0,95</td><td>Sangat baik — <b>atau</b> ada kebocoran data. Periksa dulu sebelum senang</td></tr>
+</table>
+
+<h3>Kenapa AUC disukai</h3>
+<ul>
+  <li><b>Tidak bergantung pada ambang</b>, sehingga cocok untuk membandingkan dua model.</li>
+  <li><b>Tidak terpengaruh perbandingan jumlah kelas</b> — tidak seperti akurasi, yang bisa 99% hanya karena kasus positifnya langka.</li>
+  <li><b>Satu angka</b>, mudah dilaporkan dan dipantau dari waktu ke waktu.</li>
+</ul>
+
+<div class="callout warn">
+<b>⚠️ Tiga hal yang TIDAK diberitahukan AUC</b><br><br>
+<b>1. Ambang mana yang harus kamu pakai.</b> AUC menilai seluruh kurva; keputusan operasionalnya tetap harus kamu pilih berdasarkan biaya kesalahan.<br><br>
+<b>2. Apakah peluangnya masuk akal (terkalibrasi).</b> Model bisa ber-AUC 0,9 tapi selalu menyebut peluang 0,9 untuk kasus yang sebenarnya hanya 30% berisiko. AUC hanya peduli <b>urutan</b>, bukan besaran angkanya.<br><br>
+<b>3. Seberapa berguna model pada kasus yang sangat langka.</b> Bila penipuan hanya 0,1% dari data, FPR 1% terdengar kecil — padahal itu bisa berarti ribuan alarm palsu untuk setiap penipuan yang tertangkap. Untuk kasus timpang seperti ini, praktisi memakai <b>PR curve</b> (precision–recall) dan <b>average precision</b>.
+</div>
+
+<h3>Memilih metrik: panduan singkat</h3>
+<table class="tbl">
+  <tr><th>Situasi</th><th>Pakai</th></tr>
+  <tr><td>Membandingkan beberapa model sebelum menentukan ambang</td><td>AUC (ROC)</td></tr>
+  <tr><td>Kasus positif sangat langka (penipuan, penyakit langka)</td><td>PR curve &amp; average precision</td></tr>
+  <tr><td>Sudah menentukan ambang, ingin laporan operasional</td><td>Precision, recall, F1</td></tr>
+  <tr><td>Butuh angka peluang yang bisa dipercaya besarannya</td><td>Ukuran kalibrasi, misalnya Brier score</td></tr>
+</table>
+
+<pre class="code">from sklearn.metrics import roc_auc_score, roc_curve, average_precision_score
+
+peluang = model.predict_proba(X_uji)[:, 1]     # skor, bukan keputusan
+print(roc_auc_score(y_uji, peluang))           # satu angka AUC
+print(average_precision_score(y_uji, peluang)) # lebih cocok untuk kelas langka
+
+fpr, tpr, ambang = roc_curve(y_uji, peluang)   # bahan untuk menggambar kurva</pre>
+
+<div class="callout">
+<b>💡 Ingat ini saja bila lupa yang lain:</b> AUC menjawab "seberapa baik model <b>mengurutkan</b> kasus berisiko di atas kasus aman", sedangkan precision dan recall menjawab "apa yang terjadi <b>bila</b> aku memotong di ambang tertentu". Keduanya dipakai bersama, bukan saling menggantikan.
+</div>
+`,
+          keyPoints: [
+            "Model klasifikasi memberi skor, bukan keputusan; keputusan muncul setelah skor dibandingkan dengan ambang.",
+            "TPR = dari semua positif, berapa yang tertangkap. FPR = dari semua negatif, berapa yang salah ditandai.",
+            "Kurva ROC adalah jejak pasangan (FPR, TPR) saat semua ambang dicoba dari longgar sampai galak.",
+            "AUC = luas di bawah kurva ROC, dan sama dengan peluang skor kasus positif acak lebih tinggi dari kasus negatif acak.",
+            "AUC 0,5 setara menebak acak; di atas 0,95 pada masalah nyata patut dicurigai sebagai kebocoran data.",
+            "AUC tidak memberi tahu ambang yang harus dipakai, tidak menilai kalibrasi peluang, dan menyesatkan pada kelas yang sangat langka.",
+            "Untuk kasus sangat timpang, pakai PR curve dan average precision.",
+          ],
+          practice: [
+            { type: "number", q: "Dari 50 kasus positif, 40 tertangkap model. Berapa TPR-nya dalam persen?", answer: 80, tol: 0.5, hint: "TPR = tertangkap ÷ seluruh kasus positif.", solution: "40 ÷ 50 = 0,8 = 80%." },
+            { type: "number", q: "Dari 200 kasus negatif, 30 salah ditandai positif. Berapa FPR-nya dalam persen?", answer: 15, tol: 0.5, hint: "FPR = salah ditandai ÷ seluruh kasus negatif.", solution: "30 ÷ 200 = 0,15 = 15%." },
+          ],
+          quiz: [
+            {
+              q: "Apa arti AUC 0,85 dengan bahasa paling mudah?",
+              options: [
+                "Ambil satu kasus positif dan satu negatif acak, 85% skor positifnya lebih tinggi",
+                "Model menebak dengan benar pada 85% dari seluruh kasus yang diujikan",
+                "Model menangkap 85% kasus positif pada ambang yang dipakai saat ini",
+                "Sebanyak 85% peluang yang dikeluarkan model sudah terkalibrasi dengan benar",
+              ],
+              answer: 0,
+              explain: "AUC menilai urutan skor, bukan akurasi pada satu ambang tertentu.",
+            },
+            {
+              q: "Kenapa AUC dipakai untuk membandingkan dua model?",
+              options: [
+                "Karena nilainya tidak bergantung pada ambang yang dipilih",
+                "Karena nilainya selalu lebih tinggi daripada angka akurasi",
+                "Karena nilainya memberi tahu ambang terbaik yang harus dipakai",
+                "Karena nilainya menjamin peluang yang dihasilkan sudah akurat",
+              ],
+              answer: 0,
+              explain: "Precision dan recall berubah begitu ambang digeser, sedangkan AUC menilai seluruh kurva.",
+            },
+            {
+              q: "Deteksi penipuan dengan hanya 0,1% kasus positif menunjukkan AUC 0,93, tetapi tim penyelidik kebanjiran alarm palsu. Apa yang sebaiknya dilihat?",
+              options: [
+                "PR curve dan average precision, yang lebih jujur untuk kelas sangat langka",
+                "Akurasi keseluruhan, karena angkanya paling mudah dipahami manajemen",
+                "Nilai loss saat pelatihan, karena itu menentukan kualitas sebenarnya",
+                "Jumlah lapisan model, karena model terlalu kecil untuk data sebesar itu",
+              ],
+              answer: 0,
+              explain: "Pada kelas langka, FPR kecil pun tetap berarti sangat banyak alarm palsu per kasus asli.",
+            },
+            {
+              q: "Sebuah model deteksi penyakit dilaporkan ber-AUC 0,995 pada data nyata. Sikap pertama yang tepat?",
+              options: [
+                "Curiga ada kebocoran data dan periksa kolom yang dipakai model",
+                "Langsung pakai di rumah sakit karena hasilnya hampir sempurna",
+                "Menurunkan ambang agar lebih banyak pasien tertangkap",
+                "Mengganti metrik ke akurasi agar angkanya lebih meyakinkan",
+              ],
+              answer: 0,
+              explain: "Hasil nyaris sempurna pada masalah sulit biasanya berarti ada informasi masa depan yang ikut terpakai.",
             },
           ],
         },

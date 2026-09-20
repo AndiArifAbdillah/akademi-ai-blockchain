@@ -3974,6 +3974,138 @@ DEMOS["aktivasi"] = function (root) {
   draw();
 };
 
+
+/* ---------- Demo: kurva ROC & AUC ---------- */
+DEMOS["roc-auc"] = function (root) {
+  const N = 30;
+  let pisah = 2, ambang = 1, benih = 12, data = [];
+
+  function acak(b) {
+    let a = b >>> 0;
+    return function () {
+      a |= 0; a = (a + 0x6d2b79f5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function buat() {
+    const r = acak(benih);
+    const normal = () => { const u = 1 - r(), v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+    data = [];
+    for (let i = 0; i < N; i++) data.push({ s: normal(), y: 0 });
+    for (let i = 0; i < N; i++) data.push({ s: pisah + normal(), y: 1 });
+  }
+  const koma = (v, d) => v.toFixed(d).replace(".", ",");
+
+  function hitung() {
+    const urut = data.slice().sort((a, b) => b.s - a.s);
+    let tp = 0, fp = 0, prev = [0, 0], auc = 0;
+    const titik = [[0, 0]];
+    urut.forEach((x) => {
+      if (x.y === 1) tp++; else fp++;
+      const p = [fp / N, tp / N];
+      titik.push(p);
+      auc += (p[0] - prev[0]) * ((p[1] + prev[1]) / 2);
+      prev = p;
+    });
+    // hitung ulang dengan cara kedua: berapa pasangan yang urutannya benar
+    let benar = 0;
+    data.filter((x) => x.y === 1).forEach((p) => data.filter((x) => x.y === 0).forEach((n) => { benar += p.s > n.s ? 1 : p.s === n.s ? 0.5 : 0; }));
+    return { titik: titik, auc: auc, pasangan: benar / (N * N) };
+  }
+  function matriks() {
+    let tp = 0, fp = 0, fn = 0, tn = 0;
+    data.forEach((x) => {
+      const tebak = x.s >= ambang ? 1 : 0;
+      if (tebak && x.y) tp++; else if (tebak && !x.y) fp++; else if (!tebak && x.y) fn++; else tn++;
+    });
+    return { tp: tp, fp: fp, fn: fn, tn: tn, tpr: tp / (tp + fn), fpr: fp / (fp + tn) };
+  }
+
+  const kanvas = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+
+  function draw() {
+    const H = hitung(), M = matriks();
+    const min = Math.min.apply(null, data.map((d) => d.s)) - 0.4;
+    const maks = Math.max.apply(null, data.map((d) => d.s)) + 0.4;
+    const sx = (v) => 30 + ((v - min) / (maks - min)) * 470;
+    let g = '<svg viewBox="0 0 520 352" class="viz-svg" role="img" aria-label="Sebaran skor dan kurva ROC">';
+    // sebaran skor
+    g += '<text x="30" y="14" class="vt-xs">Skor dari model — merah: kasus positif, hijau: negatif</text>';
+    data.forEach((d) => {
+      g += '<circle cx="' + sx(d.s).toFixed(1) + '" cy="' + (d.y ? 34 : 60) + '" r="5" class="' + (d.y ? "titik-pencilan" : "titik-lancar") + '" fill-opacity="0.85"/>';
+    });
+    const ax = Math.max(36, Math.min(492, sx(ambang)));
+    g += '<line x1="' + ax.toFixed(1) + '" y1="22" x2="' + ax.toFixed(1) + '" y2="76" class="garis-ambang"/>';
+    g += '<text x="' + ax.toFixed(1) + '" y="88" text-anchor="' + (ax > 450 ? "end" : ax < 70 ? "start" : "middle") + '" class="vt-xs">ambang</text>';
+    g += '<text x="26" y="38" text-anchor="end" class="vt-xs">+</text><text x="26" y="64" text-anchor="end" class="vt-xs">−</text>';
+    g += '<text x="500" y="102" text-anchor="end" class="vt-xs">di kanan ambang = ditandai positif</text>';
+    // kurva ROC
+    const X0 = 60, Y0 = 108, S = 210;
+    const rx = (v) => X0 + v * S, ry = (v) => Y0 + S - v * S;
+    g += '<rect x="' + X0 + '" y="' + Y0 + '" width="' + S + '" height="' + S + '" class="rl-sel"/>';
+    g += '<line x1="' + rx(0) + '" y1="' + ry(0) + '" x2="' + rx(1) + '" y2="' + ry(1) + '" class="vring"/>';
+    g += '<text x="' + (rx(0.62)).toFixed(1) + '" y="' + (ry(0.52)).toFixed(1) + '" class="vt-xs">menebak acak</text>';
+    g += '<path d="' + H.titik.map((p, i) => (i ? "L" : "M") + rx(p[0]).toFixed(1) + " " + ry(p[1]).toFixed(1) + " ").join("") + '" class="vline aktif"/>';
+    g += '<circle cx="' + rx(M.fpr).toFixed(1) + '" cy="' + ry(M.tpr).toFixed(1) + '" r="7" class="titik-lancar"/>';
+    g += '<text x="' + (X0 + S / 2) + '" y="' + (Y0 + S + 22) + '" text-anchor="middle" class="vt-xs">Alarm palsu (FPR) →</text>';
+    g += '<text x="' + (X0 - 14) + '" y="' + (Y0 + S / 2) + '" text-anchor="middle" class="vt-xs" transform="rotate(-90 ' + (X0 - 14) + " " + (Y0 + S / 2) + ')">Tertangkap (TPR) →</text>';
+    ["0", "1"].forEach((v, i) => {
+      g += '<text x="' + (i ? rx(1) : rx(0)) + '" y="' + (Y0 + S + 12) + '" text-anchor="middle" class="vt-xs">' + v + "</text>";
+      g += '<text x="' + (X0 - 6) + '" y="' + (i ? ry(1) + 4 : ry(0) + 4) + '" text-anchor="end" class="vt-xs">' + v + "</text>";
+    });
+    // nilai AUC besar di kanan
+    g += '<text x="300" y="' + (Y0 + 40) + '" class="vt-bold" style="font-size:13px">AUC = luas di bawah</text>';
+    g += '<text x="300" y="' + (Y0 + 58) + '" class="vt-bold" style="font-size:13px">kurva biru</text>';
+    g += '<text x="300" y="' + (Y0 + 104) + '" class="vt-bold" style="font-size:34px">' + koma(H.auc, 3) + "</text>";
+    g += '<text x="300" y="' + (Y0 + 134) + '" class="vt-xs">0,5 = seperti menebak acak</text>';
+    g += '<text x="300" y="' + (Y0 + 150) + '" class="vt-xs">1,0 = pemisahan sempurna</text>';
+    g += "</svg>";
+    kanvas.innerHTML = g;
+
+    let catatan;
+    if (H.auc < 0.6) catatan = "Kedua kelompok skor <b>bertumpuk hampir sepenuhnya</b>. Kurvanya menempel ke garis diagonal, dan AUC mendekati 0,5 — model ini praktis tidak bisa membedakan apa pun. Geser 'kualitas model' ke kanan.";
+    else if (H.auc < 0.9) catatan = "Kedua kelompok mulai terpisah, tapi masih ada wilayah tumpang tindih. <b>Di wilayah itulah kamu terpaksa memilih</b>: menurunkan ambang berarti menangkap lebih banyak kasus positif, tetapi ikut menaikkan alarm palsu.";
+    else catatan = "Pemisahannya hampir sempurna: kurva menempel ke pojok kiri atas. Hati-hati — <b>AUC yang nyaris 1,0 pada masalah nyata justru patut dicurigai</b> sebagai kebocoran data, misalnya ada kolom yang sebenarnya baru diketahui setelah kejadian.";
+
+    out.innerHTML =
+      '<div class="dm-line big"><span>AUC</span><b>' + koma(H.auc, 3) + "</b></div>" +
+      '<div class="dm-line teks"><span>Cara hitung kedua: dari ' + N * N + ' pasangan (satu positif, satu negatif), berapa yang skornya sudah urut benar?</span><b>' + koma(H.pasangan * 100, 1) + "% = " + koma(H.pasangan, 3) + "</b></div>" +
+      '<div class="cm-grid">' +
+      '<div class="cm-sel ok"><b>' + M.tp + "</b><span>Positif tertangkap (TP)</span></div>" +
+      '<div class="cm-sel bad"><b>' + M.fp + "</b><span>Alarm palsu (FP)</span></div>" +
+      '<div class="cm-sel bad"><b>' + M.fn + "</b><span>Positif terlewat (FN)</span></div>" +
+      '<div class="cm-sel ok"><b>' + M.tn + "</b><span>Negatif benar (TN)</span></div>" +
+      "</div>" +
+      '<div class="dm-line"><span>TPR / recall <i class="dm-sub">dari semua positif, berapa yang tertangkap</i></span><b>' + koma(M.tpr * 100, 0) + "%</b></div>" +
+      '<div class="dm-line"><span>FPR <i class="dm-sub">dari semua negatif, berapa yang salah ditandai</i></span><b>' + koma(M.fpr * 100, 0) + "%</b></div>" +
+      '<div class="dm-note">' + catatan + "<br><br>Perhatikan dua angka AUC di atas <b>selalu sama persis</b>. Luas di bawah kurva ternyata sama dengan peluang model memberi skor lebih tinggi pada kasus positif acak dibanding kasus negatif acak — itulah arti AUC yang paling mudah diingat.<br><br><i>Dihitung dari " + 2 * N + " contoh, jadi angkanya bergoyang sedikit setiap kali datanya diacak ulang.</i></div>";
+  }
+
+  const slP = h("input", { type: "range", min: "0", max: "3", step: "0.25", value: "2", class: "dm-range" });
+  const lbP = h("b", { text: "2,00" });
+  slP.oninput = () => { pisah = parseFloat(slP.value); lbP.textContent = koma(pisah, 2); buat(); draw(); };
+  const slA = h("input", { type: "range", min: "-3", max: "5", step: "0.1", value: "1", class: "dm-range" });
+  const lbA = h("b", { text: "1,0" });
+  slA.oninput = () => { ambang = parseFloat(slA.value); lbA.textContent = koma(ambang, 1); draw(); };
+  const tAcak = h("button", { class: "btn ghost", type: "button", text: "🎲 Data baru" });
+  tAcak.onclick = () => { benih = 1 + Math.floor(Math.random() * 100000); buat(); draw(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "📉 <b>Demo: kurva ROC & AUC</b>" }),
+    h("p", { class: "demo-hint", text: "Enam puluh kasus: 30 benar-benar positif (merah) dan 30 negatif (hijau). Model memberi skor pada tiap kasus. Geser ambangnya, lalu geser kualitas modelnya." }),
+    kanvas,
+    h("label", { class: "dm-row" }, [h("span", { text: "Ambang keputusan: " }), slA, lbA]),
+    h("label", { class: "dm-row" }, [h("span", { text: "Kualitas model (pemisahan skor): " }), slP, lbP]),
+    h("div", { class: "demo-controls" }, [tAcak]),
+    out,
+  ]));
+  buat();
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";
