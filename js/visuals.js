@@ -4106,6 +4106,120 @@ DEMOS["roc-auc"] = function (root) {
   draw();
 };
 
+
+/* ---------- Demo: latihan menjurnal transaksi sehari-hari ---------- */
+DEMOS["jurnal-harian"] = function (root) {
+  const AKUN = {
+    Kas: "aset", "Piutang Usaha": "aset", Perlengkapan: "aset", Peralatan: "aset", "Sewa Dibayar di Muka": "aset",
+    "Utang Usaha": "kewajiban", "Utang Gaji": "kewajiban",
+    "Modal Pemilik": "ekuitas", Prive: "prive",
+    "Pendapatan Jasa": "pendapatan",
+    "Beban Sewa": "beban", "Beban Gaji": "beban", "Beban Listrik": "beban",
+  };
+  const SOAL = [
+    { t: "Pemilik menyetor modal Rp50 juta tunai ke rekening usaha.", d: "Kas", k: "Modal Pemilik", n: 50, e: "Kas (aset) bertambah → debit. Modal pemilik (ekuitas) bertambah → kredit." },
+    { t: "Membayar sewa kios untuk bulan ini Rp3 juta tunai.", d: "Beban Sewa", k: "Kas", n: 3, e: "Manfaat sewanya habis bulan ini juga, jadi langsung diakui sebagai beban. Beban bertambah → debit; kas berkurang → kredit." },
+    { t: "Membayar sewa kios untuk 12 bulan ke depan Rp36 juta tunai.", d: "Sewa Dibayar di Muka", k: "Kas", n: 36, e: "Manfaatnya belum dipakai, jadi ini masih ASET (hak memakai kios 12 bulan) — bukan beban. Aset bertambah → debit." },
+    { t: "Akhir bulan pertama: mengakui pemakaian sewa dibayar di muka Rp3 juta.", d: "Beban Sewa", k: "Sewa Dibayar di Muka", n: 3, e: "Satu bulan manfaat sudah terpakai: aset berkurang → kredit, dan berubah menjadi beban → debit. Tidak ada kas yang bergerak." },
+    { t: "Membeli peralatan Rp10 juta tunai.", d: "Peralatan", k: "Kas", n: 10, e: "Tukar aset dengan aset: peralatan bertambah → debit, kas berkurang → kredit. Total aset tidak berubah." },
+    { t: "Membeli perlengkapan Rp1 juta, dibayar bulan depan.", d: "Perlengkapan", k: "Utang Usaha", n: 1, e: "Barang sudah diterima (aset bertambah → debit), tapi belum dibayar sehingga muncul kewajiban → kredit." },
+    { t: "Menyelesaikan jasa Rp5 juta; pelanggan akan membayar bulan depan.", d: "Piutang Usaha", k: "Pendapatan Jasa", n: 5, e: "Pendapatan diakui saat jasa selesai (kredit), walau uang belum diterima. Haknya dicatat sebagai piutang → debit." },
+    { t: "Pelanggan melunasi piutangnya Rp5 juta.", d: "Kas", k: "Piutang Usaha", n: 5, e: "Kas bertambah → debit; piutang (hak tagih) berkurang → kredit. Perhatikan: ini BUKAN pendapatan baru, karena pendapatannya sudah dicatat saat jasa selesai." },
+    { t: "Gaji karyawan bulan ini Rp4 juta, baru dibayar awal bulan depan.", d: "Beban Gaji", k: "Utang Gaji", n: 4, e: "Karyawan sudah bekerja bulan ini, jadi bebannya milik bulan ini → debit. Belum dibayar → muncul kewajiban → kredit." },
+    { t: "Pemilik mengambil uang usaha Rp2 juta untuk keperluan pribadi.", d: "Prive", k: "Kas", n: 2, e: "Ini bukan beban usaha, melainkan pengambilan modal oleh pemilik (prive) → debit, dan kas berkurang → kredit." },
+  ];
+
+  let ke = 0, dijawab = false, benar = 0;
+  const saldo = {};
+  Object.keys(AKUN).forEach((a) => { saldo[a] = 0; });
+
+  const pilihD = h("select", { class: "pc-input lebar", "aria-label": "Akun yang didebit" });
+  const pilihK = h("select", { class: "pc-input lebar", "aria-label": "Akun yang dikredit" });
+  [pilihD, pilihK].forEach((sel) => {
+    sel.appendChild(h("option", { value: "", text: "— pilih akun —" }));
+    Object.keys(AKUN).forEach((a) => sel.appendChild(h("option", { value: a, text: a + " (" + AKUN[a] + ")" })));
+  });
+  const soalEl = h("div", { class: "dm-out" });
+  const hasil = h("div");
+  const buku = h("div", { class: "dm-out" });
+
+  const rp = (v) => "Rp" + v + " jt";
+  function terapkan(s) {
+    saldo[s.d] += s.n; // sisi debit
+    saldo[s.k] -= s.n; // sisi kredit (disimpan negatif agar mudah dijumlahkan)
+  }
+  function gambarBuku() {
+    const jum = (jenis, tanda) => Object.keys(AKUN).filter((a) => AKUN[a] === jenis).reduce((t, a) => t + tanda * saldo[a], 0);
+    const aset = jum("aset", 1);
+    const kewajiban = jum("kewajiban", -1);
+    const modal = jum("ekuitas", -1);
+    const pendapatan = jum("pendapatan", -1);
+    const beban = jum("beban", 1);
+    const prive = jum("prive", 1);
+    const ekuitas = modal + pendapatan - beban - prive;
+    const isi = Object.keys(AKUN).filter((a) => saldo[a] !== 0)
+      .map((a) => '<div class="dm-line"><span>' + a + ' <i class="dm-sub">' + AKUN[a] + "</i></span><b>" + rp(Math.abs(saldo[a])) + " di " + (saldo[a] > 0 ? "debit" : "kredit") + "</b></div>").join("");
+    buku.innerHTML = isi
+      ? '<div class="krip-judul">SALDO BUKU BESAR</div>' + isi +
+        '<div class="dm-line big ' + (Math.abs(aset - (kewajiban + ekuitas)) < 0.001 ? "good" : "bad") + '"><span>Aset = Kewajiban + Ekuitas</span><b>' + rp(aset) + " = " + rp(kewajiban) + " + " + rp(ekuitas) + "</b></div>" +
+        '<div class="dm-note">Ekuitas dihitung dari modal ' + rp(modal) + " + pendapatan " + rp(pendapatan) + " − beban " + rp(beban) + " − prive " + rp(prive) + ". <b>Persamaannya selalu seimbang</b> — itulah gunanya pencatatan berpasangan."
+        : "";
+  }
+
+  function gambar() {
+    const s = SOAL[ke];
+    soalEl.innerHTML =
+      '<div class="dm-line"><span>Transaksi ke-' + (ke + 1) + " dari " + SOAL.length + '</span><b>skor ' + benar + "/" + ke + "</b></div>" +
+      '<div class="dm-line big teks"><span>' + s.t + "</span></div>";
+    gambarBuku();
+  }
+
+  const periksa = h("button", { class: "btn", type: "button", text: "Periksa jurnal" });
+  const lanjut = h("button", { class: "btn ghost", type: "button", text: "Transaksi berikutnya →" });
+  periksa.onclick = () => {
+    if (dijawab) return;
+    const s = SOAL[ke];
+    if (!pilihD.value || !pilihK.value) { hasil.innerHTML = '<div class="dm-note">Pilih dulu akun yang didebit dan yang dikredit.</div>'; return; }
+    const cocok = pilihD.value === s.d && pilihK.value === s.k;
+    const terbalik = pilihD.value === s.k && pilihK.value === s.d;
+    dijawab = true;
+    if (cocok) benar++;
+    terapkan(s);
+    hasil.innerHTML =
+      '<div class="dm-line big ' + (cocok ? "good" : "bad") + '"><span>' + (cocok ? "✅ Benar" : terbalik ? "❌ Terbalik — debit dan kreditnya tertukar" : "❌ Belum tepat") + "</span></div>" +
+      '<div class="krip-hasil biasa krip-pre">Debit  ' + s.d + "   " + rp(s.n) + "\nKredit    " + s.k + "   " + rp(s.n) + "</div>" +
+      '<div class="dm-note">' + s.e + "</div>" +
+      (ke === SOAL.length - 1
+        ? '<div class="dm-line big ' + (benar >= 8 ? "good" : "") + '"><span>🎓 Selesai — semua ' + SOAL.length + " transaksi terjurnal</span><b>skor akhir " + benar + "/" + SOAL.length + "</b></div>"
+        : "");
+    if (ke === SOAL.length - 1) lanjut.textContent = "↺ Ulangi dari transaksi pertama";
+    gambarBuku();
+  };
+  lanjut.onclick = () => {
+    if (!dijawab) { hasil.innerHTML = '<div class="dm-note">Periksa dulu jawabanmu.</div>'; return; }
+    ke = (ke + 1) % SOAL.length;
+    if (ke === 0) { Object.keys(saldo).forEach((a) => { saldo[a] = 0; }); benar = 0; lanjut.textContent = "Transaksi berikutnya →"; }
+    dijawab = false;
+    pilihD.value = ""; pilihK.value = "";
+    hasil.innerHTML = "";
+    gambar();
+  };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "📒 <b>Demo: jurnal transaksi sehari-hari</b>" }),
+    h("p", { class: "demo-hint", text: "Tentukan akun mana yang didebit dan mana yang dikredit. Setiap jawaban langsung dicatat ke buku besar, sehingga kamu bisa melihat persamaan akuntansinya tetap seimbang." }),
+    soalEl,
+    h("div", { class: "pc-form" }, [
+      h("label", { class: "pc-row" }, [h("span", { text: "Debit" }), pilihD]),
+      h("label", { class: "pc-row" }, [h("span", { text: "Kredit" }), pilihK]),
+    ]),
+    h("div", { class: "demo-controls" }, [periksa, lanjut]),
+    hasil,
+    buku,
+  ]));
+  gambar();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

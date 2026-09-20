@@ -193,7 +193,7 @@ const ACCOUNTING_COURSE = {
       id: "acc-pemula",
       level: "Pemula",
       title: "Fondasi Akuntansi",
-      summary: "Konsep inti: persamaan dasar, lima jenis akun, dan debit-kredit.",
+      summary: "Konsep inti: persamaan dasar, lima jenis akun, debit-kredit, dan menjurnal transaksi sehari-hari termasuk beban sewa.",
       lessons: [
         {
           id: "acc-p-1",
@@ -389,9 +389,9 @@ const ACCOUNTING_COURSE = {
   <tr><th>Jenis Akun</th><th>Bertambah di sisi...</th><th>Berkurang di sisi...</th></tr>
   <tr><td><b>Aset</b></td><td class="ok-cell">Debit</td><td>Kredit</td></tr>
   <tr><td><b>Beban</b></td><td class="ok-cell">Debit</td><td>Kredit</td></tr>
-  <tr><td><b>Kewajiban</b></td><td>Debit</td><td class="ok-cell">Kredit</td></tr>
-  <tr><td><b>Ekuitas</b></td><td>Debit</td><td class="ok-cell">Kredit</td></tr>
-  <tr><td><b>Pendapatan</b></td><td>Debit</td><td class="ok-cell">Kredit</td></tr>
+  <tr><td><b>Kewajiban</b></td><td class="ok-cell">Kredit</td><td>Debit</td></tr>
+  <tr><td><b>Ekuitas</b></td><td class="ok-cell">Kredit</td><td>Debit</td></tr>
+  <tr><td><b>Pendapatan</b></td><td class="ok-cell">Kredit</td><td>Debit</td></tr>
 </table>
 
 <div class="callout">
@@ -431,6 +431,160 @@ const ACCOUNTING_COURSE = {
               options: ["Kredit", "Debit", "Keduanya", "Tidak dicatat"],
               answer: 1,
               explain: "Aset bertambah di sisi Debit.",
+            },
+          ],
+        },
+        {
+          id: "acc-p-5",
+          title: "Menjurnal Transaksi Sehari-hari — Beban Sewa & Kawan-Kawan",
+          duration: "16 menit",
+          content: `
+<p>Aturan debit-kredit sudah kamu hafal. Tapi begitu bertemu transaksi nyata, pertanyaannya berubah jadi: <i>"Bayar sewa itu masuk akun apa? Kenapa beban ada di debit? Kalau sewanya dibayar setahun di muka, apakah tetap beban?"</i> Pelajaran ini menjawabnya lewat transaksi yang benar-benar terjadi di usaha kecil setiap hari.</p>
+
+<h3>Kenapa beban ada di sisi debit? (bukan hafalan)</h3>
+<div class="callout">
+Ingat persamaannya: <b>Aset = Kewajiban + Ekuitas</b>.<br><br>
+Beban <b>mengurangi</b> ekuitas — bisnis jadi sedikit lebih miskin setiap kali membayar listrik. Sementara ekuitas <b>bertambah</b> di sisi kredit. Maka sesuatu yang <b>mengurangi</b> ekuitas harus berada di sisi sebaliknya, yaitu <b>debit</b>.<br><br>
+Dengan logika yang sama: pendapatan menambah ekuitas, sehingga pendapatan berada di <b>kredit</b>. Kamu tidak perlu menghafal — cukup ingat beban dan pendapatan adalah "cabang" dari ekuitas.
+</div>
+
+<h3>Anatomi satu jurnal</h3>
+<p>Setiap jurnal selalu berisi empat hal: tanggal, akun yang didebit, akun yang dikredit, dan nominal yang sama besar di kedua sisi.</p>
+<table class="tbl">
+  <tr><th>Posisi</th><th>Akun</th><th>Nominal</th></tr>
+  <tr><td>Debit</td><td>Beban Sewa</td><td>Rp3.000.000</td></tr>
+  <tr><td>Kredit</td><td>&nbsp;&nbsp;&nbsp;&nbsp;Kas</td><td>Rp3.000.000</td></tr>
+</table>
+<p>Akun yang dikredit ditulis menjorok ke dalam. Itu kebiasaan penulisan, bukan aturan hitungan.</p>
+
+<h3>Beban sewa: satu transaksi, tiga kemungkinan</h3>
+<p>Inilah bagian yang paling sering membingungkan pemula. Jawabannya bergantung pada <b>kapan manfaatnya dipakai</b>, bukan kapan uangnya bergerak.</p>
+<table class="tbl">
+  <tr><th>Keadaan</th><th>Jurnalnya</th><th>Alasan</th></tr>
+  <tr><td><b>Bayar sewa bulan ini</b>, Rp3 juta tunai</td><td>Debit <b>Beban Sewa</b> 3 jt<br>Kredit Kas 3 jt</td><td>Manfaatnya habis bulan ini juga → langsung jadi beban</td></tr>
+  <tr><td><b>Bayar 12 bulan di muka</b>, Rp36 juta tunai</td><td>Debit <b>Sewa Dibayar di Muka</b> 36 jt<br>Kredit Kas 36 jt</td><td>Kamu memegang <b>hak memakai kios 12 bulan</b> — itu aset, bukan beban</td></tr>
+  <tr><td><b>Akhir bulan pertama</b> dari sewa di muka tadi</td><td>Debit <b>Beban Sewa</b> 3 jt<br>Kredit Sewa Dibayar di Muka 3 jt</td><td>Satu bulan manfaat sudah terpakai. Tidak ada kas bergerak sama sekali</td></tr>
+  <tr><td><b>Sudah menempati, belum bayar</b></td><td>Debit <b>Beban Sewa</b> 3 jt<br>Kredit Utang Sewa 3 jt</td><td>Manfaat sudah dinikmati, jadi bebannya milik bulan ini walau kas belum keluar</td></tr>
+</table>
+
+<div class="callout warn">
+<b>💡 Kunci yang berlaku untuk semua akun:</b> tanyakan <b>"manfaatnya sudah terpakai atau belum?"</b><br><br>
+Belum terpakai → <b>aset</b> (sewa dibayar di muka, asuransi dibayar di muka, perlengkapan yang masih ada).<br>
+Sudah terpakai → <b>beban</b>.<br><br>
+Pertanyaan "sudah bayar atau belum" tidak menentukan jenis akunnya — ia hanya menentukan apakah lawannya Kas atau Utang.
+</div>
+
+<h3>Latih dengan transaksi nyata</h3>
+
+<div data-demo="jurnal-harian"></div>
+
+<h3>Sepuluh transaksi yang paling sering muncul</h3>
+<table class="tbl">
+  <tr><th>Transaksi</th><th>Debit</th><th>Kredit</th></tr>
+  <tr><td>Pemilik menyetor modal tunai</td><td>Kas</td><td>Modal Pemilik</td></tr>
+  <tr><td>Membeli peralatan tunai</td><td>Peralatan</td><td>Kas</td></tr>
+  <tr><td>Membeli perlengkapan secara kredit</td><td>Perlengkapan</td><td>Utang Usaha</td></tr>
+  <tr><td>Membayar listrik bulan ini</td><td>Beban Listrik</td><td>Kas</td></tr>
+  <tr><td>Menjual jasa tunai</td><td>Kas</td><td>Pendapatan Jasa</td></tr>
+  <tr><td>Menjual jasa, dibayar nanti</td><td>Piutang Usaha</td><td>Pendapatan Jasa</td></tr>
+  <tr><td>Pelanggan melunasi piutang</td><td>Kas</td><td>Piutang Usaha</td></tr>
+  <tr><td>Membayar utang ke pemasok</td><td>Utang Usaha</td><td>Kas</td></tr>
+  <tr><td>Gaji bulan ini belum dibayar</td><td>Beban Gaji</td><td>Utang Gaji</td></tr>
+  <tr><td>Pemilik mengambil uang untuk pribadi</td><td>Prive</td><td>Kas</td></tr>
+</table>
+
+<div class="callout warn">
+<b>⚠️ Dua yang paling sering keliru:</b><br><br>
+<b>1. Pelanggan melunasi piutang dicatat sebagai pendapatan lagi.</b> Salah — pendapatannya sudah diakui saat jasa selesai. Pelunasan hanya menukar piutang menjadi kas. Kalau dicatat dua kali, pendapatanmu menggelembung palsu.<br><br>
+<b>2. Pengambilan pemilik dicatat sebagai beban.</b> Salah — <b>prive</b> bukan biaya menjalankan usaha, melainkan pengurang modal. Kalau dicatat sebagai beban, labamu terlihat lebih kecil dari yang sebenarnya.
+</div>
+
+<h3>Akun-akun yang sering membingungkan</h3>
+<table class="tbl">
+  <tr><th>Akun</th><th>Jenisnya</th><th>Artinya dengan bahasa sehari-hari</th></tr>
+  <tr><td><b>Piutang Usaha</b></td><td>Aset</td><td>Uang yang masih ditahan pelanggan — hakmu, tapi belum di tangan</td></tr>
+  <tr><td><b>Utang Usaha</b></td><td>Kewajiban</td><td>Barang sudah kamu terima, uangnya belum kamu bayar</td></tr>
+  <tr><td><b>Sewa/Asuransi Dibayar di Muka</b></td><td>Aset</td><td>Sudah bayar, manfaatnya baru akan dipakai</td></tr>
+  <tr><td><b>Pendapatan Diterima di Muka</b></td><td class="bad-cell">Kewajiban</td><td>Sudah terima uang, jasanya <b>belum</b> dikerjakan — itu utang jasa, bukan pendapatan</td></tr>
+  <tr><td><b>Akumulasi Penyusutan</b></td><td>Pengurang aset</td><td>Total "keausan" peralatan sejak dibeli; ditulis sebagai pengurang di sisi aset</td></tr>
+  <tr><td><b>Prive</b></td><td>Pengurang ekuitas</td><td>Pemilik mengambil uang usaha untuk keperluan pribadi</td></tr>
+  <tr><td><b>HPP</b></td><td>Beban</td><td>Harga beli/produksi barang yang <b>sudah terjual</b> — bukan seluruh persediaan yang dibeli</td></tr>
+</table>
+
+<h3>"Beban", "biaya", dan "belanja modal" — apa bedanya?</h3>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Maksudnya</th><th>Contoh</th></tr>
+  <tr><td><b>Beban</b> (expense)</td><td>Manfaat yang sudah habis dipakai periode ini; masuk laporan laba rugi</td><td>Sewa bulan ini, listrik, gaji</td></tr>
+  <tr><td><b>Biaya</b> (cost)</td><td>Pengorbanan untuk memperoleh sesuatu; bisa jadi aset dulu sebelum menjadi beban</td><td>Biaya membeli persediaan</td></tr>
+  <tr><td><b>Belanja modal</b> (CapEx)</td><td>Pengeluaran untuk aset yang dipakai bertahun-tahun; jadi beban pelan-pelan lewat penyusutan</td><td>Membeli motor pengantar</td></tr>
+</table>
+<p>Dalam percakapan sehari-hari ketiganya sering tertukar. Dalam laporan keuangan, perbedaannya menentukan apakah angkanya muncul di laba rugi sekarang atau di neraca dulu.</p>
+
+<div class="callout">
+<b>🧭 Tiga pertanyaan yang menyelesaikan hampir semua jurnal:</b><br>
+1. <b>Apa yang masuk atau keluar?</b> (kas, barang, hak tagih, kewajiban)<br>
+2. <b>Manfaatnya sudah terpakai belum?</b> (belum → aset, sudah → beban)<br>
+3. <b>Akun mana yang bertambah?</b> Aset dan beban bertambah di debit; kewajiban, ekuitas, dan pendapatan bertambah di kredit.
+</div>
+`,
+          keyPoints: [
+            "Beban ada di sisi debit karena beban mengurangi ekuitas, sedangkan ekuitas bertambah di kredit.",
+            "Jenis akun ditentukan oleh apakah manfaatnya sudah terpakai, bukan oleh apakah uangnya sudah dibayar.",
+            "Sewa dibayar di muka adalah ASET; ia berubah menjadi beban sedikit demi sedikit setiap bulan berjalan.",
+            "Sewa yang sudah dinikmati tapi belum dibayar tetap dicatat sebagai beban bulan ini, dengan lawan akun utang.",
+            "Pelunasan piutang bukan pendapatan baru — pendapatannya sudah diakui saat jasa selesai.",
+            "Prive bukan beban, melainkan pengurang modal pemilik.",
+            "Pendapatan diterima di muka adalah kewajiban, karena jasanya belum dikerjakan.",
+          ],
+          practice: [
+            { type: "choice", q: "Membayar asuransi setahun ke depan Rp12 juta tunai. Akun apa yang didebit?", options: ["Asuransi Dibayar di Muka (aset)", "Beban Asuransi", "Utang Asuransi"], answer: 0, hint: "Manfaatnya sudah terpakai atau belum?", solution: "Manfaatnya belum dipakai, jadi masih aset. Setiap bulan Rp1 juta dipindahkan menjadi Beban Asuransi." },
+            { type: "choice", q: "Pelanggan membayar di muka Rp5 juta untuk jasa bulan depan. Bagaimana mencatatnya?", options: ["Debit Kas, Kredit Pendapatan Diterima di Muka", "Debit Kas, Kredit Pendapatan Jasa", "Debit Pendapatan Jasa, Kredit Kas"], answer: 0, hint: "Jasanya sudah dikerjakan atau belum?", solution: "Uang sudah diterima tetapi jasanya belum dikerjakan, sehingga muncul kewajiban (utang jasa), bukan pendapatan." },
+            { type: "number", q: "Sewa 12 bulan Rp36 juta dibayar di muka. Setelah 4 bulan berjalan, berapa juta sisa saldo Sewa Dibayar di Muka?", answer: 24, tol: 0.5, hint: "Per bulan 36 ÷ 12 = 3 juta.", solution: "4 bulan × Rp3 juta = Rp12 juta sudah menjadi beban, sehingga sisanya Rp36 − Rp12 = Rp24 juta." },
+          ],
+          quiz: [
+            {
+              q: "Kenapa akun beban bertambah di sisi debit?",
+              options: [
+                "Karena beban mengurangi ekuitas, sedangkan ekuitas bertambah di sisi kredit",
+                "Karena beban selalu dibayar dengan kas yang juga berada di sisi debit",
+                "Karena semua akun yang namanya diawali huruf B dicatat di sisi debit",
+                "Karena beban termasuk kewajiban yang harus dilunasi pada akhir periode",
+              ],
+              answer: 0,
+              explain: "Beban dan pendapatan adalah cabang dari ekuitas, dengan arah yang berlawanan.",
+            },
+            {
+              q: "Sebuah usaha membayar sewa kios 12 bulan di muka sebesar Rp36 juta. Jurnal yang tepat?",
+              options: [
+                "Debit Sewa Dibayar di Muka, Kredit Kas",
+                "Debit Beban Sewa, Kredit Kas",
+                "Debit Kas, Kredit Sewa Dibayar di Muka",
+                "Debit Beban Sewa, Kredit Utang Sewa",
+              ],
+              answer: 0,
+              explain: "Manfaat 12 bulan belum dipakai, jadi statusnya masih aset.",
+            },
+            {
+              q: "Pelanggan melunasi piutang Rp5 juta yang jasanya sudah dikerjakan bulan lalu. Apa yang dicatat?",
+              options: [
+                "Debit Kas, Kredit Piutang Usaha — bukan pendapatan baru",
+                "Debit Kas, Kredit Pendapatan Jasa — karena uangnya baru diterima",
+                "Debit Pendapatan Jasa, Kredit Kas — untuk menutup piutangnya",
+                "Tidak dicatat, karena pendapatannya sudah dicatat bulan lalu",
+              ],
+              answer: 0,
+              explain: "Mencatatnya sebagai pendapatan lagi akan menggelembungkan omzet secara palsu.",
+            },
+            {
+              q: "Pemilik mengambil Rp2 juta dari kas usaha untuk belanja pribadi. Ini dicatat sebagai?",
+              options: [
+                "Prive, yaitu pengurang modal pemilik",
+                "Beban lain-lain di laporan laba rugi",
+                "Utang pemilik kepada perusahaan",
+                "Pendapatan pemilik dari usahanya",
+              ],
+              answer: 0,
+              explain: "Mencatatnya sebagai beban membuat laba usaha terlihat lebih kecil dari yang sebenarnya.",
             },
           ],
         },
