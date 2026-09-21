@@ -994,3 +994,16 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
 .nav-kunci.goyang { animation: kunciGoyang .45s; }
 @keyframes kunciGoyang { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
 .dis-kunci { display: flex; align-items: center; gap: 8px; font-size: .9rem; }
+
+/* ---------- Demo metrik klasifikasi ---------- */
+.mk-tp { fill: var(--bad); }
+.mk-fn { fill: none; stroke: var(--bad); stroke-width: 2.5; stroke-dasharray: 4 3; }
+.mk-fp { fill: var(--warn); }
+.mk-tn { fill: var(--ok); opacity: .3; }
+.mk-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .82rem; margin: 4px 0 10px; }
+.mk-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.mk-dot.tp { background: var(--bad); }
+.mk-dot.fn { border: 2px dashed var(--bad); width: 9px; height: 9px; }
+.mk-dot.fp { background: var(--warn); }
+.mk-dot.tn { background: var(--ok); opacity: .45; }
+.roc-luas { fill: var(--primary); opacity: .15; }

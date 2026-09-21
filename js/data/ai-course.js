@@ -910,73 +910,207 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
       lessons: [
         {
           id: "ai-fund-1",
-          title: "Mengukur Kualitas AI (Akurasi, Precision, Recall)",
-          duration: "12 menit",
+          title: "Mengukur Kualitas AI dari Nol — Confusion Matrix, Precision & Recall",
+          duration: "18 menit",
           content: `
-<p>Bagaimana kita tahu sebuah model AI itu "bagus"? Ternyata angka <b>akurasi</b> saja sering <b>menyesatkan</b>.</p>
+<p>Sebuah model AI pendeteksi penyakit dilaporkan punya <b>akurasi 90%</b>. Bagus? Ternyata model yang <b>selalu</b> menjawab "sehat" untuk siapa pun — tanpa berpikir sama sekali — juga bisa mendapat akurasi 90%. Pelajaran ini membongkar kenapa hal itu bisa terjadi, dan angka apa yang sebenarnya perlu dilihat. Semua istilahnya dimulai dari nol.</p>
 
-<div data-diagram="vs" data-left="PRECISION::Dari yang di-alarm positif::berapa % benar?" data-right="RECALL::Dari yang benar positif::berapa % tertangkap?" data-caption="Precision vs Recall"></div>
+<h3>Langkah 1 — Kenyataan dan tebakan</h3>
+<p>Bayangkan <b>100 orang</b> diperiksa. Kenyataannya: <b>10 orang sakit</b> dan <b>90 orang sehat</b>. Sebuah model AI menebak, lalu menandai <b>17 orang</b> sebagai sakit.</p>
+<p>Setiap orang kini punya dua label: <b>kenyataannya</b> (sakit atau sehat) dan <b>tebakan model</b> (sakit atau sehat). Dua kali dua, jadi hanya ada <b>empat kemungkinan</b>:</p>
 
+<table class="tbl">
+  <tr><th></th><th>Model bilang <b>sakit</b></th><th>Model bilang <b>sehat</b></th></tr>
+  <tr><td><b>Kenyataannya sakit</b> (10)</td><td class="ok-cell"><b>8</b> — tertangkap ✅<br><i>True Positive (TP)</i></td><td class="bad-cell"><b>2</b> — lolos ❌<br><i>False Negative (FN)</i></td></tr>
+  <tr><td><b>Kenyataannya sehat</b> (90)</td><td class="bad-cell"><b>9</b> — dituduh sakit ❌<br><i>False Positive (FP)</i></td><td class="ok-cell"><b>81</b> — benar sehat ✅<br><i>True Negative (TN)</i></td></tr>
+</table>
+<p>Tabel empat kotak inilah yang disebut <b>confusion matrix</b> ("matriks kebingungan") — karena ia menunjukkan di mana saja model "bingung". <b>Semua metrik di pelajaran ini dihitung dari empat angka tersebut.</b></p>
 
-<div class="callout warn">
-<b>Jebakan akurasi:</b> Untuk mendeteksi penyakit langka (1 dari 100 orang), model yang <b>selalu</b> menebak "sehat" mendapat akurasi <b>99%</b> — padahal tak berguna sama sekali (tak pernah menangkap yang sakit).
+<h3>Langkah 2 — Membaca namanya tanpa menghafal</h3>
+<div class="callout">
+Nama seperti "False Positive" terdengar membingungkan, padahal ada satu kunci sederhana. Baca <b>dari belakang</b>:<br><br>
+<b>Kata kedua</b> (Positive / Negative) = <b>apa yang DITEBAK model</b>. Positive berarti model bilang "ya, sakit".<br>
+<b>Kata pertama</b> (True / False) = <b>tebakan itu benar atau salah</b>.<br><br>
+Jadi <b>False Positive</b> = tebakan "sakit" yang ternyata <b>salah</b> → orang sehat yang dituduh sakit (alarm palsu).<br>
+<b>False Negative</b> = tebakan "sehat" yang ternyata <b>salah</b> → orang sakit yang lolos.
 </div>
 
-<h3>Empat kemungkinan (confusion matrix)</h3>
-<ul>
-  <li><b>TP</b> (True Positive): diprediksi positif, memang benar.</li>
-  <li><b>FP</b> (False Positive): diprediksi positif, ternyata salah (alarm palsu).</li>
-  <li><b>FN</b> (False Negative): diprediksi negatif, padahal positif (terlewat).</li>
-  <li><b>TN</b> (True Negative): diprediksi negatif, memang benar.</li>
-</ul>
-
-<h3>Dua metrik kunci</h3>
 <table class="tbl">
-  <tr><th>Metrik</th><th>Rumus</th><th>Menjawab</th></tr>
-  <tr><td><b>Precision</b></td><td>TP ÷ (TP + FP)</td><td>Dari yang di-alarm positif, berapa % benar? (bisa dipercaya?)</td></tr>
-  <tr><td><b>Recall</b></td><td>TP ÷ (TP + FN)</td><td>Dari yang benar-benar positif, berapa % tertangkap? (selengkap apa?)</td></tr>
+  <tr><th>Istilah</th><th>Model menebak</th><th>Tebakannya</th><th>Bahasa sehari-hari</th></tr>
+  <tr><td><b>TP</b></td><td>sakit</td><td class="ok-cell">benar</td><td>Tertangkap</td></tr>
+  <tr><td><b>FN</b></td><td>sehat</td><td class="bad-cell">salah</td><td>Lolos / terlewat</td></tr>
+  <tr><td><b>FP</b></td><td>sakit</td><td class="bad-cell">salah</td><td>Alarm palsu / dituduh</td></tr>
+  <tr><td><b>TN</b></td><td>sehat</td><td class="ok-cell">benar</td><td>Aman, benar</td></tr>
 </table>
 
-<div class="callout">
-<b>F1-score</b> = penyeimbang precision & recall dalam satu angka. Ada <b>trade-off</b>: filter spam terlalu galak (recall tinggi) bisa membuang email penting (precision turun). Cara menilai model <b>tanpa mengunci satu ambang</b> — kurva ROC dan AUC — dibahas di pelajaran berikutnya.
+<h3>Langkah 3 — Akurasi, dan jebakannya</h3>
+<p><b>Akurasi</b> = berapa tebakan yang benar dari semua orang = (TP + TN) ÷ semua = (8 + 81) ÷ 100 = <b>89%</b>.</p>
+<div class="callout warn">
+<b>⚠️ Jebakan akurasi.</b> "Model malas" yang selalu bilang "sehat" mendapat TP = 0 dan TN = 90, jadi akurasinya (0 + 90) ÷ 100 = <b>90%</b> — <b>lebih tinggi</b> dari model yang benar-benar bekerja, padahal tidak menangkap satu pun orang sakit.<br><br>
+Ini selalu terjadi ketika satu kelompok jauh lebih besar dari yang lain: penyakit langka, penipuan kartu kredit, cacat produksi, email berbahaya. Di semua kasus itu, akurasi hampir tidak berarti apa-apa.
 </div>
 
-<h3>💥 Dampak</h3>
-<p>Memilih metrik yang salah menghasilkan produk buruk. Untuk deteksi penipuan, <b>recall</b> penting (jangan sampai lolos). Untuk rekomendasi, <b>precision</b> penting (jangan salah sodor). Metrik menentukan arah pengembangan.</p>
+<h3>Langkah 4 — Recall: berapa yang berhasil ditangkap?</h3>
+<div class="callout">
+🎣 <b>Analogi jaring ikan.</b> Di sebuah kolam ada 10 ikan. Kamu menebar jaring. <b>Recall</b> menjawab: <b>dari 10 ikan di kolam, berapa yang masuk jaring?</b><br><br>
+<b>Recall = TP ÷ (TP + FN)</b> = 8 ÷ (8 + 2) = <b>80%</b><br><br>
+Penyebutnya (TP + FN) adalah <b>semua orang yang benar-benar sakit</b>. Recall hanya peduli pada mereka — sama sekali tidak melihat orang sehat.
+</div>
+<p><b>Recall penting ketika melewatkan kasus berakibat mahal:</b> penyakit berbahaya, penipuan, barang berbahaya di bandara, tanda-tanda kebakaran. Nama lainnya: <b>TPR</b> (<i>true positive rate</i>), <b>sensitivitas</b> (di dunia medis), atau <i>hit rate</i>. Semuanya <b>angka yang sama</b>.</p>
+
+<h3>Langkah 5 — Precision: berapa tuduhan yang benar?</h3>
+<div class="callout">
+🎣 Sekarang lihat <b>isi jaringmu</b>. Selain ikan, ikut terangkat sandal, plastik, dan ranting. <b>Precision</b> menjawab: <b>dari semua yang terangkat jaring, berapa yang benar-benar ikan?</b><br><br>
+<b>Precision = TP ÷ (TP + FP)</b> = 8 ÷ (8 + 9) = <b>47%</b><br><br>
+Penyebutnya (TP + FP) adalah <b>semua orang yang dituduh sakit</b> oleh model. Artinya: dari 17 orang yang dikabari "kamu sakit", lebih dari separuhnya sebenarnya sehat.
+</div>
+<p><b>Precision penting ketika tuduhan yang salah berakibat mahal:</b> filter spam (email penting jangan terbuang), rekomendasi produk, memblokir akun pengguna, menuduh karyawan curang.</p>
+
+<div class="callout warn">
+<b>Recall dan precision sering tertukar.</b> Ingat saja dari sisi mana melihatnya:<br>
+<b>Recall</b> berdiri di sisi <b>orang yang sakit</b>: "berapa dari kami yang ketahuan?"<br>
+<b>Precision</b> berdiri di sisi <b>model</b>: "berapa dari tuduhanku yang benar?"
+</div>
+
+<h3>Coba sendiri dengan 100 orang</h3>
+
+<div data-demo="matriks-kebingungan"></div>
+
+<h3>Langkah 6 — Tarik-menarik yang tidak bisa dihindari</h3>
+<p>Model sebenarnya tidak langsung bilang "sakit". Ia memberi <b>skor risiko</b>, lalu skor itu dibandingkan dengan sebuah <b>ambang</b>. Menggeser ambang sama seperti mengganti ukuran jaring:</p>
+<table class="tbl">
+  <tr><th>Ambang</th><th>Jaring</th><th>Recall</th><th>Precision</th></tr>
+  <tr><td>Rendah (galak)</td><td>Lebar — banyak yang terangkat</td><td class="ok-cell">Naik</td><td class="bad-cell">Turun</td></tr>
+  <tr><td>Tinggi (hati-hati)</td><td>Sempit — hanya yang pasti</td><td class="bad-cell">Turun</td><td class="ok-cell">Naik</td></tr>
+</table>
+<p>Tidak ada ambang yang membuat keduanya sempurna, kecuali modelnya memang sempurna. Memilih ambang adalah <b>keputusan manusia</b> tentang kesalahan mana yang lebih mahal — bukan keputusan matematika.</p>
+
+<h3>Langkah 7 — Sisi orang sehat: spesifisitas dan FPR</h3>
+<p>Recall dan precision sama-sama berfokus pada kasus "sakit". Untuk melihat nasib orang <b>sehat</b>, ada dua angka lain:</p>
+<table class="tbl">
+  <tr><th>Metrik</th><th>Rumus</th><th>Contoh</th><th>Pertanyaannya</th></tr>
+  <tr><td><b>Spesifisitas</b> (TNR)</td><td>TN ÷ (TN + FP)</td><td>81 ÷ 90 = 90%</td><td>Dari semua yang sehat, berapa yang benar dinyatakan sehat?</td></tr>
+  <tr><td><b>FPR</b></td><td>FP ÷ (FP + TN)</td><td>9 ÷ 90 = 10%</td><td>Dari semua yang sehat, berapa yang salah dituduh?</td></tr>
+</table>
+<p>Perhatikan: <b>FPR = 1 − spesifisitas</b>. Keduanya akan dipakai di pelajaran berikutnya untuk menggambar kurva ROC.</p>
+
+<h3>Langkah 8 — F1: satu angka untuk keduanya</h3>
+<div class="callout">
+<b>F1 = 2 × TP ÷ (2 × TP + FP + FN)</b> = 16 ÷ (16 + 9 + 2) = <b>59%</b><br><br>
+Kenapa tidak rata-rata biasa saja? Bayangkan model dengan precision 100% tapi recall hanya 1% — ia hanya berani menuduh satu orang dan kebetulan benar. Rata-rata biasanya 50,5%, terdengar lumayan. F1-nya hanya sekitar <b>2%</b>. F1 memakai <b>rata-rata harmonik</b>, yang menghukum keras bila salah satu dari keduanya jelek. <b>Ia hanya tinggi bila precision dan recall sama-sama tinggi.</b>
+</div>
+
+<h3>🔍 Rahasia yang jarang dibahas: precision bergantung pada seberapa umum kasusnya</h3>
+<p>Di demo tadi, coba ganti jumlah orang sakit dari 10 menjadi 30, lalu 50 dari 100 orang — dengan <b>model dan ambang yang sama persis</b>:</p>
+<table class="tbl">
+  <tr><th>Orang sakit per 100</th><th>Recall</th><th>Spesifisitas</th><th>Precision</th></tr>
+  <tr><td>10</td><td>80%</td><td>90%</td><td class="bad-cell">47%</td></tr>
+  <tr><td>30</td><td>80%</td><td>90%</td><td>77%</td></tr>
+  <tr><td>50</td><td>80%</td><td>90%</td><td class="ok-cell">89%</td></tr>
+</table>
+<p>Recall dan spesifisitas <b>tidak berubah sama sekali</b> — keduanya adalah sifat <b>model</b>. Tapi precision melonjak, karena ketika penyakitnya jarang, jumlah orang sehat yang bisa salah dituduh jauh lebih banyak daripada orang sakit yang bisa ditangkap.</p>
+<div class="callout warn">
+<b>Akibatnya dalam kehidupan nyata:</b> tes yang sangat bagus pun menghasilkan banyak alarm palsu bila dipakai untuk penyakit langka. Dan jangan pernah membandingkan precision dua model yang diuji pada data dengan proporsi berbeda — perbandingannya tidak adil. Penjelasan matematisnya (Teorema Bayes) ada di modul Matematika.
+</div>
+
+<h3>Kamus: satu angka, banyak nama</h3>
+<table class="tbl">
+  <tr><th>Rumus</th><th>Nama-namanya</th></tr>
+  <tr><td>TP ÷ (TP + FN)</td><td><b>Recall</b> = TPR = sensitivitas = hit rate</td></tr>
+  <tr><td>TP ÷ (TP + FP)</td><td><b>Precision</b> = PPV (<i>positive predictive value</i>)</td></tr>
+  <tr><td>TN ÷ (TN + FP)</td><td><b>Spesifisitas</b> = TNR</td></tr>
+  <tr><td>FP ÷ (FP + TN)</td><td><b>FPR</b> = 1 − spesifisitas = <i>fall-out</i></td></tr>
+  <tr><td>FN ÷ (FN + TP)</td><td><b>FNR</b> = 1 − recall = <i>miss rate</i></td></tr>
+</table>
+
+<h3>Memilih metrik yang tepat</h3>
+<table class="tbl">
+  <tr><th>Situasi</th><th>Utamakan</th><th>Alasan</th></tr>
+  <tr><td>Deteksi penyakit berbahaya, penipuan</td><td><b>Recall</b></td><td>Kasus yang lolos jauh lebih mahal daripada alarm palsu</td></tr>
+  <tr><td>Filter spam, rekomendasi, memblokir akun</td><td><b>Precision</b></td><td>Tuduhan yang salah merugikan orang yang tidak bersalah</td></tr>
+  <tr><td>Keduanya sama penting</td><td><b>F1</b></td><td>Satu angka yang hanya tinggi bila keduanya baik</td></tr>
+  <tr><td>Membandingkan model sebelum memilih ambang</td><td><b>AUC</b></td><td>Dibahas di pelajaran berikutnya</td></tr>
+  <tr><td>Kelompoknya seimbang dan kedua kesalahan sama mahal</td><td><b>Akurasi</b></td><td>Satu-satunya situasi akurasi layak dijadikan patokan</td></tr>
+</table>
+
+<pre class="code">from sklearn.metrics import confusion_matrix, classification_report
+
+tebakan = model.predict(X_uji)
+print(confusion_matrix(y_uji, tebakan))       # [[TN, FP], [FN, TP]]
+print(classification_report(y_uji, tebakan))  # precision, recall, F1 per kelas</pre>
+<p><i>Catatan: scikit-learn menyusun matriksnya dengan urutan [[TN, FP], [FN, TP]] — baris adalah kenyataan, kolom adalah tebakan. Posisinya berbeda dari tabel di atas, jadi selalu periksa label barisnya.</i></p>
 `,
           keyPoints: [
-            "Akurasi bisa menyesatkan pada data timpang (imbalanced).",
-            "Precision = TP ÷ (TP+FP): seberapa bisa dipercaya alarm positifnya.",
-            "Recall = TP ÷ (TP+FN): seberapa lengkap menangkap yang benar-benar positif.",
-            "Dampak: metrik yang tepat mengarahkan produk; salah metrik = produk buruk.",
+            "Confusion matrix memuat empat angka: TP (tertangkap), FN (lolos), FP (alarm palsu), TN (benar sehat); semua metrik dihitung dari keempatnya.",
+            "Kunci membaca nama: kata kedua = apa yang ditebak model (Positive = bilang sakit); kata pertama = tebakan itu benar atau salah.",
+            "Akurasi menipu pada data timpang: model yang selalu bilang 'sehat' bisa mendapat 90% tanpa menangkap satu pun kasus.",
+            "Recall = TP ÷ (TP + FN): dari yang benar-benar sakit, berapa yang tertangkap. Nama lain: TPR, sensitivitas.",
+            "Precision = TP ÷ (TP + FP): dari yang dituduh sakit, berapa yang benar sakit.",
+            "Menurunkan ambang menaikkan recall tetapi menurunkan precision; memilih ambang adalah keputusan tentang kesalahan mana yang lebih mahal.",
+            "Spesifisitas = TN ÷ (TN + FP) dan FPR = 1 − spesifisitas melihat nasib orang sehat.",
+            "F1 memakai rata-rata harmonik sehingga hanya tinggi bila precision dan recall sama-sama tinggi.",
+            "Precision bergantung pada seberapa umum kasusnya; recall dan spesifisitas adalah sifat model.",
           ],
           practice: [
-            { type: "number", q: "Model menandai 100 email sebagai spam; 90 benar spam, 10 ternyata bukan. Berapa precision-nya? (%)", answer: 90, tol: 0.5, hint: "Precision = TP ÷ (TP+FP) = 90 ÷ 100.", solution: "90 ÷ (90+10) × 100% = 90%." },
-            { type: "number", q: "Total email spam sebenarnya 120; model menangkap 90. Berapa recall-nya? (%)", answer: 75, tol: 0.5, hint: "Recall = TP ÷ (TP+FN) = 90 ÷ 120.", solution: "90 ÷ 120 × 100% = 75%." },
+            { type: "number", q: "Dari 50 orang yang benar-benar sakit, model menangkap 40. Berapa recall-nya (%)?", answer: 80, tol: 0.5, hint: "Recall = tertangkap ÷ semua yang benar-benar sakit.", solution: "40 ÷ 50 = 80%." },
+            { type: "number", q: "Model menuduh 25 orang sakit; ternyata hanya 20 yang benar sakit. Berapa precision-nya (%)?", answer: 80, tol: 0.5, hint: "Precision = tuduhan yang benar ÷ semua tuduhan.", solution: "20 ÷ 25 = 80%." },
+            { type: "number", q: "TP = 30, FP = 10, FN = 20. Berapa F1-nya (%)? (bulatkan 1 desimal)", answer: 66.7, tol: 0.2, hint: "F1 = 2×TP ÷ (2×TP + FP + FN).", solution: "60 ÷ (60 + 10 + 20) = 60 ÷ 90 = 66,7%." },
           ],
           quiz: [
             {
-              q: "Mengapa akurasi 99% bisa menyesatkan?",
+              q: "Dalam istilah 'False Positive', apa arti kata 'Positive'?",
               options: [
-                "Pada data timpang, menebak kelas mayoritas terus pun terlihat akurat",
-                "Karena akurasi hanya dihitung dari data latih, bukan dari data uji",
-                "Karena akurasi selalu dibulatkan ke atas oleh pustaka penghitungnya",
-                "Karena 1% sisanya biasanya berisi data yang rusak atau salah label",
+                "Model menebak 'ya, sakit' — terlepas dari benar atau salahnya",
+                "Orang tersebut benar-benar sakit menurut hasil pemeriksaan",
+                "Tebakan model terbukti benar setelah dicocokkan kenyataan",
+                "Skor risiko orang tersebut berada di atas angka nol",
               ],
               answer: 0,
-              explain:
-                "Pada kasus langka, model yang mengabaikan kelas minoritas tetap terlihat akurat.",
+              explain: "Kata kedua selalu menunjukkan apa yang ditebak model; kata pertama menunjukkan tebakannya benar atau salah.",
             },
             {
-              q: "Precision menjawab pertanyaan?",
+              q: "Model deteksi penipuan selalu menjawab 'bukan penipuan' dan mendapat akurasi 99%. Apa masalahnya?",
               options: [
-                "Dari yang ditandai positif oleh model, berapa persen yang benar",
-                "Dari seluruh kasus positif yang ada, berapa persen yang tertangkap",
-                "Dari seluruh tebakan model, berapa persen yang seluruhnya benar",
-                "Seberapa cepat model menghasilkan tebakan untuk satu data baru",
+                "Recall-nya 0% — tidak satu pun penipuan yang tertangkap",
+                "Precision-nya terlalu tinggi sehingga banyak alarm palsu",
+                "Akurasi 99% terlalu rendah untuk model deteksi penipuan",
+                "Spesifisitasnya 0% karena semua transaksi dicurigai",
               ],
               answer: 0,
-              explain: "Precision = TP ÷ (TP+FP), mengukur keandalan prediksi positif.",
+              explain: "Pada data timpang, menebak kelompok mayoritas terus pun terlihat sangat akurat.",
+            },
+            {
+              q: "Rumah sakit ingin sesedikit mungkin pasien kanker yang lolos dari skrining. Metrik apa yang diutamakan?",
+              options: [
+                "Recall, karena mengukur berapa banyak pasien sakit yang tertangkap",
+                "Precision, karena mengukur berapa tuduhan sakit yang terbukti benar",
+                "Spesifisitas, karena mengukur berapa pasien sehat yang dinyatakan sehat",
+                "Akurasi, karena mencakup semua pasien yang diperiksa dalam satu angka",
+              ],
+              answer: 0,
+              explain: "Pasien sakit yang lolos adalah kesalahan termahal di sini, dan recall mengukur persis hal itu.",
+            },
+            {
+              q: "Model yang sama dipakai di dua kota. Di kota A penyakitnya jarang, di kota B umum. Apa yang paling mungkin terjadi?",
+              options: [
+                "Precision di kota A jauh lebih rendah, walau recall-nya mirip",
+                "Recall di kota A jauh lebih rendah, walau precision-nya mirip",
+                "Semua metrik sama persis karena modelnya tidak berubah",
+                "Akurasi di kota B pasti lebih tinggi daripada di kota A",
+              ],
+              answer: 0,
+              explain: "Saat kasusnya jarang, orang sehat yang bisa salah dituduh jauh lebih banyak, sehingga precision turun.",
+            },
+            {
+              q: "Kenapa F1 memakai rata-rata harmonik, bukan rata-rata biasa?",
+              options: [
+                "Agar hasilnya hanya tinggi bila precision dan recall sama-sama tinggi",
+                "Agar hasilnya selalu lebih tinggi daripada precision maupun recall",
+                "Agar perhitungannya tidak memerlukan angka TP sama sekali",
+                "Agar hasilnya sama dengan akurasi pada data yang seimbang",
+              ],
+              answer: 0,
+              explain: "Precision 100% dengan recall 1% menghasilkan rata-rata biasa 50,5%, tetapi F1 hanya sekitar 2%.",
             },
           ],
         },
@@ -1001,6 +1135,30 @@ Artinya, satu model yang sama bisa berperilaku galak atau longgar hanya dengan m
 </table>
 <p><b>Kurva ROC</b> adalah jejak yang terbentuk bila kita mencoba <b>semua ambang dari yang paling longgar sampai paling galak</b>, lalu menandai pasangan (FPR, TPR) di setiap ambang.</p>
 
+<div class="callout">
+<b>Ingat dari pelajaran sebelumnya:</b> TPR adalah nama lain dari <b>recall</b> — dari semua yang benar-benar sakit, berapa yang tertangkap. FPR adalah kebalikan dari spesifisitas — dari semua yang sehat, berapa yang salah dituduh. Kurva ROC hanya memakai dua angka itu.
+</div>
+
+<h3>Menggambar kurva ROC dengan tangan</h3>
+<p>Sebelum melihat versi otomatisnya, mari buat satu kurva ROC sendiri dari <b>enam pasien</b>. Tiga benar-benar sakit (A, B, D) dan tiga sehat (C, E, F). Model sudah memberi skor, dan pasien diurutkan dari skor tertinggi:</p>
+<table class="tbl">
+  <tr><th>Langkah</th><th>Ambang turun ke…</th><th>Yang ditandai sakit</th><th>TPR</th><th>FPR</th><th>Titik</th></tr>
+  <tr><td>0</td><td>di atas 0,9</td><td>tidak ada</td><td>0/3</td><td>0/3</td><td>(0, 0)</td></tr>
+  <tr><td>1</td><td>0,9</td><td>A (sakit ✅)</td><td>1/3</td><td>0/3</td><td>naik ↑</td></tr>
+  <tr><td>2</td><td>0,8</td><td>+ B (sakit ✅)</td><td>2/3</td><td>0/3</td><td>naik ↑</td></tr>
+  <tr><td>3</td><td>0,7</td><td>+ C (sehat ❌)</td><td>2/3</td><td>1/3</td><td>kanan →</td></tr>
+  <tr><td>4</td><td>0,6</td><td>+ D (sakit ✅)</td><td>3/3</td><td>1/3</td><td>naik ↑</td></tr>
+  <tr><td>5</td><td>0,4</td><td>+ E (sehat ❌)</td><td>3/3</td><td>2/3</td><td>kanan →</td></tr>
+  <tr><td>6</td><td>0,2</td><td>+ F (sehat ❌)</td><td>3/3</td><td>3/3</td><td>(1, 1)</td></tr>
+</table>
+<div class="callout warn">
+<b>Aturan menggambarnya sangat sederhana:</b> setiap kali ambang turun dan menangkap orang <b>sakit</b>, titik <b>naik</b>. Setiap kali menangkap orang <b>sehat</b>, titik bergeser ke <b>kanan</b>. Model yang bagus menaruh orang sakit di skor teratas, sehingga kurvanya naik dulu sebelum bergerak ke kanan — itulah sebabnya kurva yang bagus menempel ke pojok kiri atas.
+</div>
+
+<div data-demo="roc-langkah"></div>
+
+<p>Sekarang versi yang lebih besar: <b>60 kasus</b>, dengan ambang dan kualitas model yang bisa kamu geser sendiri.</p>
+
 <div data-demo="roc-auc"></div>
 
 <h3>Membaca kurvanya</h3>
@@ -1017,7 +1175,7 @@ Artinya, satu model yang sama bisa berperilaku galak atau longgar hanya dengan m
 <b>AUC</b> (<i>Area Under the Curve</i>) adalah <b>luas daerah di bawah kurva ROC</b>. Karena kotaknya berukuran 1 × 1, nilainya selalu antara 0 dan 1.<br><br>
 Ada satu cara membacanya yang jauh lebih mudah diingat:<br>
 <b>AUC = peluang model memberi skor lebih tinggi pada satu kasus positif acak dibanding satu kasus negatif acak.</b><br><br>
-AUC 0,92 berarti: ambil satu penipuan dan satu transaksi normal secara acak, maka 92% dari waktu model memberi skor lebih tinggi untuk yang penipuan. Di demo di atas, kedua cara menghitung itu selalu menghasilkan angka yang sama persis.
+AUC 0,92 berarti: ambil satu penipuan dan satu transaksi normal secara acak, maka 92% dari waktu model memberi skor lebih tinggi untuk yang penipuan. Di contoh enam pasien tadi, kedua cara menghasilkan 8/9 — dan di demo 60 kasus pun keduanya selalu sama persis.
 </div>
 
 <table class="tbl">
