@@ -1401,6 +1401,8 @@ const GLOSSARY = [
   ["PPO", "Proximal Policy Optimization: algoritma RL berbasis kebijakan yang banyak dipakai, termasuk dalam RLHF."],
   ["Self-Play", "Cara berlatih dengan melawan salinan diri sendiri, seperti yang dipakai AlphaZero."],
   ["Model Penilai", "Model yang dilatih dari peringkat buatan manusia untuk memberi skor jawaban; menjadi sumber reward dalam RLHF."],
+  ["Rata-rata Harmonik", "Rata-rata yang berpihak pada angka kecil: balik tiap angka, rata-ratakan, lalu balik lagi. Dipakai F1; hanya tinggi bila semua angkanya tinggi."],
+  ["F1", "Rata-rata harmonik dari precision dan recall; hanya tinggi bila keduanya sama-sama tinggi."],
 ];
 
 function renderGlossary() {

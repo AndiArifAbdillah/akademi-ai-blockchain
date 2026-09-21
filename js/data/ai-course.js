@@ -1000,6 +1000,30 @@ Penyebutnya (TP + FP) adalah <b>semua orang yang dituduh sakit</b> oleh model. A
 Kenapa tidak rata-rata biasa saja? Bayangkan model dengan precision 100% tapi recall hanya 1% — ia hanya berani menuduh satu orang dan kebetulan benar. Rata-rata biasanya 50,5%, terdengar lumayan. F1-nya hanya sekitar <b>2%</b>. F1 memakai <b>rata-rata harmonik</b>, yang menghukum keras bila salah satu dari keduanya jelek. <b>Ia hanya tinggi bila precision dan recall sama-sama tinggi.</b>
 </div>
 
+<h3>Apa itu rata-rata harmonik?</h3>
+<p>Cara termudah memahaminya lewat <b>kecepatan</b>. Kamu pergi ke kampus sejauh 10 km dengan kecepatan <b>60 km/jam</b>, lalu pulang lewat jalan macet dengan kecepatan <b>20 km/jam</b>. Berapa kecepatan rata-ratamu? Jawaban spontan (60 + 20) ÷ 2 = 40 km/jam — dan itu <b>salah</b>:</p>
+<table class="tbl">
+  <tr><th>Perjalanan</th><th>Jarak</th><th>Kecepatan</th><th>Waktu</th></tr>
+  <tr><td>Pergi</td><td>10 km</td><td>60 km/jam</td><td>10 menit</td></tr>
+  <tr><td>Pulang</td><td>10 km</td><td>20 km/jam</td><td>30 menit</td></tr>
+  <tr><td><b>Total</b></td><td><b>20 km</b></td><td></td><td><b>40 menit</b></td></tr>
+</table>
+<p>20 km dalam 40 menit = <b>30 km/jam</b>. Angka 30 inilah <b>rata-rata harmonik</b> dari 60 dan 20. Hasilnya lebih kecil dari 40 karena bagian yang lambat <b>memakan waktu lebih lama</b>, sehingga pengaruhnya lebih besar — angka yang kecil "menarik" hasilnya ke bawah.</p>
+<div class="callout">
+<b>Cara menghitungnya dalam 3 langkah:</b><br>
+1. <b>Balik</b> setiap angka: 1/60 dan 1/20<br>
+2. <b>Rata-ratakan</b> kebalikannya: (1/60 + 3/60) ÷ 2 = 1/30<br>
+3. <b>Balik lagi</b>: 30<br><br>
+Untuk dua angka ada jalan pintas: <b>2 × a × b ÷ (a + b)</b>. Karena itu F1 = 2 × precision × recall ÷ (precision + recall) — rumus yang setara dengan 2×TP ÷ (2×TP + FP + FN) di atas.
+</div>
+<table class="tbl">
+  <tr><th>Precision</th><th>Recall</th><th>Rata-rata biasa</th><th>Rata-rata harmonik (F1)</th></tr>
+  <tr><td>80%</td><td>80%</td><td>80%</td><td class="ok-cell">80% — sama, karena seimbang</td></tr>
+  <tr><td>47,1%</td><td>80%</td><td>63,5%</td><td>59,3% — contoh 100 orang</td></tr>
+  <tr><td>100%</td><td>1%</td><td class="bad-cell">50,5% — tampak lumayan</td><td class="ok-cell">2% — langsung ketahuan jelek</td></tr>
+</table>
+<p>Tiga sifatnya: selalu <b>sama atau lebih kecil</b> daripada rata-rata biasa, <b>sama persis</b> bila kedua angkanya sama, dan <b>hanya tinggi bila semua angkanya tinggi</b>. Satu sisi yang ambruk tidak bisa ditutupi oleh sisi yang sempurna.</p>
+
 <h3>🔍 Rahasia yang jarang dibahas: precision bergantung pada seberapa umum kasusnya</h3>
 <p>Di demo tadi, coba ganti jumlah orang sakit dari 10 menjadi 30, lalu 50 dari 100 orang — dengan <b>model dan ambang yang sama persis</b>:</p>
 <table class="tbl">
