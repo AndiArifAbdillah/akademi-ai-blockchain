@@ -1403,6 +1403,12 @@ const GLOSSARY = [
   ["Model Penilai", "Model yang dilatih dari peringkat buatan manusia untuk memberi skor jawaban; menjadi sumber reward dalam RLHF."],
   ["Rata-rata Harmonik", "Rata-rata yang berpihak pada angka kecil: balik tiap angka, rata-ratakan, lalu balik lagi. Dipakai F1; hanya tinggi bila semua angkanya tinggi."],
   ["F1", "Rata-rata harmonik dari precision dan recall; hanya tinggi bila keduanya sama-sama tinggi."],
+  ["TPR", "True Positive Rate = recall = sensitivitas: dari semua yang benar-benar positif, berapa persen yang tertangkap model. Rumus TP ÷ (TP + FN)."],
+  ["FPR", "False Positive Rate: dari semua yang benar-benar negatif, berapa persen yang salah ditandai positif (alarm palsu). Rumus FP ÷ (FP + TN)."],
+  ["Kurva ROC", "Grafik TPR (sumbu tegak) terhadap FPR (sumbu datar) untuk semua ambang keputusan. Makin menempel ke pojok kiri atas, makin baik modelnya."],
+  ["AUC", "Luas di bawah kurva ROC (0–1) = peluang model memberi skor lebih tinggi pada kasus positif acak dibanding kasus negatif acak. 0,5 = menebak asal."],
+  ["Spesifisitas", "Dari semua yang benar-benar negatif, berapa persen yang benar dinyatakan negatif. Rumus TN ÷ (TN + FP) = 1 − FPR."],
+  ["Confusion Matrix", "Tabel empat kotak (TP, FN, FP, TN) yang mencocokkan tebakan model dengan kenyataan; sumber semua metrik klasifikasi."],
 ];
 
 function renderGlossary() {

@@ -1007,3 +1007,14 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
 .mk-dot.fp { background: var(--warn); }
 .mk-dot.tn { background: var(--ok); opacity: .45; }
 .roc-luas { fill: var(--primary); opacity: .15; }
+
+/* ---------- Demo peta metrik: kotak mana yang dipakai tiap metrik ---------- */
+.pm-grid { display: grid; grid-template-columns: minmax(70px, .8fr) 1fr 1fr; gap: 8px; margin: 12px 0; align-items: stretch; }
+.pm-kepala, .pm-sisi { font-size: .8rem; color: var(--muted); display: flex; align-items: center; justify-content: center; text-align: center; }
+.pm-sel { border-radius: 10px; padding: 10px; background: var(--surface); border: 2px solid var(--border); transition: opacity .2s, background .2s; }
+.pm-sel b { display: block; font-size: 1.4rem; line-height: 1.2; }
+.pm-sel span { font-size: .78rem; color: var(--muted); }
+.pm-sel.pembilang { background: color-mix(in srgb, var(--primary) 22%, var(--surface)); border-color: var(--primary); }
+.pm-sel.penyebut { border-style: dashed; border-color: var(--primary); }
+.pm-sel.redup { opacity: .3; }
+.pm-isian { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; margin: 6px 0; }

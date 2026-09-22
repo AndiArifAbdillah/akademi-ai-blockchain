@@ -4490,6 +4490,103 @@ DEMOS["roc-langkah"] = function (root) {
   draw();
 };
 
+
+/* ---------- Demo: setiap metrik mengambil bagian berbeda dari tabel yang sama ---------- */
+DEMOS["peta-metrik"] = function (root) {
+  const n = { tp: 8, fn: 2, fp: 9, tn: 81 };
+  let pilih = "tpr";
+  const METRIK = {
+    tpr: { nama: "TPR (= recall)", atas: ["tp"], bawah: ["tp", "fn"], arah: "baris", kalimat: "Dari semua yang BENAR-BENAR SAKIT (baris atas), berapa yang tertangkap?" },
+    fpr: { nama: "FPR", atas: ["fp"], bawah: ["fp", "tn"], arah: "baris", kalimat: "Dari semua yang BENAR-BENAR SEHAT (baris bawah), berapa yang salah dituduh?" },
+    precision: { nama: "Precision", atas: ["tp"], bawah: ["tp", "fp"], arah: "kolom", kalimat: "Dari semua yang DITUDUH SAKIT (kolom kiri), berapa yang benar sakit?" },
+    spesifisitas: { nama: "Spesifisitas", atas: ["tn"], bawah: ["tn", "fp"], arah: "baris", kalimat: "Dari semua yang BENAR-BENAR SEHAT (baris bawah), berapa yang benar dinyatakan sehat?" },
+    akurasi: { nama: "Akurasi", atas: ["tp", "tn"], bawah: ["tp", "fn", "fp", "tn"], arah: "semua", kalimat: "Dari SEMUA orang, berapa yang ditebak benar?" },
+  };
+  const LABEL = { tp: "TP — sakit, tertangkap", fn: "FN — sakit, lolos", fp: "FP — sehat, dituduh", tn: "TN — sehat, benar" };
+  const persen = (a, b) => (b === 0 ? "—" : ((a / b) * 100).toFixed(1).replace(".", ",") + "%");
+
+  const grid = h("div", { class: "pm-grid" });
+  const rumus = h("div", { class: "dm-out" });
+  const kanvas = h("div", { class: "dm-viz" });
+
+  function draw() {
+    const M = METRIK[pilih];
+    const sel = (k) => {
+      const cls = M.atas.indexOf(k) >= 0 ? "pembilang" : M.bawah.indexOf(k) >= 0 ? "penyebut" : "redup";
+      return '<div class="pm-sel ' + cls + '"><b>' + n[k] + "</b><span>" + LABEL[k] + "</span></div>";
+    };
+    grid.innerHTML =
+      '<div class="pm-kosong"></div><div class="pm-kepala">Model bilang <b>sakit</b></div><div class="pm-kepala">Model bilang <b>sehat</b></div>' +
+      '<div class="pm-sisi">Benar-benar <b>sakit</b></div>' + sel("tp") + sel("fn") +
+      '<div class="pm-sisi">Benar-benar <b>sehat</b></div>' + sel("fp") + sel("tn");
+
+    const atas = M.atas.reduce((s, k) => s + n[k], 0);
+    const bawah = M.bawah.reduce((s, k) => s + n[k], 0);
+    rumus.innerHTML =
+      '<div class="dm-line big good teks"><span>' + M.nama + "</span><b>" + (M.atas.length > 1 ? "(" + M.atas.map((k) => k.toUpperCase()).join(" + ") + ")" : M.atas[0].toUpperCase()) + " ÷ (" + M.bawah.map((k) => k.toUpperCase()).join(" + ") + ") = " + atas + " ÷ " + bawah + " = " + persen(atas, bawah) + "</b></div>" +
+      '<div class="dm-note">' + M.kalimat + "<br><br><b>Kotak berisi warna</b> = yang dihitung (pembilang). <b>Kotak bergaris putus-putus</b> ikut menjadi pembagi. Kotak pudar sama sekali tidak dilihat oleh metrik ini." +
+      (M.arah === "baris" ? "<br><br>Metrik ini hanya membaca <b>satu baris</b> — satu kelompok kenyataan — sehingga tidak terpengaruh oleh berapa banyak orang di baris lainnya." : "") +
+      (M.arah === "kolom" ? "<br><br>Metrik ini membaca <b>satu kolom</b> yang berisi orang sakit <i>dan</i> sehat sekaligus. Karena itu precision ikut berubah bila perbandingan jumlah orang sakit dan sehat berubah." : "") +
+      "</div>";
+
+    // titik model ini di ruang ROC
+    const tpr = n.tp + n.fn ? n.tp / (n.tp + n.fn) : 0;
+    const fpr = n.fp + n.tn ? n.fp / (n.fp + n.tn) : 0;
+    const X0 = 70, Y0 = 14, S = 170;
+    const rx = (v) => X0 + v * S, ry = (v) => Y0 + S - v * S;
+    let g = '<svg viewBox="0 0 520 220" class="viz-svg" role="img" aria-label="Posisi model di ruang ROC">';
+    g += '<rect x="' + X0 + '" y="' + Y0 + '" width="' + S + '" height="' + S + '" class="rl-sel"/>';
+    g += '<line x1="' + rx(0) + '" y1="' + ry(0) + '" x2="' + rx(1) + '" y2="' + ry(1) + '" class="vring"/>';
+    g += '<circle cx="' + rx(fpr).toFixed(1) + '" cy="' + ry(tpr).toFixed(1) + '" r="8" class="titik-pencilan"/>';
+    g += '<text x="' + (X0 + S / 2) + '" y="' + (Y0 + S + 18) + '" text-anchor="middle" class="vt-xs">FPR →</text>';
+    g += '<text x="' + (X0 - 10) + '" y="' + (Y0 + S / 2) + '" text-anchor="end" class="vt-xs">TPR ↑</text>';
+    g += '<text x="' + (X0 + S + 24) + '" y="' + (Y0 + 30) + '" class="vt-bold" style="font-size:13px">Titik model ini</text>';
+    g += '<text x="' + (X0 + S + 24) + '" y="' + (Y0 + 52) + '" class="vt-xs">TPR = ' + persen(n.tp, n.tp + n.fn) + " (naik ke atas)</text>";
+    g += '<text x="' + (X0 + S + 24) + '" y="' + (Y0 + 70) + '" class="vt-xs">FPR = ' + persen(n.fp, n.fp + n.tn) + " (geser ke kanan)</text>";
+    g += '<text x="' + (X0 + S + 24) + '" y="' + (Y0 + 104) + '" class="vt-xs">Pojok kiri atas = sempurna</text>';
+    g += '<text x="' + (X0 + S + 24) + '" y="' + (Y0 + 122) + '" class="vt-xs">Garis diagonal = menebak asal</text>';
+    g += '<text x="' + (X0 + S + 24) + '" y="' + (Y0 + 150) + '" class="vt-xs">Geser ambang → titik berpindah.</text>';
+    g += '<text x="' + (X0 + S + 24) + '" y="' + (Y0 + 168) + '" class="vt-xs">Jejaknya = kurva ROC; luasnya = AUC.</text>';
+    g += "</svg>";
+    kanvas.innerHTML = g;
+  }
+
+  const tombol = Object.keys(METRIK).map((k) => {
+    const b = h("button", { class: "btn ghost", type: "button", text: METRIK[k].nama });
+    b.onclick = () => { pilih = k; tombol.forEach((x) => x.classList.toggle("aktif", x === b)); draw(); };
+    return b;
+  });
+  tombol[0].classList.add("aktif");
+
+  const isian = {};
+  const form = h("div", { class: "pm-isian" }, ["tp", "fn", "fp", "tn"].map((k) => {
+    const inp = h("input", { class: "pc-input", type: "number", min: "0", step: "1", value: String(n[k]), "aria-label": k.toUpperCase() });
+    inp.addEventListener("input", () => { n[k] = Math.max(0, parseInt(inp.value, 10) || 0); draw(); });
+    isian[k] = inp;
+    return h("label", { class: "pc-row" }, [h("span", { text: k.toUpperCase() }), inp]);
+  }));
+  const pakai = (v) => { Object.keys(v).forEach((k) => { n[k] = v[k]; isian[k].value = String(v[k]); }); draw(); };
+  const contoh = [
+    ["Contoh 100 orang", { tp: 8, fn: 2, fp: 9, tn: 81 }],
+    ["Model galak", { tp: 10, fn: 0, fp: 40, tn: 50 }],
+    ["Model hati-hati", { tp: 3, fn: 7, fp: 0, tn: 90 }],
+    ["Model malas", { tp: 0, fn: 10, fp: 0, tn: 90 }],
+  ].map(([t, v]) => { const b = h("button", { class: "btn ghost", type: "button", text: t }); b.onclick = () => pakai(v); return b; });
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "🗺️ <b>Demo: satu tabel, banyak metrik</b>" }),
+    h("p", { class: "demo-hint", text: "Pilih sebuah metrik dan lihat kotak mana yang dipakainya. Ubah angkanya sendiri, atau pakai contoh yang tersedia." }),
+    h("div", { class: "demo-controls" }, tombol),
+    grid,
+    rumus,
+    h("div", { class: "krip-judul", style: "margin-top:12px", text: "UBAH ANGKANYA" }),
+    form,
+    h("div", { class: "demo-controls" }, contoh),
+    kanvas,
+  ]));
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

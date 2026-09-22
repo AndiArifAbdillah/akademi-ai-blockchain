@@ -1307,6 +1307,139 @@ fpr, tpr, ambang = roc_curve(y_uji, peluang)   # bahan untuk menggambar kurva</p
           ],
         },
         {
+          id: "ai-fund-6",
+          title: "TPR, FPR, Precision & ROC AUC — Semuanya dalam Satu Halaman",
+          duration: "12 menit",
+          content: `
+<p>Empat istilah ini paling sering tertukar, bahkan oleh orang yang sudah lama bekerja dengan AI. Dua pelajaran sebelumnya membahasnya satu per satu secara mendalam. Pelajaran ini merangkumnya dengan satu kunci yang membuat semuanya tidak tertukar lagi:</p>
+
+<div class="callout">
+<b>🔑 Semua metrik ini dihitung dari tabel empat kotak yang SAMA. Bedanya hanya satu: kotak mana yang dilihat.</b>
+</div>
+
+<h3>Tabelnya, sekali lagi</h3>
+<p>Contoh yang sama seperti sebelumnya: 100 orang diperiksa, 10 benar-benar sakit, dan model menuduh 17 orang sakit.</p>
+<table class="tbl">
+  <tr><th></th><th>Model bilang <b>sakit</b></th><th>Model bilang <b>sehat</b></th><th>Jumlah</th></tr>
+  <tr><td><b>Benar-benar sakit</b></td><td class="ok-cell">TP = 8</td><td class="bad-cell">FN = 2</td><td>10</td></tr>
+  <tr><td><b>Benar-benar sehat</b></td><td class="bad-cell">FP = 9</td><td class="ok-cell">TN = 81</td><td>90</td></tr>
+  <tr><td><b>Jumlah</b></td><td>17</td><td>83</td><td>100</td></tr>
+</table>
+
+<h3>Empat istilah, empat cara melihat tabel</h3>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Melihat bagian…</th><th>Rumus</th><th>Pertanyaannya</th><th>Contoh</th></tr>
+  <tr><td><b>TPR</b><br><i>= recall = sensitivitas</i></td><td>Baris <b>sakit</b></td><td>TP ÷ (TP + FN)</td><td>Dari yang benar-benar sakit, berapa yang <b>tertangkap</b>?</td><td>8 ÷ 10 = <b>80%</b></td></tr>
+  <tr><td><b>FPR</b></td><td>Baris <b>sehat</b></td><td>FP ÷ (FP + TN)</td><td>Dari yang benar-benar sehat, berapa yang <b>salah dituduh</b>?</td><td>9 ÷ 90 = <b>10%</b></td></tr>
+  <tr><td><b>Precision</b></td><td>Kolom <b>"dituduh sakit"</b></td><td>TP ÷ (TP + FP)</td><td>Dari yang dituduh sakit, berapa yang <b>benar sakit</b>?</td><td>8 ÷ 17 = <b>47%</b></td></tr>
+  <tr><td><b>ROC AUC</b></td><td>TPR &amp; FPR di <b>semua ambang</b></td><td>Luas di bawah kurva</td><td>Seberapa baik model <b>mengurutkan</b> orang sakit di atas orang sehat?</td><td>0 sampai 1</td></tr>
+</table>
+
+<div data-demo="peta-metrik"></div>
+
+<h3>Cara supaya tidak tertukar lagi</h3>
+<div class="callout warn">
+<b>Lihat penyebutnya — bagian yang menjadi pembagi.</b><br><br>
+<b>TPR dan FPR</b> dibagi dengan <b>kenyataan</b>: jumlah orang yang benar-benar sakit, atau jumlah orang yang benar-benar sehat. Kata <i>rate</i> di namanya berarti "tingkat, per kelompok kenyataan".<br><br>
+<b>Precision</b> dibagi dengan <b>tuduhan model</b>: jumlah orang yang dituduh sakit.<br><br>
+Jadi: TPR bertanya kepada <b>orang sakit</b>, FPR bertanya kepada <b>orang sehat</b>, precision bertanya kepada <b>model</b>.
+</div>
+
+<h3>Kenapa ROC memakai TPR dan FPR, bukan precision?</h3>
+<p>Ini bagian yang jarang dijelaskan, padahal menjawab banyak kebingungan:</p>
+<table class="tbl">
+  <tr><th>Metrik</th><th>Membaca</th><th>Kalau penyakitnya makin jarang…</th></tr>
+  <tr><td>TPR</td><td>Hanya baris sakit</td><td class="ok-cell">Tidak berubah</td></tr>
+  <tr><td>FPR</td><td>Hanya baris sehat</td><td class="ok-cell">Tidak berubah</td></tr>
+  <tr><td>Precision</td><td>Satu kolom berisi orang sakit <b>dan</b> sehat</td><td class="bad-cell">Ikut turun</td></tr>
+</table>
+<p>Karena TPR dan FPR masing-masing hanya membaca <b>satu kelompok kenyataan</b>, keduanya adalah sifat <b>model itu sendiri</b>. Kurva ROC yang dibangun dari keduanya pun sama, di mana pun model dipakai. Itulah alasan AUC cocok untuk <b>membandingkan model</b>.</p>
+<p>Sisi gelapnya: justru karena ROC tidak peduli seberapa langka kasusnya, ia bisa terlihat bagus padahal di lapangan alarm palsunya menumpuk. Untuk kasus yang sangat langka, lihat juga <b>precision</b> — atau kurva precision–recall.</p>
+
+<h3>Apa yang terjadi bila ambang diturunkan (model makin galak)?</h3>
+<table class="tbl">
+  <tr><th>Metrik</th><th>Arah</th><th>Alasannya</th></tr>
+  <tr><td>TPR</td><td class="ok-cell">Naik ⬆</td><td>Makin banyak orang sakit ikut tertangkap</td></tr>
+  <tr><td>FPR</td><td class="bad-cell">Naik ⬆</td><td>Makin banyak orang sehat ikut dituduh</td></tr>
+  <tr><td>Precision</td><td class="bad-cell">Biasanya turun ⬇</td><td>Tuduhan bertambah, tapi kebanyakan tambahannya orang sehat</td></tr>
+  <tr><td>ROC AUC</td><td>Tetap</td><td>AUC menilai seluruh kurva, bukan satu ambang</td></tr>
+</table>
+
+<h3>Kartu ringkas untuk disimpan</h3>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Dalam satu kalimat</th><th>Pakai saat…</th></tr>
+  <tr><td><b>TPR / recall</b></td><td>Seberapa sedikit yang lolos</td><td>Melewatkan kasus itu mahal (penyakit, penipuan)</td></tr>
+  <tr><td><b>FPR</b></td><td>Seberapa sering orang tak bersalah dituduh</td><td>Menggambar kurva ROC; menilai beban alarm palsu</td></tr>
+  <tr><td><b>Precision</b></td><td>Seberapa bisa dipercaya sebuah tuduhan</td><td>Tuduhan yang salah itu mahal (spam, blokir akun)</td></tr>
+  <tr><td><b>ROC AUC</b></td><td>Seberapa baik model mengurutkan</td><td>Membandingkan model sebelum memilih ambang</td></tr>
+</table>
+
+<div class="callout">
+<b>💡 Ingin lebih dalam?</b> Pelajaran <b>Mengukur Kualitas AI dari Nol</b> membahas asal-usul nama TP/FP/FN/TN, jebakan akurasi, dan F1. Pelajaran <b>Kurva ROC &amp; AUC</b> menunjukkan cara menggambar kurvanya dengan tangan dari enam pasien sampai AUC = 8/9.
+</div>
+`,
+          keyPoints: [
+            "TPR, FPR, precision, dan ROC AUC semuanya dihitung dari confusion matrix yang sama; bedanya hanya kotak mana yang dilihat.",
+            "TPR (= recall) = TP ÷ (TP + FN): dari yang benar-benar sakit, berapa yang tertangkap.",
+            "FPR = FP ÷ (FP + TN): dari yang benar-benar sehat, berapa yang salah dituduh.",
+            "Precision = TP ÷ (TP + FP): dari yang dituduh sakit, berapa yang benar sakit.",
+            "Kunci tidak tertukar: TPR dan FPR dibagi dengan kenyataan, precision dibagi dengan tuduhan model.",
+            "ROC memakai TPR dan FPR karena keduanya tidak terpengaruh seberapa langka kasusnya; precision ikut berubah.",
+            "Menurunkan ambang menaikkan TPR dan FPR, biasanya menurunkan precision, sedangkan AUC tetap.",
+          ],
+          practice: [
+            { type: "number", q: "TP = 30, FN = 10, FP = 20, TN = 140. Berapa TPR-nya (%)?", answer: 75, tol: 0.5, hint: "TPR = TP ÷ (TP + FN).", solution: "30 ÷ 40 = 75%." },
+            { type: "number", q: "Dengan tabel yang sama (TP 30, FN 10, FP 20, TN 140), berapa FPR-nya (%)? (1 desimal)", answer: 12.5, tol: 0.1, hint: "FPR = FP ÷ (FP + TN).", solution: "20 ÷ 160 = 12,5%." },
+            { type: "number", q: "Dengan tabel yang sama, berapa precision-nya (%)?", answer: 60, tol: 0.5, hint: "Precision = TP ÷ (TP + FP).", solution: "30 ÷ 50 = 60%." },
+          ],
+          quiz: [
+            {
+              q: "Apa perbedaan mendasar antara TPR dan precision?",
+              options: [
+                "TPR dibagi jumlah yang benar-benar sakit, precision dibagi jumlah yang dituduh sakit",
+                "TPR dipakai untuk data kecil, sedangkan precision dipakai untuk data yang sangat besar",
+                "TPR menghitung kesalahan model, sedangkan precision menghitung jawaban yang benar",
+                "TPR dan precision sama saja, hanya namanya berbeda di buku yang berbeda",
+              ],
+              answer: 0,
+              explain: "Pembilangnya sama (TP), tetapi penyebutnya berbeda: kenyataan lawan tuduhan.",
+            },
+            {
+              q: "FPR sebuah model 10%. Apa artinya?",
+              options: [
+                "Dari semua orang yang benar-benar sehat, 10% salah dituduh sakit",
+                "Dari semua orang yang dituduh sakit, 10% ternyata sehat",
+                "Dari semua orang yang benar-benar sakit, 10% berhasil lolos",
+                "Dari semua orang yang diperiksa, 10% ditebak dengan salah",
+              ],
+              answer: 0,
+              explain: "FPR hanya membaca baris orang yang benar-benar sehat.",
+            },
+            {
+              q: "Kenapa kurva ROC dibangun dari TPR dan FPR, bukan dari precision?",
+              options: [
+                "Karena keduanya tidak berubah saat kasusnya makin langka, jadi mencerminkan model itu sendiri",
+                "Karena precision tidak bisa dihitung pada ambang mana pun untuk data yang seimbang",
+                "Karena TPR dan FPR selalu bernilai lebih tinggi sehingga kurvanya terlihat lebih baik",
+                "Karena precision hanya dipakai untuk regresi, bukan untuk klasifikasi",
+              ],
+              answer: 0,
+              explain: "Masing-masing hanya membaca satu kelompok kenyataan, sedangkan precision mencampur keduanya.",
+            },
+            {
+              q: "Ambang keputusan diturunkan sehingga model makin galak. Apa yang biasanya terjadi?",
+              options: [
+                "TPR naik, FPR naik, precision cenderung turun, dan AUC tetap",
+                "TPR turun, FPR turun, precision naik, dan AUC ikut naik",
+                "TPR naik, FPR turun, precision naik, dan AUC ikut naik",
+                "Semua metrik tetap karena modelnya tidak dilatih ulang",
+              ],
+              answer: 0,
+              explain: "Lebih banyak orang ditandai sakit — yang sakit maupun yang sehat — sementara AUC menilai seluruh kurva.",
+            },
+          ],
+        },
+        {
           id: "ai-fund-2",
           title: "Loss & Gradient Descent (Matematika Belajar)",
           duration: "12 menit",

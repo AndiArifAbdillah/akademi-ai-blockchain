@@ -7,11 +7,61 @@
 
   /* ---------- 1. Daftarkan service worker (agar bisa offline) ---------- */
   if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-      navigator.serviceWorker.register("sw.js").catch(function () {
-        /* Dibuka lewat file:// atau browser lama — abaikan, situs tetap jalan. */
-      });
+    // Berkas materi dilayani dari cache lebih dulu, jadi versi baru baru terunduh di latar
+    // belakang. Saat service worker baru mengambil alih, beri tahu pengguna agar memuat ulang.
+    var sudahDikendalikan = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener("controllerchange", function () {
+      if (!sudahDikendalikan) {
+        sudahDikendalikan = true; // pemasangan pertama, bukan pembaruan
+        return;
+      }
+      tampilkanPembaruan();
     });
+
+    window.addEventListener("load", function () {
+      navigator.serviceWorker
+        .register("sw.js")
+        .then(function (reg) {
+          // Aplikasi yang terpasang di HP sering hanya "dibangunkan" dari latar belakang,
+          // tidak dimuat ulang — periksa versi baru setiap kali kembali dibuka.
+          document.addEventListener("visibilitychange", function () {
+            if (document.visibilityState === "visible") reg.update().catch(function () {});
+          });
+        })
+        .catch(function () {
+          /* Dibuka lewat file:// atau browser lama — abaikan, situs tetap jalan. */
+        });
+    });
+  }
+
+  function tampilkanPembaruan() {
+    if (!document.body || document.querySelector(".pwa-perbarui")) return;
+    var box = document.createElement("div");
+    box.className = "pwa-banner pwa-perbarui";
+    box.innerHTML =
+      '<span class="pwa-ikon">🔄</span>' +
+      '<span class="pwa-teks"><b>Materi terbaru sudah siap</b><br>' +
+      "Muat ulang untuk melihat pelajaran dan perbaikan terbaru.</span>";
+    var muat = document.createElement("button");
+    muat.className = "btn primary";
+    muat.type = "button";
+    muat.textContent = "Muat ulang";
+    muat.onclick = function () {
+      location.reload();
+    };
+    var nanti = document.createElement("button");
+    nanti.className = "btn ghost";
+    nanti.type = "button";
+    nanti.textContent = "Nanti";
+    nanti.onclick = function () {
+      box.remove();
+    };
+    var aksi = document.createElement("div");
+    aksi.className = "pwa-aksi";
+    aksi.appendChild(muat);
+    aksi.appendChild(nanti);
+    box.appendChild(aksi);
+    document.body.appendChild(box);
   }
 
   /* ---------- 2. Tombol pasang aplikasi ---------- */
