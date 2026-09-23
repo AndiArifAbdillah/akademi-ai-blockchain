@@ -1018,3 +1018,5 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
 .pm-sel.penyebut { border-style: dashed; border-color: var(--primary); }
 .pm-sel.redup { opacity: .3; }
 .pm-isian { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; margin: 6px 0; }
+.roc-benar { fill: var(--ok); opacity: .32; }
+.roc-salah { fill: var(--bad); opacity: .38; }

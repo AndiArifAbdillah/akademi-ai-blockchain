@@ -1181,6 +1181,26 @@ Artinya, satu model yang sama bisa berperilaku galak atau longgar hanya dengan m
 
 <div data-demo="roc-langkah"></div>
 
+<h3>Cara membaca gambar ini — dan apa gunanya</h3>
+<table class="tbl">
+  <tr><th>Bagian gambar</th><th>Artinya</th></tr>
+  <tr><td><b>Sumbu tegak</b> (TPR)</td><td>Dari yang benar-benar sakit, berapa yang tertangkap. <b>Makin tinggi makin baik.</b></td></tr>
+  <tr><td><b>Sumbu datar</b> (FPR)</td><td>Dari yang benar-benar sehat, berapa yang salah dituduh. <b>Makin ke kanan makin buruk.</b></td></tr>
+  <tr><td><b>Setiap titik</b></td><td>Satu pilihan ambang: "mulai skor berapa seseorang dianggap sakit?"</td></tr>
+  <tr><td><b>Anak tangga naik</b></td><td>Ambang turun dan menangkap orang <b>sakit</b></td></tr>
+  <tr><td><b>Anak tangga ke kanan</b></td><td>Ambang turun dan ikut menuduh orang <b>sehat</b></td></tr>
+  <tr><td><b>Garis putus-putus diagonal</b></td><td>Model yang menebak asal, seperti melempar koin</td></tr>
+  <tr><td><b>Pojok kiri atas</b></td><td>Sempurna: semua yang sakit tertangkap, tak satu pun yang sehat dituduh</td></tr>
+</table>
+
+<div class="callout">
+<b>Tiga kegunaan gambar ini</b><br><br>
+<b>1. Memilih ambang dengan sadar.</b> Pada model kita, titik <b>(0, ⅔)</b> berarti 2 dari 3 pasien sakit tertangkap <i>tanpa satu pun alarm palsu</i>. Titik <b>(⅓, 1)</b> berarti <i>semua</i> pasien sakit tertangkap, tapi 1 dari 3 orang sehat ikut dituduh. Mana yang dipilih bergantung pada kesalahan mana yang lebih mahal — dan gambar ini menampilkan semua pilihan berdampingan.<br><br>
+<b>2. Menilai model hanya dari bentuknya.</b> Model yang baik <b>naik dulu</b> sampai puncak, baru bergerak ke kanan. Model yang buruk berkelok-kelok dekat garis diagonal. Coba tombol "Model sempurna" dan "Model asal-asalan" di demo untuk membandingkannya.<br><br>
+<b>3. Membaca AUC tanpa rumus.</b> Setiap kotak kecil mewakili <b>satu pasangan</b>: satu pasien sehat dan satu pasien sakit, sehingga ada 3 × 3 = 9 pasangan. Kotak <b>hijau</b> berarti model memberi pasien sakit skor lebih tinggi — urutannya benar. Kotak <b>merah</b> berarti urutannya terbalik. AUC hanyalah <b>bagian yang hijau</b>: 8 dari 9 kotak = 0,89.
+</div>
+
+
 <p>Sekarang versi yang lebih besar: <b>60 kasus</b>, dengan ambang dan kualitas model yang bisa kamu geser sendiri.</p>
 
 <div data-demo="roc-auc"></div>

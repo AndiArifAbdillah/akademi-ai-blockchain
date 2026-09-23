@@ -4406,85 +4406,122 @@ DEMOS["matriks-kebingungan"] = function (root) {
 
 /* ---------- Demo: menggambar kurva ROC dengan tangan (6 pasien) ---------- */
 DEMOS["roc-langkah"] = function (root) {
-  const P = [
-    { n: "A", s: 0.9, sakit: true }, { n: "B", s: 0.8, sakit: true }, { n: "C", s: 0.7, sakit: false },
-    { n: "D", s: 0.6, sakit: true }, { n: "E", s: 0.4, sakit: false }, { n: "F", s: 0.2, sakit: false },
-  ];
-  let langkah = 0;
+  const SKENARIO = {
+    kita: { nama: "Model kita", P: [["A", 0.9, 1], ["B", 0.8, 1], ["C", 0.7, 0], ["D", 0.6, 1], ["E", 0.4, 0], ["F", 0.2, 0]] },
+    sempurna: { nama: "Model sempurna", P: [["A", 0.9, 1], ["B", 0.8, 1], ["D", 0.7, 1], ["C", 0.6, 0], ["E", 0.4, 0], ["F", 0.2, 0]] },
+    asal: { nama: "Model asal-asalan", P: [["A", 0.9, 1], ["C", 0.8, 0], ["E", 0.7, 0], ["B", 0.6, 1], ["D", 0.5, 1], ["F", 0.3, 0]] },
+  };
+  let kunci = "kita", langkah = 0;
   const koma = (v) => String(v).replace(".", ",");
   const tabel = h("div");
   const kanvas = h("div", { class: "dm-viz" });
   const out = h("div", { class: "dm-out" });
 
-  function titikSampai(k) {
+  function hitung(P, k) {
     let tp = 0, fp = 0;
     const t = [[0, 0]];
-    for (let i = 0; i < k; i++) { if (P[i].sakit) tp++; else fp++; t.push([fp / 3, tp / 3]); }
+    for (let i = 0; i < k; i++) { if (P[i][2]) tp++; else fp++; t.push([fp / 3, tp / 3]); }
     return { t: t, tp: tp, fp: fp };
   }
 
   function draw() {
-    const T = titikSampai(langkah);
+    const P = SKENARIO[kunci].P;
+    const T = hitung(P, langkah);
+    const selesai = langkah === P.length;
     tabel.innerHTML =
       '<table class="tbl"><tr><th>Pasien</th><th>Skor</th><th>Kenyataan</th><th>Ditandai sakit?</th></tr>' +
-      P.map((p, i) => "<tr><td><b>" + p.n + "</b></td><td>" + koma(p.s) + "</td><td>" + (p.sakit ? "🔴 sakit" : "🟢 sehat") + '</td><td class="' + (i < langkah ? (p.sakit ? "ok-cell" : "bad-cell") : "") + '">' + (i < langkah ? (p.sakit ? "ya — benar" : "ya — alarm palsu") : "tidak") + "</td></tr>").join("") +
+      P.map((p, i) => "<tr><td><b>" + p[0] + "</b></td><td>" + koma(p[1]) + "</td><td>" + (p[2] ? "🔴 sakit" : "🟢 sehat") + '</td><td class="' + (i < langkah ? (p[2] ? "ok-cell" : "bad-cell") : "") + '">' + (i < langkah ? (p[2] ? "ya — benar (naik ↑)" : "ya — alarm palsu (kanan →)") : "belum") + "</td></tr>").join("") +
       "</table>";
 
-    const X0 = 60, Y0 = 16, S = 228;
+    const X0 = 60, Y0 = 16, S = 228, C = S / 3;
     const rx = (v) => X0 + v * S, ry = (v) => Y0 + S - v * S;
-    let g = '<svg viewBox="0 0 520 280" class="viz-svg" role="img" aria-label="Kurva ROC yang digambar langkah demi langkah">';
+    let g = '<svg viewBox="0 0 520 290" class="viz-svg" role="img" aria-label="Kurva ROC yang digambar langkah demi langkah">';
     g += '<rect x="' + X0 + '" y="' + Y0 + '" width="' + S + '" height="' + S + '" class="rl-sel"/>';
+
+    // setelah selesai: tiap kotak 1/9 diwarnai — hijau = pasangan urut benar, merah = urut salah
+    const salah = [];
+    if (selesai) {
+      const sakit = P.filter((p) => p[2]).map((p) => p[0]);
+      let naik = 0, kol = 0;
+      P.forEach((p) => {
+        if (p[2]) { naik++; return; }
+        for (let baris = 0; baris < 3; baris++) {
+          const benar = baris < naik;
+          const x = X0 + kol * C, y = Y0 + S - (baris + 1) * C;
+          g += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + C.toFixed(1) + '" height="' + C.toFixed(1) + '" class="' + (benar ? "roc-benar" : "roc-salah") + '"/>';
+          if (!benar) {
+            salah.push(p[0] + " (sehat) di atas " + sakit[baris] + " (sakit)");
+            g += '<text x="' + (x + C / 2).toFixed(1) + '" y="' + (y + C / 2 + 5).toFixed(1) + '" text-anchor="middle" class="vt-bold" style="font-size:13px">' + p[0] + " &gt; " + sakit[baris] + "</text>";
+          }
+        }
+        kol++;
+      });
+    }
     [1, 2].forEach((k) => {
       g += '<line x1="' + rx(k / 3) + '" y1="' + Y0 + '" x2="' + rx(k / 3) + '" y2="' + (Y0 + S) + '" class="vline dim"/>';
       g += '<line x1="' + X0 + '" y1="' + ry(k / 3) + '" x2="' + (X0 + S) + '" y2="' + ry(k / 3) + '" class="vline dim"/>';
     });
     g += '<line x1="' + rx(0) + '" y1="' + ry(0) + '" x2="' + rx(1) + '" y2="' + ry(1) + '" class="vring"/>';
-    if (langkah === P.length) {
-      g += '<path d="M' + rx(0) + " " + ry(0) + " " + T.t.map((p) => "L" + rx(p[0]).toFixed(1) + " " + ry(p[1]).toFixed(1)).join(" ") + " L" + rx(1) + " " + ry(0) + ' Z" class="roc-luas"/>';
-    }
     g += '<path d="' + T.t.map((p, i) => (i ? "L" : "M") + rx(p[0]).toFixed(1) + " " + ry(p[1]).toFixed(1)).join(" ") + '" class="vline aktif"/>';
     T.t.forEach((p, i) => { g += '<circle cx="' + rx(p[0]).toFixed(1) + '" cy="' + ry(p[1]).toFixed(1) + '" r="' + (i === T.t.length - 1 ? 7 : 4) + '" class="titik-lancar"/>'; });
     ["0", "⅓", "⅔", "1"].forEach((v, i) => {
       g += '<text x="' + rx(i / 3) + '" y="' + (Y0 + S + 14) + '" text-anchor="middle" class="vt-xs">' + v + "</text>";
       g += '<text x="' + (X0 - 8) + '" y="' + (ry(i / 3) + 4) + '" text-anchor="end" class="vt-xs">' + v + "</text>";
     });
-    g += '<text x="' + (X0 + S / 2) + '" y="' + (Y0 + S + 30) + '" text-anchor="middle" class="vt-xs">FPR — sehat yang dituduh →</text>';
-    g += '<text x="' + (X0 + S + 22) + '" y="' + (Y0 + 18) + '" class="vt-bold" style="font-size:13px">Titik sekarang</text>';
-    g += '<text x="' + (X0 + S + 22) + '" y="' + (Y0 + 40) + '" class="vt-xs">TPR = ' + T.tp + " dari 3 sakit</text>";
-    g += '<text x="' + (X0 + S + 22) + '" y="' + (Y0 + 58) + '" class="vt-xs">FPR = ' + T.fp + " dari 3 sehat</text>";
-    if (langkah === P.length) {
-      g += '<text x="' + (X0 + S + 22) + '" y="' + (Y0 + 110) + '" class="vt-bold" style="font-size:13px">Luas daerah biru</text>';
-      g += '<text x="' + (X0 + S + 22) + '" y="' + (Y0 + 148) + '" class="vt-bold" style="font-size:30px">8/9 ≈ 0,89</text>';
+    g += '<text x="' + (X0 + S / 2) + '" y="' + (Y0 + S + 30) + '" text-anchor="middle" class="vt-xs">sehat yang dituduh (FPR) →</text>';
+    g += '<text x="' + (X0 - 34) + '" y="' + (Y0 + S / 2) + '" text-anchor="middle" class="vt-xs" transform="rotate(-90 ' + (X0 - 34) + " " + (Y0 + S / 2) + ')">sakit yang tertangkap (TPR) →</text>';
+    const tx = X0 + S + 22;
+    g += '<text x="' + tx + '" y="' + (Y0 + 18) + '" class="vt-bold" style="font-size:13px">' + SKENARIO[kunci].nama + "</text>";
+    g += '<text x="' + tx + '" y="' + (Y0 + 40) + '" class="vt-xs">Tertangkap: ' + T.tp + " dari 3 sakit</text>";
+    g += '<text x="' + tx + '" y="' + (Y0 + 58) + '" class="vt-xs">Dituduh: ' + T.fp + " dari 3 sehat</text>";
+    if (selesai) {
+      const benar = 9 - salah.length;
+      g += '<rect x="' + tx + '" y="' + (Y0 + 84) + '" width="14" height="14" class="roc-benar"/><text x="' + (tx + 20) + '" y="' + (Y0 + 96) + '" class="vt-xs">' + benar + " kotak hijau = AUC</text>";
+      g += '<rect x="' + tx + '" y="' + (Y0 + 106) + '" width="14" height="14" class="roc-salah"/><text x="' + (tx + 20) + '" y="' + (Y0 + 118) + '" class="vt-xs">' + salah.length + " kotak merah = salah urut</text>";
+      g += '<text x="' + tx + '" y="' + (Y0 + 162) + '" class="vt-bold" style="font-size:28px">AUC = ' + benar + "/9</text>";
+      g += '<text x="' + tx + '" y="' + (Y0 + 184) + '" class="vt-xs">≈ ' + koma((benar / 9).toFixed(2)) + "</text>";
     }
     g += "</svg>";
     kanvas.innerHTML = g;
 
     let pesan;
-    if (langkah === 0) pesan = "Ambang masih <b>di atas 0,9</b>: belum ada satu pun pasien yang ditandai sakit. Tidak ada yang tertangkap, tidak ada alarm palsu → titik <b>(0, 0)</b>, pojok kiri bawah.";
-    else if (langkah < P.length) {
+    if (langkah === 0) {
+      pesan = "Ambang masih <b>di atas skor tertinggi</b>: belum ada yang ditandai sakit. Tidak ada yang tertangkap, tidak ada yang dituduh → titik <b>(0, 0)</b>. Tekan tombol untuk menurunkan ambang satu pasien demi satu pasien.";
+    } else if (!selesai) {
       const p = P[langkah - 1];
-      pesan = "Ambang diturunkan ke <b>" + koma(p.s) + "</b>, jadi pasien <b>" + p.n + "</b> ikut ditandai sakit. " +
-        (p.sakit ? "Ia memang sakit → titik <b>naik ke atas</b> (TPR bertambah ⅓)." : "Padahal ia sehat → titik <b>bergeser ke kanan</b> (FPR bertambah ⅓).");
+      pesan = "Ambang turun ke <b>" + koma(p[1]) + "</b>, jadi pasien <b>" + p[0] + "</b> ikut ditandai sakit. " +
+        (p[2] ? "Ia memang sakit → garis <b>naik satu anak tangga</b>." : "Padahal ia sehat → garis <b>bergeser ke kanan</b>. Setiap langkah ke kanan <i>sebelum</i> garis mencapai puncak adalah kesalahan urutan.");
+    } else if (kunci === "sempurna") {
+      pesan = "<b>Model sempurna:</b> ketiga pasien sakit mendapat skor di atas semua pasien sehat. Garisnya naik lurus sampai puncak dulu, baru ke kanan. Seluruh kotak berwarna hijau → <b>AUC = 9/9 = 1</b>.";
     } else {
-      pesan = "Semua pasien sudah ditandai → titik <b>(1, 1)</b>, pojok kanan atas. Garis biru yang terbentuk <b>itulah kurva ROC</b>.<br><br>" +
-        "Luas di bawahnya bisa dihitung dari dua persegi panjang: lebar ⅓ × tinggi ⅔ = 2/9, ditambah lebar ⅔ × tinggi 1 = 6/9. Totalnya <b>8/9 ≈ 0,89</b> — itulah <b>AUC</b>.<br><br>" +
-        "<b>Cek dengan cara kedua:</b> pasangkan tiap pasien sakit dengan tiap pasien sehat (3 × 3 = 9 pasangan). A dan B skornya lebih tinggi dari C, E, F (6 pasangan benar). D lebih tinggi dari E dan F (2 benar) tapi <b>lebih rendah dari C</b> (1 salah). Jadi <b>8 dari 9 pasangan</b> diurutkan benar — angka yang sama persis.";
+      pesan = "Selesai. Setiap kotak kecil mewakili <b>satu pasangan</b> (satu pasien sehat dan satu pasien sakit) — ada 3 × 3 = 9 pasangan. " +
+        "<b>Hijau</b> berarti model mengurutkan pasangan itu dengan benar (yang sakit diberi skor lebih tinggi). <b>Merah</b> berarti urutannya terbalik: " + salah.join(", ") + ".<br><br>" +
+        "Luas daerah hijau itulah <b>AUC</b>. " + (kunci === "asal" ? "Garis ini menempel dekat diagonal putus-putus — nyaris seperti menebak asal." : "Satu-satunya kesalahan model kita adalah memberi pasien C yang sehat skor lebih tinggi daripada pasien D yang sakit.");
     }
     out.innerHTML = '<div class="dm-note">' + pesan + "</div>";
-    turun.disabled = langkah === P.length;
+    turun.disabled = selesai;
   }
 
   const turun = h("button", { class: "btn", type: "button", text: "⬇ Turunkan ambang (tandai 1 pasien lagi)" });
-  turun.onclick = () => { if (langkah < P.length) { langkah++; draw(); } };
+  turun.onclick = () => { if (langkah < SKENARIO[kunci].P.length) { langkah++; draw(); } };
+  const semua = h("button", { class: "btn ghost", type: "button", text: "⏩ Langsung ke akhir" });
+  semua.onclick = () => { langkah = SKENARIO[kunci].P.length; draw(); };
   const ulang = h("button", { class: "btn ghost", type: "button", text: "↺ Ulang" });
   ulang.onclick = () => { langkah = 0; draw(); };
+  const pilih = Object.keys(SKENARIO).map((k) => {
+    const b = h("button", { class: "btn ghost", type: "button", text: SKENARIO[k].nama });
+    b.onclick = () => { kunci = k; langkah = 0; pilih.forEach((x) => x.classList.toggle("aktif", x === b)); draw(); };
+    return b;
+  });
+  pilih[0].classList.add("aktif");
 
   root.appendChild(h("div", { class: "demo" }, [
     h("div", { class: "demo-head", html: "✏️ <b>Demo: menggambar kurva ROC dengan tangan</b>" }),
-    h("p", { class: "demo-hint", text: "Enam pasien, sudah diurutkan dari skor tertinggi. Turunkan ambang satu langkah demi satu langkah dan lihat titik ROC terbentuk." }),
+    h("p", { class: "demo-hint", text: "Enam pasien, diurutkan dari skor tertinggi. Turunkan ambang satu langkah demi satu langkah: pasien sakit membuat garis naik, pasien sehat membuatnya bergeser ke kanan." }),
+    h("div", { class: "demo-controls" }, pilih),
     tabel,
     kanvas,
-    h("div", { class: "demo-controls" }, [turun, ulang]),
+    h("div", { class: "demo-controls" }, [turun, semua, ulang]),
     out,
   ]));
   draw();
