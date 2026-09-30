@@ -1409,6 +1409,18 @@ const GLOSSARY = [
   ["AUC", "Luas di bawah kurva ROC (0–1) = peluang model memberi skor lebih tinggi pada kasus positif acak dibanding kasus negatif acak. 0,5 = menebak asal."],
   ["Spesifisitas", "Dari semua yang benar-benar negatif, berapa persen yang benar dinyatakan negatif. Rumus TN ÷ (TN + FP) = 1 − FPR."],
   ["Confusion Matrix", "Tabel empat kotak (TP, FN, FP, TN) yang mencocokkan tebakan model dengan kenyataan; sumber semua metrik klasifikasi."],
+  ["Backpropagation", "Cara menghitung andil tiap bobot terhadap loss: kemiringan tiap lapisan dikalikan mundur dari ujung ke awal (aturan rantai)."],
+  ["Fungsi Aktivasi", "\"Tikungan\" setelah tiap neuron (mis. ReLU, sigmoid) agar jaringan bisa menangkap pola yang tidak lurus."],
+  ["Generalisasi", "Kemampuan model bekerja baik pada data baru yang belum pernah dilihatnya — tujuan sejati melatih AI."],
+  ["Context Window", "Batas jumlah token yang bisa dilihat model sekaligus — luas 'meja kerjanya'."],
+  ["RMSE", "Akar dari MSE; kembali ke satuan asli, dibaca 'rata-rata meleset sekitar …'."],
+  ["MAE", "Mean Absolute Error — rata-rata selisih tanpa tanda minus; lebih memaafkan kesalahan besar dibanding MSE."],
+  ["Top-p", "Pengaturan LLM: hanya mengundi dari kandidat kata teratas yang total peluangnya mencapai p."],
+  ["Top-k", "Mengambil k hasil dengan skor tertinggi, mis. 3 potongan dokumen paling mirip dalam RAG."],
+  ["Stateless", "Tidak menyimpan ingatan antarpanggilan; setiap permintaan harus membawa sendiri seluruh konteksnya."],
+  ["SDK", "Software Development Kit — paket kode siap pakai dari penyedia layanan."],
+  ["Backend", "Program yang berjalan di server milikmu, tidak terlihat pengguna; tempat aman menyimpan API key."],
+  ["Peluang Bersyarat", "P(A | B): peluang A bila B sudah diketahui terjadi — dihitung hanya dari kasus-kasus B."],
 ];
 
 function renderGlossary() {

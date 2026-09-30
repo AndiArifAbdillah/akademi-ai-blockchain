@@ -17,7 +17,7 @@ const AI_COURSE = {
       id: "ai-dasar",
       level: "Dasar",
       title: "Mulai dari Nol",
-      summary: "Sebelum AI: pahami data, pola, peluang sederhana, dan apa itu algoritma.",
+      summary: "Sebelum AI: pahami data dan pola, apa itu algoritma, lalu peluang, rata-rata & persen sederhana.",
       lessons: [
         {
           id: "ai-nol-1",
@@ -76,6 +76,64 @@ const AI_COURSE = {
               options: ["Listrik", "Data", "Internet cepat", "Layar besar"],
               answer: 1,
               explain: "AI belajar dari data; tanpa data tak ada yang bisa dipelajari.",
+            },
+          ],
+        },
+        {
+          id: "ai-nol-3",
+          title: "Apa itu Algoritma?",
+          duration: "7 menit",
+          content: `
+<p>Kata "algoritma" terdengar rumit, padahal kamu memakainya setiap hari.</p>
+
+<div data-diagram="pipeline" data-stages="Masukan::bahan yang tersedia|Langkah berurutan::dikerjakan satu per satu|Percabangan::jika begini, maka begitu|Keluaran::hasil yang sama tiap kali" data-caption="Algoritma itu resep — masukan yang sama selalu memberi hasil yang sama"></div>
+
+
+<div class="callout">
+<b>Algoritma</b> = <b>urutan langkah</b> untuk menyelesaikan suatu tugas. Titik.
+</div>
+
+<h3>Algoritma di sekitarmu</h3>
+<ul>
+  <li><b>Resep masak</b> — langkah 1: rebus air, langkah 2: masukkan mi, langkah 3: tunggu 3 menit.</li>
+  <li><b>Petunjuk arah</b> — belok kiri, lurus 100m, belok kanan.</li>
+  <li><b>Membuat teh</b> — didihkan air → celup teh → tuang → aduk.</li>
+</ul>
+<p>Komputer bekerja dengan mengikuti algoritma — urutan langkah yang sangat jelas.</p>
+
+<h3>Hubungannya dengan AI</h3>
+<table class="tbl">
+  <tr><th>Program biasa</th><th>AI</th></tr>
+  <tr><td>Algoritma & aturannya <b>ditulis manusia</b></td><td>Algoritma yang <b>menemukan aturannya sendiri</b> dari data</td></tr>
+</table>
+`,
+          keyPoints: [
+            "Algoritma = urutan langkah untuk menyelesaikan tugas (resep, petunjuk arah).",
+            "Komputer bekerja dengan mengikuti algoritma yang jelas.",
+            "Program biasa: aturan ditulis manusia. AI: menemukan aturannya sendiri dari data.",
+          ],
+          quiz: [
+            {
+              q: "Apa itu algoritma?",
+              options: [
+                "Urutan langkah yang pasti untuk menyelesaikan sebuah tugas",
+                "Program komputer yang mampu memperbaiki dirinya sendiri",
+                "Rumus matematika yang hanya dipahami ahli pemrograman",
+                "Perangkat keras khusus untuk menjalankan perhitungan berat",
+              ],
+              answer: 0,
+              explain: "Algoritma adalah langkah-langkah jelas untuk menyelesaikan sesuatu.",
+            },
+            {
+              q: "Beda utama AI dari program biasa?",
+              options: [
+                "AI menemukan aturannya sendiri dari data, bukan ditulis manusia",
+                "AI menjalankan aturan yang sama persis, hanya jauh lebih cepat",
+                "AI bisa bekerja tanpa perlu diberi contoh data sama sekali",
+                "AI menulis ulang kode programnya setiap kali dijalankan",
+              ],
+              answer: 0,
+              explain: "AI belajar aturan dari data; program biasa mengikuti aturan tetap buatan manusia.",
             },
           ],
         },
@@ -309,64 +367,6 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
             },
           ],
         },
-        {
-          id: "ai-nol-3",
-          title: "Apa itu Algoritma?",
-          duration: "7 menit",
-          content: `
-<p>Kata "algoritma" terdengar rumit, padahal kamu memakainya setiap hari.</p>
-
-<div data-diagram="pipeline" data-stages="Masukan::bahan yang tersedia|Langkah berurutan::dikerjakan satu per satu|Percabangan::jika begini, maka begitu|Keluaran::hasil yang sama tiap kali" data-caption="Algoritma itu resep — masukan yang sama selalu memberi hasil yang sama"></div>
-
-
-<div class="callout">
-<b>Algoritma</b> = <b>urutan langkah</b> untuk menyelesaikan suatu tugas. Titik.
-</div>
-
-<h3>Algoritma di sekitarmu</h3>
-<ul>
-  <li><b>Resep masak</b> — langkah 1: rebus air, langkah 2: masukkan mi, langkah 3: tunggu 3 menit.</li>
-  <li><b>Petunjuk arah</b> — belok kiri, lurus 100m, belok kanan.</li>
-  <li><b>Membuat teh</b> — didihkan air → celup teh → tuang → aduk.</li>
-</ul>
-<p>Komputer bekerja dengan mengikuti algoritma — urutan langkah yang sangat jelas.</p>
-
-<h3>Hubungannya dengan AI</h3>
-<table class="tbl">
-  <tr><th>Program biasa</th><th>AI</th></tr>
-  <tr><td>Algoritma & aturannya <b>ditulis manusia</b></td><td>Algoritma yang <b>menemukan aturannya sendiri</b> dari data</td></tr>
-</table>
-`,
-          keyPoints: [
-            "Algoritma = urutan langkah untuk menyelesaikan tugas (resep, petunjuk arah).",
-            "Komputer bekerja dengan mengikuti algoritma yang jelas.",
-            "Program biasa: aturan ditulis manusia. AI: menemukan aturannya sendiri dari data.",
-          ],
-          quiz: [
-            {
-              q: "Apa itu algoritma?",
-              options: [
-                "Urutan langkah yang pasti untuk menyelesaikan sebuah tugas",
-                "Program komputer yang mampu memperbaiki dirinya sendiri",
-                "Rumus matematika yang hanya dipahami ahli pemrograman",
-                "Perangkat keras khusus untuk menjalankan perhitungan berat",
-              ],
-              answer: 0,
-              explain: "Algoritma adalah langkah-langkah jelas untuk menyelesaikan sesuatu.",
-            },
-            {
-              q: "Beda utama AI dari program biasa?",
-              options: [
-                "AI menemukan aturannya sendiri dari data, bukan ditulis manusia",
-                "AI menjalankan aturan yang sama persis, hanya jauh lebih cepat",
-                "AI bisa bekerja tanpa perlu diberi contoh data sama sekali",
-                "AI menulis ulang kode programnya setiap kali dijalankan",
-              ],
-              answer: 0,
-              explain: "AI belajar aturan dari data; program biasa mengikuti aturan tetap buatan manusia.",
-            },
-          ],
-        },
       ],
     },
     /* ---------------- MODUL 2: DASAR-DASAR AI ---------------- */
@@ -548,38 +548,72 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
         {
           id: "ai-p-4",
           title: "Bagaimana AI 'Belajar'?",
-          duration: "10 menit",
+          duration: "11 menit",
           content: `
-<p>Belajar pada AI disebut <b>training</b> (pelatihan). Ibarat siswa mengerjakan ribuan soal latihan sampai mahir.</p>
-
-<div data-diagram="flow" data-steps="Tebak|Bandingkan jawaban|Hitung kesalahan|Perbaiki bobot" data-caption="Siklus belajar AI (diulang jutaan kali)"></div>
-
-
-<h3>Siklus belajar AI (sederhana)</h3>
-<ol>
-  <li><b>Tebak</b> — AI menebak jawaban dari sebuah contoh.</li>
-  <li><b>Bandingkan</b> — Tebakan dibandingkan dengan jawaban benar (label).</li>
-  <li><b>Hitung kesalahan</b> — Seberapa jauh meleset? Ini disebut <i>error/loss</i>.</li>
-  <li><b>Perbaiki</b> — AI sedikit mengubah "pengaturannya" agar lain kali lebih tepat.</li>
-  <li>Ulangi jutaan kali sampai kesalahannya kecil.</li>
-</ol>
-
-<div class="callout">
-<b>Analogi:</b> Seperti memanah. Tembakan pertama meleset ke kiri, kamu geser sedikit ke kanan. Meleset lagi, koreksi lagi. Lama-lama tepat sasaran. AI "menggeser" angka-angka di dalamnya (disebut <b>parameter/bobot</b>).
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+AI menemukan <b>pola dari data</b>, dan data latihnya sering diberi <b>label</b> — jawaban yang benar. Pelajaran ini menjawab pertanyaan berikutnya: <i>bagaimana persisnya</i> AI memakai jawaban benar itu untuk menjadi pintar?
 </div>
 
+<p>Belajar pada AI disebut <b>training</b> (pelatihan). Ibaratnya siswa yang mengerjakan ribuan soal latihan, mencocokkan jawabannya dengan kunci, lalu memperbaiki caranya sedikit demi sedikit. Mari lihat prosesnya dengan angka sungguhan — tanpa rumus.</p>
+
+<h3>Contoh: AI menebak harga sewa kamar kos</h3>
+<p>Kita punya data berlabel: kamar <b>10 m²</b> disewakan <b>Rp1.000.000</b>, dan kamar <b>20 m²</b> disewakan <b>Rp2.000.000</b>. AI kita sangat sederhana. Ia hanya punya <b>satu kenop</b>, yaitu "harga per m²", dan menebak dengan cara:</p>
+<div class="callout">
+<b>tebakan = kenop × luas kamar</b>
+</div>
+<p>Awalnya AI tidak tahu nilai kenop yang tepat, jadi ia mulai dari tebakan asal: <b>Rp50.000 per m²</b>. Lalu siklus belajarnya berjalan:</p>
+
+<table class="tbl">
+  <tr><th>Putaran</th><th>Kenop</th><th>Tebakan untuk 10 m²</th><th>Jawaban benar</th><th>Meleset</th><th>Perbaikan</th></tr>
+  <tr><td>1</td><td>50 ribu</td><td>500 ribu</td><td>1 juta</td><td class="bad-cell">kurang 500 ribu</td><td>naikkan kenop banyak</td></tr>
+  <tr><td>2</td><td>80 ribu</td><td>800 ribu</td><td>1 juta</td><td class="bad-cell">kurang 200 ribu</td><td>naikkan sedikit</td></tr>
+  <tr><td>3</td><td>95 ribu</td><td>950 ribu</td><td>1 juta</td><td>kurang 50 ribu</td><td>naikkan sedikit lagi</td></tr>
+  <tr><td>4</td><td>100 ribu</td><td>1 juta</td><td>1 juta</td><td class="ok-cell">tepat</td><td>berhenti</td></tr>
+</table>
+<p>Setelah empat putaran, kenopnya <b>Rp100.000 per m²</b>. Coba pada kamar 20 m² yang tidak dipakai saat berlatih tadi: 100 ribu × 20 = <b>Rp2.000.000</b> — tepat. AI sudah <b>menemukan polanya sendiri</b>, padahal tidak ada yang memberitahunya angka 100 ribu.</p>
+
+<h3>Empat langkah yang selalu sama</h3>
+<div data-diagram="flow" data-steps="Tebak|Bandingkan jawaban|Hitung kesalahan|Perbaiki kenop" data-caption="Siklus belajar AI — contoh kos di atas menjalankannya empat kali"></div>
+<ol>
+  <li><b>Tebak</b> — AI menebak memakai kenop yang ia punya sekarang.</li>
+  <li><b>Bandingkan</b> — tebakan dicocokkan dengan jawaban benar (label).</li>
+  <li><b>Hitung kesalahan</b> — seberapa jauh meleset? Angka kesalahan ini disebut <b>loss</b>.</li>
+  <li><b>Perbaiki</b> — kenopnya digeser sedikit ke arah yang mengurangi kesalahan.</li>
+</ol>
+<p>Perhatikan pola pada tabel: <b>makin besar melesetnya, makin besar perbaikannya</b>. Saat meleset 500 ribu, kenop dinaikkan 30 ribu; saat hanya meleset 50 ribu, kenop cukup dinaikkan 5 ribu.</p>
+
+<div class="callout">
+<b>Kenop itu punya nama resmi:</b> <b>parameter</b> atau <b>bobot</b> (<i>weight</i>). AI kos kita punya 1 parameter. Model pengenal wajah punya jutaan, dan chatbot modern punya <b>miliaran</b>. Prosesnya tetap empat langkah yang sama — hanya saja kenop sebanyak itu tidak mungkin digeser dengan perasaan, sehingga dipakai rumus bernama <b>gradient descent</b>. Rumus itu dibahas pelan-pelan di modul Fundamental.
+</div>
+
+<div class="callout">
+<b>Analogi:</b> seperti memanah. Tembakan pertama meleset jauh ke kiri, jadi kamu geser bidikan cukup banyak ke kanan. Tembakan kedua hanya meleset sedikit, jadi koreksimu juga kecil. Lama-lama tepat sasaran.
+</div>
+
+<h3>Lihat sendiri: garis yang belajar</h3>
+<p>Demo ini menjalankan siklus yang sama pada titik-titik data. Garisnya adalah tebakan AI, dan setiap langkah menggeser kemiringan serta posisinya sedikit. Perhatikan angka kesalahannya terus mengecil:</p>
 <div data-demo="learning-loop"></div>
 
-<h3>Training vs Inference</h3>
-<ul>
-  <li><b>Training</b> — proses belajar (lambat, mahal, sekali di awal).</li>
-  <li><b>Inference</b> — memakai model yang sudah jadi untuk menjawab (cepat). Saat kamu bertanya ke ChatGPT, itu inference.</li>
-</ul>
+<h3>Training vs inference</h3>
+<table class="tbl">
+  <tr><th></th><th>Training (belajar)</th><th>Inference (memakai)</th></tr>
+  <tr><td>Yang terjadi</td><td>Kenop digeser berulang-ulang sampai kesalahannya kecil</td><td>Kenop sudah dikunci, AI tinggal menebak</td></tr>
+  <tr><td>Analogi</td><td>Belajar untuk ujian</td><td>Mengerjakan ujian</td></tr>
+  <tr><td>Biaya & waktu</td><td>Lambat dan mahal, dilakukan di awal</td><td>Cepat, dilakukan setiap kali dipakai</td></tr>
+  <tr><td>Contoh kos</td><td>Empat putaran menemukan 100 ribu per m²</td><td>Menebak harga kamar 15 m² → 1,5 juta</td></tr>
+</table>
+<p>Saat kamu bertanya kepada ChatGPT atau Claude, yang terjadi adalah <b>inference</b>: modelnya tidak sedang belajar dari percakapanmu, ia memakai kenop yang sudah dikunci saat training.</p>
 `,
           keyPoints: [
-            "Training = AI berlatih dari banyak contoh secara berulang.",
-            "AI memperbaiki diri dengan mengurangi kesalahan (loss) sedikit demi sedikit.",
-            "Inference = memakai model yang sudah dilatih untuk menjawab.",
+            "Training = AI berlatih dari banyak contoh berlabel secara berulang.",
+            "Siklusnya selalu empat langkah: tebak, bandingkan dengan jawaban benar, hitung kesalahan (loss), perbaiki kenop.",
+            "Kenop angka di dalam model disebut parameter atau bobot; makin besar melesetnya, makin besar perbaikannya.",
+            "Inference = memakai model yang kenopnya sudah dikunci untuk menjawab."
+          ],
+          practice: [
+            { type: "number", q: "Kenop AI kos = Rp90.000 per m². Kamar 10 m² harga sebenarnya Rp1.000.000. Berapa ribu rupiah tebakannya meleset?", answer: 100, tol: 0.5, unit: "ribu", hint: "Tebakan = 90 ribu × 10. Bandingkan dengan 1.000 ribu.", solution: "Tebakan 900 ribu, jawaban benar 1.000 ribu → meleset 100 ribu." },
+            { type: "number", q: "Setelah belajar, kenopnya Rp100.000 per m². Berapa juta rupiah tebakan untuk kamar 15 m²?", answer: 1.5, tol: 0.01, unit: "juta", hint: "Ini inference: tinggal kalikan kenop dengan luas.", solution: "100 ribu × 15 = 1.500 ribu = Rp1,5 juta." }
           ],
           quiz: [
             {
@@ -588,20 +622,29 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
                 "Ukuran seberapa jauh tebakan model meleset dari jawaban yang sebenarnya",
                 "Jumlah data latih yang gagal terbaca selama proses pelatihan berlangsung",
                 "Bagian data yang sengaja disisihkan untuk menguji model di tahap akhir",
-                "Penurunan kecepatan model setiap kali ukuran datanya bertambah besar",
+                "Penurunan kecepatan model setiap kali ukuran datanya bertambah besar"
               ],
               answer: 0,
-              explain:
-                "Loss mengukur besar kesalahan; AI berusaha menguranginya tiap iterasi.",
+              explain: "Loss mengukur besar kesalahan; AI berusaha menguranginya tiap putaran."
             },
             {
               q: "Saat kamu bertanya ke chatbot yang sudah jadi, itu disebut?",
-              options: ["Training", "Inference", "Labeling", "Debugging"],
-              answer: 1,
-              explain:
-                "Inference = menggunakan model terlatih untuk menghasilkan jawaban.",
+              options: ["Inference", "Training", "Labeling", "Debugging"],
+              answer: 0,
+              explain: "Inference = menggunakan model terlatih yang kenopnya sudah dikunci untuk menghasilkan jawaban."
             },
-          ],
+            {
+              q: "Pada contoh AI kos, apa yang sebenarnya berubah selama training?",
+              options: [
+                "Nilai kenop harga per m² yang dipakai untuk menebak",
+                "Harga sewa kamar yang tercatat di dalam data latih",
+                "Luas kamar yang dimasukkan sebagai bahan tebakan",
+                "Rumus tebakannya, dari perkalian menjadi penjumlahan"
+              ],
+              answer: 0,
+              explain: "Data dan rumusnya tetap. Yang digeser hanyalah kenop (parameter) sampai tebakannya cocok dengan jawaban benar."
+            }
+          ]
         },
       ],
     },
@@ -906,14 +949,121 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
       id: "ai-fundamental",
       level: "Fundamental",
       title: "Fundamental & Metrik AI",
-      summary: "Cara mengukur kualitas model (akurasi, precision, recall, ROC & AUC), loss & gradient descent, parameter & token, serta bias-variance.",
+      summary: "Bias-variance sebagai lanjutan overfitting, cara mengukur kualitas model langkah demi langkah (recall & precision, lalu spesifisitas & F1, lalu ROC & AUC), loss & gradient descent, serta parameter & token.",
       lessons: [
         {
-          id: "ai-fund-1",
-          title: "Mengukur Kualitas AI dari Nol — Confusion Matrix, Precision & Recall",
-          duration: "18 menit",
+          id: "ai-fund-4",
+          title: "Bias, Variance & Generalisasi",
+          duration: "12 menit",
           content: `
-<p>Sebuah model AI pendeteksi penyakit dilaporkan punya <b>akurasi 90%</b>. Bagus? Ternyata model yang <b>selalu</b> menjawab "sehat" untuk siapa pun — tanpa berpikir sama sekali — juga bisa mendapat akurasi 90%. Pelajaran ini membongkar kenapa hal itu bisa terjadi, dan angka apa yang sebenarnya perlu dilihat. Semua istilahnya dimulai dari nol.</p>
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+Di akhir modul sebelumnya kamu bertemu dua penyakit model: <b>overfitting</b> (menghafal data latih, gagal di data baru) dan <b>underfitting</b> (terlalu sederhana, gagal di mana-mana). Kamu juga tahu datanya dibagi dua: <b>data latih</b> untuk belajar dan <b>data uji</b> untuk ujian. Pelajaran ini membuat keduanya bisa <b>didiagnosis dengan angka</b>.
+</div>
+
+<p>Tujuan sejati AI bukan pintar di data latihan, melainkan <b>generalisasi</b>: bekerja baik pada data <b>baru</b> yang belum pernah dilihatnya. Seperti siswa — yang penting bukan nilai latihan, tapi nilai ujian yang soalnya berbeda.</p>
+
+<h3>Langkah 1 — Diagnosis cukup dengan dua angka</h3>
+<p>Setiap model yang selesai dilatih punya dua nilai: <b>nilai di data latih</b> dan <b>nilai di data uji</b>. Lihat tiga model yang menebak apakah pelanggan akan berhenti berlangganan:</p>
+<table class="tbl">
+  <tr><th>Model</th><th>Nilai latih</th><th>Nilai uji</th><th>Selisih</th><th>Diagnosis</th></tr>
+  <tr><td>A</td><td>60%</td><td>58%</td><td>2</td><td class="bad-cell"><b>Underfitting</b> — dua-duanya rendah</td></tr>
+  <tr><td>B</td><td>90%</td><td>87%</td><td>3</td><td class="ok-cell"><b>Pas</b> — tinggi dan berdekatan</td></tr>
+  <tr><td>C</td><td>100%</td><td>65%</td><td>35</td><td class="bad-cell"><b>Overfitting</b> — jurangnya lebar</td></tr>
+</table>
+<div class="callout">
+<b>Aturan membacanya:</b><br>
+Nilai latih <b>rendah</b> → model bahkan belum paham soal latihan → <b>underfitting</b>.<br>
+Nilai latih tinggi tapi nilai uji <b>jauh lebih rendah</b> → model menghafal → <b>overfitting</b>.<br>
+Keduanya tinggi dan berdekatan → itulah yang dicari.
+</div>
+
+<div data-diagram="compare3" data-cols="Underfitting::model terlalu sederhana::salah di data latih DAN data baru|Pas (ideal)::kerumitan seimbang::baik di keduanya|Overfitting::model terlalu rumit::hafal data latih, gagal di data baru" data-caption="Tiga keadaan model — yang dikejar adalah yang tengah"></div>
+
+<h3>Langkah 2 — Kenapa namanya "bias" dan "variance"?</h3>
+<p>Para ahli memakai dua kata ini untuk dua penyakit tadi. Bayangkan empat orang memanah ke papan sasaran:</p>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Di papan panah</th><th>Di AI</th></tr>
+  <tr><td><b>Bias tinggi</b></td><td>Anak panah mengumpul rapi, tapi <b>jauh dari pusat</b> — selalu meleset ke arah yang sama</td><td>Model terlalu kaku sehingga selalu keliru dengan cara yang sama → <b>underfitting</b></td></tr>
+  <tr><td><b>Variance tinggi</b></td><td>Anak panah <b>tersebar ke mana-mana</b> — kadang kena, kadang jauh sekali</td><td>Model terlalu peka: data latihnya diganti sedikit, jawabannya berubah drastis → <b>overfitting</b></td></tr>
+</table>
+<p>Kenapa model yang menghafal disebut "peka"? Karena ia ikut menghafal <b>keributan</b> di data latih — kebetulan-kebetulan yang tidak akan terulang. Ganti datanya, keributannya lain, maka hafalannya pun lain.</p>
+
+<h3>Langkah 3 — Tarik-menarik keduanya</h3>
+<table class="tbl">
+  <tr><th>Kerumitan model</th><th>Bias</th><th>Variance</th><th>Hasil</th></tr>
+  <tr><td>Terlalu sederhana</td><td class="bad-cell">Tinggi</td><td class="ok-cell">Rendah</td><td>Underfitting</td></tr>
+  <tr><td>Sedang</td><td>Cukup rendah</td><td>Cukup rendah</td><td class="ok-cell">Pas</td></tr>
+  <tr><td>Terlalu rumit</td><td class="ok-cell">Rendah</td><td class="bad-cell">Tinggi</td><td>Overfitting</td></tr>
+</table>
+<div class="callout">
+<b>Trade-off bias-variance:</b> menurunkan yang satu sering menaikkan yang lain. Tugas kita bukan membuat salah satunya nol, melainkan menemukan <b>titik tengah</b> — cukup fleksibel untuk menangkap pola, tapi tidak ikut menghafal keributan.
+</div>
+
+<h3>Langkah 4 — Obatnya berbeda, jadi diagnosis dulu</h3>
+<table class="tbl">
+  <tr><th>Gejala</th><th>Obat yang biasa dipakai</th></tr>
+  <tr><td><b>Underfitting</b> (nilai latih rendah)</td><td>Pakai model yang lebih mampu, tambahkan informasi (fitur) yang lebih berguna, latih lebih lama</td></tr>
+  <tr><td><b>Overfitting</b> (jurang latih–uji lebar)</td><td>Tambah data yang <b>banyak dan beragam</b>, sederhanakan model, beri "hukuman" bagi model yang terlalu rumit (<i>regularisasi</i>, dibahas di pelajaran Regresi Linear), hentikan latihan sebelum mulai menghafal</td></tr>
+</table>
+<div class="callout warn">
+<b>⚠️ Salah obat justru memperparah.</b> Menambah kerumitan pada model yang overfitting membuat hafalannya makin parah. Menambah data pada model yang underfitting sering tidak menolong, karena masalahnya ada pada modelnya yang terlalu kaku.
+</div>
+
+<h3>💥 Dampak</h3>
+<p>Model yang tidak menggeneralisasi akan <b>gagal di dunia nyata</b> meski terlihat hebat saat pengujian internal. Karena itu evaluasi harus selalu memakai data yang benar-benar terpisah — dan "nilai" yang dipakai untuk menilai pun harus tepat. Pelajaran berikutnya membahas persis itu: <b>angka apa yang sebaiknya dipakai untuk menilai model</b>, karena ternyata "akurasi" bisa sangat menipu.</p>
+`,
+          keyPoints: [
+            "Generalisasi = kinerja pada data baru; itulah tujuan sejati AI.",
+            "Diagnosis cukup dengan dua angka: nilai latih rendah = underfitting; nilai latih tinggi tapi nilai uji jauh lebih rendah = overfitting.",
+            "Bias tinggi = selalu meleset ke arah yang sama (terlalu kaku); variance tinggi = jawaban berubah drastis bila data diganti (terlalu peka).",
+            "Trade-off bias-variance: cari titik tengah, dan pilih obat sesuai diagnosisnya."
+          ],
+          practice: [
+            { type: "choice", q: "Model mendapat nilai latih 99% dan nilai uji 71%. Obat mana yang paling tepat dicoba lebih dulu?", options: ["Tambah data latih yang lebih banyak dan beragam", "Ganti dengan model yang jauh lebih rumit", "Latih model lebih lama sampai nilai latih 100%", "Buang data uji agar nilainya tidak turun"], answer: 0, hint: "Jurang latih–uji yang lebar adalah tanda menghafal.", solution: "Selisih 28 poin = overfitting. Data yang lebih banyak dan beragam membuat model sulit sekadar menghafal." }
+          ],
+          quiz: [
+            {
+              q: "Model sempurna di data latih tetapi buruk di data baru mengalami?",
+              options: [
+                "Overfitting — model menghafal data latih dan gagal menyamaratakan",
+                "Underfitting — model terlalu sederhana untuk menangkap polanya",
+                "Kebocoran data — data uji ikut terpakai saat proses pelatihan",
+                "Model drift — pola dunia berubah setelah model selesai dilatih"
+              ],
+              answer: 0,
+              explain: "Itu overfitting — model menghafal, gagal menggeneralisasi."
+            },
+            {
+              q: "Senjata utama melawan overfitting?",
+              options: [
+                "Data latih yang lebih banyak, berkualitas, dan beragam",
+                "Menambah jumlah lapisan agar model belajar lebih dalam",
+                "Melatih model jauh lebih lama sampai loss mendekati nol",
+                "Memakai seluruh data untuk melatih tanpa menyisakan uji"
+              ],
+              answer: 0,
+              explain: "Data beragam menyulitkan model sekadar menghafal, mendorong generalisasi."
+            },
+            {
+              q: "Nilai latih 62% dan nilai uji 60%. Apa diagnosisnya?",
+              options: [
+                "Underfitting — keduanya rendah, model terlalu sederhana",
+                "Overfitting — nilai ujinya lebih rendah dari nilai latih",
+                "Model sudah pas, karena kedua nilainya sangat berdekatan",
+                "Kebocoran data, karena nilai latih dan uji hampir sama"
+              ],
+              answer: 0,
+              explain: "Selisihnya kecil, tapi nilai latihnya sendiri sudah rendah: model belum mampu menangkap pola bahkan pada soal latihan."
+            }
+          ]
+        },
+        {
+          id: "ai-fund-1",
+          title: "Mengukur Kualitas AI dari Nol — Confusion Matrix, Recall & Precision",
+          duration: "13 menit",
+          content: `
+<p>Sebuah model AI pendeteksi penyakit dilaporkan punya <b>akurasi 90%</b>. Bagus? Ternyata model yang <b>selalu</b> menjawab "sehat" untuk siapa pun — tanpa berpikir sama sekali — juga bisa mendapat akurasi 90%. Pelajaran ini membongkar kenapa hal itu bisa terjadi, dan dua angka apa yang sebenarnya perlu dilihat: <b>recall</b> dan <b>precision</b>. Semua istilahnya dimulai dari nol, dan cukup memakai bekal <b>persen</b> dari modul Dasar: (bagian ÷ total) × 100.</p>
 
 <h3>Langkah 1 — Kenyataan dan tebakan</h3>
 <p>Bayangkan <b>100 orang</b> diperiksa. Kenyataannya: <b>10 orang sakit</b> dan <b>90 orang sehat</b>. Sebuah model AI menebak, lalu menandai <b>17 orang</b> sebagai sakit.</p>
@@ -924,7 +1074,7 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
   <tr><td><b>Kenyataannya sakit</b> (10)</td><td class="ok-cell"><b>8</b> — tertangkap ✅<br><i>True Positive (TP)</i></td><td class="bad-cell"><b>2</b> — lolos ❌<br><i>False Negative (FN)</i></td></tr>
   <tr><td><b>Kenyataannya sehat</b> (90)</td><td class="bad-cell"><b>9</b> — dituduh sakit ❌<br><i>False Positive (FP)</i></td><td class="ok-cell"><b>81</b> — benar sehat ✅<br><i>True Negative (TN)</i></td></tr>
 </table>
-<p>Tabel empat kotak inilah yang disebut <b>confusion matrix</b> ("matriks kebingungan") — karena ia menunjukkan di mana saja model "bingung". <b>Semua metrik di pelajaran ini dihitung dari empat angka tersebut.</b></p>
+<p>Tabel empat kotak inilah yang disebut <b>confusion matrix</b> ("matriks kebingungan") — karena ia menunjukkan di mana saja model "bingung". <b>Semua metrik di pelajaran ini — dan di dua pelajaran sesudahnya — dihitung dari empat angka tersebut.</b></p>
 
 <h3>Langkah 2 — Membaca namanya tanpa menghafal</h3>
 <div class="callout">
@@ -985,7 +1135,53 @@ Penyebutnya (TP + FP) adalah <b>semua orang yang dituduh sakit</b> oleh model. A
 </table>
 <p>Tidak ada ambang yang membuat keduanya sempurna, kecuali modelnya memang sempurna. Memilih ambang adalah <b>keputusan manusia</b> tentang kesalahan mana yang lebih mahal — bukan keputusan matematika.</p>
 
-<h3>Langkah 7 — Sisi orang sehat: spesifisitas dan FPR</h3>
+<h3>Kapan recall, kapan precision?</h3>
+<table class="tbl">
+  <tr><th>Situasi</th><th>Utamakan</th><th>Alasan</th></tr>
+  <tr><td>Deteksi penyakit berbahaya, penipuan</td><td><b>Recall</b></td><td>Kasus yang lolos jauh lebih mahal daripada alarm palsu</td></tr>
+  <tr><td>Filter spam, rekomendasi, memblokir akun</td><td><b>Precision</b></td><td>Tuduhan yang salah merugikan orang yang tidak bersalah</td></tr>
+  <tr><td>Kelompoknya seimbang dan kedua kesalahan sama mahal</td><td><b>Akurasi</b></td><td>Satu-satunya situasi akurasi layak dijadikan patokan</td></tr>
+</table>
+<div class="callout">
+<b>Sampai di sini kamu sudah memegang intinya:</b> empat kotak, akurasi yang bisa menipu, recall dari sisi orang sakit, precision dari sisi model, dan tarik-menarik keduanya lewat ambang. Pelajaran berikutnya melengkapinya dengan <b>nasib orang sehat</b>, satu angka gabungan bernama <b>F1</b>, dan satu jebakan yang jarang dibahas.
+</div>
+`,
+          keyPoints: [
+            "Confusion matrix memuat empat angka: TP (tertangkap), FN (lolos), FP (alarm palsu), TN (benar sehat); semua metrik dihitung dari keempatnya.",
+            "Kunci membaca nama: kata kedua = apa yang ditebak model (Positive = bilang sakit); kata pertama = tebakan itu benar atau salah.",
+            "Akurasi menipu pada data timpang: model yang selalu bilang 'sehat' bisa mendapat 90% tanpa menangkap satu pun kasus.",
+            "Recall = TP ÷ (TP + FN): dari yang benar-benar sakit, berapa yang tertangkap. Nama lain: TPR, sensitivitas.",
+            "Precision = TP ÷ (TP + FP): dari yang dituduh sakit, berapa yang benar sakit.",
+            "Menurunkan ambang menaikkan recall tetapi menurunkan precision; memilih ambang adalah keputusan tentang kesalahan mana yang lebih mahal."
+          ],
+          practice: [
+            {"type":"number","q":"Dari 50 orang yang benar-benar sakit, model menangkap 40. Berapa recall-nya (%)?","answer":80,"tol":0.5,"hint":"Recall = tertangkap ÷ semua yang benar-benar sakit.","solution":"40 ÷ 50 = 80%."},
+            {"type":"number","q":"Model menuduh 25 orang sakit; ternyata hanya 20 yang benar sakit. Berapa precision-nya (%)?","answer":80,"tol":0.5,"hint":"Precision = tuduhan yang benar ÷ semua tuduhan.","solution":"20 ÷ 25 = 80%."}
+          ],
+          quiz: [
+            {"q":"Dalam istilah 'False Positive', apa arti kata 'Positive'?","options":["Model menebak 'ya, sakit' — terlepas dari benar atau salahnya","Orang tersebut benar-benar sakit menurut hasil pemeriksaan","Tebakan model terbukti benar setelah dicocokkan kenyataan","Skor risiko orang tersebut berada di atas angka nol"],"answer":0,"explain":"Kata kedua selalu menunjukkan apa yang ditebak model; kata pertama menunjukkan tebakannya benar atau salah."},
+            {"q":"Model deteksi penipuan selalu menjawab 'bukan penipuan' dan mendapat akurasi 99%. Apa masalahnya?","options":["Recall-nya 0% — tidak satu pun penipuan yang tertangkap","Precision-nya terlalu tinggi sehingga banyak alarm palsu","Akurasi 99% terlalu rendah untuk model deteksi penipuan","Spesifisitasnya 0% karena semua transaksi dicurigai"],"answer":0,"explain":"Pada data timpang, menebak kelompok mayoritas terus pun terlihat sangat akurat."},
+            {"q":"Rumah sakit ingin sesedikit mungkin pasien kanker yang lolos dari skrining. Metrik apa yang diutamakan?","options":["Recall, karena mengukur berapa banyak pasien sakit yang tertangkap","Precision, karena mengukur berapa tuduhan sakit yang terbukti benar","Spesifisitas, karena mengukur berapa pasien sehat yang dinyatakan sehat","Akurasi, karena mencakup semua pasien yang diperiksa dalam satu angka"],"answer":0,"explain":"Pasien sakit yang lolos adalah kesalahan termahal di sini, dan recall mengukur persis hal itu."},
+            {"q":"Model menuduh 17 orang sakit, dan hanya 8 yang benar-benar sakit. Berapa precision-nya?","options":["Sekitar 47%, karena 8 dari 17 tuduhan benar","80%, karena 8 dari 10 orang sakit tertangkap","89%, karena 89 dari 100 tebakan model benar","8%, karena 8 dari 100 orang yang diperiksa"],"answer":0,"explain":"Precision melihat dari sisi tuduhan model: tuduhan benar ÷ semua tuduhan = 8 ÷ 17 ≈ 47%."}
+          ]
+        },
+        {
+          id: "ai-fund-7",
+          title: "Spesifisitas, F1 & Jebakan Prevalensi — Melengkapi Recall & Precision",
+          duration: "13 menit",
+          content: `<div class="callout ingat">
+<b>🔙 Ingat dulu</b> — tabel 100 orang dari pelajaran sebelumnya:
+<table class="tbl">
+  <tr><th></th><th>Model bilang <b>sakit</b></th><th>Model bilang <b>sehat</b></th></tr>
+  <tr><td><b>Kenyataannya sakit</b> (10)</td><td class="ok-cell">TP = 8</td><td class="bad-cell">FN = 2</td></tr>
+  <tr><td><b>Kenyataannya sehat</b> (90)</td><td class="bad-cell">FP = 9</td><td class="ok-cell">TN = 81</td></tr>
+</table>
+<b>Recall</b> = 8 ÷ 10 = 80% (dari yang sakit, berapa tertangkap) &nbsp;•&nbsp; <b>Precision</b> = 8 ÷ 17 = 47% (dari yang dituduh, berapa benar)
+</div>
+
+<p>Recall dan precision sama-sama memusatkan perhatian pada orang <b>sakit</b>. Pelajaran ini melengkapi gambarnya dalam tiga langkah: melihat nasib orang <b>sehat</b>, menggabungkan recall dan precision jadi <b>satu angka</b>, lalu membongkar satu jebakan yang membuat precision bisa berubah walau modelnya sama persis.</p>
+
+<h3>Langkah 1 — Sisi orang sehat: spesifisitas dan FPR</h3>
 <p>Recall dan precision sama-sama berfokus pada kasus "sakit". Untuk melihat nasib orang <b>sehat</b>, ada dua angka lain:</p>
 <table class="tbl">
   <tr><th>Metrik</th><th>Rumus</th><th>Contoh</th><th>Pertanyaannya</th></tr>
@@ -994,7 +1190,7 @@ Penyebutnya (TP + FP) adalah <b>semua orang yang dituduh sakit</b> oleh model. A
 </table>
 <p>Perhatikan: <b>FPR = 1 − spesifisitas</b>. Keduanya akan dipakai di pelajaran berikutnya untuk menggambar kurva ROC.</p>
 
-<h3>Langkah 8 — F1: satu angka untuk keduanya</h3>
+<h3>Langkah 2 — F1: satu angka untuk keduanya</h3>
 <div class="callout">
 <b>F1 = 2 × TP ÷ (2 × TP + FP + FN)</b> = 16 ÷ (16 + 9 + 2) = <b>59%</b><br><br>
 Kenapa tidak rata-rata biasa saja? Bayangkan model dengan precision 100% tapi recall hanya 1% — ia hanya berani menuduh satu orang dan kebetulan benar. Rata-rata biasanya 50,5%, terdengar lumayan. F1-nya hanya sekitar <b>2%</b>. F1 memakai <b>rata-rata harmonik</b>, yang menghukum keras bila salah satu dari keduanya jelek. <b>Ia hanya tinggi bila precision dan recall sama-sama tinggi.</b>
@@ -1024,8 +1220,12 @@ Untuk dua angka ada jalan pintas: <b>2 × a × b ÷ (a + b)</b>. Karena itu F1 =
 </table>
 <p>Tiga sifatnya: selalu <b>sama atau lebih kecil</b> daripada rata-rata biasa, <b>sama persis</b> bila kedua angkanya sama, dan <b>hanya tinggi bila semua angkanya tinggi</b>. Satu sisi yang ambruk tidak bisa ditutupi oleh sisi yang sempurna.</p>
 
-<h3>🔍 Rahasia yang jarang dibahas: precision bergantung pada seberapa umum kasusnya</h3>
-<p>Di demo tadi, coba ganti jumlah orang sakit dari 10 menjadi 30, lalu 50 dari 100 orang — dengan <b>model dan ambang yang sama persis</b>:</p>
+<h3>Langkah 3 — 🔍 Rahasia yang jarang dibahas: precision bergantung pada seberapa umum kasusnya</h3>
+<p>Pakai lagi demo 100 orang di bawah ini. Ganti jumlah orang sakit dari 10 menjadi 30, lalu 50 — dengan <b>model dan ambang yang sama persis</b> — dan perhatikan angka mana yang ikut berubah:</p>
+
+<div data-demo="matriks-kebingungan"></div>
+
+<p>Hasilnya:</p>
 <table class="tbl">
   <tr><th>Orang sakit per 100</th><th>Recall</th><th>Spesifisitas</th><th>Precision</th></tr>
   <tr><td>10</td><td>80%</td><td>90%</td><td class="bad-cell">47%</td></tr>
@@ -1065,85 +1265,28 @@ print(classification_report(y_uji, tebakan))  # precision, recall, F1 per kelas<
 <p><i>Catatan: scikit-learn menyusun matriksnya dengan urutan [[TN, FP], [FN, TP]] — baris adalah kenyataan, kolom adalah tebakan. Posisinya berbeda dari tabel di atas, jadi selalu periksa label barisnya.</i></p>
 `,
           keyPoints: [
-            "Confusion matrix memuat empat angka: TP (tertangkap), FN (lolos), FP (alarm palsu), TN (benar sehat); semua metrik dihitung dari keempatnya.",
-            "Kunci membaca nama: kata kedua = apa yang ditebak model (Positive = bilang sakit); kata pertama = tebakan itu benar atau salah.",
-            "Akurasi menipu pada data timpang: model yang selalu bilang 'sehat' bisa mendapat 90% tanpa menangkap satu pun kasus.",
-            "Recall = TP ÷ (TP + FN): dari yang benar-benar sakit, berapa yang tertangkap. Nama lain: TPR, sensitivitas.",
-            "Precision = TP ÷ (TP + FP): dari yang dituduh sakit, berapa yang benar sakit.",
-            "Menurunkan ambang menaikkan recall tetapi menurunkan precision; memilih ambang adalah keputusan tentang kesalahan mana yang lebih mahal.",
-            "Spesifisitas = TN ÷ (TN + FP) dan FPR = 1 − spesifisitas melihat nasib orang sehat.",
+            "Spesifisitas = TN ÷ (TN + FP): dari yang sehat, berapa yang benar dinyatakan sehat; FPR = 1 − spesifisitas = yang salah dituduh.",
             "F1 memakai rata-rata harmonik sehingga hanya tinggi bila precision dan recall sama-sama tinggi.",
+            "Rata-rata harmonik dihitung dengan membalik angka, merata-ratakan, lalu membalik lagi; untuk dua angka: 2ab ÷ (a + b).",
             "Precision bergantung pada seberapa umum kasusnya; recall dan spesifisitas adalah sifat model.",
+            "Satu angka punya banyak nama: recall = TPR = sensitivitas; precision = PPV; FPR = fall-out."
           ],
           practice: [
-            { type: "number", q: "Dari 50 orang yang benar-benar sakit, model menangkap 40. Berapa recall-nya (%)?", answer: 80, tol: 0.5, hint: "Recall = tertangkap ÷ semua yang benar-benar sakit.", solution: "40 ÷ 50 = 80%." },
-            { type: "number", q: "Model menuduh 25 orang sakit; ternyata hanya 20 yang benar sakit. Berapa precision-nya (%)?", answer: 80, tol: 0.5, hint: "Precision = tuduhan yang benar ÷ semua tuduhan.", solution: "20 ÷ 25 = 80%." },
-            { type: "number", q: "TP = 30, FP = 10, FN = 20. Berapa F1-nya (%)? (bulatkan 1 desimal)", answer: 66.7, tol: 0.2, hint: "F1 = 2×TP ÷ (2×TP + FP + FN).", solution: "60 ÷ (60 + 10 + 20) = 60 ÷ 90 = 66,7%." },
+            {"type":"number","q":"TP = 30, FP = 10, FN = 20. Berapa F1-nya (%)? (bulatkan 1 desimal)","answer":66.7,"tol":0.2,"hint":"F1 = 2×TP ÷ (2×TP + FP + FN).","solution":"60 ÷ (60 + 10 + 20) = 60 ÷ 90 = 66,7%."},
+            {"type":"number","q":"Dari 80 orang sehat, model benar menyatakan sehat 72 orang dan salah menuduh 8 orang. Berapa spesifisitasnya (%)?","answer":90,"tol":0.5,"unit":"%","hint":"Spesifisitas = TN ÷ (TN + FP).","solution":"72 ÷ (72 + 8) = 72 ÷ 80 = 90%. FPR-nya 10%."}
           ],
           quiz: [
-            {
-              q: "Dalam istilah 'False Positive', apa arti kata 'Positive'?",
-              options: [
-                "Model menebak 'ya, sakit' — terlepas dari benar atau salahnya",
-                "Orang tersebut benar-benar sakit menurut hasil pemeriksaan",
-                "Tebakan model terbukti benar setelah dicocokkan kenyataan",
-                "Skor risiko orang tersebut berada di atas angka nol",
-              ],
-              answer: 0,
-              explain: "Kata kedua selalu menunjukkan apa yang ditebak model; kata pertama menunjukkan tebakannya benar atau salah.",
-            },
-            {
-              q: "Model deteksi penipuan selalu menjawab 'bukan penipuan' dan mendapat akurasi 99%. Apa masalahnya?",
-              options: [
-                "Recall-nya 0% — tidak satu pun penipuan yang tertangkap",
-                "Precision-nya terlalu tinggi sehingga banyak alarm palsu",
-                "Akurasi 99% terlalu rendah untuk model deteksi penipuan",
-                "Spesifisitasnya 0% karena semua transaksi dicurigai",
-              ],
-              answer: 0,
-              explain: "Pada data timpang, menebak kelompok mayoritas terus pun terlihat sangat akurat.",
-            },
-            {
-              q: "Rumah sakit ingin sesedikit mungkin pasien kanker yang lolos dari skrining. Metrik apa yang diutamakan?",
-              options: [
-                "Recall, karena mengukur berapa banyak pasien sakit yang tertangkap",
-                "Precision, karena mengukur berapa tuduhan sakit yang terbukti benar",
-                "Spesifisitas, karena mengukur berapa pasien sehat yang dinyatakan sehat",
-                "Akurasi, karena mencakup semua pasien yang diperiksa dalam satu angka",
-              ],
-              answer: 0,
-              explain: "Pasien sakit yang lolos adalah kesalahan termahal di sini, dan recall mengukur persis hal itu.",
-            },
-            {
-              q: "Model yang sama dipakai di dua kota. Di kota A penyakitnya jarang, di kota B umum. Apa yang paling mungkin terjadi?",
-              options: [
-                "Precision di kota A jauh lebih rendah, walau recall-nya mirip",
-                "Recall di kota A jauh lebih rendah, walau precision-nya mirip",
-                "Semua metrik sama persis karena modelnya tidak berubah",
-                "Akurasi di kota B pasti lebih tinggi daripada di kota A",
-              ],
-              answer: 0,
-              explain: "Saat kasusnya jarang, orang sehat yang bisa salah dituduh jauh lebih banyak, sehingga precision turun.",
-            },
-            {
-              q: "Kenapa F1 memakai rata-rata harmonik, bukan rata-rata biasa?",
-              options: [
-                "Agar hasilnya hanya tinggi bila precision dan recall sama-sama tinggi",
-                "Agar hasilnya selalu lebih tinggi daripada precision maupun recall",
-                "Agar perhitungannya tidak memerlukan angka TP sama sekali",
-                "Agar hasilnya sama dengan akurasi pada data yang seimbang",
-              ],
-              answer: 0,
-              explain: "Precision 100% dengan recall 1% menghasilkan rata-rata biasa 50,5%, tetapi F1 hanya sekitar 2%.",
-            },
-          ],
+            {"q":"Model yang sama dipakai di dua kota. Di kota A penyakitnya jarang, di kota B umum. Apa yang paling mungkin terjadi?","options":["Precision di kota A jauh lebih rendah, walau recall-nya mirip","Recall di kota A jauh lebih rendah, walau precision-nya mirip","Semua metrik sama persis karena modelnya tidak berubah","Akurasi di kota B pasti lebih tinggi daripada di kota A"],"answer":0,"explain":"Saat kasusnya jarang, orang sehat yang bisa salah dituduh jauh lebih banyak, sehingga precision turun."},
+            {"q":"Kenapa F1 memakai rata-rata harmonik, bukan rata-rata biasa?","options":["Agar hasilnya hanya tinggi bila precision dan recall sama-sama tinggi","Agar hasilnya selalu lebih tinggi daripada precision maupun recall","Agar perhitungannya tidak memerlukan angka TP sama sekali","Agar hasilnya sama dengan akurasi pada data yang seimbang"],"answer":0,"explain":"Precision 100% dengan recall 1% menghasilkan rata-rata biasa 50,5%, tetapi F1 hanya sekitar 2%."},
+            {"q":"Dari 90 orang sehat, 9 salah dituduh sakit. Berapa FPR model ini?","options":["10%, yaitu 9 dari 90 orang yang sehat","90%, yaitu 81 dari 90 orang yang sehat","9%, yaitu 9 dari 100 orang yang diperiksa","53%, yaitu 9 dari 17 orang yang dituduh"],"answer":0,"explain":"FPR hanya melihat kelompok orang sehat: FP ÷ (FP + TN) = 9 ÷ 90 = 10%."}
+          ]
         },
         {
           id: "ai-fund-5",
           title: "Kurva ROC & AUC — Menilai Model Tanpa Terpaku Satu Ambang",
           duration: "15 menit",
           content: `
-<p>Precision dan recall di pelajaran sebelumnya punya satu kelemahan: keduanya <b>berubah begitu kamu menggeser ambang keputusan</b>. Lalu bagaimana membandingkan dua model secara adil, kalau angkanya bergantung pada ambang yang belum kamu tentukan? Di situlah <b>ROC</b> dan <b>AUC</b> masuk — dua istilah yang muncul di hampir semua laporan model, termasuk di pelajaran XGBoost nanti.</p>
+<p>Recall, precision, dan F1 dari dua pelajaran sebelumnya punya satu kelemahan yang sama: ketiganya <b>berubah begitu kamu menggeser ambang keputusan</b>. Lalu bagaimana membandingkan dua model secara adil, kalau angkanya bergantung pada ambang yang belum kamu tentukan? Di situlah <b>ROC</b> dan <b>AUC</b> masuk — dua istilah yang muncul di hampir semua laporan model, termasuk di pelajaran XGBoost nanti.</p>
 
 <h3>Fundamental: model sebenarnya memberi skor, bukan keputusan</h3>
 <div class="callout">
@@ -1331,7 +1474,7 @@ fpr, tpr, ambang = roc_curve(y_uji, peluang)   # bahan untuk menggambar kurva</p
           title: "TPR, FPR, Precision & ROC AUC — Semuanya dalam Satu Halaman",
           duration: "12 menit",
           content: `
-<p>Empat istilah ini paling sering tertukar, bahkan oleh orang yang sudah lama bekerja dengan AI. Dua pelajaran sebelumnya membahasnya satu per satu secara mendalam. Pelajaran ini merangkumnya dengan satu kunci yang membuat semuanya tidak tertukar lagi:</p>
+<p>Empat istilah ini paling sering tertukar, bahkan oleh orang yang sudah lama bekerja dengan AI. Tiga pelajaran sebelumnya membahasnya satu per satu secara mendalam. Pelajaran ini merangkumnya dengan satu kunci yang membuat semuanya tidak tertukar lagi:</p>
 
 <div class="callout">
 <b>🔑 Semua metrik ini dihitung dari tabel empat kotak yang SAMA. Bedanya hanya satu: kotak mana yang dilihat.</b>
@@ -1462,28 +1605,76 @@ Jadi: TPR bertanya kepada <b>orang sakit</b>, FPR bertanya kepada <b>orang sehat
         {
           id: "ai-fund-2",
           title: "Loss & Gradient Descent (Matematika Belajar)",
-          duration: "12 menit",
+          duration: "14 menit",
           content: `
-<p>Bagaimana persisnya model "belajar"? Inti matematikanya cuma dua: <b>loss</b> dan <b>gradient descent</b>.</p>
-
-<div data-diagram="cycle" data-steps="Model menebak|Hitung selisih (loss)|Cari arah menurun (gradient)|Geser bobot sedikit" data-center="ribuan kali" data-caption="Belajar = mengulang empat langkah ini sampai selisihnya cukup kecil"></div>
-
-
-<h3>Loss = ukuran kesalahan</h3>
-<p><b>Loss</b> (fungsi kerugian) mengubah "seberapa salah" model menjadi satu angka. Tujuan training: <b>membuat loss sekecil mungkin</b>.</p>
-
-<h3>Gradient descent = menuruni bukit dalam kabut</h3>
-<div class="callout">
-<b>Analogi:</b> Bayangkan kamu di bukit berkabut dan ingin turun ke lembah (loss terendah). Kamu raba kemiringan tanah (<b>gradien</b> = arah paling menanjak), lalu melangkah ke arah <b>berlawanan</b>. Ulangi → sampai ke dasar.
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+Di pelajaran "Bagaimana AI Belajar", AI kos memutar empat langkah: <b>tebak → bandingkan → hitung kesalahan → perbaiki kenop</b>. Waktu itu kenopnya kita geser dengan perasaan. Pelajaran ini menjawab dua hal yang tertinggal: <b>bagaimana kesalahan diubah jadi satu angka</b> (loss), dan <b>bagaimana komputer tahu ke mana harus menggeser kenop</b> (gradient descent).
 </div>
-<ul>
-  <li><b>Gradien</b> = arah & kecuraman kenaikan loss.</li>
-  <li><b>Learning rate</b> = besar langkah. Terlalu besar → melompati lembah; terlalu kecil → sangat lambat.</li>
-</ul>
+
+<div data-diagram="cycle" data-steps="Model menebak|Hitung selisih (loss)|Cari arah menurun (gradient)|Geser bobot sedikit" data-caption="Belajar = mengulang empat langkah ini sampai selisihnya cukup kecil"></div>
+
+<h3>Langkah 1 — Loss: kesalahan dijadikan satu angka</h3>
+<p>Misalkan model menebak tiga harga, dan melesetnya masing-masing <b>+2</b>, <b>−2</b>, dan <b>0</b>. Kalau selisihnya langsung dijumlahkan: 2 + (−2) + 0 = <b>0</b>. Seolah-olah model sempurna — padahal dua tebakannya salah! Kesalahan ke atas dan ke bawah saling menghapus.</p>
+<p>Jalan keluarnya: <b>kuadratkan</b> dulu setiap selisih, supaya semuanya positif.</p>
+<table class="tbl">
+  <tr><th>Tebakan</th><th>Selisih</th><th>Dikuadratkan</th></tr>
+  <tr><td>1</td><td>+2</td><td>4</td></tr>
+  <tr><td>2</td><td>−2</td><td>4</td></tr>
+  <tr><td>3</td><td>0</td><td>0</td></tr>
+  <tr><td colspan="2"><b>Rata-ratanya</b></td><td><b>(4 + 4 + 0) ÷ 3 ≈ 2,67</b></td></tr>
+</table>
+<p>Angka 2,67 itulah <b>loss</b> (fungsi kerugian): satu angka yang mengatakan "seberapa salah model ini". Tujuan training hanya satu: <b>membuat loss sekecil mungkin</b>. Cara menghitung loss yang lengkap — termasuk untuk menebak kategori — dibahas di modul Matematika.</p>
+
+<h3>Langkah 2 — Loss membentuk "lembah"</h3>
+<p>Ambil model paling sederhana dengan <b>satu kenop</b> bernama <b>w</b>. Untuk contoh ini, loss-nya dihitung dengan <b>(w − 3)²</b> — artinya nilai kenop terbaik adalah 3, tapi anggap model belum tahu itu. Kita coba beberapa nilai w:</p>
+<table class="tbl">
+  <tr><th>w</th><td>0</td><td>1</td><td>2</td><td class="ok-cell">3</td><td>4</td><td>5</td><td>6</td></tr>
+  <tr><th>loss</th><td>9</td><td>4</td><td>1</td><td class="ok-cell">0</td><td>1</td><td>4</td><td>9</td></tr>
+</table>
+<p>Kalau digambar, angkanya membentuk <b>lembah</b>: tinggi di pinggir, paling rendah di w = 3. Belajar artinya <b>turun ke dasar lembah</b>.</p>
+<div class="callout warn">
+<b>Masalahnya:</b> di sini kita bisa mencoba semua nilai w karena kenopnya cuma satu. Model sungguhan punya <b>jutaan sampai miliaran kenop</b> — mencoba semua kombinasinya mustahil, bahkan untuk komputer tercepat. Kita butuh cara yang lebih pintar.
+</div>
+
+<h3>Langkah 3 — Gradient descent: menuruni lembah dalam kabut</h3>
+<div class="callout">
+<b>Analogi:</b> kamu berdiri di lereng bukit berkabut tebal dan ingin turun ke lembah. Kamu tidak bisa melihat dasarnya, tapi kakimu bisa <b>merasakan kemiringan tanah</b>. Aturannya sederhana: <b>melangkahlah ke arah yang menurun</b>. Ulangi terus, dan kamu akan sampai ke bawah.
+</div>
+<p>Komputer melakukan hal yang sama. Di setiap posisi w, ia menghitung <b>kemiringan</b> lembah di titik itu:</p>
+<table class="tbl">
+  <tr><th>Posisi</th><th>Tanahnya…</th><th>Kemiringan</th><th>Maka melangkah ke…</th></tr>
+  <tr><td>w = 0</td><td>menurun ke kanan (9 → 4)</td><td>negatif</td><td>kanan (w dinaikkan)</td></tr>
+  <tr><td>w = 5</td><td>menanjak ke kanan (4 → 9)</td><td>positif</td><td>kiri (w diturunkan)</td></tr>
+  <tr><td>w = 3</td><td>datar</td><td>nol</td><td>diam — sudah di dasar</td></tr>
+</table>
+<p>Untuk lembah (w − 3)², angka kemiringannya ternyata <b>2 × (w − 3)</b>. Dari mana rumus itu? Itulah yang disebut <b>turunan</b>, dan asal-usulnya dibongkar pelan-pelan di modul Matematika. Untuk sekarang, cukup pakai: di w = 0, kemiringannya 2 × (0 − 3) = <b>−6</b>.</p>
+<p>Kumpulan kemiringan untuk semua kenop sekaligus disebut <b>gradien</b>. Karena itulah metodenya bernama <b>gradient descent</b>: <i>menuruni gradien</i>.</p>
+
+<h3>Langkah 4 — Besar langkah: learning rate</h3>
+<div class="callout">
+<b>w baru = w lama − learning rate × kemiringan</b><br><br>
+Tanda <b>minus</b> membuat langkahnya selalu <b>berlawanan</b> dengan arah menanjak. <b>Learning rate</b> menentukan seberapa jauh setiap langkah.
+</div>
+<p>Mulai dari w = 0 dengan learning rate <b>0,1</b>:</p>
+<pre class="code">Langkah 1: kemiringan = 2 × (0 − 3)   = −6
+           w = 0 − 0,1 × (−6)          = 0,6     (loss 5,76)
+Langkah 2: kemiringan = 2 × (0,6 − 3) = −4,8
+           w = 0,6 − 0,1 × (−4,8)      = 1,08    (loss 3,69)
+Langkah 3: w = 1,464                           (loss 2,36)
+Langkah 4: w = 1,771                           (loss 1,51)
+... terus mendekati w = 3, loss mendekati 0</pre>
+<p>Sekarang bandingkan tiga pilihan learning rate, masing-masing empat langkah dari w = 0:</p>
+<table class="tbl">
+  <tr><th>Learning rate</th><th>Loss: awal → setelah 4 langkah</th><th>Yang terjadi</th></tr>
+  <tr><td>0,01 (terlalu kecil)</td><td>9 → 7,66</td><td>Benar arahnya, tapi <b>sangat lambat</b></td></tr>
+  <tr><td class="ok-cell">0,1 (pas)</td><td class="ok-cell">9 → 1,51</td><td>Turun cepat dan mulus</td></tr>
+  <tr><td class="bad-cell">1,1 (terlalu besar)</td><td class="bad-cell">9 → 38,7</td><td>Langkahnya <b>melompati lembah</b> bolak-balik, makin lama makin jauh</td></tr>
+</table>
 
 <h3>Kapan berhenti? Saat sudah "konvergen"</h3>
 <div class="callout">
-<b>Konvergen</b> artinya langkah-langkahnya <b>mengerucut ke satu titik</b>. Awalnya setiap langkah menurunkan loss cukup banyak; makin dekat ke dasar lembah, perubahannya makin kecil — sampai hampir diam. Saat itu model disebut <b>sudah konvergen</b>: melanjutkan latihan nyaris tidak menurunkan loss lagi.<br><br>
+<b>Konvergen</b> artinya langkah-langkahnya <b>mengerucut ke satu titik</b>. Awalnya setiap langkah menurunkan loss cukup banyak; makin dekat ke dasar lembah, kemiringannya makin landai sehingga perubahannya makin kecil — sampai hampir diam. Saat itu model disebut <b>sudah konvergen</b>: melanjutkan latihan nyaris tidak menurunkan loss lagi.<br><br>
 Contoh deret loss yang konvergen: 0,73 → 0,24 → 0,06 → 0,02 → 0,006 → 0,005 → 0,005 …
 </div>
 <table class="tbl">
@@ -1497,39 +1688,45 @@ Contoh deret loss yang konvergen: 0,73 → 0,24 → 0,06 → 0,02 → 0,006 → 
 </div>
 
 <h3>Coba sendiri — jalankan gradient descent 👇</h3>
-<p>Kita cari nilai x yang meminimalkan fungsi f(x) = (x − 3)². Jawabannya jelas x = 3; lihat AI "menemukannya" sendiri:</p>
-<div data-demo="js-playground">// f(x) = (x - 3)^2, turunannya f'(x) = 2*(x - 3)
-let x = 0;          // tebakan awal
+<p>Kode ini mengerjakan tabel di atas secara otomatis. Coba ubah <b>lr</b> menjadi 0.01 atau 1.1, lalu jalankan lagi:</p>
+<div data-demo="js-playground">// Lembah loss = (w - 3)^2, kemiringannya = 2 * (w - 3)
+let w = 0;          // tebakan awal kenop
 const lr = 0.1;     // learning rate (besar langkah)
 
 [1,2,3,4,5,6,7,8,9,10].forEach(function(langkah){
-  const gradien = 2 * (x - 3);   // arah menanjak
-  x = x - lr * gradien;          // melangkah berlawanan gradien
-  console.log("Langkah " + langkah + ": x = " + x.toFixed(3));
+  const kemiringan = 2 * (w - 3);   // arah menanjak
+  w = w - lr * kemiringan;          // melangkah berlawanan arah
+  const loss = (w - 3) * (w - 3);
+  console.log("Langkah " + langkah + ": w = " + w.toFixed(3) + "   loss = " + loss.toFixed(4));
 });
-console.log("=> Konvergen menuju x = 3 (titik minimum). Itulah 'belajar'.");</div>
+console.log("=> w mendekati 3 dan loss mendekati 0. Itulah 'belajar'.");</div>
 
 <div class="callout">
-<b>💥 Dampak:</b> Proses inilah yang menjalankan pelatihan SEMUA neural network — dari pengenal gambar sampai LLM raksasa seperti Claude. Bedanya hanya skala: bukan 1 angka x, tapi <b>miliaran parameter</b> sekaligus.
+<b>💥 Dampak:</b> proses inilah yang menjalankan pelatihan SEMUA neural network — dari pengenal gambar sampai LLM raksasa seperti Claude. Bedanya hanya skala: bukan 1 kenop w, tapi <b>miliaran kenop</b> yang digeser serentak, masing-masing menurut kemiringannya sendiri.
 </div>
 `,
           keyPoints: [
-            "Loss = satu angka yang mengukur seberapa salah model; training berusaha meminimalkannya.",
-            "Gradient descent = melangkah berlawanan arah gradien untuk menuruni 'bukit' loss.",
-            "Learning rate mengatur besar langkah: terlalu besar melompati, terlalu kecil lambat.",
-            "Prinsip ini menjalankan pelatihan semua neural network & LLM, hanya beda skala.",
+            "Loss = satu angka yang mengukur seberapa salah model; selisih dikuadratkan agar kesalahan ke atas dan ke bawah tidak saling menghapus.",
+            "Nilai loss untuk berbagai nilai kenop membentuk lembah; belajar = turun ke dasar lembah.",
+            "Gradient descent: hitung kemiringan, lalu melangkah berlawanan arah menanjak — w baru = w lama − learning rate × kemiringan.",
+            "Learning rate terlalu kecil = lambat; terlalu besar = melompati lembah dan gagal konvergen.",
+            "Prinsip ini menjalankan pelatihan semua neural network & LLM, hanya beda skala."
+          ],
+          practice: [
+            { type: "number", q: "Selisih tiga tebakan adalah +3, −3, dan 0. Berapa rata-rata selisih kuadratnya?", answer: 6, tol: 0.05, hint: "Kuadratkan dulu: 9, 9, 0. Lalu rata-ratakan.", solution: "(9 + 9 + 0) ÷ 3 = 6." },
+            { type: "number", q: "Loss = (w − 3)², kemiringannya 2 × (w − 3). Mulai dari w = 5 dengan learning rate 0,1. Berapa w setelah satu langkah?", answer: 4.6, tol: 0.01, hint: "Kemiringan di w = 5 adalah 2 × 2 = 4. Lalu w − 0,1 × 4.", solution: "5 − 0,1 × 4 = 5 − 0,4 = 4,6 — bergerak ke kiri, mendekati 3." }
           ],
           quiz: [
             {
               q: "Apa tujuan gradient descent?",
               options: [
                 "Memperkecil loss dengan melangkah berlawanan arah gradiennya",
-                "Memperbesar loss agar model belajar dari kesalahan yang lebih banyak",
-                "Mencari nilai tertinggi dari fungsi loss di seluruh ruang parameter",
-                "Menghitung seberapa cepat model memproses satu batch data",
+                "Memperbesar loss agar model belajar dari kesalahan lebih banyak",
+                "Mencari nilai tertinggi dari fungsi loss di seluruh parameter",
+                "Menghitung seberapa cepat model memproses satu batch data"
               ],
               answer: 0,
-              explain: "Ia menuruni permukaan loss menuju nilai terkecil.",
+              explain: "Ia menuruni lembah loss menuju nilai terkecil."
             },
             {
               q: "Apa efek learning rate yang terlalu besar?",
@@ -1537,128 +1734,131 @@ console.log("=> Konvergen menuju x = 3 (titik minimum). Itulah 'belajar'.");</di
                 "Langkahnya melompati titik terendah sehingga bisa gagal konvergen",
                 "Pelatihan berjalan sangat lambat karena langkahnya terlalu kecil",
                 "Model menghafal data latih sehingga gagal pada data yang baru",
-                "Gradiennya menjadi nol sehingga model berhenti belajar sama sekali",
+                "Gradiennya menjadi nol sehingga model berhenti belajar sama sekali"
               ],
               answer: 0,
-              explain: "Langkah terlalu besar bisa melewati/menjauhi minimum.",
+              explain: "Pada contoh lembah (w − 3)², learning rate 1,1 membuat loss naik dari 9 ke 38,7 dalam empat langkah."
             },
-          ],
+            {
+              q: "Kenapa selisih tebakan dikuadratkan sebelum dirata-rata menjadi loss?",
+              options: [
+                "Agar kesalahan ke atas dan ke bawah tidak saling menghapus",
+                "Agar angka loss selalu berupa bilangan bulat yang mudah dibaca",
+                "Agar perhitungannya lebih cepat dijalankan oleh komputer",
+                "Agar tebakan yang tepat tetap mendapat sedikit hukuman"
+              ],
+              answer: 0,
+              explain: "Selisih +2 dan −2 bila dijumlahkan menjadi 0, seolah tidak ada kesalahan. Setelah dikuadratkan keduanya menjadi 4."
+            }
+          ]
         },
         {
           id: "ai-fund-3",
           title: "Parameter, Token, Context & Compute",
-          duration: "11 menit",
+          duration: "13 menit",
           content: `
-<p>Empat "sumber daya" fundamental yang menentukan kemampuan & biaya sebuah model AI:</p>
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Parameter</b> adalah kenop angka di dalam model yang digeser oleh gradient descent. AI kos punya satu kenop. Pelajaran ini membahas empat "ukuran" yang selalu muncul saat orang membicarakan model besar seperti ChatGPT atau Claude — dan kenapa keempatnya menentukan <b>kemampuan sekaligus biaya</b>.
+</div>
 
+<h3>1. Parameter — berapa banyak kenopnya</h3>
+<p>Makin banyak kenop, makin rumit pola yang bisa ditampung model. Bandingkan skalanya:</p>
 <table class="tbl">
-  <tr><th>Istilah</th><th>Arti fundamental</th></tr>
-  <tr><td><b>Parameter</b></td><td>"Kenop" angka yang dipelajari model. Makin banyak → kapasitas belajar makin besar (LLM modern: ratusan miliar).</td></tr>
-  <tr><td><b>Token</b></td><td>Potongan kata. Model berpikir & <b>ditagih per token</b> (input + output).</td></tr>
-  <tr><td><b>Context window</b></td><td>Berapa token bisa "diingat" sekaligus dalam satu percakapan/dokumen.</td></tr>
-  <tr><td><b>Compute</b></td><td>Daya komputasi (dihitung dalam FLOPs) untuk melatih & menjalankan model. Menentukan biaya & waktu.</td></tr>
+  <tr><th>Model</th><th>Jumlah parameter</th></tr>
+  <tr><td>AI kos (contoh kita)</td><td>1</td></tr>
+  <tr><td>Jaringan kecil pengenal angka tulisan tangan</td><td>sekitar 100 ribu</td></tr>
+  <tr><td>GPT-2 (2019)</td><td>1,5 miliar</td></tr>
+  <tr><td>GPT-3 (2020)</td><td>175 miliar</td></tr>
 </table>
+<p>Model terbaru umumnya <b>tidak mengumumkan</b> jumlah parameternya, jadi angka yang beredar di internet sering hanya tebakan.</p>
+<div class="callout">
+<b>Kenapa model besar butuh banyak mesin?</b> Setiap parameter adalah satu angka yang harus disimpan di memori — biasanya <b>2 byte</b>. Maka 175 miliar parameter × 2 byte = <b>350 GB</b>, hanya untuk menyimpan kenopnya. Laptop biasa punya 8–16 GB memori. Karena itu model sebesar ini dijalankan di pusat data dengan banyak kartu grafis sekaligus.
+</div>
+
+<h3>2. Token — satuan yang dibaca model</h3>
+<p>Model bahasa tidak membaca huruf per huruf, juga tidak selalu kata per kata. Teks dipotong menjadi <b>token</b> — potongan yang sering muncul. Kata umum biasanya satu token; kata panjang atau jarang dipecah jadi beberapa. Contoh ilustrasinya:</p>
+<pre class="code">"Saya suka belajar kecerdasan buatan"
+  →  Saya | suka | bel | ajar | kecer | dasan | buatan</pre>
+<p><i>Pemotongan persisnya berbeda-beda untuk tiap model.</i> Bahasa Indonesia umumnya butuh lebih banyak token per kata dibanding bahasa Inggris, karena sebagian besar data latih model berbahasa Inggris.</p>
+<div class="callout">
+<b>Token = satuan tagihan.</b> Layanan AI menagih <b>per token</b>, baik token yang kamu kirim (masukan) maupun yang dijawab model (keluaran) — dan token keluaran biasanya lebih mahal. Contoh dengan harga ilustrasi Rp50 per 1.000 token masukan dan Rp250 per 1.000 token keluaran:<br><br>
+Satu percakapan: 2.000 token masukan + 500 token keluaran = Rp100 + Rp125 = <b>Rp225</b>.<br>
+Dikali 10.000 pengguna per hari = <b>Rp2,25 juta per hari</b>. Menghemat panjang prompt langsung menghemat uang.
+</div>
+
+<h3>3. Context window — luas meja kerjanya</h3>
+<div class="callout">
+🗂️ Bayangkan model bekerja di sebuah <b>meja</b>. Semua yang ada di atas meja bisa ia lihat sekaligus: instruksimu, riwayat percakapan, dokumen yang kamu tempel, dan jawaban yang sedang ia tulis. <b>Context window</b> adalah luas meja itu, diukur dalam token. Yang tidak muat di meja tidak bisa ia lihat — bagian percakapan paling lama harus dibuang atau diringkas.
+</div>
+<p>Inilah alasan chatbot kadang "lupa" hal yang kamu katakan di awal percakapan yang sangat panjang, dan alasan sistem RAG (dibahas di modul Lanjutan) memilih <b>potongan dokumen yang paling relevan saja</b> untuk diletakkan di meja, bukan seluruh arsip.</p>
+
+<h3>4. Compute — berapa banyak hitungan</h3>
+<p><b>Compute</b> adalah jumlah pekerjaan hitung yang dibutuhkan, diukur dalam <b>FLOPs</b> (<i>floating point operations</i> — operasi hitung angka desimal, seperti satu perkalian). Ada perkiraan kasar yang terkenal untuk melatih model bahasa:</p>
+<div class="callout">
+<b>compute latih ≈ 6 × jumlah parameter × jumlah token latih</b><br><br>
+GPT-3: 6 × 175 miliar × 300 miliar token ≈ <b>3 × 10²³ FLOPs</b> (angka 3 diikuti 23 nol).<br>
+Laptop yang sanggup sekitar 1 triliun operasi per detik butuh kira-kira <b>10.000 tahun</b> untuk menyelesaikannya. Pusat data dengan ribuan kartu grafis menyelesaikannya dalam hitungan minggu — dengan tagihan listrik dan sewa mesin yang sangat besar.
+</div>
 
 <div class="callout">
 <b>Scaling laws:</b> secara umum, <b>lebih banyak parameter + lebih banyak data + lebih banyak compute → model lebih pintar</b> — tapi juga <b>lebih mahal</b>. Inilah mengapa model tercanggih butuh biaya latih yang sangat besar.
 </div>
 
 <h3>💥 Dampak pada aplikasi</h3>
-<ul>
-  <li><b>Token</b> menentukan biaya API-mu → prompt ringkas & caching menghemat uang.</li>
-  <li><b>Context window</b> membatasi berapa banyak dokumen bisa dimasukkan sekaligus (relevan untuk RAG).</li>
-  <li><b>Parameter/compute</b> menjelaskan kenapa model besar lebih pintar tapi lebih lambat/mahal → pilih model sesuai kebutuhan.</li>
-</ul>
+<table class="tbl">
+  <tr><th>Ukuran</th><th>Yang kamu rasakan saat membangun aplikasi</th></tr>
+  <tr><td><b>Token</b></td><td>Menentukan tagihan bulananmu → prompt ringkas dan caching menghemat uang</td></tr>
+  <tr><td><b>Context window</b></td><td>Membatasi berapa banyak dokumen bisa dimasukkan sekaligus</td></tr>
+  <tr><td><b>Parameter & compute</b></td><td>Model besar lebih pintar tapi lebih lambat dan mahal → pilih model sesuai kebutuhan, jangan selalu yang terbesar</td></tr>
+</table>
 `,
           keyPoints: [
-            "Parameter = kenop yang dipelajari; makin banyak makin berkapasitas (dan mahal).",
-            "Token = potongan kata; dasar biaya API. Context window = batas token yang 'diingat' sekaligus.",
-            "Compute (FLOPs) = daya komputasi; menentukan biaya & waktu latih/pakai.",
-            "Scaling laws: parameter+data+compute lebih besar → lebih pintar tapi lebih mahal.",
+            "Parameter = kenop yang dipelajari; makin banyak makin berkapasitas, dan tiap parameter butuh memori (175 miliar × 2 byte = 350 GB).",
+            "Token = potongan kata yang dibaca model sekaligus satuan tagihan; token keluaran biasanya lebih mahal.",
+            "Context window = luas 'meja kerja' model dalam token; yang tidak muat tidak bisa dilihat.",
+            "Compute (FLOPs) = jumlah hitungan; perkiraan kasar biaya latih ≈ 6 × parameter × token latih.",
+            "Scaling laws: parameter + data + compute lebih besar → lebih pintar tapi lebih mahal."
+          ],
+          practice: [
+            { type: "number", q: "Model punya 7 miliar parameter, masing-masing disimpan 2 byte. Berapa GB memori untuk menyimpan kenopnya?", answer: 14, tol: 0.1, unit: "GB", hint: "7 miliar × 2 byte = 14 miliar byte.", solution: "14 miliar byte ≈ 14 GB — masih bisa muat di kartu grafis besar, tapi tidak di laptop biasa." },
+            { type: "number", q: "Harga ilustrasi: Rp50 per 1.000 token masukan dan Rp250 per 1.000 token keluaran. Satu percakapan memakai 4.000 token masukan dan 1.000 token keluaran. Berapa rupiah biayanya?", answer: 450, tol: 1, unit: "Rp", hint: "Masukan: 4 × Rp50. Keluaran: 1 × Rp250.", solution: "Rp200 + Rp250 = Rp450." }
           ],
           quiz: [
             {
               q: "Apa yang dimaksud 'token' pada LLM?",
               options: [
-                "Potongan kata yang jadi satuan berpikir sekaligus dasar penagihan",
+                "Potongan kata yang jadi satuan baca sekaligus dasar penagihan",
                 "Satu kata utuh dalam kalimat, apa pun panjang dan bahasanya",
                 "Satu huruf tunggal yang diproses model satu per satu",
-                "Kode rahasia yang dipakai mengakses layanan model bahasa",
+                "Kode rahasia yang dipakai mengakses layanan model bahasa"
               ],
               answer: 0,
-              explain: "Model memproses & ditagih per token (input + output).",
+              explain: "Model memproses & ditagih per token (masukan + keluaran)."
             },
             {
               q: "Apa itu 'context window'?",
               options: [
-                "Berapa banyak token yang bisa dipegang model dalam satu percakapan",
-                "Berapa lama model menyimpan riwayat percakapan di servernya",
-                "Berapa banyak permintaan yang boleh dikirim dalam satu menit",
-                "Seberapa besar ukuran model diukur dari jumlah parameternya",
+                "Berapa banyak token yang bisa dilihat model sekaligus",
+                "Berapa lama model menyimpan riwayat percakapan di server",
+                "Berapa banyak permintaan yang boleh dikirim dalam semenit",
+                "Seberapa besar ukuran model dilihat dari jumlah parameter"
               ],
               answer: 0,
-              explain: "Context window membatasi banyaknya token yang diproses dalam satu waktu.",
-            },
-          ],
-        },
-        {
-          id: "ai-fund-4",
-          title: "Bias, Variance & Generalisasi",
-          duration: "11 menit",
-          content: `
-<p>Tujuan sejati AI bukan pintar di data latihan, melainkan <b>generalisasi</b> — bekerja baik pada data <b>baru</b> yang belum pernah dilihat.</p>
-
-<div data-diagram="compare3" data-cols="Underfitting::model terlalu sederhana::salah di data latih DAN data baru|Pas (ideal)::kerumitan seimbang::baik di keduanya|Overfitting::model terlalu rumit::hafal data latih, gagal di data baru" data-caption="Tiga keadaan model — yang dikejar adalah yang tengah"></div>
-
-
-<h3>Dua penyakit model</h3>
-<table class="tbl">
-  <tr><th></th><th>Bias tinggi (Underfitting)</th><th>Variance tinggi (Overfitting)</th></tr>
-  <tr><td>Penyebab</td><td>Model terlalu sederhana</td><td>Model terlalu rumit / menghafal</td></tr>
-  <tr><td>Gejala</td><td>Salah di data latih & data baru</td><td>Sempurna di data latih, buruk di data baru</td></tr>
-  <tr><td>Analogi</td><td>Siswa yang tak paham materi</td><td>Siswa yang menghafal kunci jawaban</td></tr>
-</table>
-
-<div class="callout">
-<b>Trade-off bias-variance:</b> menurunkan yang satu sering menaikkan yang lain. Tujuan: menemukan <b>keseimbangan</b> — cukup fleksibel untuk menangkap pola, tapi tidak menghafal keributan data.
-</div>
-
-<h3>Peran data</h3>
-<p>Data latih yang <b>banyak & berkualitas</b> adalah senjata utama melawan overfitting — makin beragam contohnya, makin sulit model sekadar menghafal.</p>
-
-<h3>💥 Dampak</h3>
-<p>Model yang tidak menggeneralisasi akan <b>gagal di dunia nyata</b> meski terlihat hebat saat pengujian internal. Karena itu evaluasi harus memakai data yang benar-benar terpisah (lihat pelajaran "Overfitting & Cara Menguji Model").</p>
-`,
-          keyPoints: [
-            "Generalisasi = kinerja pada data baru; itulah tujuan sejati AI.",
-            "Bias tinggi (underfitting) = terlalu sederhana; variance tinggi (overfitting) = menghafal.",
-            "Trade-off bias-variance: cari keseimbangan; data banyak & berkualitas melawan overfitting.",
-            "Dampak: model yang tak menggeneralisasi gagal di dunia nyata meski bagus saat uji.",
-          ],
-          quiz: [
-            {
-              q: "Model sempurna di data latih tetapi buruk di data baru mengalami?",
-              options: [
-                "Overfitting — model menghafal data latih dan gagal menyamaratakan",
-                "Underfitting — model terlalu sederhana untuk menangkap polanya",
-                "Kebocoran data — data uji ikut terpakai saat proses pelatihan",
-                "Model drift — pola dunia berubah setelah model selesai dilatih",
-              ],
-              answer: 0,
-              explain: "Itu overfitting — model menghafal, gagal menggeneralisasi.",
+              explain: "Context window adalah luas 'meja kerja' model: instruksi, riwayat, dokumen, dan jawaban harus muat di dalamnya."
             },
             {
-              q: "Senjata utama melawan overfitting?",
+              q: "Kenapa model dengan 175 miliar parameter tidak bisa dijalankan di laptop biasa?",
               options: [
-                "Data latih yang lebih banyak, berkualitas, dan beragam",
-                "Menambah jumlah lapisan agar model bisa belajar lebih dalam",
-                "Melatih model jauh lebih lama sampai loss-nya mendekati nol",
-                "Memakai seluruh data untuk melatih tanpa menyisakan data uji",
+                "Menyimpan kenopnya saja butuh sekitar 350 GB memori",
+                "Model sebesar itu hanya bisa membaca teks berbahasa Inggris",
+                "Laptop tidak mampu memotong teks menjadi potongan token",
+                "Context window-nya terlalu sempit untuk layar laptop"
               ],
               answer: 0,
-              explain: "Data beragam menyulitkan model sekadar menghafal, mendorong generalisasi.",
-            },
-          ],
+              explain: "175 miliar × 2 byte = 350 GB, jauh di atas memori laptop yang umumnya 8–16 GB."
+            }
+          ]
         },
       ],
     },
@@ -1667,7 +1867,7 @@ console.log("=> Konvergen menuju x = 3 (titik minimum). Itulah 'belajar'.");</di
       id: "ai-matematika",
       level: "Matematika",
       title: "Matematika di Balik AI",
-      summary: "Untuk apa matematika AI dipelajari, membaca simbol, vektor & dot product, turunan, fungsi aktivasi & loss, sigmoid vs ReLU, dan probabilitas.",
+      summary: "Untuk apa matematika AI dipelajari, membaca simbol, vektor & dot product, turunan, kenapa perlu fungsi aktivasi, sigmoid vs ReLU, fungsi loss & softmax, dan probabilitas.",
       lessons: [
         {
           id: "ai-mat-intro",
@@ -1721,8 +1921,9 @@ console.log("=> Konvergen menuju x = 3 (titik minimum). Itulah 'belajar'.");</di
   <tr><td><b>Membaca Simbol</b></td><td>Arti f(x), Σ, α, σ, ŷ — supaya rumus di mana pun berhenti terasa menakutkan</td></tr>
   <tr><td><b>Vektor &amp; Dot Product</b></td><td>Bagaimana kata dan dokumen menjadi angka, dan bagaimana pencarian RAG menilai "mirip"</td></tr>
   <tr><td><b>Turunan &amp; Gradient Descent</b></td><td>Bagaimana model belajar, dan kenapa learning rate adalah kenop terpenting</td></tr>
-  <tr><td><b>Fungsi Aktivasi &amp; Loss</b></td><td>Apa yang sebenarnya dikejar model saat dilatih, dan cara memilih lapisan keluaran</td></tr>
+  <tr><td><b>Kenapa Neuron Butuh Fungsi Aktivasi?</b></td><td>Kenapa seratus lapisan tanpa "tikungan" sama saja dengan satu garis lurus</td></tr>
   <tr><td><b>Sigmoid, ReLU &amp; Kawan-Kawan</b></td><td>Kenapa jaringan dalam dulu gagal dilatih, dan kenapa satu fungsi sederhana mengubah segalanya</td></tr>
+  <tr><td><b>Fungsi Loss &amp; Softmax</b></td><td>Apa yang sebenarnya dikejar model saat dilatih — termasuk rumus yang melatih semua chatbot</td></tr>
   <tr><td><b>Probabilitas untuk AI</b></td><td>Kenapa akurasi menipu, dan apa arti angka <i>temperature</i> pada chatbot</td></tr>
 </table>
 
@@ -1935,68 +2136,101 @@ Huruf kecil <b>i</b> di bawah cuma penanda urutan: a₁, a₂, a₃ = anggota ke
         {
           id: "ai-mat-1",
           title: "Vektor & Dot Product",
-          duration: "13 menit",
+          duration: "15 menit",
           content: `
-<p>Semua yang dilakukan AI — mengenali gambar, memahami teks, mencari dokumen — pada akhirnya adalah <b>operasi pada vektor</b>. Mari pahami dari nol.</p>
-
-<h3>Fundamental: vektor itu cuma daftar angka</h3>
-<div class="callout">
-<b>Vektor</b> = deretan angka yang mewakili sesuatu. Contoh, sebuah rumah bisa diwakili vektor <b>[120, 3, 2]</b> = (luas 120 m², 3 kamar, 2 lantai). Di AI, sebuah kata atau kalimat diwakili vektor berisi ratusan angka — itulah <b>embedding</b>.
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+Di pelajaran "Membaca Simbol" kamu belajar bahwa <b>Σ</b> artinya "jumlahkan semuanya". Simbol itu akan muncul lagi di sini. Selebihnya cukup perkalian, penjumlahan, dan akar.
 </div>
 
-<h3>Dot product (hasil kali titik)</h3>
-<p>Cara mengalikan dua vektor: <b>kalikan pasangan angka di posisi yang sama, lalu jumlahkan</b>.</p>
-<pre class="code">a = [3, 4, 0]
-b = [4, 3, 0]
+<p>Semua yang dilakukan AI — mengenali gambar, memahami teks, mencari dokumen — pada akhirnya adalah <b>operasi pada vektor</b>. Kedengarannya berat, padahal kita akan memulainya dari pertanyaan sehari-hari: <i>siapa yang selera filmnya paling mirip denganmu?</i></p>
 
-a · b = (3×4) + (4×3) + (0×0)
-      = 12 + 12 + 0
-      = 24</pre>
+<h3>Langkah 1 — Vektor itu cuma daftar angka</h3>
+<p><b>Vektor</b> = deretan angka dengan <b>urutan yang tetap</b>, yang mewakili sesuatu. Sebuah rumah bisa ditulis <b>[120, 3, 2]</b>: luas 120 m², 3 kamar, 2 lantai. Urutannya penting — <b>[3, 120, 2]</b> berarti rumah yang sangat berbeda.</p>
+<p>Kenapa AI butuh ini? Karena komputer <b>hanya bisa menghitung angka</b>. Foto, kalimat, lagu, bahkan selera seseorang harus diubah dulu menjadi daftar angka sebelum bisa diolah.</p>
 
-<h3>Panjang vektor (norm)</h3>
-<p>Memakai <b>Teorema Pythagoras</b> yang diperluas:</p>
-<pre class="code">|a| = akar( 3² + 4² + 0² ) = akar(25) = 5</pre>
+<h3>Langkah 2 — Selera film sebagai vektor</h3>
+<p>Empat orang memberi nilai 0–5 untuk tiga jenis film, dengan urutan <b>[aksi, komedi, horor]</b>:</p>
+<table class="tbl">
+  <tr><th>Orang</th><th>Aksi</th><th>Komedi</th><th>Horor</th><th>Vektornya</th></tr>
+  <tr><td><b>Andi</b></td><td>5</td><td>1</td><td>0</td><td>[5, 1, 0]</td></tr>
+  <tr><td><b>Budi</b></td><td>4</td><td>2</td><td>0</td><td>[4, 2, 0]</td></tr>
+  <tr><td><b>Citra</b></td><td>0</td><td>1</td><td>5</td><td>[0, 1, 5]</td></tr>
+  <tr><td><b>Dedi</b></td><td>5</td><td>5</td><td>5</td><td>[5, 5, 5]</td></tr>
+</table>
+<p>Dengan mata saja kamu sudah bisa menebak: selera <b>Budi</b> paling mirip Andi (sama-sama gila aksi, tidak suka horor), <b>Citra</b> kebalikannya, dan <b>Dedi</b> suka semuanya. Sekarang kita ajari komputer menebak hal yang sama.</p>
 
-<h3>Cosine similarity — inti pencarian RAG</h3>
+<h3>Langkah 3 — Dot product: kalikan seposisi, lalu jumlahkan</h3>
+<pre class="code">Andi · Budi  = (5×4) + (1×2) + (0×0) = 20 + 2 + 0 = 22
+Andi · Citra = (5×0) + (1×1) + (0×5) =  0 + 1 + 0 =  1</pre>
+<p>Kenapa cara ini mengukur kemiripan? Lihat setiap pasangan: bila <b>keduanya suka</b> suatu jenis film, hasil kalinya besar (5×4 = 20). Bila salah satunya tidak suka, hasil kalinya kecil atau nol (5×0 = 0). Jadi dot product besar berarti <b>banyak kesukaan yang sama</b>.</p>
+<p>Dengan simbol dari pelajaran Membaca Simbol, rumusnya ditulis <b>a · b = Σ aᵢ × bᵢ</b> — "jumlahkan semua perkalian angka di posisi yang sama".</p>
+
+<h3>Langkah 4 — Masalah: orang yang memberi nilai tinggi untuk semuanya</h3>
+<pre class="code">Andi · Dedi  = (5×5) + (1×5) + (0×5) = 25 + 5 + 0 = 30</pre>
+<p>Hasilnya <b>30</b> — lebih besar dari Budi (22)! Padahal Dedi juga suka horor dan komedi, jadi seleranya tidak se-spesifik Andi. Dedi menang hanya karena <b>angkanya besar-besar</b>. Kita butuh cara menilai kemiripan yang tidak tertipu oleh besarnya angka.</p>
+
+<h3>Langkah 5 — Panjang vektor</h3>
+<p>Bayangkan berjalan 3 langkah ke timur lalu 4 langkah ke utara. Jarak lurus dari titik awal adalah <b>5</b> — segitiga 3-4-5 yang terkenal dari Teorema Pythagoras: √(3² + 4²) = √25 = 5. Panjang vektor dihitung dengan cara yang sama, berapa pun banyak angkanya:</p>
+<pre class="code">|Andi| = √(5² + 1² + 0²) = √26 ≈ 5,10
+|Budi| = √(4² + 2² + 0²) = √20 ≈ 4,47
+|Dedi| = √(5² + 5² + 5²) = √75 ≈ 8,66</pre>
+<p>Tanda <b>| |</b> dibaca "panjang". Perhatikan: vektor Dedi paling panjang, karena semua nilainya tinggi.</p>
+
+<h3>Langkah 6 — Cosine similarity: dot product yang adil</h3>
 <div class="callout">
-<b>Rumus:</b> cos(θ) = (a · b) ÷ (|a| × |b|)<br><br>
-Hasilnya antara <b>−1</b> (berlawanan) sampai <b>1</b> (searah/sangat mirip). Pembagian dengan panjang membuat <b>ukuran vektor tidak berpengaruh</b> — yang dinilai hanya <b>arah</b>, yaitu maknanya.
+<b>cosine = (a · b) ÷ (|a| × |b|)</b><br><br>
+Dot product dibagi dengan kedua panjangnya, sehingga "angka yang besar-besar" tidak lagi memberi keuntungan. Yang tersisa hanya <b>arah</b> selera — ke mana kesukaannya condong.
 </div>
+<table class="tbl">
+  <tr><th>Pasangan</th><th>Dot product</th><th>Dibagi panjang</th><th>Cosine</th></tr>
+  <tr><td>Andi–Budi</td><td>22</td><td>22 ÷ (5,10 × 4,47)</td><td class="ok-cell"><b>0,965</b> — paling mirip</td></tr>
+  <tr><td>Andi–Dedi</td><td>30</td><td>30 ÷ (5,10 × 8,66)</td><td>0,679</td></tr>
+  <tr><td>Andi–Citra</td><td>1</td><td>1 ÷ (5,10 × 5,10)</td><td class="bad-cell">0,038 — hampir tak ada kesamaan</td></tr>
+</table>
+<p>Sekarang Budi menang, persis seperti tebakan mata kita. Nilai cosine berkisar dari <b>−1</b> (arah berlawanan) sampai <b>1</b> (searah sempurna). Karena nilai film kita tidak ada yang negatif, hasilnya di sini selalu antara 0 dan 1.</p>
 
 <h3>Coba sendiri — hitung langkah demi langkah 👇</h3>
-<div data-demo="js-playground">// Dot product & cosine similarity, langkah demi langkah
-const a = [3, 4, 0];
-const b = [4, 3, 0];
+<p>Ganti angka selera siapa pun, lalu jalankan lagi. Coba buat seseorang yang seleranya lebih mirip Andi daripada Budi:</p>
+<div data-demo="js-playground">// Selera film: [aksi, komedi, horor]
+const andi  = [5, 1, 0];
+const orang = { Budi: [4, 2, 0], Citra: [0, 1, 5], Dedi: [5, 5, 5] };
 
-let dot = 0;
-a.forEach(function(v, i){ dot = dot + v * b[i]; });
+function dot(a, b) {
+  let total = 0;
+  a.forEach(function(v, i){ total = total + v * b[i]; });
+  return total;
+}
+function panjang(a) { return Math.sqrt(dot(a, a)); }
 
-let sumA = 0, sumB = 0;
-a.forEach(function(v){ sumA = sumA + v*v; });
-b.forEach(function(v){ sumB = sumB + v*v; });
-const panjangA = Math.sqrt(sumA);
-const panjangB = Math.sqrt(sumB);
+Object.keys(orang).forEach(function(nama){
+  const v = orang[nama];
+  const d = dot(andi, v);
+  const cos = d / (panjang(andi) * panjang(v));
+  console.log("Andi-" + nama + ": dot = " + d + "   cosine = " + cos.toFixed(3));
+});
+console.log("Cosine paling besar = selera paling mirip.");</div>
 
-console.log("a . b (dot product) = " + dot);
-console.log("panjang a = " + panjangA.toFixed(3));
-console.log("panjang b = " + panjangB.toFixed(3));
-console.log("cosine = dot / (|a| x |b|) = " + (dot/(panjangA*panjangB)).toFixed(4));
-console.log("Mendekati 1 = sangat mirip maknanya.");</div>
-
-<div class="callout">
-<b>Kenapa penting:</b> satu <b>neuron</b> pada dasarnya menghitung dot product antara input dan bobotnya. Jadi rumus sederhana ini dijalankan <b>miliaran kali</b> di dalam sebuah LLM.
-</div>
+<h3>Kenapa ini inti AI modern</h3>
+<table class="tbl">
+  <tr><th>Di contoh film</th><th>Di AI sungguhan</th></tr>
+  <tr><td>Selera = vektor 3 angka</td><td>Kata atau kalimat = vektor ratusan sampai ribuan angka, disebut <b>embedding</b></td></tr>
+  <tr><td>Mencari orang yang seleranya mirip</td><td>Mencari dokumen yang maknanya mirip dengan pertanyaanmu — inti <b>pencarian RAG</b> dan sistem rekomendasi</td></tr>
+  <tr><td>Dot product dua daftar angka</td><td>Satu <b>neuron</b> menghitung dot product antara masukan dan bobotnya — dijalankan <b>miliaran kali</b> di dalam sebuah LLM</td></tr>
+</table>
 `,
           keyPoints: [
-            "Vektor = deretan angka yang mewakili sesuatu; embedding adalah vektor makna.",
-            "Dot product: kalikan pasangan angka seposisi lalu jumlahkan.",
-            "Panjang vektor (norm) = akar dari jumlah kuadrat komponennya (Pythagoras).",
-            "Cosine similarity = dot product ÷ (panjang a × panjang b); menilai arah/makna, bukan ukuran.",
-            "Satu neuron pada dasarnya menghitung dot product input × bobot.",
+            "Vektor = deretan angka berurutan tetap yang mewakili sesuatu; embedding adalah vektor makna.",
+            "Dot product: kalikan pasangan angka seposisi lalu jumlahkan (a · b = Σ aᵢ × bᵢ); besar berarti banyak kesamaan.",
+            "Dot product bisa tertipu oleh angka yang besar-besar, sehingga perlu dibagi panjang vektor.",
+            "Panjang vektor = akar dari jumlah kuadrat komponennya (Pythagoras).",
+            "Cosine similarity = dot product ÷ (panjang a × panjang b); menilai arah/makna, bukan besar angkanya.",
+            "Satu neuron pada dasarnya menghitung dot product masukan × bobot."
           ],
           practice: [
             { type: "number", q: "Hitung dot product dari a = [2, 3] dan b = [4, 5].", answer: 23, tol: 0.5, hint: "(2×4) + (3×5).", solution: "8 + 15 = 23." },
-            { type: "number", q: "Berapa panjang (norm) vektor [3, 4]?", answer: 5, tol: 0.1, hint: "Akar dari (3² + 4²).", solution: "akar(9+16) = akar(25) = 5." },
+            { type: "number", q: "Berapa panjang (norm) vektor [3, 4]?", answer: 5, tol: 0.1, hint: "Akar dari (3² + 4²).", solution: "akar(9 + 16) = akar(25) = 5." },
+            { type: "number", q: "Selera Eka = [2, 0, 0]. Berapa cosine similarity-nya dengan Andi [5, 1, 0]? (2 desimal)", answer: 0.98, tol: 0.01, hint: "Dot = 10. Panjang Eka = 2, panjang Andi ≈ 5,10.", solution: "10 ÷ (2 × 5,10) ≈ 0,98 — walau angkanya kecil, arah seleranya hampir sama dengan Andi." }
           ],
           quiz: [
             {
@@ -2005,10 +2239,10 @@ console.log("Mendekati 1 = sangat mirip maknanya.");</div>
                 "Kalikan pasangan angka pada posisi yang sama, lalu jumlahkan",
                 "Jumlahkan seluruh angka kedua vektor lalu kalikan hasilnya",
                 "Kurangkan tiap pasangan angka lalu ambil nilai mutlaknya",
-                "Bagi tiap angka vektor pertama dengan vektor kedua",
+                "Bagi tiap angka vektor pertama dengan vektor kedua"
               ],
               answer: 0,
-              explain: "Dot product = jumlah dari perkalian komponen seposisi.",
+              explain: "Dot product = jumlah dari perkalian komponen seposisi."
             },
             {
               q: "Kenapa cosine similarity dibagi dengan panjang kedua vektor?",
@@ -2016,160 +2250,243 @@ console.log("Mendekati 1 = sangat mirip maknanya.");</div>
                 "Agar ukuran vektor tidak berpengaruh, yang dinilai hanya arahnya",
                 "Agar hasilnya selalu berupa bilangan bulat yang mudah dibaca",
                 "Agar perhitungannya berjalan lebih cepat pada data besar",
-                "Agar vektor dengan panjang berbeda tetap bisa dijumlahkan",
+                "Agar vektor dengan panjang berbeda tetap bisa dijumlahkan"
               ],
               answer: 0,
-              explain:
-                "Normalisasi membuat perbandingan murni soal arah, bukan besar vektornya.",
+              explain: "Tanpa pembagian itu, Dedi yang memberi nilai 5 untuk semua film tampak lebih mirip Andi daripada Budi."
             },
-          ],
+            {
+              q: "Andi = [5, 1, 0] dan Budi = [4, 2, 0]. Berapa dot product keduanya?",
+              options: ["22", "12", "20", "26"],
+              answer: 0,
+              explain: "(5×4) + (1×2) + (0×0) = 20 + 2 + 0 = 22."
+            }
+          ]
         },
         {
           id: "ai-mat-2",
           title: "Turunan & Gradient Descent",
-          duration: "13 menit",
+          duration: "16 menit",
           content: `
-<p>Di modul Fundamental kamu sudah menjalankan gradient descent. Sekarang kita bedah <b>matematikanya</b>.</p>
-
-<h3>Fundamental: turunan = kemiringan</h3>
-<div class="callout">
-<b>Turunan</b> menjawab: <i>"kalau x digeser sedikit, f(x) berubah seberapa cepat?"</i> Secara visual, itu <b>kemiringan garis singgung</b> di suatu titik. Kemiringan <b>positif</b> = naik ke kanan; <b>negatif</b> = turun; <b>nol</b> = datar (puncak atau lembah).
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+Di modul Fundamental, lembah loss <b>(w − 3)²</b> dituruni dengan rumus <b>w baru = w lama − learning rate × kemiringan</b>, dan kemiringannya "diberi" begitu saja: <b>2 × (w − 3)</b>. Pelajaran ini membongkar dari mana angka kemiringan itu berasal. Namanya <b>turunan</b>, dan kita akan menemukannya sendiri hanya dengan kalkulator.
 </div>
 
-<h3>Aturan turunan yang dipakai AI</h3>
+<h3>Langkah 1 — Kemiringan jalan</h3>
+<p>Sebuah jalan naik <b>1 meter</b> setiap <b>10 meter</b> ke depan. Kemiringannya 1 ÷ 10 = <b>0,1</b>. Jalan yang naik 3 meter setiap 10 meter lebih curam: 0,3. Jalan yang turun punya kemiringan <b>negatif</b>, dan jalan datar kemiringannya <b>nol</b>.</p>
+<div class="callout">
+<b>kemiringan = perubahan tinggi ÷ perubahan jarak</b>
+</div>
+<p>Untuk garis lurus seperti f(x) = 2x, kemiringannya sama di mana-mana: x naik 1, f(x) naik 2 → kemiringan <b>2</b>.</p>
+
+<h3>Langkah 2 — Kurva: kemiringannya berubah-ubah</h3>
+<p>Sekarang f(x) = x²:</p>
 <table class="tbl">
-  <tr><th>Fungsi</th><th>Turunannya</th></tr>
-  <tr><td>f(x) = x²</td><td>f'(x) = 2x</td></tr>
-  <tr><td>f(x) = xⁿ</td><td>f'(x) = n·xⁿ⁻¹</td></tr>
-  <tr><td>f(x) = c (konstanta)</td><td>f'(x) = 0</td></tr>
+  <tr><th>x</th><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+  <tr><th>f(x) = x²</th><td>1</td><td>4</td><td>9</td><td>16</td></tr>
+  <tr><th>naik sebesar</th><td></td><td>3</td><td>5</td><td>7</td></tr>
+</table>
+<p>Makin ke kanan, kenaikannya makin besar — kurvanya makin curam. Jadi pertanyaannya bukan lagi "berapa kemiringan kurva ini", melainkan <b>"berapa kemiringannya tepat di satu titik?"</b></p>
+
+<h3>Langkah 3 — Geser sedikit sekali</h3>
+<p>Triknya: ukur kemiringan pada jarak yang <b>sangat pendek</b>. Di titik x = 3 (tinggi 9):</p>
+<table class="tbl">
+  <tr><th>Geser x sejauh</th><th>Tinggi baru</th><th>Naik</th><th>Kemiringan = naik ÷ geser</th></tr>
+  <tr><td>0,1</td><td>3,1² = 9,61</td><td>0,61</td><td>6,1</td></tr>
+  <tr><td>0,01</td><td>3,01² = 9,0601</td><td>0,0601</td><td>6,01</td></tr>
+  <tr><td>0,001</td><td>3,001² = 9,006001</td><td>0,006001</td><td>6,001</td></tr>
+</table>
+<p>Makin kecil geserannya, hasilnya makin mendekati <b>6</b>. Angka yang didekati inilah <b>turunan</b> di titik itu. Ulangi cara yang sama di titik lain dan kamu akan mendapat:</p>
+<table class="tbl">
+  <tr><th>Titik x</th><td>1</td><td>3</td><td>5</td><td>10</td></tr>
+  <tr><th>Kemiringan</th><td>2</td><td>6</td><td>10</td><td>20</td></tr>
+</table>
+<p>Polanya kelihatan: kemiringan selalu <b>2 × x</b>. Jadi turunan dari x² adalah <b>2x</b>. Kamu baru saja menemukan aturan kalkulus pertama dengan tanganmu sendiri.</p>
+
+<h3>Langkah 4 — Cara menulisnya, dan aturan-aturan lain</h3>
+<p>Turunan dari f(x) ditulis <b>f'(x)</b> ("f aksen x") atau <b>df/dx</b>. Jadi: kalau f(x) = x², maka f'(x) = 2x.</p>
+<table class="tbl">
+  <tr><th>Fungsi</th><th>Turunannya</th><th>Cek dengan geser kecil</th></tr>
+  <tr><td>x²</td><td>2x</td><td>di x = 3 → 6 ✓</td></tr>
+  <tr><td>x³</td><td>3x²</td><td>di x = 2 → 12 (2,001³ naik 0,012006 ÷ 0,001 ≈ 12) ✓</td></tr>
+  <tr><td>xⁿ</td><td>n·xⁿ⁻¹</td><td>pola umum dari dua baris di atas</td></tr>
+  <tr><td>c (angka tetap)</td><td>0</td><td>garis datar, tidak naik sama sekali</td></tr>
+  <tr><td>5 × f(x)</td><td>5 × f'(x)</td><td>kurvanya lima kali lebih tinggi, maka lima kali lebih curam</td></tr>
 </table>
 
-<h3>Aturan rantai (chain rule) — jantung backpropagation</h3>
+<h3>Langkah 5 — Kembali ke lembah loss</h3>
+<p>Lembah <b>(w − 3)²</b> hanyalah kurva w² yang <b>digeser 3 langkah ke kanan</b>. Bentuknya sama persis, sehingga kemiringannya juga sama: 2 × (jarak dari dasar) = <b>2 × (w − 3)</b>. Itulah angka yang di modul Fundamental "diberi" begitu saja.</p>
+<table class="tbl">
+  <tr><th>Tanda turunan</th><th>Artinya</th><th>Gradient descent melangkah…</th></tr>
+  <tr><td>Negatif (mis. −6 di w = 0)</td><td>Tanah menurun ke kanan</td><td>ke kanan</td></tr>
+  <tr><td>Positif (mis. +4 di w = 5)</td><td>Tanah menanjak ke kanan</td><td>ke kiri</td></tr>
+  <tr><td>Nol (di w = 3)</td><td>Datar — dasar lembah</td><td>diam</td></tr>
+</table>
 <div class="callout">
-Kalau sebuah nilai melewati <b>beberapa lapisan</b> fungsi, turunannya dikalikan berantai:<br>
-<b>(f(g(x)))' = f'(g(x)) × g'(x)</b><br><br>
-Inilah cara jaringan saraf mengetahui <b>berapa besar andil tiap bobot</b> terhadap kesalahan akhir, walau bobot itu berada jauh di lapisan awal. Proses itu disebut <b>backpropagation</b>.
+<b>w baru = w lama − α × turunan</b><br><br>
+<b>α</b> (alpha) adalah learning rate. Tanda minus membuat langkah selalu berlawanan arah menanjak.
 </div>
+<pre class="code">Mulai w = 0, α = 0,1
 
-<h3>Rumus gradient descent</h3>
+Langkah 1: turunan = 2(0 − 3) = −6
+           w = 0 − 0,1 × (−6) = 0,6
+Langkah 2: turunan = 2(0,6 − 3) = −4,8
+           w = 0,6 − 0,1 × (−4,8) = 1,08
+... terus mendekati w = 3 (dasar lembah)</pre>
+<p>Model sungguhan punya banyak kenop. Turunan dihitung <b>untuk tiap kenop</b>, dan kumpulan semua turunan itu — sebuah <b>vektor</b>, seperti di pelajaran sebelumnya — disebut <b>gradien</b>.</p>
+
+<h3>Langkah 6 — Aturan rantai: kemiringan yang bersambung</h3>
 <div class="callout">
-<b>bobot_baru = bobot_lama − α × gradien</b><br><br>
-<ul>
-  <li><b>gradien</b> = arah yang membuat kesalahan <b>naik</b> → karena itu kita <b>kurangi</b> (tanda minus) agar turun.</li>
-  <li><b>α</b> (alpha) = <b>learning rate</b>, besar langkah.</li>
-</ul>
+⚙️ <b>Analogi roda gigi.</b> Roda A memutar roda B <b>2 kali</b> lebih cepat, dan roda B memutar roda C <b>3 kali</b> lebih cepat. Seberapa cepat C berputar dibanding A? <b>2 × 3 = 6 kali</b>. Kemiringan yang bersambung cukup <b>dikalikan</b>.
 </div>
+<p>Contoh dengan angka: y = (3x)². Ada dua tahap: dalam (g = 3x) lalu luar (y = g²).</p>
+<pre class="code">Di x = 1:  g = 3 × 1 = 3
+Tahap dalam: g = 3x   → kemiringan 3
+Tahap luar : y = g²   → kemiringan 2g = 2 × 3 = 6
+Bersambung : 6 × 3 = 18
 
-<h3>Contoh hitung tangan</h3>
-<pre class="code">f(x) = (x − 3)²         -> turunannya f'(x) = 2(x − 3)
-Mulai dari x = 0, α = 0,1
-
-Langkah 1: gradien = 2(0 − 3) = −6
-           x = 0 − 0,1 × (−6) = 0,6
-Langkah 2: gradien = 2(0,6 − 3) = −4,8
-           x = 0,6 − 0,1 × (−4,8) = 1,08
-... terus mendekati x = 3 (titik minimum)</pre>
+Cek: y = (3x)² = 9x², turunannya 18x → di x = 1 = 18 ✓</pre>
+<p>Rumus resminya <b>(f(g(x)))' = f'(g(x)) × g'(x)</b> — dengan kata-kata: <i>kemiringan tahap luar dikali kemiringan tahap dalam</i>.</p>
+<div class="callout">
+<b>Kenapa ini jantung deep learning?</b> Neural network adalah <b>rantai lapisan</b>: masukan → lapisan 1 → lapisan 2 → … → loss. Untuk tahu seberapa besar andil sebuah bobot di lapisan 1 terhadap loss di ujung, kemiringan setiap lapisan dikalikan <b>mundur dari belakang ke depan</b>, persis seperti roda gigi. Proses ini disebut <b>backpropagation</b> (propagasi mundur).
+</div>
 
 <div class="callout warn">
 <b>Peran learning rate (α):</b> terlalu <b>besar</b> → langkah melompati lembah, bisa gagal konvergen. Terlalu <b>kecil</b> → sangat lambat. Inilah salah satu "kenop" terpenting saat melatih model.
 </div>
 `,
           keyPoints: [
-            "Turunan = kemiringan; menjawab seberapa cepat f(x) berubah saat x digeser sedikit.",
+            "Turunan = kemiringan tepat di satu titik; ditemukan dengan menggeser x sedikit sekali lalu membagi kenaikannya dengan geserannya.",
             "Aturan dasar: (x²)' = 2x, (xⁿ)' = n·xⁿ⁻¹, (konstanta)' = 0.",
-            "Aturan rantai (f(g(x)))' = f'(g(x)) × g'(x) adalah jantung backpropagation.",
-            "Gradient descent: bobot_baru = bobot_lama − α × gradien; α = learning rate.",
+            "Tanda turunan menunjukkan arah: negatif = menurun ke kanan, positif = menanjak, nol = dasar lembah atau puncak.",
+            "Gradient descent: w baru = w lama − α × turunan; kumpulan turunan semua kenop disebut gradien.",
+            "Aturan rantai: kemiringan bersambung dikalikan (seperti roda gigi) — inilah jantung backpropagation."
           ],
           practice: [
             { type: "number", q: "Jika f(x) = (x − 3)², berapa nilai turunannya saat x = 0? (rumus: 2(x−3))", answer: -6, tol: 0.1, hint: "Masukkan x = 0 ke 2(x − 3).", solution: "2(0 − 3) = −6." },
-            { type: "number", q: "Dengan gradien −6 dan learning rate 0,1, berapa x baru bila x lama = 0? (rumus: x − α×gradien)", answer: 0.6, tol: 0.05, hint: "0 − 0,1 × (−6).", solution: "0 + 0,6 = 0,6." },
+            { type: "number", q: "Dengan turunan −6 dan learning rate 0,1, berapa x baru bila x lama = 0? (rumus: x − α×turunan)", answer: 0.6, tol: 0.05, hint: "0 − 0,1 × (−6).", solution: "0 + 0,6 = 0,6." },
+            { type: "number", q: "y = (2x)². Pakai aturan rantai: berapa kemiringannya di x = 1?", answer: 8, tol: 0.1, hint: "Dalam: g = 2x, kemiringan 2. Luar: y = g², kemiringan 2g = 4 (karena g = 2).", solution: "4 × 2 = 8. Cek: (2x)² = 4x², turunannya 8x → 8 di x = 1." }
           ],
           quiz: [
             {
               q: "Kenapa rumus gradient descent memakai tanda MINUS?",
               options: [
-                "Karena gradien menunjuk arah kesalahan NAIK, jadi kita berlawanan",
+                "Karena turunan menunjuk arah kesalahan NAIK, jadi kita berlawanan",
                 "Karena bobot model harus selalu bernilai negatif agar stabil",
                 "Karena tanda minus membuat langkahnya menjadi lebih kecil",
-                "Karena loss selalu bernilai negatif sehingga perlu dibalik",
+                "Karena loss selalu bernilai negatif sehingga perlu dibalik"
               ],
               answer: 0,
-              explain: "Bergerak berlawanan gradien menurunkan nilai loss.",
+              explain: "Bergerak berlawanan arah menanjak menurunkan nilai loss."
             },
             {
               q: "Aturan rantai (chain rule) dipakai untuk apa di neural network?",
               options: [
                 "Menghitung andil tiap bobot terhadap kesalahan akhir",
-                "Menggabungkan beberapa lapisan menjadi satu lapisan tunggal",
-                "Menentukan jumlah lapisan yang sebaiknya dipakai model",
-                "Mengurutkan data latih agar polanya lebih mudah dipelajari",
+                "Menggabungkan beberapa lapisan menjadi satu lapisan",
+                "Menentukan jumlah lapisan yang sebaiknya dipakai",
+                "Mengurutkan data latih agar polanya mudah dipelajari"
               ],
               answer: 0,
-              explain:
-                "Chain rule menyebarkan turunan mundur melewati lapisan-lapisan jaringan.",
+              explain: "Kemiringan tiap lapisan dikalikan mundur dari loss ke lapisan awal — itulah backpropagation."
             },
-          ],
+            {
+              q: "Berapa turunan x² di titik x = 5?",
+              options: ["10", "25", "5", "2"],
+              answer: 0,
+              explain: "Turunan x² adalah 2x, jadi di x = 5 hasilnya 10. Cek: (5,001² − 25) ÷ 0,001 ≈ 10,001."
+            }
+          ]
         },
         {
           id: "ai-mat-3",
-          title: "Fungsi Aktivasi & Fungsi Loss",
+          title: "Kenapa Neuron Butuh Fungsi Aktivasi?",
           duration: "13 menit",
           content: `
-<p>Dua keluarga rumus yang muncul di hampir semua model: <b>aktivasi</b> (mengolah sinyal neuron) dan <b>loss</b> (mengukur kesalahan).</p>
-
-<h3>Kenapa perlu fungsi aktivasi?</h3>
-<div class="callout warn">
-Tanpa aktivasi, menumpuk banyak lapisan itu <b>sia-sia</b> — gabungan operasi linear tetaplah linear, sehingga 100 lapisan sama saja dengan 1 lapisan. Fungsi aktivasi menambahkan <b>ketaklinieran</b>, sehingga jaringan bisa menangkap pola rumit.
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+Satu <b>neuron</b> menghitung dot product antara masukan dan bobotnya (pelajaran Vektor), lalu hasilnya diteruskan ke lapisan berikutnya (pelajaran Neural Network: Otak Buatan). Pelajaran ini menjawab pertanyaan yang kelihatannya sepele: <i>kenapa hasil itu tidak langsung diteruskan saja?</i>
 </div>
 
+<h3>Langkah 1 — Satu neuron tanpa tambahan apa pun</h3>
+<p>Neuron dengan dua masukan menghitung:</p>
+<div class="callout">
+<b>z = w₁ × x₁ + w₂ × x₂ + b</b><br><br>
+<b>x</b> = masukan, <b>w</b> = bobot (kenop), <b>b</b> = <i>bias</i>, yaitu angka tambahan agar hasilnya bisa digeser naik-turun.
+</div>
+<p>Contoh: x₁ = 2, x₂ = 1, w₁ = 3, w₂ = −1, b = 0,5 → z = 6 − 1 + 0,5 = <b>5,5</b>. Hanya kali dan tambah — rumus <b>garis lurus</b>.</p>
+
+<h3>Langkah 2 — Menumpuk garis lurus tetap menghasilkan garis lurus</h3>
+<p>Buat jaringan dua lapisan, masing-masing satu neuron, tanpa tambahan apa pun:</p>
+<pre class="code">Lapisan 1:  h = 2x + 1
+Lapisan 2:  y = 3h + 4
+
+Masukkan h ke lapisan 2:
+y = 3 × (2x + 1) + 4
+  = 6x + 3 + 4
+  = 6x + 7          ← ternyata cuma satu garis lurus</pre>
+<p>Dua lapisan ternyata <b>sama saja dengan satu lapisan</b> berbobot 6 dan bias 7. Tambah lapisan ketiga, keempat, keseratus — hasilnya tetap bisa diringkas menjadi satu garis lurus. Semua kerumitan jaringan dalam jadi <b>sia-sia</b>.</p>
+
+<h3>Langkah 3 — Kenapa garis lurus tidak cukup</h3>
+<p>Banyak pola di dunia nyata <b>berbelok</b>. Contoh: rasa kopi dibanding banyaknya gula. Terlalu sedikit gula → pahit. Pas → enak. Terlalu banyak → kemanisan. Rasanya <b>naik lalu turun</b>.</p>
+<p>Garis lurus hanya bisa terus naik atau terus turun — ia <b>tidak mungkin</b> naik lalu turun. Model yang hanya terdiri dari garis lurus tidak akan pernah bisa menangkap pola kopi ini, berapa pun lapisannya.</p>
+
+<h3>Langkah 4 — Fungsi aktivasi: "tikungan" setelah setiap neuron</h3>
+<p>Solusinya: setelah menghitung z, setiap neuron melewatkannya ke sebuah fungsi yang <b>tidak lurus</b>. Fungsi ini disebut <b>fungsi aktivasi</b>. Yang paling sederhana bernama <b>ReLU</b>:</p>
+<div class="callout">
+<b>ReLU(z) = max(0, z)</b> — kalau z negatif, jadikan 0; kalau positif, biarkan.<br>
+ReLU(5) = 5 &nbsp;•&nbsp; ReLU(0) = 0 &nbsp;•&nbsp; ReLU(−3) = 0
+</div>
+<p>Sepele? Lihat apa yang terjadi bila dua neuron ReLU digabung: <b>y = ReLU(x) − 2 × ReLU(x − 2)</b></p>
 <table class="tbl">
-  <tr><th>Fungsi</th><th>Rumus</th><th>Keluaran</th><th>Dipakai untuk</th></tr>
-  <tr><td><b>Sigmoid</b></td><td>σ(x) = 1 ÷ (1 + e⁻ˣ)</td><td>0 sampai 1</td><td>Peluang (ya/tidak)</td></tr>
-  <tr><td><b>ReLU</b></td><td>max(0, x)</td><td>0 atau x</td><td>Lapisan tersembunyi (paling umum)</td></tr>
-  <tr><td><b>Softmax</b></td><td>eᶻⁱ ÷ Σeᶻʲ</td><td>Peluang total 100%</td><td>Memilih 1 dari banyak kelas</td></tr>
+  <tr><th>x</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+  <tr><th>ReLU(x)</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+  <tr><th>2 × ReLU(x − 2)</th><td>0</td><td>0</td><td>0</td><td>2</td><td>4</td></tr>
+  <tr><th>y</th><td>0</td><td>1</td><td class="ok-cell"><b>2</b></td><td>1</td><td>0</td></tr>
 </table>
-
-<h3>Coba sendiri — hitung softmax 👇</h3>
-<div data-demo="js-playground">// Softmax: mengubah skor mentah menjadi peluang
-const skor = [2.0, 1.0, 0.1];
-
-let jumlah = 0;
-const eksp = skor.map(function(s){ const e = Math.exp(s); jumlah = jumlah + e; return e; });
-
-eksp.forEach(function(e, i){
-  console.log("skor " + skor[i] + " -> peluang " + (e/jumlah*100).toFixed(1) + "%");
-});
-console.log("-----");
-console.log("Totalnya selalu 100% - itulah gunanya softmax.");
-console.log("Perhatikan: selisih skor kecil bisa jadi selisih peluang besar (efek eksponensial).");</div>
-
-<p>Perbandingan lengkapnya — termasuk tanh, Leaky ReLU, GELU, dan alasan ReLU mengubah sejarah deep learning — ada di <b>pelajaran berikutnya</b>.</p>
-
-<h3>Fungsi loss — mengukur kesalahan</h3>
-<table class="tbl">
-  <tr><th>Loss</th><th>Rumus</th><th>Untuk</th></tr>
-  <tr><td><b>MSE</b> (Mean Squared Error)</td><td>(1/n) × Σ(y − ŷ)²</td><td>Regresi (menebak angka)</td></tr>
-  <tr><td><b>Cross-Entropy</b></td><td>− Σ y × log(ŷ)</td><td>Klasifikasi (menebak kategori) &amp; LLM</td></tr>
-</table>
-<p>Keterangan: <b>y</b> = jawaban benar, <b>ŷ</b> = tebakan model, <b>n</b> = jumlah data.</p>
+<p>Hasilnya <b>naik lalu turun</b>, puncaknya di x = 2 — persis bentuk "rasa kopi" yang mustahil dibuat garis lurus. Hanya dengan <b>dua</b> neuron ReLU. Dengan ratusan neuron, jaringan bisa membuat ratusan tikungan dan meniru hampir bentuk pola apa pun.</p>
 
 <div class="callout">
-<b>Kenapa MSE dikuadratkan?</b> Dua alasan: (1) agar kesalahan positif &amp; negatif tidak saling menghapus, dan (2) agar kesalahan <b>besar dihukum lebih berat</b> — meleset 10 dianggap 100× lebih buruk daripada meleset 1.
+<b>Inilah jawabannya:</b> fungsi aktivasi menambahkan <b>ketaklinieran</b> — kemampuan untuk berbelok. Tanpanya, jaringan sedalam apa pun hanyalah satu garis lurus yang menyamar.
 </div>
 
-<div class="callout warn">
-<b>Kaitan ke LLM:</b> saat model bahasa "menebak kata berikutnya", ia menghasilkan skor untuk tiap kemungkinan token, mengubahnya jadi peluang lewat <b>softmax</b>, lalu dilatih dengan <b>cross-entropy</b> agar peluang token yang benar makin tinggi.
-</div>
+<h3>Coba sendiri — lihat tikungannya muncul 👇</h3>
+<div data-demo="js-playground">function relu(z) { return Math.max(0, z); }
+
+console.log("Tanpa aktivasi: dua lapisan h = 2x + 1, y = 3h + 4");
+[0, 1, 2, 3, 4].forEach(function(x){
+  const h = 2 * x + 1;
+  const y = 3 * h + 4;
+  console.log("  x = " + x + "  ->  y = " + y + "   (selalu naik 6: garis lurus)");
+});
+
+console.log("Dengan ReLU: y = relu(x) - 2 * relu(x - 2)");
+[0, 1, 2, 3, 4].forEach(function(x){
+  const y = relu(x) - 2 * relu(x - 2);
+  console.log("  x = " + x + "  ->  y = " + y);
+});
+console.log("Naik lalu turun: tikungan yang mustahil dibuat garis lurus.");</div>
+
+<h3>Langkah 5 — Tiga fungsi aktivasi yang paling sering kamu temui</h3>
+<table class="tbl">
+  <tr><th>Fungsi</th><th>Yang dilakukannya</th><th>Dipakai untuk</th></tr>
+  <tr><td><b>ReLU</b></td><td>Negatif jadi 0, positif dibiarkan</td><td>Lapisan tersembunyi — paling umum</td></tr>
+  <tr><td><b>Sigmoid</b></td><td>Menekan angka berapa pun ke antara 0 dan 1</td><td>Keluaran ya/tidak, dibaca sebagai peluang</td></tr>
+  <tr><td><b>Softmax</b></td><td>Mengubah beberapa skor menjadi peluang yang totalnya 100%</td><td>Keluaran "pilih satu dari banyak kategori"</td></tr>
+</table>
+<p>Pelajaran berikutnya membandingkan sigmoid, ReLU, dan kawan-kawannya satu per satu — termasuk kenapa pilihan ini dulu hampir menghentikan perkembangan deep learning. Cara menghitung softmax dibahas di pelajaran "Fungsi Loss & Softmax" sesudahnya.</p>
 `,
           keyPoints: [
-            "Tanpa fungsi aktivasi, menumpuk lapisan sia-sia karena gabungan linear tetap linear.",
-            "Sigmoid (0–1) untuk peluang; ReLU = max(0,x) paling umum di lapisan tersembunyi; softmax membuat total peluang 100%.",
-            "MSE = rata-rata kuadrat selisih (regresi); cross-entropy = −Σ y·log(ŷ) (klasifikasi & LLM).",
-            "MSE dikuadratkan agar error tak saling menghapus & kesalahan besar dihukum lebih berat.",
+            "Satu neuron tanpa aktivasi hanya menghitung kali dan tambah (z = w·x + b) — rumus garis lurus.",
+            "Menumpuk garis lurus tetap menghasilkan garis lurus: h = 2x + 1 lalu y = 3h + 4 sama dengan y = 6x + 7.",
+            "Banyak pola nyata berbelok (naik lalu turun), dan garis lurus tidak mungkin menangkapnya.",
+            "Fungsi aktivasi menambahkan ketaklinieran; dua neuron ReLU saja sudah bisa membentuk puncak.",
+            "ReLU = max(0, z) untuk lapisan tersembunyi; sigmoid (0–1) untuk ya/tidak; softmax untuk memilih satu dari banyak kategori."
           ],
           practice: [
             { type: "number", q: "Berapa hasil ReLU dari −5? (rumus: max(0, x))", answer: 0, tol: 0.01, hint: "max(0, −5).", solution: "ReLU membuang nilai negatif → 0." },
-            { type: "number", q: "Jawaban benar y = 10, tebakan model ŷ = 7. Berapa kesalahan kuadratnya (y − ŷ)²?", answer: 9, tol: 0.1, hint: "(10 − 7)².", solution: "3² = 9." },
+            { type: "number", q: "y = ReLU(x) − 2 × ReLU(x − 2). Berapa y saat x = 3?", answer: 1, tol: 0.01, hint: "ReLU(3) = 3 dan ReLU(1) = 1.", solution: "3 − 2 × 1 = 1. Setelah puncak di x = 2, grafiknya turun." }
           ],
           quiz: [
             {
@@ -2178,19 +2495,29 @@ console.log("Perhatikan: selisih skor kecil bisa jadi selisih peluang besar (efe
                 "Menambahkan ketaklinieran; tanpanya banyak lapisan sama saja satu",
                 "Mempercepat perhitungan dengan menyederhanakan angka besar",
                 "Mencegah bobot model bernilai negatif saat proses pelatihan",
-                "Menyamakan skala keluaran agar jumlahnya selalu tepat satu",
+                "Menyamakan skala keluaran agar jumlahnya selalu tepat satu"
               ],
               answer: 0,
-              explain:
-                "Gabungan operasi linear tetap linear; aktivasi memungkinkan pola rumit dipelajari.",
+              explain: "Gabungan operasi linear tetap linear; aktivasi memungkinkan pola yang berbelok dipelajari."
             },
             {
-              q: "Fungsi apa yang mengubah skor mentah menjadi peluang bertotal 100%?",
-              options: ["ReLU", "Softmax", "MSE", "Turunan"],
-              answer: 1,
-              explain: "Softmax menormalkan skor menjadi distribusi peluang.",
+              q: "Lapisan 1: h = 2x, lapisan 2: y = 3h, tanpa fungsi aktivasi. Jaringan ini setara dengan?",
+              options: [
+                "Satu lapisan y = 6x, tetap sebuah garis lurus",
+                "Satu lapisan y = 5x, karena bobotnya dijumlahkan",
+                "Dua lapisan yang bisa membentuk kurva naik-turun",
+                "Fungsi yang berbelok karena ada dua bobot berbeda"
+              ],
+              answer: 0,
+              explain: "y = 3 × (2x) = 6x. Bobotnya dikalikan, dan hasilnya tetap satu garis lurus."
             },
-          ],
+            {
+              q: "Berapa hasil ReLU(−3)?",
+              options: ["0", "−3", "3", "1"],
+              answer: 0,
+              explain: "ReLU(z) = max(0, z). Angka negatif diubah menjadi 0."
+            }
+          ]
         },
         {
           id: "ai-mat-5",
@@ -2338,80 +2665,281 @@ model = keras.Sequential([
           ],
         },
         {
-          id: "ai-mat-4",
-          title: "Probabilitas untuk AI",
-          duration: "13 menit",
+          id: "ai-mat-6",
+          title: "Fungsi Loss & Softmax — Mengukur Seberapa Salah",
+          duration: "15 menit",
           content: `
-<p>AI berpikir dalam <b>peluang</b>. Ini rumus-rumus yang membuatnya bekerja — dan yang menjelaskan kesalahan penalaran paling umum tentang AI.</p>
-
-<h3>Dua aturan dasar</h3>
-<table class="tbl">
-  <tr><th>Aturan</th><th>Rumus</th><th>Contoh</th></tr>
-  <tr><td><b>Perkalian</b> (kejadian bebas)</td><td>P(A dan B) = P(A) × P(B)</td><td>Dua koin sama-sama gambar: ½ × ½ = ¼</td></tr>
-  <tr><td><b>Penjumlahan</b> (saling lepas)</td><td>P(A atau B) = P(A) + P(B)</td><td>Dadu keluar 1 atau 2: ⅙ + ⅙ = ⅓</td></tr>
-</table>
-
-<h3>Teorema Bayes — memperbarui keyakinan</h3>
-<div class="callout">
-<b>P(A|B) = P(B|A) × P(A) ÷ P(B)</b><br><br>
-Dibaca: "peluang A <b>bila diketahui</b> B". Ini rumus untuk <b>memperbarui keyakinan</b> setelah melihat bukti baru.
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Loss</b> = satu angka yang mengatakan seberapa salah model, dan selisih dikuadratkan agar kesalahan ke atas dan ke bawah tidak saling menghapus (modul Fundamental). <b>Σ</b> artinya "jumlahkan semua", dan <b>ŷ</b> (y topi) artinya tebakan model (Membaca Simbol). Pelajaran ini menyusun keduanya menjadi rumus loss yang benar-benar dipakai — satu untuk <b>menebak angka</b>, satu untuk <b>menebak kategori</b>.
 </div>
 
-<h3>Contoh penting: kenapa akurasi menipu</h3>
-<p>Sebuah tes penyakit punya akurasi <b>99%</b>. Penyakitnya langka: hanya <b>1 dari 1.000</b> orang. Kamu dites <b>positif</b>. Berapa peluang kamu benar-benar sakit?</p>
+<h3>Bagian A — Menebak angka: Mean Squared Error (MSE)</h3>
+<p>Model menebak harga tiga rumah (dalam juta rupiah):</p>
+<table class="tbl">
+  <tr><th>Rumah</th><th>Harga sebenarnya (y)</th><th>Tebakan (ŷ)</th><th>Selisih (y − ŷ)</th><th>Dikuadratkan</th></tr>
+  <tr><td>1</td><td>100</td><td>110</td><td>−10</td><td>100</td></tr>
+  <tr><td>2</td><td>150</td><td>140</td><td>+10</td><td>100</td></tr>
+  <tr><td>3</td><td>200</td><td>230</td><td>−30</td><td>900</td></tr>
+  <tr><td colspan="4"><b>Rata-rata kuadrat</b></td><td><b>1.100 ÷ 3 ≈ 366,7</b></td></tr>
+</table>
+<p>Itulah <b>MSE</b> (<i>Mean Squared Error</i> — rata-rata kesalahan kuadrat). Dalam simbol:</p>
+<div class="callout">
+<b>MSE = (1/n) × Σ (y − ŷ)²</b><br><br>
+Dibaca dari dalam ke luar: hitung selisih <b>(y − ŷ)</b> → kuadratkan <b>²</b> → jumlahkan semua <b>Σ</b> → bagi dengan banyaknya data <b>(1/n)</b>. Persis empat kolom tabel di atas.
+</div>
+<p>Angka 366,7 satuannya "juta kuadrat", sulit dibayangkan. Karena itu orang sering mengambil akarnya: √366,7 ≈ <b>19,1</b> — "rata-rata meleset sekitar 19 juta". Versi berakar ini disebut <b>RMSE</b>.</p>
+<div class="callout">
+<b>Kenapa dikuadratkan, bukan cukup dibuang tanda minusnya?</b> Karena kuadrat <b>menghukum kesalahan besar jauh lebih berat</b>. Rumah 3 meleset 30 — tiga kali rumah 1 — tapi hukumannya 900, <b>sembilan kali</b> lipat. Model jadi sangat terdorong untuk menghindari tebakan yang meleset jauh.<br><br>
+Kalau tanda minusnya hanya dibuang lalu dirata-rata, hasilnya (10 + 10 + 30) ÷ 3 ≈ 16,7 — disebut <b>MAE</b>. MAE lebih "memaafkan" kesalahan besar, dan dipakai bila data punya beberapa angka ekstrem yang tidak ingin terlalu diperhatikan.
+</div>
+
+<h3>Bagian B — Menebak kategori: dari skor ke peluang (softmax)</h3>
+<p>Model pengenal foto melihat sebuah gambar dan memberi <b>skor mentah</b> untuk tiga kategori: <b>kucing 2,0</b>, <b>anjing 1,0</b>, <b>burung 0,1</b>. Skor ini bukan persen — bisa berapa saja, bahkan negatif. Kita butuh peluang yang totalnya 100%. Caranya disebut <b>softmax</b>, dalam tiga langkah:</p>
+<table class="tbl">
+  <tr><th>Langkah</th><th>Kucing</th><th>Anjing</th><th>Burung</th></tr>
+  <tr><td>Skor mentah</td><td>2,0</td><td>1,0</td><td>0,1</td></tr>
+  <tr><td>1. Pangkatkan: e<sup>skor</sup></td><td>7,39</td><td>2,72</td><td>1,11</td></tr>
+  <tr><td>2. Jumlahkan semuanya</td><td colspan="3">7,39 + 2,72 + 1,11 = 11,21</td></tr>
+  <tr><td>3. Bagi masing-masing dengan jumlahnya</td><td class="ok-cell"><b>65,9%</b></td><td>24,2%</td><td>9,9%</td></tr>
+</table>
+<p>Huruf <b>e</b> adalah angka tetap ≈ 2,718 (dikenal di pelajaran Membaca Simbol). Memangkatkannya punya dua manfaat: hasilnya <b>selalu positif</b> (skor negatif pun jadi angka kecil yang positif), dan <b>selisih skor diperbesar</b> sehingga kategori terkuat makin menonjol. Langkah terakhir — membagi dengan jumlah — menjamin totalnya <b>tepat 100%</b>.</p>
+
+<h3>Bagian C — Menghukum tebakan kategori: cross-entropy</h3>
+<p>Misalkan foto itu memang <b>kucing</b>. Model memberi peluang 65,9% pada jawaban yang benar. Bagaimana mengubahnya menjadi angka hukuman? Rumusnya:</p>
+<div class="callout">
+<b>loss = −log(peluang yang diberikan untuk jawaban benar)</b>
+</div>
+<p>Tidak perlu hafal cara menghitung <b>log</b> — kalkulator yang mengerjakannya. Yang penting adalah perilakunya:</p>
+<table class="tbl">
+  <tr><th>Peluang untuk jawaban benar</th><th>Hukuman (−log)</th><th>Artinya</th></tr>
+  <tr><td>100%</td><td class="ok-cell">0</td><td>Yakin dan benar — tidak dihukum</td></tr>
+  <tr><td>65,9% (foto kucing kita)</td><td>0,42</td><td>Cukup yakin dan benar — hukuman kecil</td></tr>
+  <tr><td>50%</td><td>0,69</td><td>Ragu-ragu</td></tr>
+  <tr><td>9,9% (seandainya fotonya burung)</td><td>2,31</td><td>Jawaban benar dianggap tidak mungkin — hukuman besar</td></tr>
+  <tr><td>1%</td><td class="bad-cell">4,61</td><td>Yakin tapi <b>salah</b> — hukuman sangat berat</td></tr>
+</table>
+<p>Kenapa tidak cukup "100% dikurangi peluangnya"? Karena −log menghukum <b>keyakinan yang salah</b> dengan sangat keras: turun dari 10% ke 1% saja hukumannya melonjak dua kali lipat. Model jadi belajar untuk <b>tidak sok yakin</b> kalau belum pasti.</p>
+<div class="callout">
+<b>Rumus lengkapnya: cross-entropy = −Σ y × log(ŷ)</b><br><br>
+Di sini <b>y</b> bernilai <b>1</b> untuk kategori yang benar dan <b>0</b> untuk yang lain. Karena dikali 0, semua suku lain hilang — tinggal −log(peluang jawaban benar), persis seperti tabel di atas.
+</div>
+
+<h3>Coba sendiri — softmax lalu cross-entropy 👇</h3>
+<p>Ubah skornya, atau ganti kategori yang benar, lalu lihat hukumannya berubah:</p>
+<div data-demo="js-playground">const nama = ["kucing", "anjing", "burung"];
+const skor = [2.0, 1.0, 0.1];
+const benar = 0;   // 0 = kucing, 1 = anjing, 2 = burung
+
+// softmax
+const e = skor.map(function(s){ return Math.exp(s); });
+const total = e.reduce(function(a, b){ return a + b; }, 0);
+const peluang = e.map(function(v){ return v / total; });
+
+peluang.forEach(function(p, i){
+  console.log(nama[i] + ": skor " + skor[i] + "  ->  peluang " + (p * 100).toFixed(1) + "%");
+});
+
+// cross-entropy
+const loss = -Math.log(peluang[benar]);
+console.log("-----");
+console.log("Jawaban benar: " + nama[benar]);
+console.log("Loss (cross-entropy) = -log(" + peluang[benar].toFixed(3) + ") = " + loss.toFixed(3));</div>
+
+<h3>Ringkasan: pasangan keluaran dan loss</h3>
+<table class="tbl">
+  <tr><th>Tugas</th><th>Keluaran model</th><th>Loss yang dipakai</th></tr>
+  <tr><td>Menebak angka (harga, suhu)</td><td>Angka langsung</td><td><b>MSE</b> (atau MAE)</td></tr>
+  <tr><td>Ya / tidak (spam, penipuan)</td><td>Sigmoid → satu peluang</td><td><b>Binary cross-entropy</b></td></tr>
+  <tr><td>Pilih satu dari banyak kategori</td><td>Softmax → peluang total 100%</td><td><b>Cross-entropy</b></td></tr>
+</table>
+<div class="callout warn">
+<b>Kaitan ke LLM:</b> "menebak kata berikutnya" adalah memilih satu dari <b>puluhan ribu</b> kategori token. Model memberi skor untuk setiap token, mengubahnya jadi peluang dengan <b>softmax</b>, dan dilatih dengan <b>cross-entropy</b> agar peluang token yang benar makin tinggi. Chatbot mana pun yang kamu pakai dilatih dengan dua rumus di pelajaran ini.
+</div>
+`,
+          keyPoints: [
+            "MSE = (1/n) × Σ (y − ŷ)²: selisih, kuadratkan, jumlahkan, bagi banyaknya data; akarnya (RMSE) kembali ke satuan asli.",
+            "Kuadrat menghukum kesalahan besar jauh lebih berat: meleset 3 kali lipat dihukum 9 kali lipat.",
+            "Softmax mengubah skor mentah menjadi peluang bertotal 100%: pangkatkan dengan e, jumlahkan, lalu bagi.",
+            "Cross-entropy = −log(peluang untuk jawaban benar); yakin tapi salah dihukum sangat berat.",
+            "Angka → MSE; ya/tidak → sigmoid + binary cross-entropy; banyak kategori (termasuk LLM) → softmax + cross-entropy."
+          ],
+          practice: [
+            { type: "number", q: "Jawaban benar y = 10, tebakan model ŷ = 7. Berapa kesalahan kuadratnya (y − ŷ)²?", answer: 9, tol: 0.1, hint: "(10 − 7)².", solution: "3² = 9." },
+            { type: "number", q: "Dua tebakan meleset 2 dan 4. Berapa MSE-nya?", answer: 10, tol: 0.05, hint: "Kuadratkan: 4 dan 16. Lalu rata-ratakan.", solution: "(4 + 16) ÷ 2 = 10." },
+            { type: "choice", q: "Model memberi 90% pada jawaban yang salah dan hanya 2% pada jawaban benar. Bagaimana cross-entropy-nya?", options: ["Sangat besar, karena model yakin tapi salah", "Nol, karena totalnya tetap 100%", "Kecil, karena 90% adalah angka yang tinggi", "Tidak bisa dihitung tanpa skor mentahnya"], answer: 0, hint: "Cross-entropy hanya melihat peluang untuk jawaban benar.", solution: "−log(0,02) ≈ 3,9 — hukuman besar untuk keyakinan yang salah." }
+          ],
+          quiz: [
+            {
+              q: "Fungsi apa yang mengubah skor mentah menjadi peluang bertotal 100%?",
+              options: ["Softmax", "ReLU", "MSE", "Turunan"],
+              answer: 0,
+              explain: "Softmax memangkatkan tiap skor, menjumlahkannya, lalu membagi — totalnya selalu 100%."
+            },
+            {
+              q: "Kenapa MSE memakai kuadrat selisih?",
+              options: [
+                "Agar kesalahan besar dihukum jauh lebih berat daripada yang kecil",
+                "Agar hasilnya selalu bernilai di antara 0 dan 1 seperti peluang",
+                "Agar tebakan yang tepat tetap mendapat sedikit hukuman",
+                "Agar satuannya sama persis dengan satuan data aslinya"
+              ],
+              answer: 0,
+              explain: "Meleset 30 dihukum 900, sembilan kali lipat dari meleset 10 yang dihukum 100. Kuadrat juga mencegah selisih positif dan negatif saling menghapus."
+            },
+            {
+              q: "Kapan cross-entropy memberi hukuman paling besar?",
+              options: [
+                "Saat model yakin, tapi yakin pada jawaban yang salah",
+                "Saat model ragu-ragu dan memberi peluang sama rata",
+                "Saat model yakin dan jawabannya ternyata benar",
+                "Saat kategori yang harus dipilih jumlahnya banyak"
+              ],
+              answer: 0,
+              explain: "Bila peluang untuk jawaban benar hanya 1%, hukumannya −log(0,01) ≈ 4,61 — jauh di atas 0,69 untuk tebakan ragu-ragu 50%."
+            }
+          ]
+        },
+        {
+          id: "ai-mat-4",
+          title: "Probabilitas untuk AI",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Peluang = hasil yang diinginkan ÷ semua hasil yang mungkin</b> (modul Dasar), dan precision bisa anjlok ketika kasusnya langka (modul Fundamental). Pelajaran ini memberi alasan matematis di balik keduanya — dimulai dengan <b>menghitung</b>, baru kemudian rumus.
+</div>
+
+<h3>Langkah 1 — Peluang dua kejadian sekaligus ("dan")</h3>
+<p>Dua koin dilempar. Berapa peluang <b>keduanya</b> gambar? Tulis semua kemungkinannya:</p>
+<pre class="code">Koin 1   Koin 2
+Gambar   Gambar   ← yang kita cari
+Gambar   Angka
+Angka    Gambar
+Angka    Angka
+
+1 dari 4 kemungkinan = 1/4 = 25%</pre>
+<p>Perhatikan: ½ × ½ = ¼. Hasil yang sama bisa didapat dengan <b>mengalikan</b> peluang masing-masing.</p>
+<div class="callout">
+<b>Aturan perkalian:</b> P(A dan B) = P(A) × P(B)<br>
+Syaratnya: kedua kejadian <b>bebas</b> — hasil yang satu tidak memengaruhi yang lain. Koin pertama tidak tahu apa yang terjadi pada koin kedua.
+</div>
+<p>Kata <b>P( )</b> dibaca "peluang dari". P(A) = peluang kejadian A.</p>
+
+<h3>Langkah 2 — Salah satu dari dua ("atau")</h3>
+<p>Dadu dilempar. Peluang keluar <b>1 atau 2</b>? Ada 2 sisi yang cocok dari 6 → 2/6 = ⅓. Sama dengan ⅙ + ⅙.</p>
+<div class="callout">
+<b>Aturan penjumlahan:</b> P(A atau B) = P(A) + P(B)<br>
+Syaratnya: A dan B <b>tidak bisa terjadi bersamaan</b>. Dadu tidak bisa keluar 1 dan 2 sekaligus.
+</div>
+<div class="callout warn">
+<b>Hati-hati bila bisa tumpang-tindih.</b> Peluang dadu keluar "genap atau lebih dari 3"? Genap = {2, 4, 6}, lebih dari 3 = {4, 5, 6}. Kalau dijumlah langsung: 3/6 + 3/6 = 6/6 = 100% — jelas salah, karena angka 1 dan 3 tidak termasuk. Angka 4 dan 6 terhitung dua kali. Yang benar: {2, 4, 5, 6} = <b>4/6</b>.
+</div>
+
+<h3>Langkah 3 — Peluang bila sudah tahu sesuatu</h3>
+<p>Kotak masuk berisi <b>100 email</b>. Sebanyak <b>20</b> di antaranya spam. Sebelum membaca apa pun, peluang sebuah email adalah spam = 20/100 = <b>20%</b>.</p>
+<p>Sekarang kamu melihat sebuah email berisi kata <b>"GRATIS"</b>. Dari catatan lama:</p>
+<table class="tbl">
+  <tr><th></th><th>Ada kata "GRATIS"</th><th>Tidak ada</th><th>Total</th></tr>
+  <tr><td><b>Spam</b></td><td>15</td><td>5</td><td>20</td></tr>
+  <tr><td><b>Bukan spam</b></td><td>5</td><td>75</td><td>80</td></tr>
+  <tr><td><b>Total</b></td><td><b>20</b></td><td>80</td><td>100</td></tr>
+</table>
+<p>Ada 20 email berkata "GRATIS", dan 15 di antaranya spam. Jadi <b>setelah tahu</b> email itu berisi "GRATIS", peluangnya spam = 15/20 = <b>75%</b>. Bukti baru mengubah keyakinan dari 20% menjadi 75%.</p>
+<p>Ditulis <b>P(spam | GRATIS) = 75%</b>. Garis tegak <b>|</b> dibaca "bila diketahui".</p>
+
+<h3>Langkah 4 — Teorema Bayes: rumus untuk hitungan tadi</h3>
+<div class="callout">
+<b>P(A | B) = P(B | A) × P(A) ÷ P(B)</b>
+</div>
+<p>Kelihatannya menakutkan, padahal isinya sama persis dengan hitungan tabel. Masukkan angkanya:</p>
+<table class="tbl">
+  <tr><th>Bagian rumus</th><th>Dibaca</th><th>Dari tabel</th></tr>
+  <tr><td>P(spam)</td><td>keyakinan <b>awal</b> sebelum melihat bukti</td><td>20/100 = 0,20</td></tr>
+  <tr><td>P(GRATIS | spam)</td><td>seberapa sering bukti itu muncul pada spam</td><td>15/20 = 0,75</td></tr>
+  <tr><td>P(GRATIS)</td><td>seberapa sering bukti itu muncul secara umum</td><td>20/100 = 0,20</td></tr>
+  <tr><td><b>P(spam | GRATIS)</b></td><td>keyakinan <b>baru</b> setelah melihat bukti</td><td><b>0,75 × 0,20 ÷ 0,20 = 0,75</b></td></tr>
+</table>
+<p>Teorema Bayes adalah <b>cara memperbarui keyakinan setelah melihat bukti baru</b>. Algoritma Naive Bayes — salah satu filter spam tertua — bekerja persis seperti ini, hanya dengan ribuan kata sekaligus.</p>
+
+<h3>Langkah 5 — Contoh penting: kenapa tes "99% akurat" bisa menipu</h3>
+<p>Sebuah tes penyakit akurat <b>99%</b>. Penyakitnya langka: hanya <b>1 dari 1.000</b> orang. Kamu dites <b>positif</b>. Berapa peluang kamu benar-benar sakit? Hitung dengan cara tabel:</p>
 <pre class="code">Bayangkan 1.000 orang dites:
   Benar-benar sakit  : 1 orang    -> hasil positif (benar)      = 1
   Sehat              : 999 orang  -> 1% salah positif           = ~10
 
 Total hasil positif = 1 + 10 = 11
 Peluang benar sakit = 1 / 11 = sekitar 9%</pre>
-
 <div class="callout warn">
-<b>Hanya ~9%</b> — padahal tesnya "99% akurat"! Ini disebut <b>base rate fallacy</b>: saat kejadiannya <b>langka</b>, hasil positif lebih sering berasal dari salah-alarm. Inilah alasan matematis mengapa <b>precision</b> &amp; <b>recall</b> lebih berguna daripada akurasi (lihat modul Fundamental).
+<b>Hanya ~9%</b> — padahal tesnya "99% akurat"! Ini disebut <b>base rate fallacy</b>: saat kejadiannya <b>langka</b>, hasil positif lebih sering berasal dari alarm palsu. Ini persis gejala yang kamu lihat di modul Fundamental: <b>precision</b> anjlok ketika kasusnya jarang, walau model dan ambangnya sama persis.
 </div>
 
-<h3>Temperature pada LLM</h3>
-<p>Saat LLM memilih kata berikutnya, skor tiap token dibagi dulu dengan <b>temperature (T)</b> sebelum masuk softmax:</p>
-<ul>
-  <li><b>T rendah</b> (mis. 0,2) → perbedaan peluang menajam → jawaban <b>konsisten &amp; aman</b>.</li>
-  <li><b>T tinggi</b> (mis. 1,2) → peluang lebih merata → jawaban <b>lebih bervariasi &amp; kreatif</b> (juga lebih berisiko keliru).</li>
-</ul>
+<h3>Langkah 6 — Temperature: kenop kreativitas chatbot</h3>
+<p>Saat memilih kata berikutnya, LLM memberi <b>skor</b> untuk tiap kandidat, lalu mengubahnya menjadi peluang dengan <b>softmax</b> (dihitung di pelajaran sebelumnya). Sebelum masuk softmax, skornya dibagi dulu dengan angka bernama <b>temperature (T)</b>. Dengan skor 2,0 / 1,0 / 0,1 untuk tiga kandidat kata:</p>
+<table class="tbl">
+  <tr><th>Temperature</th><th>Kata A</th><th>Kata B</th><th>Kata C</th><th>Sifat jawabannya</th></tr>
+  <tr><td>0,5 (rendah)</td><td>86,4%</td><td>11,7%</td><td>1,9%</td><td>Hampir selalu memilih A — konsisten &amp; aman</td></tr>
+  <tr><td>1 (normal)</td><td>65,9%</td><td>24,2%</td><td>9,9%</td><td>Kadang memilih B atau C</td></tr>
+  <tr><td>2 (tinggi)</td><td>50,2%</td><td>30,4%</td><td>19,4%</td><td>Peluang lebih merata — bervariasi &amp; kreatif, juga lebih mudah keliru</td></tr>
+</table>
+
+<div data-demo="js-playground">// Temperature: skor dibagi T, lalu softmax
+const skor = [2.0, 1.0, 0.1];
+
+function peluang(T) {
+  const e = skor.map(function(s){ return Math.exp(s / T); });
+  const total = e.reduce(function(a, b){ return a + b; }, 0);
+  return e.map(function(v){ return (v / total * 100).toFixed(1) + "%"; });
+}
+
+[0.2, 0.5, 1, 2, 5].forEach(function(T){
+  console.log("T = " + T + "  ->  " + peluang(T).join("  "));
+});
+console.log("T kecil: yang terkuat makin dominan. T besar: makin merata.");</div>
 `,
           keyPoints: [
-            "Aturan perkalian: P(A dan B) = P(A)×P(B); aturan penjumlahan: P(A atau B) = P(A)+P(B).",
-            "Teorema Bayes: P(A|B) = P(B|A)×P(A) ÷ P(B) — memperbarui keyakinan setelah melihat bukti.",
+            "Aturan perkalian: P(A dan B) = P(A) × P(B) bila kejadiannya bebas — dua koin sama-sama gambar = ½ × ½ = ¼.",
+            "Aturan penjumlahan: P(A atau B) = P(A) + P(B) bila tidak bisa terjadi bersamaan; kalau tumpang-tindih, jangan hitung dua kali.",
+            "P(A | B) = peluang A bila B sudah diketahui; bisa dihitung langsung dari tabel hitungan.",
+            "Teorema Bayes: P(A|B) = P(B|A) × P(A) ÷ P(B) — memperbarui keyakinan awal setelah melihat bukti.",
             "Base rate fallacy: pada kejadian langka, hasil positif dari tes 99% akurat bisa hanya ~9% benar.",
-            "Temperature pada LLM: rendah = konsisten, tinggi = bervariasi/kreatif.",
+            "Temperature pada LLM: rendah = konsisten, tinggi = bervariasi/kreatif."
           ],
           practice: [
-            { type: "number", q: "Peluang dua koin adil sama-sama muncul 'gambar'? (dalam %)", answer: 25, tol: 0.5, hint: "P(A) × P(B) = 0,5 × 0,5.", solution: "0,5 × 0,5 = 0,25 = 25%." },
-            { type: "choice", q: "Tes 99% akurat untuk penyakit yang menimpa 1 dari 1.000 orang. Kamu positif. Peluang benar-benar sakit paling mendekati?", options: ["99%", "Sekitar 9%", "50%", "1%"], answer: 1, hint: "Bandingkan 1 positif benar dengan ~10 salah-alarm.", solution: "1 ÷ 11 ≈ 9% — inilah base rate fallacy." },
+            { type: "number", q: "Peluang dua koin adil sama-sama muncul 'gambar'? (dalam %)", answer: 25, tol: 0.5, unit: "%", hint: "P(A) × P(B) = 0,5 × 0,5.", solution: "0,5 × 0,5 = 0,25 = 25%." },
+            { type: "choice", q: "Tes 99% akurat untuk penyakit yang menimpa 1 dari 1.000 orang. Kamu positif. Peluang benar-benar sakit paling mendekati?", options: ["99%", "Sekitar 9%", "50%", "1%"], answer: 1, hint: "Bandingkan 1 positif benar dengan ~10 alarm palsu.", solution: "1 ÷ 11 ≈ 9% — inilah base rate fallacy." },
+            { type: "number", q: "Dari 40 email berisi kata 'PROMO', 10 adalah spam. Berapa P(spam | PROMO) dalam %?", answer: 25, tol: 0.5, unit: "%", hint: "Hanya lihat email yang berisi 'PROMO'.", solution: "10 ÷ 40 = 25%." }
           ],
           quiz: [
             {
               q: "Apa gunanya Teorema Bayes?",
               options: [
                 "Memperbarui keyakinan setelah melihat bukti yang baru",
-                "Menghitung rata-rata dari sekumpulan peluang yang berbeda",
-                "Menentukan peluang dua kejadian terjadi secara bersamaan",
-                "Mengubah data kategori menjadi angka agar bisa dihitung",
+                "Menghitung rata-rata dari sekumpulan peluang berbeda",
+                "Menentukan peluang dua kejadian bebas terjadi bersamaan",
+                "Mengubah data kategori menjadi angka agar bisa dihitung"
               ],
               answer: 0,
-              explain: "Bayes menggabungkan keyakinan awal dengan bukti baru.",
+              explain: "Bayes menggabungkan keyakinan awal dengan bukti baru — seperti 20% spam menjadi 75% setelah melihat kata 'GRATIS'."
             },
             {
               q: "Apa efek menaikkan 'temperature' pada LLM?",
               options: [
-                "Jawabannya makin bervariasi dan kreatif, tapi lebih berisiko keliru",
+                "Jawabannya makin bervariasi dan kreatif, tapi lebih mudah keliru",
                 "Jawabannya menjadi lebih panjang dan rinci dari sebelumnya",
-                "Model menjawab lebih cepat karena pencariannya dipersempit",
-                "Model menjadi lebih hemat token sehingga biayanya turun",
+                "Model menjawab lebih cepat karena pilihannya dipersempit",
+                "Model menjadi lebih hemat token sehingga biayanya turun"
               ],
               answer: 0,
-              explain:
-                "Temperature tinggi meratakan peluang sehingga pilihan kata lebih beragam.",
+              explain: "Temperature tinggi meratakan peluang sehingga pilihan kata lebih beragam."
             },
-          ],
+            {
+              q: "Dari 20 email berisi kata 'GRATIS', 15 adalah spam. Berapa P(spam | GRATIS)?",
+              options: ["75%", "15%", "20%", "25%"],
+              answer: 0,
+              explain: "Setelah tahu emailnya berisi 'GRATIS', yang dilihat hanya 20 email itu: 15 ÷ 20 = 75%."
+            }
+          ]
         },
       ],
     },
@@ -6131,9 +6659,13 @@ Keduanya berlatih bersamaan: pemalsu makin pintar memalsukan, polisi makin jeli 
   <tr><td><b>Max tokens</b></td><td>Batas panjang jawaban</td></tr>
 </table>
 
+<div class="callout">
+<b>Top-p dengan angka.</b> Misalkan kandidat kata berikutnya punya peluang: "biru" 60%, "cerah" 25%, "kelabu" 10%, "ungu" 5%. Dengan <b>top-p = 0,9</b>, model mengambil kandidat teratas sampai jumlahnya mencapai 90%: biru + cerah + kelabu = 95%. Kata "ungu" dibuang dari undian. Hasilnya: jawaban tetap bervariasi, tapi kandidat yang aneh tidak pernah terpilih.
+</div>
+
 <h3>Trik agar model raksasa bisa dijalankan</h3>
 <ul>
-  <li><b>Quantization</b> — menyimpan angka model dengan <b>presisi lebih rendah</b> (mis. dari 16-bit jadi 4-bit). Ukuran menyusut drastis, kualitas turun sedikit. Inilah yang membuat model besar bisa jalan di laptop.</li>
+  <li><b>Quantization</b> — menyimpan angka model dengan <b>presisi lebih rendah</b> (mis. dari 16-bit jadi 4-bit). Ukuran menyusut drastis, kualitas turun sedikit. Hitungannya: model 175 miliar parameter butuh 350 GB pada 16-bit (2 byte per angka), tapi hanya sekitar <b>88 GB</b> pada 4-bit (setengah byte per angka). Model 7 miliar parameter menyusut dari 14 GB menjadi sekitar <b>3,5 GB</b> — muat di laptop biasa.</li>
   <li><b>Distillation</b> — model besar (<i>guru</i>) "mengajari" model kecil (<i>murid</i>). Murid jadi jauh lebih ringan dengan kemampuan mendekati gurunya.</li>
   <li><b>Mixture of Experts (MoE)</b> — model dibagi jadi banyak "ahli"; tiap permintaan <b>hanya mengaktifkan sebagian</b>. Total parameter besar, tapi biaya per permintaan tetap wajar.</li>
 </ul>
@@ -6377,6 +6909,11 @@ Suara adalah <b>getaran udara</b>. Mikrofon mengubahnya jadi gelombang, lalu kom
           title: "Membangun Aplikasi AI (API & RAG)",
           duration: "12 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+Melatih LLM butuh ratusan miliar parameter dan compute setara ribuan tahun kerja laptop (pelajaran Parameter, Token, Context &amp; Compute). Jadi hampir tidak ada yang melatih LLM sendiri. Lalu bagaimana orang biasa membangun aplikasi AI? Jawabannya dua kata di judul pelajaran ini.
+</div>
+
 <p>Kamu tidak perlu melatih model sendiri untuk membuat aplikasi AI. Cukup pakai model yang sudah ada lewat <b>API</b>.</p>
 
 <div data-diagram="pipeline" data-stages="Pertanyaan::dari pengguna|Cari dokumen::yang paling relevan|Sisipkan ke prompt::sebagai bahan bacaan|Model menjawab::berdasar dokumen itu" data-caption="Alur RAG: model diberi bahan bacaan dulu, baru diminta menjawab"></div>
@@ -6384,10 +6921,13 @@ Suara adalah <b>getaran udara</b>. Mikrofon mengubahnya jadi gelombang, lalu kom
 
 <h3>API = jembatan ke AI</h3>
 <p><b>API</b> (Application Programming Interface) memungkinkan aplikasimu mengirim prompt ke model AI (mis. Claude/GPT) dan menerima jawaban, lewat kode. Kamu fokus membangun produk, penyedia mengurus modelnya.</p>
+<div class="callout">
+🍽️ <b>Analogi pelayan restoran.</b> Kamu tidak masuk ke dapur dan memasak sendiri. Kamu memberi pesanan kepada pelayan, pelayan membawanya ke dapur, lalu kembali membawa makanan. <b>API adalah pelayannya</b>: aplikasimu mengirim "pesanan" (prompt), dapur penyedia AI memasaknya dengan model raksasa mereka, dan jawabannya dikirim balik. Kamu membayar per porsi — dalam hal ini <b>per token</b>.
+</div>
 
 <pre class="code">// Contoh alur sederhana (pseudo-code)
 jawaban = panggilAI({
-  model: "claude-opus-4-8",
+  model: "claude-opus-5-5",
   prompt: "Ringkas artikel ini: " + teksArtikel
 });
 tampilkan(jawaban);</pre>
@@ -6404,6 +6944,16 @@ tampilkan(jawaban);</pre>
 <div class="callout">
 <b>Contoh nyata:</b> Chatbot layanan pelanggan yang menjawab berdasarkan buku panduan perusahaan, bukan tebakan umum.
 </div>
+
+<h3>RAG dengan contoh kecil</h3>
+<table class="tbl">
+  <tr><th>Langkah</th><th>Yang terjadi</th></tr>
+  <tr><td>Pertanyaan</td><td>"Berapa lama garansi laptop seri X?"</td></tr>
+  <tr><td>Cari dokumen</td><td>Dari 500 halaman buku panduan, sistem menemukan paragraf: <i>"Seri X bergaransi 2 tahun untuk kerusakan pabrik."</i></td></tr>
+  <tr><td>Sisipkan ke prompt</td><td>"Berdasarkan teks berikut: [paragraf tadi]. Jawab: berapa lama garansi laptop seri X?"</td></tr>
+  <tr><td>Model menjawab</td><td>"Garansinya 2 tahun untuk kerusakan pabrik."</td></tr>
+</table>
+<p>Tanpa RAG, model hanya bisa <b>menebak</b> dari ingatan umumnya — dan tebakan yang terdengar yakin tapi salah itulah <b>halusinasi</b>. Bagaimana sistem tahu paragraf mana yang paling cocok? Ia mengubah teks menjadi <b>vektor</b> dan mencari yang paling mirip dengan <b>cosine similarity</b> — persis seperti mencari selera film yang paling mirip di pelajaran Vektor &amp; Dot Product. Pelajaran berikutnya membahas mesin penyimpannya.</p>
 `,
           keyPoints: [
             "API memungkinkan aplikasimu memakai model AI tanpa melatihnya sendiri.",
@@ -6442,6 +6992,11 @@ tampilkan(jawaban);</pre>
           title: "Vector Database — Infrastruktur RAG",
           duration: "11 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Embedding</b> = teks yang diubah menjadi vektor (daftar angka) yang mewakili maknanya. <b>Cosine similarity</b> = cara mengukur seberapa mirip arah dua vektor, dari 0 (tidak mirip) sampai 1 (sangat mirip) — kamu menghitungnya sendiri untuk selera film Andi, Budi, dan Citra di pelajaran Vektor &amp; Dot Product.
+</div>
+
 <p>Di pelajaran <b>Membangun Aplikasi AI</b> kamu belajar RAG mencari dokumen lewat <b>kemiripan vektor</b>. Untuk jutaan dokumen, pencarian itu butuh mesin khusus: <b>vector database</b>.</p>
 
 <div data-diagram="pipeline" data-stages="Dokumen::dipotong kecil-kecil|Embedding::tiap potongan jadi vektor|Disimpan::di vector database|Dicari::yang paling mirip pertanyaan" data-caption="Vector database mencari berdasar kemiripan makna, bukan kecocokan kata"></div>
@@ -6452,6 +7007,10 @@ tampilkan(jawaban);</pre>
   <li>Menyimpan <b>embedding</b> (vektor) dari ribuan/jutaan potongan teks.</li>
   <li>Mencari vektor <b>paling mirip</b> dengan pertanyaan secara <b>sangat cepat</b> (pencarian tetangga terdekat / ANN).</li>
 </ul>
+
+<h3>Kenapa tidak dihitung satu per satu saja?</h3>
+<p>Dengan 3 dokumen, menghitung cosine ke semuanya itu instan. Dengan <b>10 juta</b> potongan dokumen yang masing-masing berisi 1.000 angka, satu pertanyaan butuh sekitar <b>10 miliar perkalian</b> — terlalu lambat bila ribuan orang bertanya tiap detik.</p>
+<p>Vector database memakai jalan pintas bernama <b>ANN</b> (<i>Approximate Nearest Neighbor</i> — tetangga terdekat secara perkiraan). Idenya: vektor-vektor dikelompokkan dulu berdasarkan kedekatannya, seperti buku yang disusun per rak topik. Saat ada pertanyaan, pencarian langsung menuju beberapa rak yang paling dekat, bukan memeriksa seluruh perpustakaan. Hasilnya <b>hampir selalu</b> sama dengan pencarian lengkap, tapi ratusan kali lebih cepat. Harga yang dibayar: sesekali ada dokumen relevan yang terlewat.</p>
 
 <div class="callout">
 <b>Analogi:</b> vector database ibarat "perpustakaan yang menata buku berdasarkan MAKNA, bukan abjad" — sehingga saat kamu bertanya, ia langsung menuju rak yang paling relevan.
@@ -6566,6 +7125,11 @@ tampilkan(jawaban);</pre>
           title: "Multi-Agent & CrewAI",
           duration: "12 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Dulu, sekarang</b><br>
+Chatbot biasa hanya <b>menjawab</b>: kamu bertanya, ia membalas dengan teks. <b>Agen AI</b> selangkah lebih jauh: ia diberi <b>tujuan</b> dan <b>alat</b> (misalnya mesin pencari, kalkulator, atau akses ke berkas), lalu memutuskan sendiri langkah-langkahnya — mencari, membaca, menghitung, menulis — sampai tujuannya tercapai. Kata "agen" di sini mirip dengan agen di Reinforcement Learning: sesuatu yang <b>mengambil tindakan</b>, bukan sekadar menjawab.
+</div>
+
 <p>Sejauh ini kita memakai <b>satu</b> AI. Tapi tugas rumit sering lebih baik ditangani <b>beberapa agen AI yang bekerja sama</b> — seperti sebuah tim.</p>
 
 <div data-diagram="network" data-center="Satu tugas besar" data-nodes="Agen Peneliti|Agen Penulis|Agen Pemeriksa|Agen Perangkum" data-caption="Multi-agent: satu tugas besar dipecah ke beberapa agen dengan peran berbeda"></div>
@@ -6648,6 +7212,19 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
 <b>Aturan keamanan #1:</b> JANGAN pernah menaruh <b>API key</b> di kode frontend (browser). Siapa pun bisa melihatnya. API key harus berada di <b>backend</b> (server) milikmu. Alurnya: <b>Browser → Backend-mu → API Claude → kembali</b>.
 </div>
 
+<h3>Sebelum mulai — kamus kecil</h3>
+<p>Kode di pelajaran ini memakai beberapa istilah pemrograman web. Ini artinya dalam bahasa sehari-hari:</p>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th></tr>
+  <tr><td><b>Frontend</b></td><td>Bagian yang berjalan di browser pengguna — siapa pun bisa mengintip kodenya</td></tr>
+  <tr><td><b>Backend</b></td><td>Program di server milikmu sendiri — tidak bisa diintip pengguna</td></tr>
+  <tr><td><b>API key</b></td><td>"Kata sandi" untuk memakai layanan AI; semua tagihan dibebankan ke pemilik kunci ini</td></tr>
+  <tr><td><b>SDK</b></td><td>Paket kode siap pakai dari penyedia layanan, supaya kamu tidak menulis semuanya dari nol</td></tr>
+  <tr><td><b>npm</b></td><td>"Toko aplikasi" untuk paket kode JavaScript; <i>npm install</i> = mengunduh sebuah paket</td></tr>
+  <tr><td><b>Environment variable</b></td><td>Pengaturan rahasia yang disimpan di server, di luar kode — tempat aman untuk API key</td></tr>
+  <tr><td><b>await</b></td><td>"Tunggu dulu sampai jawabannya datang" — dipakai karena jawaban dari internet butuh waktu</td></tr>
+</table>
+
 <h3>1. Pasang SDK resmi</h3>
 <pre class="code">npm install @anthropic-ai/sdk</pre>
 
@@ -6658,7 +7235,7 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
 const client = new Anthropic();
 
 const response = await client.messages.create({
-  model: "claude-opus-4-8",          // model terbaru & paling cerdas
+  model: "claude-opus-5-5",          // nama model; cek dokumentasi untuk versi terbaru
   max_tokens: 1024,                  // batas panjang jawaban
   system: "Kamu asisten yang ramah dan menjawab dalam Bahasa Indonesia.",
   messages: [
@@ -6668,8 +7245,26 @@ const response = await client.messages.create({
 
 console.log(response.content[0].text);</pre>
 
+<p>Dibaca baris demi baris:</p>
+<table class="tbl">
+  <tr><th>Baris</th><th>Artinya</th></tr>
+  <tr><td><b>import Anthropic …</b></td><td>Ambil SDK yang tadi dipasang</td></tr>
+  <tr><td><b>new Anthropic()</b></td><td>Buat "penghubung" ke layanan; API key dibaca otomatis dari environment variable</td></tr>
+  <tr><td><b>model</b></td><td>Model mana yang dipakai. Nama model berganti tiap ada rilis baru</td></tr>
+  <tr><td><b>max_tokens</b></td><td>Batas panjang jawaban (ingat: tagihan dihitung per token)</td></tr>
+  <tr><td><b>system</b></td><td>Aturan dan kepribadian bot — berlaku untuk seluruh percakapan</td></tr>
+  <tr><td><b>messages</b></td><td>Isi percakapannya; <i>role: "user"</i> berarti pesan dari pengguna</td></tr>
+  <tr><td><b>response.content[0].text</b></td><td>Ambil teks jawaban dari balasan yang diterima</td></tr>
+</table>
+
 <h3>3. Membuat percakapan (multi-turn)</h3>
-<p>API bersifat <b>stateless</b> — ia tidak mengingat percakapan. Supaya chatbot "ingat", kamu kirim <b>seluruh riwayat</b> tiap kali:</p>
+<p>API bersifat <b>stateless</b> — ia tidak mengingat percakapan. Setiap panggilan berdiri sendiri, seperti menelepon operator yang berbeda setiap kali. Supaya chatbot "ingat", kamu kirim <b>seluruh riwayat</b> tiap kali:</p>
+<table class="tbl">
+  <tr><th>Panggilan</th><th>Yang dikirim ke API</th></tr>
+  <tr><td>Ke-1</td><td>user: "Namaku Andi."</td></tr>
+  <tr><td>Ke-2</td><td>user: "Namaku Andi." → assistant: "Halo Andi!" → user: "Siapa namaku tadi?"</td></tr>
+</table>
+<p>Karena riwayatnya ikut dikirim terus, <b>percakapan panjang makin mahal</b>: panggilan ke-20 membawa 19 pesan sebelumnya sebagai token masukan. Kodenya:</p>
 <pre class="code">const messages = [
   { role: "user",      content: "Namaku Andi." },
   { role: "assistant", content: "Halo Andi! Ada yang bisa kubantu?" },
@@ -6677,7 +7272,7 @@ console.log(response.content[0].text);</pre>
 ];
 
 const res = await client.messages.create({
-  model: "claude-opus-4-8",
+  model: "claude-opus-5-5",
   max_tokens: 1024,
   messages: messages
 });</pre>
@@ -6690,7 +7285,7 @@ const res = await client.messages.create({
             "Bangun chatbot dengan memanggil API Claude — tidak perlu melatih model.",
             "API key WAJIB di backend, tidak boleh di frontend/browser.",
             "API stateless: kirim seluruh riwayat (messages) agar bot 'mengingat' percakapan.",
-            "Gunakan model terbaru claude-opus-4-8; atur kepribadian lewat 'system'.",
+            "Pakai model terbaru (saat materi ini ditulis: claude-opus-5-5) — nama model berganti tiap rilis; atur kepribadian lewat 'system'.",
           ],
           quiz: [
             {
@@ -6729,6 +7324,11 @@ const res = await client.messages.create({
 <div data-diagram="flow" data-steps="Pecah Dokumen|Embedding|Simpan di Vector DB|Cari yang Relevan|Jawab" data-caption="Pipeline RAG"></div>
 
 
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Embedding</b> = teks yang diubah jadi vektor makna; <b>cosine similarity</b> = ukuran kemiripan dua vektor (pelajaran Vektor); <b>context window</b> = "meja kerja" model yang luasnya terbatas (pelajaran Parameter &amp; Token). RAG menggabungkan ketiganya.
+</div>
+
 <h3>Pipeline RAG (5 langkah)</h3>
 <ol>
   <li><b>Pecah (chunk)</b> — dokumen dipotong jadi bagian kecil (mis. per paragraf).</li>
@@ -6742,6 +7342,10 @@ const res = await client.messages.create({
 <b>Inti idenya:</b> daripada AI menebak dari ingatannya, kita "menyodorkan buku catatan yang benar" tepat sebelum ia menjawab. Hasilnya jauh lebih akurat & bisa dirujuk sumbernya.
 </div>
 
+<div class="callout">
+<b>Kenapa harus dipotong-potong (chunk)?</b> Karena meja kerja model terbatas. Buku panduan 500 halaman tidak muat — dan kalaupun muat, mahal sekali. Dengan dipotong per paragraf, sistem cukup menaruh <b>3 paragraf paling relevan</b> di meja. Itulah arti <b>top-k</b>: ambil k potongan dengan skor kemiripan tertinggi (di sini k = 3).
+</div>
+
 <h3>Contoh inti kode (disederhanakan)</h3>
 <pre class="code">// 1) Saat user bertanya, cari potongan dokumen relevan
 const potongan = await vectorDB.cari(pertanyaanUser, { topK: 3 });
@@ -6751,13 +7355,15 @@ const konteks = potongan.map(p => p.teks).join("\\n\\n");
 
 // 3) Selipkan ke prompt, lalu minta Claude menjawab
 const res = await client.messages.create({
-  model: "claude-opus-4-8",
+  model: "claude-opus-5-5",
   max_tokens: 1024,
   system: "Jawab HANYA berdasarkan konteks. Jika tidak ada di konteks, katakan tidak tahu.",
   messages: [
     { role: "user", content: "Konteks:\\n" + konteks + "\\n\\nPertanyaan: " + pertanyaanUser }
   ]
 });</pre>
+
+<p>Dalam bahasa sehari-hari: (1) cari 3 potongan dokumen yang paling mirip dengan pertanyaan; (2) ambil teks dari tiap potongan lalu sambung menjadi satu, dipisah baris kosong; (3) kirim ke Claude dengan aturan "jawab hanya dari konteks", ditambah konteks dan pertanyaannya.</p>
 
 <div class="callout warn">
 <b>Kunci akurasi:</b> instruksi "jawab hanya berdasarkan konteks" + menyodorkan sumber = halusinasi turun drastis. Ini fondasi chatbot dokumen, customer service AI, dan asisten internal.
@@ -6892,7 +7498,7 @@ console.log("RAG memilih dokumen dengan skor tertinggi sebagai konteks.");</div>
 <pre class="code">import { ChatAnthropic } from "@langchain/anthropic";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 
-const model = new ChatAnthropic({ model: "claude-opus-4-8" });
+const model = new ChatAnthropic({ model: "claude-opus-5-5" });
 
 const prompt = ChatPromptTemplate.fromMessages([
   ["system", "Kamu tutor yang ramah, jawab dalam Bahasa Indonesia."],
@@ -6904,6 +7510,8 @@ const chain = prompt.pipe(model);
 
 const hasil = await chain.invoke({ pertanyaan: "Apa itu RAG?" });
 console.log(hasil.content);</pre>
+
+<p>Dibaca pelan-pelan: <b>{pertanyaan}</b> adalah lubang kosong di dalam template — diisi belakangan saat <i>invoke</i> dipanggil. <b>.pipe(model)</b> artinya "alirkan hasil template ke model", seperti pipa air: prompt yang sudah terisi mengalir masuk ke Claude. Rangkaian itulah yang disebut <b>chain</b>. Bandingkan dengan pelajaran Chatbot: di sana kamu menyusun pesan secara manual; di sini LangChain yang menyusunnya.</p>
 
 <div class="callout">
 <b>Untuk RAG:</b> LangChain menyediakan <b>retriever</b> + <b>chain</b> bawaan, sehingga pipeline "cari dokumen → selipkan ke prompt → jawab" yang tadi kita buat manual bisa dirakit dalam beberapa baris.
@@ -6969,12 +7577,14 @@ console.log(hasil.content);</pre>
 
 <pre class="code">async function tanyaTutor(riwayat, pertanyaan, materiRelevan) {
   return client.messages.create({
-    model: "claude-opus-4-8",
+    model: "claude-opus-5-5",
     max_tokens: 800,
     system: SYSTEM_TUTOR + "\\n\\nMateri rujukan:\\n" + materiRelevan,
     messages: [...riwayat, { role: "user", content: pertanyaan }]
   });
 }</pre>
+
+<p>Tiga titik pada <b>...riwayat</b> artinya "tumpahkan semua isi riwayat di sini", lalu pertanyaan baru ditambahkan di ujungnya. Jadi setiap panggilan membawa seluruh percakapan sebelumnya — ingat, API tidak punya ingatan sendiri. Materi rujukan hasil RAG ditempel di <b>system</b>, sehingga tutor selalu menjawab berdasarkan isi pelajaran.</p>
 
 <div class="callout">
 <b>Pelajaran arsitektur:</b> aplikasi AI yang baik = <b>persona</b> (system prompt) + <b>pengetahuan</b> (RAG) + <b>memori</b> (riwayat) + <b>batasan</b> (guardrails). Empat pilar ini berlaku untuk hampir semua produk AI.
@@ -7493,6 +8103,12 @@ Daftar di atas mudah membuat kewalahan. Jangan terjebak <b>"belajar pustaka"</b>
           title: "Unit Economics Produk AI",
           duration: "13 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Biaya variabel</b> = biaya yang ikut naik setiap kali ada satu penjualan lagi (di sini: biaya token per permintaan). <b>Margin kontribusi</b> = harga jual − biaya variabel, yaitu sisa uang dari tiap penjualan untuk menutup biaya tetap (<a href="#/lesson/acc-a-4">Akuntansi untuk Keputusan Bisnis</a>).<br>
+<b>Free Cash Flow (FCF)</b> = kas dari operasi − belanja modal; uang yang benar-benar bebas dipakai pemilik (<a href="#/lesson/acc-fund-2">Free Cash Flow</a>).
+</div>
+
 <p>Kamu sudah bisa <b>membangun</b> aplikasi AI. Pertanyaan berikutnya yang menentukan hidup-matinya: <b>apakah tiap pengguna menghasilkan untung?</b> Ini pertemuan antara jalur AI dan jalur Akuntansi.</p>
 
 <div data-diagram="stack" data-parts="Biaya token model:55|Vector DB &amp; penyimpanan:15|Server &amp; jaringan:15|Dukungan pengguna:15" data-caption="Contoh rincian biaya melayani satu pengguna produk AI — biaya token biasanya yang terbesar"></div>
@@ -7599,6 +8215,12 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
           title: "ROI Proyek AI & Build vs Buy",
           duration: "12 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>ROI</b> = (hasil − biaya) ÷ biaya × 100%. Modal 100 menghasilkan 130 → ROI 30% (<a href="#/lesson/acc-fund-3">ROI</a>).<br>
+<b>CapEx</b> = belanja besar di muka untuk aset yang dipakai bertahun-tahun (membeli mesin). <b>OpEx</b> = biaya rutin yang dibayar selama dipakai (menyewa mesin) (<a href="#/lesson/acc-op-1">CapEx vs OpEx</a>).
+</div>
+
 <p>Banyak perusahaan membangun AI karena <b>ikut tren</b>, bukan karena menghasilkan nilai. Cara menghindarinya: pakai <b>ROI</b> — alat yang sudah kamu pelajari di jalur Akuntansi.</p>
 
 <div data-diagram="vs" data-left="BUY - pakai API::Biaya awal kecil (OpEx)::Cepat mulai" data-right="BUILD - latih sendiri::Biaya besar di muka (CapEx)::Butuh volume besar" data-caption="Build vs Buy"></div>
@@ -7673,6 +8295,11 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
           title: "Moat di Era AI — Apakah Model Itu Parit?",
           duration: "12 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Economic moat</b> (parit ekonomi) = keunggulan yang membuat bisnis sulit ditiru pesaing, seperti parit yang melindungi benteng. Lima jenisnya: merek, <b>network effect</b> (makin banyak pengguna makin berguna), <b>switching cost</b> (repot/mahal bila pelanggan pindah), keunggulan biaya &amp; skala, serta teknologi, paten, atau izin (<a href="#/lesson/acc-kual-4">Economic Moat</a>).
+</div>
+
 <p>Pertanyaan paling diperdebatkan di industri AI: <b>apa yang membuat sebuah perusahaan AI sulit ditiru?</b> Kita pakai kerangka <b>economic moat</b> dari jalur Akuntansi.</p>
 
 <div class="callout warn">
@@ -7736,6 +8363,12 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
           title: "Keusangan Model & Alokasi Modal di AI",
           duration: "12 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Penyusutan</b> = cara mencatat harga aset sebagai biaya sedikit demi sedikit selama masa pakainya. Mesin Rp100 juta yang dipakai 10 tahun dicatat Rp10 juta per tahun (<a href="#/lesson/acc-a-3">Penyusutan, Persediaan &amp; Modal Kerja</a>).<br>
+<b>Alokasi modal</b> = keputusan ke mana uang perusahaan dipakai: diinvestasikan lagi, membeli perusahaan lain, melunasi utang, membeli kembali saham, atau dibagi sebagai dividen (<a href="#/lesson/acc-kual-1">Alokasi Modal</a>).
+</div>
+
 <p>Pelajaran penutup: bagaimana perusahaan AI sebaiknya <b>mengalokasikan modal</b>, mengingat satu sifat khas industri ini — <b>segalanya cepat usang</b>.</p>
 
 <h3>Fundamental: "aset" AI menyusut sangat cepat</h3>

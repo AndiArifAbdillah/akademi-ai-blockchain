@@ -252,6 +252,9 @@ a:hover { text-decoration: underline; }
 
 .callout { background: var(--surface-2); border-left: 4px solid var(--primary); border-radius: 10px; padding: 14px 16px; margin: 18px 0; }
 .callout.warn { border-left-color: var(--warn); background: rgba(245,158,11,.08); }
+/* Kotak "Ingat dulu": bekal dari pelajaran sebelumnya, dipasang di awal pelajaran yang menanjak */
+.callout.ingat { border-left-color: var(--ok); background: rgba(22,163,74,.07); }
+.callout.ingat .tbl { margin: 10px 0; }
 
 .tbl { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .92rem; }
 .tbl th, .tbl td { border: 1px solid var(--border); padding: 9px 12px; text-align: left; }
