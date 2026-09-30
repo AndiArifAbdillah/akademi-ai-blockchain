@@ -8365,7 +8365,7 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
           content: `
 <div class="callout ingat">
 <b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
-<b>Penyusutan</b> = cara mencatat harga aset sebagai biaya sedikit demi sedikit selama masa pakainya. Mesin Rp100 juta yang dipakai 10 tahun dicatat Rp10 juta per tahun (<a href="#/lesson/acc-a-3">Penyusutan, Persediaan &amp; Modal Kerja</a>).<br>
+<b>Penyusutan</b> = cara mencatat harga aset sebagai biaya sedikit demi sedikit selama masa pakainya. Mesin Rp100 juta yang dipakai 10 tahun dicatat Rp10 juta per tahun (<a href="#/lesson/acc-a-3">Penyusutan</a>).<br>
 <b>Alokasi modal</b> = keputusan ke mana uang perusahaan dipakai: diinvestasikan lagi, membeli perusahaan lain, melunasi utang, membeli kembali saham, atau dibagi sebagai dividen (<a href="#/lesson/acc-kual-1">Alokasi Modal</a>).
 </div>
 

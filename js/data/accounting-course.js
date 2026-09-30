@@ -846,124 +846,225 @@ Jurnal menjawab <b>"kapan dan apa yang terjadi"</b>. Setelah dicatat, angkanya d
         {
           id: "acc-m-3",
           title: "Laporan Laba Rugi",
-          duration: "10 menit",
+          duration: "13 menit",
           content: `
-<p><b>Laporan Laba Rugi (Income Statement)</b> menunjukkan kinerja bisnis selama satu periode: untung atau rugi.</p>
-
-<div data-diagram="layers" data-items="Laba Bersih|Laba Kotor|Pendapatan" data-caption="Dari pendapatan menyusut jadi laba bersih"></div>
-
-
-<div class="callout">
-<b>Rumus inti:</b> Pendapatan − Beban = <b>Laba (atau Rugi) Bersih</b>.
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Pendapatan</b> = uang yang didapat dari berjualan; <b>beban</b> = biaya yang dikorbankan untuk mendapatkannya (Lima Jenis Akun). Setelah jurnal dan penyesuaian selesai, semua pendapatan dan beban satu tahun dirangkum menjadi satu laporan. Itulah pelajaran ini.
 </div>
 
-<h3>Susunannya (dari atas ke bawah)</h3>
+<p><b>Laporan Laba Rugi</b> (<i>income statement</i>) menjawab satu pertanyaan: <b>selama satu periode, bisnis ini untung atau rugi — dan berapa?</b> Kita pakai satu contoh yang akan terus muncul di pelajaran-pelajaran berikutnya: <b>Warung Kopi Sari</b>, sepanjang tahun 2025 (angka dalam juta rupiah).</p>
+
+<div data-diagram="layers" data-items="Laba Bersih|Laba Operasi|Laba Kotor|Pendapatan" data-caption="Dari pendapatan, dikurangi lapis demi lapis sampai tersisa laba bersih"></div>
+
+<h3>Langkah 1 — Pendapatan dikurangi harga barang yang terjual</h3>
+<p>Setahun Warung Sari menjual kopi dan roti senilai <b>300</b>. Untuk membuat semua yang terjual itu, dipakai biji kopi, susu, gula, dan roti seharga <b>120</b>. Biaya bahan yang <b>benar-benar terjual</b> ini disebut <b>HPP</b> (Harga Pokok Penjualan).</p>
+<div class="callout">
+<b>Laba Kotor = Pendapatan − HPP</b> = 300 − 120 = <b>180</b><br>
+Artinya: dari tiap Rp100 penjualan, Rp60 tersisa setelah membayar bahannya. Angka 60% ini disebut <b>gross margin</b>.
+</div>
+
+<h3>Langkah 2 — Dikurangi biaya menjalankan warung</h3>
+<p>Warung tidak jalan hanya dengan bahan. Ada biaya yang harus dibayar <b>berapa pun cangkir yang terjual</b>:</p>
 <table class="tbl">
-  <tr><td>Pendapatan (Penjualan)</td><td>100</td></tr>
-  <tr><td>− Harga Pokok Penjualan (HPP)</td><td>(60)</td></tr>
-  <tr><td><b>= Laba Kotor</b></td><td><b>40</b></td></tr>
-  <tr><td>− Beban Operasional (gaji, sewa, listrik)</td><td>(25)</td></tr>
-  <tr><td><b>= Laba Bersih</b></td><td><b>15</b></td></tr>
+  <tr><th>Beban operasional</th><th>Jumlah</th></tr>
+  <tr><td>Gaji 2 barista</td><td>70</td></tr>
+  <tr><td>Sewa tempat</td><td>30</td></tr>
+  <tr><td>Listrik, air & lain-lain</td><td>10</td></tr>
+  <tr><td>Penyusutan peralatan (mesin kopi, kulkas, meja)</td><td>20</td></tr>
+  <tr><td><b>Total</b></td><td><b>130</b></td></tr>
+</table>
+<div class="callout">
+<b>Laba Operasi = Laba Kotor − Beban Operasional</b> = 180 − 130 = <b>50</b><br>
+Inilah hasil dari <b>kegiatan inti</b> warung: membuat dan menjual kopi.
+</div>
+<p><i>Penyusutan</i> adalah bagian harga peralatan yang "terpakai" tahun ini — dibahas tuntas di modul berikutnya.</p>
+
+<h3>Langkah 3 — Dikurangi bunga dan pajak</h3>
+<table class="tbl">
+  <tr><td>Laba operasi</td><td>50</td></tr>
+  <tr><td>− Bunga pinjaman bank</td><td>(5)</td></tr>
+  <tr><td>− Pajak (angka ilustrasi)</td><td>(5)</td></tr>
+  <tr><td><b>= Laba Bersih</b></td><td><b>40</b></td></tr>
 </table>
 
-<ul>
-  <li><b>HPP</b> = biaya langsung barang yang terjual.</li>
-  <li><b>Laba Kotor</b> = Pendapatan − HPP.</li>
-  <li><b>Laba Bersih</b> = Laba Kotor − beban operasional (& lain-lain).</li>
-  <li><b>Margin laba bersih</b> = Laba Bersih ÷ Pendapatan × 100%.</li>
-</ul>
+<h3>Laporan lengkapnya</h3>
+<table class="tbl">
+  <tr><th>Warung Kopi Sari — Laba Rugi 2025</th><th>Juta Rp</th></tr>
+  <tr><td>Pendapatan</td><td>300</td></tr>
+  <tr><td>− HPP</td><td>(120)</td></tr>
+  <tr><td><b>= Laba Kotor</b></td><td><b>180</b></td></tr>
+  <tr><td>− Beban operasional</td><td>(130)</td></tr>
+  <tr><td><b>= Laba Operasi</b></td><td><b>50</b></td></tr>
+  <tr><td>− Bunga</td><td>(5)</td></tr>
+  <tr><td>− Pajak</td><td>(5)</td></tr>
+  <tr><td class="ok-cell"><b>= Laba Bersih</b></td><td class="ok-cell"><b>40</b></td></tr>
+</table>
+
+<h3>Margin: laba dibandingkan penjualan</h3>
+<p>Angka laba saja sulit dibandingkan — warung besar tentu labanya lebih besar. Karena itu laba dibagi pendapatan menjadi persen, disebut <b>margin</b>:</p>
+<table class="tbl">
+  <tr><th>Margin</th><th>Hitungan</th><th>Hasil</th><th>Artinya</th></tr>
+  <tr><td>Gross margin</td><td>180 ÷ 300</td><td>60%</td><td>Seberapa mahal bahan dibanding harga jual</td></tr>
+  <tr><td>Operating margin</td><td>50 ÷ 300</td><td>16,7%</td><td>Seberapa efisien menjalankan warungnya</td></tr>
+  <tr><td>Net margin</td><td>40 ÷ 300</td><td>13,3%</td><td>Dari tiap Rp100 penjualan, Rp13,3 menjadi laba bersih</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Ingat:</b> laporan laba rugi merekam <b>satu periode</b> (misalnya setahun), seperti rekaman video. Laba 40 juta <b>belum tentu</b> berarti ada uang 40 juta di laci — pelajaran berikutnya menunjukkan kenapa.
+</div>
 
 <p>Coba sendiri — ubah angkanya dan lihat laba & marginnya berubah:</p>
 <div data-demo="profit-calc"></div>
 `,
           keyPoints: [
-            "Laba Rugi mengukur kinerja selama satu periode: Pendapatan − Beban = Laba bersih.",
-            "Laba Kotor = Pendapatan − HPP; Laba Bersih = Laba Kotor − beban operasional.",
-            "Margin laba bersih = Laba Bersih ÷ Pendapatan × 100%.",
+            "Laba Rugi mengukur kinerja selama satu periode: pendapatan dikurangi lapis demi lapis sampai laba bersih.",
+            "Laba Kotor = Pendapatan − HPP (biaya bahan barang yang terjual).",
+            "Laba Operasi = Laba Kotor − beban operasional (gaji, sewa, listrik, penyusutan); Laba Bersih = Laba Operasi − bunga − pajak.",
+            "Margin = laba ÷ pendapatan × 100% — membuat laba bisa dibandingkan antar-bisnis."
           ],
           practice: [
-            { type: "number", q: "Pendapatan Rp500jt, HPP Rp300jt, beban operasional Rp120jt. Berapa Laba Bersih? (juta)", answer: 80, unit: "jt", hint: "Laba kotor = Pendapatan − HPP, lalu kurangi beban operasional.", solution: "Laba kotor = 500 − 300 = 200; laba bersih = 200 − 120 = Rp80jt." },
-            { type: "number", q: "Laba bersih Rp40jt dari pendapatan Rp160jt. Berapa margin laba bersih? (dalam %)", answer: 25, unit: "%", hint: "Margin = Laba Bersih ÷ Pendapatan × 100%.", solution: "40 ÷ 160 × 100% = 25%." },
+            { type: "number", q: "Pendapatan Rp500jt, HPP Rp300jt, beban operasional Rp120jt. Berapa laba operasinya? (juta)", answer: 80, tol: 0.5, unit: "jt", hint: "Laba kotor = Pendapatan − HPP, lalu kurangi beban operasional.", solution: "Laba kotor = 500 − 300 = 200; laba operasi = 200 − 120 = Rp80jt." },
+            { type: "number", q: "Laba bersih Rp40jt dari pendapatan Rp160jt. Berapa net margin? (dalam %)", answer: 25, tol: 0.5, unit: "%", hint: "Margin = Laba Bersih ÷ Pendapatan × 100%.", solution: "40 ÷ 160 × 100% = 25%." }
           ],
           quiz: [
             {
-              q: "Pendapatan Rp200jt, HPP Rp120jt, beban operasional Rp50jt. Laba bersihnya?",
-              options: ["Rp80jt", "Rp30jt", "Rp50jt", "Rp200jt"],
-              answer: 1,
-              explain:
-                "Laba kotor = 200 − 120 = 80; laba bersih = 80 − 50 = Rp30jt.",
+              q: "Pendapatan Rp200jt, HPP Rp120jt, beban operasional Rp50jt. Tanpa bunga dan pajak, laba bersihnya?",
+              options: ["Rp30jt", "Rp80jt", "Rp50jt", "Rp200jt"],
+              answer: 0,
+              explain: "Laba kotor = 200 − 120 = 80; lalu 80 − 50 = Rp30jt."
             },
             {
               q: "Laba Kotor dihitung dari?",
-              options: [
-                "Pendapatan − semua beban",
-                "Pendapatan − HPP",
-                "Pendapatan + HPP",
-                "Aset − Kewajiban",
-              ],
-              answer: 1,
-              explain: "Laba Kotor = Pendapatan − Harga Pokok Penjualan.",
+              options: ["Pendapatan − HPP", "Pendapatan − semua beban", "Pendapatan + HPP", "Aset − Kewajiban"],
+              answer: 0,
+              explain: "Laba kotor hanya mengurangkan harga pokok barang yang terjual."
             },
-          ],
+            {
+              q: "Gaji barista Warung Sari masuk ke bagian mana di laporan laba rugi?",
+              options: [
+                "Beban operasional, di antara laba kotor dan laba operasi",
+                "HPP, karena barista ikut membuat kopi yang terjual",
+                "Bunga, karena gaji dibayar rutin setiap bulannya",
+                "Pendapatan, karena barista yang melayani pembeli"
+              ],
+              answer: 0,
+              explain: "Pada contoh ini HPP hanya berisi bahan yang terjual; gaji, sewa, dan listrik adalah beban operasional."
+            }
+          ]
         },
         {
           id: "acc-m-4",
           title: "Neraca & Laporan Arus Kas",
-          duration: "10 menit",
+          duration: "15 menit",
           content: `
-<p>Dua laporan penting lainnya:</p>
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Aset = Kewajiban + Ekuitas</b> — persamaan dasar dari modul Dasar. Dan dari pelajaran sebelumnya: Warung Kopi Sari mencetak <b>laba bersih 40 juta</b> sepanjang 2025. Pelajaran ini membuka dua laporan lainnya, dengan warung yang sama.
+</div>
 
 <div data-diagram="vs" data-left="NERACA::Foto satu tanggal::Aset = Kewajiban + Ekuitas" data-right="LABA RUGI::Rekaman satu periode::Pendapatan − Beban" data-caption="Neraca vs Laba Rugi"></div>
 
+<h3>1. Neraca — foto pada satu tanggal</h3>
+<p>Laba rugi seperti <b>rekaman video</b> satu tahun. Neraca seperti <b>foto</b>: apa yang dimiliki dan apa yang diutang, tepat pada <b>satu tanggal</b> — misalnya 31 Desember 2025.</p>
+<p>Sebelum melihat angkanya, ada satu kata penting: <b>lancar</b>. Dalam akuntansi, "lancar" artinya <b>dalam waktu satu tahun</b>.</p>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th><th>Contoh di Warung Sari</th></tr>
+  <tr><td><b>Aset lancar</b></td><td>Uang, atau yang akan <b>menjadi uang</b> dalam setahun</td><td>Kas, piutang (tagihan ke pelanggan), persediaan biji kopi</td></tr>
+  <tr><td><b>Aset tidak lancar</b></td><td>Dipakai bertahun-tahun, tidak untuk dijual</td><td>Mesin kopi, kulkas, meja</td></tr>
+  <tr><td><b>Kewajiban lancar</b></td><td>Harus <b>dibayar</b> dalam setahun</td><td>Utang ke pemasok kopi, cicilan bank tahun ini</td></tr>
+  <tr><td><b>Kewajiban jangka panjang</b></td><td>Jatuh tempo lebih dari setahun lagi</td><td>Sisa pinjaman bank</td></tr>
+</table>
 
-<h3>1. Neraca (Balance Sheet)</h3>
-<p><b>Foto</b> kondisi keuangan pada <b>satu tanggal tertentu</b>. Isinya persis persamaan dasar:</p>
-<div class="callout"><b>Aset = Kewajiban + Ekuitas</b> — dan kedua sisi harus seimbang ("balance").</div>
-<p>Beda dengan laba rugi yang mengukur <i>periode</i>, neraca menunjukkan <i>posisi</i> pada <i>satu titik waktu</i> (mis. per 31 Desember).</p>
+<table class="tbl">
+  <tr><th colspan="2">Warung Kopi Sari — Neraca 31 Des 2025 (juta Rp)</th></tr>
+  <tr><td>Kas</td><td>70</td></tr>
+  <tr><td>Piutang (katering kantor belum membayar)</td><td>10</td></tr>
+  <tr><td>Persediaan (biji kopi, susu, roti)</td><td>20</td></tr>
+  <tr><td><b>Aset lancar</b></td><td><b>100</b></td></tr>
+  <tr><td>Peralatan: harga beli 100 − penyusutan sejauh ini 40</td><td>60</td></tr>
+  <tr><td class="ok-cell"><b>TOTAL ASET</b></td><td class="ok-cell"><b>160</b></td></tr>
+  <tr><td>Utang ke pemasok</td><td>20</td></tr>
+  <tr><td>Cicilan pinjaman bank tahun depan</td><td>10</td></tr>
+  <tr><td><b>Kewajiban lancar</b></td><td><b>30</b></td></tr>
+  <tr><td>Sisa pinjaman bank (jangka panjang)</td><td>30</td></tr>
+  <tr><td><b>Total kewajiban</b></td><td><b>60</b></td></tr>
+  <tr><td><b>Ekuitas</b> (bagian milik pemilik)</td><td><b>100</b></td></tr>
+  <tr><td class="ok-cell"><b>TOTAL KEWAJIBAN + EKUITAS</b></td><td class="ok-cell"><b>160</b></td></tr>
+</table>
+<div class="callout">
+<b>Kedua sisi sama: 160 = 60 + 100.</b> Itulah asal nama <i>balance sheet</i> — selalu seimbang, karena setiap aset pasti dibiayai oleh salah satu dari dua sumber: uang pinjaman (kewajiban) atau uang pemilik (ekuitas).
+</div>
 
-<h3>2. Laporan Arus Kas (Cash Flow)</h3>
-<p>Melacak <b>uang tunai</b> yang benar-benar masuk & keluar, dikelompokkan jadi tiga:</p>
-<ul>
-  <li><b>Operasi</b> — dari kegiatan utama (jual produk, bayar gaji).</li>
-  <li><b>Investasi</b> — beli/jual aset jangka panjang (mesin, gedung).</li>
-  <li><b>Pendanaan</b> — dari pemilik/kreditor (setor modal, pinjam/bayar utang).</li>
-</ul>
+<h3>2. Laporan Arus Kas — ke mana uang tunai benar-benar mengalir</h3>
+<p>Warung Sari untung 40 juta. Tapi kalau dicek, kasnya hanya naik dari 60 menjadi 70 — cuma <b>bertambah 10 juta</b>. Ke mana sisanya? Laporan arus kas menjawabnya dengan membagi semua uang masuk-keluar menjadi tiga kelompok:</p>
+<table class="tbl">
+  <tr><th>Kelompok</th><th>Isinya di Warung Sari (2025)</th><th>Juta Rp</th></tr>
+  <tr><td><b>Operasi</b><br>kegiatan inti</td><td>Uang diterima dari pembeli 290 (10 lagi masih berupa piutang)<br>Dibayar ke pemasok 125, gaji 70, sewa 30, listrik 10, bunga 5, pajak 5</td><td class="ok-cell">+45</td></tr>
+  <tr><td><b>Investasi</b><br>beli/jual aset jangka panjang</td><td>Tidak membeli peralatan tahun ini (tahun 2024 bagian ini −100)</td><td>0</td></tr>
+  <tr><td><b>Pendanaan</b><br>hubungan dengan pemberi dana</td><td>Mencicil pinjaman bank 10<br>Pemilik mengambil uang untuk keperluan pribadi 25</td><td class="bad-cell">−35</td></tr>
+  <tr><td colspan="2"><b>Kenaikan kas</b></td><td><b>+10</b></td></tr>
+</table>
+
+<h3>Kenapa laba 40 tapi kas operasi 45?</h3>
+<table class="tbl">
+  <tr><th>Penyebab</th><th>Pengaruh ke kas</th></tr>
+  <tr><td>Laba bersih</td><td>+40</td></tr>
+  <tr><td>Penyusutan 20 tercatat sebagai beban, padahal <b>tidak ada uang keluar</b> tahun ini (peralatan sudah dibayar 2024)</td><td>+20</td></tr>
+  <tr><td>Pelanggan katering belum membayar (piutang naik)</td><td>−10</td></tr>
+  <tr><td>Membeli bahan 125 padahal yang terjual hanya 120 (stok naik)</td><td>−5</td></tr>
+  <tr><td><b>Kas dari operasi</b></td><td><b>45</b></td></tr>
+</table>
 
 <div class="callout warn">
-<b>Laba ≠ Kas!</b> Bisnis bisa "untung" di laporan laba rugi tapi <b>kehabisan uang tunai</b> (mis. banyak penjualan kredit yang belum dibayar). Karena itu laporan arus kas sangat penting — banyak bisnis bangkrut bukan karena rugi, tapi karena kehabisan kas.
+<b>Laba ≠ Kas!</b> Bisnis bisa "untung" di laporan laba rugi tapi <b>kehabisan uang tunai</b> — misalnya bila banyak pelanggan belum membayar, atau stok menumpuk di gudang. Banyak bisnis bangkrut bukan karena rugi, tapi karena kehabisan kas. Karena itu ketiga laporan selalu dibaca bersama.
 </div>
 `,
           keyPoints: [
-            "Neraca = foto posisi keuangan pada satu tanggal: Aset = Kewajiban + Ekuitas.",
-            "Arus kas melacak uang tunai nyata: operasi, investasi, pendanaan.",
-            "Laba tidak sama dengan kas — bisnis untung pun bisa kehabisan uang tunai.",
+            "Neraca = foto posisi keuangan pada satu tanggal: Aset = Kewajiban + Ekuitas, selalu seimbang.",
+            "'Lancar' artinya dalam setahun: aset lancar akan menjadi uang, kewajiban lancar harus dibayar dalam setahun.",
+            "Arus kas melacak uang tunai nyata dalam tiga kelompok: operasi, investasi, pendanaan.",
+            "Laba tidak sama dengan kas — penyusutan, piutang, dan stok membuat keduanya berbeda."
+          ],
+          practice: [
+            { type: "number", q: "Aset sebuah toko Rp200jt dan kewajibannya Rp80jt. Berapa ekuitasnya? (juta)", answer: 120, tol: 0.5, unit: "jt", hint: "Aset = Kewajiban + Ekuitas.", solution: "Ekuitas = 200 − 80 = Rp120jt." },
+            { type: "number", q: "Kas operasi +45, investasi −15, pendanaan −20. Berapa perubahan kasnya? (juta)", answer: 10, tol: 0.5, unit: "jt", hint: "Jumlahkan ketiganya.", solution: "45 − 15 − 20 = +10 juta." }
           ],
           quiz: [
             {
               q: "Neraca menggambarkan kondisi keuangan pada?",
               options: [
                 "Satu tanggal tertentu, seperti potret sesaat",
-                "Satu periode penuh, misalnya selama setahun berjalan",
+                "Satu periode penuh, misalnya selama setahun",
                 "Rata-rata seluruh bulan dalam satu tahun buku",
-                "Perkiraan kondisi keuangan pada tahun berikutnya",
+                "Perkiraan kondisi keuangan tahun berikutnya"
               ],
               answer: 0,
-              explain:
-                "Neraca adalah 'foto' posisi keuangan pada satu tanggal tertentu.",
+              explain: "Neraca adalah foto satu tanggal; laba rugi dan arus kas merekam satu periode."
             },
             {
               q: "Mengapa laporan arus kas penting meski bisnis terlihat untung?",
               options: [
                 "Karena bisnis yang untung pun bisa kehabisan kas lalu bangkrut",
                 "Karena laporan laba rugi tidak mencantumkan pendapatan penjualan",
-                "Karena laba selalu dilaporkan lebih kecil daripada yang sebenarnya",
-                "Karena pajak dihitung dari arus kas, bukan dari laba bersih",
+                "Karena laba selalu dilaporkan lebih kecil dari yang sebenarnya",
+                "Karena pajak dihitung dari arus kas, bukan dari laba bersih"
               ],
               answer: 0,
-              explain:
-                "Laba bukan kas; tanpa kas yang cukup bisnis tetap bisa kolaps.",
+              explain: "Laba bisa tertahan di piutang dan stok, sementara tagihan tetap harus dibayar tunai."
             },
-          ],
+            {
+              q: "Mana yang termasuk aset lancar?",
+              options: [
+                "Piutang pelanggan yang akan dibayar bulan depan",
+                "Mesin kopi yang akan dipakai lima tahun lagi",
+                "Utang ke pemasok yang jatuh tempo bulan depan",
+                "Sisa pinjaman bank yang lunas tiga tahun lagi"
+              ],
+              answer: 0,
+              explain: "Aset lancar akan menjadi uang dalam setahun. Utang ke pemasok juga 'lancar', tapi ia kewajiban, bukan aset."
+            }
+          ]
         },
         {
           id: "acc-deep-1",
@@ -1050,7 +1151,7 @@ Jurnal menjawab <b>"kapan dan apa yang terjadi"</b>. Setelah dicatat, angkanya d
       id: "acc-pendalaman",
       level: "Pendalaman",
       title: "Akrual, Aset & Persediaan",
-      summary: "Basis akrual vs kas, penyusutan & modal kerja, serta metode persediaan FIFO, LIFO & rata-rata.",
+      summary: "Basis akrual vs kas, penyusutan, persediaan & modal kerja, lalu metode persediaan FIFO, LIFO & rata-rata.",
       lessons: [
         {
           id: "acc-a-1",
@@ -1109,56 +1210,182 @@ Jurnal menjawab <b>"kapan dan apa yang terjadi"</b>. Setelah dicatat, angkanya d
         },
         {
           id: "acc-a-3",
-          title: "Penyusutan, Persediaan & Modal Kerja",
-          duration: "10 menit",
+          title: "Penyusutan — Membagi Harga Aset ke Tahun-Tahun Pemakaiannya",
+          duration: "12 menit",
           content: `
-<p>Tiga konsep penting dalam akuntansi sehari-hari bisnis:</p>
-
-<div data-diagram="cycle" data-steps="Beli persediaan (kas keluar)|Jual (jadi piutang)|Tagih piutang|Kas masuk lagi" data-center="siklus kas" data-caption="Modal kerja adalah uang yang terus berputar — makin cepat berputar, makin sedikit modal dibutuhkan"></div>
-
-
-<h3>1. Penyusutan (Depresiasi)</h3>
-<p>Aset jangka panjang (mesin, kendaraan) kehilangan nilai seiring waktu. Biayanya <b>disebar</b> selama masa manfaatnya, bukan dibebankan sekaligus.</p>
-<div class="callout">
-<b>Metode garis lurus:</b> Penyusutan/tahun = (Harga − Nilai sisa) ÷ Masa manfaat. Mesin Rp50jt, nilai sisa 0, manfaat 5 tahun → Rp10jt/tahun.
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+Di laporan laba rugi Warung Kopi Sari ada baris <b>penyusutan peralatan 20 juta</b>, dan di neraca peralatannya tercatat <b>100 − 40 = 60</b>. Di pelajaran arus kas kamu juga melihat penyusutan <b>ditambahkan kembali</b> karena bukan uang keluar. Pelajaran ini menjelaskan ketiganya sekaligus.
 </div>
 
-<h3>2. Persediaan (Inventory)</h3>
-<p>Barang yang siap dijual. Saat harga beli berubah-ubah, ada metode menilainya:</p>
-<ul>
-  <li><b>FIFO</b> (First In, First Out) — barang yang masuk duluan dianggap terjual duluan.</li>
-  <li><b>Rata-rata (Average)</b> — pakai harga rata-rata.</li>
-</ul>
-
-<h3>3. Modal Kerja (Working Capital)</h3>
+<h3>Langkah 1 — Masalahnya</h3>
+<p>Awal 2024, Warung Sari membeli peralatan (mesin kopi, kulkas, meja) seharga <b>Rp100 juta</b> tunai. Peralatan ini akan dipakai <b>5 tahun</b>. Pertanyaannya: biaya 100 juta itu dicatat sebagai beban tahun berapa?</p>
+<table class="tbl">
+  <tr><th>Cara mencatat</th><th>2024</th><th>2025</th><th>2026</th><th>2027</th><th>2028</th></tr>
+  <tr><td>Dibebankan sekaligus di 2024</td><td class="bad-cell">−100</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>Disebar selama 5 tahun</td><td>−20</td><td>−20</td><td>−20</td><td>−20</td><td>−20</td></tr>
+</table>
+<p>Kalau dibebankan sekaligus, warung tampak <b>rugi besar di 2024</b>, lalu tampak sangat untung di tahun-tahun berikutnya — padahal kegiatan jualannya sama saja setiap tahun. Laporannya jadi menyesatkan.</p>
 <div class="callout">
-<b>Modal Kerja = Aset Lancar − Kewajiban Lancar.</b> Menunjukkan "napas" jangka pendek bisnis untuk operasi harian. Positif = sehat; negatif = perlu waspada.
+<b>Penyusutan</b> (depresiasi) adalah cara menyebar harga aset jangka panjang menjadi beban <b>selama masa manfaatnya</b>. Prinsipnya sama dengan jurnal penyesuaian: beban dicatat pada periode ketika aset itu <b>dipakai</b> untuk menghasilkan pendapatan.
 </div>
+
+<h3>Langkah 2 — Metode garis lurus</h3>
+<div class="callout">
+<b>Penyusutan per tahun = (Harga beli − Nilai sisa) ÷ Masa manfaat</b><br><br>
+<b>Nilai sisa</b> = perkiraan harga jual aset saat sudah tidak dipakai lagi. Untuk peralatan Warung Sari, nilai sisanya dianggap 0.<br>
+(100 − 0) ÷ 5 = <b>20 juta per tahun</b>
+</div>
+<table class="tbl">
+  <tr><th>Akhir tahun</th><th>Beban penyusutan</th><th>Akumulasi penyusutan</th><th>Nilai buku di neraca</th></tr>
+  <tr><td>2024</td><td>20</td><td>20</td><td>80</td></tr>
+  <tr><td class="ok-cell">2025</td><td class="ok-cell">20</td><td class="ok-cell">40</td><td class="ok-cell">60 ← angka di neraca</td></tr>
+  <tr><td>2026</td><td>20</td><td>60</td><td>40</td></tr>
+  <tr><td>2027</td><td>20</td><td>80</td><td>20</td></tr>
+  <tr><td>2028</td><td>20</td><td>100</td><td>0</td></tr>
+</table>
+<p><b>Akumulasi penyusutan</b> = jumlah penyusutan sejak aset dibeli. <b>Nilai buku</b> = harga beli − akumulasi penyusutan. Kalau peralatan bisa dijual Rp10 juta di akhir tahun kelima, penyusutannya menjadi (100 − 10) ÷ 5 = <b>18 juta</b> per tahun.</p>
+
+<h3>Langkah 3 — Penyusutan bukan uang keluar</h3>
+<div class="callout warn">
+Uangnya keluar <b>sekali</b>, saat membeli di 2024 (tercatat di arus kas <i>investasi</i>). Beban penyusutan 20 juta per tahun sesudahnya hanya <b>catatan</b> — tidak ada uang yang dibayarkan ke siapa pun. Karena itu, saat menghitung kas dari operasi, penyusutan <b>ditambahkan kembali</b> ke laba.
+</div>
+<p>Fakta kecil ini nanti sangat penting: ia menjadi dasar <b>Free Cash Flow</b> dan <b>EBITDA</b> di modul-modul berikutnya.</p>
+
+<h3>Langkah 4 — Beberapa catatan</h3>
+<table class="tbl">
+  <tr><th>Hal</th><th>Penjelasan</th></tr>
+  <tr><td>Metode lain</td><td><b>Saldo menurun</b> — penyusutan besar di tahun-tahun awal, mengecil kemudian. Cocok untuk aset yang cepat turun nilainya, seperti kendaraan dan komputer.</td></tr>
+  <tr><td>Tanah</td><td><b>Tidak disusutkan</b>, karena tidak aus dipakai.</td></tr>
+  <tr><td>Amortisasi</td><td>Sama dengan penyusutan, tapi untuk aset <b>tak berwujud</b> — hak paten, lisensi, perangkat lunak.</td></tr>
+  <tr><td>Nilai buku ≠ harga pasar</td><td>Nilai buku 60 bukan harga jual peralatan itu hari ini. Ia hanya sisa harga beli yang belum dibebankan.</td></tr>
+</table>
 `,
           keyPoints: [
-            "Penyusutan menyebar biaya aset jangka panjang selama masa manfaatnya (mis. garis lurus).",
-            "Persediaan bisa dinilai dengan FIFO atau rata-rata saat harga berubah.",
-            "Modal Kerja = Aset Lancar − Kewajiban Lancar; mengukur napas operasional.",
+            "Penyusutan menyebar harga aset jangka panjang menjadi beban selama masa manfaatnya, agar laba tiap tahun tidak menyesatkan.",
+            "Garis lurus: (Harga beli − Nilai sisa) ÷ Masa manfaat; peralatan 100 selama 5 tahun = 20 per tahun.",
+            "Nilai buku = harga beli − akumulasi penyusutan; bukan harga pasar.",
+            "Penyusutan bukan uang keluar — ditambahkan kembali saat menghitung kas operasi; tanah tidak disusutkan; amortisasi untuk aset tak berwujud."
+          ],
+          practice: [
+            { type: "number", q: "Mobil box Rp200jt, nilai sisa Rp40jt, masa manfaat 4 tahun. Berapa penyusutan garis lurus per tahun? (juta)", answer: 40, tol: 0.5, unit: "jt", hint: "(Harga − Nilai sisa) ÷ Masa manfaat.", solution: "(200 − 40) ÷ 4 = Rp40jt per tahun." },
+            { type: "number", q: "Peralatan Rp100jt disusutkan Rp20jt per tahun. Berapa nilai bukunya setelah 3 tahun? (juta)", answer: 40, tol: 0.5, unit: "jt", hint: "Akumulasi 3 tahun = 60.", solution: "100 − 60 = Rp40jt." }
           ],
           quiz: [
             {
               q: "Mesin Rp60jt, nilai sisa 0, masa manfaat 6 tahun. Penyusutan garis lurus per tahun?",
-              options: ["Rp6jt", "Rp10jt", "Rp60jt", "Rp12jt"],
-              answer: 1,
-              explain: "(60 − 0) ÷ 6 = Rp10jt per tahun.",
+              options: ["Rp10jt", "Rp6jt", "Rp60jt", "Rp12jt"],
+              answer: 0,
+              explain: "(60 − 0) ÷ 6 = Rp10jt per tahun."
             },
             {
-              q: "Modal kerja dihitung dari?",
+              q: "Kenapa harga peralatan tidak dibebankan sekaligus di tahun pembeliannya?",
               options: [
-                "Aset Lancar − Kewajiban Lancar",
-                "Total Aset − Total Kewajiban",
-                "Kas + Piutang − Persediaan",
-                "Pendapatan − Beban Operasional",
+                "Agar laba tiap tahun mencerminkan pemakaian peralatan itu",
+                "Agar pajak tahun pembelian menjadi jauh lebih besar",
+                "Agar peralatan bisa dijual lagi dengan harga tinggi",
+                "Agar kas yang keluar saat membeli menjadi lebih kecil"
               ],
               answer: 0,
-              explain: "Modal Kerja = Aset Lancar − Kewajiban Lancar.",
+              explain: "Peralatan dipakai bertahun-tahun, jadi bebannya disebar ke tahun-tahun pemakaian. Kas yang keluar saat membeli tetap sama."
             },
+            {
+              q: "Saat menghitung kas dari operasi, kenapa penyusutan ditambahkan kembali ke laba?",
+              options: [
+                "Karena penyusutan tidak membuat uang keluar pada tahun itu",
+                "Karena penyusutan adalah pendapatan yang belum diterima",
+                "Karena penyusutan dibayar tunai kepada penjual peralatan",
+                "Karena penyusutan dikembalikan oleh kantor pajak tiap tahun"
+              ],
+              answer: 0,
+              explain: "Uangnya sudah keluar saat membeli. Penyusutan sesudahnya hanya catatan beban, bukan pembayaran."
+            }
+          ]
+        },
+        {
+          id: "acc-a-5",
+          title: "Persediaan & Modal Kerja — Uang yang Terus Berputar",
+          duration: "12 menit",
+          content: `
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>HPP</b> Warung Kopi Sari tahun 2025 = <b>120</b>, padahal bahan yang dibeli <b>125</b> (pelajaran arus kas). <b>Aset lancar</b> = akan menjadi uang dalam setahun (100); <b>kewajiban lancar</b> = harus dibayar dalam setahun (30). Pelajaran ini menyambungkan angka-angka itu.
+</div>
+
+<h3>Langkah 1 — Apa itu persediaan?</h3>
+<p><b>Persediaan</b> (<i>inventory</i>) = barang yang disimpan untuk dijual, atau bahan untuk membuat barang yang dijual. Di Warung Sari: biji kopi, susu, gula, roti. Selama masih di rak, bahan itu adalah <b>aset</b>. Begitu terjual, nilainya pindah menjadi <b>HPP</b> — beban di laporan laba rugi.</p>
+
+<h3>Langkah 2 — Menghitung HPP dari persediaan</h3>
+<p>Warung tidak mencatat harga setiap sendok kopi yang dipakai. Caranya lebih sederhana: hitung stok di awal, tambahkan pembelian, lalu kurangi stok yang masih tersisa di akhir tahun.</p>
+<table class="tbl">
+  <tr><th>Warung Kopi Sari 2025</th><th>Juta Rp</th></tr>
+  <tr><td>Persediaan awal (1 Januari)</td><td>15</td></tr>
+  <tr><td>+ Pembelian bahan sepanjang tahun</td><td>125</td></tr>
+  <tr><td>= Bahan yang tersedia untuk dipakai</td><td>140</td></tr>
+  <tr><td>− Persediaan akhir (dihitung 31 Desember)</td><td>(20)</td></tr>
+  <tr><td class="ok-cell"><b>= HPP (yang terpakai untuk barang terjual)</b></td><td class="ok-cell"><b>120</b></td></tr>
+</table>
+<div class="callout">
+<b>HPP = Persediaan awal + Pembelian − Persediaan akhir</b><br><br>
+Itulah kenapa toko rutin melakukan <b>stock opname</b> — menghitung fisik barang di rak. Kalau hitungannya salah, HPP salah, dan labanya ikut salah. Stok yang hilang atau rusak juga otomatis "masuk" ke HPP, karena tidak ada di persediaan akhir.
+</div>
+<p>Satu masalah tersisa: bagaimana kalau harga beli biji kopi berubah-ubah sepanjang tahun — stok yang tersisa dinilai dengan harga yang mana? Itu dijawab pelajaran berikutnya (FIFO dan rata-rata).</p>
+
+<h3>Langkah 3 — Modal kerja: napas jangka pendek</h3>
+<div class="callout">
+<b>Modal Kerja = Aset Lancar − Kewajiban Lancar</b> = 100 − 30 = <b>70</b><br><br>
+Seandainya semua aset lancar dicairkan dan semua tagihan tahun ini dibayar, Warung Sari masih memegang 70 juta. Itulah "bantalan" untuk menjalankan kegiatan harian.
+</div>
+
+<div data-diagram="cycle" data-steps="Beli persediaan (kas keluar)|Jual (jadi piutang)|Tagih piutang|Kas masuk lagi" data-center="siklus kas" data-caption="Modal kerja adalah uang yang terus berputar — makin cepat berputar, makin sedikit modal dibutuhkan"></div>
+
+<p>Kenapa disebut "berputar"? Uang dipakai membeli bahan → bahan menjadi kopi yang terjual → sebagian pembeli membayar belakangan (piutang) → piutang ditagih → uang kembali, lalu dipakai membeli bahan lagi. Selama uang masih "di jalan" — berupa stok di rak atau tagihan ke pelanggan — uang itu <b>tidak bisa dipakai</b> untuk hal lain.</p>
+
+<table class="tbl">
+  <tr><th>Keadaan</th><th>Artinya</th></tr>
+  <tr><td class="ok-cell">Modal kerja positif</td><td>Tagihan jangka pendek tertutup dengan aman</td></tr>
+  <tr><td class="bad-cell">Modal kerja negatif</td><td>Tagihan tahun ini lebih besar dari yang bisa dicairkan — umumnya tanda waspada</td></tr>
+  <tr><td>Stok atau piutang membengkak</td><td>Modal kerja tampak besar, tapi uangnya <b>terjebak</b>; kas bisa menipis walau untung</td></tr>
+</table>
+<div class="callout warn">
+<b>Pengecualian penting:</b> supermarket besar sering sengaja punya modal kerja <b>negatif</b>. Pembeli membayar tunai hari ini, sedangkan pemasok baru dibayar 30–60 hari kemudian. Uang pemasok itulah yang memutar bisnisnya. Jadi angka negatif perlu dibaca bersama <b>jenis bisnisnya</b>, bukan otomatis dianggap buruk.
+</div>
+`,
+          keyPoints: [
+            "Persediaan = barang/bahan untuk dijual; masih di rak = aset, sudah terjual = HPP.",
+            "HPP = Persediaan awal + Pembelian − Persediaan akhir; karena itu stok harus dihitung (stock opname).",
+            "Modal Kerja = Aset Lancar − Kewajiban Lancar; bantalan untuk kegiatan harian.",
+            "Uang yang tertahan di stok dan piutang tidak bisa dipakai; modal kerja negatif perlu dibaca bersama jenis bisnisnya."
           ],
+          practice: [
+            { type: "number", q: "Persediaan awal Rp30jt, pembelian Rp200jt, persediaan akhir Rp50jt. Berapa HPP-nya? (juta)", answer: 180, tol: 0.5, unit: "jt", hint: "Awal + Pembelian − Akhir.", solution: "30 + 200 − 50 = Rp180jt." },
+            { type: "number", q: "Aset lancar Rp250jt, kewajiban lancar Rp180jt. Berapa modal kerjanya? (juta)", answer: 70, tol: 0.5, unit: "jt", hint: "Aset lancar − Kewajiban lancar.", solution: "250 − 180 = Rp70jt." }
+          ],
+          quiz: [
+            {
+              q: "Modal kerja dihitung dari?",
+              options: ["Aset Lancar − Kewajiban Lancar", "Total Aset − Total Kewajiban", "Kas + Piutang − Persediaan", "Pendapatan − Beban Operasional"],
+              answer: 0,
+              explain: "Modal kerja membandingkan yang akan menjadi uang dalam setahun dengan yang harus dibayar dalam setahun."
+            },
+            {
+              q: "Stok awal 15, pembelian 125, stok akhir 20. Berapa HPP?",
+              options: ["120", "140", "130", "110"],
+              answer: 0,
+              explain: "15 + 125 − 20 = 120."
+            },
+            {
+              q: "Kenapa stok yang hilang dicuri ikut membesarkan HPP?",
+              options: [
+                "Karena tidak ada di persediaan akhir, jadi dianggap terpakai",
+                "Karena kantor pajak menambahkannya ke HPP setiap tahun",
+                "Karena pencurian dicatat sebagai pendapatan lain-lain",
+                "Karena pemasok menagih ulang barang yang sudah hilang"
+              ],
+              answer: 0,
+              explain: "HPP = awal + pembelian − akhir. Barang yang hilang tidak terhitung di stok akhir, sehingga 'terhitung' sebagai terpakai."
+            }
+          ]
         },
         {
           id: "acc-deep-2",
@@ -1234,6 +1461,11 @@ Jurnal menjawab <b>"kapan dan apa yang terjadi"</b>. Setelah dicatat, angkanya d
           title: "Persen, Rasio & CAGR",
           duration: "12 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Persen</b> artinya "dari seratus", dan rumusnya (bagian ÷ total) × 100 (modul Dasar). Modul ini akan memakai persen di hampir setiap pelajaran, jadi kita kuatkan dulu fondasinya.
+</div>
+
 <p>Kita mulai dari yang paling dasar, lalu naik ke rumus pertumbuhan yang sering disalahhitung orang.</p>
 
 <div data-diagram="bar" data-bars="Kenaikan tahun 1:10|Kenaikan tahun 2:11|Kenaikan tahun 3:12.1" data-unit=" juta" data-caption="Modal Rp100 juta tumbuh 10% per tahun — persentasenya sama, tapi kenaikannya membesar. Itulah bunga berbunga."></div>
@@ -1253,8 +1485,21 @@ Contoh: dari 200 jadi 250 → (250 − 200) ÷ 200 × 100% = <b>25%</b>.
 <h3>CAGR — pertumbuhan rata-rata per tahun</h3>
 <p>Kalau nilai tumbuh dari Rp100 juta jadi Rp200 juta dalam 5 tahun, banyak orang menghitung 100% ÷ 5 = 20% per tahun. <b>Itu keliru</b>, karena pertumbuhan bersifat <b>majemuk</b>.</p>
 
+<h4>Cari dulu dengan coba-coba</h4>
+<p>Pertanyaannya: tumbuh berapa persen <b>setiap tahun</b> agar 100 menjadi 200 dalam 5 tahun? Kita coba beberapa tebakan, masing-masing dikalikan lima kali:</p>
+<table class="tbl">
+  <tr><th>Tebakan per tahun</th><th>Hitungan</th><th>Hasil setelah 5 tahun</th></tr>
+  <tr><td>20%</td><td>100 × 1,2 × 1,2 × 1,2 × 1,2 × 1,2</td><td class="bad-cell">248,8 — kebanyakan</td></tr>
+  <tr><td>15%</td><td>100 × 1,15⁵</td><td>201,1 — sedikit lebih</td></tr>
+  <tr><td>14%</td><td>100 × 1,14⁵</td><td>192,5 — kurang</td></tr>
+  <tr><td class="ok-cell">14,87%</td><td>100 × 1,1487⁵</td><td class="ok-cell">200,0 — pas</td></tr>
+</table>
+<p>Jadi pertumbuhan rata-ratanya <b>14,87% per tahun</b>, bukan 20%. Tebakan 20% kebanyakan karena setiap tahun pertumbuhannya dihitung dari angka yang sudah membesar — bunga berbunga, seperti grafik di atas.</p>
+<p>Menebak-nebak itu lambat. Rumus CAGR langsung "membalik" perkalian lima kali tadi — pangkat <b>1 ÷ 5</b> artinya <b>akar pangkat lima</b>, kebalikan dari dipangkatkan lima:</p>
+
 <div class="callout">
-<b>Rumus CAGR:</b> CAGR = (Nilai Akhir ÷ Nilai Awal)<sup>(1 ÷ jumlah tahun)</sup> − 1
+<b>Rumus CAGR:</b> CAGR = (Nilai Akhir ÷ Nilai Awal)<sup>(1 ÷ jumlah tahun)</sup> − 1<br>
+(200 ÷ 100)<sup>1/5</sup> − 1 = 2<sup>0,2</sup> − 1 = 1,1487 − 1 = <b>14,87%</b>
 </div>
 
 <h3>Coba sendiri — hitung CAGR 👇</h3>
@@ -1314,54 +1559,72 @@ console.log("Bukti: 100jt dikali 1,1487 sebanyak 5 kali = 200jt.");</div>
         {
           id: "acc-a-2",
           title: "Membaca Rasio Keuangan",
-          duration: "11 menit",
+          duration: "13 menit",
           content: `
-<p><b>Rasio keuangan</b> mengubah angka laporan menjadi indikator yang mudah dibandingkan. Tiga kelompok utama:</p>
-
-<div data-diagram="layers" data-items="Profitabilitas — apakah untung?|Likuiditas — sanggup bayar utang pendek?|Solvabilitas — sanggup bayar utang panjang?|Efisiensi — secepat apa aset berputar?" data-caption="Empat keluarga rasio — bacalah berurutan dari atas"></div>
-
-
-<h3>1. Likuiditas — sanggup bayar utang jangka pendek?</h3>
-<ul>
-  <li><b>Current Ratio</b> = Aset Lancar ÷ Kewajiban Lancar. Nilai > 1 berarti aset lancar cukup menutup utang jangka pendek.</li>
-</ul>
-
-<h3>2. Profitabilitas — seberapa untung?</h3>
-<ul>
-  <li><b>Margin Laba Bersih</b> = Laba Bersih ÷ Pendapatan × 100%.</li>
-  <li><b>ROE (Return on Equity)</b> = Laba Bersih ÷ Ekuitas × 100% — imbal hasil bagi modal pemilik.</li>
-</ul>
-
-<h3>3. Solvabilitas — seberapa besar bergantung pada utang?</h3>
-<ul>
-  <li><b>Debt-to-Equity (DER)</b> = Total Utang ÷ Ekuitas. Makin tinggi, makin berisiko.</li>
-</ul>
-
-<div class="callout">
-<b>Contoh:</b> Laba bersih Rp20jt, pendapatan Rp200jt → margin = 20/200 = <b>10%</b>. Artinya tiap Rp100 penjualan menghasilkan Rp10 laba.
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b> — angka Warung Kopi Sari 2025 (juta Rp):<br>
+Pendapatan <b>300</b> • Laba bersih <b>40</b> • Aset lancar <b>100</b> • Kewajiban lancar <b>30</b> • Total kewajiban <b>60</b> • Ekuitas <b>100</b> • Total aset <b>160</b>
 </div>
 
+<p>Laba 40 juta itu bagus atau jelek? Tidak bisa dijawab kalau angkanya berdiri sendiri. Untuk warung kecil, 40 juta luar biasa; untuk pabrik besar, 40 juta hampir tidak ada artinya. <b>Rasio</b> menyelesaikan masalah ini dengan <b>membandingkan dua angka</b> sehingga hasilnya bisa dibandingkan antar-bisnis, berapa pun ukurannya. Caranya persis seperti persen dari pelajaran sebelumnya: bagi satu angka dengan angka lain.</p>
+
+<div data-diagram="layers" data-items="Profitabilitas — apakah untung?|Likuiditas — sanggup bayar utang pendek?|Solvabilitas — sanggup bayar utang panjang?|Efisiensi — secepat apa aset berputar?" data-caption="Empat keluarga rasio — masing-masing menjawab satu pertanyaan"></div>
+
+<h3>1. Profitabilitas — seberapa untung?</h3>
+<div class="callout">
+<b>Net margin = Laba bersih ÷ Pendapatan × 100%</b> = 40 ÷ 300 = <b>13,3%</b><br>
+Dari tiap Rp100 penjualan, Rp13,3 menjadi laba.
+</div>
+<p>Ada juga <b>ROE</b> (Laba bersih ÷ Ekuitas) = 40 ÷ 100 = <b>40%</b>: setiap Rp100 modal pemilik menghasilkan Rp40 laba setahun. ROE dan kerabatnya dibahas lebih dalam beberapa pelajaran lagi.</p>
+
+<h3>2. Likuiditas — sanggup bayar tagihan tahun ini?</h3>
+<div class="callout">
+<b>Current ratio = Aset lancar ÷ Kewajiban lancar</b> = 100 ÷ 30 = <b>3,3</b><br>
+Untuk setiap Rp1 tagihan yang jatuh tempo tahun ini, tersedia Rp3,3 aset yang akan menjadi uang tahun ini.
+</div>
+<p>Di atas 1 berarti cukup; di bawah 1 berarti tagihan tahun ini lebih besar daripada yang bisa dicairkan — tanda bahaya walau bisnisnya untung. Tapi terlalu tinggi juga bisa berarti banyak uang menganggur.</p>
+
+<h3>3. Solvabilitas — seberapa bergantung pada utang?</h3>
+<div class="callout">
+<b>DER (Debt-to-Equity Ratio) = Total kewajiban ÷ Ekuitas</b> = 60 ÷ 100 = <b>0,6</b><br>
+Untuk setiap Rp1 modal pemilik, ada Rp0,6 uang pinjaman.
+</div>
+<p>Makin tinggi DER, makin besar cicilan dan bunga yang harus dibayar apa pun keadaannya — makin berisiko ketika penjualan turun.</p>
+
+<h3>4. Efisiensi — seberapa cepat aset berputar?</h3>
+<p>Contohnya: berapa kali setahun stok habis terjual lalu diisi lagi. Keluarga ini dibahas di pelajaran berikutnya bersama rasio likuiditas yang lebih ketat.</p>
+
+<h3>Ringkasan Warung Sari</h3>
+<table class="tbl">
+  <tr><th>Keluarga</th><th>Rasio</th><th>Nilai</th><th>Kesan pertama</th></tr>
+  <tr><td>Profitabilitas</td><td>Net margin</td><td>13,3%</td><td class="ok-cell">Untung dengan sehat</td></tr>
+  <tr><td>Likuiditas</td><td>Current ratio</td><td>3,3</td><td class="ok-cell">Aman membayar tagihan jangka pendek</td></tr>
+  <tr><td>Solvabilitas</td><td>DER</td><td>0,6</td><td class="ok-cell">Utang tidak berlebihan</td></tr>
+</table>
+
 <div class="callout warn">
-<b>Ingat:</b> rasio bermakna saat <b>dibandingkan</b> — dengan periode lalu, pesaing, atau rata-rata industri. Satu angka sendirian tidak banyak bercerita.
+<b>Ingat:</b> rasio bermakna saat <b>dibandingkan</b> — dengan tahun lalu, dengan pesaing, atau dengan rata-rata industri. Net margin 13,3% tinggi untuk warung, tapi rendah untuk perusahaan perangkat lunak. Satu angka sendirian tidak banyak bercerita.
 </div>
 
 <div data-demo="ratio-explorer"></div>
 `,
           keyPoints: [
-            "Likuiditas (current ratio) menilai kemampuan bayar utang jangka pendek.",
-            "Profitabilitas (margin, ROE) menilai seberapa untung bisnis.",
-            "Solvabilitas (DER) menilai ketergantungan pada utang; rasio bermakna saat dibandingkan.",
+            "Rasio membandingkan dua angka sehingga bisnis beda ukuran bisa dibandingkan.",
+            "Profitabilitas: net margin = laba bersih ÷ pendapatan; ROE = laba bersih ÷ ekuitas.",
+            "Likuiditas: current ratio = aset lancar ÷ kewajiban lancar; di bawah 1 = tanda bahaya.",
+            "Solvabilitas: DER = total kewajiban ÷ ekuitas; rasio bermakna saat dibandingkan."
           ],
           practice: [
             { type: "number", q: "Aset lancar Rp90jt, kewajiban lancar Rp60jt. Berapa current ratio? (tulis desimal, mis. 1.5)", answer: 1.5, tol: 0.05, hint: "Current ratio = Aset Lancar ÷ Kewajiban Lancar.", solution: "90 ÷ 60 = 1,5 (aset lancar cukup menutup utang jangka pendek)." },
-            { type: "number", q: "Laba bersih Rp24jt, ekuitas Rp120jt. Berapa ROE? (dalam %)", answer: 20, unit: "%", hint: "ROE = Laba Bersih ÷ Ekuitas × 100%.", solution: "24 ÷ 120 × 100% = 20%." },
+            { type: "number", q: "Laba bersih Rp24jt, ekuitas Rp120jt. Berapa ROE? (dalam %)", answer: 20, tol: 0.5, unit: "%", hint: "ROE = Laba Bersih ÷ Ekuitas × 100%.", solution: "24 ÷ 120 × 100% = 20%." },
+            { type: "number", q: "Total kewajiban Rp150jt, ekuitas Rp100jt. Berapa DER-nya? (desimal)", answer: 1.5, tol: 0.05, hint: "DER = Total kewajiban ÷ Ekuitas.", solution: "150 ÷ 100 = 1,5 — utangnya lebih besar dari modal pemilik." }
           ],
           quiz: [
             {
               q: "Laba bersih Rp30jt, pendapatan Rp300jt. Margin laba bersihnya?",
-              options: ["30%", "10%", "3%", "100%"],
-              answer: 1,
-              explain: "Margin = 30 ÷ 300 × 100% = 10%.",
+              options: ["10%", "30%", "3%", "100%"],
+              answer: 0,
+              explain: "30 ÷ 300 × 100% = 10%."
             },
             {
               q: "Current ratio di bawah 1 menandakan?",
@@ -1369,13 +1632,23 @@ console.log("Bukti: 100jt dikali 1,1487 sebanyak 5 kali = 200jt.");</div>
                 "Aset lancar mungkin tidak cukup menutup utang jangka pendek",
                 "Perusahaan sedang merugi dan labanya bernilai negatif",
                 "Perusahaan menyimpan terlalu banyak kas yang menganggur",
-                "Utang jangka panjang lebih besar daripada seluruh ekuitasnya",
+                "Utang jangka panjang lebih besar dari seluruh ekuitasnya"
               ],
               answer: 0,
-              explain:
-                "Current ratio < 1 berarti kewajiban lancar melebihi aset lancar — sinyal risiko likuiditas.",
+              explain: "Tagihan yang jatuh tempo tahun ini lebih besar daripada aset yang bisa dicairkan tahun ini."
             },
-          ],
+            {
+              q: "Kenapa laba 40 juta belum bisa dinilai bagus atau jelek?",
+              options: [
+                "Karena perlu dibandingkan dengan ukuran bisnisnya",
+                "Karena laba selalu dilaporkan lebih kecil dari aslinya",
+                "Karena laba hanya bermakna bila dibagi sebagai dividen",
+                "Karena laba baru sah setelah diaudit kantor pajak"
+              ],
+              answer: 0,
+              explain: "40 juta besar untuk warung, kecil untuk pabrik. Rasio membandingkannya dengan pendapatan, aset, atau modal."
+            }
+          ]
         },
         {
           id: "acc-adv-4",
@@ -1394,12 +1667,21 @@ console.log("Bukti: 100jt dikali 1,1487 sebanyak 5 kali = 200jt.");</div>
   <tr><td><b>Quick Ratio</b> (acid test)</td><td>(Aset Lancar − Persediaan) ÷ Kewajiban Lancar</td><td>Versi lebih ketat (persediaan sulit cepat jadi uang)</td></tr>
 </table>
 
+<p>Warung Kopi Sari: current ratio = 100 ÷ 30 = <b>3,3</b>; quick ratio = (100 − 20) ÷ 30 = <b>2,7</b>. Persediaan dikeluarkan karena biji kopi tidak bisa langsung dipakai membayar tagihan — ia harus terjual dulu.</p>
+
 <h3>Efisiensi (perputaran)</h3>
 <ul>
   <li><b>Inventory Turnover</b> = HPP ÷ rata-rata persediaan → seberapa cepat stok terjual. Rendah = stok menumpuk.</li>
   <li><b>Receivables Turnover</b> → seberapa cepat piutang tertagih. Rendah = uang tersangkut di pelanggan.</li>
   <li><b>Cash Conversion Cycle</b> → berapa lama uang "terkunci" dari beli bahan sampai kembali jadi kas.</li>
 </ul>
+
+<h4>Dari "berapa kali" ke "berapa hari"</h4>
+<p>Angka perputaran lebih mudah dibayangkan bila diubah menjadi hari: <b>365 ÷ perputaran</b>. Warung Sari: HPP 120 ÷ rata-rata persediaan 17,5 (awal 15, akhir 20) ≈ <b>6,9 kali</b> setahun → 365 ÷ 6,9 ≈ <b>53 hari</b>. Artinya stok rata-rata diam di rak sekitar 53 hari sebelum terjual.</p>
+<div class="callout">
+<b>Cash Conversion Cycle dengan angka:</b> sebuah toko menyimpan stok rata-rata <b>60 hari</b>, pelanggannya membayar <b>30 hari</b> setelah membeli, dan toko membayar pemasoknya <b>45 hari</b> setelah menerima barang.<br>
+Siklusnya = 60 + 30 − 45 = <b>45 hari</b>. Selama 45 hari itu uang toko "terkunci" — harus ditalangi dengan kas sendiri atau pinjaman. Memperpendek siklus ini sama dengan membebaskan uang.
+</div>
 
 <h3>💥 Dampak</h3>
 <ul>
@@ -1567,7 +1849,7 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
 <table class="tbl">
   <tr><th>Rasio</th><th>Rumus</th><th>Menjawab</th></tr>
   <tr><td><b>Margin FCF</b></td><td>FCF ÷ Pendapatan</td><td>Dari tiap Rp100 penjualan, berapa yang jadi kas bebas? Di atas <b>10%</b> umumnya sangat baik.</td></tr>
-  <tr><td><b>FCF Yield</b></td><td>FCF ÷ Kapitalisasi pasar</td><td>Kalau kamu membeli seluruh perusahaan hari ini, berapa persen kas bebas yang kamu terima per tahun?</td></tr>
+  <tr><td><b>FCF Yield</b></td><td>FCF ÷ Kapitalisasi pasar (harga seluruh saham perusahaan di bursa — dijelaskan di pelajaran Saham, EPS &amp; PER)</td><td>Kalau kamu membeli seluruh perusahaan hari ini, berapa persen kas bebas yang kamu terima per tahun?</td></tr>
 </table>
 
 <div class="callout">
@@ -1580,7 +1862,7 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
 <div data-demo="fcf-calc"></div>
 
 <div class="callout warn">
-<b>Kapan FCF negatif itu wajar?</b> Perusahaan muda yang sedang membangun kapasitas hampir selalu ber-FCF negatif — dan itu <b>normal</b>. Yang harus ditanyakan bukan "positif atau negatif", tapi: <b>apakah uang yang ditanam itu menghasilkan return di atas biaya modalnya?</b> Kalau ya, FCF negatif hari ini adalah investasi. Kalau tidak, itu pembakaran uang.
+<b>Kapan FCF negatif itu wajar?</b> Perusahaan muda yang sedang membangun kapasitas hampir selalu ber-FCF negatif — dan itu <b>normal</b>. Yang harus ditanyakan bukan "positif atau negatif", tapi: <b>apakah uang yang ditanam itu menghasilkan return di atas biaya modalnya?</b> (Biaya modal = imbal hasil minimum yang dituntut pemberi pinjaman dan pemilik — dibahas di modul Kualitas.) Kalau ya, FCF negatif hari ini adalah investasi. Kalau tidak, itu pembakaran uang.
 </div>
 `,
           keyPoints: [
@@ -1663,45 +1945,62 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
         {
           id: "acc-fund-3",
           title: "ROI (Return on Investment)",
-          duration: "11 menit",
+          duration: "12 menit",
           content: `
-<p><b>ROI (Return on Investment)</b> mengukur seberapa <b>menguntungkan</b> sebuah investasi/keputusan dibanding biayanya. Ini alat keputusan paling universal — dipakai untuk apa saja: iklan, mesin, pelatihan, proyek.</p>
-
-<div class="callout">
-<b>Rumus:</b> ROI = (Keuntungan dari investasi − Biaya investasi) ÷ Biaya investasi × 100%.
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Perubahan persen</b> = (Baru − Lama) ÷ Lama × 100%, dan <b>CAGR</b> meratakan pertumbuhan beberapa tahun menjadi angka per tahun (pelajaran Persen, Rasio &amp; CAGR). ROI memakai keduanya.
 </div>
 
-<h3>Contoh</h3>
-<p>Kamu keluarkan Rp10jt untuk iklan, dan iklan itu menghasilkan tambahan laba Rp15jt. ROI = (15 − 10) ÷ 10 × 100% = <b>50%</b>. Artinya tiap Rp1 menghasilkan Rp0,50 keuntungan bersih.</p>
+<p><b>ROI (Return on Investment)</b> menjawab pertanyaan paling sederhana dalam bisnis: <b>"Uang yang kukeluarkan kembali berapa?"</b> Ini alat keputusan paling universal — dipakai untuk iklan, mesin, pelatihan, proyek, apa saja.</p>
 
-<h3>💥 Dampak pada perusahaan</h3>
-<ul>
-  <li>Membantu <b>alokasi modal</b>: dahulukan proyek dengan ROI tertinggi.</li>
-  <li>ROI <b>negatif</b> = rugi → hentikan atau perbaiki.</li>
-  <li>Membuat keputusan berbasis angka, bukan tebakan.</li>
-</ul>
+<h3>Langkah 1 — Rumusnya adalah perubahan persen</h3>
+<div class="callout">
+<b>ROI = (Hasil yang kembali − Biaya investasi) ÷ Biaya investasi × 100%</b><br><br>
+Perhatikan: ini sama persis dengan perubahan persen. "Lama" adalah uang yang dikeluarkan; "baru" adalah uang yang kembali.
+</div>
+<p><b>Contoh:</b> kamu mengeluarkan Rp10jt untuk iklan, dan iklan itu mendatangkan tambahan laba Rp15jt. ROI = (15 − 10) ÷ 10 × 100% = <b>50%</b>. Tiap Rp1 yang dikeluarkan kembali Rp1,50 — untung bersih Rp0,50.</p>
+
+<h3>Langkah 2 — Membaca hasilnya</h3>
+<table class="tbl">
+  <tr><th>ROI</th><th>Artinya</th><th>Contoh</th></tr>
+  <tr><td class="ok-cell">Positif</td><td>Uang kembali lebih banyak</td><td>Keluar 10, kembali 15 → +50%</td></tr>
+  <tr><td>Nol</td><td>Impas — kembali persis sebesar modal</td><td>Keluar 20, kembali 20 → 0%</td></tr>
+  <tr><td class="bad-cell">Negatif</td><td>Rugi — sebagian uang tidak kembali</td><td>Keluar 10, kembali 7 → −30%</td></tr>
+</table>
+<p>Dampaknya pada perusahaan: dahulukan proyek dengan ROI tertinggi, hentikan atau perbaiki yang ROI-nya negatif, dan putuskan berdasarkan angka, bukan firasat.</p>
+
+<h3>Langkah 3 — Jebakan: ROI tidak tahu waktu</h3>
+<p>Dua investasi sama-sama ROI <b>50%</b>:</p>
+<table class="tbl">
+  <tr><th>Investasi</th><th>ROI total</th><th>Butuh waktu</th><th>Per tahun (CAGR)</th></tr>
+  <tr><td>A</td><td>50%</td><td>1 tahun</td><td class="ok-cell">50%</td></tr>
+  <tr><td>B</td><td>50%</td><td>5 tahun</td><td class="bad-cell">sekitar 8,4%</td></tr>
+</table>
+<p>Hasil akhirnya sama, tapi B mengikat uangmu lima kali lebih lama. Hitungan per tahunnya memakai CAGR: (1,5)<sup>1/5</sup> − 1 ≈ 8,4%. Kalau deposito memberi 5% per tahun tanpa risiko, investasi B hanya sedikit lebih baik — padahal risikonya jauh lebih besar.</p>
 
 <div class="callout warn">
-<b>Keterbatasan:</b> ROI dasar <b>mengabaikan waktu</b> (untung 50% dalam 1 bulan ≠ dalam 5 tahun) dan <b>risiko</b>. Untuk proyek jangka panjang, lengkapi dengan analisis lain.
+<b>Keterbatasan ROI dasar:</b> ia <b>mengabaikan waktu</b> dan <b>risiko</b>. Untuk proyek jangka panjang, lengkapi dengan ROI per tahun, lalu dengan NPV dan IRR yang dibahas di modul Matematika Keuangan.
 </div>
 
 <div data-demo="roi-calc"></div>
 `,
           keyPoints: [
-            "ROI = (Keuntungan − Biaya) ÷ Biaya × 100%; alat keputusan universal.",
-            "Dampak: mengarahkan modal ke proyek paling menguntungkan; ROI negatif = hentikan.",
-            "Keterbatasan: ROI dasar mengabaikan faktor waktu dan risiko.",
+            "ROI = (Hasil yang kembali − Biaya) ÷ Biaya × 100% — sama dengan rumus perubahan persen.",
+            "Positif = untung, nol = impas, negatif = rugi; dahulukan proyek dengan ROI tertinggi.",
+            "ROI dasar mengabaikan waktu: 50% dalam 5 tahun hanya sekitar 8,4% per tahun.",
+            "ROI dasar juga mengabaikan risiko; proyek panjang dilengkapi NPV dan IRR."
           ],
           practice: [
-            { type: "number", q: "Beli mesin Rp50jt, menghasilkan keuntungan Rp65jt. Berapa ROI-nya? (dalam %)", answer: 30, tol: 0.5, hint: "ROI = (Keuntungan − Biaya) ÷ Biaya × 100%.", solution: "(65 − 50) ÷ 50 × 100% = 30%." },
-            { type: "number", q: "Iklan Rp20jt menghasilkan tambahan laba Rp20jt. Berapa ROI-nya? (%)", answer: 0, tol: 0.5, hint: "Keuntungan − Biaya = 20 − 20.", solution: "(20 − 20) ÷ 20 = 0% (impas, tidak untung/rugi)." },
+            { type: "number", q: "Beli mesin Rp50jt, menghasilkan keuntungan Rp65jt. Berapa ROI-nya? (dalam %)", answer: 30, tol: 0.5, unit: "%", hint: "ROI = (Hasil − Biaya) ÷ Biaya × 100%.", solution: "(65 − 50) ÷ 50 × 100% = 30%." },
+            { type: "number", q: "Iklan Rp20jt menghasilkan tambahan laba Rp20jt. Berapa ROI-nya? (%)", answer: 0, tol: 0.5, unit: "%", hint: "Hasil − Biaya = 20 − 20.", solution: "(20 − 20) ÷ 20 = 0% (impas, tidak untung/rugi)." }
           ],
           quiz: [
             {
               q: "Investasi Rp10jt menghasilkan keuntungan Rp13jt. Berapa ROI-nya?",
-              options: ["3%", "30%", "130%", "13%"],
-              answer: 1,
-              explain: "(13 − 10) ÷ 10 × 100% = 30%.",
+              options: ["30%", "3%", "130%", "13%"],
+              answer: 0,
+              explain: "(13 − 10) ÷ 10 × 100% = 30%."
             },
             {
               q: "Apa keterbatasan utama ROI dasar?",
@@ -1709,49 +2008,87 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
                 "Mengabaikan lamanya waktu investasi dan besarnya risiko",
                 "Hanya bisa dihitung untuk investasi dalam bentuk saham",
                 "Selalu memberi hasil negatif pada tahun pertama investasi",
-                "Membutuhkan data arus kas harian yang sulit didapatkan",
+                "Membutuhkan data arus kas harian yang sulit didapatkan"
               ],
               answer: 0,
-              explain: "ROI dasar tak memperhitungkan berapa lama & seberisiko apa investasinya.",
+              explain: "ROI 50% dalam setahun jauh lebih baik daripada 50% dalam lima tahun, tapi ROI dasar menilainya sama."
             },
-          ],
+            {
+              q: "Keluar Rp10jt, kembali Rp7jt. Berapa ROI-nya?",
+              options: ["−30%", "−3%", "70%", "30%"],
+              answer: 0,
+              explain: "(7 − 10) ÷ 10 × 100% = −30%. Sebagian modal tidak kembali."
+            }
+          ]
         },
         {
           id: "acc-fund-4",
           title: "ROE, ROA & ROIC — Ukuran Efisiensi Modal",
-          duration: "12 menit",
+          duration: "14 menit",
           content: `
-<p>Tiga rasio "return" ini menjawab: <b>seberapa efisien perusahaan mengubah modal menjadi laba?</b></p>
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b> — Warung Kopi Sari 2025 (juta Rp):<br>
+Pendapatan <b>300</b> • Laba operasi <b>50</b> • Laba bersih <b>40</b> • Total aset <b>160</b> • Pinjaman bank <b>40</b> • Total kewajiban <b>60</b> • Ekuitas <b>100</b>
+</div>
+
+<p>ROI menilai <b>satu</b> keputusan investasi. Tiga rasio di pelajaran ini menilai <b>seluruh perusahaan</b>: seberapa pandai ia mengubah modal menjadi laba. Rumusnya sama-sama "laba ÷ sesuatu" — yang membedakan hanyalah <b>penyebutnya</b>.</p>
 
 <div data-diagram="compare3" data-cols="ROA::laba ÷ seluruh aset::seberapa produktif asetnya|ROE::laba ÷ modal sendiri::hasil untuk pemilik|ROIC::laba ÷ modal terpakai::paling jujur, abaikan utang" data-caption="Tiga ukuran efisiensi modal — penyebutnya yang membedakan"></div>
 
-
-<table class="tbl">
-  <tr><th>Rasio</th><th>Rumus</th><th>Menjawab</th></tr>
-  <tr><td><b>ROE</b> (Return on Equity)</td><td>Laba Bersih ÷ Ekuitas</td><td>Imbal hasil bagi <b>modal pemilik</b></td></tr>
-  <tr><td><b>ROA</b> (Return on Assets)</td><td>Laba Bersih ÷ Total Aset</td><td>Efisiensi <b>seluruh aset</b> menghasilkan laba</td></tr>
-  <tr><td><b>ROIC</b> (Return on Invested Capital)</td><td>Laba operasi setelah pajak ÷ Modal diinvestasikan</td><td>Efisiensi <b>seluruh modal</b> (utang + ekuitas)</td></tr>
-</table>
-
-<h3>💥 Dampak pada perusahaan</h3>
-<ul>
-  <li><b>ROE tinggi</b> → sangat menarik bagi investor (modal mereka "bekerja keras"). TAPI hati-hati: ROE bisa tinggi <b>karena utang besar</b> (leverage) — itu berisiko.</li>
-  <li><b>ROA</b> mengungkap apakah aset dipakai efisien; ROA rendah = banyak aset menganggur.</li>
-  <li><b>ROIC</b> dibanding biaya modal menentukan apakah perusahaan benar-benar <b>menciptakan nilai</b>.</li>
-</ul>
-
+<h3>Langkah 1 — ROA: seberapa produktif semua asetnya?</h3>
 <div class="callout">
-<b>Rahasia DuPont:</b> ROE = Margin laba × Perputaran aset × Leverage. Jadi ROE tinggi bisa datang dari margin bagus, aset efisien, ATAU sekadar banyak utang. Bedakan mana yang sehat!
+<b>ROA = Laba bersih ÷ Total aset</b> = 40 ÷ 160 = <b>25%</b><br>
+Setiap Rp100 aset — kas, stok, peralatan — menghasilkan Rp25 laba setahun. ROA rendah berarti banyak aset yang menganggur.
+</div>
+
+<h3>Langkah 2 — ROE: berapa hasil untuk pemilik?</h3>
+<div class="callout">
+<b>ROE = Laba bersih ÷ Ekuitas</b> = 40 ÷ 100 = <b>40%</b><br>
+Setiap Rp100 uang pemilik menghasilkan Rp40 laba setahun. Angka setinggi ini wajar untuk usaha kecil yang modalnya sedikit; perusahaan besar yang sehat umumnya berada di kisaran belasan sampai dua puluhan persen.
+</div>
+<p>Kenapa ROE (40%) lebih tinggi dari ROA (25%)? Karena sebagian aset dibeli dengan <b>uang pinjaman</b>. Laba yang dihasilkan aset pinjaman itu — setelah bunga — jatuh ke tangan pemilik, padahal pemilik tidak menyetor modal untuknya.</p>
+
+<h3>Langkah 3 — Utang memperbesar ROE… ke dua arah</h3>
+<p>Bayangkan dua warung yang sama persis — aset sama 160, penjualan sama — bedanya hanya cara membiayainya. Supaya mudah, pajak diabaikan:</p>
+<table class="tbl">
+  <tr><th></th><th>Warung A (tanpa utang)</th><th>Warung B (pinjam 60)</th></tr>
+  <tr><td>Ekuitas</td><td>160</td><td>100</td></tr>
+  <tr><td colspan="3"><b>Tahun normal — laba operasi 50</b></td></tr>
+  <tr><td>Bunga</td><td>0</td><td>5</td></tr>
+  <tr><td>Laba</td><td>50</td><td>45</td></tr>
+  <tr><td>ROE</td><td>31%</td><td class="ok-cell">45%</td></tr>
+  <tr><td colspan="3"><b>Tahun buruk — laba operasi turun ke 3</b></td></tr>
+  <tr><td>Laba</td><td>3</td><td class="bad-cell">3 − 5 = −2 (rugi)</td></tr>
+  <tr><td>ROE</td><td>1,9%</td><td class="bad-cell">−2%</td></tr>
+</table>
+<p>Di tahun normal, utang membuat ROE B jauh lebih tinggi. Di tahun buruk, bunga tetap harus dibayar dan B langsung rugi. Utang disebut <b>leverage</b> (daya ungkit): ia memperbesar hasil, baik yang bagus maupun yang jelek.</p>
+
+<h3>Langkah 4 — ROIC: ukuran yang tidak tertipu utang</h3>
+<div class="callout">
+<b>ROIC = Laba operasi setelah pajak ÷ Modal yang diinvestasikan</b><br><br>
+Modal yang diinvestasikan = <b>utang berbunga + ekuitas</b> = 40 + 100 = 140<br>
+Laba operasi setelah pajak ≈ 50 − 5 = 45 (dipakai laba <i>operasi</i>, sebelum bunga, supaya cara membiayai tidak ikut memengaruhi)<br>
+ROIC ≈ 45 ÷ 140 ≈ <b>32%</b>
+</div>
+<p>Karena memakai laba sebelum bunga dan <b>seluruh</b> modal, ROIC menilai kualitas bisnisnya sendiri — apakah warungnya memang pandai menghasilkan laba, terlepas dari berapa banyak utangnya. Bila ROIC lebih tinggi dari biaya modal, perusahaan benar-benar <b>menciptakan nilai</b> (dibahas di modul Kualitas).</p>
+
+<h3>Langkah 5 — Rahasia DuPont: dari mana ROE berasal?</h3>
+<div class="callout">
+<b>ROE = Net margin × Perputaran aset × Leverage</b><br><br>
+Warung Sari: <b>13,3%</b> (40 ÷ 300) × <b>1,875</b> (300 ÷ 160) × <b>1,6</b> (160 ÷ 100) = <b>40%</b> ✓<br><br>
+Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, ATAU sekadar banyak utang. Dua yang pertama sehat; yang ketiga perlu diwaspadai.
 </div>
 `,
           keyPoints: [
-            "ROE = Laba ÷ Ekuitas (untuk pemilik); ROA = Laba ÷ Aset (efisiensi aset); ROIC = laba operasi bersih ÷ modal diinvestasikan.",
-            "Dampak: ROE tinggi menarik investor, tapi bisa berasal dari utang besar (risiko).",
-            "DuPont: ROE = margin × perputaran aset × leverage — bedakan sumber ROE yang sehat vs berisiko.",
+            "ROA = Laba bersih ÷ Total aset (produktivitas semua aset); ROE = Laba bersih ÷ Ekuitas (hasil untuk pemilik).",
+            "ROE lebih tinggi dari ROA bila sebagian aset dibiayai utang; utang (leverage) memperbesar hasil ke dua arah.",
+            "ROIC = laba operasi setelah pajak ÷ (utang berbunga + ekuitas) — menilai bisnisnya tanpa tertipu cara membiayai.",
+            "DuPont: ROE = margin × perputaran aset × leverage — bedakan sumber ROE yang sehat dan yang berisiko."
           ],
           practice: [
-            { type: "number", q: "Laba bersih Rp30jt, ekuitas Rp150jt. Berapa ROE-nya? (%)", answer: 20, tol: 0.5, hint: "ROE = Laba ÷ Ekuitas × 100%.", solution: "30 ÷ 150 × 100% = 20%." },
-            { type: "number", q: "Laba bersih Rp30jt, total aset Rp300jt. Berapa ROA-nya? (%)", answer: 10, tol: 0.5, hint: "ROA = Laba ÷ Total Aset × 100%.", solution: "30 ÷ 300 × 100% = 10%." },
+            { type: "number", q: "Laba bersih Rp30jt, ekuitas Rp150jt. Berapa ROE-nya? (%)", answer: 20, tol: 0.5, unit: "%", hint: "ROE = Laba ÷ Ekuitas × 100%.", solution: "30 ÷ 150 × 100% = 20%." },
+            { type: "number", q: "Laba bersih Rp30jt, total aset Rp300jt. Berapa ROA-nya? (%)", answer: 10, tol: 0.5, unit: "%", hint: "ROA = Laba ÷ Total Aset × 100%.", solution: "30 ÷ 300 × 100% = 10%." },
+            { type: "number", q: "Net margin 10%, perputaran aset 2 kali, leverage 1,5. Berapa ROE menurut DuPont? (%)", answer: 30, tol: 0.5, unit: "%", hint: "Kalikan ketiganya.", solution: "0,10 × 2 × 1,5 = 0,30 = 30%." }
           ],
           quiz: [
             {
@@ -1760,11 +2097,10 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
                 "Berasal dari utang besar (leverage), bukan dari operasi yang unggul",
                 "Perusahaan membagikan sebagian labanya sebagai dividen",
                 "Perusahaan bergerak di industri teknologi yang tumbuh cepat",
-                "Labanya naik bersamaan dengan kenaikan penjualan",
+                "Labanya naik bersamaan dengan kenaikan penjualan"
               ],
               answer: 0,
-              explain:
-                "ROE tinggi karena utang besar meningkatkan risiko keuangan, bukan kualitas.",
+              explain: "Utang memperbesar ROE di tahun baik, tapi juga memperbesar kerugian di tahun buruk."
             },
             {
               q: "ROA mengukur?",
@@ -1772,12 +2108,23 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
                 "Seberapa efisien seluruh aset perusahaan menghasilkan laba",
                 "Seberapa besar laba yang dihasilkan dari modal milik pemilik",
                 "Seberapa cepat perusahaan menjual habis persediaannya",
-                "Seberapa besar porsi aset yang dibiayai oleh utang",
+                "Seberapa besar porsi aset yang dibiayai oleh utang"
               ],
               answer: 0,
-              explain: "ROA = Laba ÷ Total Aset — efisiensi aset menghasilkan laba.",
+              explain: "ROA = laba bersih ÷ total aset."
             },
-          ],
+            {
+              q: "Kenapa ROIC memakai laba operasi (sebelum bunga), bukan laba bersih?",
+              options: [
+                "Agar cara membiayai bisnis tidak ikut memengaruhi hasilnya",
+                "Agar hasilnya selalu lebih besar daripada ROE perusahaan",
+                "Agar pajak yang dibayar perusahaan tidak perlu dihitung",
+                "Agar laba dari penjualan aset ikut masuk ke hitungan"
+              ],
+              answer: 0,
+              explain: "Bunga bergantung pada seberapa banyak utang. ROIC ingin menilai kualitas bisnisnya saja."
+            }
+          ]
         },
         {
           id: "acc-fund-6",
@@ -1794,6 +2141,16 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
   <tr><td><b>Burn Rate</b></td><td>Kecepatan bisnis "membakar" kas per bulan</td></tr>
   <tr><td><b>Break-even</b></td><td>Titik saat tidak untung & tidak rugi</td></tr>
 </table>
+
+<h3>Contohnya di Warung Kopi Sari</h3>
+<table class="tbl">
+  <tr><th>Metrik</th><th>Hitungan</th><th>Hasil</th></tr>
+  <tr><td>Gross margin</td><td>Laba kotor 180 ÷ pendapatan 300</td><td>60%</td></tr>
+  <tr><td>Operating margin</td><td>Laba operasi 50 ÷ 300</td><td>16,7%</td></tr>
+  <tr><td>EBITDA</td><td>Laba operasi 50 + penyusutan 20 (penyusutan bukan uang keluar)</td><td>70</td></tr>
+  <tr><td>Break-even</td><td>Beban tetap setahun (gaji, sewa, listrik, penyusutan) = 130; tiap Rp100 penjualan menyisakan Rp60 setelah bahan → 130 ÷ 60%</td><td>penjualan ≈ 217 setahun</td></tr>
+</table>
+<p>Artinya: di bawah penjualan sekitar 217 juta setahun, warung rugi; di atasnya, mulai untung. Untuk sederhananya, semua beban operasional dianggap tetap dan bunga diabaikan. <b>Burn rate</b> tidak relevan untuk Warung Sari karena ia sudah untung; metrik ini dipakai perusahaan rintisan yang masih rugi, misalnya "kas berkurang Rp200 juta per bulan".</p>
 
 <h3>Soal "ROTI"</h3>
 <div class="callout">
@@ -2365,7 +2722,19 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
 <b>Margin Kontribusi</b> = Harga jual − Biaya variabel per unit.<br>
 <b>Titik Impas (unit)</b> = Biaya Tetap ÷ Margin Kontribusi per unit.
 </div>
-<p><b>Contoh:</b> Biaya tetap Rp10jt/bulan. Tiap produk dijual Rp50rb, biaya variabelnya Rp30rb → margin kontribusi Rp20rb. Titik impas = 10.000.000 ÷ 20.000 = <b>500 unit</b>/bulan. Di bawah itu rugi, di atasnya untung.</p>
+<p><b>Contoh Warung Kopi Sari:</b> secangkir kopi dijual <b>Rp25.000</b>, bahannya <b>Rp10.000</b> → margin kontribusi <b>Rp15.000</b> per cangkir (60% — cocok dengan gross margin di laporan laba ruginya). Biaya tetapnya setahun 130 juta (gaji, sewa, listrik, penyusutan), atau sekitar <b>Rp10,8 juta per bulan</b>. Titik impas = 10.800.000 ÷ 15.000 ≈ <b>720 cangkir per bulan</b> — kira-kira <b>24 cangkir sehari</b>. Cangkir ke-25 dan seterusnya setiap hari barulah menghasilkan laba.</p>
+<p><b>Contoh lain:</b> Biaya tetap Rp10jt/bulan. Tiap produk dijual Rp50rb, biaya variabelnya Rp30rb → margin kontribusi Rp20rb. Titik impas = 10.000.000 ÷ 20.000 = <b>500 unit</b>/bulan. Di bawah itu rugi, di atasnya untung.</p>
+
+<h3>Dua biaya yang sering menipu keputusan</h3>
+<p>Diagram di atas menyebut dua jenis biaya yang tidak muncul di laporan keuangan tapi sangat menentukan keputusan:</p>
+<table class="tbl">
+  <tr><th>Biaya</th><th>Artinya</th><th>Contoh</th></tr>
+  <tr><td><b>Sunk cost</b><br>(biaya hangus)</td><td>Uang yang <b>sudah terlanjur keluar</b> dan tidak bisa kembali, apa pun keputusanmu sekarang. Karena itu harus <b>diabaikan</b>.</td><td>Sari sudah membayar kursus latte art Rp5 juta, tapi ternyata pembeli tidak peduli. Rp5 juta itu bukan alasan untuk terus membuang waktu barista menghias kopi.</td></tr>
+  <tr><td><b>Biaya peluang</b><br>(opportunity cost)</td><td>Keuntungan dari <b>pilihan terbaik lain</b> yang kamu lepaskan karena memilih sesuatu.</td><td>Uang 70 juta yang mengendap di kas warung bisa menghasilkan sekitar 3,5 juta setahun di deposito berbunga 5%. Kalau dibiarkan menganggur, 3,5 juta itu "hilang" walau tidak tercatat di laporan mana pun.</td></tr>
+</table>
+<div class="callout warn">
+<b>Jebakan sunk cost</b> adalah alasan orang terus menuangkan uang ke proyek yang gagal: "sayang, sudah keluar banyak". Pertanyaan yang benar selalu menghadap ke depan: <i>mulai hari ini, pilihan mana yang memberi hasil terbaik?</i>
+</div>
 
 <h3>Etika & integritas</h3>
 <div class="callout warn">
@@ -2646,6 +3015,14 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
   <li>Pajak atas <b>konsumsi</b>, tarif umum <b>11%</b>, ditambahkan ke harga jual.</li>
   <li>Bisnis (PKP) <b>memungut</b> PPN dari pelanggan lalu <b>menyetorkannya</b> ke negara — jadi bisnis hanya "penampung", PPN <b>bukan beban</b> bisnis itu sendiri.</li>
 </ul>
+
+<div class="callout">
+<b>Kenapa PPN disebut "numpang lewat"? Contoh dengan tarif ilustrasi 11%:</b><br>
+Toko membeli bahan Rp50.000 dan membayar PPN <b>Rp5.500</b> kepada pemasok (<i>PPN masukan</i>).<br>
+Toko menjual barang Rp100.000 dan memungut PPN <b>Rp11.000</b> dari pembeli (<i>PPN keluaran</i>).<br>
+Yang disetor ke negara = 11.000 − 5.500 = <b>Rp5.500</b>.<br><br>
+Semua PPN itu pada akhirnya dibayar <b>pembeli terakhir</b> (konsumen). Toko hanya memungut, mengurangi yang sudah ia bayar, lalu menyetor selisihnya — pajak ini dikenakan hanya pada <b>nilai tambah</b> di setiap tahap, sesuai namanya.
+</div>
 
 <h3>PPh (Pajak Penghasilan)</h3>
 <ul>
@@ -3318,6 +3695,17 @@ console.log("Rumusnya cuma berkata: uang sekarang dikali faktor pertumbuhan.");<
 Rp100 hari ini <b>lebih berharga</b> daripada Rp100 tahun depan, karena uang hari ini bisa <b>bekerja</b> (ditabung/diinvestasikan) dan bertumbuh. Karena itu setiap perbandingan uang antarwaktu harus disesuaikan.
 </div>
 
+<h3>Langkah demi langkah dulu, rumus belakangan</h3>
+<p>Kamu menabung <b>Rp10 juta</b> dengan bunga <b>10% per tahun</b>, dan bunganya ikut ditabung. Hitung tahun demi tahun:</p>
+<table class="tbl">
+  <tr><th>Tahun</th><th>Saldo awal</th><th>Bunga 10%</th><th>Saldo akhir</th></tr>
+  <tr><td>1</td><td>10,00</td><td>1,00</td><td>11,00</td></tr>
+  <tr><td>2</td><td>11,00</td><td>1,10</td><td>12,10</td></tr>
+  <tr><td>3</td><td>12,10</td><td>1,21</td><td class="ok-cell"><b>13,31</b></td></tr>
+</table>
+<p>Perhatikan polanya: setiap tahun saldonya <b>dikali 1,1</b>. Tiga tahun berarti dikali 1,1 tiga kali: 10 × 1,1 × 1,1 × 1,1 = 10 × 1,1³ = <b>13,31</b>. Itulah rumus FV di bawah — hanya cara singkat menulis tabel ini.</p>
+<p>Sekarang dibalik: kalau kamu ingin punya <b>13,31 juta</b> tiga tahun lagi, berapa yang harus ditabung hari ini? Bagi 1,1 tiga kali: 13,31 ÷ 1,1 ÷ 1,1 ÷ 1,1 = <b>10</b>. Itulah PV — "nilai hari ini" dari uang di masa depan. Membagi seperti ini disebut <b>mendiskonto</b>.</p>
+
 <h3>Dua rumus kembar</h3>
 <table class="tbl">
   <tr><th>Arah</th><th>Rumus</th><th>Menjawab</th></tr>
@@ -3392,6 +3780,25 @@ Bunga 9% → 72 ÷ 9 = <b>8 tahun</b>. Bunga 6% → 12 tahun.
           content: `
 <p>Bagaimana memutuskan sebuah proyek layak dijalankan? Ini rumus yang dipakai profesional keuangan.</p>
 
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>PV = FV ÷ (1 + r)ⁿ</b>: uang yang datang n tahun lagi harus dibagi (1 + r) sebanyak n kali agar setara dengan uang hari ini (pelajaran sebelumnya). NPV hanyalah melakukan itu untuk <b>beberapa tahun sekaligus</b>, lalu menjumlahkannya.
+</div>
+
+<h3>Mulai dari tabel</h3>
+<p>Sebuah proyek butuh <b>Rp100 juta</b> hari ini dan menghasilkan kas 30, 40, 50, lalu 30 juta selama empat tahun. Totalnya 150 juta — tampak untung 50 juta. Tapi uang tahun keempat tidak sama nilainya dengan uang hari ini. Diskon tiap angka dengan <b>10%</b>:</p>
+<table class="tbl">
+  <tr><th>Tahun</th><th>Kas masuk</th><th>Dibagi</th><th>Nilai hari ini</th></tr>
+  <tr><td>1</td><td>30</td><td>1,1</td><td>27,27</td></tr>
+  <tr><td>2</td><td>40</td><td>1,1² = 1,21</td><td>33,06</td></tr>
+  <tr><td>3</td><td>50</td><td>1,1³ = 1,331</td><td>37,57</td></tr>
+  <tr><td>4</td><td>30</td><td>1,1⁴ = 1,4641</td><td>20,49</td></tr>
+  <tr><td colspan="3"><b>Jumlah nilai hari ini</b></td><td><b>118,39</b></td></tr>
+  <tr><td colspan="3">− Investasi awal</td><td>(100)</td></tr>
+  <tr><td colspan="3" class="ok-cell"><b>NPV</b></td><td class="ok-cell"><b>+18,39</b></td></tr>
+</table>
+<p>Keuntungan "sebenarnya", setelah memperhitungkan nilai waktu uang, adalah 18,39 juta — bukan 50 juta.</p>
+
 <h3>NPV (Net Present Value)</h3>
 <div class="callout">
 <b>NPV</b> = jumlah dari semua arus kas masa depan yang sudah <b>didiskon</b>, dikurangi <b>investasi awal</b>.<br><br>
@@ -3434,7 +3841,15 @@ console.log("Coba naikkan diskon jadi 0.25 lalu jalankan lagi.");</div>
 <b>IRR</b> = tingkat diskon <b>r</b> yang membuat <b>NPV = 0</b>. Ia menjawab: <i>"proyek ini sebenarnya memberi imbal hasil berapa persen per tahun?"</i><br><br>
 Aturannya: <b>IRR lebih tinggi dari biaya modal → layak.</b>
 </div>
-<p>IRR tidak bisa dihitung langsung dengan satu rumus — biasanya dicari lewat <b>coba-coba</b> (atau otomatis oleh spreadsheet).</p>
+<p>IRR tidak bisa dihitung langsung dengan satu rumus — biasanya dicari lewat <b>coba-coba</b> (atau otomatis oleh spreadsheet). Untuk proyek di atas:</p>
+<table class="tbl">
+  <tr><th>Tingkat diskon dicoba</th><th>NPV</th></tr>
+  <tr><td>10%</td><td>+18,39</td></tr>
+  <tr><td>15%</td><td>+6,36</td></tr>
+  <tr><td class="ok-cell">18%</td><td class="ok-cell">+0,06 — hampir nol</td></tr>
+  <tr><td>20%</td><td>−3,82</td></tr>
+</table>
+<p>NPV berganti tanda di sekitar <b>18%</b>, jadi IRR proyek ini ≈ 18% per tahun. Kalau biaya modal perusahaan 10%, proyeknya layak; kalau biaya modalnya 20%, tidak.</p>
 
 <div class="callout warn">
 <b>Kelemahan IRR:</b> bisa menyesatkan saat membandingkan proyek berukuran sangat berbeda. Proyek kecil ber-IRR 50% (untung Rp5 juta) kalah bermanfaat dibanding proyek besar ber-IRR 20% (untung Rp500 juta). <b>Untuk memilih, NPV lebih dapat diandalkan.</b>
@@ -3482,11 +3897,23 @@ Aturannya: <b>IRR lebih tinggi dari biaya modal → layak.</b>
           content: `
 <p>Rumus penutup: cara menghitung nilai dari <b>arus kas berulang</b> — dipakai untuk cicilan, pensiun, obligasi, dan bagian terpenting DCF.</p>
 
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+NPV = menjumlahkan nilai hari ini dari kas tiap tahun (pelajaran sebelumnya). Pelajaran ini membahas kasus khusus: kasnya <b>sama besar setiap tahun</b>. Karena polanya teratur, penjumlahan panjang itu bisa dipersingkat jadi satu rumus.
+</div>
+
 <h3>Anuitas — pembayaran tetap selama n periode</h3>
+<p>Mulai dari penjumlahan biasa: <b>Rp10 juta per tahun selama 3 tahun</b>, diskon 10%:</p>
+<pre class="code">Tahun 1: 10 ÷ 1,1    = 9,09
+Tahun 2: 10 ÷ 1,21   = 8,26
+Tahun 3: 10 ÷ 1,331  = 7,51
+                  jumlah = 24,87 juta</pre>
+<p>Untuk 3 tahun masih mudah. Untuk cicilan rumah 240 bulan, penjumlahan ini terlalu panjang — rumus di bawah memberi hasil yang sama sekaligus.</p>
 <div class="callout">
 <b>PV Anuitas = PMT × [ 1 − (1 + r)<sup>−n</sup> ] ÷ r</b><br><br>
 Keterangan: <b>PMT</b> = pembayaran tiap periode, <b>r</b> = bunga per periode, <b>n</b> = jumlah periode.
 </div>
+<p>Cek dengan contoh tadi: 10 × [1 − 1,1⁻³] ÷ 0,1 = 10 × [1 − 0,7513] ÷ 0,1 = <b>24,87</b> — sama dengan penjumlahan manual.</p>
 <p><b>Kegunaan sehari-hari:</b> rumus inilah yang dipakai bank untuk menghitung <b>cicilan KPR</b> atau kredit kendaraan — dan yang bisa kamu pakai untuk mengecek apakah cicilan yang ditawarkan masuk akal.</p>
 
 <h3>Perpetuitas — pembayaran tetap SELAMANYA</h3>
@@ -3494,6 +3921,7 @@ Keterangan: <b>PMT</b> = pembayaran tiap periode, <b>r</b> = bunga per periode, 
 <b>PV Perpetuitas = PMT ÷ r</b><br><br>
 Terlihat mengejutkan: arus kas <b>tak terbatas</b> ternyata punya nilai <b>terbatas</b>! Sebabnya, uang yang sangat jauh di masa depan didiskon sampai nilainya mendekati nol.
 </div>
+<p>Lihat kenapa bisa begitu. Nilai hari ini dari Rp10 juta di tahun ke-1 adalah 9,09; di tahun ke-10 tinggal 3,86; di tahun ke-50 hanya 0,09. Makin jauh, sumbangannya makin kecil, sehingga jumlahnya berhenti di satu angka.</p>
 <pre class="code">Contoh: Rp10 juta per tahun selamanya, diskon 10%
         PV = 10.000.000 ÷ 0,10 = Rp100.000.000</pre>
 
@@ -3638,13 +4066,195 @@ Tanpa FCF, DCF tidak punya bahan. Tanpa DCF, FCF hanya angka tahunan tanpa kesim
       id: "acc-lanjutan",
       level: "Lanjutan",
       title: "Valuasi Relatif & Multiples",
-      summary: "Menilai harga lewat perbandingan: PBV & nilai buku, PER & PEG, EV/EBITDA, dan jebakan valuasi relatif.",
+      summary: "Menilai harga lewat perbandingan, mulai dari nol: apa itu saham, EPS & PER, lalu PEG, PBV & nilai buku, EV/EBITDA, dan jebakan valuasi relatif.",
       lessons: [
+        {
+          id: "acc-adv-0",
+          title: "Saham, EPS & PER dari Nol — Berapa Tahun Laba untuk Menebus Harga?",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Ekuitas</b> = bagian milik pemilik (neraca), <b>laba bersih</b> = sisa setelah semua beban, bunga, dan pajak (laba rugi), dan <b>ROE</b> = laba bersih ÷ ekuitas. Modul ini memakai ketiganya untuk menjawab pertanyaan baru: <i>berapa harga yang pantas untuk membeli sebagian bisnis?</i>
+</div>
+
+<h3>Langkah 1 — Apa itu saham?</h3>
+<p>Bayangkan Warung Kopi Sari tumbuh besar menjadi <b>PT Kopi Sari Tbk</b> dengan ratusan kedai. Kepemilikannya kini dipotong menjadi <b>1 miliar lembar</b> yang sama besar. Satu lembar itulah <b>saham</b>. Memiliki 1 lembar berarti memiliki 1/1.000.000.000 bagian perusahaan — termasuk hak atas sebagian labanya.</p>
+<p>"Tbk" (terbuka) artinya sahamnya diperjualbelikan di <b>bursa efek</b>. Harganya berubah setiap hari mengikuti tawar-menawar pembeli dan penjual — misalnya hari ini <b>Rp600 per lembar</b>.</p>
+
+<h3>Langkah 2 — Harga seluruh perusahaan: kapitalisasi pasar</h3>
+<div class="callout">
+<b>Kapitalisasi pasar = Harga per lembar × Jumlah lembar</b><br>
+Rp600 × 1 miliar lembar = <b>Rp600 miliar</b><br><br>
+Inilah harga yang dipasang pasar untuk <b>seluruh</b> kepemilikan PT Kopi Sari hari ini.
+</div>
+
+<h3>Langkah 3 — Laba per lembar: EPS</h3>
+<p>Tahun lalu PT Kopi Sari mencetak laba bersih <b>Rp40 miliar</b>. Berapa bagian untuk tiap lembar?</p>
+<div class="callout">
+<b>EPS (Earnings per Share) = Laba bersih ÷ Jumlah lembar</b><br>
+Rp40 miliar ÷ 1 miliar lembar = <b>Rp40 per lembar</b>
+</div>
+
+<h3>Langkah 4 — PER: harga dibanding laba</h3>
+<div class="callout">
+<b>PER (Price to Earnings Ratio) = Harga per lembar ÷ EPS</b><br>
+Rp600 ÷ Rp40 = <b>15</b><br><br>
+Hasilnya sama bila dihitung untuk seluruh perusahaan: kapitalisasi pasar ÷ laba bersih = 600 ÷ 40 = 15.
+</div>
+<p><b>Cara termudah membacanya:</b> kalau laba tidak naik dan tidak turun, butuh <b>15 tahun laba</b> untuk "menebus" harga yang kamu bayar hari ini. PER 15 sering juga ditulis "15 kali" atau 15×.</p>
+
+<h3>Langkah 5 — Dibalik: earnings yield</h3>
+<p>Balik PER-nya: 1 ÷ 15 = <b>6,7%</b>. Artinya: setiap Rp100 yang kamu bayar untuk saham ini "menghasilkan" laba Rp6,7 setahun. Angka ini disebut <b>earnings yield</b>, dan berguna untuk dibandingkan dengan bunga deposito atau obligasi.</p>
+<table class="tbl">
+  <tr><th>PER</th><th>Earnings yield</th><th>Kesan pertama</th></tr>
+  <tr><td>5</td><td>20%</td><td>Sangat murah — atau pasar mencium masalah besar</td></tr>
+  <tr><td>15</td><td>6,7%</td><td>Sedang</td></tr>
+  <tr><td>40</td><td>2,5%</td><td>Mahal — kecuali labanya diharapkan tumbuh sangat cepat</td></tr>
+</table>
+
+<h3>Langkah 6 — Kapan PER tidak bisa dipakai?</h3>
+<table class="tbl">
+  <tr><th>Situasi</th><th>Masalahnya</th></tr>
+  <tr><td>Perusahaan <b>rugi</b></td><td>EPS negatif → PER tidak bermakna</td></tr>
+  <tr><td>Laba tahun ini <b>luar biasa</b> (misalnya dari menjual tanah)</td><td>PER tampak murah, padahal laba itu tidak berulang — ingat kualitas laba</td></tr>
+  <tr><td>Bisnis <b>siklikal</b> di puncak siklus</td><td>Laba sedang setinggi-tingginya, jadi PER tampak rendah justru saat paling berbahaya</td></tr>
+  <tr><td>Beda industri</td><td>PER bank dan PER perusahaan teknologi tidak bisa dibandingkan langsung</td></tr>
+</table>
+
+<div class="callout warn">
+<b>PER hanya separuh cerita.</b> PER 15 untuk perusahaan yang labanya naik 20% setahun sangat berbeda dengan PER 15 untuk perusahaan yang labanya menyusut. Pelajaran berikutnya menambahkan unsur pertumbuhan itu. Ini materi edukasi, bukan saran membeli atau menjual saham apa pun.
+</div>
+`,
+          keyPoints: [
+            "Saham = potongan kepemilikan perusahaan; kapitalisasi pasar = harga per lembar × jumlah lembar.",
+            "EPS = laba bersih ÷ jumlah lembar; PER = harga ÷ EPS = kapitalisasi pasar ÷ laba bersih.",
+            "PER 15 dibaca: butuh sekitar 15 tahun laba (bila tetap) untuk menebus harga hari ini.",
+            "Earnings yield = 1 ÷ PER, bisa dibandingkan dengan bunga deposito.",
+            "PER tidak bermakna bila rugi, menyesatkan bila labanya sekali-saja atau di puncak siklus."
+          ],
+          practice: [
+            { type: "number", q: "Laba bersih Rp90 miliar, jumlah saham 3 miliar lembar. Berapa EPS-nya? (Rupiah)", answer: 30, tol: 0.1, unit: "Rp", hint: "EPS = Laba bersih ÷ jumlah lembar.", solution: "90 miliar ÷ 3 miliar = Rp30 per lembar." },
+            { type: "number", q: "Harga saham Rp450, EPS Rp30. Berapa PER-nya?", answer: 15, tol: 0.1, hint: "PER = Harga ÷ EPS.", solution: "450 ÷ 30 = 15 kali." },
+            { type: "number", q: "PER sebuah saham 20. Berapa earnings yield-nya? (%)", answer: 5, tol: 0.1, unit: "%", hint: "Earnings yield = 1 ÷ PER.", solution: "1 ÷ 20 = 0,05 = 5%." }
+          ],
+          quiz: [
+            {
+              q: "Apa yang dimiliki seseorang yang memegang satu lembar saham?",
+              options: [
+                "Sebagian kecil kepemilikan perusahaan, termasuk hak atas labanya",
+                "Surat utang yang wajib dilunasi perusahaan beserta bunganya",
+                "Hak untuk membeli produk perusahaan dengan harga lebih murah",
+                "Bagian dari gaji karyawan yang ditahan sebagai tabungan"
+              ],
+              answer: 0,
+              explain: "Saham adalah potongan kepemilikan. Surat utang perusahaan disebut obligasi."
+            },
+            {
+              q: "Harga saham Rp600, EPS Rp40. Apa arti PER-nya?",
+              options: [
+                "Sekitar 15 tahun laba untuk menebus harga",
+                "Perusahaan untung 15% setiap tahunnya",
+                "Harga saham naik 15 kali dalam setahun",
+                "Tiap lembar menerima dividen Rp15"
+              ],
+              answer: 0,
+              explain: "PER = 600 ÷ 40 = 15. Bila laba tetap, dibutuhkan sekitar 15 tahun laba untuk menyamai harga yang dibayar."
+            },
+            {
+              q: "Kenapa PER tidak bermakna untuk perusahaan yang sedang rugi?",
+              options: [
+                "Karena EPS-nya negatif sehingga hasil baginya tidak bisa dibaca",
+                "Karena saham perusahaan rugi dilarang diperjualbelikan di bursa",
+                "Karena harga saham perusahaan rugi selalu bernilai nol rupiah",
+                "Karena jumlah lembar sahamnya berubah setiap kali perusahaan rugi"
+              ],
+              answer: 0,
+              explain: "Laba negatif membuat PER negatif — tidak bisa dibaca sebagai 'berapa tahun laba menebus harga'."
+            }
+          ]
+        },
+        {
+          id: "acc-adv-2",
+          title: "PER, PEG & Valuasi Pertumbuhan",
+          duration: "11 menit",
+          content: `
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>PER = Harga ÷ EPS</b> — PT Kopi Sari: Rp600 ÷ Rp40 = <b>15</b>, artinya sekitar 15 tahun laba untuk menebus harga bila labanya tetap (pelajaran sebelumnya).
+</div>
+
+<p>Masalahnya: kata "bila labanya tetap" jarang benar. PER <b>tidak memperhitungkan pertumbuhan</b>. Saham yang labanya tumbuh cepat "pantas" lebih mahal daripada yang stagnan — karena laba masa depannya jauh lebih besar dari laba hari ini.</p>
+
+<div data-diagram="bar" data-bars="PER 10 / tumbuh 5%:2|PER 20 / tumbuh 20%:1|PER 30 / tumbuh 45%:0.67" data-unit=" PEG" data-caption="PER tinggi belum tentu mahal — PEG memperhitungkan pertumbuhannya. Makin kecil PEG, makin menarik."></div>
+
+
+<div class="callout">
+<b>PEG (Price/Earnings to Growth)</b> = PER ÷ Pertumbuhan laba tahunan (%). Ini menyeimbangkan harga dengan kecepatan pertumbuhan.
+</div>
+
+<h3>Membaca PEG</h3>
+<table class="tbl">
+  <tr><th>PEG</th><th>Arti kasar</th></tr>
+  <tr><td><b>≈ 1</b></td><td>Wajar — harga sepadan dengan pertumbuhan</td></tr>
+  <tr><td><b>&lt; 1</b></td><td>Relatif murah dibanding pertumbuhannya (menarik)</td></tr>
+  <tr><td><b>&gt; 1</b></td><td>Relatif mahal dibanding pertumbuhannya</td></tr>
+</table>
+
+<h3>Contoh</h3>
+<p>PT Kopi Sari: PER 15, labanya diperkirakan tumbuh 10% per tahun → PEG = 15 ÷ 10 = <b>1,5</b> (sedikit mahal dibanding pertumbuhannya).</p>
+<p>Saham A: PER 20, tumbuh 20%/tahun → PEG = 20 ÷ 20 = <b>1,0</b> (wajar). Saham B: PER 30, tumbuh 15% → PEG = 2,0 (relatif mahal). Meski PER B lebih tinggi, PEG mengungkap A lebih menarik untuk pertumbuhannya.</p>
+
+<div class="callout warn">
+<b>Hati-hati:</b> PEG bergantung pada <b>ramalan pertumbuhan</b> yang bisa meleset. Gunakan sebagai satu alat, bukan penentu tunggal. Ini edukasi, bukan saran investasi.
+</div>
+`,
+          keyPoints: [
+            "PER mengabaikan pertumbuhan; PEG memperbaikinya.",
+            "PEG = PER ÷ pertumbuhan laba tahunan (%).",
+            "PEG ≈ 1 wajar; < 1 relatif murah; > 1 relatif mahal terhadap pertumbuhan.",
+            "PEG bergantung pada ramalan pertumbuhan yang bisa meleset — bukan penentu tunggal.",
+          ],
+          practice: [
+            { type: "number", q: "PER 20, pertumbuhan laba 20%/tahun. Berapa PEG-nya?", answer: 1, tol: 0.05, hint: "PEG = PER ÷ pertumbuhan (%).", solution: "20 ÷ 20 = 1,0 (wajar)." },
+            { type: "number", q: "PER 30, pertumbuhan laba 15%/tahun. Berapa PEG-nya?", answer: 2, tol: 0.05, hint: "PEG = PER ÷ pertumbuhan (%).", solution: "30 ÷ 15 = 2,0 (relatif mahal)." },
+          ],
+          quiz: [
+            {
+              q: "Apa keunggulan PEG dibanding PER?",
+              options: [
+                "Ikut memperhitungkan laju pertumbuhan laba, bukan hanya harga vs laba",
+                "Ikut memperhitungkan besarnya utang perusahaan terhadap ekuitas",
+                "Bisa dipakai untuk perusahaan yang labanya sedang negatif",
+                "Tidak memerlukan data laba sehingga lebih mudah dihitung",
+              ],
+              answer: 0,
+              explain:
+                "PEG menyesuaikan PER dengan tingkat pertumbuhan, menilai lebih adil.",
+            },
+            {
+              q: "PEG = 0,7 secara kasar menandakan?",
+              options: [
+                "Relatif murah dibanding laju pertumbuhan labanya",
+                "Relatif mahal dibanding laju pertumbuhan labanya",
+                "Pertumbuhan laba perusahaan hanya 0,7% per tahun",
+                "Perusahaan sedang merugi sehingga PEG-nya di bawah satu",
+              ],
+              answer: 0,
+              explain: "PEG < 1 mengindikasikan harga murah relatif terhadap pertumbuhan.",
+            },
+          ],
+        },
         {
           id: "acc-adv-1",
           title: "PBV & Nilai Buku (Book Value)",
           duration: "11 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+PER membandingkan harga dengan <b>laba</b> (laporan laba rugi). PBV membandingkan harga dengan <b>ekuitas</b> — angka dari <b>neraca</b>: Aset − Kewajiban.
+</div>
+
 <p><b>PBV (Price to Book Value)</b> membandingkan harga saham dengan <b>nilai buku</b> perusahaan — salah satu rasio favorit para <i>value investor</i>.</p>
 
 <div data-diagram="flow" data-steps="Harga Saham|÷ Nilai Buku per Saham|= PBV" data-caption="Menghitung PBV"></div>
@@ -3655,6 +4265,8 @@ Tanpa FCF, DCF tidak punya bahan. Tanpa DCF, FCF hanya angka tahunan tanpa kesim
 <b>Nilai Buku per Saham</b> = Ekuitas ÷ Jumlah saham.<br>
 <b>PBV</b> = Harga Saham ÷ Nilai Buku per Saham.
 </div>
+
+<p><b>Contoh PT Kopi Sari:</b> ekuitas Rp300 miliar ÷ 1 miliar lembar = nilai buku <b>Rp300 per lembar</b>. Harga di bursa Rp600 → PBV = 600 ÷ 300 = <b>2</b>. Pembeli membayar dua kali nilai buku — karena perusahaan ini menghasilkan ROE sekitar 13% (40 ÷ 300) dan punya merek yang tidak tercatat di neraca.</p>
 
 <h3>Cara membacanya</h3>
 <table class="tbl">
@@ -3709,75 +4321,15 @@ Tanpa FCF, DCF tidak punya bahan. Tanpa DCF, FCF hanya angka tahunan tanpa kesim
           ],
         },
         {
-          id: "acc-adv-2",
-          title: "PER, PEG & Valuasi Pertumbuhan",
-          duration: "11 menit",
-          content: `
-<p><b>PER (Price to Earnings Ratio)</b> = Harga ÷ EPS — sudah kita kenal. Masalahnya: PER <b>tidak memperhitungkan pertumbuhan</b>. Saham tumbuh cepat "pantas" lebih mahal daripada yang stagnan.</p>
-
-<div data-diagram="bar" data-bars="PER 10 / tumbuh 5%:2|PER 20 / tumbuh 20%:1|PER 30 / tumbuh 45%:0.67" data-unit=" PEG" data-caption="PER tinggi belum tentu mahal — PEG memperhitungkan pertumbuhannya. Makin kecil PEG, makin menarik."></div>
-
-
-<div class="callout">
-<b>PEG (Price/Earnings to Growth)</b> = PER ÷ Pertumbuhan laba tahunan (%). Ini menyeimbangkan harga dengan kecepatan pertumbuhan.
-</div>
-
-<h3>Membaca PEG</h3>
-<table class="tbl">
-  <tr><th>PEG</th><th>Arti kasar</th></tr>
-  <tr><td><b>≈ 1</b></td><td>Wajar — harga sepadan dengan pertumbuhan</td></tr>
-  <tr><td><b>&lt; 1</b></td><td>Relatif murah dibanding pertumbuhannya (menarik)</td></tr>
-  <tr><td><b>&gt; 1</b></td><td>Relatif mahal dibanding pertumbuhannya</td></tr>
-</table>
-
-<h3>Contoh</h3>
-<p>Saham A: PER 20, tumbuh 20%/tahun → PEG = 20 ÷ 20 = <b>1,0</b> (wajar). Saham B: PER 30, tumbuh 15% → PEG = 2,0 (relatif mahal). Meski PER B lebih tinggi, PEG mengungkap A lebih menarik untuk pertumbuhannya.</p>
-
-<div class="callout warn">
-<b>Hati-hati:</b> PEG bergantung pada <b>ramalan pertumbuhan</b> yang bisa meleset. Gunakan sebagai satu alat, bukan penentu tunggal. Ini edukasi, bukan saran investasi.
-</div>
-`,
-          keyPoints: [
-            "PER mengabaikan pertumbuhan; PEG memperbaikinya.",
-            "PEG = PER ÷ pertumbuhan laba tahunan (%).",
-            "PEG ≈ 1 wajar; < 1 relatif murah; > 1 relatif mahal terhadap pertumbuhan.",
-            "PEG bergantung pada ramalan pertumbuhan yang bisa meleset — bukan penentu tunggal.",
-          ],
-          practice: [
-            { type: "number", q: "PER 20, pertumbuhan laba 20%/tahun. Berapa PEG-nya?", answer: 1, tol: 0.05, hint: "PEG = PER ÷ pertumbuhan (%).", solution: "20 ÷ 20 = 1,0 (wajar)." },
-            { type: "number", q: "PER 30, pertumbuhan laba 15%/tahun. Berapa PEG-nya?", answer: 2, tol: 0.05, hint: "PEG = PER ÷ pertumbuhan (%).", solution: "30 ÷ 15 = 2,0 (relatif mahal)." },
-          ],
-          quiz: [
-            {
-              q: "Apa keunggulan PEG dibanding PER?",
-              options: [
-                "Ikut memperhitungkan laju pertumbuhan laba, bukan hanya harga vs laba",
-                "Ikut memperhitungkan besarnya utang perusahaan terhadap ekuitas",
-                "Bisa dipakai untuk perusahaan yang labanya sedang negatif",
-                "Tidak memerlukan data laba sehingga lebih mudah dihitung",
-              ],
-              answer: 0,
-              explain:
-                "PEG menyesuaikan PER dengan tingkat pertumbuhan, menilai lebih adil.",
-            },
-            {
-              q: "PEG = 0,7 secara kasar menandakan?",
-              options: [
-                "Relatif murah dibanding laju pertumbuhan labanya",
-                "Relatif mahal dibanding laju pertumbuhan labanya",
-                "Pertumbuhan laba perusahaan hanya 0,7% per tahun",
-                "Perusahaan sedang merugi sehingga PEG-nya di bawah satu",
-              ],
-              answer: 0,
-              explain: "PEG < 1 mengindikasikan harga murah relatif terhadap pertumbuhan.",
-            },
-          ],
-        },
-        {
           id: "acc-adv-3",
           title: "Enterprise Value & EV/EBITDA",
           duration: "11 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Kapitalisasi pasar</b> = harga per lembar × jumlah lembar (PT Kopi Sari: Rp600 miliar). <b>EBITDA</b> = laba operasi + penyusutan &amp; amortisasi — kira-kira kas yang dihasilkan kegiatan inti, karena penyusutan bukan uang keluar (pelajaran Metrik Lain).
+</div>
+
 <p>Berapa "harga sesungguhnya" untuk mengambil alih seluruh perusahaan? Bukan sekadar harga sahamnya — melainkan <b>Enterprise Value</b>.</p>
 
 <div data-diagram="pipeline" data-stages="Kapitalisasi pasar::harga seluruh saham|+ Total utang::kamu ikut mewarisinya|− Kas::kamu ikut mendapatkannya|= Enterprise Value::harga ambil alih utuh" data-caption="Kenapa utang ditambah dan kas dikurangi"></div>
@@ -3788,7 +4340,10 @@ Tanpa FCF, DCF tidak punya bahan. Tanpa DCF, FCF hanya angka tahunan tanpa kesim
 <i>Kenapa + utang & − kas? Kalau kamu membeli perusahaan, kamu mewarisi utangnya (menambah biaya) tapi juga mendapat kasnya (mengurangi biaya).</i>
 </div>
 
+<p><b>Dengan angka PT Kopi Sari:</b> kapitalisasi pasar 600 + utang bank 150 − kas 50 = <b>EV Rp700 miliar</b>. Laba operasinya 50 miliar dan penyusutannya 20 miliar, jadi EBITDA = <b>70 miliar</b>.</p>
+
 <h3>EV/EBITDA</h3>
+<p>PT Kopi Sari: 700 ÷ 70 = <b>10 kali</b>. Kalau pesaingnya punya kapitalisasi pasar yang sama (600) tapi utang 500, EV-nya 1.050 — jauh lebih mahal untuk diambil alih, walau harga sahamnya tampak sama.</p>
 <p><b>EV/EBITDA</b> membandingkan nilai perusahaan dengan kas operasionalnya (EBITDA). Keunggulannya: <b>netral terhadap struktur modal & pajak</b>, sehingga adil membandingkan perusahaan dengan tingkat utang atau negara berbeda.</p>
 
 <h3>Kapan lebih baik dari PER?</h3>
@@ -5483,6 +6038,13 @@ Biasanya jawabannya: ROE-nya rendah karena biaya dananya mahal (CASA rendah), at
 <b>Perhatikan baik-baik:</b> Z-Score memprediksi <b>risiko KEBANGKRUTAN</b>, <b>bukan</b> kenaikan harga saham. Perusahaan sehat (Z tinggi) belum tentu sahamnya naik — tapi perusahaan Z rendah memang <b>berisiko tinggi</b>.
 </div>
 
+<div class="callout ingat">
+<b>🔙 Tiga istilah dulu</b><br>
+<b>Modal kerja</b> = aset lancar − kewajiban lancar (pelajaran Persediaan &amp; Modal Kerja).<br>
+<b>Laba ditahan</b> = tumpukan laba dari tahun ke tahun yang <b>tidak dibagikan</b> sebagai dividen, tercatat di bagian ekuitas neraca. Perusahaan muda atau yang sering rugi laba ditahannya kecil.<br>
+<b>EBIT</b> (<i>Earnings Before Interest and Taxes</i>) = laba sebelum bunga dan pajak — kira-kira sama dengan <b>laba operasi</b> di laporan laba rugi.
+</div>
+
 <h3>Lima rasio yang dipakai</h3>
 <table class="tbl">
   <tr><th>Kode</th><th>Rasio</th><th>Mengukur</th></tr>
@@ -5496,6 +6058,8 @@ Biasanya jawabannya: ROE-nya rendah karena biaya dananya mahal (CASA rendah), at
 <div class="callout">
 <b>Rumus:</b> Z = 1,2·X1 + 1,4·X2 + 3,3·X3 + 0,6·X4 + 1,0·X5
 </div>
+
+<p>Angka pengali (1,2 … 3,3 …) ditemukan Altman dari data 66 perusahaan manufaktur — separuh bangkrut, separuh selamat — dengan mencari kombinasi rasio yang paling bisa memisahkan kedua kelompok. Pengali terbesar ada pada <b>X3</b>: kemampuan aset menghasilkan laba operasi diberi bobot paling berat.</p>
 
 <h3>Membaca hasilnya</h3>
 <table class="tbl">
@@ -5654,7 +6218,7 @@ console.log("Catatan: ini indikator risiko, BUKAN ramalan harga saham.");</div>
           content: `
 <p>Karena masa depan tak pasti, cara paling jujur menilainya bukan satu angka, melainkan <b>beberapa kemungkinan</b>.</p>
 
-<div data-diagram="bar" data-bars="Skenario buruk (20%):-30|Skenario dasar (60%):15|Skenario baik (20%):60|Nilai harapan:15" data-unit="%" data-caption="Nilai harapan = rata-rata semua skenario, ditimbang peluangnya masing-masing"></div>
+<div data-diagram="bar" data-bars="Terburuk (20%):-20|Tengah (50%):60|Terbaik (30%):100|Nilai harapan:56" data-unit=" jt" data-caption="Nilai harapan = rata-rata semua skenario, ditimbang peluangnya masing-masing"></div>
 
 
 <h3>1. Analisis Skenario</h3>
@@ -5667,6 +6231,12 @@ console.log("Catatan: ini indikator risiko, BUKAN ramalan harga saham.");</div>
 </table>
 
 <h3>2. Expected Value (Nilai Harapan)</h3>
+<p>Bayangkan masa depan bisa diulang <b>10 kali</b>. Dengan peluang di tabel, kira-kira 3 kali terjadi skenario terbaik, 5 kali tengah, dan 2 kali terburuk:</p>
+<pre class="code">3 kali × 100  =  300
+5 kali ×  60  =  300
+2 kali × −20  =  −40
+          total =  560   → rata-rata per kali = 560 ÷ 10 = 56</pre>
+<p>Angka <b>56</b> itulah nilai harapan. Cara singkatnya: kalikan setiap hasil dengan peluangnya, lalu jumlahkan — 0,3 × 100 + 0,5 × 60 + 0,2 × (−20) = 30 + 30 − 4 = <b>56</b>.</p>
 <div class="callout">
 <b>Rumus:</b> Nilai Harapan = jumlah dari (peluang × hasil) tiap skenario.<br>
 Ini <b>rata-rata tertimbang</b> semua kemungkinan — bukan ramalan pasti, tapi cara membandingkan pilihan secara adil.
