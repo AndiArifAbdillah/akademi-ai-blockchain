@@ -320,6 +320,10 @@ const BLOCKCHAIN_COURSE = {
           content: `
 <p>Untuk menyimpan & mengirim crypto kamu butuh <b>wallet</b> (dompet digital). Tapi wallet tidak benar-benar "menyimpan koin" — koin ada di blockchain. Wallet menyimpan <b>kunci</b> yang membuktikan kepemilikanmu.</p>
 
+<div class="callout">
+📮 <b>Analogi kotak surat.</b> Alamat dompetmu seperti <b>alamat kotak surat</b> di depan rumah: semua orang boleh tahu, dan siapa pun boleh memasukkan kiriman ke dalamnya. Kunci privat adalah <b>anak kunci gembok</b> kotak itu: hanya pemegangnya yang bisa membuka dan mengambil isinya. Kalau orang lain memegang anak kuncinya, isinya menjadi milik mereka — tidak peduli nama siapa yang tertulis di kotak.
+</div>
+
 <h3>Dua kunci penting</h3>
 <table class="tbl">
   <tr><th>Kunci</th><th>Fungsi</th><th>Analogi</th></tr>
@@ -332,6 +336,16 @@ const BLOCKCHAIN_COURSE = {
 <div class="callout warn">
 <b>Aturan emas:</b> "Not your keys, not your coins." Siapa pun yang memegang private key, dialah pemilik dana. Jangan pernah bagikan private key atau <b>seed phrase</b> (12-24 kata pemulihan) kepada siapa pun. Tidak ada "lupa password" di crypto.
 </div>
+
+<h3>Seed phrase — cadangan kunci dalam bentuk kata</h3>
+<p>Kunci privat adalah angka yang sangat panjang dan mudah salah ditulis. Karena itu dompet menampilkannya dalam bentuk <b>12–24 kata</b> bahasa Inggris, misalnya <i>"apple river ..."</i>. Daftar kata inilah <b>seed phrase</b>: siapa pun yang memegangnya bisa membuat ulang dompetmu, lengkap dengan semua kuncinya, di HP mana pun.</p>
+<table class="tbl">
+  <tr><th>Kejadian</th><th>Akibatnya</th></tr>
+  <tr><td>HP hilang, seed phrase tersimpan aman di kertas</td><td class="ok-cell">Aman — pasang aplikasi dompet di HP baru, masukkan seed phrase, dana kembali</td></tr>
+  <tr><td>Seed phrase difoto lalu dicuri orang</td><td class="bad-cell">Pencuri bisa menguras dana dari mana saja, kapan saja</td></tr>
+  <tr><td>HP rusak <b>dan</b> seed phrase tidak pernah dicatat</td><td class="bad-cell">Dana hilang selamanya — tidak ada bank atau layanan pelanggan yang bisa memulihkannya</td></tr>
+</table>
+<p>Bagaimana kunci privat bisa menghasilkan alamat, dan kenapa alamat tidak bisa dibalik menjadi kunci privat, dibongkar pelan-pelan di modul Fondasi Kriptografi.</p>
 
 <h3>Jenis wallet</h3>
 <ul>
@@ -1890,7 +1904,7 @@ Penambang mencoba angka acak (<b>nonce</b>) sampai hash blok memenuhi syarat. Ka
       id: "bc-kriptografi",
       level: "Kriptografi",
       title: "Kriptografi Mendalam & Era Kuantum",
-      summary: "Enkripsi vs hash vs tanda tangan, simetris vs asimetris, ECDSA, ancaman komputer kuantum, PQC, pertukaran kunci, dan di mana enkripsi dipakai.",
+      summary: "Dari yang paling dekat ke yang paling jauh: enkripsi vs hash vs tanda tangan, simetris vs asimetris, pertukaran kunci, di mana enkripsi dipakai, ECDSA, lalu ancaman komputer kuantum, PQC, dan migrasinya.",
       lessons: [
         {
           id: "bc-enk-1",
@@ -2079,6 +2093,178 @@ Sepasang kunci yang sama, dua kegunaan yang berlawanan arah.
               options: ["256 bit", "512 bit", "3072 bit", "128 bit"],
               answer: 2,
               explain: "ECC jauh lebih efisien: 256-bit ECC ≈ 3072-bit RSA.",
+            },
+          ],
+        },
+        {
+          id: "bc-enk-2",
+          title: "Menyepakati Kunci di Jalur Terbuka",
+          duration: "13 menit",
+          content: `
+<p>Enkripsi simetris cepat, tapi punya satu masalah yang tampak mustahil: <b>bagaimana dua orang menyepakati kunci rahasia kalau semua jalur komunikasinya bisa disadap?</b> Pelajaran ini menjawabnya.</p>
+
+<h3>Masalahnya dulu</h3>
+<div class="callout">
+Kamu ingin mengirim pesan terenkripsi ke seseorang di negara lain yang belum pernah kamu temui. Kalian butuh kunci yang sama. Tapi kalau kunci itu dikirim lewat internet, <b>penyadap ikut mendapatkannya</b> — dan seluruh enkripsinya jadi percuma.<br><br>
+Selama berabad-abad, satu-satunya jawaban adalah <b>bertemu langsung</b> atau memakai kurir tepercaya. Itu tidak mungkin untuk internet.
+</div>
+
+<h3>Jawabannya: hitung rahasia bersama, jangan kirimkan</h3>
+<p>Idenya sangat cerdik: alih-alih mengirim kunci, kedua pihak <b>menghitung sendiri</b> kunci yang sama dari potongan-potongan yang boleh terlihat umum. Angka rahasianya <b>tidak pernah melintas di jalur mana pun</b>.</p>
+
+<div data-demo="tukar-kunci"></div>
+
+<div class="callout warn">
+<b>Kenapa penyadap kalah?</b> Ia mendengar semuanya: g, p, dan kedua angka yang dikirim. Untuk menemukan rahasia bersamanya, ia harus memecahkan <b>g^x mod p</b> — mencari x dari hasilnya. Dengan angka kecil di demo itu mudah dicoba satu per satu; dengan bilangan ratusan digit, mencobanya satu per satu <b>memakan waktu lebih lama dari umur alam semesta</b>.<br><br>
+Inilah "fungsi satu arah" yang kamu pelajari di modul Matematika, dipakai untuk sesuatu yang sangat praktis.
+</div>
+
+<h3>Enkripsi hibrida — kenapa keduanya dipakai bersama</h3>
+<p>Setelah kunci bersama disepakati, komunikasi selanjutnya <b>tidak</b> memakai kriptografi asimetris. Terlalu lambat. Yang dilakukan:</p>
+
+<div data-diagram="pipeline" data-stages="Sepakati kunci::cara asimetris, sekali saja|Buat kunci sesi::kunci simetris acak|Kirim data::dienkripsi simetris, cepat|Selesai::kunci sesi dibuang" data-caption="Enkripsi hibrida: yang lambat dipakai sekali, yang cepat dipakai seterusnya"></div>
+
+<div class="callout">
+<b>Inilah yang terjadi setiap kali kamu membuka situs berawalan https</b> — termasuk saat membuka bursa kripto atau situs ini sendiri. Prosesnya berlangsung dalam sepersekian detik, berulang tiap kali kamu membuka halaman baru, dan kamu tidak pernah menyadarinya.
+</div>
+
+<h3>Satu sifat yang sangat berharga</h3>
+<div class="callout warn">
+<b>Forward secrecy.</b> Karena kunci sesi dibuat <b>baru setiap kali</b> lalu dibuang, penyerang yang berhasil mencuri kunci privat servermu <b>hari ini</b> tetap tidak bisa membuka rekaman percakapan <b>tahun lalu</b>.<br><br>
+Ini penting untuk ancaman "rekam sekarang, buka nanti" — data sandi yang direkam hari ini untuk dibuka kelak dengan komputer kuantum, yang dibahas di pelajaran Ancaman Komputer Kuantum sebentar lagi — meski forward secrecy tidak menolong bila algoritma pertukaran kuncinya sendiri yang jebol.
+</div>
+`,
+          keyPoints: [
+            "Masalah lama: dua pihak butuh kunci yang sama, tapi mengirim kunci lewat jalur yang disadap membuatnya percuma.",
+            "Solusinya: kedua pihak menghitung sendiri kunci yang sama; angka rahasianya tidak pernah dikirimkan.",
+            "Penyadap mendengar g, p, dan kedua angka publik, tapi harus memecahkan g^x mod p untuk mendapatkan rahasianya.",
+            "Enkripsi hibrida: asimetris dipakai sekali untuk menyepakati kunci, lalu simetris yang cepat untuk seluruh datanya.",
+            "Inilah yang terjadi setiap kali membuka situs https, dalam sepersekian detik tanpa disadari.",
+            "Forward secrecy: kunci sesi dibuat baru tiap kali lalu dibuang, sehingga rekaman lama tetap aman meski kunci server dicuri kemudian.",
+          ],
+          quiz: [
+            {
+              q: "Apa inti cerdik dari pertukaran kunci Diffie-Hellman?",
+              options: [
+                "Kedua pihak menghitung sendiri kunci yang sama tanpa pernah mengirimkannya",
+                "Kunci dikirim dalam bentuk terenkripsi sehingga penyadap tak bisa membacanya",
+                "Kunci dipecah menjadi beberapa bagian yang dikirim lewat jalur berbeda",
+                "Kunci diganti begitu cepat sehingga penyadap tak sempat menangkapnya",
+              ],
+              answer: 0,
+              explain: "Rahasianya tidak pernah melintas di jalur mana pun — itulah yang membuatnya aman meski seluruh percakapan disadap.",
+            },
+            {
+              q: "Kenapa komunikasi https memakai enkripsi simetris DAN asimetris sekaligus?",
+              options: [
+                "Asimetris dipakai sekali menyepakati kunci, simetris yang cepat untuk seluruh datanya",
+                "Simetris dipakai untuk data penting, asimetris untuk data yang kurang penting",
+                "Keduanya dipakai bergantian agar penyadap kebingungan membedakannya",
+                "Asimetris dipakai mengirim data, simetris hanya untuk memeriksa keutuhannya",
+              ],
+              answer: 0,
+              explain: "Asimetris terlalu lambat untuk data besar; simetris tidak bisa menyelesaikan masalah distribusi kunci. Keduanya saling melengkapi.",
+            },
+            {
+              q: "Apa manfaat forward secrecy?",
+              options: [
+                "Rekaman percakapan lama tetap aman walau kunci privat server dicuri kemudian",
+                "Percakapan menjadi lebih cepat karena kuncinya tidak perlu dihitung ulang",
+                "Penyadap tidak bisa mengetahui siapa yang sedang berkomunikasi dengan siapa",
+                "Pesan yang salah kirim bisa ditarik kembali sebelum dibaca penerimanya",
+              ],
+              answer: 0,
+              explain: "Karena tiap sesi memakai kunci baru yang langsung dibuang, tidak ada satu kunci yang membuka seluruh riwayat.",
+            },
+          ],
+        },
+        {
+          id: "bc-enk-3",
+          title: "Di Mana Enkripsi Sebenarnya Dipakai dalam Crypto",
+          duration: "12 menit",
+          content: `
+<p>Kita sudah tahu blockchain <b>tidak</b> mengenkripsi isinya. Lalu di mana enkripsi benar-benar dipakai dalam dunia kripto? Ternyata di banyak tempat — hanya saja bukan di tempat yang orang kira.</p>
+
+<div data-diagram="layers" data-items="Berkas dompet di perangkatmu|Sambungan ke bursa (https)|Pesan &amp; kunci cadangan|Mempool terenkripsi (baru)" data-caption="Empat tempat enkripsi benar-benar bekerja di sekitar kripto"></div>
+
+<h3>1. Berkas dompet di perangkatmu</h3>
+<div class="callout">
+Inilah pemakaian yang paling menyentuh kamu langsung. Kunci privat di dompetmu <b>disimpan dalam keadaan terenkripsi</b>, dan kata sandi yang kamu ketik saat membuka dompet adalah kunci yang membukanya.<br><br>
+Artinya: pencuri yang mengambil berkas dompetmu <b>masih terhalang kata sandi</b>. Itulah kenapa kata sandi dompet yang lemah sangat berbahaya — ia satu-satunya lapisan antara berkas itu dan dana kamu.
+</div>
+
+<h3>2. Sambungan ke bursa dan dompet</h3>
+<p>Setiap kali membuka aplikasi bursa, sambunganmu dienkripsi memakai proses yang baru saja kamu pelajari. Tanpa itu, siapa pun yang berbagi jaringan Wi-Fi denganmu bisa membaca kata sandi dan kode OTP-mu.</p>
+
+<h3>3. Mencadangkan frasa pemulihan</h3>
+<div class="callout warn">
+Banyak orang memotret frasa pemulihannya lalu menyimpannya di layanan awan. Layanan itu memang menyimpan berkas dalam keadaan terenkripsi — <b>tetapi kuncinya dipegang penyedia layanan</b>, bukan kamu.<br><br>
+Kalau memang harus disimpan digital, enkripsi sendiri lebih dulu dengan kata sandi yang hanya kamu ketahui. Tapi cara yang paling disarankan tetap: <b>tulis di kertas, simpan di tempat aman, jangan difoto</b>.
+</div>
+
+<h3>4. Perbatasan yang sedang dikerjakan</h3>
+<table class="tbl">
+  <tr><th>Yang sedang dikembangkan</th><th>Masalah yang ingin dipecahkan</th></tr>
+  <tr><td><b>Mempool terenkripsi</b></td><td>Transaksi yang menunggu kini terlihat semua orang, sehingga bisa disalip demi keuntungan. Menyembunyikannya sampai masuk blok mencegah hal itu</td></tr>
+  <tr><td><b>Enkripsi homomorfik</b></td><td>Menghitung <b>di atas data terenkripsi</b> tanpa membukanya. Masih sangat lambat, tapi akan sangat berguna bila matang</td></tr>
+  <tr><td><b>Bukti tanpa pengetahuan</b></td><td>Membuktikan sesuatu benar tanpa mengungkap datanya — dibahas di pelajaran Zero-Knowledge Proof</td></tr>
+</table>
+
+<div class="callout">
+<b>Pola yang terlihat dari keempatnya:</b> enkripsi dipakai di <b>tepi</b> sistem kripto — pada perangkatmu, pada sambungan, pada cadangan — sementara <b>inti blockchainnya sendiri tetap terbuka</b>.<br><br>
+Ini bukan kelalaian, melainkan pilihan rancangan. Blockchain memilih <b>keterbukaan yang bisa diverifikasi</b> daripada kerahasiaan. Privasi lalu dikerjakan dengan cara lain — seperti bukti tanpa pengetahuan — bukan dengan menyembunyikan buku besarnya.
+</div>
+
+<div class="callout warn">
+<b>Yang praktis bisa kamu lakukan hari ini:</b><br>
+• Pakai kata sandi dompet yang <b>panjang dan unik</b> — itu kunci enkripsi berkas dompetmu.<br>
+• Pastikan alamat situs bursa berawalan <b>https</b> dan ejaannya benar sebelum memasukkan apa pun.<br>
+• <b>Jangan</b> menyimpan frasa pemulihan sebagai foto atau catatan biasa di layanan awan.<br>
+• Sadari bahwa enkripsi melindungi <b>berkas dan sambungan</b> — bukan membuat transaksimu di blockchain jadi rahasia.
+</div>
+`,
+          keyPoints: [
+            "Berkas dompet disimpan terenkripsi; kata sandi yang kamu ketik adalah kunci pembukanya.",
+            "Kata sandi dompet yang lemah berbahaya karena ia satu-satunya lapisan antara berkas curian dan dana kamu.",
+            "Sambungan ke bursa dienkripsi lewat https; tanpa itu pengguna Wi-Fi yang sama bisa membaca kata sandi dan OTP.",
+            "Menyimpan frasa pemulihan di layanan awan berarti kuncinya dipegang penyedia layanan, bukan kamu.",
+            "Perbatasan yang sedang dikerjakan: mempool terenkripsi, enkripsi homomorfik, dan bukti tanpa pengetahuan.",
+            "Polanya: enkripsi dipakai di TEPI sistem (perangkat, sambungan, cadangan); inti blockchainnya tetap terbuka.",
+            "Itu pilihan rancangan — blockchain memilih keterbukaan yang bisa diverifikasi, lalu mengerjakan privasi dengan cara lain.",
+          ],
+          quiz: [
+            {
+              q: "Apa yang sebenarnya dilindungi kata sandi dompet kriptomu?",
+              options: [
+                "Berkas dompet yang menyimpan kunci privat dalam keadaan terenkripsi",
+                "Seluruh transaksi yang pernah kamu kirim agar tak terbaca di blockchain",
+                "Saldo koinmu agar tidak bisa dilihat lewat block explorer publik",
+                "Sambungan antara aplikasi dompet dan jaringan blockchain",
+              ],
+              answer: 0,
+              explain: "Karena itu kata sandi yang lemah berbahaya: ia satu-satunya lapisan bila berkas dompetmu dicuri.",
+            },
+            {
+              q: "Kenapa menyimpan foto frasa pemulihan di layanan awan berisiko?",
+              options: [
+                "Karena kunci enkripsi berkas itu dipegang penyedia layanan, bukan olehmu",
+                "Karena berkas di layanan awan sama sekali tidak pernah dienkripsi",
+                "Karena layanan awan otomatis membagikan berkas kepada pengguna lain",
+                "Karena foto akan kehilangan kualitas sehingga frasanya jadi tak terbaca",
+              ],
+              answer: 0,
+              explain: "Terenkripsi bukan berarti aman bagimu — yang menentukan adalah siapa yang memegang kuncinya.",
+            },
+            {
+              q: "Apa pola pemakaian enkripsi dalam ekosistem kripto?",
+              options: [
+                "Di tepi sistem — perangkat, sambungan, cadangan — blockchainnya tetap terbuka",
+                "Pada seluruh transaksi di blockchain sehingga isinya tak terbaca oleh publik",
+                "Hanya oleh bursa besar, sedangkan dompet pribadi sama sekali tidak memakainya",
+                "Untuk menyembunyikan saldo setiap alamat dari penelusuran block explorer",
+              ],
+              answer: 0,
+              explain: "Blockchain sengaja memilih keterbukaan yang bisa diverifikasi; privasi dikerjakan lewat cara lain seperti bukti tanpa pengetahuan.",
             },
           ],
         },
@@ -2447,178 +2633,6 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
             },
           ],
         },
-        {
-          id: "bc-enk-2",
-          title: "Menyepakati Kunci di Jalur Terbuka",
-          duration: "13 menit",
-          content: `
-<p>Enkripsi simetris cepat, tapi punya satu masalah yang tampak mustahil: <b>bagaimana dua orang menyepakati kunci rahasia kalau semua jalur komunikasinya bisa disadap?</b> Pelajaran ini menjawabnya.</p>
-
-<h3>Masalahnya dulu</h3>
-<div class="callout">
-Kamu ingin mengirim pesan terenkripsi ke seseorang di negara lain yang belum pernah kamu temui. Kalian butuh kunci yang sama. Tapi kalau kunci itu dikirim lewat internet, <b>penyadap ikut mendapatkannya</b> — dan seluruh enkripsinya jadi percuma.<br><br>
-Selama berabad-abad, satu-satunya jawaban adalah <b>bertemu langsung</b> atau memakai kurir tepercaya. Itu tidak mungkin untuk internet.
-</div>
-
-<h3>Jawabannya: hitung rahasia bersama, jangan kirimkan</h3>
-<p>Idenya sangat cerdik: alih-alih mengirim kunci, kedua pihak <b>menghitung sendiri</b> kunci yang sama dari potongan-potongan yang boleh terlihat umum. Angka rahasianya <b>tidak pernah melintas di jalur mana pun</b>.</p>
-
-<div data-demo="tukar-kunci"></div>
-
-<div class="callout warn">
-<b>Kenapa penyadap kalah?</b> Ia mendengar semuanya: g, p, dan kedua angka yang dikirim. Untuk menemukan rahasia bersamanya, ia harus memecahkan <b>g^x mod p</b> — mencari x dari hasilnya. Dengan angka kecil di demo itu mudah dicoba satu per satu; dengan bilangan ratusan digit, mencobanya satu per satu <b>memakan waktu lebih lama dari umur alam semesta</b>.<br><br>
-Inilah "fungsi satu arah" yang kamu pelajari di modul Matematika, dipakai untuk sesuatu yang sangat praktis.
-</div>
-
-<h3>Enkripsi hibrida — kenapa keduanya dipakai bersama</h3>
-<p>Setelah kunci bersama disepakati, komunikasi selanjutnya <b>tidak</b> memakai kriptografi asimetris. Terlalu lambat. Yang dilakukan:</p>
-
-<div data-diagram="pipeline" data-stages="Sepakati kunci::cara asimetris, sekali saja|Buat kunci sesi::kunci simetris acak|Kirim data::dienkripsi simetris, cepat|Selesai::kunci sesi dibuang" data-caption="Enkripsi hibrida: yang lambat dipakai sekali, yang cepat dipakai seterusnya"></div>
-
-<div class="callout">
-<b>Inilah yang terjadi setiap kali kamu membuka situs berawalan https</b> — termasuk saat membuka bursa kripto atau situs ini sendiri. Prosesnya berlangsung dalam sepersekian detik, berulang tiap kali kamu membuka halaman baru, dan kamu tidak pernah menyadarinya.
-</div>
-
-<h3>Satu sifat yang sangat berharga</h3>
-<div class="callout warn">
-<b>Forward secrecy.</b> Karena kunci sesi dibuat <b>baru setiap kali</b> lalu dibuang, penyerang yang berhasil mencuri kunci privat servermu <b>hari ini</b> tetap tidak bisa membuka rekaman percakapan <b>tahun lalu</b>.<br><br>
-Ini penting untuk ancaman "rekam sekarang, buka nanti" yang kamu pelajari di pelajaran kuantum — meski forward secrecy tidak menolong bila algoritma pertukaran kuncinya sendiri yang jebol.
-</div>
-`,
-          keyPoints: [
-            "Masalah lama: dua pihak butuh kunci yang sama, tapi mengirim kunci lewat jalur yang disadap membuatnya percuma.",
-            "Solusinya: kedua pihak menghitung sendiri kunci yang sama; angka rahasianya tidak pernah dikirimkan.",
-            "Penyadap mendengar g, p, dan kedua angka publik, tapi harus memecahkan g^x mod p untuk mendapatkan rahasianya.",
-            "Enkripsi hibrida: asimetris dipakai sekali untuk menyepakati kunci, lalu simetris yang cepat untuk seluruh datanya.",
-            "Inilah yang terjadi setiap kali membuka situs https, dalam sepersekian detik tanpa disadari.",
-            "Forward secrecy: kunci sesi dibuat baru tiap kali lalu dibuang, sehingga rekaman lama tetap aman meski kunci server dicuri kemudian.",
-          ],
-          quiz: [
-            {
-              q: "Apa inti cerdik dari pertukaran kunci Diffie-Hellman?",
-              options: [
-                "Kedua pihak menghitung sendiri kunci yang sama tanpa pernah mengirimkannya",
-                "Kunci dikirim dalam bentuk terenkripsi sehingga penyadap tak bisa membacanya",
-                "Kunci dipecah menjadi beberapa bagian yang dikirim lewat jalur berbeda",
-                "Kunci diganti begitu cepat sehingga penyadap tak sempat menangkapnya",
-              ],
-              answer: 0,
-              explain: "Rahasianya tidak pernah melintas di jalur mana pun — itulah yang membuatnya aman meski seluruh percakapan disadap.",
-            },
-            {
-              q: "Kenapa komunikasi https memakai enkripsi simetris DAN asimetris sekaligus?",
-              options: [
-                "Asimetris dipakai sekali menyepakati kunci, simetris yang cepat untuk seluruh datanya",
-                "Simetris dipakai untuk data penting, asimetris untuk data yang kurang penting",
-                "Keduanya dipakai bergantian agar penyadap kebingungan membedakannya",
-                "Asimetris dipakai mengirim data, simetris hanya untuk memeriksa keutuhannya",
-              ],
-              answer: 0,
-              explain: "Asimetris terlalu lambat untuk data besar; simetris tidak bisa menyelesaikan masalah distribusi kunci. Keduanya saling melengkapi.",
-            },
-            {
-              q: "Apa manfaat forward secrecy?",
-              options: [
-                "Rekaman percakapan lama tetap aman walau kunci privat server dicuri kemudian",
-                "Percakapan menjadi lebih cepat karena kuncinya tidak perlu dihitung ulang",
-                "Penyadap tidak bisa mengetahui siapa yang sedang berkomunikasi dengan siapa",
-                "Pesan yang salah kirim bisa ditarik kembali sebelum dibaca penerimanya",
-              ],
-              answer: 0,
-              explain: "Karena tiap sesi memakai kunci baru yang langsung dibuang, tidak ada satu kunci yang membuka seluruh riwayat.",
-            },
-          ],
-        },
-        {
-          id: "bc-enk-3",
-          title: "Di Mana Enkripsi Sebenarnya Dipakai dalam Crypto",
-          duration: "12 menit",
-          content: `
-<p>Kita sudah tahu blockchain <b>tidak</b> mengenkripsi isinya. Lalu di mana enkripsi benar-benar dipakai dalam dunia kripto? Ternyata di banyak tempat — hanya saja bukan di tempat yang orang kira.</p>
-
-<div data-diagram="layers" data-items="Berkas dompet di perangkatmu|Sambungan ke bursa (https)|Pesan &amp; kunci cadangan|Mempool terenkripsi (baru)" data-caption="Empat tempat enkripsi benar-benar bekerja di sekitar kripto"></div>
-
-<h3>1. Berkas dompet di perangkatmu</h3>
-<div class="callout">
-Inilah pemakaian yang paling menyentuh kamu langsung. Kunci privat di dompetmu <b>disimpan dalam keadaan terenkripsi</b>, dan kata sandi yang kamu ketik saat membuka dompet adalah kunci yang membukanya.<br><br>
-Artinya: pencuri yang mengambil berkas dompetmu <b>masih terhalang kata sandi</b>. Itulah kenapa kata sandi dompet yang lemah sangat berbahaya — ia satu-satunya lapisan antara berkas itu dan dana kamu.
-</div>
-
-<h3>2. Sambungan ke bursa dan dompet</h3>
-<p>Setiap kali membuka aplikasi bursa, sambunganmu dienkripsi memakai proses yang baru saja kamu pelajari. Tanpa itu, siapa pun yang berbagi jaringan Wi-Fi denganmu bisa membaca kata sandi dan kode OTP-mu.</p>
-
-<h3>3. Mencadangkan frasa pemulihan</h3>
-<div class="callout warn">
-Banyak orang memotret frasa pemulihannya lalu menyimpannya di layanan awan. Layanan itu memang menyimpan berkas dalam keadaan terenkripsi — <b>tetapi kuncinya dipegang penyedia layanan</b>, bukan kamu.<br><br>
-Kalau memang harus disimpan digital, enkripsi sendiri lebih dulu dengan kata sandi yang hanya kamu ketahui. Tapi cara yang paling disarankan tetap: <b>tulis di kertas, simpan di tempat aman, jangan difoto</b>.
-</div>
-
-<h3>4. Perbatasan yang sedang dikerjakan</h3>
-<table class="tbl">
-  <tr><th>Yang sedang dikembangkan</th><th>Masalah yang ingin dipecahkan</th></tr>
-  <tr><td><b>Mempool terenkripsi</b></td><td>Transaksi yang menunggu kini terlihat semua orang, sehingga bisa disalip demi keuntungan. Menyembunyikannya sampai masuk blok mencegah hal itu</td></tr>
-  <tr><td><b>Enkripsi homomorfik</b></td><td>Menghitung <b>di atas data terenkripsi</b> tanpa membukanya. Masih sangat lambat, tapi akan sangat berguna bila matang</td></tr>
-  <tr><td><b>Bukti tanpa pengetahuan</b></td><td>Membuktikan sesuatu benar tanpa mengungkap datanya — dibahas di pelajaran Zero-Knowledge Proof</td></tr>
-</table>
-
-<div class="callout">
-<b>Pola yang terlihat dari keempatnya:</b> enkripsi dipakai di <b>tepi</b> sistem kripto — pada perangkatmu, pada sambungan, pada cadangan — sementara <b>inti blockchainnya sendiri tetap terbuka</b>.<br><br>
-Ini bukan kelalaian, melainkan pilihan rancangan. Blockchain memilih <b>keterbukaan yang bisa diverifikasi</b> daripada kerahasiaan. Privasi lalu dikerjakan dengan cara lain — seperti bukti tanpa pengetahuan — bukan dengan menyembunyikan buku besarnya.
-</div>
-
-<div class="callout warn">
-<b>Yang praktis bisa kamu lakukan hari ini:</b><br>
-• Pakai kata sandi dompet yang <b>panjang dan unik</b> — itu kunci enkripsi berkas dompetmu.<br>
-• Pastikan alamat situs bursa berawalan <b>https</b> dan ejaannya benar sebelum memasukkan apa pun.<br>
-• <b>Jangan</b> menyimpan frasa pemulihan sebagai foto atau catatan biasa di layanan awan.<br>
-• Sadari bahwa enkripsi melindungi <b>berkas dan sambungan</b> — bukan membuat transaksimu di blockchain jadi rahasia.
-</div>
-`,
-          keyPoints: [
-            "Berkas dompet disimpan terenkripsi; kata sandi yang kamu ketik adalah kunci pembukanya.",
-            "Kata sandi dompet yang lemah berbahaya karena ia satu-satunya lapisan antara berkas curian dan dana kamu.",
-            "Sambungan ke bursa dienkripsi lewat https; tanpa itu pengguna Wi-Fi yang sama bisa membaca kata sandi dan OTP.",
-            "Menyimpan frasa pemulihan di layanan awan berarti kuncinya dipegang penyedia layanan, bukan kamu.",
-            "Perbatasan yang sedang dikerjakan: mempool terenkripsi, enkripsi homomorfik, dan bukti tanpa pengetahuan.",
-            "Polanya: enkripsi dipakai di TEPI sistem (perangkat, sambungan, cadangan); inti blockchainnya tetap terbuka.",
-            "Itu pilihan rancangan — blockchain memilih keterbukaan yang bisa diverifikasi, lalu mengerjakan privasi dengan cara lain.",
-          ],
-          quiz: [
-            {
-              q: "Apa yang sebenarnya dilindungi kata sandi dompet kriptomu?",
-              options: [
-                "Berkas dompet yang menyimpan kunci privat dalam keadaan terenkripsi",
-                "Seluruh transaksi yang pernah kamu kirim agar tak terbaca di blockchain",
-                "Saldo koinmu agar tidak bisa dilihat lewat block explorer publik",
-                "Sambungan antara aplikasi dompet dan jaringan blockchain",
-              ],
-              answer: 0,
-              explain: "Karena itu kata sandi yang lemah berbahaya: ia satu-satunya lapisan bila berkas dompetmu dicuri.",
-            },
-            {
-              q: "Kenapa menyimpan foto frasa pemulihan di layanan awan berisiko?",
-              options: [
-                "Karena kunci enkripsi berkas itu dipegang penyedia layanan, bukan olehmu",
-                "Karena berkas di layanan awan sama sekali tidak pernah dienkripsi",
-                "Karena layanan awan otomatis membagikan berkas kepada pengguna lain",
-                "Karena foto akan kehilangan kualitas sehingga frasanya jadi tak terbaca",
-              ],
-              answer: 0,
-              explain: "Terenkripsi bukan berarti aman bagimu — yang menentukan adalah siapa yang memegang kuncinya.",
-            },
-            {
-              q: "Apa pola pemakaian enkripsi dalam ekosistem kripto?",
-              options: [
-                "Di tepi sistem — perangkat, sambungan, cadangan — blockchainnya tetap terbuka",
-                "Pada seluruh transaksi di blockchain sehingga isinya tak terbaca oleh publik",
-                "Hanya oleh bursa besar, sedangkan dompet pribadi sama sekali tidak memakainya",
-                "Untuk menyembunyikan saldo setiap alamat dari penelusuran block explorer",
-              ],
-              answer: 0,
-              explain: "Blockchain sengaja memilih keterbukaan yang bisa diverifikasi; privasi dikerjakan lewat cara lain seperti bukti tanpa pengetahuan.",
-            },
-          ],
-        },
       ],
     },
     /* ---------------- MODUL 7: ETHEREUM, SMART CONTRACT & TOKEN ---------------- */
@@ -2626,7 +2640,7 @@ Ini bukan kelalaian, melainkan pilihan rancangan. Blockchain memilih <b>keterbuk
       id: "bc-menengah",
       level: "Menengah",
       title: "Ethereum, Smart Contract & Token",
-      summary: "Dari uang digital menuju komputer dunia: Ethereum, smart contract, gas, Solidity, token & NFT, serta DApp.",
+      summary: "Dari uang digital menuju komputer dunia: Ethereum, smart contract, gas, token & NFT, serta DApp — konsepnya dulu, kodenya di modul Proyek.",
       lessons: [
         {
           id: "bc-m-1",
@@ -2764,12 +2778,21 @@ Ini bukan kelalaian, melainkan pilihan rancangan. Blockchain memilih <b>keterbuk
   <li><b>Fee (biaya)</b> = Gas dipakai × harga gas.</li>
 </ul>
 
+<h3>Contoh hitungan</h3>
+<p>Harga gas biasanya ditulis dalam <b>gwei</b>. 1 gwei = 0,000000001 ETH (sepermiliar ETH) — satuan kecil supaya angkanya enak dibaca, seperti "sen" untuk rupiah.</p>
+<table class="tbl">
+  <tr><th>Transaksi</th><th>Gas dipakai</th><th>Harga gas</th><th>Biaya</th></tr>
+  <tr><td>Kirim ETH biasa</td><td>21.000 (selalu tetap)</td><td>22 gwei</td><td>21.000 × 22 = 462.000 gwei = <b>0,000462 ETH</b></td></tr>
+  <tr><td>Tukar token di DEX</td><td>sekitar 150.000</td><td>22 gwei</td><td>3.300.000 gwei = <b>0,0033 ETH</b> — tujuh kali lebih mahal</td></tr>
+</table>
+<p>Kalau 1 ETH seharga Rp50 juta (angka ilustrasi), kirim ETH biasa itu berbiaya sekitar <b>Rp23.000</b>. Saat jaringan sepi harga gas bisa turun ke beberapa gwei; saat sangat ramai bisa melonjak berkali-kali lipat.</p>
+
 <h3>Lelang ruang blok</h3>
 <div class="callout">
 <b>Hukum penawaran-permintaan:</b> saat jaringan <b>ramai</b>, banyak orang bersaing memasukkan transaksi ke ruang blok yang terbatas → harga gas <b>naik</b> (seperti tarif ojek saat jam sibuk). Saat sepi, biaya turun.
 </div>
 
-<p>Sistem modern (mis. EIP-1559 di Ethereum) memakai <b>base fee</b> (biaya dasar yang otomatis menyesuaikan kepadatan & "dibakar") plus <b>tip</b> untuk validator agar transaksimu diprioritaskan.</p>
+<p>Sistem modern (mis. EIP-1559 di Ethereum) memakai <b>base fee</b> (biaya dasar yang otomatis menyesuaikan kepadatan & "dibakar") plus <b>tip</b> untuk validator agar transaksimu diprioritaskan. Pada contoh di atas, 22 gwei bisa berarti base fee 20 + tip 2: sebanyak 21.000 × 20 = 420.000 gwei <b>dimusnahkan</b> (dibakar), dan hanya 42.000 gwei yang diterima validator.</p>
 
 <h3>💥 Dampak</h3>
 <ul>
@@ -2811,75 +2834,6 @@ Ini bukan kelalaian, melainkan pilihan rancangan. Blockchain memilih <b>keterbuk
           ],
         },
         {
-          id: "bc-a-2",
-          title: "Mengenal Solidity (Bahasa Smart Contract)",
-          duration: "12 menit",
-          content: `
-<p><b>Solidity</b> adalah bahasa pemrograman paling populer untuk menulis smart contract di Ethereum. Sintaksnya mirip JavaScript/C++.</p>
-
-<h3>Contoh smart contract sederhana</h3>
-<pre class="code">// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
-contract Penyimpanan {
-    uint256 private angka;          // variabel disimpan di blockchain
-
-    // Menyimpan nilai baru
-    function simpan(uint256 _angka) public {
-        angka = _angka;
-    }
-
-    // Membaca nilai (gratis, tidak ubah data)
-    function baca() public view returns (uint256) {
-        return angka;
-    }
-}</pre>
-
-<h3>Yang perlu dipahami</h3>
-<ul>
-  <li><b>contract</b> — mirip "class", wadah kode & data.</li>
-  <li><b>function ... public</b> — fungsi yang bisa dipanggil dari luar.</li>
-  <li><b>view</b> — fungsi yang hanya membaca (tidak mengubah data, jadi gratis/tanpa gas).</li>
-  <li>Mengubah data (mis. <code>simpan</code>) butuh transaksi & <b>biaya gas</b>.</li>
-</ul>
-
-<div class="callout">
-<b>Coba sendiri:</b> Buka <b>Remix IDE</b> (remix.ethereum.org) di browser — editor Solidity gratis tanpa instalasi, lengkap dengan jaringan uji coba.
-</div>
-`,
-          keyPoints: [
-            "Solidity = bahasa utama smart contract Ethereum (mirip JS/C++).",
-            "'contract' adalah wadah kode; fungsi 'view' hanya membaca (gratis).",
-            "Mengubah data di blockchain memerlukan transaksi & biaya gas.",
-          ],
-          quiz: [
-            {
-              q: "Fungsi dengan keyword 'view' di Solidity berarti?",
-              options: [
-                "Hanya membaca data tanpa mengubahnya, sehingga tidak perlu gas",
-                "Hanya boleh dipanggil oleh pemilik kontrak yang bersangkutan",
-                "Menampilkan antarmuka kontrak kepada pengguna lewat browser",
-                "Menyembunyikan isi fungsi dari siapa pun yang membaca kontrak",
-              ],
-              answer: 0,
-              explain:
-                "'view' menandai fungsi baca-saja yang tidak mengubah state.",
-            },
-            {
-              q: "Kapan kamu perlu membayar gas?",
-              options: [
-                "Saat menulis atau mengubah data yang tersimpan di blockchain",
-                "Setiap kali membuka aplikasi dompet dan memeriksa saldo",
-                "Saat membaca isi sebuah kontrak lewat block explorer",
-                "Ketika menerima kiriman token dari pengguna yang lain",
-              ],
-              answer: 0,
-              explain:
-                "Operasi tulis mengubah state blockchain sehingga butuh gas.",
-            },
-          ],
-        },
-        {
           id: "bc-m-3",
           title: "Token, NFT, & Standar ERC",
           duration: "10 menit",
@@ -2888,6 +2842,15 @@ contract Penyimpanan {
 
 <div data-diagram="compare3" data-cols="ERC-20::token biasa::semua unit sama nilainya|ERC-721::NFT::tiap unit unik|ERC-1155::campuran::hemat, cocok untuk game" data-caption="Tiga standar token yang paling sering ditemui"></div>
 
+
+<h3>Rahasia kecil: token hanyalah buku saldo di dalam smart contract</h3>
+<p>Sebuah token ERC-20 <b>bukan</b> sesuatu yang berpindah ke dalam dompetmu. Ia adalah <b>smart contract</b> yang menyimpan satu tabel: alamat siapa punya berapa.</p>
+<table class="tbl">
+  <tr><th>Alamat</th><th>Saldo token KOPI</th><th>Setelah Andi mengirim 100 ke Budi</th></tr>
+  <tr><td>0xA1… (Andi)</td><td>500</td><td>400</td></tr>
+  <tr><td>0xB2… (Budi)</td><td>200</td><td>300</td></tr>
+</table>
+<p>"Mengirim token" artinya meminta kontrak itu mengubah dua baris di tabelnya — dan permintaan itu harus <b>ditandatangani</b> kunci privat Andi. Dompetmu hanya <b>membaca</b> tabel ini lalu menampilkannya. Karena perubahan tabel adalah transaksi di Ethereum, memindahkan token pun tetap butuh <b>ETH untuk gas</b>.</p>
 
 <h3>1. Token "fungible" (ERC-20)</h3>
 <p><b>Fungible</b> = setiap unit sama nilainya & bisa ditukar (seperti uang: Rp1.000-mu sama dengan Rp1.000-ku). Contoh: stablecoin USDT, token proyek. Standarnya disebut <b>ERC-20</b>.</p>
@@ -3077,6 +3040,16 @@ contract Penyimpanan {
 <div class="callout">
 <b>x × y = k.</b> Jumlah dua token (x dan y) dikalikan harus tetap konstan (k). Saat kamu membeli ETH (x berkurang), USDC di kolam (y) harus bertambah agar hasil kali tetap k — <b>itulah yang menentukan harga & slippage</b>.
 </div>
+
+<h3>Dengan angka: kenapa membeli banyak jadi mahal</h3>
+<p>Kolam berisi <b>10 ETH</b> dan <b>20.000 USDC</b>, jadi k = 10 × 20.000 = <b>200.000</b>, dan harga awalnya 20.000 ÷ 10 = <b>2.000 USDC per ETH</b>.</p>
+<table class="tbl">
+  <tr><th>Membeli</th><th>ETH tersisa di kolam</th><th>USDC harus menjadi (200.000 ÷ ETH)</th><th>Yang dibayar</th><th>Harga rata-rata per ETH</th></tr>
+  <tr><td>1 ETH</td><td>9</td><td>22.222</td><td>2.222</td><td>2.222 (lebih mahal 11%)</td></tr>
+  <tr><td>5 ETH</td><td>5</td><td>40.000</td><td>20.000</td><td class="bad-cell">4.000 (dua kali lipat)</td></tr>
+  <tr><td>9 ETH</td><td>1</td><td>200.000</td><td>180.000</td><td class="bad-cell">20.000 (sepuluh kali lipat)</td></tr>
+</table>
+<p>Makin besar pembelian dibanding isi kolam, makin mahal harga rata-ratanya. Selisih dari harga awal ini disebut <b>slippage</b>. Dan kolam tidak akan pernah benar-benar kehabisan ETH: untuk mengambil ETH terakhir, USDC yang dibayar harus tak terhingga. Karena itu kolam yang <b>besar</b> (likuiditasnya dalam) lebih nyaman dipakai — pembelian yang sama menggeser harga jauh lebih sedikit.</p>
 
 <h3>Coba sendiri — lihat harga bergerak 👇</h3>
 <div data-demo="js-playground">// Kolam: x = ETH, y = USDC, aturan x * y = k
@@ -3671,7 +3644,7 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
       id: "bc-proyek",
       level: "Proyek",
       title: "Proyek Produksi Web3",
-      summary: "Praktik nyata: siapkan dompet & testnet, deploy smart contract, hubungkan ke web, dan pahami keamanan produksi.",
+      summary: "Praktik nyata: siapkan dompet & testnet, kenali bahasa Solidity, deploy smart contract, hubungkan ke web, dan pahami keamanan produksi.",
       lessons: [
         {
           id: "bc-pro-1",
@@ -3730,6 +3703,92 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
               answer: 0,
               explain:
                 "Testnet memungkinkan uji coba aman tanpa risiko finansial.",
+            },
+          ],
+        },
+        {
+          id: "bc-a-2",
+          title: "Mengenal Solidity (Bahasa Smart Contract)",
+          duration: "12 menit",
+          content: `
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Smart contract</b> = program yang disimpan dan dijalankan di blockchain (modul Ethereum). <b>Mengubah</b> data di blockchain butuh transaksi dan <b>gas</b>; <b>membaca</b> saja gratis. Dompet dan testnet sudah kamu siapkan di pelajaran sebelumnya — sekarang saatnya melihat isi sebuah kontrak.
+</div>
+
+<p><b>Solidity</b> adalah bahasa pemrograman paling populer untuk menulis smart contract di Ethereum. Sintaksnya mirip JavaScript/C++.</p>
+
+<h3>Contoh smart contract sederhana</h3>
+<pre class="code">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Penyimpanan {
+    uint256 private angka;          // variabel disimpan di blockchain
+
+    // Menyimpan nilai baru
+    function simpan(uint256 _angka) public {
+        angka = _angka;
+    }
+
+    // Membaca nilai (gratis, tidak ubah data)
+    function baca() public view returns (uint256) {
+        return angka;
+    }
+}</pre>
+
+<h3>Dibaca baris demi baris</h3>
+<table class="tbl">
+  <tr><th>Baris</th><th>Artinya</th></tr>
+  <tr><td><b>// SPDX-License-Identifier: MIT</b></td><td>Keterangan lisensi kode (izin orang lain memakainya)</td></tr>
+  <tr><td><b>pragma solidity ^0.8.0;</b></td><td>"Kode ini untuk Solidity versi 0.8 ke atas"</td></tr>
+  <tr><td><b>contract Penyimpanan { … }</b></td><td>Satu kontrak bernama Penyimpanan; semua isinya di antara kurung kurawal</td></tr>
+  <tr><td><b>uint256 private angka;</b></td><td>Satu "laci" data bernama <i>angka</i>, berisi bilangan bulat tak negatif. Disimpan permanen di blockchain</td></tr>
+  <tr><td><b>function simpan(uint256 _angka) public</b></td><td>Tombol yang bisa ditekan siapa pun untuk mengisi laci dengan angka baru → mengubah data → butuh gas</td></tr>
+  <tr><td><b>function baca() public view returns (uint256)</b></td><td>Tombol untuk melihat isi laci; <i>view</i> berarti hanya melihat → gratis</td></tr>
+</table>
+<p><i>Catatan:</i> "private" hanya berarti kontrak lain tidak bisa membaca laci itu lewat kode. Semua data di blockchain publik tetap <b>bisa dilihat siapa pun</b> lewat block explorer — jangan pernah menyimpan rahasia di smart contract.</p>
+
+<h3>Yang perlu dipahami</h3>
+<ul>
+  <li><b>contract</b> — mirip "class", wadah kode & data.</li>
+  <li><b>function ... public</b> — fungsi yang bisa dipanggil dari luar.</li>
+  <li><b>view</b> — fungsi yang hanya membaca (tidak mengubah data, jadi gratis/tanpa gas).</li>
+  <li>Mengubah data (mis. <code>simpan</code>) butuh transaksi & <b>biaya gas</b>.</li>
+</ul>
+
+<div class="callout">
+<b>Coba sendiri:</b> Buka <b>Remix IDE</b> (remix.ethereum.org) di browser — editor Solidity gratis tanpa instalasi, lengkap dengan jaringan uji coba.
+</div>
+`,
+          keyPoints: [
+            "Solidity = bahasa utama smart contract Ethereum (mirip JS/C++).",
+            "'contract' adalah wadah kode; fungsi 'view' hanya membaca (gratis).",
+            "Mengubah data di blockchain memerlukan transaksi & biaya gas.",
+          ],
+          quiz: [
+            {
+              q: "Fungsi dengan keyword 'view' di Solidity berarti?",
+              options: [
+                "Hanya membaca data tanpa mengubahnya, sehingga tidak perlu gas",
+                "Hanya boleh dipanggil oleh pemilik kontrak yang bersangkutan",
+                "Menampilkan antarmuka kontrak kepada pengguna lewat browser",
+                "Menyembunyikan isi fungsi dari siapa pun yang membaca kontrak",
+              ],
+              answer: 0,
+              explain:
+                "'view' menandai fungsi baca-saja yang tidak mengubah state.",
+            },
+            {
+              q: "Kapan kamu perlu membayar gas?",
+              options: [
+                "Saat menulis atau mengubah data yang tersimpan di blockchain",
+                "Setiap kali membuka aplikasi dompet dan memeriksa saldo",
+                "Saat membaca isi sebuah kontrak lewat block explorer",
+                "Ketika menerima kiriman token dari pengguna yang lain",
+              ],
+              answer: 0,
+              explain:
+                "Operasi tulis mengubah state blockchain sehingga butuh gas.",
             },
           ],
         },
@@ -3809,6 +3868,21 @@ contract Penghitung {
           content: `
 <p>Agar pengguna biasa bisa memakai kontrakmu lewat website, kita pakai library <b>ethers.js</b> untuk menjembatani halaman web dengan blockchain.</p>
 
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+Kontrak <b>Penghitung</b> dari pelajaran sebelumnya punya dua fungsi: <b>tambah()</b> (mengubah data → butuh transaksi bertanda tangan dan gas) dan <b>baca()</b> (gratis). Tanda tangan dibuat oleh kunci privat di dompet — kode website tidak pernah boleh melihat kunci itu.
+</div>
+
+<h3>Kamus kecil sebelum membaca kode</h3>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th></tr>
+  <tr><td><b>npm install ethers</b></td><td>Mengunduh pustaka ethers.js ke proyekmu</td></tr>
+  <tr><td><b>Provider</b></td><td>"Jendela baca" ke blockchain — untuk melihat data, tidak bisa menandatangani</td></tr>
+  <tr><td><b>Signer</b></td><td>Pihak yang bisa menandatangani transaksi — di sini dompet MetaMask milik pengguna</td></tr>
+  <tr><td><b>ABI</b></td><td>Daftar fungsi yang dimiliki kontrak beserta bentuknya, agar kode tahu cara memanggilnya</td></tr>
+  <tr><td><b>await</b></td><td>"Tunggu dulu sampai jawabannya datang dari jaringan"</td></tr>
+</table>
+
 <pre class="code">npm install ethers</pre>
 
 <h3>1. Hubungkan dompet pengguna</h3>
@@ -3838,6 +3912,8 @@ console.log("Jumlah sekarang:", nilai.toString());
 const tx = await kontrak.tambah();
 await tx.wait();                 // tunggu transaksi dikonfirmasi
 console.log("Berhasil ditambah!");</pre>
+
+<p>Alurnya dalam bahasa sehari-hari: website meminta izin tersambung ke dompet → mengambil <i>signer</i> (dompet pengguna) → membuat "remote" kontrak dari alamat dan ABI-nya → menekan tombol <i>baca</i> (langsung dijawab) atau <i>tambah</i> (MetaMask muncul meminta persetujuan dan gas, lalu kode menunggu sampai transaksi masuk blok).</p>
 
 <div class="callout">
 <b>Itulah sebuah DApp!</b> Frontend web biasa + <b>ethers.js</b> + <b>smart contract</b> sebagai backend. <b>ABI</b> memberi tahu kode cara memanggil fungsi; <b>signer</b> menandatangani transaksi tulis.
@@ -4940,6 +5016,12 @@ Artinya RWA <b>tetap membutuhkan kepercayaan pada pihak di dunia nyata</b> — t
           title: "Apakah Protokol Punya 'Laporan Keuangan'?",
           duration: "12 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Laporan laba rugi</b>: pendapatan − beban = laba. Warung yang menjual kopi 300 juta dengan beban 260 juta berlaba 40 juta (<a href="#/lesson/acc-m-3">Laporan Laba Rugi</a>).<br>
+<b>Free Cash Flow (FCF)</b> = kas dari kegiatan inti − belanja untuk aset jangka panjang; uang yang benar-benar bebas dipakai pemilik (<a href="#/lesson/acc-fund-2">Free Cash Flow</a>).
+</div>
+
 <p>Selama ini crypto sering dianggap "tak bisa dianalisis seperti bisnis". Sebagian benar — tapi <b>lebih banyak yang bisa</b> daripada yang orang kira. Mari pakai kacamata akuntansi.</p>
 
 <div data-diagram="compare3" data-cols="Pendapatan::fee dari pengguna::seperti omzet|Beban::insentif token::seperti biaya pemasaran|Laba protokol::fee − insentif::sering ternyata negatif" data-caption="Protokol punya 'laporan keuangan' — hanya namanya berbeda"></div>
@@ -5034,7 +5116,13 @@ Kalau <b>tidak</b> → yang selama ini dijual bukan layanan, melainkan <b>insent
           title: "Alokasi Modal: Treasury DAO",
           duration: "12 menit",
           content: `
-<p>Ingat pelajaran <b>Alokasi Modal</b> di jalur Akuntansi — empat pilihan memakai kas perusahaan? Protokol crypto menghadapi <b>pilihan yang sama persis</b>, hanya beda nama.</p>
+<div class="callout ingat">
+<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Alokasi modal</b> = keputusan ke mana kas perusahaan dipakai. Pilihannya hanya lima: diinvestasikan lagi ke bisnis, membeli perusahaan lain, melunasi utang, membeli kembali saham sendiri (<i>buyback</i>, sehingga kepemilikan tiap lembar sisanya membesar), atau dibagikan sebagai dividen (<a href="#/lesson/acc-kual-1">Alokasi Modal</a>).<br>
+<b>Treasury</b> = kas simpanan sebuah organisasi; di DAO, isinya biasanya token dan stablecoin.
+</div>
+
+<p>Protokol crypto menghadapi <b>pilihan yang sama persis</b> dengan perusahaan, hanya beda nama.</p>
 
 <table class="tbl">
   <tr><th>Pilihan perusahaan</th><th>Padanannya di protokol</th></tr>
@@ -5101,6 +5189,11 @@ Kalau <b>tidak</b> → yang selama ini dijual bukan layanan, melainkan <b>insent
           title: "Dilusi Token & 'Real Yield'",
           duration: "13 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Dilusi</b> (pengenceran) terjadi saat saham baru dicetak. Misalkan perusahaan punya 100 lembar dan kamu memegang 10 — kamu memiliki <b>10%</b>. Kalau perusahaan mencetak 100 lembar baru untuk orang lain, kamu tetap memegang 10 lembar, tapi kini dari 200: kepemilikanmu tinggal <b>5%</b>. Laba yang sama dibagi ke lebih banyak lembar, sehingga bagian tiap lembar mengecil (<a href="#/lesson/acc-adv-0">Saham, EPS &amp; PER</a>).
+</div>
+
 <p>Ini salah satu analisis paling berguna — dan langsung memakai konsep akuntansi: <b>dilusi</b>.</p>
 
 <div data-diagram="vs" data-left="REAL YIELD::Didanai fee pengguna::Berkelanjutan" data-right="EMISI TOKEN::Didanai cetak token baru::Mengencerkan (dilusi)" data-caption="Dari mana imbal hasil berasal?"></div>
@@ -5268,6 +5361,12 @@ console.log("Coba ubah emisi jadi 20000000000, lalu jalankan lagi.");</div>
           title: "Moat, Red Flag & Batas Analisis di Crypto",
           duration: "13 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Economic moat</b> (parit ekonomi) = keunggulan yang membuat bisnis sulit ditiru, seperti parit yang melindungi benteng: merek, network effect, switching cost, keunggulan biaya &amp; skala, serta teknologi atau izin (<a href="#/lesson/acc-kual-4">Economic Moat</a>).<br>
+<b>Red flag</b> = tanda bahaya yang membuat angka-angka laporan patut dicurigai, misalnya laba naik terus tapi kasnya tidak pernah ikut naik (<a href="#/lesson/acc-aud-4">Mendeteksi Manipulasi</a>).
+</div>
+
 <p>Pelajaran penutup: menerapkan <b>moat</b> &amp; <b>red flag</b> ke crypto — dan bersikap jujur soal <b>apa yang tidak bisa dianalisis</b>.</p>
 
 <h3>Parit (moat) versi crypto</h3>
