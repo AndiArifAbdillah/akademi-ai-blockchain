@@ -15,7 +15,7 @@ const MODULE_ORDER = [
   // 🤖 AI
   "ai-dasar", "ai-pemula", "ai-menengah", "ai-fundamental", "ai-matematika",
   "ai-tools", "ai-pendalaman", "ai-algoritma", "ai-ensemble", "ai-arsitektur", "ai-rl",
-  "ai-mahir", "ai-lanjutan", "ai-proyek", "ai-terapan", "ai-ekonomi", "ai-arah",
+  "ai-mahir", "ai-lanjutan", "ai-otomasi", "ai-proyek", "ai-terapan", "ai-ekonomi", "ai-arah",
   // ⛓️ Blockchain
   "bc-dasar", "bc-pemula", "bc-fundamental", "bc-pendalaman", "bc-matematika",
   "bc-kriptografi", "bc-menengah", "bc-terapan", "bc-lanjutan", "bc-proyek",
@@ -1457,6 +1457,12 @@ const GLOSSARY = [
   ["SDK", "Software Development Kit — paket kode siap pakai dari penyedia layanan."],
   ["Backend", "Program yang berjalan di server milikmu, tidak terlihat pengguna; tempat aman menyimpan API key."],
   ["Peluang Bersyarat", "P(A | B): peluang A bila B sudah diketahui terjadi — dihitung hanya dari kasus-kasus B."],
+  ["n8n", "Alat otomasi alur kerja: menyusun langkah-langkah sebagai node yang disambung garis; bisa dipasang sendiri atau dipakai lewat n8n Cloud."],
+  ["Workflow", "Satu rangkaian otomasi utuh, dimulai dari pemicu (trigger) lalu menjalankan langkah-langkah berikutnya."],
+  ["Trigger", "Pemicu yang memulai workflow, misalnya jadwal, webhook, formulir, atau pesan masuk."],
+  ["Webhook", "Alamat khusus yang menunggu kiriman data dari aplikasi lain; begitu dipanggil, workflow berjalan."],
+  ["JSON", "Format data berupa pasangan kunci–nilai, mis. { \"nama\": \"Sari\" } — dipakai hampir semua aplikasi untuk bertukar data."],
+  ["Ekspresi", "Di n8n: rumus di antara {{ }} yang mengambil atau mengolah data item, mis. {{ $json.nama }}."],
 ];
 
 function renderGlossary() {

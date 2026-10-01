@@ -7194,7 +7194,494 @@ hasil = crew.jalankan("Buat artikel tentang RAG");</pre>
         },
       ],
     },
-    /* ---------------- MODUL 14: PROYEK PRODUKSI AI ---------------- */
+    /* ---------------- MODUL 14: OTOMASI TANPA BANYAK KODE: N8N ---------------- */
+    {
+      id: "ai-otomasi",
+      level: "Otomasi",
+      title: "Otomasi Tanpa Banyak Kode: n8n",
+      summary: "Membuat alur kerja otomatis dengan menyambungkan kotak dan garis: konsep workflow & node, data JSON dan ekspresi, workflow pertama yang berjalan setiap pagi, lalu agen AI yang bisa memakai alat.",
+      lessons: [
+        {
+          id: "ai-n8n-1",
+          title: "n8n dari Nol — Otomasi dengan Kotak dan Garis",
+          duration: "13 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Algoritma</b> = urutan langkah yang jelas (modul Dasar). <b>API</b> = "pelayan" yang membawa permintaan aplikasimu ke layanan lain dan membawa balik jawabannya (pelajaran Membangun Aplikasi AI). n8n menggabungkan keduanya: kamu menyusun urutan langkah, dan tiap langkah bisa berbicara dengan aplikasi lain lewat API — tanpa harus menulis banyak kode.
+</div>
+
+<h3>Masalahnya: pekerjaan yang diulang setiap hari</h3>
+<p>Sebuah toko kopi online menerima pesanan lewat formulir. Setiap ada pesanan, pemiliknya melakukan empat hal: menyalin data ke Google Sheets, mengirim email konfirmasi ke pembeli, memberi tahu bagian gudang, dan — kalau pesanannya besar — mengabari dirinya sendiri di Telegram.</p>
+<table class="tbl">
+  <tr><th>Dikerjakan manual</th><th>Hitungan</th></tr>
+  <tr><td>Waktu per pesanan</td><td>sekitar 5 menit</td></tr>
+  <tr><td>Pesanan per hari</td><td>40</td></tr>
+  <tr><td><b>Waktu habis per hari</b></td><td><b>200 menit — lebih dari 3 jam</b></td></tr>
+</table>
+<p>Pekerjaannya selalu sama, urutannya selalu sama. Itu tanda pekerjaan ini bisa <b>diotomasi</b>: dijalankan oleh komputer setiap kali sesuatu terjadi, tanpa ada yang menekan tombol.</p>
+
+<h3>n8n: menyusun otomasi dengan kotak dan garis</h3>
+<p><b>n8n</b> (dibaca "n-eight-n", singkatan dari <i>nodemation</i>) adalah alat untuk membuat otomasi dengan cara <b>menyambungkan kotak-kotak</b> di layar. Setiap kotak mengerjakan satu langkah; garis di antara kotak menunjukkan ke mana data mengalir.</p>
+<div data-diagram="flow" data-steps="Formulir diisi|Catat ke Sheets|Email ke pembeli|Kabari pemilik" data-caption="Satu workflow: empat langkah yang kini berjalan sendiri setiap ada pesanan"></div>
+
+<h3>Lima kata yang perlu kamu kenal</h3>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th><th>Di contoh toko kopi</th></tr>
+  <tr><td><b>Workflow</b></td><td>Satu rangkaian otomasi utuh</td><td>"Proses pesanan baru"</td></tr>
+  <tr><td><b>Node</b></td><td>Satu kotak = satu langkah</td><td>"Catat ke Sheets"</td></tr>
+  <tr><td><b>Trigger</b> (pemicu)</td><td>Node pertama yang <b>memulai</b> workflow</td><td>"Ada formulir yang diisi"</td></tr>
+  <tr><td><b>Eksekusi</b></td><td>Satu kali workflow berjalan dari awal sampai akhir</td><td>Satu pesanan = satu eksekusi</td></tr>
+  <tr><td><b>Kredensial</b></td><td>Izin masuk ke aplikasi lain (kunci API, akun) yang disimpan terenkripsi di n8n</td><td>Akun Google untuk Sheets</td></tr>
+</table>
+<p>Pemicunya bisa bermacam-macam: <b>jadwal</b> (setiap pagi pukul 07.00), <b>webhook</b> (aplikasi lain mengirim kabar ke alamat khusus milik workflow-mu), <b>formulir</b> buatan n8n sendiri, pesan masuk di Telegram, email baru, baris baru di spreadsheet, dan ratusan lainnya.</p>
+
+<h3>Kenapa n8n, bukan alat sejenis?</h3>
+<p>Ada beberapa alat serupa, misalnya Zapier dan Make. Perbedaan yang paling sering menentukan pilihan:</p>
+<table class="tbl">
+  <tr><th>Hal</th><th>n8n</th></tr>
+  <tr><td>Tempat berjalan</td><td>Bisa di layanan cloud resminya, <b>atau dipasang sendiri</b> di komputer/server milikmu</td></tr>
+  <tr><td>Cara menghitung pemakaian</td><td>Per <b>eksekusi</b> — satu workflow utuh dihitung sekali, berapa pun langkahnya</td></tr>
+  <tr><td>Kalau butuh logika khusus</td><td>Ada node <b>Code</b> untuk menulis JavaScript atau Python di tengah alur</td></tr>
+  <tr><td>AI</td><td>Ada node <b>AI Agent</b>, model bahasa, memori, dan penyimpanan vektor (dibahas di pelajaran terakhir modul ini)</td></tr>
+  <tr><td>Lisensi</td><td><i>Fair-code</i> (Sustainable Use License): kodenya terbuka dan boleh dipakai untuk keperluan sendiri atau bisnismu, tapi tidak boleh dijual kembali sebagai layanan n8n</td></tr>
+</table>
+
+<h3>Cara mulai mencoba</h3>
+<table class="tbl">
+  <tr><th>Pilihan</th><th>Cocok untuk</th><th>Catatan</th></tr>
+  <tr><td><b>n8n Cloud</b></td><td>Pemula — paling mudah</td><td>Daftar di situs resminya; ada masa uji coba, selanjutnya berbayar. Workflow terjadwal tetap jalan walau laptopmu mati.</td></tr>
+  <tr><td><b>npx n8n</b></td><td>Mencoba di laptop sendiri</td><td>Butuh Node.js terpasang. Setelah jalan, buka <b>http://localhost:5678</b>.</td></tr>
+  <tr><td><b>Docker</b></td><td>Dipasang serius di server</td><td>Cara yang disarankan dokumentasi resmi untuk dipasang sendiri.</td></tr>
+</table>
+<pre class="code"># mencoba cepat di laptop (butuh Node.js)
+npx n8n
+
+# atau dengan Docker
+docker volume create n8n_data
+docker run -it --rm --name n8n -p 5678:5678 -v n8n_data:/home/node/.n8n docker.n8n.io/n8nio/n8n</pre>
+<div class="callout warn">
+<b>Jujur soal memasang sendiri.</b> Dokumentasi n8n sendiri menyarankan pemasangan mandiri hanya untuk yang terbiasa mengurus server: kamu yang bertanggung jawab atas pembaruan, cadangan data, dan keamanan. Kalau n8n di laptopmu mati, workflow terjadwal pun ikut berhenti. Untuk belajar, n8n Cloud atau npx di laptop sudah cukup.
+</div>
+
+<div class="callout">
+<b>Dampaknya untuk toko kopi tadi:</b> 3 jam lebih per hari kembali ke pemiliknya, dan tidak ada lagi pesanan yang lupa dicatat. Otomasi yang baik bukan soal teknologi canggih — melainkan soal <b>pekerjaan membosankan yang tidak lagi dikerjakan manusia</b>.
+</div>
+`,
+          keyPoints: [
+            "Otomasi cocok untuk pekerjaan yang urutannya selalu sama dan diulang setiap hari.",
+            "n8n menyusun otomasi dengan menyambungkan node (kotak langkah) lewat garis; satu rangkaian utuh disebut workflow.",
+            "Workflow selalu dimulai trigger (jadwal, webhook, formulir, pesan masuk); satu kali berjalan disebut eksekusi.",
+            "Kelebihan n8n: bisa dipasang sendiri, dihitung per eksekusi, punya node Code dan node AI; lisensinya fair-code.",
+            "Untuk belajar pakai n8n Cloud atau npx n8n; memasang sendiri di server menuntut kesiapan mengurus keamanan dan cadangan."
+          ],
+          practice: [
+            { type: "number", q: "Sebuah pekerjaan manual memakan 4 menit dan dilakukan 30 kali sehari. Berapa menit per hari yang bisa dihemat bila diotomasi?", answer: 120, tol: 0.5, unit: "menit", hint: "4 × 30.", solution: "4 × 30 = 120 menit — dua jam setiap hari." },
+            { type: "choice", q: "Node mana yang PERTAMA dalam setiap workflow n8n?", options: ["Node Code", "Trigger (pemicu)", "Node IF", "Kredensial"], answer: 1, hint: "Apa yang memulai workflow?", solution: "Setiap workflow dimulai dari trigger, misalnya jadwal atau webhook." }
+          ],
+          quiz: [
+            {
+              q: "Dalam n8n, apa yang dimaksud dengan 'node'?",
+              options: [
+                "Satu kotak yang mengerjakan satu langkah dalam workflow",
+                "Satu kali workflow berjalan dari pemicu sampai akhir",
+                "Izin masuk ke aplikasi lain yang disimpan terenkripsi",
+                "Server tempat n8n dipasang dan dijalankan setiap hari"
+              ],
+              answer: 0,
+              explain: "Node = satu langkah. Satu kali berjalan disebut eksekusi; izin masuk disebut kredensial."
+            },
+            {
+              q: "Pekerjaan seperti apa yang paling cocok diotomasi dengan n8n?",
+              options: [
+                "Pekerjaan berulang yang urutan langkahnya selalu sama",
+                "Keputusan strategis yang butuh pertimbangan baru tiap kali",
+                "Pekerjaan sekali jalan yang tidak akan pernah diulang",
+                "Percakapan yang menuntut empati penuh dari manusia"
+              ],
+              answer: 0,
+              explain: "Otomasi paling menguntungkan untuk langkah-langkah yang selalu sama dan sering diulang."
+            },
+            {
+              q: "Workflow terjadwal di n8n yang dipasang di laptop tidak berjalan semalam. Penyebab paling mungkin?",
+              options: [
+                "Laptopnya mati atau tertidur, sehingga n8n ikut berhenti",
+                "Jadwal hanya bisa berjalan di hari kerja, bukan malam hari",
+                "Node trigger jadwal hanya boleh dipakai di n8n Cloud",
+                "Workflow terjadwal selalu butuh kredensial Google"
+              ],
+              answer: 0,
+              explain: "n8n yang dipasang sendiri hanya bekerja selama mesinnya menyala. n8n Cloud tetap berjalan walau laptopmu mati."
+            }
+          ]
+        },
+        {
+          id: "ai-n8n-2",
+          title: "Data di n8n — Item, JSON & Ekspresi",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Workflow = rangkaian <b>node</b>, dimulai dari <b>trigger</b>; data mengalir lewat garis penghubung (pelajaran sebelumnya). Pelajaran ini membuka isi garis itu: data apa yang sebenarnya dikirim dari satu node ke node berikutnya?
+</div>
+
+<h3>Langkah 1 — JSON: cara aplikasi menulis data</h3>
+<p>Hampir semua aplikasi modern bertukar data dalam format bernama <b>JSON</b>. Bentuknya sederhana: pasangan <b>kunci</b> dan <b>nilai</b>, dibungkus kurung kurawal.</p>
+<pre class="code">{
+  "nama": "Sari",
+  "produk": "Kopi Gayo 250 g",
+  "jumlah": 2,
+  "harga": 85000
+}</pre>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Artinya</th></tr>
+  <tr><td><b>"nama"</b></td><td>Kunci — nama kolomnya, selalu dalam tanda petik</td></tr>
+  <tr><td><b>"Sari"</b></td><td>Nilai berupa teks — dalam tanda petik</td></tr>
+  <tr><td><b>85000</b></td><td>Nilai berupa angka — tanpa tanda petik, tanpa titik ribuan</td></tr>
+  <tr><td><b>{ … }</b></td><td>Satu objek — anggap saja satu baris di tabel</td></tr>
+  <tr><td><b>[ … ]</b></td><td>Daftar — beberapa objek berjajar, seperti beberapa baris tabel</td></tr>
+</table>
+<p>Kalau kamu sudah pernah melihat spreadsheet, JSON hanyalah cara lain menulis baris-baris tabel.</p>
+
+<h3>Langkah 2 — Item: satuan data di n8n</h3>
+<p>Di n8n, data yang mengalir antar-node selalu berupa <b>daftar item</b>, dan setiap item adalah satu objek JSON. Satu pesanan = satu item. Tiga pesanan sekaligus = tiga item.</p>
+<div class="callout">
+<b>Aturan penting:</b> kebanyakan node menjalankan pekerjaannya <b>sekali untuk setiap item</b>. Kalau node "Kirim email" menerima 3 item, ia mengirim 3 email — tanpa kamu perlu membuat perulangan sendiri.
+</div>
+
+<h3>Langkah 3 — Ekspresi: mengambil isi item</h3>
+<p>Di kolom pengaturan sebuah node, kamu bisa menulis <b>ekspresi</b> di antara dua pasang kurung kurawal. Ekspresi dihitung ulang untuk setiap item.</p>
+<table class="tbl">
+  <tr><th>Ekspresi</th><th>Artinya</th><th>Hasil untuk pesanan Sari</th></tr>
+  <tr><td><code>{{ $json.nama }}</code></td><td>Ambil nilai <i>nama</i> dari item yang sedang diproses</td><td>Sari</td></tr>
+  <tr><td><code>{{ $json.jumlah * $json.harga }}</code></td><td>Boleh berhitung</td><td>170000</td></tr>
+  <tr><td><code>{{ $json.harga.toLocaleString('id-ID') }}</code></td><td>Boleh memakai fungsi JavaScript</td><td>85.000</td></tr>
+  <tr><td><code>{{ $('Formulir pesanan').item.json.email }}</code></td><td>Ambil data dari node lain yang sudah lewat, berdasarkan nama node-nya</td><td>alamat email Sari</td></tr>
+</table>
+<p>Kata <b>$json</b> berarti "isi item yang sedang diproses". Kamu tidak perlu menghafalnya: di n8n, kolom data dari node sebelumnya bisa <b>diseret</b> ke kolom isian, dan ekspresinya ditulis otomatis.</p>
+
+<h3>Lihat sendiri</h3>
+<div data-demo="n8n-alur"></div>
+
+<h3>Langkah 4 — Node yang paling sering dipakai</h3>
+<table class="tbl">
+  <tr><th>Node</th><th>Kegunaan</th></tr>
+  <tr><td><b>Schedule Trigger</b></td><td>Memulai workflow pada jadwal tertentu</td></tr>
+  <tr><td><b>Webhook</b></td><td>Memulai workflow saat aplikasi lain mengirim data ke alamat khusus</td></tr>
+  <tr><td><b>Edit Fields (Set)</b></td><td>Menambah, mengubah, atau membuang kolom di item</td></tr>
+  <tr><td><b>IF</b> / <b>Switch</b></td><td>Memilih cabang berdasarkan syarat</td></tr>
+  <tr><td><b>HTTP Request</b></td><td>Memanggil API mana pun — "pintu darurat" bila aplikasinya belum punya node sendiri</td></tr>
+  <tr><td><b>Code</b></td><td>Menulis JavaScript atau Python untuk logika yang tidak muat di node lain</td></tr>
+  <tr><td><b>Merge</b></td><td>Menggabungkan data dari dua cabang</td></tr>
+</table>
+
+<h3>Coba sendiri — cara kerja node Code</h3>
+<p>Node Code menerima daftar item dan harus mengembalikan daftar item. Di n8n, daftar itu diambil dengan <code>$input.all()</code>; di sini kita tuliskan langsung agar bisa dijalankan di browser:</p>
+<div data-demo="js-playground">// Setiap item berbentuk { json: { ...isi... } }, persis seperti di n8n
+const items = [
+  { json: { nama: "Sari", jumlah: 2, harga: 85000 } },
+  { json: { nama: "Budi", jumlah: 1, harga: 520000 } },
+  { json: { nama: "Citra", jumlah: 3, harga: 240000 } }
+];
+
+// Isi node Code: hitung total dan tandai pesanan besar
+const hasil = items.map(function (item) {
+  const total = item.json.jumlah * item.json.harga;
+  return { json: { nama: item.json.nama, total: total, besar: total >= 500000 } };
+});
+
+hasil.forEach(function (item) {
+  console.log(JSON.stringify(item.json));
+});
+console.log("Masuk 3 item, keluar 3 item — node berikutnya menerima hasil ini.");</div>
+
+<h3>Langkah 5 — Uji coba vs sungguhan</h3>
+<table class="tbl">
+  <tr><th></th><th>Saat menyusun</th><th>Setelah di-publish</th></tr>
+  <tr><td>Menjalankan</td><td>Tombol <b>Execute workflow</b> / <b>Execute step</b></td><td>Berjalan sendiri setiap pemicunya terjadi</td></tr>
+  <tr><td>Alamat webhook</td><td><b>Test URL</b> — hanya mendengar saat kamu menekan tombol uji</td><td><b>Production URL</b> — selalu aktif</td></tr>
+  <tr><td>Melihat data</td><td>Langsung tampil di tiap node</td><td>Di tab <b>Executions</b>, satu baris per eksekusi</td></tr>
+</table>
+<div class="callout warn">
+<b>Kesalahan pemula paling umum:</b> workflow sudah benar saat diuji, tapi lupa di-<b>publish</b> — atau aplikasi lain masih memakai <b>Test URL</b>. Hasilnya, workflow tidak pernah berjalan sendiri. Kalau ada yang gagal, buka tab Executions: n8n menunjukkan node mana yang merah dan pesan errornya.
+</div>
+`,
+          keyPoints: [
+            "JSON menulis data sebagai pasangan kunci–nilai; satu objek seperti satu baris tabel, daftar seperti beberapa baris.",
+            "Data di n8n mengalir sebagai daftar item; kebanyakan node bekerja sekali untuk setiap item.",
+            "Ekspresi {{ $json.nama }} mengambil isi item yang sedang diproses; boleh berhitung dan memakai fungsi JavaScript.",
+            "Node inti: Schedule Trigger, Webhook, Edit Fields, IF/Switch, HTTP Request, Code, Merge.",
+            "Workflow baru berjalan sendiri setelah di-publish; error dilacak di tab Executions."
+          ],
+          practice: [
+            { type: "number", q: "Item: { \"jumlah\": 4, \"harga\": 25000 }. Berapa hasil ekspresi {{ $json.jumlah * $json.harga }}?", answer: 100000, tol: 1, hint: "4 × 25.000.", solution: "4 × 25.000 = 100.000." },
+            { type: "number", q: "Node 'Kirim email' menerima 5 item. Berapa email yang terkirim?", answer: 5, tol: 0.1, unit: "email", hint: "Kebanyakan node bekerja sekali per item.", solution: "5 item → 5 email." }
+          ],
+          quiz: [
+            {
+              q: "Apa arti ekspresi {{ $json.nama }} di sebuah node n8n?",
+              options: [
+                "Ambil nilai 'nama' dari item yang sedang diproses",
+                "Ganti nama node ini menjadi kata yang ditulis",
+                "Simpan teks 'nama' sebagai kolom baru yang kosong",
+                "Cari semua node yang namanya diawali kata nama"
+              ],
+              answer: 0,
+              explain: "$json merujuk ke isi item yang sedang diproses, dan .nama mengambil nilai dengan kunci 'nama'."
+            },
+            {
+              q: "Workflow sudah benar saat diuji, tapi tidak pernah berjalan sendiri. Apa yang paling mungkin terlupa?",
+              options: [
+                "Workflow belum di-publish, atau masih memakai Test URL",
+                "Ekspresinya ditulis dengan huruf besar, bukan kecil",
+                "Workflow terlalu panjang sehingga ditolak oleh n8n",
+                "Data JSON-nya memakai angka, bukan teks bertanda petik"
+              ],
+              answer: 0,
+              explain: "Pemicu sungguhan dan Production URL baru aktif setelah workflow di-publish."
+            },
+            {
+              q: "Di JSON, kenapa harga ditulis 85000 tanpa tanda petik?",
+              options: [
+                "Karena nilainya angka, sehingga bisa dihitung",
+                "Karena tanda petik hanya untuk nama orang",
+                "Karena JSON melarang tanda petik di nilai",
+                "Karena angka besar harus ditulis tanpa koma"
+              ],
+              answer: 0,
+              explain: "Nilai bertanda petik dibaca sebagai teks. Tanpa petik, 85000 adalah angka yang bisa dikalikan atau dibandingkan."
+            }
+          ]
+        },
+        {
+          id: "ai-n8n-3",
+          title: "Workflow Pertamamu — Kurs Dolar Setiap Pagi ke Telegram",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Item</b> = satu objek JSON; <b>ekspresi</b> <code>{{ $json.kunci }}</code> mengambil isinya; workflow baru berjalan sendiri setelah di-<b>publish</b> (pelajaran sebelumnya). Sekarang kita pakai semuanya untuk membuat satu workflow yang benar-benar berguna.
+</div>
+
+<p>Tujuan: setiap pagi pukul 07.00, HP-mu menerima pesan Telegram berisi kurs dolar hari itu. Empat node saja:</p>
+<div data-diagram="flow" data-steps="Jadwal 07.00|Ambil kurs (API)|Susun pesan|Kirim ke Telegram" data-caption="Workflow pertama: dari pemicu jadwal sampai pesan di HP"></div>
+
+<h3>Langkah 1 — Pemicu: Schedule Trigger</h3>
+<p>Buat workflow baru, lalu tambahkan node <b>Schedule Trigger</b>. Atur: setiap <b>hari</b>, pukul <b>7</b>.</p>
+<div class="callout warn">
+<b>Periksa zona waktu.</b> Jam di n8n mengikuti pengaturan zona waktu workflow atau servernya. Kalau masih UTC, "pukul 7" berarti pukul 14.00 WIB. Atur zona waktu workflow ke <b>Asia/Jakarta</b> di pengaturan workflow.
+</div>
+
+<h3>Langkah 2 — Ambil data: HTTP Request</h3>
+<p>Tambahkan node <b>HTTP Request</b> dengan metode <b>GET</b> dan URL berikut. Layanan Frankfurter ini gratis dan tidak butuh kunci API:</p>
+<pre class="code">https://api.frankfurter.dev/v1/latest?base=USD&amp;symbols=IDR</pre>
+<p>Tekan <b>Execute step</b>. Keluarannya satu item JSON seperti ini (angkanya berubah setiap hari):</p>
+<pre class="code">{
+  "amount": 1,
+  "base": "USD",
+  "date": "2026-09-30",
+  "rates": { "IDR": 17891 }
+}</pre>
+<p>Perhatikan: kurs rupiah ada <b>di dalam</b> objek <i>rates</i>. Untuk mengambilnya, tulis jalurnya dengan titik: <code>{{ $json.rates.IDR }}</code>.</p>
+
+<h3>Langkah 3 — Susun pesan: Edit Fields</h3>
+<p>Tambahkan node <b>Edit Fields (Set)</b>, buat satu kolom bertipe teks bernama <b>pesan</b> dengan isi:</p>
+<pre class="code">Kurs {{ $json.date }}: 1 USD = Rp{{ $json.rates.IDR.toLocaleString('id-ID') }}</pre>
+<p>Hasilnya: <i>Kurs 2026-09-30: 1 USD = Rp17.891</i>. Fungsi <b>toLocaleString('id-ID')</b> menambahkan titik ribuan ala Indonesia.</p>
+
+<h3>Langkah 4 — Kirim: Telegram</h3>
+<table class="tbl">
+  <tr><th>Yang dilakukan</th><th>Caranya</th></tr>
+  <tr><td>1. Buat bot</td><td>Di Telegram, buka <b>@BotFather</b>, kirim <i>/newbot</i>, beri nama. BotFather memberimu <b>token</b> — rangkaian huruf dan angka panjang.</td></tr>
+  <tr><td>2. Simpan token di n8n</td><td>Tambahkan node <b>Telegram</b> (operasi kirim pesan teks), buat kredensial baru, tempel tokennya.</td></tr>
+  <tr><td>3. Cari Chat ID-mu</td><td>Kirim pesan apa saja ke bot barumu, lalu buka alamat di bawah di browser. Cari angka di bagian <b>"chat": {"id": …}</b>.</td></tr>
+  <tr><td>4. Isi node Telegram</td><td>Chat ID = angka tadi; Text = <code>{{ $json.pesan }}</code></td></tr>
+</table>
+<pre class="code">https://api.telegram.org/botTOKEN_KAMU/getUpdates</pre>
+<div class="callout warn">
+<b>Token bot = kata sandi.</b> Siapa pun yang memegangnya bisa mengirim pesan atas nama botmu. Jangan dibagikan atau difoto. Kalau terlanjur bocor, buat token baru lewat BotFather dengan perintah <i>/revoke</i>.
+</div>
+
+<h3>Langkah 5 — Uji, lalu publish</h3>
+<ol>
+  <li>Tekan <b>Execute workflow</b>. Dalam beberapa detik, pesan masuk ke Telegram-mu.</li>
+  <li>Kalau sudah benar, tekan <b>Publish</b>. Mulai besok, workflow berjalan sendiri pukul 07.00.</li>
+  <li>Buka tab <b>Executions</b> besok pagi untuk memastikan eksekusinya berhasil.</li>
+</ol>
+
+<h3>Kalau ada yang tidak jalan</h3>
+<table class="tbl">
+  <tr><th>Gejala</th><th>Penyebab yang biasa</th></tr>
+  <tr><td>Telegram menolak dengan pesan <i>Unauthorized</i></td><td>Token salah tempel atau sudah dicabut</td></tr>
+  <tr><td><i>Chat not found</i></td><td>Chat ID salah, atau kamu belum pernah mengirim pesan ke bot itu</td></tr>
+  <tr><td>Pesan berisi teks <i>undefined</i></td><td>Jalur ekspresi salah, mis. <code>$json.IDR</code> padahal seharusnya <code>$json.rates.IDR</code></td></tr>
+  <tr><td>Pagi ini tidak ada pesan</td><td>Workflow belum di-publish, zona waktu masih UTC, atau n8n di laptop sedang mati</td></tr>
+</table>
+
+<div class="callout">
+<b>Pola yang sama dipakai di mana-mana.</b> Ganti API kurs dengan harga Bitcoin, cuaca, atau data penjualan tokomu; ganti Telegram dengan email atau Google Sheets. Hampir semua otomasi sederhana adalah empat langkah ini: <b>pemicu → ambil data → olah → kirim</b>.
+</div>
+`,
+          keyPoints: [
+            "Workflow sederhana hampir selalu berpola: pemicu → ambil data → olah → kirim.",
+            "Schedule Trigger memulai workflow sesuai jadwal; pastikan zona waktunya Asia/Jakarta.",
+            "HTTP Request memanggil API; data bersarang diambil dengan jalur titik, mis. {{ $json.rates.IDR }}.",
+            "Token bot Telegram adalah kata sandi: simpan sebagai kredensial, cabut dengan /revoke bila bocor.",
+            "Uji dengan Execute workflow, lalu Publish; periksa hasil harian di tab Executions."
+          ],
+          practice: [
+            { type: "choice", q: "Keluaran API: { \"rates\": { \"IDR\": 17891 } }. Ekspresi mana yang mengambil angka 17891?", options: ["{{ $json.IDR }}", "{{ $json.rates.IDR }}", "{{ $json.rates }}", "{{ IDR }}"], answer: 1, hint: "IDR berada di dalam objek rates.", solution: "Jalurnya rates lalu IDR: {{ $json.rates.IDR }}." },
+            { type: "number", q: "Server n8n memakai UTC, dan jadwalnya diatur pukul 7. Pukul berapa (WIB) workflow itu berjalan?", answer: 14, tol: 0.1, unit: "WIB", hint: "WIB = UTC + 7 jam.", solution: "07.00 UTC = 14.00 WIB. Karena itu zona waktu perlu diatur ke Asia/Jakarta." }
+          ],
+          quiz: [
+            {
+              q: "Pesan Telegram yang diterima berisi kata 'undefined'. Penyebab paling mungkin?",
+              options: [
+                "Jalur ekspresi salah sehingga datanya tidak ditemukan",
+                "Token bot sudah dicabut sehingga pesan jadi kosong",
+                "API kurs sedang libur karena hari itu tanggal merah",
+                "Telegram tidak bisa menampilkan angka berformat rupiah"
+              ],
+              answer: 0,
+              explain: "'undefined' berarti kunci yang diminta tidak ada di item — misalnya $json.IDR padahal datanya di $json.rates.IDR."
+            },
+            {
+              q: "Kenapa token bot Telegram harus disimpan sebagai kredensial dan dirahasiakan?",
+              options: [
+                "Siapa pun yang memegangnya bisa mengendalikan bot itu",
+                "Token hanya berlaku sehari, jadi harus disimpan rapi",
+                "Telegram menagih biaya setiap kali token dibagikan",
+                "Token berisi nomor HP pemilik yang tidak boleh bocor"
+              ],
+              answer: 0,
+              explain: "Token adalah kata sandi bot. Kalau bocor, cabut dan buat yang baru lewat /revoke di BotFather."
+            },
+            {
+              q: "Urutan empat langkah yang menjadi pola sebagian besar otomasi sederhana adalah?",
+              options: [
+                "Pemicu, ambil data, olah, lalu kirim hasilnya",
+                "Kirim hasilnya, olah, ambil data, lalu pemicu",
+                "Olah data, pemicu, kirim hasilnya, ambil data",
+                "Ambil data, kirim hasilnya, pemicu, lalu olah"
+              ],
+              answer: 0,
+              explain: "Workflow selalu dimulai pemicu, lalu mengambil data, mengolahnya, dan mengirimkan hasilnya."
+            }
+          ]
+        },
+        {
+          id: "ai-n8n-4",
+          title: "Agen AI di n8n — Chatbot yang Bisa Bertindak",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Agen AI</b> = model bahasa yang diberi tujuan dan <b>alat</b>, lalu memutuskan sendiri langkahnya (pelajaran Multi-Agent). <b>RAG</b> = mencari potongan dokumen yang relevan lalu menyelipkannya ke prompt (pelajaran Membangun Aplikasi AI). Setiap panggilan model ditagih per <b>token</b>. n8n menyediakan semua bagian itu sebagai node.
+</div>
+
+<h3>Langkah 1 — Node AI Agent dan "anak-anaknya"</h3>
+<p>Node <b>AI Agent</b> adalah node induk. Ia tidak bekerja sendirian — ia butuh beberapa node kecil yang ditempelkan di bawahnya:</p>
+<table class="tbl">
+  <tr><th>Sambungan</th><th>Isinya</th><th>Analogi</th></tr>
+  <tr><td><b>Chat Model</b></td><td>Model bahasa yang dipakai, mis. Claude lewat node Anthropic Chat Model (butuh kunci API)</td><td>Otaknya</td></tr>
+  <tr><td><b>Memory</b></td><td>Riwayat percakapan, agar bot ingat isi obrolan sebelumnya</td><td>Buku catatan</td></tr>
+  <tr><td><b>Tools</b> (minimal satu)</td><td>Hal-hal yang boleh dilakukan agen: membaca Google Sheets, memanggil API, menghitung, mencari dokumen, server MCP</td><td>Tangannya</td></tr>
+</table>
+<p>Pemicunya bisa <b>Chat Trigger</b> (jendela obrolan bawaan n8n untuk menguji) atau pesan masuk dari Telegram.</p>
+
+<h3>Langkah 2 — Contoh: asisten toko kopi di Telegram</h3>
+<p>Pelanggan bertanya: <i>"Pesanan saya nomor 1043 sudah dikirim belum?"</i> Agen punya satu alat bernama <b>cari_pesanan</b> yang membaca tabel pesanan di Google Sheets. Yang terjadi di balik layar:</p>
+<table class="tbl">
+  <tr><th>Urutan</th><th>Yang terjadi</th></tr>
+  <tr><td>1</td><td>Model membaca pertanyaan dan daftar alat, lalu memutuskan: "aku perlu memanggil <i>cari_pesanan</i> dengan nomor 1043"</td></tr>
+  <tr><td>2</td><td>n8n menjalankan alat itu dan mendapat baris: <i>status = dikirim, resi = JNE123</i></td></tr>
+  <tr><td>3</td><td>Model membaca hasil alat, lalu menyusun jawaban</td></tr>
+  <tr><td>4</td><td>Bot membalas: <i>"Sudah dikirim, nomor resinya JNE123."</i></td></tr>
+</table>
+<div class="callout">
+<b>Satu pertanyaan, dua kali memanggil model</b> (langkah 1 dan 3). Pertanyaan yang lebih rumit bisa memanggil beberapa alat berturut-turut — dan tiap putaran menambah token. n8n membatasi jumlah putaran lewat pengaturan <b>Max Iterations</b> agar agen tidak berputar tanpa henti.
+</div>
+
+<h3>Langkah 3 — Deskripsi alat adalah instruksi</h3>
+<p>Model memilih alat berdasarkan <b>nama dan deskripsinya</b>. Deskripsi yang samar membuat agen salah pilih alat atau tidak memakainya sama sekali.</p>
+<table class="tbl">
+  <tr><th>Deskripsi alat</th><th>Hasilnya</th></tr>
+  <tr><td class="bad-cell">"Sheets"</td><td>Agen tidak tahu kapan harus memakainya</td></tr>
+  <tr><td class="ok-cell">"Mencari satu pesanan berdasarkan nomor pesanan. Mengembalikan status, tanggal kirim, dan nomor resi."</td><td>Agen tahu persis kapan dan untuk apa</td></tr>
+</table>
+
+<h3>Langkah 4 — RAG di n8n</h3>
+<p>Supaya bot bisa menjawab pertanyaan seperti <i>"Kopi mana yang cocok untuk V60?"</i> dari katalog toko, alurnya sama dengan RAG yang sudah kamu pelajari, hanya disusun dengan node:</p>
+<div data-diagram="flow" data-steps="Muat katalog|Potong per bagian|Ubah jadi embedding|Simpan di vector store|Agen mencari saat ditanya" data-caption="RAG di n8n: penyimpanan vektor dipasang sebagai salah satu alat agen"></div>
+
+<h3>Langkah 5 — Batas yang harus dijaga</h3>
+<table class="tbl">
+  <tr><th>Risiko</th><th>Cara menjaganya</th></tr>
+  <tr><td>Biaya membengkak</td><td>Batasi Max Iterations, pilih model sesuai tugas, pantau pemakaian token di dasbor penyedia model</td></tr>
+  <tr><td>Agen mengubah atau menghapus data</td><td>Beri alat <b>hanya-baca</b> bila cukup; untuk tindakan penting, tambahkan langkah <b>persetujuan manusia</b> — beberapa node pesan, misalnya Gmail dan Slack, punya operasi kirim lalu tunggu jawaban</td></tr>
+  <tr><td>Data pelanggan</td><td>Isi percakapan dikirim ke penyedia model. Memasang n8n sendiri tidak membuat modelnya ikut berjalan di tempatmu</td></tr>
+  <tr><td>Jawaban mengarang</td><td>Perintahkan lewat system message agar menjawab hanya dari hasil alat, dan katakan tidak tahu bila datanya tidak ada</td></tr>
+</table>
+
+<h3>n8n atau tulis kode sendiri?</h3>
+<table class="tbl">
+  <tr><th>Pilih n8n bila…</th><th>Pilih kode (SDK, LangChain) bila…</th></tr>
+  <tr><td>Alurnya banyak menyambungkan aplikasi yang sudah ada</td><td>Logikanya rumit dan butuh pengujian otomatis yang ketat</td></tr>
+  <tr><td>Ingin cepat jadi dan mudah diubah orang non-programmer</td><td>Melayani ribuan pengguna dengan kebutuhan kecepatan tinggi</td></tr>
+  <tr><td>Tim kecil, kebutuhan berubah-ubah</td><td>Butuh kendali penuh atas setiap detail</td></tr>
+</table>
+<p>Keduanya tidak saling meniadakan: banyak tim memakai n8n untuk merangkai alur, lalu memanggil layanan buatan sendiri lewat node HTTP Request. Modul berikutnya, Proyek, membangun hal yang sama dengan kode.</p>
+`,
+          keyPoints: [
+            "Node AI Agent butuh Chat Model (otak), Memory (catatan percakapan), dan minimal satu Tool (tangan).",
+            "Satu pertanyaan bisa memanggil model beberapa kali: memilih alat, lalu menyusun jawaban dari hasil alat.",
+            "Model memilih alat dari nama dan deskripsinya — tulis deskripsi alat sejelas instruksi.",
+            "RAG di n8n: muat dokumen → potong → embedding → vector store, lalu dipasang sebagai alat agen.",
+            "Jaga biaya (Max Iterations), batasi alat yang bisa mengubah data, minta persetujuan manusia untuk tindakan penting."
+          ],
+          practice: [
+            { type: "number", q: "Harga ilustrasi Rp250 per satu kali panggilan model. Satu pertanyaan butuh 3 panggilan, dan bot menerima 200 pertanyaan sehari. Berapa rupiah biaya per hari?", answer: 150000, tol: 1, unit: "Rp", hint: "250 × 3 × 200.", solution: "250 × 3 = 750 per pertanyaan; × 200 = Rp150.000 per hari." },
+            { type: "choice", q: "Agen sering tidak memakai alat 'cari_pesanan' walau pertanyaannya tentang pesanan. Perbaikan pertama yang paling tepat?", options: ["Ganti ke model yang lebih mahal", "Perjelas deskripsi alatnya", "Hapus memori percakapan", "Naikkan Max Iterations"], answer: 1, hint: "Bagaimana model tahu kapan memakai sebuah alat?", solution: "Model memilih alat dari deskripsinya. Deskripsi yang jelas biasanya langsung memperbaiki masalah ini." }
+          ],
+          quiz: [
+            {
+              q: "Di node AI Agent n8n, apa peran sub-node 'Tools'?",
+              options: [
+                "Hal yang boleh dilakukan agen, seperti membaca Sheets atau memanggil API",
+                "Model bahasa yang menjadi otak agen dan menyusun semua jawabannya",
+                "Riwayat percakapan agar agen ingat isi obrolan sebelumnya",
+                "Pemicu yang memulai workflow saat ada pesan masuk"
+              ],
+              answer: 0,
+              explain: "Chat Model = otak, Memory = catatan percakapan, Tools = tangan. AI Agent wajib punya minimal satu tool."
+            },
+            {
+              q: "Kenapa satu pertanyaan ke agen bisa memakan token lebih banyak daripada chatbot biasa?",
+              options: [
+                "Model dipanggil berkali-kali: memilih alat, lalu menyusun jawaban",
+                "Agen selalu menerjemahkan pertanyaan ke bahasa Inggris dulu",
+                "n8n menambahkan iklan ke setiap jawaban yang dikirim agen",
+                "Token dihitung dua kali bila workflow sudah di-publish"
+              ],
+              answer: 0,
+              explain: "Setiap putaran 'pilih alat → baca hasil' adalah panggilan model tersendiri, dan semuanya ditagih."
+            },
+            {
+              q: "Agen diberi alat yang bisa menghapus baris pesanan. Pengaman yang paling tepat?",
+              options: [
+                "Tambahkan langkah persetujuan manusia sebelum menghapus",
+                "Naikkan Max Iterations agar agen lebih teliti sebelumnya",
+                "Pakai model yang lebih besar agar tidak pernah salah",
+                "Matikan memori supaya agen lupa perintah sebelumnya"
+              ],
+              answer: 0,
+              explain: "Tindakan yang sulit dibatalkan sebaiknya menunggu persetujuan manusia; alat hanya-baca lebih aman bila cukup."
+            }
+          ]
+        },
+      ],
+    },
+    /* ---------------- MODUL 15: PROYEK PRODUKSI AI ---------------- */
     {
       id: "ai-proyek",
       level: "Proyek",
@@ -7690,7 +8177,7 @@ console.log(hasil.content);</pre>
         },
       ],
     },
-    /* ---------------- MODUL 15: PRODUKSI, ETIKA & EKOSISTEM AI ---------------- */
+    /* ---------------- MODUL 16: PRODUKSI, ETIKA & EKOSISTEM AI ---------------- */
     {
       id: "ai-terapan",
       level: "Terapan",
@@ -8091,7 +8578,7 @@ Daftar di atas mudah membuat kewalahan. Jangan terjebak <b>"belajar pustaka"</b>
         },
       ],
     },
-    /* ---------------- MODUL 16: EKONOMI & BISNIS AI ---------------- */
+    /* ---------------- MODUL 17: EKONOMI & BISNIS AI ---------------- */
     {
       id: "ai-ekonomi",
       level: "Ekonomi",
@@ -8428,7 +8915,7 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
         },
       ],
     },
-    /* ---------------- MODUL 17: MASA DEPAN AI ---------------- */
+    /* ---------------- MODUL 18: MASA DEPAN AI ---------------- */
     {
       id: "ai-arah",
       level: "Arah",

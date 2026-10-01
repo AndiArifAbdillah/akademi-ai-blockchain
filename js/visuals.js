@@ -4624,6 +4624,107 @@ DEMOS["peta-metrik"] = function (root) {
   draw();
 };
 
+/* ---------- Demo n8n: data mengalir dari node ke node ---------- */
+DEMOS["n8n-alur"] = function (root) {
+  const PESANAN = {
+    sari: { nama: "Sari", produk: "Kopi Gayo 250 g", jumlah: 2, harga: 85000 },
+    budi: { nama: "Budi", produk: "French press", jumlah: 1, harga: 520000 },
+    citra: { nama: "Citra", produk: "Kopi Toraja 1 kg", jumlah: 3, harga: 240000 },
+  };
+  const NODE = [
+    { id: "form", nama: "Formulir pesanan", jenis: "Trigger" },
+    { id: "set", nama: "Hitung total", jenis: "Edit Fields" },
+    { id: "if", nama: "Total ≥ 500.000?", jenis: "IF" },
+    { id: "vip", nama: "Kabari pemilik", jenis: "Telegram", cabang: true },
+    { id: "biasa", nama: "Catat ke Sheets", jenis: "Google Sheets", cabang: false },
+  ];
+  let kunci = "sari", langkah = 0; // 0 = belum jalan; 1..4 = node yang sudah diproses
+  const rupiah = (n) => "Rp" + n.toLocaleString("id-ID");
+
+  const pilih = Object.keys(PESANAN).map((k) => {
+    const b = h("button", { class: "btn ghost", type: "button", text: "Pesanan " + PESANAN[k].nama });
+    b.onclick = () => { kunci = k; langkah = 0; pilih.forEach((x) => x.classList.toggle("aktif", x === b)); draw(); };
+    return b;
+  });
+  pilih[0].classList.add("aktif");
+
+  const alur = h("div", { class: "n8n-alur" });
+  const panel = h("div", { class: "n8n-panel" });
+  const maju = h("button", { class: "btn primary", type: "button", text: "Jalankan node berikutnya" });
+  const semua = h("button", { class: "btn ghost", type: "button", text: "Jalankan semua" });
+  const ulang = h("button", { class: "btn ghost", type: "button", text: "Ulang" });
+  maju.onclick = () => { if (langkah < 4) { langkah++; draw(); } };
+  semua.onclick = () => { langkah = 4; draw(); };
+  ulang.onclick = () => { langkah = 0; draw(); };
+
+  function item(sampai) {
+    const p = PESANAN[kunci];
+    const it = { nama: p.nama, produk: p.produk, jumlah: p.jumlah, harga: p.harga };
+    if (sampai >= 2) it.total = p.jumlah * p.harga;
+    return it;
+  }
+
+  function draw() {
+    const it = item(langkah);
+    const vip = item(2).total >= 500000;
+    alur.innerHTML = "";
+    NODE.forEach((n, i) => {
+      let status = "";
+      if (i < 3) status = langkah > i ? "lewat" : langkah === i ? "berikut" : "";
+      else if (langkah >= 4) status = n.cabang === vip ? "lewat" : "mati";
+      else if (langkah === 3) status = n.cabang === vip ? "berikut" : "";
+      const kotak = h("div", { class: "n8n-node " + status }, [
+        h("small", { text: n.jenis }),
+        h("b", { text: n.nama }),
+      ]);
+      if (i === 3) alur.appendChild(h("div", { class: "n8n-cabang-label", text: "jika ya ↓ / jika tidak ↓" }));
+      alur.appendChild(kotak);
+      if (i < 2) alur.appendChild(h("span", { class: "n8n-panah", text: "→" }));
+    });
+
+    let judul, isi, ket;
+    if (langkah === 0) {
+      judul = "Belum ada yang berjalan";
+      isi = "";
+      ket = "Workflow menunggu pemicu: seseorang mengisi formulir pesanan. Tekan <b>Jalankan node berikutnya</b> untuk mengirim satu pesanan.";
+    } else if (langkah === 1) {
+      judul = "Keluaran node “Formulir pesanan”";
+      isi = JSON.stringify([item(1)], null, 2);
+      ket = "Pemicu menghasilkan <b>satu item</b>: sebuah objek JSON berisi isian formulir. Item inilah yang dikirim ke node berikutnya lewat garis penghubung.";
+    } else if (langkah === 2) {
+      judul = "Keluaran node “Hitung total”";
+      isi = JSON.stringify([it], null, 2);
+      ket = "Node Edit Fields menambah kolom <b>total</b> dengan ekspresi <code>{{ $json.jumlah * $json.harga }}</code> — artinya: ambil <i>jumlah</i> dan <i>harga</i> dari item yang sedang diproses, lalu kalikan. Hasilnya " + rupiah(it.total) + ".";
+    } else if (langkah === 3) {
+      judul = "Pemeriksaan node IF";
+      isi = "{{ $json.total }} ≥ 500000\n" + it.total + " ≥ 500000  →  " + (vip ? "true (ya)" : "false (tidak)");
+      ket = "Node IF membandingkan total dengan 500.000 lalu mengirim item ke <b>salah satu</b> dari dua cabang. Cabang yang lain tidak dijalankan sama sekali.";
+    } else {
+      judul = vip ? "Node “Kabari pemilik” mengirim pesan" : "Node “Catat ke Sheets” menambah satu baris";
+      isi = vip
+        ? "Pesanan besar dari {{ $json.nama }}: {{ $json.produk }}, total {{ $json.total }}\n\n→ terkirim ke Telegram pemilik:\n\"Pesanan besar dari " + it.nama + ": " + it.produk + ", total " + rupiah(it.total) + "\""
+        : "Baris baru di Google Sheets:\n" + [it.nama, it.produk, it.jumlah, it.total].join("  |  ");
+      ket = "Selesai. Satu kali workflow berjalan dari pemicu sampai akhir disebut satu <b>eksekusi</b>. Coba pesanan lain: total yang berbeda membuat item mengambil cabang yang berbeda.";
+    }
+    panel.innerHTML =
+      "<div class=\"n8n-panel-judul\">" + judul + "</div>" +
+      (isi ? "<pre class=\"code n8n-json\"></pre>" : "") +
+      "<div class=\"dm-note\">" + ket + "</div>";
+    if (isi) panel.querySelector(".n8n-json").textContent = isi;
+    maju.disabled = langkah >= 4;
+  }
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Data mengalir dari node ke node</b>" }),
+    h("p", { class: "demo-hint", text: "Pilih satu pesanan, lalu jalankan workflow selangkah demi selangkah. Perhatikan isi item JSON berubah di tiap node." }),
+    h("div", { class: "demo-controls" }, pilih),
+    alur,
+    panel,
+    h("div", { class: "demo-controls" }, [maju, semua, ulang]),
+  ]));
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";
