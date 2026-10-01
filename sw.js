@@ -9,7 +9,9 @@
    Tanpa itu, pengguna lama akan tetap melihat materi versi lama.
    ============================================================ */
 
-const VERSI = "akademi-v29";
+const VERSI = "akademi-v30";
+// Huruf dari Google Fonts disimpan terpisah agar tidak terhapus setiap kali materi diperbarui.
+const HURUF = "akademi-huruf-v1";
 
 const BERKAS = [
   "./",
@@ -51,7 +53,7 @@ self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches
       .keys()
-      .then((nama) => Promise.all(nama.filter((n) => n !== VERSI).map((n) => caches.delete(n))))
+      .then((nama) => Promise.all(nama.filter((n) => n !== VERSI && n !== HURUF).map((n) => caches.delete(n))))
       .then(() => self.clients.claim())
   );
 });
@@ -60,6 +62,19 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
+  const host = new URL(req.url).hostname;
+  if (host === "fonts.googleapis.com" || host === "fonts.gstatic.com") {
+    // Huruf: ambil dari simpanan bila ada, kalau belum unduh lalu simpan untuk dipakai offline.
+    e.respondWith(
+      caches.open(HURUF).then((c) =>
+        c.match(req).then((ada) => ada || fetch(req).then((res) => {
+          if (res && (res.ok || res.type === "opaque")) c.put(req, res.clone());
+          return res;
+        }))
+      )
+    );
+    return;
+  }
   if (new URL(req.url).origin !== self.location.origin) return;
 
   // Permintaan membuka halaman: coba jaringan dulu (agar dapat versi baru),

@@ -218,7 +218,7 @@ const BLOCKCHAIN_COURSE = {
 <h3>Kenapa namanya "blockchain"?</h3>
 <p>Transaksi dikelompokkan dalam <b>blok</b>. Tiap blok baru disambung ke blok sebelumnya membentuk <b>rantai</b> (chain) — secara berurutan dan saling mengunci.</p>
 
-<h3>Apa yang "mengunci" rantai? Hash 🔒</h3>
+<h3>Apa yang "mengunci" rantai? Hash</h3>
 <p>Tiap blok punya <b>hash</b> — semacam sidik jari digital unik dari isinya. Tiap blok juga menyimpan hash blok sebelumnya, sehingga semuanya saling terikat. Coba dulu cara kerja hash:</p>
 <div data-demo="hash-demo"></div>
 <p>Karena tiap blok terikat pada hash blok sebelumnya, mengubah satu blok akan merusak semua blok sesudahnya. Buktikan sendiri di demo berikut:</p>
@@ -321,7 +321,7 @@ const BLOCKCHAIN_COURSE = {
 <p>Untuk menyimpan & mengirim crypto kamu butuh <b>wallet</b> (dompet digital). Tapi wallet tidak benar-benar "menyimpan koin" — koin ada di blockchain. Wallet menyimpan <b>kunci</b> yang membuktikan kepemilikanmu.</p>
 
 <div class="callout">
-📮 <b>Analogi kotak surat.</b> Alamat dompetmu seperti <b>alamat kotak surat</b> di depan rumah: semua orang boleh tahu, dan siapa pun boleh memasukkan kiriman ke dalamnya. Kunci privat adalah <b>anak kunci gembok</b> kotak itu: hanya pemegangnya yang bisa membuka dan mengambil isinya. Kalau orang lain memegang anak kuncinya, isinya menjadi milik mereka — tidak peduli nama siapa yang tertulis di kotak.
+<b>Analogi kotak surat.</b> Alamat dompetmu seperti <b>alamat kotak surat</b> di depan rumah: semua orang boleh tahu, dan siapa pun boleh memasukkan kiriman ke dalamnya. Kunci privat adalah <b>anak kunci gembok</b> kotak itu: hanya pemegangnya yang bisa membuka dan mengambil isinya. Kalau orang lain memegang anak kuncinya, isinya menjadi milik mereka — tidak peduli nama siapa yang tertulis di kotak.
 </div>
 
 <h3>Dua kunci penting</h3>
@@ -494,7 +494,7 @@ const BLOCKCHAIN_COURSE = {
   <tr><td><b>Token</b></td><td>Aset yang dibuat di atas sebuah blockchain</td><td>Koin permainan di arena</td></tr>
 </table>
 
-<h3>🚩 Tiga salah paham yang paling sering</h3>
+<h3>Tiga salah paham yang paling sering</h3>
 <table class="tbl">
   <tr><th>Salah paham</th><th>Yang benar</th></tr>
   <tr><td class="bad-cell">"Koinku tersimpan di dompet HP"</td><td class="ok-cell">Koin tercatat di blockchain. Dompet hanya menyimpan kunci untuk memindahkannya — HP hilang, dana aman selama seed phrase aman</td></tr>
@@ -503,7 +503,7 @@ const BLOCKCHAIN_COURSE = {
 </table>
 
 <div class="callout">
-<b>💡 Tidak perlu hafal.</b> Modul berikutnya membongkar lapisan pertama sampai ketiga satu per satu — hash, kunci, tanda tangan, dan Merkle tree — lengkap dengan demo yang menghitung semuanya secara sungguhan di browsermu. Kembalilah ke halaman ini kapan pun kamu lupa sebuah istilah.
+<b>Tidak perlu hafal.</b> Modul berikutnya membongkar lapisan pertama sampai ketiga satu per satu — hash, kunci, tanda tangan, dan Merkle tree — lengkap dengan demo yang menghitung semuanya secara sungguhan di browsermu. Kembalilah ke halaman ini kapan pun kamu lupa sebuah istilah.
 </div>
 `,
           keyPoints: [
@@ -580,7 +580,7 @@ const BLOCKCHAIN_COURSE = {
 
 <h3>Fundamental: sidik jari untuk data</h3>
 <div class="callout">
-👆 <b>Sidik jarimu</b> punya tiga sifat penting:<br>
+<b>Sidik jarimu</b> punya tiga sifat penting:<br>
 • <b>Kecil, tapi mewakili yang besar</b> — satu ujung jari cukup mewakili seluruh dirimu.<br>
 • <b>Unik</b> — dua orang praktis tidak pernah punya sidik jari yang sama.<br>
 • <b>Tidak bisa dibalik</b> — dari sidik jari, polisi bisa mencocokkan pemiliknya, tapi tidak bisa menggambar wajah atau tinggi badanmu.<br><br>
@@ -588,7 +588,7 @@ const BLOCKCHAIN_COURSE = {
 </div>
 
 <div class="callout warn">
-🥤 <b>Analogi blender.</b> Memasukkan pisang, susu, dan madu lalu memblendernya itu mudah — dan resep yang sama selalu menghasilkan jus yang sama. Tapi mengembalikan jus menjadi pisang utuh? Mustahil. Hash bekerja seperti blender itu: <b>mudah ke depan, mustahil ke belakang</b>.
+<b>Analogi blender.</b> Memasukkan pisang, susu, dan madu lalu memblendernya itu mudah — dan resep yang sama selalu menghasilkan jus yang sama. Tapi mengembalikan jus menjadi pisang utuh? Mustahil. Hash bekerja seperti blender itu: <b>mudah ke depan, mustahil ke belakang</b>.
 </div>
 
 <h3>Coba buat hash sendiri — dengan tangan</h3>
@@ -650,7 +650,7 @@ const BLOCKCHAIN_COURSE = {
   <tr><td>5. Hasil akhir</td><td>Tersisa delapan angka, masing-masing 32 bit — totalnya <b>256 bit</b>, ditulis sebagai 64 karakter.</td></tr>
 </table>
 <div class="callout">
-🃏 <b>Analogi mengocok kartu.</b> Bayangkan mengocok setumpuk kartu 64 kali dengan aturan yang tetap dan diumumkan ke semua orang. Siapa pun yang memulai dari urutan kartu yang sama akan mendapat hasil akhir yang sama persis. Tapi dari hasil akhirnya, tidak ada yang bisa menebak urutan awalnya — terlalu banyak kemungkinan yang teraduk di tengah jalan.
+<b>Analogi mengocok kartu.</b> Bayangkan mengocok setumpuk kartu 64 kali dengan aturan yang tetap dan diumumkan ke semua orang. Siapa pun yang memulai dari urutan kartu yang sama akan mendapat hasil akhir yang sama persis. Tapi dari hasil akhirnya, tidak ada yang bisa menebak urutan awalnya — terlalu banyak kemungkinan yang teraduk di tengah jalan.
 </div>
 
 <h4>SHA-256 di dunia crypto</h4>
@@ -671,7 +671,7 @@ const BLOCKCHAIN_COURSE = {
 <p>Banyaknya kemungkinan hash adalah 2<sup>256</sup> — sekitar 1 diikuti 77 angka nol. Sebagai pembanding, jumlah butir pasir di seluruh pantai Bumi diperkirakan "hanya" sekitar 1 diikuti 19 angka nol.</p>
 
 <div class="callout warn">
-<b>⚠️ Hash bukan enkripsi.</b> Enkripsi punya kunci dan memang dirancang untuk dibuka kembali. Hash tidak punya kunci dan tidak bisa "dibuka" oleh siapa pun, termasuk pembuatnya. Perbedaan keduanya dibahas tuntas di modul Kriptografi Mendalam.
+<b>Hash bukan enkripsi.</b> Enkripsi punya kunci dan memang dirancang untuk dibuka kembali. Hash tidak punya kunci dan tidak bisa "dibuka" oleh siapa pun, termasuk pembuatnya. Perbedaan keduanya dibahas tuntas di modul Kriptografi Mendalam.
 </div>
 
 <h3>Kenapa ini penting untuk pelajaran berikutnya</h3>
@@ -775,7 +775,7 @@ const BLOCKCHAIN_COURSE = {
 
 <h3>Fundamental: kenapa tidak ada jalan pulang</h3>
 <div class="callout">
-🕒 <b>Analogi jam dinding.</b> Jarum jam menunjuk angka 3. Sudah berapa jam berlalu sejak tengah malam? Bisa 3 jam, 15 jam, 27 jam, 39 jam… Informasinya <b>sudah hilang</b>, sehingga tidak ada rumus yang bisa menjawab dengan pasti.<br><br>
+<b>Analogi jam dinding.</b> Jarum jam menunjuk angka 3. Sudah berapa jam berlalu sejak tengah malam? Bisa 3 jam, 15 jam, 27 jam, 39 jam… Informasinya <b>sudah hilang</b>, sehingga tidak ada rumus yang bisa menjawab dengan pasti.<br><br>
 Hash bekerja dengan cara serupa, tapi jauh lebih ekstrem. SHA-256 mengaduk data dalam <b>64 putaran</b>; setiap putaran mencampur hasil putaran sebelumnya dengan cara yang sengaja dibuat berantakan. Tidak ada yang tahu cara menguraikannya kembali.
 </div>
 
@@ -819,7 +819,7 @@ Hash bekerja dengan cara serupa, tapi jauh lebih ekstrem. SHA-256 mengaduk data 
 </table>
 
 <div class="callout">
-<b>💡 Penambangan juga memakai prinsip "hanya bisa ditebak".</b> Penambang harus menemukan sebuah angka yang membuat hash blok diawali banyak angka nol. Tidak ada rumusnya — satu-satunya cara adalah mencoba jutaan angka. Kerja keras inilah yang membuat menghitung ulang blok-blok lama menjadi sangat mahal. Cara kerjanya dibahas lengkap di modul Konsensus, Penambangan &amp; Dompet.
+<b>Penambangan juga memakai prinsip "hanya bisa ditebak".</b> Penambang harus menemukan sebuah angka yang membuat hash blok diawali banyak angka nol. Tidak ada rumusnya — satu-satunya cara adalah mencoba jutaan angka. Kerja keras inilah yang membuat menghitung ulang blok-blok lama menjadi sangat mahal. Cara kerjanya dibahas lengkap di modul Konsensus, Penambangan &amp; Dompet.
 </div>
 `,
           keyPoints: [
@@ -892,7 +892,7 @@ Hash bekerja dengan cara serupa, tapi jauh lebih ekstrem. SHA-256 mengaduk data 
 
 <h3>1. Kunci privat hanyalah angka acak — tapi sangat besar</h3>
 <div class="callout">
-🪙 <b>Lempar koin 256 kali.</b> Tulis 1 setiap muncul gambar dan 0 setiap muncul angka. Deretan 256 angka 0 dan 1 itu <b>sudah merupakan kunci privat</b> yang sah.<br><br>
+<b>Lempar koin 256 kali.</b> Tulis 1 setiap muncul gambar dan 0 setiap muncul angka. Deretan 256 angka 0 dan 1 itu <b>sudah merupakan kunci privat</b> yang sah.<br><br>
 Tidak ada bank yang menerbitkannya, tidak ada server yang mencatatnya, tidak ada formulir pendaftaran. Dompetmu cukup mengacak satu angka raksasa.
 </div>
 
@@ -904,7 +904,7 @@ Tidak ada bank yang menerbitkannya, tidak ada server yang mencatatnya, tidak ada
 
 <h3>2. Dari kunci privat ke kunci publik: mudah maju, mustahil mundur</h3>
 <div class="callout">
-🎨 <b>Analogi mencampur cat.</b> Kuning dicampur biru jadi hijau — mudah. Tapi dari segelas cat hijau, memisahkan kembali kuning dan birunya? Mustahil.<br><br>
+<b>Analogi mencampur cat.</b> Kuning dicampur biru jadi hijau — mudah. Tapi dari segelas cat hijau, memisahkan kembali kuning dan birunya? Mustahil.<br><br>
 Secara matematis, kunci publik didapat dengan "mengalikan" kunci privat dengan sebuah titik tetap <b>G</b> pada kurva bernama <b>secp256k1</b>. Perkalian ini cepat dihitung, tetapi kebalikannya — mencari kunci privat dari kunci publik — tidak punya cara yang diketahui. Mengapa demikian dibahas di modul Kriptografi Mendalam.
 </div>
 
@@ -932,7 +932,7 @@ Secara matematis, kunci publik didapat dengan "mengalikan" kunci privat dengan s
 <p>Menulis 64 karakter heksadesimal dengan tangan rawan salah. Karena itu dompet modern menuliskan angka acak raksasa itu sebagai <b>12 atau 24 kata</b> dari daftar baku berisi <b>2.048 kata</b>. Dari satu seed phrase, dompet bisa menurunkan <b>banyak</b> kunci privat — untuk banyak akun dan banyak jenis koin.</p>
 
 <div class="callout warn">
-<b>⚠️ Karena itulah seed phrase sama dengan seluruh isi brankas.</b> Siapa pun yang mengetahuinya bisa membuat ulang semua kuncimu di perangkatnya sendiri dan mengambil seluruh dana — dari jarak jauh, tanpa perlu HP-mu. Tidak ada tombol "lupa password", dan <b>tidak ada petugas resmi mana pun yang akan meminta seed phrase-mu</b>. Siapa pun yang memintanya adalah penipu.
+<b>Karena itulah seed phrase sama dengan seluruh isi brankas.</b> Siapa pun yang mengetahuinya bisa membuat ulang semua kuncimu di perangkatnya sendiri dan mengambil seluruh dana — dari jarak jauh, tanpa perlu HP-mu. Tidak ada tombol "lupa password", dan <b>tidak ada petugas resmi mana pun yang akan meminta seed phrase-mu</b>. Siapa pun yang memintanya adalah penipu.
 </div>
 `,
           keyPoints: [
@@ -1001,7 +1001,7 @@ Secara matematis, kunci publik didapat dengan "mengalikan" kunci privat dengan s
           duration: "15 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Hash</b> = sidik jari data: berubah total bila isinya diubah sedikit saja, dan tidak bisa dibalik. <b>Kunci privat</b> = angka rahasia di dompetmu; <b>kunci publik</b> = pasangannya yang boleh diketahui semua orang, dan tidak bisa dibalik menjadi kunci privat. Pelajaran ini menyatukan ketiganya.
 </div>
 
@@ -1027,7 +1027,7 @@ Secara matematis, kunci publik didapat dengan "mengalikan" kunci privat dengan s
 <p>Tanda tangan digital memecahkan keduanya dengan cara yang tidak terduga: <b>rahasianya tidak pernah dikirim</b>, dan <b>bentuk tanda tangannya berbeda untuk setiap pesan</b>.</p>
 
 <div class="callout">
-🔏 <b>Analogi stempel ajaib.</b> Bayangkan Andi punya stempel yang cetakannya <b>berubah bentuk mengikuti isi surat</b>. Setiap orang punya kaca pemeriksa milik Andi (kunci publik) yang hanya cocok bila surat dan capnya sesuai.<br><br>
+<b>Analogi stempel ajaib.</b> Bayangkan Andi punya stempel yang cetakannya <b>berubah bentuk mengikuti isi surat</b>. Setiap orang punya kaca pemeriksa milik Andi (kunci publik) yang hanya cocok bila surat dan capnya sesuai.<br><br>
 Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain → tidak cocok. Buat cap tanpa stempel asli → mustahil. Stempel aslinya (kunci privat) tidak pernah keluar dari laci Andi.
 </div>
 
@@ -1082,7 +1082,7 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
 <b>Kebiasaan aman:</b> jangan menyetujui apa pun yang tidak kamu pahami; pastikan alamat situsnya benar sebelum menghubungkan dompet; dan cabut izin token lama yang sudah tidak dipakai — banyak dompet dan block explorer menyediakan fitur cabut izin (<i>revoke</i>).
 </div>
 
-<h3>🔍 Intip matematikanya (versi mainan)</h3>
+<h3>Intip matematikanya (versi mainan)</h3>
 <p>Bitcoin dan Ethereum memakai ECDSA dengan angka sepanjang 77 digit. Idenya bisa dirasakan dengan <b>versi mainan berangka kecil</b> (pola RSA). Istilah "sisa bagi" artinya sisa setelah pembagian, misalnya 16 sisa bagi 5 = 1.</p>
 <table class="tbl">
   <tr><th>Bagian</th><th>Nilai mainan</th></tr>
@@ -1187,7 +1187,7 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
 </table>
 
 <div class="callout">
-<b>💡 Perhatikan serangan "kirim ulang".</b> Tanda tangannya <b>sah</b> — karena memang tanda tangan asli Andi. Yang menolaknya adalah pemeriksaan keempat. Inilah alasan setiap transaksi Ethereum membawa <b>nomor urut</b> (nonce), dan setiap koin Bitcoin hanya bisa dibelanjakan satu kali.
+<b>Perhatikan serangan "kirim ulang".</b> Tanda tangannya <b>sah</b> — karena memang tanda tangan asli Andi. Yang menolaknya adalah pemeriksaan keempat. Inilah alasan setiap transaksi Ethereum membawa <b>nomor urut</b> (nonce), dan setiap koin Bitcoin hanya bisa dibelanjakan satu kali.
 </div>
 
 <h3>Yang tidak pernah dikirim</h3>
@@ -1276,7 +1276,7 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
 
 <h3>Fundamental: bagan turnamen</h3>
 <div class="callout">
-⚽ <b>Bayangkan bagan turnamen sistem gugur.</b> Delapan tim bertanding berpasangan, pemenangnya naik, berpasangan lagi, sampai tersisa satu juara di puncak.<br><br>
+<b>Bayangkan bagan turnamen sistem gugur.</b> Delapan tim bertanding berpasangan, pemenangnya naik, berpasangan lagi, sampai tersisa satu juara di puncak.<br><br>
 <b>Merkle tree</b> bekerja dengan bentuk yang sama, hanya saja yang "naik" adalah hash:<br>
 1. Setiap transaksi di-hash<br>
 2. Hash-hash itu dipasangkan, lalu setiap pasangan di-hash bersama<br>
@@ -1308,7 +1308,7 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
 </table>
 
 <div class="callout">
-<b>📱 Dompet ringan (SPV).</b> Menyimpan seluruh blockchain Bitcoin butuh ratusan gigabyte. Dompet di HP cukup menyimpan <b>header</b> semua blok — hanya puluhan megabyte — lalu meminta bukti Merkle untuk transaksi miliknya. Dengan beberapa hash saja, HP bisa memastikan sendiri bahwa transaksinya benar-benar tercatat.
+<b>Dompet ringan (SPV).</b> Menyimpan seluruh blockchain Bitcoin butuh ratusan gigabyte. Dompet di HP cukup menyimpan <b>header</b> semua blok — hanya puluhan megabyte — lalu meminta bukti Merkle untuk transaksi miliknya. Dengan beberapa hash saja, HP bisa memastikan sendiri bahwa transaksinya benar-benar tercatat.
 </div>
 
 <div class="callout warn">
@@ -1465,7 +1465,7 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
 </ul>
 
 <div class="callout">
-<b>💥 Kenapa ini mengamankan jaringan?</b> Untuk memalsukan riwayat, penyerang harus mengulang "kerja" komputasi lebih cepat dari seluruh jaringan jujur — praktis mustahil & sangat mahal. Biaya inilah yang menjaga Bitcoin aman.
+<b>Kenapa ini mengamankan jaringan?</b> Untuk memalsukan riwayat, penyerang harus mengulang "kerja" komputasi lebih cepat dari seluruh jaringan jujur — praktis mustahil & sangat mahal. Biaya inilah yang menjaga Bitcoin aman.
 </div>
 
 <div data-demo="mining-sim"></div>
@@ -1525,7 +1525,7 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
 </ul>
 
 <div class="callout">
-<b>💥 Dampak:</b> pasokan yang terbatas & bisa <b>diprediksi</b> membuat Bitcoin tahan inflasi buatan — tidak ada otoritas yang bisa "mencetak" seenaknya. Inilah daya tarik utamanya sebagai penyimpan nilai.
+<b>Dampak:</b> pasokan yang terbatas & bisa <b>diprediksi</b> membuat Bitcoin tahan inflasi buatan — tidak ada otoritas yang bisa "mencetak" seenaknya. Inilah daya tarik utamanya sebagai penyimpan nilai.
 </div>
 
 <div class="callout warn">
@@ -1661,7 +1661,7 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
 </table>
 
 <div class="callout warn">
-<b>⚠️ Penipuan crypto hampir selalu punya cacat matematis.</b> Janji imbal hasil tetap yang tinggi, "bunga harian", atau skema yang membayar peserta lama dari uang peserta baru — semuanya runtuh begitu angkanya dihitung sampai akhir. Kemampuan menghitung sederhana melindungi lebih banyak orang daripada kemampuan membaca kode.
+<b>Penipuan crypto hampir selalu punya cacat matematis.</b> Janji imbal hasil tetap yang tinggi, "bunga harian", atau skema yang membayar peserta lama dari uang peserta baru — semuanya runtuh begitu angkanya dihitung sampai akhir. Kemampuan menghitung sederhana melindungi lebih banyak orang daripada kemampuan membaca kode.
 </div>
 
 <h3>Yang TIDAK perlu kamu lakukan</h3>
@@ -1682,7 +1682,7 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
 </table>
 
 <div class="callout">
-<b>💡 Kalau waktumu terbatas, dahulukan dua hal:</b> <b>bunga majemuk</b> (untuk menilai janji imbal hasil) dan <b>urutan besar angka</b> (untuk paham kenapa kunci aman). Dua hal ini saja sudah menutup sebagian besar risiko yang dihadapi pemula di crypto.
+<b>Kalau waktumu terbatas, dahulukan dua hal:</b> <b>bunga majemuk</b> (untuk menilai janji imbal hasil) dan <b>urutan besar angka</b> (untuk paham kenapa kunci aman). Dua hal ini saja sudah menutup sebagian besar risiko yang dihadapi pemula di crypto.
 </div>
 `,
           keyPoints: [
@@ -1870,7 +1870,7 @@ Contoh lain: <b>17 mod 5 = 2</b> (karena 17 = 3×5 + 2).
 Menghitung <b>maju</b> (dari x ke hasil): sangat cepat. Menebak <b>mundur</b> (dari hasil ke x): harus dicoba satu per satu. Ini disebut masalah <b>logaritma diskret</b> — dengan angka sebesar yang dipakai crypto nyata, mencobanya butuh waktu lebih lama dari umur alam semesta.
 </div>
 
-<h3>Coba sendiri — buktikan satu arahnya 👇</h3>
+<h3>Coba sendiri — buktikan satu arahnya</h3>
 <div data-demo="js-playground">// Fungsi satu arah: mudah maju, sangat sulit mundur
 const g = 5, p = 23;
 const x = 6;   // "kunci privat" (rahasia)
@@ -2054,7 +2054,7 @@ Kata kuncinya: <b>bisa dibalik</b>. Enkripsi dirancang untuk dibuka lagi — ole
 </table>
 
 <div class="callout warn">
-<b>⚠️ Salah paham paling luas tentang blockchain.</b><br><br>
+<b>Salah paham paling luas tentang blockchain.</b><br><br>
 Kalimat <i>"data blockchain aman karena dienkripsi"</i> <b>keliru</b>. Blockchain justru <b>tidak mengenkripsi</b> isinya — seluruh transaksinya sengaja dibuat <b>terbuka</b> agar siapa pun bisa memeriksanya sendiri. Itulah sumber kepercayaannya.<br><br>
 Yang dipakai blockchain adalah <b>hash</b> (menyegel agar tak bisa diubah diam-diam) dan <b>tanda tangan digital</b> (membuktikan siapa pemiliknya). Keduanya <b>bukan</b> enkripsi.
 </div>
@@ -2417,7 +2417,7 @@ Ini bukan kelalaian, melainkan pilihan rancangan. Blockchain memilih <b>keterbuk
 </ol>
 
 <div class="callout warn">
-<b>⚠️ Bahaya nomor satu: nonce yang tidak benar-benar acak.</b>
+<b>Bahaya nomor satu: nonce yang tidak benar-benar acak.</b>
 <br><br>Kalau angka acak <b>k</b> dipakai <b>dua kali</b> — atau bisa ditebak — maka <b>kunci privat bisa dihitung</b> dari dua tanda tangan itu. Ini bukan teori: pernah terjadi pada perangkat konsol game terkenal dan pada beberapa dompet crypto yang generator acaknya lemah, mengakibatkan dana hilang.
 <br><br><b>Pelajaran praktis:</b> selalu gunakan dompet/pustaka yang bereputasi baik. Jangan pernah membuat sendiri implementasi kriptografi — ini area di mana kesalahan kecil berakibat fatal.
 </div>
@@ -2504,7 +2504,7 @@ Komputer biasa memakai <b>bit</b>: bernilai <b>0 atau 1</b>. Komputer kuantum me
 </ul>
 </div>
 
-<h3>Coba sendiri — lihat dampaknya per algoritma 👇</h3>
+<h3>Coba sendiri — lihat dampaknya per algoritma</h3>
 <div data-demo="js-playground">// Tingkat keamanan sebelum vs sesudah era komputer kuantum
 const algoritma = [
   { nama: "AES-128  (simetris) ", bit: 128, jenis: "simetris" },
@@ -2910,7 +2910,7 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
 
 <p>Sistem modern (mis. EIP-1559 di Ethereum) memakai <b>base fee</b> (biaya dasar yang otomatis menyesuaikan kepadatan & "dibakar") plus <b>tip</b> untuk validator agar transaksimu diprioritaskan. Pada contoh di atas, 22 gwei bisa berarti base fee 20 + tip 2: sebanyak 21.000 × 20 = 420.000 gwei <b>dimusnahkan</b> (dibakar), dan hanya 42.000 gwei yang diterima validator.</p>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <ul>
   <li>Pengguna membayar lebih mahal saat jaringan padat → perlu memilih waktu/estimasi gas.</li>
   <li>Developer melakukan <b>optimasi gas</b> agar kontraknya murah dipakai.</li>
@@ -3167,7 +3167,7 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
 </table>
 <p>Makin besar pembelian dibanding isi kolam, makin mahal harga rata-ratanya. Selisih dari harga awal ini disebut <b>slippage</b>. Dan kolam tidak akan pernah benar-benar kehabisan ETH: untuk mengambil ETH terakhir, USDC yang dibayar harus tak terhingga. Karena itu kolam yang <b>besar</b> (likuiditasnya dalam) lebih nyaman dipakai — pembelian yang sama menggeser harga jauh lebih sedikit.</p>
 
-<h3>Coba sendiri — lihat harga bergerak 👇</h3>
+<h3>Coba sendiri — lihat harga bergerak</h3>
 <div data-demo="js-playground">// Kolam: x = ETH, y = USDC, aturan x * y = k
 let x = 10;        // 10 ETH
 let y = 20000;     // 20.000 USDC
@@ -3181,7 +3181,7 @@ const yBaru = k / xBaru;      // USDC harus naik agar x*y tetap k
 console.log("Bayar ~ " + Math.round(yBaru - y) + " USDC untuk 1 ETH");
 console.log("Harga naik jadi ~ " + Math.round(yBaru / xBaru) + " USDC (slippage)");</div>
 
-<h3>💥 Dampak & risiko</h3>
+<h3>Dampak & risiko</h3>
 <ul>
   <li>LP mendapat <b>biaya (fee)</b> dari tiap transaksi di kolamnya.</li>
   <li>Perdagangan <b>tanpa izin, 24/7, tanpa perantara</b>.</li>
@@ -3259,7 +3259,7 @@ Slippage      = (2.000 − 1.818) ÷ 2.000 = 9,1%</pre>
 Keterangan: <b>r</b> = rasio perubahan harga (r = 2 berarti harga menjadi 2 kali lipat).
 </div>
 
-<h3>Coba sendiri — hitung impermanent loss 👇</h3>
+<h3>Coba sendiri — hitung impermanent loss</h3>
 <div data-demo="js-playground">// Impermanent loss pada berbagai perubahan harga
 [1.25, 1.5, 2, 3, 4, 5].forEach(function(r){
   const il = (2 * Math.sqrt(r) / (1 + r) - 1) * 100;
@@ -3331,7 +3331,7 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
 <b>Pelajaran mahal (2022):</b> stablecoin algoritmik <b>UST/Terra</b> kehilangan patokannya (<b>depeg</b>) dan runtuh, menghapus puluhan miliar dolar dalam hitungan hari. Bukti bahwa "stabil" tidak selalu berarti aman.
 </div>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <ul>
   <li>Stablecoin adalah <b>tulang punggung DeFi</b> & pembayaran crypto (jembatan ke dunia nyata).</li>
   <li>Pilih jenis dengan hati-hati: fiat/crypto-backed yang transparan jauh lebih aman daripada algoritmik.</li>
@@ -3394,7 +3394,7 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
 <b>"Oracle problem":</b> jika data dari oracle salah/dimanipulasi, smart contract akan bertindak salah — dan itu permanen. Karena itu oracle yang baik memakai <b>banyak sumber & node</b> agar tidak bergantung pada satu titik.
 </div>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <p>Oracle membuka pintu bagi aplikasi Web3 yang berinteraksi dengan dunia nyata: DeFi (harga), asuransi otomatis, prediksi, dan banyak lagi. Tanpa oracle, smart contract hanya bisa "melihat" data di dalam blockchain saja.</p>
 `,
           keyPoints: [
@@ -3452,10 +3452,10 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
 </div>
 
 <div class="callout warn">
-<b>💥 Risiko besar:</b> bridge sering menjadi <b>target peretasan terbesar</b> di crypto — karena menyimpan banyak aset di satu tempat dan kompleks secara teknis. Beberapa peretasan bridge mencuri <b>ratusan juta hingga miliaran dolar</b>. Pilih bridge yang teruji & hati-hati.
+<b>Risiko besar:</b> bridge sering menjadi <b>target peretasan terbesar</b> di crypto — karena menyimpan banyak aset di satu tempat dan kompleks secara teknis. Beberapa peretasan bridge mencuri <b>ratusan juta hingga miliaran dolar</b>. Pilih bridge yang teruji & hati-hati.
 </div>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <p>Bridge memungkinkan dunia <b>multi-chain</b> (pindah ke chain yang lebih murah/cepat), tapi menjadi salah satu <b>titik lemah keamanan</b> paling serius di Web3.</p>
 `,
           keyPoints: [
@@ -3589,7 +3589,7 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
 </ul>
 
 <div class="callout">
-<b>💥 Dampak:</b> L2 membuat transaksi <b>jauh lebih murah & cepat</b> (dari dolar jadi sen) sambil tetap "mewarisi" keamanan L1. Inilah cara Web3 melayani jutaan pengguna tanpa biaya gas yang mencekik.
+<b>Dampak:</b> L2 membuat transaksi <b>jauh lebih murah & cepat</b> (dari dolar jadi sen) sambil tetap "mewarisi" keamanan L1. Inilah cara Web3 melayani jutaan pengguna tanpa biaya gas yang mencekik.
 </div>
 `,
           keyPoints: [
@@ -3652,7 +3652,7 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
 </ul>
 
 <div class="callout">
-<b>💥 Dampak:</b> ZKP menggabungkan dua hal yang tadinya bertentangan — <b>transparansi verifikasi</b> dan <b>privasi data</b>. Ini teknologi kunci masa depan Web3, dari identitas digital sampai skalabilitas.
+<b>Dampak:</b> ZKP menggabungkan dua hal yang tadinya bertentangan — <b>transparansi verifikasi</b> dan <b>privasi data</b>. Ini teknologi kunci masa depan Web3, dari identitas digital sampai skalabilitas.
 </div>
 
 <div data-demo="zkp-cave"></div>
@@ -3711,7 +3711,7 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
 <b>Analogi:</b> seperti koperasi digital yang aturannya dijalankan kode, transparan, dan lintas negara — semua keputusan & keuangannya tercatat di blockchain untuk dilihat siapa saja.
 </div>
 
-<h3>💥 Dampak & risiko</h3>
+<h3>Dampak & risiko</h3>
 <ul>
   <li>👍 Transparan, tanpa perantara, keputusan bersama, lintas batas.</li>
   <li>👎 Bisa lambat (voting), rentan bila token terpusat pada sedikit orang (whale), dan <b>bug smart contract bisa fatal</b> (kasus "The DAO" 2016 kehilangan dana besar).</li>
@@ -3828,7 +3828,7 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Smart contract</b> = program yang disimpan dan dijalankan di blockchain (modul Ethereum). <b>Mengubah</b> data di blockchain butuh transaksi dan <b>gas</b>; <b>membaca</b> saja gratis. Dompet dan testnet sudah kamu siapkan di pelajaran sebelumnya — sekarang saatnya melihat isi sebuah kontrak.
 </div>
 
@@ -3985,7 +3985,7 @@ contract Penghitung {
 <p>Agar pengguna biasa bisa memakai kontrakmu lewat website, kita pakai library <b>ethers.js</b> untuk menjembatani halaman web dengan blockchain.</p>
 
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 Kontrak <b>Penghitung</b> dari pelajaran sebelumnya punya dua fungsi: <b>tambah()</b> (mengubah data → butuh transaksi bertanda tangan dan gas) dan <b>baca()</b> (gratis). Tanda tangan dibuat oleh kunci privat di dompet — kode website tidak pernah boleh melihat kunci itu.
 </div>
 
@@ -4088,7 +4088,7 @@ console.log("Berhasil ditambah!");</pre>
   <li><b>Identitas digital</b> — pengguna mengontrol datanya sendiri.</li>
 </ul>
 
-<h3>🔒 Keamanan produksi</h3>
+<h3>Keamanan produksi</h3>
 <ul>
   <li><b>Pakai library teruji</b> — gunakan <b>OpenZeppelin</b> untuk token & pola standar, jangan tulis dari nol.</li>
   <li><b>Audit keamanan</b> — kontrak yang memegang dana wajib diaudit pihak ketiga.</li>
@@ -4145,7 +4145,7 @@ console.log("Berhasil ditambah!");</pre>
 <h3>Idenya</h3>
 <p>Tiap blok menyimpan <b>hash</b> (sidik jari) dari isinya, plus hash blok sebelumnya. Validasi mengecek dua hal untuk setiap blok: (1) apakah <i>prev</i>-nya cocok dengan hash blok sebelumnya, dan (2) apakah hash-nya masih cocok dengan datanya. Ubah satu data → hash berubah → validasi gagal.</p>
 
-<h3>Coba sendiri — jalankan, lalu lihat rantai rusak 👇</h3>
+<h3>Coba sendiri — jalankan, lalu lihat rantai rusak</h3>
 <div data-demo="js-playground">// Hash sederhana (untuk demo, bukan kriptografi nyata)
 function hash(s){
   let h = 0;
@@ -4249,7 +4249,7 @@ console.log("Setelah blok 0 diubah, sah?", sah());</div>
 </table>
 
 <div class="callout warn">
-<b>⚠️ Yang paling sering tidak disadari: privasi kripto bersifat <i>surut</i>.</b><br><br>
+<b>Yang paling sering tidak disadari: privasi kripto bersifat <i>surut</i>.</b><br><br>
 Kalau kamu bocor hari ini, yang terbongkar bukan hanya transaksi hari ini — melainkan <b>seluruh riwayatmu sejak awal</b>. Dan kamu tidak bisa menariknya kembali, karena datanya sudah tersalin ke ribuan komputer di seluruh dunia.<br><br>
 Bandingkan dengan kebocoran data bank: setidaknya masih ada satu pihak yang bisa diminta menutup akses. Di blockchain, <b>tidak ada siapa pun yang bisa diminta menghapus</b>.
 </div>
@@ -4367,7 +4367,7 @@ Untuk Bitcoin ada <i>mempool.space</i> dan <i>blockstream.info</i>; untuk Ethere
 </table>
 
 <div class="callout">
-<b>💡 Yang membuat penelusuran berhasil bukan kecanggihan alat, melainkan kesabaran.</b> Pelaku hanya perlu salah <b>sekali</b>: satu kali memakai ulang alamat, satu kali menggabungkan dana lama dengan dana baru, satu kali mencairkan di bursa yang meminta KTP. Penyidik punya waktu bertahun-tahun untuk menunggu kesalahan itu — dan datanya tidak akan pernah hilang.
+<b>Yang membuat penelusuran berhasil bukan kecanggihan alat, melainkan kesabaran.</b> Pelaku hanya perlu salah <b>sekali</b>: satu kali memakai ulang alamat, satu kali menggabungkan dana lama dengan dana baru, satu kali mencairkan di bursa yang meminta KTP. Penyidik punya waktu bertahun-tahun untuk menunggu kesalahan itu — dan datanya tidak akan pernah hilang.
 </div>
 `,
           keyPoints: [
@@ -4570,7 +4570,7 @@ Analisis blockchain-nya sendiri bisa dilakukan siapa saja. Tapi <b>langkah terak
 Akibatnya, identitas tidak lagi berhenti di satu bursa; ia <b>ikut berpindah</b> mengikuti dananya antar-lembaga.
 </div>
 
-<h3>⚠️ Batas yang harus kamu pahami</h3>
+<h3>Batas yang harus kamu pahami</h3>
 <div class="callout warn">
 Materi ini mengajarkan <b>cara kerjanya</b>, bukan ajakan melakukannya sendiri. Beberapa batas yang tegas:<br><br>
 • <b>Analisis on-chain itu legal</b> — datanya publik, siapa pun boleh membacanya.<br>
@@ -4786,7 +4786,7 @@ Yang penting dipahami: <b>privasi finansial adalah kebutuhan wajar</b>, tapi di 
 </table>
 
 <div class="callout warn">
-<b>⚠️ Bahaya salah tuduh.</b> Klasterisasi adalah <b>heuristik</b>, bukan bukti. Alamat bisa dikendalikan bursa, bisa milik korban lain, bisa hasil CoinJoin, bisa dipakai bersama.<br><br>
+<b>Bahaya salah tuduh.</b> Klasterisasi adalah <b>heuristik</b>, bukan bukti. Alamat bisa dikendalikan bursa, bisa milik korban lain, bisa hasil CoinJoin, bisa dipakai bersama.<br><br>
 Menuduh orang berdasarkan analisis yang keliru bukan hanya merusak hidup orang tak bersalah — ia juga bisa berbalik menjadi perkara hukum bagi penuduhnya. Inilah kenapa langkah terakhir sengaja diserahkan kepada lembaga yang punya kewenangan dan prosedur pembuktian.
 </div>
 
@@ -4816,7 +4816,7 @@ Menuduh orang berdasarkan analisis yang keliru bukan hanya merusak hidup orang t
 </table>
 
 <div class="callout">
-<b>💡 Bekal yang sebenarnya dibutuhkan</b> ternyata sangat cocok dengan yang sudah kamu pelajari di platform ini:<br><br>
+<b>Bekal yang sebenarnya dibutuhkan</b> ternyata sangat cocok dengan yang sudah kamu pelajari di platform ini:<br><br>
 • Paham cara kerja blockchain &amp; dompet <i>(modul Fundamental &amp; Pendalaman)</i><br>
 • Bisa mengolah data dalam jumlah besar — <b>pandas</b> <i>(modul Perkakas AI)</i><br>
 • Paham pencucian uang &amp; pengendalian internal <i>(modul Audit Akuntansi)</i><br>
@@ -4916,7 +4916,7 @@ Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan ora
 </ul>
 
 <div class="callout warn">
-<b>💥 Dampak:</b> mengabaikan pajak/regulasi bisa berujung <b>denda atau masalah hukum</b>. Perubahan regulasi juga bisa memengaruhi harga & legalitas suatu aset. Selalu pakai <b>exchange terdaftar/berizin</b> dan simpan catatan transaksimu.
+<b>Dampak:</b> mengabaikan pajak/regulasi bisa berujung <b>denda atau masalah hukum</b>. Perubahan regulasi juga bisa memengaruhi harga & legalitas suatu aset. Selalu pakai <b>exchange terdaftar/berizin</b> dan simpan catatan transaksimu.
 </div>
 
 <div class="callout">
@@ -5133,7 +5133,7 @@ Artinya RWA <b>tetap membutuhkan kepercayaan pada pihak di dunia nyata</b> — t
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
 <b>Laporan laba rugi</b>: pendapatan − beban = laba. Warung yang menjual kopi 300 juta dengan beban 260 juta berlaba 40 juta (<a href="#/lesson/acc-m-3">Laporan Laba Rugi</a>).<br>
 <b>Free Cash Flow (FCF)</b> = kas dari kegiatan inti − belanja untuk aset jangka panjang; uang yang benar-benar bebas dipakai pemilik (<a href="#/lesson/acc-fund-2">Free Cash Flow</a>).
 </div>
@@ -5184,7 +5184,7 @@ Artinya RWA <b>tetap membutuhkan kepercayaan pada pihak di dunia nyata</b> — t
 </table>
 
 <div class="callout warn">
-<b>💥 Di sinilah banyak protokol terbongkar.</b> Sebuah protokol bisa membanggakan "pendapatan fee $50 juta setahun" — terdengar hebat. Tapi kalau pada tahun yang sama ia membagikan <b>token senilai $120 juta</b> sebagai insentif, maka <b>FCF-nya minus $70 juta</b>.<br><br>
+<b>Di sinilah banyak protokol terbongkar.</b> Sebuah protokol bisa membanggakan "pendapatan fee $50 juta setahun" — terdengar hebat. Tapi kalau pada tahun yang sama ia membagikan <b>token senilai $120 juta</b> sebagai insentif, maka <b>FCF-nya minus $70 juta</b>.<br><br>
 Uangnya tidak keluar dari rekening bank, jadi tidak terasa. Tapi biayanya nyata: <b>ditanggung pemegang token lama</b> lewat pengenceran (dilusi). Ini persis seperti perusahaan yang terus menerbitkan saham baru untuk membiayai operasi — tanda bahaya yang kamu pelajari di materi <b>alokasi modal</b>.
 </div>
 
@@ -5233,7 +5233,7 @@ Kalau <b>tidak</b> → yang selama ini dijual bukan layanan, melainkan <b>insent
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
 <b>Alokasi modal</b> = keputusan ke mana kas perusahaan dipakai. Pilihannya hanya lima: diinvestasikan lagi ke bisnis, membeli perusahaan lain, melunasi utang, membeli kembali saham sendiri (<i>buyback</i>, sehingga kepemilikan tiap lembar sisanya membesar), atau dibagikan sebagai dividen (<a href="#/lesson/acc-kual-1">Alokasi Modal</a>).<br>
 <b>Treasury</b> = kas simpanan sebuah organisasi; di DAO, isinya biasanya token dan stablecoin.
 </div>
@@ -5306,7 +5306,7 @@ Kalau <b>tidak</b> → yang selama ini dijual bukan layanan, melainkan <b>insent
           duration: "13 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
 <b>Dilusi</b> (pengenceran) terjadi saat saham baru dicetak. Misalkan perusahaan punya 100 lembar dan kamu memegang 10 — kamu memiliki <b>10%</b>. Kalau perusahaan mencetak 100 lembar baru untuk orang lain, kamu tetap memegang 10 lembar, tapi kini dari 200: kepemilikanmu tinggal <b>5%</b>. Laba yang sama dibagi ke lebih banyak lembar, sehingga bagian tiap lembar mengecil (<a href="#/lesson/acc-adv-0">Saham, EPS &amp; PER</a>).
 </div>
 
@@ -5332,7 +5332,7 @@ Ingat kriteria Piotroski <i>"tidak menerbitkan saham baru"</i>? Alasannya: saham
 <b>Analoginya:</b> perusahaan membagi "dividen" dengan cara <b>mencetak saham baru</b> lalu memberikannya padamu. Kelihatan dapat sesuatu, padahal porsi kepemilikanmu tergerus. Itulah yang terjadi pada imbal hasil berbasis emisi.
 </div>
 
-<h3>Coba sendiri — bedakan real yield vs emisi 👇</h3>
+<h3>Coba sendiri — bedakan real yield vs emisi</h3>
 <div data-demo="js-playground">// Apakah protokol ini benar-benar menghasilkan, atau hanya mencetak token?
 const feeProtokolPerTahun = 40000000000;     // Rp40 miliar dari biaya pengguna
 const nilaiEmisiTokenPerTahun = 65000000000; // Rp65 miliar token baru yang dibagikan
@@ -5478,7 +5478,7 @@ console.log("Coba ubah emisi jadi 20000000000, lalu jalankan lagi.");</div>
           duration: "13 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
 <b>Economic moat</b> (parit ekonomi) = keunggulan yang membuat bisnis sulit ditiru, seperti parit yang melindungi benteng: merek, network effect, switching cost, keunggulan biaya &amp; skala, serta teknologi atau izin (<a href="#/lesson/acc-kual-4">Economic Moat</a>).<br>
 <b>Red flag</b> = tanda bahaya yang membuat angka-angka laporan patut dicurigai, misalnya laba naik terus tapi kasnya tidak pernah ikut naik (<a href="#/lesson/acc-aud-4">Mendeteksi Manipulasi</a>).
 </div>
@@ -5498,7 +5498,7 @@ console.log("Coba ubah emisi jadi 20000000000, lalu jalankan lagi.");</div>
 <b>Bedakan dengan hati-hati:</b> pengguna yang datang karena <b>insentif token</b> (<i>mercenary capital</i>) akan <b>pergi</b> begitu insentif berhenti — itu <b>bukan</b> parit. Parit sejati bertahan tanpa disubsidi.
 </div>
 
-<h3>🚩 Red flag khas crypto</h3>
+<h3>Red flag khas crypto</h3>
 <ul>
   <li><b>Risiko konsentrasi</b> — sedikit dompet memegang porsi token sangat besar (whale) → bisa mendominasi voting &amp; menjual besar-besaran.</li>
   <li><b>Aktivitas yang disubsidi</b> — TVL/volume melonjak hanya karena hadiah token.</li>
@@ -5593,7 +5593,7 @@ console.log("Coba ubah emisi jadi 20000000000, lalu jalankan lagi.");</div>
 <b>Perhatikan pola dari daftar di atas:</b> yang bertahan adalah hal-hal yang <b>menyelesaikan masalah nyata</b> — mengirim uang lintas negara dengan murah, menyimpan aset dengan aman, menurunkan biaya. Bukan yang paling menarik diberitakan.
 </div>
 
-<h3>🪦 Yang sudah terbukti mati</h3>
+<h3>Yang sudah terbukti mati</h3>
 <p>Ini bagian yang jarang dibahas, padahal paling banyak pelajarannya:</p>
 
 <table class="tbl">
@@ -5688,7 +5688,7 @@ console.log("Coba ubah emisi jadi 20000000000, lalu jalankan lagi.");</div>
 </table>
 <p>Keduanya bisa terjadi bersamaan. Yang <b>tidak</b> didukung bukti adalah skenario "semua akan berjalan di blockchain" — yang sudah lebih dari satu dekade dijanjikan tanpa terwujud.</p>
 
-<h3>🧭 Cara menyikapinya</h3>
+<h3>Cara menyikapinya</h3>
 <div class="callout">
 • <b>Pisahkan teknologi dari asetnya.</b> Blockchain bisa berguna tanpa membuat token tertentu jadi investasi yang baik.<br>
 • <b>Perhatikan pemakaian, bukan harga.</b> Jumlah pengguna yang membayar fee lebih memberi tahu daripada grafik harga.<br>

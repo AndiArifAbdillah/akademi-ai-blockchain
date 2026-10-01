@@ -267,6 +267,51 @@ function stripHTML(html) {
   return (d.textContent || "").replace(/\s+/g, " ").trim();
 }
 
+/* ---------- Ikon garis ----------
+   Antarmuka memakai ikon garis tipis yang seragam, bukan emoji —
+   emoji tampil berbeda di tiap HP dan membuat tampilan terasa ramai. */
+const IKON_PATH = {
+  beranda: '<path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/>',
+  cari: '<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>',
+  kode: '<path d="m8.5 7.5-4.5 4.5 4.5 4.5M15.5 7.5l4.5 4.5-4.5 4.5M13.5 5l-3 14"/>',
+  sesi: '<circle cx="12" cy="13.5" r="7"/><path d="M12 10v3.5l2.5 1.5M9.5 3.5h5"/>',
+  kartu: '<rect x="3.5" y="7" width="13" height="13" rx="1.5"/><path d="M7.5 7V5.5A1.5 1.5 0 0 1 9 4h10a1.5 1.5 0 0 1 1.5 1.5v10A1.5 1.5 0 0 1 19 17h-2.5"/>',
+  kamus: '<path d="M5 18.5V5.5A1.5 1.5 0 0 1 6.5 4H19v13H6.5A1.5 1.5 0 0 0 5 18.5 1.5 1.5 0 0 0 6.5 20H19"/><path d="M9 8h6"/>',
+  unduh: '<path d="M12 4v11m-4.5-4.5L12 15l4.5-4.5M5 20h14"/>',
+  unggah: '<path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M5 20h14"/>',
+  ulang: '<path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4"/>',
+  menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+  jam: '<circle cx="12" cy="12" r="8"/><path d="M12 8v4.5l3 1.5"/>',
+  kunci: '<rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/>',
+  cek: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+  suara: '<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>',
+  henti: '<rect x="7" y="7" width="10" height="10" rx="1"/>',
+  api: '<path d="M12 21c-3.6 0-6-2.4-6-5.6 0-3.4 2.6-5 3.3-8.4 1.9 1.1 2.7 3 2.7 4.4.9-.5 1.6-1.6 1.8-3 2.4 1.8 4.2 4.3 4.2 7 0 3.2-2.4 5.6-6 5.6z"/>',
+  perisai: '<path d="M12 3.5 5.5 6v5.5c0 4 2.8 7.2 6.5 8.8 3.7-1.6 6.5-4.8 6.5-8.8V6z"/>',
+  bintang: '<path d="m12 4 2.4 5 5.4.6-4 3.7 1.1 5.4L12 16l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/>',
+  kalender: '<rect x="4" y="5.5" width="16" height="14.5" rx="1.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/>',
+  kanan: '<path d="M5 12h14m-5.5-5.5L19 12l-5.5 5.5"/>',
+  kiri: '<path d="M19 12H5m5.5-5.5L5 12l5.5 5.5"/>',
+  lampu: '<path d="M9.5 17.5h5M10.5 20.5h3M12 3.5a5.5 5.5 0 0 0-3.2 10c.6.5 1 1.2 1 2v.5h4.4v-.5c0-.8.4-1.5 1-2a5.5 5.5 0 0 0-3.2-10z"/>',
+  acak: '<path d="M4 7h3c4.5 0 5.5 10 10 10h3m0 0-2.5-2.5M20 17l-2.5 2.5M4 17h3c1.5 0 2.5-1 3.4-2.4M20 7h-3c-1.5 0-2.5 1-3.4 2.4M20 7l-2.5-2.5M20 7l-2.5 2.5"/>',
+};
+function ikon(nama, kelas) {
+  return `<svg class="ikon${kelas ? " " + kelas : ""}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${IKON_PATH[nama] || ""}</svg>`;
+}
+/* Tanda tiap jalur: simpul jaringan (AI), rantai blok (Crypto), buku besar bentuk T (Akuntansi) */
+const TANDA_JALUR = {
+  ai: '<circle cx="6.5" cy="7" r="2.2"/><circle cx="17.5" cy="7" r="2.2"/><circle cx="12" cy="17.5" r="2.2"/><path d="M8.7 7h6.6M7.7 8.9l3.2 6.6M16.3 8.9l-3.2 6.6"/>',
+  blockchain: '<rect x="2.5" y="9" width="5.5" height="6" rx="1"/><rect x="9.25" y="9" width="5.5" height="6" rx="1"/><rect x="16" y="9" width="5.5" height="6" rx="1"/><path d="M8 12h1.25M14.75 12H16"/>',
+  accounting: '<path d="M4 6.5h16M12 6.5V19"/><path d="M6 10.5h3.5M6 13.5h3.5M14.5 10.5H18M14.5 13.5H18"/>',
+};
+function tandaJalur(course, kelas) {
+  return `<span class="tanda-jalur jalur-${course.id}${kelas ? " " + kelas : ""}" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false">${TANDA_JALUR[course.id] || ""}</svg></span>`;
+}
+function sapaan() {
+  const j = new Date().getHours();
+  return j < 11 ? "Selamat pagi" : j < 15 ? "Selamat siang" : j < 18 ? "Selamat sore" : "Selamat malam";
+}
+
 /* ---------- Tooltip Glosarium Otomatis ----------
    Menandai istilah sulit di dalam materi agar bisa diklik & dilihat artinya,
    tanpa perlu meninggalkan halaman pelajaran. */
@@ -465,33 +510,34 @@ function kartuDisiplin() {
   let kabar = "";
   const tCapai = typeof Tonggak !== "undefined" ? Tonggak.baru() : null;
   if (tCapai) {
-    kabar += `<div class="dis-kabar rayakan">🎉 <b>Tonggak ${tCapai} hari tercapai!</b> ${Tonggak.PESAN[tCapai]}</div>`;
+    kabar += `<div class="dis-kabar rayakan"><b>Tonggak ${tCapai} hari tercapai.</b> ${Tonggak.PESAN[tCapai]}</div>`;
     Tonggak.tandai(tCapai);
   }
   if (Progress.data.perisaiTerpakaiBaru) {
-    kabar += `<div class="dis-kabar selamat">🛡️ <b>Satu perisai terpakai.</b> Kemarin kamu absen, tapi runtunmu selamat. Perisai tersisa: ${perisai}.</div>`;
+    kabar += `<div class="dis-kabar selamat">${ikon("perisai")} <b>Satu perisai terpakai.</b> Kemarin kamu absen, tapi runtunmu selamat. Perisai tersisa: ${perisai}.</div>`;
     delete Progress.data.perisaiTerpakaiBaru;
     Progress.save();
   }
   if (Progress.data.perisaiBaru) {
-    kabar += `<div class="dis-kabar hadiah">🛡️ <b>Kamu mendapat satu perisai!</b> Simpan untuk hari yang benar-benar sibuk.</div>`;
+    kabar += `<div class="dis-kabar hadiah">${ikon("perisai")} <b>Kamu mendapat satu perisai.</b> Simpan untuk hari yang benar-benar sibuk.</div>`;
     delete Progress.data.perisaiBaru;
     Progress.save();
   }
 
   const pesan = tercapai
-    ? `🎉 <b>Target hari ini tercapai!</b> Sampai jumpa besok.`
+    ? `<b>Target hari ini tercapai.</b> Sampai jumpa besok.`
     : runtun > 0
     ? `Tinggal <b>${sisa} pelajaran</b> lagi untuk menjaga runtunmu hari ini.`
     : `Selesaikan <b>${target} pelajaran</b> hari ini untuk memulai runtun.`;
 
   const kartu = el(`
     <section class="disiplin ${tercapai ? "selesai" : ""}">
+      <h2 class="bagian-judul">Kebiasaan belajar</h2>
       <div class="dis-atas">
-        <div class="dis-api">
-          <span class="dis-emoji">${runtun > 0 ? "🔥" : "🌱"}</span>
+        <div class="dis-api ${runtun > 0 ? "menyala" : ""}">
+          ${ikon("api", "dis-ikon")}
           <span class="dis-angka">${runtun}</span>
-          <span class="dis-label">hari berturut-turut</span>
+          <span class="dis-label">hari<br>berturut-turut</span>
         </div>
         <div class="dis-kanan">
           <div class="dis-hari">
@@ -506,10 +552,10 @@ function kartuDisiplin() {
       ${kabar}
       <div class="dis-alat">
         <span class="dis-perisai" title="Perisai menyelamatkan runtunmu bila satu hari terlewat">
-          🛡️ <b>${perisai}</b> perisai${perisai < 2 ? ` <small>(berikutnya di hari ${tonggakPerisai})</small>` : ""}
+          ${ikon("perisai")} <b>${perisai}</b> perisai${perisai < 2 ? ` <small>(berikutnya di hari ${tonggakPerisai})</small>` : ""}
         </span>
-        <span class="dis-xp">⭐ <b>${Progress.data.xp || 0}</b> XP</span>
-        <a class="btn primary dis-sesi" href="#/sesi">⚡ Sesi Harian${jatuhTempo ? ` · ${jatuhTempo} soal` : ""}</a>
+        <span class="dis-xp">${ikon("bintang")} <b>${Progress.data.xp || 0}</b> XP</span>
+        <a class="btn primary dis-sesi" href="#/sesi">${ikon("sesi")} Sesi Harian${jatuhTempo ? ` · ${jatuhTempo} soal` : ""}</a>
       </div>
       <div class="kal" aria-label="Kalender aktivitas 12 minggu terakhir">${sel}</div>
       <div class="kal-ket">
@@ -523,8 +569,8 @@ function kartuDisiplin() {
           </select>
         </label>
         <label>Ingatkan pukul <input type="time" class="dis-jam" value="19:00"></label>
-        <button class="btn ghost dis-ics" type="button">📅 Pasang pengingat</button>
-        <label class="dis-kunci"><input type="checkbox" class="dis-kunci-kuis" ${Progress.data.kunciKuis ? "checked" : ""}> 🔒 Kunci tombol "Berikutnya" sampai kuis benar semua</label>
+        <button class="btn ghost dis-ics" type="button">${ikon("kalender")} Pasang pengingat</button>
+        <label class="dis-kunci"><input type="checkbox" class="dis-kunci-kuis" ${Progress.data.kunciKuis ? "checked" : ""}> Kunci tombol "Berikutnya" sampai kuis benar semua</label>
       </div>
       <p class="dis-catatan">Pengingat dipasang sebagai acara harian berulang di aplikasi kalender HP-mu — cara yang paling andal, karena situs ini berjalan tanpa server.</p>
     </section>
@@ -566,109 +612,87 @@ function kartuDisiplin() {
 }
 
 function renderHome() {
-  const wrap = el(`<div class="page"></div>`);
+  const wrap = el(`<div class="page beranda"></div>`);
 
   const totalLessons = COURSES.reduce((n, c) => n + allLessons(c).length, 0);
   const totalDone = COURSES.reduce((n, c) => n + courseProgress(c).done, 0);
   const overall = totalLessons ? Math.round((totalDone / totalLessons) * 100) : 0;
 
   wrap.appendChild(el(`
-    <section class="hero">
-      <h1>Selamat datang di <span class="grad">Akademi AI &amp; Blockchain</span> 🎓</h1>
-      <p class="lead">Belajar Kecerdasan Buatan dan Crypto &amp; Blockchain dari <b>dasar hingga mahir</b>,
-      dengan bahasa Indonesia yang sederhana, contoh nyata, dan kuis di setiap pelajaran.</p>
-      <div class="ring-wrap">
-        <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="${overall}% materi selesai">
-          <defs>
-            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#6366f1"/>
-              <stop offset="1" stop-color="#f59e0b"/>
-            </linearGradient>
-          </defs>
-          <circle class="ring-alur" cx="60" cy="60" r="50"/>
-          <circle class="ring-isi" cx="60" cy="60" r="50" transform="rotate(-90 60 60)"
-                  stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
-          <text x="60" y="68" text-anchor="middle">${overall}%</text>
-        </svg>
-        <div class="ring-info">
-          <b>${totalDone} dari ${totalLessons} pelajaran</b><br>
-          ${totalDone === 0 ? "Belum ada yang diselesaikan — mulai dari mana saja." :
-            overall >= 100 ? "Semuanya selesai. Luar biasa! 🎉" :
-            "Terus lanjut, sedikit demi sedikit."}
-        </div>
-      </div>
+    <section class="beranda-kepala">
+      <p class="kicker">${sapaan()}</p>
+      <h1>${totalDone === 0 ? "Mulai belajar dari nol." : overall >= 100 ? "Semua jalur sudah kamu tuntaskan." : "Lanjutkan belajarmu."}</h1>
+      <p class="lead">AI, Crypto, dan Akuntansi dijelaskan bertahap dalam bahasa Indonesia — dari konsep paling dasar sampai bisa kamu pakai sendiri.</p>
     </section>
   `));
 
-  // Isi cincin diisi sesaat setelah dipasang agar transisinya terlihat.
-  // Sengaja memakai setTimeout, bukan requestAnimationFrame: rAF tidak
-  // berjalan saat tab berada di latar belakang, sehingga cincinnya bisa
-  // tertinggal kosong padahal persentasenya sudah benar.
-  setTimeout(() => {
-    const isi = wrap.querySelector(".ring-isi");
-    if (isi) isi.style.strokeDashoffset = (314.16 * (1 - overall / 100)).toFixed(2);
-  }, 50);
-
-  // Kartu disiplin harian — runtun, target hari ini, & kalender aktivitas
-  wrap.appendChild(kartuDisiplin());
-
-  // Kartu "Lanjutkan Belajar" — tahu sampai mana progres belajarmu
+  // Kartu "Lanjutkan Belajar" — aksi utama halaman ini
   const resumeId = Progress.resumeLessonId();
   if (resumeId) {
     const f = findLesson(resumeId);
     const started = totalDone > 0;
+    const mi = f.course.modules.indexOf(f.module);
     const lastNote = Progress.data.lastAt
-      ? `<span class="resume-note">🕘 Terakhir belajar ${timeAgo(Progress.data.lastAt)}</span>` : "";
+      ? `<span class="resume-note">${ikon("jam")} Terakhir belajar ${timeAgo(Progress.data.lastAt)}</span>` : "";
     wrap.appendChild(el(`
-      <a class="resume-card" href="#/lesson/${resumeId}" style="--accent:${f.course.color}">
+      <a class="resume-card jalur-${f.course.id}" href="#/lesson/${resumeId}">
         <span class="resume-info">
-          <span class="resume-label">${started ? "Lanjutkan dari sini" : "Ayo mulai dari sini"}</span>
-          <span class="resume-title">${f.course.emoji} ${esc(f.lesson.title)}</span>
-          <span class="resume-sub"><span class="lvl-badge lvl-${f.module.level.toLowerCase()}">${esc(f.module.level)}</span> ${esc(f.course.title)}</span>
+          <span class="resume-label">${started ? "Lanjutkan dari sini" : "Mulai dari sini"}</span>
+          <span class="resume-title">${esc(f.lesson.title)}</span>
+          <span class="resume-sub">${tandaJalur(f.course, "kecil")} ${esc(f.course.title)} · Modul ${mi + 1} · ${esc(f.module.title)}</span>
           ${lastNote}
         </span>
-        <span class="resume-btn">${started ? "Lanjutkan Belajar →" : "Mulai Belajar →"}</span>
+        <span class="resume-btn">${started ? "Lanjutkan" : "Mulai"} ${ikon("kanan")}</span>
       </a>
     `));
   } else if (totalLessons > 0) {
     wrap.appendChild(el(`
       <div class="resume-card done">
         <span class="resume-info">
-          <span class="resume-title">🎉 Selamat! Semua pelajaran sudah selesai.</span>
-          <span class="resume-sub">Kamu bisa mengulang materi atau menguji ulang kuis kapan saja.</span>
+          <span class="resume-label">Selesai</span>
+          <span class="resume-title">Semua pelajaran sudah kamu selesaikan.</span>
+          <span class="resume-sub">Ulangi materi atau kerjakan Sesi Harian agar ingatanmu tetap segar.</span>
         </span>
       </div>
     `));
   }
 
-  const grid = el(`<div class="card-grid"></div>`);
+  // Jalur belajar — daftar tenang, bukan kartu berkilau
+  const daftar = el(`
+    <section class="jalur-daftar">
+      <div class="bagian-kepala">
+        <h2 class="bagian-judul">Jalur belajar</h2>
+        <span class="bagian-catatan">${totalDone} dari ${totalLessons} pelajaran selesai</span>
+      </div>
+    </section>
+  `);
   COURSES.forEach((c) => {
     const p = courseProgress(c);
-    const card = el(`
-      <a class="course-card" href="#/course/${c.id}" style="--accent:${c.color}">
-        <div class="cc-emoji">${c.emoji}</div>
-        <h2>${esc(c.title)}</h2>
-        <p>${esc(c.tagline)}</p>
-        <div class="cc-meta">
-          <span>${c.modules.length} modul • ${allLessons(c).length} pelajaran</span>
-        </div>
-        <div class="progress"><div class="progress-fill" style="width:${p.pct}%;background:${c.color}"></div></div>
-        <div class="cc-foot"><span>${p.done}/${p.total} selesai</span><span class="cc-go">Mulai belajar →</span></div>
+    daftar.appendChild(el(`
+      <a class="jalur-baris jalur-${c.id}" href="#/course/${c.id}">
+        ${tandaJalur(c, "besar")}
+        <span class="jb-teks">
+          <b>${esc(c.title)}</b>
+          <span>${esc(c.tagline)}</span>
+          <span class="jb-bar"><i style="width:${p.pct}%"></i></span>
+        </span>
+        <span class="jb-angka"><b>${p.done}</b>/${p.total}<small>${c.modules.length} modul</small></span>
       </a>
-    `);
-    grid.appendChild(card);
+    `));
   });
-  wrap.appendChild(grid);
+  wrap.appendChild(daftar);
+
+  // Kartu disiplin harian — runtun, target hari ini, & kalender aktivitas
+  wrap.appendChild(kartuDisiplin());
 
   wrap.appendChild(el(`
     <section class="how">
-      <h3>Cara memakai platform ini</h3>
+      <h2 class="bagian-judul">Cara belajar di sini</h2>
       <ol>
-        <li>Pilih salah satu jalur belajar di atas.</li>
-        <li>Ikuti pelajaran berurutan dari level <b>Pemula</b> → <b>Menengah</b> → <b>Mahir</b>.</li>
-        <li>Kerjakan kuis di akhir tiap pelajaran untuk menandainya selesai.</li>
-        <li>Kemajuanmu tersimpan otomatis. Pakai tombol <b>Lanjutkan Belajar</b> untuk meneruskan dari pelajaran terakhir.</li>
-        <li>Mau pindah browser/komputer? Klik <b>Cadangkan</b> di samping untuk mengunduh file simpanan, lalu <b>Pulihkan</b> di perangkat lain.</li>
+        <li><b>Ikuti modul berurutan.</b> Setiap pelajaran memakai bekal dari pelajaran sebelumnya, dan kotak <i>Ingat dulu</i> mengingatkan bekal itu.</li>
+        <li><b>Kerjakan kuisnya.</b> Pelajaran dihitung selesai setelah semua soal kuis dijawab benar.</li>
+        <li><b>Datang sebentar setiap hari.</b> Sesi Harian berisi 5 soal ulangan dari pelajaran yang sudah lewat.</li>
+        <li><b>Pindah perangkat?</b> Pakai <i>Cadangkan</i> di menu untuk mengunduh file kemajuan, lalu <i>Pulihkan</i> di perangkat lain.</li>
       </ol>
     </section>
   `));
@@ -678,51 +702,57 @@ function renderHome() {
 
 /* ---------- Halaman: Detail Kursus ---------- */
 function renderCourse(course) {
-  const wrap = el(`<div class="page"></div>`);
+  const wrap = el(`<div class="page kursus jalur-${course.id}"></div>`);
   const p = courseProgress(course);
+  const lanjutId = courseResumeId(course);
 
   wrap.appendChild(el(`
     <div class="crumb"><a href="#/">Beranda</a> / <span>${esc(course.title)}</span></div>
-    <header class="course-head" style="--accent:${course.color}">
-      <div class="ch-emoji">${course.emoji}</div>
-      <div>
+    <header class="course-head jalur-${course.id}">
+      ${tandaJalur(course, "besar")}
+      <div class="ch-teks">
+        <p class="kicker">Jalur belajar · ${course.modules.length} modul · ${p.total} pelajaran</p>
         <h1>${esc(course.title)}</h1>
         <p>${esc(course.description)}</p>
-        <div class="progress big"><div class="progress-fill" style="width:${p.pct}%;background:${course.color}"></div></div>
-        <small>${p.done}/${p.total} pelajaran selesai (${p.pct}%)</small>
+        <div class="ch-progres">
+          <div class="progress"><div class="progress-fill" style="width:${p.pct}%"></div></div>
+          <small>${p.done} dari ${p.total} selesai</small>
+        </div>
         ${
-          courseResumeId(course)
-            ? `<a class="btn primary course-resume" href="#/lesson/${courseResumeId(course)}">${p.done > 0 ? "Lanjutkan kursus" : "Mulai kursus"} →</a>`
-            : `<span class="course-done">🎉 Kursus ini selesai!</span>`
+          lanjutId
+            ? `<a class="btn primary course-resume" href="#/lesson/${lanjutId}">${p.done > 0 ? "Lanjutkan" : "Mulai dari pelajaran pertama"} ${ikon("kanan")}</a>`
+            : `<span class="course-done">${ikon("cek")} Jalur ini sudah kamu selesaikan.</span>`
         }
       </div>
     </header>
   `));
 
   wrap.appendChild(el(`
-    <p class="course-order-hint">📚 <b>Ikuti modul 1 → ${course.modules.length} secara berurutan.</b>
-    Materi disusun bertahap: konsep dasar → fundamental → matematika → penerapan → membangun.
-    Setiap modul memakai bekal dari modul sebelumnya.</p>
+    <p class="course-order-hint">Ikuti modul 1 sampai ${course.modules.length} secara berurutan — konsep dasar dulu, lalu fundamental, matematika, penerapan, dan membangun. Setiap modul memakai bekal dari modul sebelumnya.</p>
   `));
 
   course.modules.forEach((m, mi) => {
     const mod = el(`<section class="module"></section>`);
+    const selesaiModul = m.lessons.filter((l) => Progress.isDone(l.id)).length;
     mod.appendChild(el(`
       <div class="module-head">
-        <span class="mod-num">Modul ${mi + 1} dari ${course.modules.length}</span>
-        <span class="lvl-badge lvl-${m.level.toLowerCase()}">${esc(m.level)}</span>
-        <h2>${esc(m.title)}</h2>
-        <p>${esc(m.summary)}</p>
+        <span class="mod-angka">${String(mi + 1).padStart(2, "0")}</span>
+        <div class="mod-teks">
+          <p class="kicker">Modul ${mi + 1} · ${esc(m.level)} · ${selesaiModul}/${m.lessons.length} selesai</p>
+          <h2>${esc(m.title)}</h2>
+          <p>${esc(m.summary)}</p>
+        </div>
       </div>
     `));
     const list = el(`<ol class="lesson-list"></ol>`);
     m.lessons.forEach((l, li) => {
       const done = Progress.isDone(l.id);
+      const berikut = l.id === lanjutId;
       list.appendChild(el(`
         <li>
-          <a class="lesson-row ${done ? "done" : ""}" href="#/lesson/${l.id}">
-            <span class="lr-check">${done ? "✓" : mi + 1 + "." + (li + 1)}</span>
-            <span class="lr-title">${esc(l.title)}</span>
+          <a class="lesson-row ${done ? "done" : ""} ${berikut ? "berikut" : ""}" href="#/lesson/${l.id}">
+            <span class="lr-check">${done ? ikon("cek") : mi + 1 + "." + (li + 1)}</span>
+            <span class="lr-title">${esc(l.title)}${berikut ? `<small class="lr-tanda">${p.done > 0 ? "lanjutkan di sini" : "mulai di sini"}</small>` : ""}</span>
             <span class="lr-dur">${esc(l.duration)}</span>
           </a>
         </li>
@@ -737,7 +767,7 @@ function renderCourse(course) {
 
 /* ---------- Halaman: Pelajaran ---------- */
 function renderLesson({ course, module, lesson }) {
-  const wrap = el(`<div class="page lesson-page"></div>`);
+  const wrap = el(`<div class="page lesson-page jalur-${course.id}"></div>`);
   // Sebelumnya/Berikutnya tetap di dalam satu jalur — tidak melompat ke jalur lain
   const seq = allLessons(course);
   const idx = seq.findIndex((l) => l.id === lesson.id);
@@ -755,11 +785,10 @@ function renderLesson({ course, module, lesson }) {
     <div class="crumb">
       <a href="#/">Beranda</a> / <a href="#/course/${course.id}">${esc(course.title)}</a> / <span>${esc(lesson.title)}</span>
     </div>
-    <header class="lesson-head" style="--accent:${course.color}">
-      <span class="lvl-badge lvl-${module.level.toLowerCase()}">${esc(module.level)}</span>
+    <header class="lesson-head jalur-${course.id}">
+      <p class="kicker">${tandaJalur(course, "kecil")} ${esc(course.title)} · Modul ${mi + 1} · ${esc(module.level)}</p>
       <h1>${esc(lesson.title)}</h1>
-      <small>⏱ ${esc(lesson.duration)} ${done ? '• <span class="ok">✓ Selesai</span>' : ""}</small>
-      <span class="lesson-pos">Modul ${mi + 1} dari ${course.modules.length} · ${esc(module.title)} · Pelajaran ${li + 1} dari ${module.lessons.length}</span>
+      <p class="lesson-meta"><span>${ikon("jam")} ${esc(lesson.duration)}</span><span class="lesson-pos">Pelajaran ${li + 1} dari ${module.lessons.length} · ${esc(module.title)}</span>${done ? `<span class="ok">${ikon("cek")} Selesai</span>` : ""}</p>
     </header>
   `));
 
@@ -767,7 +796,8 @@ function renderLesson({ course, module, lesson }) {
   if (li === 0) {
     wrap.appendChild(el(`
       <aside class="modul-jembatan masuk">
-        <b>📘 Awal Modul ${mi + 1}: ${esc(module.title)}</b>
+        <p class="kicker">Awal modul ${mi + 1} dari ${course.modules.length}</p>
+        <b>${esc(module.title)}</b>
         <p>${esc(module.summary)}</p>
         ${modulSebelum ? `<small>Sebelumnya kamu menuntaskan Modul ${mi}: ${esc(modulSebelum.title)}.</small>` : ""}
       </aside>
@@ -776,18 +806,19 @@ function renderLesson({ course, module, lesson }) {
 
   // Tombol "Dengarkan" — hanya muncul bila ada suara Bahasa Indonesia asli di perangkat.
   if (Speech.supported && Speech.indoVoice()) {
-    const ttsBtn = el(`<button class="btn ghost tts-btn">🔊 Dengarkan materi</button>`);
+    const LABEL_DENGAR = `${ikon("suara")} Dengarkan materi`;
+    const ttsBtn = el(`<button class="btn ghost tts-btn">${LABEL_DENGAR}</button>`);
     ttsBtn.onclick = () => {
       if (Speech.speaking) {
         Speech.stop();
-        ttsBtn.innerHTML = "🔊 Dengarkan materi";
+        ttsBtn.innerHTML = LABEL_DENGAR;
         ttsBtn.classList.remove("playing");
       } else {
         Speech.speak(lessonNarration(lesson), () => {
-          ttsBtn.innerHTML = "🔊 Dengarkan materi";
+          ttsBtn.innerHTML = LABEL_DENGAR;
           ttsBtn.classList.remove("playing");
         });
-        ttsBtn.innerHTML = "⏹ Hentikan suara";
+        ttsBtn.innerHTML = `${ikon("henti")} Hentikan suara`;
         ttsBtn.classList.add("playing");
       }
     };
@@ -796,7 +827,7 @@ function renderLesson({ course, module, lesson }) {
 
   // Peta singkat SEBELUM materi: pembaca tahu dulu apa yang akan dipelajari
   if (lesson.keyPoints && lesson.keyPoints.length) {
-    const pre = el(`<aside class="lesson-preview"><h3>🎯 Yang akan kamu pelajari</h3><ul></ul></aside>`);
+    const pre = el(`<aside class="lesson-preview"><p class="kicker">Yang akan kamu pelajari</p><ul></ul></aside>`);
     const ulp = pre.querySelector("ul");
     lesson.keyPoints.slice(0, 4).forEach((k) => ulp.appendChild(el(`<li>${esc(k)}</li>`)));
     wrap.appendChild(pre);
@@ -837,7 +868,7 @@ function renderLesson({ course, module, lesson }) {
   });
 
   if (lesson.keyPoints && lesson.keyPoints.length) {
-    const kp = el(`<aside class="keypoints"><h3>💡 Poin Penting</h3><ul></ul></aside>`);
+    const kp = el(`<aside class="keypoints"><p class="kicker">Ringkasan</p><h3>Poin penting pelajaran ini</h3><ul></ul></aside>`);
     const ul = kp.querySelector("ul");
     lesson.keyPoints.forEach((k) => ul.appendChild(el(`<li>${esc(k)}</li>`)));
     wrap.appendChild(kp);
@@ -862,31 +893,32 @@ function renderLesson({ course, module, lesson }) {
   if (li === module.lessons.length - 1) {
     wrap.appendChild(el(`
       <aside class="modul-jembatan keluar">
-        <b>🎓 Akhir Modul ${mi + 1}: ${esc(module.title)}</b>
-        <p>Ringkasan modul ini: ${esc(module.summary)}</p>
+        <p class="kicker">Akhir modul ${mi + 1}</p>
+        <b>${esc(module.title)}</b>
+        <p>${esc(module.summary)}</p>
         ${
           modulBerikut
             ? `<p class="mj-lanjut">Berikutnya — <b>Modul ${mi + 2}: ${esc(modulBerikut.title)}</b><br>${esc(modulBerikut.summary)}</p>`
-            : `<p class="mj-lanjut">Ini modul terakhir jalur <b>${esc(course.title)}</b>. 🎉</p>`
+            : `<p class="mj-lanjut">Ini modul terakhir jalur <b>${esc(course.title)}</b>.</p>`
         }
       </aside>
     `));
   }
 
   const nav = el(`<div class="lesson-nav"></div>`);
-  if (prevLesson) nav.appendChild(el(`<a class="btn ghost nav-lesson" href="#/lesson/${prevLesson.id}"><small>← Sebelumnya</small><span>${esc(prevLesson.title)}</span></a>`));
+  if (prevLesson) nav.appendChild(el(`<a class="btn ghost nav-lesson" href="#/lesson/${prevLesson.id}"><small>${ikon("kiri")} Sebelumnya</small><span>${esc(prevLesson.title)}</span></a>`));
   else nav.appendChild(el(`<span></span>`));
   let tombolNext = null;
   if (nextLesson) {
-    tombolNext = el(`<a class="btn nav-lesson nav-next" href="#/lesson/${nextLesson.id}"><small>Berikutnya →</small><span>${esc(nextLesson.title)}</span></a>`);
+    tombolNext = el(`<a class="btn nav-lesson nav-next" href="#/lesson/${nextLesson.id}"><small>Berikutnya ${ikon("kanan")}</small><span>${esc(nextLesson.title)}</span></a>`);
     nav.appendChild(tombolNext);
-  } else nav.appendChild(el(`<a class="btn" href="#/course/${course.id}">Kembali ke kursus</a>`));
+  } else nav.appendChild(el(`<a class="btn" href="#/course/${course.id}">Kembali ke jalur</a>`));
 
   // Kunci tombol "Berikutnya" sampai kuis pelajaran ini benar semua
   const perluKuis = !!(lesson.quiz && lesson.quiz.length) && Progress.data.kunciKuis && !Progress.kuisLulus(lesson.id);
   const gembok = el(`
-    <p class="nav-kunci"${perluKuis ? "" : " hidden"}>🔒 Jawab <b>semua soal kuis dengan benar</b> untuk membuka pelajaran berikutnya.
-    Masih bisa melompat lewat daftar pelajaran di halaman kursus.</p>
+    <p class="nav-kunci"${perluKuis ? "" : " hidden"}>${ikon("kunci")} <span>Jawab <b>semua soal kuis dengan benar</b> untuk membuka pelajaran berikutnya.
+    Masih bisa melompat lewat daftar pelajaran di halaman jalur.</span></p>
   `);
   function kunciNav(kunci) {
     if (!tombolNext) return;
@@ -918,7 +950,9 @@ function renderLesson({ course, module, lesson }) {
 function renderQuiz(lesson, onLulus) {
   const box = el(`
     <section class="quiz">
-      <h3>📝 Kuis — uji pemahamanmu</h3>
+      <p class="kicker">Kuis · ${lesson.quiz.length} soal</p>
+      <h3>Uji pemahamanmu</h3>
+      <p class="quiz-sub">Pelajaran ini dihitung selesai setelah semua soal dijawab benar.</p>
       <div class="quiz-questions"></div>
       <button class="btn primary quiz-submit">Periksa Jawaban</button>
       <div class="quiz-result" hidden></div>
@@ -937,8 +971,8 @@ function renderQuiz(lesson, onLulus) {
       const j = Math.floor(Math.random() * (i + 1));
       [urutan[i], urutan[j]] = [urutan[j], urutan[i]];
     }
-    urutan.forEach((oi) => {
-      const o = el(`<button class="opt" data-qi="${qi}" data-oi="${oi}">${esc(q.options[oi])}</button>`);
+    urutan.forEach((oi, pos) => {
+      const o = el(`<button class="opt" data-qi="${qi}" data-oi="${oi}"><span class="opt-huruf">${"ABCDEF"[pos]}</span><span class="opt-teks">${esc(q.options[oi])}</span></button>`);
       o.onclick = () => {
         if (box.classList.contains("locked")) return;
         chosen[qi] = oi;
@@ -952,7 +986,7 @@ function renderQuiz(lesson, onLulus) {
 
   box.querySelector(".quiz-submit").onclick = () => {
     if (chosen.includes(null)) {
-      alert("Jawab semua pertanyaan dulu ya 🙂");
+      alert("Jawab semua pertanyaan dulu, ya.");
       return;
     }
     box.classList.add("locked");
@@ -986,7 +1020,7 @@ function renderQuiz(lesson, onLulus) {
       <b>Skor: ${correct}/${total}.</b>
       ${
         lulus
-          ? "Semua benar! Pelajaran ini ditandai selesai ✓ dan tombol <b>Berikutnya</b> sudah terbuka."
+          ? "Semua benar. Pelajaran ini ditandai selesai dan tombol <b>Berikutnya</b> sudah terbuka."
           : `Kurang ${total - correct} lagi. Baca penjelasan di tiap soal, lalu ulangi — <b>semua soal harus benar</b> agar pelajaran ini dihitung selesai.`
       }
       <br><button class="btn ghost retry">Ulangi Kuis</button>
@@ -1006,7 +1040,7 @@ function renderQuiz(lesson, onLulus) {
 
 /* ---------- Komponen: Latihan Praktik ---------- */
 function renderPractice(lesson) {
-  const box = el(`<section class="practice"><h3>✍️ Latihan</h3><p class="pr-sub">Kerjakan dulu, baru periksa. Ada petunjuk kalau buntu.</p></section>`);
+  const box = el(`<section class="practice"><p class="kicker">Latihan · ${lesson.practice.length} soal</p><h3>Coba hitung sendiri</h3><p class="pr-sub">Kerjakan dulu, baru periksa. Ada petunjuk kalau buntu.</p></section>`);
 
   lesson.practice.forEach((p, pi) => {
     const item = el(`<div class="pr-item"></div>`);
@@ -1039,10 +1073,10 @@ function renderPractice(lesson) {
     }
 
     const check = el(`<button class="btn primary pr-check">Periksa</button>`);
-    const hintBtn = el(`<button class="btn ghost pr-hint-btn">💡 Petunjuk</button>`);
+    const hintBtn = el(`<button class="btn ghost pr-hint-btn">${ikon("lampu")} Petunjuk</button>`);
     const hintBox = el(`<div class="pr-hint" hidden></div>`);
     if (p.hint) {
-      hintBox.textContent = "💡 " + p.hint;
+      hintBox.textContent = p.hint;
       hintBtn.onclick = () => (hintBox.hidden = !hintBox.hidden);
     } else {
       hintBtn.style.display = "none";
@@ -1051,7 +1085,7 @@ function renderPractice(lesson) {
     check.onclick = () => {
       const a = getAnswer();
       if (a === null || (typeof a === "number" && isNaN(a))) {
-        alert("Isi jawabanmu dulu ya 🙂");
+        alert("Isi jawabanmu dulu, ya.");
         return;
       }
       const correct = p.type === "choice" ? a === p.answer : Math.abs(a - p.answer) < (p.tol || 0.001);
@@ -1429,8 +1463,9 @@ function renderGlossary() {
   const wrap = el(`<div class="page"></div>`);
   wrap.appendChild(el(`
     <div class="crumb"><a href="#/">Beranda</a> / <span>Glosarium</span></div>
-    <h1>📖 Glosarium Istilah</h1>
-    <p class="lead">Kamus singkat istilah AI &amp; Blockchain. Ketik untuk mencari.</p>
+    <p class="kicker">${GLOSSARY.length} istilah</p>
+    <h1>Glosarium</h1>
+    <p class="lead">Kamus singkat istilah AI, Crypto, dan Akuntansi. Ketik untuk mencari.</p>
     <input class="search" type="search" placeholder="Cari istilah... (mis. blockchain, LLM, wallet)">
   `));
   const dl = el(`<dl class="glossary"></dl>`);
@@ -1455,13 +1490,13 @@ function renderFlashcards() {
   const wrap = el(`<div class="page"></div>`);
   wrap.appendChild(el(`
     <div class="crumb"><a href="#/">Beranda</a> / <span>Flashcard</span></div>
-    <h1>🃏 Flashcard — Ulasan Cepat</h1>
-    <p class="lead">Uji ingatanmu. Klik kartu untuk membaliknya & lihat jawaban, lalu lanjut ke kartu berikutnya.</p>
+    <h1>Flashcard</h1>
+    <p class="lead">Uji ingatanmu. Ketuk kartu untuk membaliknya dan melihat jawaban, lalu lanjut ke kartu berikutnya.</p>
   `));
 
   const filters = [
-    ["all", "Semua"], ["ai", "🤖 AI"], ["blockchain", "⛓️ Blockchain"],
-    ["accounting", "📊 Akuntansi"], ["glossary", "📖 Glosarium"],
+    ["all", "Semua"], ["ai", "AI"], ["blockchain", "Crypto"],
+    ["accounting", "Akuntansi"], ["glossary", "Glosarium"],
   ];
   let filter = "all", deck = [], idx = 0, flipped = false;
 
@@ -1477,9 +1512,9 @@ function renderFlashcards() {
   const counter = el(`<div class="fc-counter"></div>`);
   const card = el(`<div class="fc-card"><div class="fc-inner"></div></div>`);
   const controls = el(`<div class="fc-controls"></div>`);
-  const prev = el(`<button class="btn ghost">← Sebelumnya</button>`);
-  const shuffle = el(`<button class="btn ghost">🔀 Acak</button>`);
-  const next = el(`<button class="btn">Berikutnya →</button>`);
+  const prev = el(`<button class="btn ghost">${ikon("kiri")} Sebelumnya</button>`);
+  const shuffle = el(`<button class="btn ghost">${ikon("acak")} Acak</button>`);
+  const next = el(`<button class="btn">Berikutnya ${ikon("kanan")}</button>`);
   controls.appendChild(prev);
   controls.appendChild(shuffle);
   controls.appendChild(next);
@@ -1495,7 +1530,7 @@ function renderFlashcards() {
     card.classList.toggle("flipped", flipped);
     card.querySelector(".fc-inner").innerHTML = flipped
       ? `<span class="fc-side">JAWABAN</span><div class="fc-text">${esc(c.back)}</div>`
-      : `<span class="fc-side">PERTANYAAN</span><div class="fc-text">${esc(c.front)}</div><span class="fc-tap">👆 klik untuk lihat jawaban</span>`;
+      : `<span class="fc-side">PERTANYAAN</span><div class="fc-text">${esc(c.front)}</div><span class="fc-tap">Ketuk untuk melihat jawaban</span>`;
     counter.innerHTML = `Kartu <b>${idx + 1}</b> dari <b>${deck.length}</b> &nbsp;•&nbsp; <span class="fc-tag">${esc(c.tag)}</span>`;
   }
   function rebuild() {
@@ -1533,7 +1568,7 @@ function buildSearchIndex() {
           id: l.id,
           title: l.title,
           course: c.title,
-          emoji: c.emoji,
+          kursus: c,
           level: m.level,
           source: text,
           hay: (l.title + " " + text + " " + (l.keyPoints || []).join(" ")).toLowerCase(),
@@ -1548,7 +1583,7 @@ function renderSearch() {
   const wrap = el(`<div class="page"></div>`);
   wrap.appendChild(el(`
     <div class="crumb"><a href="#/">Beranda</a> / <span>Cari</span></div>
-    <h1>🔎 Cari Materi</h1>
+    <h1>Cari materi</h1>
     <p class="lead">Cari ke seluruh pelajaran &amp; glosarium sekaligus.</p>
     <input class="search" type="search" placeholder="Ketik kata kunci... (mis. RAG, smart contract, laba)">
   `));
@@ -1580,15 +1615,15 @@ function renderSearch() {
       if (it.kind === "lesson") {
         results.appendChild(el(`
           <a class="sr-item" href="#/lesson/${it.id}">
-            <div class="sr-top"><span class="sr-title">${it.emoji} ${esc(it.title)}</span><span class="lvl-badge lvl-${it.level.toLowerCase()}">${esc(it.level)}</span></div>
-            <div class="sr-course">${esc(it.course)}</div>
+            <div class="sr-top"><span class="sr-title">${esc(it.title)}</span></div>
+            <div class="sr-course">${tandaJalur(it.kursus, "kecil")} ${esc(it.course)} · ${esc(it.level)}</div>
             <div class="sr-snip">${esc(snippet(it.source, q))}</div>
           </a>
         `));
       } else {
         results.appendChild(el(`
           <a class="sr-item" href="#/glossary">
-            <div class="sr-top"><span class="sr-title">📖 ${esc(it.title)}</span><span class="sr-tag">Glosarium</span></div>
+            <div class="sr-top"><span class="sr-title">${esc(it.title)}</span><span class="sr-tag">Glosarium</span></div>
             <div class="sr-snip">${esc(it.def)}</div>
           </a>
         `));
@@ -1631,7 +1666,7 @@ function renderPlayground() {
   const wrap = el(`<div class="page"></div>`);
   wrap.appendChild(el(`
     <div class="crumb"><a href="#/">Beranda</a> / <span>Playground</span></div>
-    <h1>🧪 Playground Kode</h1>
+    <h1>Playground kode</h1>
     <p class="lead">Tulis &amp; jalankan JavaScript langsung di browser — tanpa instalasi. Pilih contoh, ubah kodenya, lalu Jalankan.</p>
     <label class="pg-ex-label">Contoh siap pakai:</label>
   `));
@@ -1655,32 +1690,38 @@ function renderSidebar() {
   const nav = document.getElementById("sidebar-nav");
   if (!nav) return;
   const curHash = location.hash.slice(1) || "/";
-  let html = `<a class="side-link ${curHash === "/" ? "active" : ""}" href="#/">🏠 Beranda</a>`;
+  const tautan = (href, aktif, ikonNama, label, ekor) =>
+    `<a class="side-link ${aktif ? "active" : ""}" href="${href}">${ikon(ikonNama)}<span>${label}</span>${ekor ? `<small>${ekor}</small>` : ""}</a>`;
+  let html = tautan("#/", curHash === "/", "beranda", "Beranda");
+  html += `<div class="side-grup">Jalur belajar</div>`;
   COURSES.forEach((c) => {
     const p = courseProgress(c);
     const open = curHash.includes("/course/" + c.id) || allLessons(c).some((l) => curHash === "/lesson/" + l.id);
-    html += `<a class="side-link ${curHash === "/course/" + c.id ? "active" : ""}" href="#/course/${c.id}">${c.emoji} ${esc(c.title)} <small>${p.pct}%</small></a>`;
+    html += `<a class="side-link side-jalur ${curHash === "/course/" + c.id ? "active" : ""} ${open ? "terbuka" : ""}" href="#/course/${c.id}">${tandaJalur(c, "kecil")}<span>${esc(c.title)}</span><small>${p.pct}%</small></a>`;
     if (open) {
+      html += `<div class="side-isi">`;
       c.modules.forEach((m, mi) => {
-        html += `<div class="side-mod">${mi + 1}. ${esc(m.level)}</div>`;
+        html += `<div class="side-mod">${mi + 1} · ${esc(m.level)}</div>`;
         m.lessons.forEach((l) => {
           const done = Progress.isDone(l.id);
           const active = curHash === "/lesson/" + l.id;
-          html += `<a class="side-lesson ${active ? "active" : ""}" href="#/lesson/${l.id}">${done ? "✓" : "○"} ${esc(l.title)}</a>`;
+          html += `<a class="side-lesson ${done ? "done" : ""} ${active ? "active" : ""}" href="#/lesson/${l.id}"><i class="sl-tanda" aria-hidden="true"></i><span>${esc(l.title)}</span></a>`;
         });
       });
+      html += `</div>`;
     }
   });
-  html += `<a class="side-link ${curHash.includes("/search") ? "active" : ""}" href="#/search">🔎 Cari Materi</a>`;
-  html += `<a class="side-link ${curHash.includes("/playground") ? "active" : ""}" href="#/playground">🧪 Playground</a>`;
   const jt = typeof Ulangan !== "undefined" ? Ulangan.ringkas().jatuhTempo : 0;
-  html += `<a class="side-link ${curHash.includes("/sesi") ? "active" : ""}" href="#/sesi">⚡ Sesi Harian${jt ? ` <small>${jt} siap</small>` : ""}</a>`;
-  html += `<a class="side-link ${curHash.includes("/flashcards") ? "active" : ""}" href="#/flashcards">🃏 Flashcard</a>`;
-  html += `<a class="side-link ${curHash.includes("/glossary") ? "active" : ""}" href="#/glossary">📖 Glosarium</a>`;
-  html += `<div class="side-mod">Simpanan Kemajuan</div>`;
-  html += `<button class="side-link save" id="backup-btn">💾 Cadangkan (unduh file)</button>`;
-  html += `<button class="side-link save" id="restore-btn">📂 Pulihkan dari file</button>`;
-  html += `<button class="side-link reset" id="reset-btn">↺ Reset kemajuan</button>`;
+  html += `<div class="side-grup">Latihan & alat</div>`;
+  html += tautan("#/sesi", curHash.includes("/sesi"), "sesi", "Sesi Harian", jt ? jt + " siap" : "");
+  html += tautan("#/flashcards", curHash.includes("/flashcards"), "kartu", "Flashcard");
+  html += tautan("#/search", curHash.includes("/search"), "cari", "Cari materi");
+  html += tautan("#/glossary", curHash.includes("/glossary"), "kamus", "Glosarium");
+  html += tautan("#/playground", curHash.includes("/playground"), "kode", "Playground kode");
+  html += `<div class="side-grup">Simpanan kemajuan</div>`;
+  html += `<button class="side-link save" id="backup-btn">${ikon("unduh")}<span>Cadangkan ke file</span></button>`;
+  html += `<button class="side-link save" id="restore-btn">${ikon("unggah")}<span>Pulihkan dari file</span></button>`;
+  html += `<button class="side-link reset" id="reset-btn">${ikon("ulang")}<span>Reset kemajuan</span></button>`;
   nav.innerHTML = html;
 
   const rb = document.getElementById("reset-btn");
@@ -1719,7 +1760,7 @@ function renderSidebar() {
           try {
             Progress.importJSON(reader.result);
             router();
-            alert("Kemajuan berhasil dipulihkan ✓");
+            alert("Kemajuan berhasil dipulihkan.");
           } catch (e) {
             alert("File tidak valid. Pastikan ini file cadangan dari platform ini.");
           }

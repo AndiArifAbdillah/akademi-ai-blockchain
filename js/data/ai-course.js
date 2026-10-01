@@ -171,11 +171,11 @@ Peluang = <b>1 ÷ 2 = 0,5 = 50%</b>. Dari situlah angka 50% berasal.
 </table>
 
 <div class="callout warn">
-<b>⚠️ Kesalahpahaman paling umum:</b> 50% <b>BUKAN</b> berarti pasti bergantian atau pasti separuh-separuh.
+<b>Kesalahpahaman paling umum:</b> 50% <b>BUKAN</b> berarti pasti bergantian atau pasti separuh-separuh.
 <br><br>Kalau kamu melempar koin <b>10 kali</b>, hasilnya belum tentu tepat 5 gambar + 5 angka. Bisa 7-3, bisa 3-7 — dan itu <b>normal</b>. 50% artinya: kalau dilempar <b>sangat banyak</b> kali, perbandingannya akan <b>mendekati</b> setengah-setengah.
 </div>
 
-<h3>Coba sendiri — buktikan dengan simulasi 👇</h3>
+<h3>Coba sendiri — buktikan dengan simulasi</h3>
 <div data-demo="js-playground">// Simulasi lempar koin - lihat sendiri apa arti "50%"
 function lempar(berapaKali) {
   let gambar = 0;
@@ -243,7 +243,7 @@ Jawaban   : 25%</pre>
   <tr><td><b>0%</b></td><td>Tidak ada sama sekali</td><td>Tidak pernah terjadi</td></tr>
 </table>
 
-<h3>Coba sendiri — ubah angka jadi persen 👇</h3>
+<h3>Coba sendiri — ubah angka jadi persen</h3>
 <div data-demo="js-playground">// Persen = "dari seratus".  Rumus: (bagian / total) x 100
 const contoh = [
   { bagian: 5,  total: 20, keterangan: "5 siswa laki-laki dari 20 siswa" },
@@ -551,7 +551,7 @@ Caranya: <b>desimal × 100 = persen</b>, dan sebaliknya <b>persen ÷ 100 = desim
           duration: "11 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 AI menemukan <b>pola dari data</b>, dan data latihnya sering diberi <b>label</b> — jawaban yang benar. Pelajaran ini menjawab pertanyaan berikutnya: <i>bagaimana persisnya</i> AI memakai jawaban benar itu untuk menjadi pintar?
 </div>
 
@@ -716,7 +716,7 @@ AI menemukan <b>pola dari data</b>, dan data latihnya sering diberi <b>label</b>
 </ul>
 
 <div class="callout warn">
-<b>⚠️ Agen mengejar reward, bukan niatmu.</b> Dalam sebuah percobaan terkenal, agen balap perahu diberi poin untuk menabrak target di lintasan. Ia menemukan cara berputar-putar di satu tempat mengumpulkan poin tanpa pernah menyelesaikan lomba. Reward yang dirancang keliru akan "dicurangi" — masalah ini disebut <i>reward hacking</i>.
+<b>Agen mengejar reward, bukan niatmu.</b> Dalam sebuah percobaan terkenal, agen balap perahu diberi poin untuk menabrak target di lintasan. Ia menemukan cara berputar-putar di satu tempat mengumpulkan poin tanpa pernah menyelesaikan lomba. Reward yang dirancang keliru akan "dicurangi" — masalah ini disebut <i>reward hacking</i>.
 </div>
 
 <p>Contoh penerapan: AI pemain Go dan catur, robot yang belajar berjalan, pengaturan pendingin pusat data, dan — yang paling kamu kenal — <b>chatbot seperti ChatGPT dan Claude</b>, yang diperhalus dengan umpan balik manusia (RLHF). Cara kerja RL — dari dilema eksplorasi sampai robot yang belajar mencari jalan — dibahas mendalam di modul <b>Reinforcement Learning</b>, lalu RLHF di modul AI Generatif &amp; LLM.</p>
@@ -957,7 +957,7 @@ AI menemukan <b>pola dari data</b>, dan data latihnya sering diberi <b>label</b>
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 Di akhir modul sebelumnya kamu bertemu dua penyakit model: <b>overfitting</b> (menghafal data latih, gagal di data baru) dan <b>underfitting</b> (terlalu sederhana, gagal di mana-mana). Kamu juga tahu datanya dibagi dua: <b>data latih</b> untuk belajar dan <b>data uji</b> untuk ujian. Pelajaran ini membuat keduanya bisa <b>didiagnosis dengan angka</b>.
 </div>
 
@@ -1007,10 +1007,10 @@ Keduanya tinggi dan berdekatan → itulah yang dicari.
   <tr><td><b>Overfitting</b> (jurang latih–uji lebar)</td><td>Tambah data yang <b>banyak dan beragam</b>, sederhanakan model, beri "hukuman" bagi model yang terlalu rumit (<i>regularisasi</i>, dibahas di pelajaran Regresi Linear), hentikan latihan sebelum mulai menghafal</td></tr>
 </table>
 <div class="callout warn">
-<b>⚠️ Salah obat justru memperparah.</b> Menambah kerumitan pada model yang overfitting membuat hafalannya makin parah. Menambah data pada model yang underfitting sering tidak menolong, karena masalahnya ada pada modelnya yang terlalu kaku.
+<b>Salah obat justru memperparah.</b> Menambah kerumitan pada model yang overfitting membuat hafalannya makin parah. Menambah data pada model yang underfitting sering tidak menolong, karena masalahnya ada pada modelnya yang terlalu kaku.
 </div>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <p>Model yang tidak menggeneralisasi akan <b>gagal di dunia nyata</b> meski terlihat hebat saat pengujian internal. Karena itu evaluasi harus selalu memakai data yang benar-benar terpisah — dan "nilai" yang dipakai untuk menilai pun harus tepat. Pelajaran berikutnya membahas persis itu: <b>angka apa yang sebaiknya dipakai untuk menilai model</b>, karena ternyata "akurasi" bisa sangat menipu.</p>
 `,
           keyPoints: [
@@ -1096,13 +1096,13 @@ Jadi <b>False Positive</b> = tebakan "sakit" yang ternyata <b>salah</b> → oran
 <h3>Langkah 3 — Akurasi, dan jebakannya</h3>
 <p><b>Akurasi</b> = berapa tebakan yang benar dari semua orang = (TP + TN) ÷ semua = (8 + 81) ÷ 100 = <b>89%</b>.</p>
 <div class="callout warn">
-<b>⚠️ Jebakan akurasi.</b> "Model malas" yang selalu bilang "sehat" mendapat TP = 0 dan TN = 90, jadi akurasinya (0 + 90) ÷ 100 = <b>90%</b> — <b>lebih tinggi</b> dari model yang benar-benar bekerja, padahal tidak menangkap satu pun orang sakit.<br><br>
+<b>Jebakan akurasi.</b> "Model malas" yang selalu bilang "sehat" mendapat TP = 0 dan TN = 90, jadi akurasinya (0 + 90) ÷ 100 = <b>90%</b> — <b>lebih tinggi</b> dari model yang benar-benar bekerja, padahal tidak menangkap satu pun orang sakit.<br><br>
 Ini selalu terjadi ketika satu kelompok jauh lebih besar dari yang lain: penyakit langka, penipuan kartu kredit, cacat produksi, email berbahaya. Di semua kasus itu, akurasi hampir tidak berarti apa-apa.
 </div>
 
 <h3>Langkah 4 — Recall: berapa yang berhasil ditangkap?</h3>
 <div class="callout">
-🎣 <b>Analogi jaring ikan.</b> Di sebuah kolam ada 10 ikan. Kamu menebar jaring. <b>Recall</b> menjawab: <b>dari 10 ikan di kolam, berapa yang masuk jaring?</b><br><br>
+<b>Analogi jaring ikan.</b> Di sebuah kolam ada 10 ikan. Kamu menebar jaring. <b>Recall</b> menjawab: <b>dari 10 ikan di kolam, berapa yang masuk jaring?</b><br><br>
 <b>Recall = TP ÷ (TP + FN)</b> = 8 ÷ (8 + 2) = <b>80%</b><br><br>
 Penyebutnya (TP + FN) adalah <b>semua orang yang benar-benar sakit</b>. Recall hanya peduli pada mereka — sama sekali tidak melihat orang sehat.
 </div>
@@ -1110,7 +1110,7 @@ Penyebutnya (TP + FN) adalah <b>semua orang yang benar-benar sakit</b>. Recall h
 
 <h3>Langkah 5 — Precision: berapa tuduhan yang benar?</h3>
 <div class="callout">
-🎣 Sekarang lihat <b>isi jaringmu</b>. Selain ikan, ikut terangkat sandal, plastik, dan ranting. <b>Precision</b> menjawab: <b>dari semua yang terangkat jaring, berapa yang benar-benar ikan?</b><br><br>
+Sekarang lihat <b>isi jaringmu</b>. Selain ikan, ikut terangkat sandal, plastik, dan ranting. <b>Precision</b> menjawab: <b>dari semua yang terangkat jaring, berapa yang benar-benar ikan?</b><br><br>
 <b>Precision = TP ÷ (TP + FP)</b> = 8 ÷ (8 + 9) = <b>47%</b><br><br>
 Penyebutnya (TP + FP) adalah <b>semua orang yang dituduh sakit</b> oleh model. Artinya: dari 17 orang yang dikabari "kamu sakit", lebih dari separuhnya sebenarnya sehat.
 </div>
@@ -1170,7 +1170,7 @@ Penyebutnya (TP + FP) adalah <b>semua orang yang dituduh sakit</b> oleh model. A
           title: "Spesifisitas, F1 & Jebakan Prevalensi — Melengkapi Recall & Precision",
           duration: "13 menit",
           content: `<div class="callout ingat">
-<b>🔙 Ingat dulu</b> — tabel 100 orang dari pelajaran sebelumnya:
+<b>Ingat dulu</b> — tabel 100 orang dari pelajaran sebelumnya:
 <table class="tbl">
   <tr><th></th><th>Model bilang <b>sakit</b></th><th>Model bilang <b>sehat</b></th></tr>
   <tr><td><b>Kenyataannya sakit</b> (10)</td><td class="ok-cell">TP = 8</td><td class="bad-cell">FN = 2</td></tr>
@@ -1220,7 +1220,7 @@ Untuk dua angka ada jalan pintas: <b>2 × a × b ÷ (a + b)</b>. Karena itu F1 =
 </table>
 <p>Tiga sifatnya: selalu <b>sama atau lebih kecil</b> daripada rata-rata biasa, <b>sama persis</b> bila kedua angkanya sama, dan <b>hanya tinggi bila semua angkanya tinggi</b>. Satu sisi yang ambruk tidak bisa ditutupi oleh sisi yang sempurna.</p>
 
-<h3>Langkah 3 — 🔍 Rahasia yang jarang dibahas: precision bergantung pada seberapa umum kasusnya</h3>
+<h3>Langkah 3 — Rahasia yang jarang dibahas: precision bergantung pada seberapa umum kasusnya</h3>
 <p>Pakai lagi demo 100 orang di bawah ini. Ganti jumlah orang sakit dari 10 menjadi 30, lalu 50 — dengan <b>model dan ambang yang sama persis</b> — dan perhatikan angka mana yang ikut berubah:</p>
 
 <div data-demo="matriks-kebingungan"></div>
@@ -1382,7 +1382,7 @@ AUC 0,92 berarti: ambil satu penipuan dan satu transaksi normal secara acak, mak
 </ul>
 
 <div class="callout warn">
-<b>⚠️ Tiga hal yang TIDAK diberitahukan AUC</b><br><br>
+<b>Tiga hal yang TIDAK diberitahukan AUC</b><br><br>
 <b>1. Ambang mana yang harus kamu pakai.</b> AUC menilai seluruh kurva; keputusan operasionalnya tetap harus kamu pilih berdasarkan biaya kesalahan.<br><br>
 <b>2. Apakah peluangnya masuk akal (terkalibrasi).</b> Model bisa ber-AUC 0,9 tapi selalu menyebut peluang 0,9 untuk kasus yang sebenarnya hanya 30% berisiko. AUC hanya peduli <b>urutan</b>, bukan besaran angkanya.<br><br>
 <b>3. Seberapa berguna model pada kasus yang sangat langka.</b> Bila penipuan hanya 0,1% dari data, FPR 1% terdengar kecil — padahal itu bisa berarti ribuan alarm palsu untuk setiap penipuan yang tertangkap. Untuk kasus timpang seperti ini, praktisi memakai <b>PR curve</b> (precision–recall) dan <b>average precision</b>.
@@ -1406,7 +1406,7 @@ print(average_precision_score(y_uji, peluang)) # lebih cocok untuk kelas langka
 fpr, tpr, ambang = roc_curve(y_uji, peluang)   # bahan untuk menggambar kurva</pre>
 
 <div class="callout">
-<b>💡 Ingat ini saja bila lupa yang lain:</b> AUC menjawab "seberapa baik model <b>mengurutkan</b> kasus berisiko di atas kasus aman", sedangkan precision dan recall menjawab "apa yang terjadi <b>bila</b> aku memotong di ambang tertentu". Keduanya dipakai bersama, bukan saling menggantikan.
+<b>Ingat ini saja bila lupa yang lain:</b> AUC menjawab "seberapa baik model <b>mengurutkan</b> kasus berisiko di atas kasus aman", sedangkan precision dan recall menjawab "apa yang terjadi <b>bila</b> aku memotong di ambang tertentu". Keduanya dipakai bersama, bukan saling menggantikan.
 </div>
 `,
           keyPoints: [
@@ -1477,7 +1477,7 @@ fpr, tpr, ambang = roc_curve(y_uji, peluang)   # bahan untuk menggambar kurva</p
 <p>Empat istilah ini paling sering tertukar, bahkan oleh orang yang sudah lama bekerja dengan AI. Tiga pelajaran sebelumnya membahasnya satu per satu secara mendalam. Pelajaran ini merangkumnya dengan satu kunci yang membuat semuanya tidak tertukar lagi:</p>
 
 <div class="callout">
-<b>🔑 Semua metrik ini dihitung dari tabel empat kotak yang SAMA. Bedanya hanya satu: kotak mana yang dilihat.</b>
+<b>Semua metrik ini dihitung dari tabel empat kotak yang SAMA. Bedanya hanya satu: kotak mana yang dilihat.</b>
 </div>
 
 <h3>Tabelnya, sekali lagi</h3>
@@ -1538,7 +1538,7 @@ Jadi: TPR bertanya kepada <b>orang sakit</b>, FPR bertanya kepada <b>orang sehat
 </table>
 
 <div class="callout">
-<b>💡 Ingin lebih dalam?</b> Pelajaran <b>Mengukur Kualitas AI dari Nol</b> membahas asal-usul nama TP/FP/FN/TN, jebakan akurasi, dan F1. Pelajaran <b>Kurva ROC &amp; AUC</b> menunjukkan cara menggambar kurvanya dengan tangan dari enam pasien sampai AUC = 8/9.
+<b>Ingin lebih dalam?</b> Pelajaran <b>Mengukur Kualitas AI dari Nol</b> membahas asal-usul nama TP/FP/FN/TN, jebakan akurasi, dan F1. Pelajaran <b>Kurva ROC &amp; AUC</b> menunjukkan cara menggambar kurvanya dengan tangan dari enam pasien sampai AUC = 8/9.
 </div>
 `,
           keyPoints: [
@@ -1608,7 +1608,7 @@ Jadi: TPR bertanya kepada <b>orang sakit</b>, FPR bertanya kepada <b>orang sehat
           duration: "14 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 Di pelajaran "Bagaimana AI Belajar", AI kos memutar empat langkah: <b>tebak → bandingkan → hitung kesalahan → perbaiki kenop</b>. Waktu itu kenopnya kita geser dengan perasaan. Pelajaran ini menjawab dua hal yang tertinggal: <b>bagaimana kesalahan diubah jadi satu angka</b> (loss), dan <b>bagaimana komputer tahu ke mana harus menggeser kenop</b> (gradient descent).
 </div>
 
@@ -1684,10 +1684,10 @@ Contoh deret loss yang konvergen: 0,73 → 0,24 → 0,06 → 0,02 → 0,006 → 
   <tr><td><b>Belum konvergen</b></td><td>Loss masih terus turun saat latihan dihentikan</td><td>Latihan terlalu singkat atau learning rate terlalu kecil</td></tr>
 </table>
 <div class="callout warn">
-<b>⚠️ Konvergen belum tentu bagus.</b> Model bisa berhenti di lembah yang dangkal (bukan yang terdalam), atau konvergen sambil <b>menghafal</b> data latih. Karena itu hasil akhirnya tetap harus diuji dengan data yang belum pernah dilihat model.
+<b>Konvergen belum tentu bagus.</b> Model bisa berhenti di lembah yang dangkal (bukan yang terdalam), atau konvergen sambil <b>menghafal</b> data latih. Karena itu hasil akhirnya tetap harus diuji dengan data yang belum pernah dilihat model.
 </div>
 
-<h3>Coba sendiri — jalankan gradient descent 👇</h3>
+<h3>Coba sendiri — jalankan gradient descent</h3>
 <p>Kode ini mengerjakan tabel di atas secara otomatis. Coba ubah <b>lr</b> menjadi 0.01 atau 1.1, lalu jalankan lagi:</p>
 <div data-demo="js-playground">// Lembah loss = (w - 3)^2, kemiringannya = 2 * (w - 3)
 let w = 0;          // tebakan awal kenop
@@ -1702,7 +1702,7 @@ const lr = 0.1;     // learning rate (besar langkah)
 console.log("=> w mendekati 3 dan loss mendekati 0. Itulah 'belajar'.");</div>
 
 <div class="callout">
-<b>💥 Dampak:</b> proses inilah yang menjalankan pelatihan SEMUA neural network — dari pengenal gambar sampai LLM raksasa seperti Claude. Bedanya hanya skala: bukan 1 kenop w, tapi <b>miliaran kenop</b> yang digeser serentak, masing-masing menurut kemiringannya sendiri.
+<b>Dampak:</b> proses inilah yang menjalankan pelatihan SEMUA neural network — dari pengenal gambar sampai LLM raksasa seperti Claude. Bedanya hanya skala: bukan 1 kenop w, tapi <b>miliaran kenop</b> yang digeser serentak, masing-masing menurut kemiringannya sendiri.
 </div>
 `,
           keyPoints: [
@@ -1758,7 +1758,7 @@ console.log("=> w mendekati 3 dan loss mendekati 0. Itulah 'belajar'.");</div>
           duration: "13 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Parameter</b> adalah kenop angka di dalam model yang digeser oleh gradient descent. AI kos punya satu kenop. Pelajaran ini membahas empat "ukuran" yang selalu muncul saat orang membicarakan model besar seperti ChatGPT atau Claude — dan kenapa keempatnya menentukan <b>kemampuan sekaligus biaya</b>.
 </div>
 
@@ -1789,7 +1789,7 @@ Dikali 10.000 pengguna per hari = <b>Rp2,25 juta per hari</b>. Menghemat panjang
 
 <h3>3. Context window — luas meja kerjanya</h3>
 <div class="callout">
-🗂️ Bayangkan model bekerja di sebuah <b>meja</b>. Semua yang ada di atas meja bisa ia lihat sekaligus: instruksimu, riwayat percakapan, dokumen yang kamu tempel, dan jawaban yang sedang ia tulis. <b>Context window</b> adalah luas meja itu, diukur dalam token. Yang tidak muat di meja tidak bisa ia lihat — bagian percakapan paling lama harus dibuang atau diringkas.
+Bayangkan model bekerja di sebuah <b>meja</b>. Semua yang ada di atas meja bisa ia lihat sekaligus: instruksimu, riwayat percakapan, dokumen yang kamu tempel, dan jawaban yang sedang ia tulis. <b>Context window</b> adalah luas meja itu, diukur dalam token. Yang tidak muat di meja tidak bisa ia lihat — bagian percakapan paling lama harus dibuang atau diringkas.
 </div>
 <p>Inilah alasan chatbot kadang "lupa" hal yang kamu katakan di awal percakapan yang sangat panjang, dan alasan sistem RAG (dibahas di modul Lanjutan) memilih <b>potongan dokumen yang paling relevan saja</b> untuk diletakkan di meja, bukan seluruh arsip.</p>
 
@@ -1805,7 +1805,7 @@ Laptop yang sanggup sekitar 1 triliun operasi per detik butuh kira-kira <b>10.00
 <b>Scaling laws:</b> secara umum, <b>lebih banyak parameter + lebih banyak data + lebih banyak compute → model lebih pintar</b> — tapi juga <b>lebih mahal</b>. Inilah mengapa model tercanggih butuh biaya latih yang sangat besar.
 </div>
 
-<h3>💥 Dampak pada aplikasi</h3>
+<h3>Dampak pada aplikasi</h3>
 <table class="tbl">
   <tr><th>Ukuran</th><th>Yang kamu rasakan saat membangun aplikasi</th></tr>
   <tr><td><b>Token</b></td><td>Menentukan tagihan bulananmu → prompt ringkas dan caching menghemat uang</td></tr>
@@ -1912,7 +1912,7 @@ Laptop yang sanggup sekitar 1 triliun operasi per detik butuh kira-kira <b>10.00
 </table>
 
 <div class="callout warn">
-<b>⚠️ Jebakan yang umum:</b> menunda praktik sampai "matematikanya beres dulu". Banyak orang berhenti di situ. Cara yang lebih berhasil: pelajari secukupnya agar rumus <b>terbaca</b>, lalu kembali ke modul ini setiap kali menemui istilah yang tidak kamu pahami di lapangan.
+<b>Jebakan yang umum:</b> menunda praktik sampai "matematikanya beres dulu". Banyak orang berhenti di situ. Cara yang lebih berhasil: pelajari secukupnya agar rumus <b>terbaca</b>, lalu kembali ke modul ini setiap kali menemui istilah yang tidak kamu pahami di lapangan.
 </div>
 
 <h3>Peta modul ini — apa yang dibuka tiap pelajaran</h3>
@@ -1937,7 +1937,7 @@ Laptop yang sanggup sekitar 1 triliun operasi per detik butuh kira-kira <b>10.00
 </ol>
 
 <div class="callout">
-<b>💡 Cara membaca modul ini.</b> Setiap pelajaran dimulai dari analogi sehari-hari, lalu satu contoh hitung kecil, lalu demo yang bisa kamu geser sendiri. Kalau ada bagian yang terasa berat, lewati dulu bagian rumusnya dan mainkan demonya — sering kali pemahamannya justru datang dari situ.
+<b>Cara membaca modul ini.</b> Setiap pelajaran dimulai dari analogi sehari-hari, lalu satu contoh hitung kecil, lalu demo yang bisa kamu geser sendiri. Kalau ada bagian yang terasa berat, lewati dulu bagian rumusnya dan mainkan demonya — sering kali pemahamannya justru datang dari situ.
 </div>
 `,
           keyPoints: [
@@ -2021,7 +2021,7 @@ Laptop yang sanggup sekitar 1 triliun operasi per detik butuh kira-kira <b>10.00
 <pre class="code">f(3) = 2×3 + 1 = 7
 f(10) = 2×10 + 1 = 21</pre>
 
-<h3>Coba sendiri — lihat "mesin" bekerja 👇</h3>
+<h3>Coba sendiri — lihat "mesin" bekerja</h3>
 <div data-demo="js-playground">// Fungsi itu mesin: masukkan x, keluar f(x)
 function f(x) {
   return 2 * x + 1;   // aturannya: kalikan 2, lalu tambah 1
@@ -2139,7 +2139,7 @@ Huruf kecil <b>i</b> di bawah cuma penanda urutan: a₁, a₂, a₃ = anggota ke
           duration: "15 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 Di pelajaran "Membaca Simbol" kamu belajar bahwa <b>Σ</b> artinya "jumlahkan semuanya". Simbol itu akan muncul lagi di sini. Selebihnya cukup perkalian, penjumlahan, dan akar.
 </div>
 
@@ -2190,7 +2190,7 @@ Dot product dibagi dengan kedua panjangnya, sehingga "angka yang besar-besar" ti
 </table>
 <p>Sekarang Budi menang, persis seperti tebakan mata kita. Nilai cosine berkisar dari <b>−1</b> (arah berlawanan) sampai <b>1</b> (searah sempurna). Karena nilai film kita tidak ada yang negatif, hasilnya di sini selalu antara 0 dan 1.</p>
 
-<h3>Coba sendiri — hitung langkah demi langkah 👇</h3>
+<h3>Coba sendiri — hitung langkah demi langkah</h3>
 <p>Ganti angka selera siapa pun, lalu jalankan lagi. Coba buat seseorang yang seleranya lebih mirip Andi daripada Budi:</p>
 <div data-demo="js-playground">// Selera film: [aksi, komedi, horor]
 const andi  = [5, 1, 0];
@@ -2269,7 +2269,7 @@ console.log("Cosine paling besar = selera paling mirip.");</div>
           duration: "16 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 Di modul Fundamental, lembah loss <b>(w − 3)²</b> dituruni dengan rumus <b>w baru = w lama − learning rate × kemiringan</b>, dan kemiringannya "diberi" begitu saja: <b>2 × (w − 3)</b>. Pelajaran ini membongkar dari mana angka kemiringan itu berasal. Namanya <b>turunan</b>, dan kita akan menemukannya sendiri hanya dengan kalkulator.
 </div>
 
@@ -2338,7 +2338,7 @@ Langkah 2: turunan = 2(0,6 − 3) = −4,8
 
 <h3>Langkah 6 — Aturan rantai: kemiringan yang bersambung</h3>
 <div class="callout">
-⚙️ <b>Analogi roda gigi.</b> Roda A memutar roda B <b>2 kali</b> lebih cepat, dan roda B memutar roda C <b>3 kali</b> lebih cepat. Seberapa cepat C berputar dibanding A? <b>2 × 3 = 6 kali</b>. Kemiringan yang bersambung cukup <b>dikalikan</b>.
+<b>Analogi roda gigi.</b> Roda A memutar roda B <b>2 kali</b> lebih cepat, dan roda B memutar roda C <b>3 kali</b> lebih cepat. Seberapa cepat C berputar dibanding A? <b>2 × 3 = 6 kali</b>. Kemiringan yang bersambung cukup <b>dikalikan</b>.
 </div>
 <p>Contoh dengan angka: y = (3x)². Ada dua tahap: dalam (g = 3x) lalu luar (y = g²).</p>
 <pre class="code">Di x = 1:  g = 3 × 1 = 3
@@ -2405,7 +2405,7 @@ Cek: y = (3x)² = 9x², turunannya 18x → di x = 1 = 18 ✓</pre>
           duration: "13 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 Satu <b>neuron</b> menghitung dot product antara masukan dan bobotnya (pelajaran Vektor), lalu hasilnya diteruskan ke lapisan berikutnya (pelajaran Neural Network: Otak Buatan). Pelajaran ini menjawab pertanyaan yang kelihatannya sepele: <i>kenapa hasil itu tidak langsung diteruskan saja?</i>
 </div>
 
@@ -2451,7 +2451,7 @@ ReLU(5) = 5 &nbsp;•&nbsp; ReLU(0) = 0 &nbsp;•&nbsp; ReLU(−3) = 0
 <b>Inilah jawabannya:</b> fungsi aktivasi menambahkan <b>ketaklinieran</b> — kemampuan untuk berbelok. Tanpanya, jaringan sedalam apa pun hanyalah satu garis lurus yang menyamar.
 </div>
 
-<h3>Coba sendiri — lihat tikungannya muncul 👇</h3>
+<h3>Coba sendiri — lihat tikungannya muncul</h3>
 <div data-demo="js-playground">function relu(z) { return Math.max(0, z); }
 
 console.log("Tanpa aktivasi: dua lapisan h = 2x + 1, y = 3h + 4");
@@ -2528,7 +2528,7 @@ console.log("Naik lalu turun: tikungan yang mustahil dibuat garis lurus.");</div
 
 <h3>Fundamental: aktivasi adalah "keran" di setiap neuron</h3>
 <div class="callout">
-🚰 Setiap neuron menjumlahkan sinyal masuk, lalu melewatkannya ke sebuah <b>keran</b>. Keran itulah fungsi aktivasi. Ia menentukan dua hal:<br><br>
+Setiap neuron menjumlahkan sinyal masuk, lalu melewatkannya ke sebuah <b>keran</b>. Keran itulah fungsi aktivasi. Ia menentukan dua hal:<br><br>
 1. <b>Berapa nilai yang diteruskan ke depan</b> saat model menebak<br>
 2. <b>Berapa besar sinyal perbaikan yang bisa lewat mundur</b> saat model belajar — dan ini ditentukan oleh <b>turunannya</b><br><br>
 Kalau turunannya nyaris nol, keran itu tertutup: sinyal belajar tidak bisa lewat, dan lapisan-lapisan di belakangnya berhenti memperbaiki diri.
@@ -2570,7 +2570,7 @@ Sinyal yang sampai ke lapisan pertama tinggal <b>sepersejuta</b>. Lapisan awal p
 <p>Perubahan sesederhana ini adalah salah satu kunci lompatan deep learning pada 2012, ketika model pengenal gambar AlexNet memakainya dan mengalahkan pendekatan lama secara telak.</p>
 
 <div class="callout warn">
-<b>⚠️ Harga yang dibayar: neuron mati (dead ReLU).</b> Di sisi negatif, keluarannya nol <b>dan</b> turunannya nol. Neuron yang terlanjur selalu menerima nilai negatif tidak akan pernah diperbaiki lagi — ia mati permanen. Penyebab paling sering: <b>learning rate terlalu besar</b> yang mendorong bobot terlalu jauh ke negatif sekaligus.
+<b>Harga yang dibayar: neuron mati (dead ReLU).</b> Di sisi negatif, keluarannya nol <b>dan</b> turunannya nol. Neuron yang terlanjur selalu menerima nilai negatif tidak akan pernah diperbaiki lagi — ia mati permanen. Penyebab paling sering: <b>learning rate terlalu besar</b> yang mendorong bobot terlalu jauh ke negatif sekaligus.
 </div>
 
 <h3>4. Leaky ReLU &amp; GELU — penyempurnaan</h3>
@@ -2601,7 +2601,7 @@ model = keras.Sequential([
 ])</pre>
 
 <div class="callout">
-<b>💡 Jangan tertukar:</b> <b>fungsi aktivasi</b> menentukan bentuk sinyal <i>di dalam</i> jaringan, sedangkan <b>fungsi loss</b> mengukur seberapa salah hasil akhirnya. Keduanya sering disebut bersamaan, tapi perannya berbeda — dan salah memilih salah satunya membuat model gagal belajar dengan gejala yang mirip.
+<b>Jangan tertukar:</b> <b>fungsi aktivasi</b> menentukan bentuk sinyal <i>di dalam</i> jaringan, sedangkan <b>fungsi loss</b> mengukur seberapa salah hasil akhirnya. Keduanya sering disebut bersamaan, tapi perannya berbeda — dan salah memilih salah satunya membuat model gagal belajar dengan gejala yang mirip.
 </div>
 `,
           keyPoints: [
@@ -2670,7 +2670,7 @@ model = keras.Sequential([
           duration: "15 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Loss</b> = satu angka yang mengatakan seberapa salah model, dan selisih dikuadratkan agar kesalahan ke atas dan ke bawah tidak saling menghapus (modul Fundamental). <b>Σ</b> artinya "jumlahkan semua", dan <b>ŷ</b> (y topi) artinya tebakan model (Membaca Simbol). Pelajaran ini menyusun keduanya menjadi rumus loss yang benar-benar dipakai — satu untuk <b>menebak angka</b>, satu untuk <b>menebak kategori</b>.
 </div>
 
@@ -2725,7 +2725,7 @@ Kalau tanda minusnya hanya dibuang lalu dirata-rata, hasilnya (10 + 10 + 30) ÷ 
 Di sini <b>y</b> bernilai <b>1</b> untuk kategori yang benar dan <b>0</b> untuk yang lain. Karena dikali 0, semua suku lain hilang — tinggal −log(peluang jawaban benar), persis seperti tabel di atas.
 </div>
 
-<h3>Coba sendiri — softmax lalu cross-entropy 👇</h3>
+<h3>Coba sendiri — softmax lalu cross-entropy</h3>
 <p>Ubah skornya, atau ganti kategori yang benar, lalu lihat hukumannya berubah:</p>
 <div data-demo="js-playground">const nama = ["kucing", "anjing", "burung"];
 const skor = [2.0, 1.0, 0.1];
@@ -2806,7 +2806,7 @@ console.log("Loss (cross-entropy) = -log(" + peluang[benar].toFixed(3) + ") = " 
           duration: "15 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Peluang = hasil yang diinginkan ÷ semua hasil yang mungkin</b> (modul Dasar), dan precision bisa anjlok ketika kasusnya langka (modul Fundamental). Pelajaran ini memberi alasan matematis di balik keduanya — dimulai dengan <b>menghitung</b>, baru kemudian rumus.
 </div>
 
@@ -3031,7 +3031,7 @@ console.log(hasil);     // hasil: 32</pre>
 </ol>
 
 <div class="callout">
-<b>💡 Kabar baik:</b> playground di platform ini memakai <b>JavaScript</b>, jadi kamu sudah berlatih logika pemrograman sejak pelajaran pertama — perulangan, kondisi, fungsi. Konsepnya <b>sama persis</b> di Python, hanya cara menulisnya sedikit berbeda. Kamu tidak mulai dari nol.
+<b>Kabar baik:</b> playground di platform ini memakai <b>JavaScript</b>, jadi kamu sudah berlatih logika pemrograman sejak pelajaran pertama — perulangan, kondisi, fungsi. Konsepnya <b>sama persis</b> di Python, hanya cara menulisnya sedikit berbeda. Kamu tidak mulai dari nol.
 </div>
 `,
           keyPoints: [
@@ -3116,7 +3116,7 @@ print(df["omzet"].sum())               # jumlahkan
 print(df.groupby("cabang").sum())      # ringkas per cabang</pre>
 
 <div class="callout warn">
-<b>📊 Penting untukmu.</b> pandas bukan hanya alat AI — ini juga <b>alat terbaik untuk menganalisis laporan keuangan</b>. Menghitung rasio ratusan perusahaan, membandingkan P/E antar-pesaing, melacak arus kas bertahun-tahun — semua yang kamu pelajari di jalur Akuntansi bisa diotomatiskan di sini. Satu pustaka, dua jalur belajar sekaligus.
+<b>Penting untukmu.</b> pandas bukan hanya alat AI — ini juga <b>alat terbaik untuk menganalisis laporan keuangan</b>. Menghitung rasio ratusan perusahaan, membandingkan P/E antar-pesaing, melacak arus kas bertahun-tahun — semua yang kamu pelajari di jalur Akuntansi bisa diotomatiskan di sini. Satu pustaka, dua jalur belajar sekaligus.
 </div>
 
 <h3>Coba rasakan cara berpikirnya</h3>
@@ -3170,7 +3170,7 @@ hasil = model.predict(X_test)      # 3. ramalkan data baru</pre>
 </table>
 
 <div class="callout warn">
-<b>⚠️ Jangan terjebak "belajar semua pustaka".</b> Kuasai <b>pandas</b> dulu sampai lancar — itu 80% pekerjaan nyata seorang praktisi AI. Melatih model sering hanya 20% sisanya. Pemula sering terbalik: buru-buru ke model, padahal datanya belum rapi.
+<b>Jangan terjebak "belajar semua pustaka".</b> Kuasai <b>pandas</b> dulu sampai lancar — itu 80% pekerjaan nyata seorang praktisi AI. Melatih model sering hanya 20% sisanya. Pemula sering terbalik: buru-buru ke model, padahal datanya belum rapi.
 </div>
 `,
           keyPoints: [
@@ -3312,7 +3312,7 @@ Proyek A butuh pustaka versi 1.0, proyek B butuh versi 2.0. Kalau semua dipasang
 </table>
 
 <div class="callout">
-<b>💡 Kunci yang sering diabaikan:</b> pakai <b>datamu sendiri</b> — catatan keuangan, data penjualan, apa pun yang kamu pedulikan. Belajar dengan data yang kamu mengerti membuat hasilnya bermakna, dan kamu langsung tahu kalau hasilnya keliru. Itu jauh lebih cepat daripada mengikuti tutorial dengan data asing.
+<b>Kunci yang sering diabaikan:</b> pakai <b>datamu sendiri</b> — catatan keuangan, data penjualan, apa pun yang kamu pedulikan. Belajar dengan data yang kamu mengerti membuat hasilnya bermakna, dan kamu langsung tahu kalau hasilnya keliru. Itu jauh lebih cepat daripada mengikuti tutorial dengan data asing.
 </div>
 `,
           keyPoints: [
@@ -3436,7 +3436,7 @@ sns.scatterplot(data=df, x="pengalaman", y="gaji", hue="divisi")</pre>
 Tiga grafik ini sering menemukan masalah data lebih cepat daripada berjam-jam mengutak-atik model.
 </div>
 
-<h3>🚩 Kesalahan visualisasi yang sering terjadi</h3>
+<h3>Kesalahan visualisasi yang sering terjadi</h3>
 <table class="tbl">
   <tr><th>Kesalahan</th><th>Kenapa menyesatkan</th></tr>
   <tr><td>Sumbu Y tidak mulai dari nol pada diagram batang</td><td>Selisih kecil terlihat dramatis. Untuk batang, mulailah dari nol</td></tr>
@@ -3556,7 +3556,7 @@ Tiga grafik ini sering menemukan masalah data lebih cepat daripada berjam-jam me
 <br><br><b>Solusinya:</b> <b>penskalaan</b> — semua fitur disamakan rentangnya (mis. dijadikan 0–1) agar dibandingkan dengan adil.
 </div>
 
-<h3>Coba sendiri — lihat efek penskalaan 👇</h3>
+<h3>Coba sendiri — lihat efek penskalaan</h3>
 <div data-demo="js-playground">// Penskalaan Min-Max: ubah semua nilai ke rentang 0 sampai 1
 // Rumus: (nilai - terkecil) / (terbesar - terkecil)
 
@@ -3742,7 +3742,7 @@ X_latih, X_uji, y_latih, y_uji = train_test_split(
     X, y, test_size=0.2, random_state=42)</pre>
 
 <div class="callout warn">
-<b>⚠️ Kenapa wajib dipisah?</b> Menguji model dengan data yang dipakai melatihnya sama seperti <b>memberi ujian dengan soal yang bocor</b>. Nilainya pasti bagus, tapi tidak berarti apa-apa.<br><br>
+<b>Kenapa wajib dipisah?</b> Menguji model dengan data yang dipakai melatihnya sama seperti <b>memberi ujian dengan soal yang bocor</b>. Nilainya pasti bagus, tapi tidak berarti apa-apa.<br><br>
 <b>Data uji harus disentuh sekali saja</b> — di paling akhir. Kalau kamu berkali-kali mengubah model sampai nilainya di data uji bagus, kamu sedang menyontek secara tidak sadar: data uji itu pelan-pelan berubah menjadi data latih.
 </div>
 
@@ -3780,7 +3780,7 @@ pipa.fit(X_latih, y_latih)
 print(pipa.score(X_uji, y_uji))</pre>
 
 <div class="callout warn">
-<b>🚩 Pipeline bukan sekadar kerapian — ia mencegah kebocoran data.</b><br><br>
+<b>Pipeline bukan sekadar kerapian — ia mencegah kebocoran data.</b><br><br>
 Kalau kamu menskalakan <b>seluruh</b> data sebelum memisahkannya, maka rata-rata yang dipakai penskala <b>sudah mengandung informasi dari data uji</b>. Modelmu jadi terlihat lebih pintar dari kenyataannya, lalu mengecewakan saat dipakai sungguhan.<br><br>
 Pipeline menghitung ulang penskalaan <b>hanya dari data latih</b> di setiap lipatan. Inilah alasan sesungguhnya ia dipakai praktisi.
 </div>
@@ -3796,7 +3796,7 @@ print(skor.mean(), skor.std())</pre>
 <p>Yang penting bukan hanya rata-ratanya, tapi juga <b>simpangannya</b>. Rata-rata 85% dengan simpangan 2% jauh lebih dipercaya daripada rata-rata 85% dengan simpangan 15%.</p>
 
 <div class="callout warn">
-<b>⚠️ Jebakan akurasi.</b> Bayangkan mendeteksi penipuan kartu kredit di mana hanya <b>1 dari 1.000</b> transaksi yang menipu. Model yang selalu menjawab "tidak menipu" mendapat akurasi <b>99,9%</b> — dan sama sekali tidak berguna.<br><br>
+<b>Jebakan akurasi.</b> Bayangkan mendeteksi penipuan kartu kredit di mana hanya <b>1 dari 1.000</b> transaksi yang menipu. Model yang selalu menjawab "tidak menipu" mendapat akurasi <b>99,9%</b> — dan sama sekali tidak berguna.<br><br>
 Karena itu pakai <b>precision</b> (dari yang ditandai menipu, berapa yang benar?) dan <b>recall</b> (dari semua penipuan, berapa yang tertangkap?). Di scikit-learn keduanya langsung tersedia:
 </div>
 
@@ -3817,7 +3817,7 @@ print(classification_report(y_uji, y_tebak))</pre>
 </table>
 
 <div class="callout">
-<b>💡 Urutan kerja yang disarankan:</b> mulai dari model paling sederhana sebagai <b>pembanding dasar</b> (baseline). Kalau LogisticRegression sudah memberi 88%, dan model rumit hanya memberi 89%, pilih yang sederhana — lebih cepat, lebih mudah dijelaskan, lebih sedikit yang bisa rusak.
+<b>Urutan kerja yang disarankan:</b> mulai dari model paling sederhana sebagai <b>pembanding dasar</b> (baseline). Kalau LogisticRegression sudah memberi 88%, dan model rumit hanya memberi 89%, pilih yang sederhana — lebih cepat, lebih mudah dijelaskan, lebih sedikit yang bisa rusak.
 </div>
 `,
           keyPoints: [
@@ -3927,7 +3927,7 @@ Regresi linear menebak <b>angka</b> — harga rumah, omzet bulan depan, lama pen
 <p>Kemiringan <b>a</b> bukan sekadar angka matematika. Kalau a = 7,8, artinya: <b>tiap tambahan 1 m², harga naik sekitar Rp7,8 juta</b>. Inilah alasan regresi linear disukai analis — hasilnya bisa diceritakan.</p>
 
 <div class="callout warn">
-<b>⚠️ Tapi hati-hati: hubungan bukan sebab-akibat.</b> Regresi hanya menemukan bahwa dua hal bergerak bersama. Penjualan es krim dan kasus tenggelam naik bersamaan — bukan karena es krim menyebabkan tenggelam, melainkan karena keduanya naik saat musim panas. Koefisien yang besar tidak membuktikan x <i>menyebabkan</i> y.
+<b>Tapi hati-hati: hubungan bukan sebab-akibat.</b> Regresi hanya menemukan bahwa dua hal bergerak bersama. Penjualan es krim dan kasus tenggelam naik bersamaan — bukan karena es krim menyebabkan tenggelam, melainkan karena keduanya naik saat musim panas. Koefisien yang besar tidak membuktikan x <i>menyebabkan</i> y.
 </div>
 
 <h3>Lebih dari satu faktor: regresi berganda</h3>
@@ -3965,7 +3965,7 @@ lasso = Lasso(alpha=0.1).fit(X_latih, y_latih)
 print(lasso.coef_)        # sebagian bisa bernilai 0 = faktor dibuang</pre>
 
 <div class="callout">
-<b>💡 Kenapa masih penting di era deep learning?</b> Karena ia <b>cepat, bisa dijelaskan, dan jadi pembanding dasar</b>. Kalau model rumitmu tidak jauh lebih baik daripada regresi linear, gunakan regresi linear. Banyak keputusan kredit dan penetapan harga resmi justru mensyaratkan model yang bisa dijelaskan seperti ini.
+<b>Kenapa masih penting di era deep learning?</b> Karena ia <b>cepat, bisa dijelaskan, dan jadi pembanding dasar</b>. Kalau model rumitmu tidak jauh lebih baik daripada regresi linear, gunakan regresi linear. Banyak keputusan kredit dan penetapan harga resmi justru mensyaratkan model yang bisa dijelaskan seperti ini.
 </div>
 `,
           keyPoints: [
@@ -4065,7 +4065,7 @@ Solusinya: hitung skor seperti regresi linear, lalu <b>tekan hasilnya ke rentang
 </table>
 
 <div class="callout warn">
-<b>⚠️ Ambang 0,5 bukan aturan.</b> Itu hanya nilai bawaan. Memakai 0,5 begitu saja pada kasus kredit atau medis adalah keputusan bisnis yang diambil tanpa sadar. Hubungkan dengan pelajaran <b>precision &amp; recall</b>: ambang adalah tuas yang menggeser keseimbangan keduanya.
+<b>Ambang 0,5 bukan aturan.</b> Itu hanya nilai bawaan. Memakai 0,5 begitu saja pada kasus kredit atau medis adalah keputusan bisnis yang diambil tanpa sadar. Hubungkan dengan pelajaran <b>precision &amp; recall</b>: ambang adalah tuas yang menggeser keseimbangan keduanya.
 </div>
 
 <h3>Kenapa bank menyukainya</h3>
@@ -4338,7 +4338,7 @@ svm.fit(X_latih, y_latih)</pre>
 <b>Umpan balik:</b> setiap klik & durasi tontonanmu jadi <b>data latih</b> yang terus menyempurnakan rekomendasi. Makin kamu pakai, makin ia "mengenalmu".
 </div>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <ul>
   <li>👍 Sangat kuat untuk <b>keterlibatan (engagement)</b> & penjualan.</li>
   <li>👎 Risiko: <b>filter bubble</b> (hanya melihat yang serupa), kecanduan, dan penguatan bias.</li>
@@ -4405,7 +4405,7 @@ svm.fit(X_latih, y_latih)</pre>
 <b>Inti peramalan:</b> pisahkan <b>pola</b> (tren + musiman) dari <b>keributan</b> (noise), lalu proyeksikan polanya ke depan.
 </div>
 
-<h3>Coba sendiri — ramalan sederhana 👇</h3>
+<h3>Coba sendiri — ramalan sederhana</h3>
 <div data-demo="js-playground">// Peramalan sederhana: rata-rata bergerak (moving average)
 const penjualan = [100, 120, 115, 130, 125, 140, 135, 150];
 const periode = 3;
@@ -4655,7 +4655,7 @@ Tapi kalau ke-100 orang itu <b>membaca satu iklan yang sama</b> sebelum menebak,
 </table>
 
 <div class="callout">
-<b>💡 Perbedaan penting dengan boosting:</b> di Random Forest, pohon tambahan dilatih <b>terpisah</b> lalu dirata-rata, jadi menambah pohon tidak membuat model menghafal. Di boosting (pelajaran berikutnya), pohon dilatih <b>berurutan</b> untuk mengejar kesalahan — di sana terlalu banyak pohon justru berbahaya.
+<b>Perbedaan penting dengan boosting:</b> di Random Forest, pohon tambahan dilatih <b>terpisah</b> lalu dirata-rata, jadi menambah pohon tidak membuat model menghafal. Di boosting (pelajaran berikutnya), pohon dilatih <b>berurutan</b> untuk mengejar kesalahan — di sana terlalu banyak pohon justru berbahaya.
 </div>
 
 <pre class="code">from sklearn.ensemble import RandomForestClassifier
@@ -4676,7 +4676,7 @@ print(model.oob_score_)
 hasil = permutation_importance(model, X_validasi, y_validasi, n_repeats=10, random_state=42)
 print(hasil.importances_mean)</pre>
 
-<h3>🚩 Dua jebakan yang sering terjadi</h3>
+<h3>Dua jebakan yang sering terjadi</h3>
 <ol>
   <li><b>Feature importance bawaan bias.</b> <i>feature_importances_</i> cenderung melebih-lebihkan kolom dengan banyak nilai unik (misalnya nomor ID atau angka kontinu). Pakai <b>permutation importance</b> pada data validasi: acak satu kolom, lihat seberapa besar skornya turun.</li>
   <li><b>Tidak bisa menebak di luar jangkauan data.</b> Tebakan pohon adalah rata-rata isi daunnya. Kalau harga tertinggi di data latih Rp2 miliar, Random Forest tidak akan pernah menebak Rp3 miliar — walau trennya jelas naik. Untuk data yang terus tumbuh seperti omzet, ini kelemahan serius.</li>
@@ -4868,7 +4868,7 @@ model.fit(X_latih, y_latih, eval_set=[(X_validasi, y_validasi)], verbose=False)
 print(model.best_iteration)     # jumlah pohon yang benar-benar dipakai</pre>
 
 <div class="callout warn">
-<b>⚠️ Jebakan halus:</b> data yang dipakai untuk early stopping <b>sudah memengaruhi model</b>. Karena itu jangan memakai data uji sebagai <i>eval_set</i> — hasil akhirnya akan terlihat lebih bagus dari kenyataan. Siapkan <b>tiga</b> bagian data: latih, validasi, uji — persis seperti di pelajaran Melatih Model dengan Benar.
+<b>Jebakan halus:</b> data yang dipakai untuk early stopping <b>sudah memengaruhi model</b>. Karena itu jangan memakai data uji sebagai <i>eval_set</i> — hasil akhirnya akan terlihat lebih bagus dari kenyataan. Siapkan <b>tiga</b> bagian data: latih, validasi, uji — persis seperti di pelajaran Melatih Model dengan Benar.
 </div>
 
 <h3>Membaca "feature importance" dengan hati-hati</h3>
@@ -4889,7 +4889,7 @@ print(model.best_iteration)     # jumlah pohon yang benar-benar dipakai</pre>
 </ol>
 
 <div class="callout">
-<b>💡 Urutan kerja yang disarankan:</b> mulai dari regresi logistik sebagai pembanding → XGBoost dengan pengaturan bawaan + early stopping → baru setel beberapa pengaturan utama. Kalau XGBoost hanya menang tipis dari regresi logistik, pertimbangkan model yang lebih sederhana dan lebih mudah dijelaskan. LightGBM dan CatBoost bekerja dengan cara serupa — dibahas setelah pelajaran ini.
+<b>Urutan kerja yang disarankan:</b> mulai dari regresi logistik sebagai pembanding → XGBoost dengan pengaturan bawaan + early stopping → baru setel beberapa pengaturan utama. Kalau XGBoost hanya menang tipis dari regresi logistik, pertimbangkan model yang lebih sederhana dan lebih mudah dijelaskan. LightGBM dan CatBoost bekerja dengan cara serupa — dibahas setelah pelajaran ini.
 </div>
 `,
           keyPoints: [
@@ -4978,7 +4978,7 @@ LightGBM mengelompokkan nilai ke dalam sekitar <b>255 ember</b> (histogram) lebi
 </table>
 
 <div class="callout warn">
-<b>⚠️ Aturan praktis LightGBM:</b> jaga <b>num_leaves lebih kecil dari 2 pangkat max_depth</b>. Pohon sedalam 7 bisa punya 128 daun; memasang num_leaves = 128 membuat pohon leaf-wise bebas menjorok sangat dalam. Mulailah dari 31 (bawaannya), dan naikkan <b>min_child_samples</b> bila datamu hanya ribuan baris.
+<b>Aturan praktis LightGBM:</b> jaga <b>num_leaves lebih kecil dari 2 pangkat max_depth</b>. Pohon sedalam 7 bisa punya 128 daun; memasang num_leaves = 128 membuat pohon leaf-wise bebas menjorok sangat dalam. Mulailah dari 31 (bawaannya), dan naikkan <b>min_child_samples</b> bila datamu hanya ribuan baris.
 </div>
 
 <h3>3. Dua trik kecepatan lain di LightGBM</h3>
@@ -5028,7 +5028,7 @@ model = CatBoostClassifier(
 model.fit(X_latih, y_latih, eval_set=(X_validasi, y_validasi))</pre>
 
 <div class="callout">
-<b>💡 Yang jarang dikatakan:</b> pada kebanyakan data nyata, selisih akurasi ketiganya <b>kecil</b>. Kualitas kolom yang kamu siapkan, pembagian data yang jujur, dan early stopping jauh lebih menentukan daripada memilih pustaka yang "paling juara".
+<b>Yang jarang dikatakan:</b> pada kebanyakan data nyata, selisih akurasi ketiganya <b>kecil</b>. Kualitas kolom yang kamu siapkan, pembagian data yang jujur, dan early stopping jauh lebih menentukan daripada memilih pustaka yang "paling juara".
 </div>
 `,
           keyPoints: [
@@ -5106,7 +5106,7 @@ Titik yang janggal letaknya jauh dari kerumunan, sehingga <b>sedikit potongan ac
 </div>
 
 <div class="callout warn">
-🎯 <b>Analogi tebak-tebakan.</b> Di sebuah kelas, kamu menebak siapa yang dimaksud dengan pertanyaan acak: "tingginya di atas 170 cm?", "rambutnya panjang?". Orang yang sangat unik — tingginya 195 cm — ketahuan hanya dalam satu atau dua pertanyaan. Orang dengan ciri rata-rata butuh banyak pertanyaan. Jumlah pertanyaan itulah skor kejanggalannya.
+<b>Analogi tebak-tebakan.</b> Di sebuah kelas, kamu menebak siapa yang dimaksud dengan pertanyaan acak: "tingginya di atas 170 cm?", "rambutnya panjang?". Orang yang sangat unik — tingginya 195 cm — ketahuan hanya dalam satu atau dua pertanyaan. Orang dengan ciri rata-rata butuh banyak pertanyaan. Jumlah pertanyaan itulah skor kejanggalannya.
 </div>
 
 <h3>Lihat hutannya bekerja</h3>
@@ -5140,7 +5140,7 @@ skor = model.decision_function(X_transaksi) # makin kecil makin janggal</pre>
   <tr><td><b>Keamanan jaringan</b></td><td>Pola akses yang tidak biasa</td></tr>
 </table>
 
-<h3>🚩 Batas yang wajib dipahami</h3>
+<h3>Batas yang wajib dipahami</h3>
 <ol>
   <li><b>Janggal bukan berarti curang.</b> Pembelian besar saat liburan itu janggal, tapi sah. Hasilnya adalah <b>daftar untuk diperiksa manusia</b>, bukan vonis — persis prinsip heuristik di modul Forensik jalur Crypto.</li>
   <li><b>Penipu yang meniru pola normal tidak tertangkap.</b> Penipuan kecil-kecil yang berulang dengan pola wajar justru lolos.</li>
@@ -5222,7 +5222,7 @@ Bayangkan data pelanggan dengan 50 kolom. Mustahil digambar, dan banyak kolomnya
 </div>
 
 <div class="callout warn">
-🔦 <b>Analogi bayangan.</b> Benda tiga dimensi bisa diwakili bayangan dua dimensi. Kalau senter diarahkan dari sudut yang tepat, bayangan sebuah sepeda masih jelas terlihat sebagai sepeda. Dari sudut yang salah, ia hanya garis. PCA mencari <b>sudut senter terbaik</b> — arah yang membuat bayangan paling informatif.
+<b>Analogi bayangan.</b> Benda tiga dimensi bisa diwakili bayangan dua dimensi. Kalau senter diarahkan dari sudut yang tepat, bayangan sebuah sepeda masih jelas terlihat sebagai sepeda. Dari sudut yang salah, ia hanya garis. PCA mencari <b>sudut senter terbaik</b> — arah yang membuat bayangan paling informatif.
 </div>
 
 <table class="tbl">
@@ -5266,7 +5266,7 @@ Cara kerjanya: titik yang punya cukup banyak tetangga dalam jarak tertentu diang
 </table>
 
 <div class="callout warn">
-<b>⚠️ Aturan yang paling sering dilanggar:</b> selalu mulai dari kolom <b>"Mulai dari"</b>. Model sederhana memberi <b>pembanding</b>. Tanpa pembanding, kamu tidak pernah tahu apakah model rumitmu benar-benar lebih baik — atau hanya lebih rumit.
+<b>Aturan yang paling sering dilanggar:</b> selalu mulai dari kolom <b>"Mulai dari"</b>. Model sederhana memberi <b>pembanding</b>. Tanpa pembanding, kamu tidak pernah tahu apakah model rumitmu benar-benar lebih baik — atau hanya lebih rumit.
 </div>
 
 <div class="callout">
@@ -5375,7 +5375,7 @@ Kalau aktivasinya sigmoid, satu neuron ini <b>persis sama</b> dengan regresi log
 
 <h3>3. Mundur (backpropagation) — mencari siapa yang salah</h3>
 <div class="callout">
-🍜 <b>Analogi warung.</b> Pelanggan mengeluh kuahnya terlalu asin. Pemilik tidak memecat semua orang — ia menelusuri mundur: pelayan hanya mengantar (andil kecil), juru masak menambah garam (andil besar), pemasok kaldu mengirim kaldu yang sudah asin (andil sedang). Tiap orang mendapat <b>porsi kesalahan sesuai pengaruhnya</b>, lalu masing-masing memperbaiki diri sedikit.<br><br>
+<b>Analogi warung.</b> Pelanggan mengeluh kuahnya terlalu asin. Pemilik tidak memecat semua orang — ia menelusuri mundur: pelayan hanya mengantar (andil kecil), juru masak menambah garam (andil besar), pemasok kaldu mengirim kaldu yang sudah asin (andil sedang). Tiap orang mendapat <b>porsi kesalahan sesuai pengaruhnya</b>, lalu masing-masing memperbaiki diri sedikit.<br><br>
 Backpropagation melakukan hal yang sama pada ribuan bobot sekaligus, memakai <b>aturan rantai</b> dari modul Matematika: andil sebuah bobot = pengaruhnya ke lapisan berikutnya × andil lapisan berikutnya terhadap loss.
 </div>
 
@@ -5567,7 +5567,7 @@ Di sinilah model sungguhan menang: ia belajar <b>konteks</b>, bukan sekadar meng
 </table>
 
 <div class="callout">
-<b>💡 Saran jujur:</b> mulailah dari <b>memanggil API</b>. Sebagian besar produk AI yang sukses tidak melatih model sendiri — nilainya ada pada <b>masalah yang dipecahkan</b>, bukan pada modelnya. Melatih model dari nol adalah pilihan terakhir, bukan pertama.
+<b>Saran jujur:</b> mulailah dari <b>memanggil API</b>. Sebagian besar produk AI yang sukses tidak melatih model sendiri — nilainya ada pada <b>masalah yang dipecahkan</b>, bukan pada modelnya. Melatih model dari nol adalah pilihan terakhir, bukan pertama.
 </div>
 `,
           keyPoints: [
@@ -5818,7 +5818,7 @@ Konsekuensinya: pertanyaan "TensorFlow atau PyTorch?" kini <b>tidak sepenting du
 </table>
 
 <div class="callout">
-⚽ <b>Analogi dropout.</b> Pelatih sepak bola mengistirahatkan pemain secara acak setiap sesi latihan. Tim tidak bisa terus bergantung pada satu bintang, sehingga semua pemain terpaksa ikut mampu. Saat pertandingan sungguhan, semua pemain turun — dan tim menjadi lebih tangguh. Karena itu dropout <b>hanya aktif saat latihan</b>.
+<b>Analogi dropout.</b> Pelatih sepak bola mengistirahatkan pemain secara acak setiap sesi latihan. Tim tidak bisa terus bergantung pada satu bintang, sehingga semua pemain terpaksa ikut mampu. Saat pertandingan sungguhan, semua pemain turun — dan tim menjadi lebih tangguh. Karena itu dropout <b>hanya aktif saat latihan</b>.
 </div>
 
 <pre class="code">from tensorflow import keras
@@ -6141,7 +6141,7 @@ Perkiraan baru = 6 + (8 − 6) ÷ 4 = <b>6,5</b>
 </table>
 
 <div class="callout warn">
-<b>💡 Kamu bertemu masalah bandit setiap hari tanpa sadar.</b> Aplikasi berita memilih judul mana yang ditampilkan, toko daring memilih promo mana yang diuji, dan iklan memilih gambar mana yang dipasang — semuanya menyeimbangkan "yang sudah terbukti laku" dengan "yang belum dicoba". Banyak perusahaan menjalankan algoritma bandit, bukan sekadar uji A/B biasa.
+<b>Kamu bertemu masalah bandit setiap hari tanpa sadar.</b> Aplikasi berita memilih judul mana yang ditampilkan, toko daring memilih promo mana yang diuji, dan iklan memilih gambar mana yang dipasang — semuanya menyeimbangkan "yang sudah terbukti laku" dengan "yang belum dicoba". Banyak perusahaan menjalankan algoritma bandit, bukan sekadar uji A/B biasa.
 </div>
 
 <h3>Tantangan 2: untung sekarang atau untung nanti?</h3>
@@ -6273,7 +6273,7 @@ Angka itu disebut <b>nilai Q</b> (Q dari <i>quality</i>). Awalnya semua angka no
 </table>
 
 <div class="callout warn">
-<b>⚠️ Pelajaran penting dari tepi jurang.</b> Jalan terbaik yang ditemukan robot berada <b>tepat di sebelah lubang</b> — karena itulah jalan terpendek. Tapi selama latihan, ε membuat robot sesekali melangkah acak, dan langkah acak di tepi lubang berakibat fatal. Q-learning mempelajari jalan terbaik <i>seandainya robot tidak pernah salah langkah</i>, bukan jalan teraman untuk robot yang masih belajar.<br><br>
+<b>Pelajaran penting dari tepi jurang.</b> Jalan terbaik yang ditemukan robot berada <b>tepat di sebelah lubang</b> — karena itulah jalan terpendek. Tapi selama latihan, ε membuat robot sesekali melangkah acak, dan langkah acak di tepi lubang berakibat fatal. Q-learning mempelajari jalan terbaik <i>seandainya robot tidak pernah salah langkah</i>, bukan jalan teraman untuk robot yang masih belajar.<br><br>
 Varian lain bernama <b>SARSA</b> ikut memperhitungkan langkah acaknya sendiri, sehingga cenderung memilih jalan yang menjauhi lubang. Di dunia nyata, inilah alasan robot dan mobil otonom dilatih di <b>simulasi</b> dulu: jatuh ribuan kali di dunia maya itu murah.
 </div>
 
@@ -6404,7 +6404,7 @@ Cara belajarnya tetap sama persis dengan pelajaran sebelumnya: hitung target, uk
 </table>
 
 <div class="callout">
-<b>♟️ Kenapa self-play begitu ampuh?</b> Lawan selalu setara: setiap kali agen membaik, lawannya — dirinya sendiri — ikut membaik. Agen tidak dibatasi oleh kebiasaan manusia, sehingga AlphaGo sempat memainkan langkah ke-37 yang awalnya dianggap aneh oleh para ahli, lalu terbukti jenius.
+<b>Kenapa self-play begitu ampuh?</b> Lawan selalu setara: setiap kali agen membaik, lawannya — dirinya sendiri — ikut membaik. Agen tidak dibatasi oleh kebiasaan manusia, sehingga AlphaGo sempat memainkan langkah ke-37 yang awalnya dianggap aneh oleh para ahli, lalu terbukti jenius.
 </div>
 
 <h3>Menghubungkan ke chatbot: RLHF</h3>
@@ -6419,7 +6419,7 @@ Cara belajarnya tetap sama persis dengan pelajaran sebelumnya: hitung target, uk
 </table>
 
 <div class="callout warn">
-<b>⚠️ Reward hacking muncul lagi di sini.</b> Model penilai hanyalah tiruan selera manusia, bukan selera manusia itu sendiri. Chatbot bisa belajar "mengakali" penilainya — misalnya menjawab terlalu panjang atau terlalu memuji — karena itu yang disukai penilai. Karena itu pelatihannya diberi rem agar model tidak menjauh terlalu jauh dari perilaku awalnya.
+<b>Reward hacking muncul lagi di sini.</b> Model penilai hanyalah tiruan selera manusia, bukan selera manusia itu sendiri. Chatbot bisa belajar "mengakali" penilainya — misalnya menjawab terlalu panjang atau terlalu memuji — karena itu yang disukai penilai. Karena itu pelatihannya diberi rem agar model tidak menjauh terlalu jauh dari perilaku awalnya.
 </div>
 
 <p>Tren terbaru memperluas ide ini: model penalaran dilatih dengan RL pada soal yang jawabannya <b>bisa diperiksa otomatis</b> — soal matematika yang hasilnya bisa dicocokkan, atau kode yang bisa dijalankan dan diuji. Reward-nya bukan lagi selera manusia, melainkan "jawabannya benar atau tidak".</p>
@@ -6435,7 +6435,7 @@ Cara belajarnya tetap sama persis dengan pelajaran sebelumnya: hitung target, uk
 </table>
 
 <div class="callout">
-<b>💡 Pegangan praktis:</b> kalau kamu punya data berisi jawaban yang benar, pakai <b>supervised learning</b> — jauh lebih murah dan stabil. Pakai RL bila keputusan <b>berurutan</b>, akibatnya <b>tertunda</b>, dan tidak ada yang bisa memberi kunci jawaban. Untuk keputusan satu langkah seperti memilih promo atau judul berita, algoritma <b>bandit</b> dari pelajaran pertama modul ini sering sudah cukup.
+<b>Pegangan praktis:</b> kalau kamu punya data berisi jawaban yang benar, pakai <b>supervised learning</b> — jauh lebih murah dan stabil. Pakai RL bila keputusan <b>berurutan</b>, akibatnya <b>tertunda</b>, dan tidak ada yang bisa memberi kunci jawaban. Untuk keputusan satu langkah seperti memilih promo atau judul berita, algoritma <b>bandit</b> dari pelajaran pertama modul ini sering sudah cukup.
 </div>
 `,
           keyPoints: [
@@ -6585,7 +6585,7 @@ Cara belajarnya tetap sama persis dengan pelajaran sebelumnya: hitung target, uk
 <b>Analogi:</b> seperti pematung yang "menghapus" bagian tak perlu sampai patung muncul — tapi di sini yang dihapus adalah <b>noise</b>, dan panduannya adalah <b>kata-katamu</b>.
 </div>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <ul>
   <li>👍 Alat kreatif dahsyat: desain, ilustrasi, prototipe cepat.</li>
   <li>👎 Kekhawatiran nyata: <b>deepfake</b>, hak cipta (dilatih dari karya orang), dan dampak pada pekerjaan kreatif.</li>
@@ -6733,7 +6733,7 @@ Keduanya berlatih bersamaan: pemalsu makin pintar memalsukan, polisi makin jeli 
 
 <p><b>Constitutional AI</b> (pendekatan Anthropic) menambahkan seperangkat prinsip/"konstitusi" agar AI bisa mengoreksi diri menuju jawaban yang lebih aman.</p>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <ul>
   <li>Alignment adalah inti <b>keamanan AI</b> — makin kuat AI, makin penting.</li>
   <li>Belum sempurna: masih ada <b>jailbreak</b> (mengakali aturan) & kadang <b>terlalu menolak</b> hal wajar.</li>
@@ -6796,7 +6796,7 @@ Suara adalah <b>getaran udara</b>. Mikrofon mengubahnya jadi gelombang, lalu kom
 <p>Model <b>multimodal</b> memahami teks, gambar, <b>dan</b> suara sekaligus. Kamu bisa memperlihatkan foto sambil bertanya lewat suara, dan ia menjawab dengan teks — mendekati cara manusia memakai banyak indra bersamaan.</p>
 
 <div class="callout warn">
-<b>⚠️ Bahaya nyata: penipuan suara.</b> Voice cloning kini butuh sampel suara sangat singkat. Modus yang marak: penipu meniru suara <b>anggota keluarga</b> lalu menelepon meminta uang darurat.
+<b>Bahaya nyata: penipuan suara.</b> Voice cloning kini butuh sampel suara sangat singkat. Modus yang marak: penipu meniru suara <b>anggota keluarga</b> lalu menelepon meminta uang darurat.
 <br><br><b>Cara melindungi diri:</b>
 <ul>
   <li>Sepakati <b>kata sandi keluarga</b> untuk situasi darurat.</li>
@@ -6910,7 +6910,7 @@ Suara adalah <b>getaran udara</b>. Mikrofon mengubahnya jadi gelombang, lalu kom
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 Melatih LLM butuh ratusan miliar parameter dan compute setara ribuan tahun kerja laptop (pelajaran Parameter, Token, Context &amp; Compute). Jadi hampir tidak ada yang melatih LLM sendiri. Lalu bagaimana orang biasa membangun aplikasi AI? Jawabannya dua kata di judul pelajaran ini.
 </div>
 
@@ -6922,7 +6922,7 @@ Melatih LLM butuh ratusan miliar parameter dan compute setara ribuan tahun kerja
 <h3>API = jembatan ke AI</h3>
 <p><b>API</b> (Application Programming Interface) memungkinkan aplikasimu mengirim prompt ke model AI (mis. Claude/GPT) dan menerima jawaban, lewat kode. Kamu fokus membangun produk, penyedia mengurus modelnya.</p>
 <div class="callout">
-🍽️ <b>Analogi pelayan restoran.</b> Kamu tidak masuk ke dapur dan memasak sendiri. Kamu memberi pesanan kepada pelayan, pelayan membawanya ke dapur, lalu kembali membawa makanan. <b>API adalah pelayannya</b>: aplikasimu mengirim "pesanan" (prompt), dapur penyedia AI memasaknya dengan model raksasa mereka, dan jawabannya dikirim balik. Kamu membayar per porsi — dalam hal ini <b>per token</b>.
+<b>Analogi pelayan restoran.</b> Kamu tidak masuk ke dapur dan memasak sendiri. Kamu memberi pesanan kepada pelayan, pelayan membawanya ke dapur, lalu kembali membawa makanan. <b>API adalah pelayannya</b>: aplikasimu mengirim "pesanan" (prompt), dapur penyedia AI memasaknya dengan model raksasa mereka, dan jawabannya dikirim balik. Kamu membayar per porsi — dalam hal ini <b>per token</b>.
 </div>
 
 <pre class="code">// Contoh alur sederhana (pseudo-code)
@@ -6993,7 +6993,7 @@ tampilkan(jawaban);</pre>
           duration: "11 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Embedding</b> = teks yang diubah menjadi vektor (daftar angka) yang mewakili maknanya. <b>Cosine similarity</b> = cara mengukur seberapa mirip arah dua vektor, dari 0 (tidak mirip) sampai 1 (sangat mirip) — kamu menghitungnya sendiri untuk selera film Andi, Budi, dan Citra di pelajaran Vektor &amp; Dot Product.
 </div>
 
@@ -7026,7 +7026,7 @@ tampilkan(jawaban);</pre>
 </table>
 
 <div class="callout">
-<b>💥 Dampak:</b> Vector database adalah <b>tulang punggung RAG produksi</b>. Tanpanya, pencarian semantik pada data besar akan sangat lambat. Ia mengubah demo RAG kecil menjadi sistem nyata berskala jutaan dokumen.
+<b>Dampak:</b> Vector database adalah <b>tulang punggung RAG produksi</b>. Tanpanya, pencarian semantik pada data besar akan sangat lambat. Ia mengubah demo RAG kecil menjadi sistem nyata berskala jutaan dokumen.
 </div>
 `,
           keyPoints: [
@@ -7126,7 +7126,7 @@ tampilkan(jawaban);</pre>
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Dulu, sekarang</b><br>
+<b>Dulu, sekarang</b><br>
 Chatbot biasa hanya <b>menjawab</b>: kamu bertanya, ia membalas dengan teks. <b>Agen AI</b> selangkah lebih jauh: ia diberi <b>tujuan</b> dan <b>alat</b> (misalnya mesin pencari, kalkulator, atau akses ke berkas), lalu memutuskan sendiri langkah-langkahnya — mencari, membaca, menghitung, menulis — sampai tujuannya tercapai. Kata "agen" di sini mirip dengan agen di Reinforcement Learning: sesuatu yang <b>mengambil tindakan</b>, bukan sekadar menjawab.
 </div>
 
@@ -7325,7 +7325,7 @@ const res = await client.messages.create({
 
 
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Embedding</b> = teks yang diubah jadi vektor makna; <b>cosine similarity</b> = ukuran kemiripan dua vektor (pelajaran Vektor); <b>context window</b> = "meja kerja" model yang luasnya terbatas (pelajaran Parameter &amp; Token). RAG menggabungkan ketiganya.
 </div>
 
@@ -7416,7 +7416,7 @@ const res = await client.messages.create({
 <b>Cosine similarity</b> mengukur "seberapa searah" dua vektor: nilai mendekati <b>1</b> = sangat mirip maknanya, mendekati <b>0</b> = beda. RAG memilih dokumen dengan skor tertinggi untuk diselipkan ke prompt.
 </div>
 
-<h3>Coba sendiri — jalankan kodenya 👇</h3>
+<h3>Coba sendiri — jalankan kodenya</h3>
 <p>Ubah angka vektor <code>q</code> (pertanyaan) dan lihat dokumen mana yang menang skornya:</p>
 
 <div data-demo="js-playground">function cosine(a, b) {
@@ -7632,7 +7632,7 @@ console.log(hasil.content);</pre>
 <div data-diagram="cycle" data-steps="Pantau biaya &amp; mutu|Kumpulkan keluhan|Perbaiki prompt/model|Rilis versi baru" data-center="terus" data-caption="Aplikasi AI tidak pernah benar-benar selesai — ia dirawat dalam siklus"></div>
 
 
-<h3>🔒 Keamanan</h3>
+<h3>Keamanan</h3>
 <ul>
   <li><b>API key di backend saja</b> — tidak pernah di browser.</li>
   <li><b>Validasi input</b> & batasi panjangnya.</li>
@@ -7640,7 +7640,7 @@ console.log(hasil.content);</pre>
   <li><b>Rate limiting</b> — batasi jumlah permintaan agar tidak disalahgunakan.</li>
 </ul>
 
-<h3>💰 Biaya (token)</h3>
+<h3>Biaya (token)</h3>
 <p>Kamu dibayar per <b>token</b> (potongan kata) — input maupun output. Cara hemat:</p>
 <ul>
   <li><b>Prompt caching</b> — bagian prompt yang sama (mis. system prompt panjang) bisa di-cache → jauh lebih murah saat diulang.</li>
@@ -7648,7 +7648,7 @@ console.log(hasil.content);</pre>
   <li><b>Batasi max_tokens</b> dan rancang prompt yang ringkas.</li>
 </ul>
 
-<h3>✅ Evaluasi (kualitas)</h3>
+<h3>Evaluasi (kualitas)</h3>
 <ul>
   <li><b>Buat set uji</b> — kumpulan pertanyaan + jawaban ideal untuk mengukur kualitas saat prompt diubah.</li>
   <li><b>Tangani error & refusal</b> — periksa <code>stop_reason</code>; siapkan pesan cadangan jika AI menolak/gagal.</li>
@@ -7724,7 +7724,7 @@ console.log(hasil.content);</pre>
 <b>Bahaya "drift":</b> Model deteksi penipuan yang hebat tahun lalu bisa gagal tahun ini karena pola penipuan berubah. Tanpa monitoring, kualitas <b>menurun diam-diam</b> tanpa ada yang sadar.
 </div>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <p>Tanpa MLOps, model AI <b>membusuk perlahan</b> di produksi. Dengan MLOps, kualitas terjaga, masalah cepat terdeteksi, dan model tetap relevan seiring waktu.</p>
 `,
           keyPoints: [
@@ -8004,7 +8004,7 @@ Untuk skripsi, penelitian, atau keputusan bisnis yang perlu dipertanggungjawabka
 </table>
 
 <div class="callout">
-<b>💡 Saran praktis:</b> setelah model pertamamu jalan, luangkan satu jam membungkusnya dengan <b>Streamlit</b>. Perbedaan antara "saya bisa melatih model" dan "saya bisa menunjukkan aplikasi yang berjalan" sangat besar — baik untuk portofolio maupun untuk memahami apa yang sesungguhnya kamu buat.
+<b>Saran praktis:</b> setelah model pertamamu jalan, luangkan satu jam membungkusnya dengan <b>Streamlit</b>. Perbedaan antara "saya bisa melatih model" dan "saya bisa menunjukkan aplikasi yang berjalan" sangat besar — baik untuk portofolio maupun untuk memahami apa yang sesungguhnya kamu buat.
 </div>
 
 <h3>5. Merapikan pekerjaan</h3>
@@ -8019,7 +8019,7 @@ Untuk skripsi, penelitian, atau keputusan bisnis yang perlu dipertanggungjawabka
 <b>Kenapa pencatatan percobaan penting:</b> setelah mencoba 30 kombinasi, kamu <b>pasti</b> lupa mana yang menghasilkan 89% dan dengan pengaturan apa. Awalnya cukup satu berkas spreadsheet; MLflow diperlukan ketika percobaanmu sudah puluhan.
 </div>
 
-<h3>⚠️ Jangan belajar semuanya</h3>
+<h3>Jangan belajar semuanya</h3>
 <div class="callout warn">
 Daftar di atas mudah membuat kewalahan. Jangan terjebak <b>"belajar pustaka"</b> tanpa henti — itu terasa produktif padahal tidak.<br><br>
 <b>Urutan yang benar:</b> kuasai <b>pandas</b> dan <b>scikit-learn</b> sampai betul-betul lancar. Lalu ambil pustaka lain <b>hanya saat ada masalah nyata</b> yang membutuhkannya. Pustaka yang dipelajari karena kebutuhan akan melekat; yang dipelajari "untuk jaga-jaga" akan lupa dalam sebulan.
@@ -8104,7 +8104,7 @@ Daftar di atas mudah membuat kewalahan. Jangan terjebak <b>"belajar pustaka"</b>
           duration: "13 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
 <b>Biaya variabel</b> = biaya yang ikut naik setiap kali ada satu penjualan lagi (di sini: biaya token per permintaan). <b>Margin kontribusi</b> = harga jual − biaya variabel, yaitu sisa uang dari tiap penjualan untuk menutup biaya tetap (<a href="#/lesson/acc-a-4">Akuntansi untuk Keputusan Bisnis</a>).<br>
 <b>Free Cash Flow (FCF)</b> = kas dari operasi − belanja modal; uang yang benar-benar bebas dipakai pemilik (<a href="#/lesson/acc-fund-2">Free Cash Flow</a>).
 </div>
@@ -8126,7 +8126,7 @@ Daftar di atas mudah membuat kewalahan. Jangan terjebak <b>"belajar pustaka"</b>
 <b>Ini perbedaan paling penting:</b> di software biasa, pengguna ke-1.000 hampir gratis dilayani. Di produk AI, tiap pemakaian <b>membakar biaya inferensi</b>. Kalau harga langgananmu terlalu murah untuk pemakaian berat, <b>makin banyak pengguna justru makin rugi</b>.
 </div>
 
-<h3>Coba sendiri — hitung untung-rugi per pengguna 👇</h3>
+<h3>Coba sendiri — hitung untung-rugi per pengguna</h3>
 <div data-demo="js-playground">// Unit economics produk AI: apakah tiap pengguna menguntungkan?
 const hargaLangganan = 150000;   // Rp per pengguna per bulan
 const permintaanPerBulan = 300;  // rata-rata panggilan AI per pengguna
@@ -8170,7 +8170,7 @@ console.log("Coba ubah biayaPerPermintaan jadi 600, lalu jalankan lagi.");</div>
 </table>
 
 <div class="callout warn">
-<b>⚠️ Perangkap khas AI:</b> di bisnis biasa, mesin yang dibeli bertahan 10 tahun. Di AI, <b>model bisa usang dalam 12–18 bulan</b>. Artinya sebagian besar yang terlihat seperti "CapEx pertumbuhan" sebenarnya <b>CapEx pemeliharaan</b> — kamu tidak sedang maju, kamu sedang <b>berlari agar tidak tertinggal</b>.<br><br>
+<b>Perangkap khas AI:</b> di bisnis biasa, mesin yang dibeli bertahan 10 tahun. Di AI, <b>model bisa usang dalam 12–18 bulan</b>. Artinya sebagian besar yang terlihat seperti "CapEx pertumbuhan" sebenarnya <b>CapEx pemeliharaan</b> — kamu tidak sedang maju, kamu sedang <b>berlari agar tidak tertinggal</b>.<br><br>
 Ini membuat banyak produk AI terlihat punya margin bagus tapi <b>FCF tipis bertahun-tahun</b>: kasnya habis terus-menerus hanya untuk tetap relevan.
 </div>
 
@@ -8216,7 +8216,7 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
 <b>ROI</b> = (hasil − biaya) ÷ biaya × 100%. Modal 100 menghasilkan 130 → ROI 30% (<a href="#/lesson/acc-fund-3">ROI</a>).<br>
 <b>CapEx</b> = belanja besar di muka untuk aset yang dipakai bertahun-tahun (membeli mesin). <b>OpEx</b> = biaya rutin yang dibayar selama dipakai (menyewa mesin) (<a href="#/lesson/acc-op-1">CapEx vs OpEx</a>).
 </div>
@@ -8296,7 +8296,7 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
 <b>Economic moat</b> (parit ekonomi) = keunggulan yang membuat bisnis sulit ditiru pesaing, seperti parit yang melindungi benteng. Lima jenisnya: merek, <b>network effect</b> (makin banyak pengguna makin berguna), <b>switching cost</b> (repot/mahal bila pelanggan pindah), keunggulan biaya &amp; skala, serta teknologi, paten, atau izin (<a href="#/lesson/acc-kual-4">Economic Moat</a>).
 </div>
 
@@ -8364,7 +8364,7 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
+<b>Bekal dari jalur Akuntansi</b> — kalau belum mempelajarinya, cukup pahami ini dulu:<br>
 <b>Penyusutan</b> = cara mencatat harga aset sebagai biaya sedikit demi sedikit selama masa pakainya. Mesin Rp100 juta yang dipakai 10 tahun dicatat Rp10 juta per tahun (<a href="#/lesson/acc-a-3">Penyusutan</a>).<br>
 <b>Alokasi modal</b> = keputusan ke mana uang perusahaan dipakai: diinvestasikan lagi, membeli perusahaan lain, melunasi utang, membeli kembali saham, atau dibagi sebagai dividen (<a href="#/lesson/acc-kual-1">Alokasi Modal</a>).
 </div>
@@ -8554,7 +8554,7 @@ Keduanya dinyatakan oleh orang yang sangat kompeten. <b>Kompetensi tidak membuat
 <p>Jarak terbesar biasanya bukan pada <b>apakah teknologinya bisa</b>, melainkan pada hal-hal yang membosankan: keandalan pada kasus langka, tanggung jawab hukum bila salah, integrasi ke sistem lama, kebiasaan kerja, dan siapa yang mau membayar.</p>
 <p>Demo yang mengesankan berjarak sangat jauh dari pemakaian sehari-hari. Itulah yang berulang kali membuat ramalan meleset.</p>
 
-<h3>🧭 Cara membaca sebuah ramalan</h3>
+<h3>Cara membaca sebuah ramalan</h3>
 <table class="tbl">
   <tr><th>Tanyakan</th><th>Kenapa</th></tr>
   <tr><td><b>Siapa yang diuntungkan bila dipercaya?</b></td><td>Ramalan sering berfungsi sebagai penggalangan dana atau pemasaran</td></tr>
@@ -8564,7 +8564,7 @@ Keduanya dinyatakan oleh orang yang sangat kompeten. <b>Kompetensi tidak membuat
 </table>
 
 <div class="callout">
-<b>💡 Yang berguna dilakukan apa pun yang terjadi.</b> Karena arahnya tidak pasti, pilihan paling masuk akal adalah keterampilan yang berguna di <b>semua</b> skenario:<br><br>
+<b>Yang berguna dilakukan apa pun yang terjadi.</b> Karena arahnya tidak pasti, pilihan paling masuk akal adalah keterampilan yang berguna di <b>semua</b> skenario:<br><br>
 • <b>Pahami dasarnya</b>, bukan alatnya. Alat berganti tiap tahun; konsep loss, generalisasi, dan bias bertahan.<br>
 • <b>Jadilah orang yang bisa memverifikasi.</b> Saat mesin menghasilkan banyak, yang langka adalah orang yang bisa menilai mana yang benar.<br>
 • <b>Kuasai bidang nyata.</b> AI mempercepat orang yang tahu apa yang sedang ia kerjakan, dan menyesatkan yang tidak.<br>

@@ -5,12 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Akademi AI & Blockchain — Belajar dari Dasar hingga Mahir</title>
   <meta name="description" content="Platform belajar Kecerdasan Buatan (AI) dan Crypto & Blockchain dari dasar hingga mahir, dalam bahasa Indonesia yang mudah dipahami." />
+  <!-- Huruf: Plus Jakarta Sans (antarmuka) & Literata (isi pelajaran). Bila offline dan belum
+       tersimpan, browser memakai huruf bawaan perangkat — tampilan tetap terbaca. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%231c1b18'/%3E%3Cpath fill='%23f4f1ea' d='M136 380L232 124L280 124L376 380L322 380L256 200L190 380ZM206 288L306 288L306 326L206 326Z'/%3E%3Crect x='166' y='414' width='180' height='28' rx='14' fill='%23c4643c'/%3E%3C/svg%3E" />
 
   <!-- Aplikasi (PWA): bisa dipasang ke layar utama & dibuka tanpa internet -->
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#6366f1" />
+  <meta name="theme-color" content="#f4f1ea" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -19,8 +24,11 @@
 </head>
 <body>
   <header class="topbar">
-    <button id="menu-toggle" aria-label="Buka menu">☰</button>
-    <a class="brand" href="#/">🎓 <span class="grad">Akademi AI &amp; Blockchain</span></a>
+    <button id="menu-toggle" aria-label="Buka menu"><svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <a class="brand" href="#/" aria-label="Akademi — beranda">
+      <svg class="brand-tanda" viewBox="0 0 512 512" aria-hidden="true"><rect class="bt-latar" width="512" height="512" rx="112"/><path class="bt-huruf" d="M136 380L232 124L280 124L376 380L322 380L256 200L190 380ZM206 288L306 288L306 326L206 326Z"/><rect class="bt-garis" x="166" y="414" width="180" height="28" rx="14"/></svg>
+      <span class="brand-nama">Akademi<small>AI · Crypto · Akuntansi</small></span>
+    </a>
   </header>
 
   <div class="layout">

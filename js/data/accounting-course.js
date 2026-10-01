@@ -468,7 +468,7 @@ Dengan logika yang sama: pendapatan menambah ekuitas, sehingga pendapatan berada
 </table>
 
 <div class="callout warn">
-<b>💡 Kunci yang berlaku untuk semua akun:</b> tanyakan <b>"manfaatnya sudah terpakai atau belum?"</b><br><br>
+<b>Kunci yang berlaku untuk semua akun:</b> tanyakan <b>"manfaatnya sudah terpakai atau belum?"</b><br><br>
 Belum terpakai → <b>aset</b> (sewa dibayar di muka, asuransi dibayar di muka, perlengkapan yang masih ada).<br>
 Sudah terpakai → <b>beban</b>.<br><br>
 Pertanyaan "sudah bayar atau belum" tidak menentukan jenis akunnya — ia hanya menentukan apakah lawannya Kas atau Utang.
@@ -494,7 +494,7 @@ Pertanyaan "sudah bayar atau belum" tidak menentukan jenis akunnya — ia hanya 
 </table>
 
 <div class="callout warn">
-<b>⚠️ Dua yang paling sering keliru:</b><br><br>
+<b>Dua yang paling sering keliru:</b><br><br>
 <b>1. Pelanggan melunasi piutang dicatat sebagai pendapatan lagi.</b> Salah — pendapatannya sudah diakui saat jasa selesai. Pelunasan hanya menukar piutang menjadi kas. Kalau dicatat dua kali, pendapatanmu menggelembung palsu.<br><br>
 <b>2. Pengambilan pemilik dicatat sebagai beban.</b> Salah — <b>prive</b> bukan biaya menjalankan usaha, melainkan pengurang modal. Kalau dicatat sebagai beban, labamu terlihat lebih kecil dari yang sebenarnya.
 </div>
@@ -521,7 +521,7 @@ Pertanyaan "sudah bayar atau belum" tidak menentukan jenis akunnya — ia hanya 
 <p>Dalam percakapan sehari-hari ketiganya sering tertukar. Dalam laporan keuangan, perbedaannya menentukan apakah angkanya muncul di laba rugi sekarang atau di neraca dulu.</p>
 
 <div class="callout">
-<b>🧭 Tiga pertanyaan yang menyelesaikan hampir semua jurnal:</b><br>
+<b>Tiga pertanyaan yang menyelesaikan hampir semua jurnal:</b><br>
 1. <b>Apa yang masuk atau keluar?</b> (kas, barang, hak tagih, kewajiban)<br>
 2. <b>Manfaatnya sudah terpakai belum?</b> (belum → aset, sudah → beban)<br>
 3. <b>Akun mana yang bertambah?</b> Aset dan beban bertambah di debit; kewajiban, ekuitas, dan pendapatan bertambah di kredit.
@@ -745,7 +745,7 @@ Jurnal menjawab <b>"kapan dan apa yang terjadi"</b>. Setelah dicatat, angkanya d
 </table>
 
 <div class="callout warn">
-<b>🔑 Dua ciri yang selalu benar untuk setiap jurnal penyesuaian:</b><br><br>
+<b>Dua ciri yang selalu benar untuk setiap jurnal penyesuaian:</b><br><br>
 <b>1. Tidak pernah menyentuh akun Kas.</b> Kalau ada kas bergerak, itu transaksi biasa, bukan penyesuaian. Ini cara tercepat memeriksa apakah jurnalmu masuk akal.<br><br>
 <b>2. Selalu menyentuh satu akun laba rugi dan satu akun neraca.</b> Satu sisi berupa pendapatan atau beban, sisi lainnya berupa aset atau kewajiban.
 </div>
@@ -774,7 +774,7 @@ Jurnal menjawab <b>"kapan dan apa yang terjadi"</b>. Setelah dicatat, angkanya d
 <p>Setelah laporan selesai, akun pendapatan dan beban di-nol-kan lewat <b>jurnal penutup</b>, dan siklus dimulai lagi untuk periode berikutnya.</p>
 
 <div class="callout">
-<b>🧭 Daftar periksa akhir bulan yang bisa langsung kamu pakai:</b><br>
+<b>Daftar periksa akhir bulan yang bisa langsung kamu pakai:</b><br>
 1. Adakah yang <b>dibayar di muka</b> dan sebagian manfaatnya sudah terpakai?<br>
 2. Berapa <b>sisa perlengkapan</b> sebenarnya di gudang?<br>
 3. Sudahkah <b>penyusutan</b> bulan ini dicatat?<br>
@@ -849,7 +849,7 @@ Jurnal menjawab <b>"kapan dan apa yang terjadi"</b>. Setelah dicatat, angkanya d
           duration: "13 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Pendapatan</b> = uang yang didapat dari berjualan; <b>beban</b> = biaya yang dikorbankan untuk mendapatkannya (Lima Jenis Akun). Setelah jurnal dan penyesuaian selesai, semua pendapatan dan beban satu tahun dirangkum menjadi satu laporan. Itulah pelajaran ini.
 </div>
 
@@ -959,7 +959,7 @@ Inilah hasil dari <b>kegiatan inti</b> warung: membuat dan menjual kopi.
           duration: "15 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Aset = Kewajiban + Ekuitas</b> — persamaan dasar dari modul Dasar. Dan dari pelajaran sebelumnya: Warung Kopi Sari mencetak <b>laba bersih 40 juta</b> sepanjang 2025. Pelajaran ini membuka dua laporan lainnya, dengan warung yang sama.
 </div>
 
@@ -1214,7 +1214,7 @@ Inilah hasil dari <b>kegiatan inti</b> warung: membuat dan menjual kopi.
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 Di laporan laba rugi Warung Kopi Sari ada baris <b>penyusutan peralatan 20 juta</b>, dan di neraca peralatannya tercatat <b>100 − 40 = 60</b>. Di pelajaran arus kas kamu juga melihat penyusutan <b>ditambahkan kembali</b> karena bukan uang keluar. Pelajaran ini menjelaskan ketiganya sekaligus.
 </div>
 
@@ -1308,7 +1308,7 @@ Uangnya keluar <b>sekali</b>, saat membeli di 2024 (tercatat di arus kas <i>inve
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>HPP</b> Warung Kopi Sari tahun 2025 = <b>120</b>, padahal bahan yang dibeli <b>125</b> (pelajaran arus kas). <b>Aset lancar</b> = akan menjadi uang dalam setahun (100); <b>kewajiban lancar</b> = harus dibayar dalam setahun (30). Pelajaran ini menyambungkan angka-angka itu.
 </div>
 
@@ -1407,7 +1407,7 @@ Seandainya semua aset lancar dicairkan dan semua tagihan tahun ini dibayar, Waru
   <tr><td><b>Average</b> (Rata-rata)</td><td>Pakai harga rata-rata</td><td>10 × 1.100 = Rp11.000</td></tr>
 </table>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <ul>
   <li>Saat harga <b>naik</b>: FIFO → HPP lebih rendah → <b>laba tampak lebih besar</b> (dan pajak lebih besar). LIFO sebaliknya.</li>
   <li>Pilihan metode memengaruhi laba, pajak, dan nilai persediaan di neraca.</li>
@@ -1462,7 +1462,7 @@ Seandainya semua aset lancar dicairkan dan semua tagihan tahun ini dibayar, Waru
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Persen</b> artinya "dari seratus", dan rumusnya (bagian ÷ total) × 100 (modul Dasar). Modul ini akan memakai persen di hampir setiap pelajaran, jadi kita kuatkan dulu fondasinya.
 </div>
 
@@ -1502,7 +1502,7 @@ Contoh: dari 200 jadi 250 → (250 − 200) ÷ 200 × 100% = <b>25%</b>.
 (200 ÷ 100)<sup>1/5</sup> − 1 = 2<sup>0,2</sup> − 1 = 1,1487 − 1 = <b>14,87%</b>
 </div>
 
-<h3>Coba sendiri — hitung CAGR 👇</h3>
+<h3>Coba sendiri — hitung CAGR</h3>
 <div data-demo="js-playground">// CAGR: pertumbuhan majemuk rata-rata per tahun
 const awal = 100000000;   // Rp100 juta
 const akhir = 200000000;  // Rp200 juta
@@ -1562,7 +1562,7 @@ console.log("Bukti: 100jt dikali 1,1487 sebanyak 5 kali = 200jt.");</div>
           duration: "13 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b> — angka Warung Kopi Sari 2025 (juta Rp):<br>
+<b>Ingat dulu</b> — angka Warung Kopi Sari 2025 (juta Rp):<br>
 Pendapatan <b>300</b> • Laba bersih <b>40</b> • Aset lancar <b>100</b> • Kewajiban lancar <b>30</b> • Total kewajiban <b>60</b> • Ekuitas <b>100</b> • Total aset <b>160</b>
 </div>
 
@@ -1683,7 +1683,7 @@ Untuk setiap Rp1 modal pemilik, ada Rp0,6 uang pinjaman.
 Siklusnya = 60 + 30 − 45 = <b>45 hari</b>. Selama 45 hari itu uang toko "terkunci" — harus ditalangi dengan kas sendiri atau pinjaman. Memperpendek siklus ini sama dengan membebaskan uang.
 </div>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <ul>
   <li>Likuiditas rendah (current ratio &lt; 1) → risiko gagal bayar meski untung.</li>
   <li>Perputaran lambat → kas terjebak di stok/piutang → butuh modal kerja lebih besar.</li>
@@ -1743,7 +1743,7 @@ Siklusnya = 60 + 30 − 45 = <b>45 hari</b>. Selama 45 hari itu uang toko "terku
 <h3>Kualitas laba (penting!)</h3>
 <p>Tidak semua laba sama. Laba dari <b>operasi inti</b> yang berulang jauh lebih berharga daripada laba <b>sekali saja</b> (mis. dari menjual aset/tanah). Analis mengecek: apakah labanya <b>berkelanjutan</b>?</p>
 
-<h3>💥 Dampak pada perusahaan</h3>
+<h3>Dampak pada perusahaan</h3>
 <table class="tbl">
   <tr><th>Laba bersih SEHAT & tumbuh</th><th>Laba bersih KECIL / negatif</th></tr>
   <tr><td>Menarik investor, harga saham cenderung naik</td><td>Sulit menarik modal; harga saham tertekan</td></tr>
@@ -1807,7 +1807,7 @@ Siklusnya = 60 + 30 − 45 = <b>45 hari</b>. Selama 45 hari itu uang toko "terku
 <h3>Kenapa lebih "jujur" dari laba?</h3>
 <p>Laba bersih memakai aturan akuntansi (akrual, depresiasi) yang bisa "diatur". FCF berbicara soal <b>uang tunai yang benar-benar bebas dipakai</b> — jauh lebih sulit dimanipulasi. Perusahaan bisa <i>untung</i> tapi FCF-nya negatif (mis. semua kas terpakai untuk mesin baru).</p>
 
-<h3>💥 Dampak pada perusahaan</h3>
+<h3>Dampak pada perusahaan</h3>
 <ul>
   <li><b>FCF positif besar</b> → bebas membayar utang, membagi dividen, membeli kembali saham (buyback), atau ekspansi <b>tanpa berutang</b>. Tanda perusahaan sehat & mandiri.</li>
   <li><b>FCF negatif terus-menerus</b> → bergantung pada pinjaman/investor untuk bertahan. Berisiko jika pendanaan mengering.</li>
@@ -1841,7 +1841,7 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
 </div>
 
 <div class="callout warn">
-🚩 <b>Tapi hati-hati.</b> Laporan keuangan biasanya <b>tidak memisahkan</b> keduanya — manajemen bisa menyebut CapEx pemeliharaan sebagai "pertumbuhan" agar angkanya terlihat bagus.<br><br>
+<b>Tapi hati-hati.</b> Laporan keuangan biasanya <b>tidak memisahkan</b> keduanya — manajemen bisa menyebut CapEx pemeliharaan sebagai "pertumbuhan" agar angkanya terlihat bagus.<br><br>
 <b>Cara memeriksanya:</b> bandingkan CapEx dengan <b>beban penyusutan</b>. Penyusutan kira-kira mencerminkan aus-nya aset per tahun. Kalau CapEx bertahun-tahun jauh <b>di bawah</b> penyusutan, kemungkinan besar asetnya sedang dibiarkan menua — FCF-nya bagus hari ini, tapi tagihannya datang belakangan.
 </div>
 
@@ -1948,7 +1948,7 @@ FCF keduanya sama-sama Rp50 M. Tapi kualitas bisnisnya <b>jauh berbeda</b>.
           duration: "12 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Perubahan persen</b> = (Baru − Lama) ÷ Lama × 100%, dan <b>CAGR</b> meratakan pertumbuhan beberapa tahun menjadi angka per tahun (pelajaran Persen, Rasio &amp; CAGR). ROI memakai keduanya.
 </div>
 
@@ -2027,7 +2027,7 @@ Perhatikan: ini sama persis dengan perubahan persen. "Lama" adalah uang yang dik
           duration: "14 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b> — Warung Kopi Sari 2025 (juta Rp):<br>
+<b>Ingat dulu</b> — Warung Kopi Sari 2025 (juta Rp):<br>
 Pendapatan <b>300</b> • Laba operasi <b>50</b> • Laba bersih <b>40</b> • Total aset <b>160</b> • Pinjaman bank <b>40</b> • Total kewajiban <b>60</b> • Ekuitas <b>100</b>
 </div>
 
@@ -2158,7 +2158,7 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
 </div>
 <p>Jika yang kamu maksud <b>ROTA</b> (Return on Total Assets), itu praktis sama dengan <b>ROA</b> — laba dibagi total aset.</p>
 
-<h3>💥 Dampak menyeluruh</h3>
+<h3>Dampak menyeluruh</h3>
 <p>Metrik adalah <b>"dashboard"</b> bisnis. Memilih metrik yang <b>tepat</b> mengarahkan keputusan yang tepat; fokus pada metrik yang salah bisa menyesatkan seluruh perusahaan (mis. mengejar pendapatan sambil mengabaikan arus kas → bangkrut walau tumbuh).</p>
 `,
           keyPoints: [
@@ -2248,7 +2248,7 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
 </table>
 
 <div class="callout warn">
-<b>💡 Harga adalah sinyal.</b> Harga yang tinggi berkata kepada penjual "bawa lebih banyak barang" dan kepada pembeli "berhemat". Harga yang rendah berkata sebaliknya. Tanpa satu pun rapat atau perintah, jutaan orang menyesuaikan keputusannya — itulah kekuatan (dan juga keterbatasan) sebuah pasar.
+<b>Harga adalah sinyal.</b> Harga yang tinggi berkata kepada penjual "bawa lebih banyak barang" dan kepada pembeli "berhemat". Harga yang rendah berkata sebaliknya. Tanpa satu pun rapat atau perintah, jutaan orang menyesuaikan keputusannya — itulah kekuatan (dan juga keterbatasan) sebuah pasar.
 </div>
 
 <h3>Di mana kamu melihatnya setiap hari</h3>
@@ -2378,7 +2378,7 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
 </table>
 
 <div class="callout warn">
-<b>📰 Kisah minyak goreng 2022.</b> Saat harga minyak sawit dunia melonjak di awal 2022, pemerintah menetapkan harga eceran tertinggi minyak goreng. Di banyak daerah, minyak goreng justru sulit ditemukan dan antrean panjang muncul. Setelah HET minyak goreng kemasan dicabut pada Maret 2022, barangnya kembali ada di rak — dengan harga yang jauh lebih tinggi.<br><br>
+<b>Kisah minyak goreng 2022.</b> Saat harga minyak sawit dunia melonjak di awal 2022, pemerintah menetapkan harga eceran tertinggi minyak goreng. Di banyak daerah, minyak goreng justru sulit ditemukan dan antrean panjang muncul. Setelah HET minyak goreng kemasan dicabut pada Maret 2022, barangnya kembali ada di rak — dengan harga yang jauh lebih tinggi.<br><br>
 <b>Bukan berarti mengatur harga selalu salah.</b> Pemerintah menimbang keterjangkauan bagi warga berpenghasilan rendah. Pilihan lain — seperti bantuan langsung kepada yang membutuhkan atau menambah pasokan — punya kelebihan dan kekurangannya sendiri. Yang perlu diingat: <b>menahan harga tanpa menambah pasokan hampir selalu menimbulkan kelangkaan</b>.
 </div>
 
@@ -2458,7 +2458,7 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
 
 <h3>Fundamental: seberapa "melar" reaksi pembeli</h3>
 <div class="callout">
-🎈 <b>Bayangkan karet gelang.</b> Karet yang elastis melar jauh saat ditarik sedikit; tali yang kaku hampir tidak berubah.<br><br>
+<b>Bayangkan karet gelang.</b> Karet yang elastis melar jauh saat ditarik sedikit; tali yang kaku hampir tidak berubah.<br><br>
 <b>Elastisitas harga</b> mengukur seberapa jauh jumlah yang dibeli "melar" saat harga ditarik:<br>
 <b>Elastisitas = % perubahan jumlah ÷ % perubahan harga</b> (dibaca tanpa tanda minus)
 </div>
@@ -2491,7 +2491,7 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
 </table>
 
 <div class="callout warn">
-<b>⚠️ Elastisitas kategori ≠ elastisitas merekmu.</b> Beras sebagai kategori sangat inelastis, tapi satu merek beras bisa sangat elastis — pembeli mudah pindah ke merek lain di rak yang sama. Yang menentukan nasib bisnismu adalah elastisitas <b>produkmu sendiri</b>.
+<b>Elastisitas kategori ≠ elastisitas merekmu.</b> Beras sebagai kategori sangat inelastis, tapi satu merek beras bisa sangat elastis — pembeli mudah pindah ke merek lain di rak yang sama. Yang menentukan nasib bisnismu adalah elastisitas <b>produkmu sendiri</b>.
 </div>
 
 <h3>Jembatan ke analisis bisnis</h3>
@@ -2586,7 +2586,7 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
   <tr><td>Muncul di</td><td>Neraca + Arus Kas Investasi</td><td>Laporan Laba Rugi</td></tr>
 </table>
 
-<h3>💥 Dampak & keputusan</h3>
+<h3>Dampak & keputusan</h3>
 <ul>
   <li><b>CapEx besar</b> menekan kas <b>sekarang</b> tapi membangun kapasitas masa depan → dampaknya tersebar lewat penyusutan bertahun-tahun.</li>
   <li><b>OpEx tinggi</b> menekan laba <b>tiap periode</b> secara langsung.</li>
@@ -2659,7 +2659,7 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
 <b>Overhead</b> sering "tersembunyi" tapi bisa besar. Kesalahan umum UMKM: menetapkan harga hanya dari biaya bahan (langsung) sambil <b>lupa membebankan overhead</b> → merasa untung padahal rugi.
 </div>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <ul>
   <li><b>Penetapan harga</b>: harga harus menutup biaya langsung + porsi overhead + margin.</li>
   <li><b>Profitabilitas produk</b>: setelah membagi overhead, mungkin ketahuan ada produk yang sebenarnya merugi.</li>
@@ -2872,7 +2872,7 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
   <li>Alat <b>kontrol biaya</b> — bandingkan Rencana vs Realisasi (varians).</li>
 </ul>
 
-<h3>💥 Dampak pada perusahaan</h3>
+<h3>Dampak pada perusahaan</h3>
 <ul>
   <li><b>RAB rapi & realistis</b> → proyek terkendali, dana cukup, kepercayaan pemberi dana tinggi.</li>
   <li><b>RAB asal-asalan / terlalu optimis</b> → biaya membengkak (over budget), kas habis, proyek bisa mangkrak.</li>
@@ -3033,7 +3033,7 @@ Semua PPN itu pada akhirnya dibayar <b>pembeli terakhir</b> (konsumen). Toko han
 </ul>
 
 <div class="callout warn">
-<b>💥 Dampak:</b> Salah kelola pajak → <b>denda, bunga, bahkan masalah hukum</b>. Pajak juga memengaruhi laba bersih & kas. Karena itu banyak bisnis melakukan <b>perencanaan pajak</b> (legal) dan pembukuan rapi agar patuh & efisien.
+<b>Dampak:</b> Salah kelola pajak → <b>denda, bunga, bahkan masalah hukum</b>. Pajak juga memengaruhi laba bersih & kas. Karena itu banyak bisnis melakukan <b>perencanaan pajak</b> (legal) dan pembukuan rapi agar patuh & efisien.
 </div>
 
 <div class="callout">
@@ -3093,7 +3093,7 @@ Semua PPN itu pada akhirnya dibayar <b>pembeli terakhir</b> (konsumen). Toko han
 <b>Poin penting:</b> "biaya membawa" seorang karyawan bagi perusahaan <b>lebih tinggi</b> dari gaji yang ia terima, karena ada iuran BPJS bagian perusahaan, THR, dan tunjangan. Rencanakan berdasarkan <b>biaya total</b>, bukan gaji pokok saja.
 </div>
 
-<h3>💥 Dampak</h3>
+<h3>Dampak</h3>
 <ul>
   <li>Salah menghitung biaya karyawan → <b>arus kas</b> kacau (mis. lupa menyiapkan THR).</li>
   <li>Kepatuhan (BPJS, PPh 21, upah minimum) menghindari <b>masalah hukum ketenagakerjaan</b>.</li>
@@ -3246,7 +3246,7 @@ Semua PPN itu pada akhirnya dibayar <b>pembeli terakhir</b> (konsumen). Toko han
   <tr><td><b>Fraud</b></td><td>Angka fiktif, transaksi palsu</td><td><b>Ilegal</b></td></tr>
 </table>
 
-<h3>🚩 Tanda bahaya utama</h3>
+<h3>Tanda bahaya utama</h3>
 <div class="callout warn">
 <b>#1 — Laba naik tapi arus kas operasi tidak.</b> Ini <b>sinyal paling kuat</b>. Laba bisa "diatur" lewat pencatatan; <b>kas jauh lebih sulit dipalsukan</b>. Bila keduanya berpisah jalan bertahun-tahun, selidiki.
 </div>
@@ -3266,7 +3266,7 @@ Pada banyak kumpulan angka alami (nilai transaksi, populasi, tagihan), <b>angka 
 <br><br>Angka <b>buatan manusia</b> cenderung tersebar terlalu rata — sehingga <b>penyimpangan dari pola Benford</b> bisa menjadi tanda untuk diperiksa lebih dalam.
 </div>
 
-<h3>Coba sendiri — lihat pola Benford 👇</h3>
+<h3>Coba sendiri — lihat pola Benford</h3>
 <div data-demo="js-playground">// Hukum Benford: seberapa sering tiap angka muncul sebagai DIGIT PERTAMA
 // Rumus: P(d) = log10(1 + 1/d)
 
@@ -3345,7 +3345,7 @@ console.log("Data yang DIKARANG biasanya tersebar terlalu merata.");</div>
 Laporan keuangan dibuat oleh <b>manajemen</b> — pihak yang justru <b>berkepentingan</b> agar angkanya terlihat bagus. Investor &amp; bank butuh pihak <b>independen</b> untuk memeriksanya. Itulah <b>auditor eksternal</b>.
 </div>
 
-<h3>⚠️ Yang paling sering disalahpahami</h3>
+<h3>Yang paling sering disalahpahami</h3>
 <div class="callout warn">
 <b>Auditor TIDAK menjamin laporan bebas dari kecurangan, dan TIDAK memeriksa semua transaksi.</b>
 <br><br>Yang auditor berikan adalah <b>opini</b>: apakah laporan <b>disajikan secara wajar</b> dalam <b>semua hal yang material</b>, sesuai standar akuntansi. Itu saja — dan itu tetap berharga, asal kamu tahu batasnya.
@@ -3469,7 +3469,7 @@ Laporan keuangan dibuat oleh <b>manajemen</b> — pihak yang justru <b>berkepent
 </table>
 
 <div class="callout warn">
-<b>⚠️ Kesalahan paling mahal dalam keuangan pribadi</b> hampir selalu berasal dari meremehkan bunga majemuk: bunga kartu kredit yang berbunga lagi, pinjaman harian, atau menunda menabung. Ironisnya, rumus yang sama juga bekerja untuk keuntunganmu bila arahnya dibalik.
+<b>Kesalahan paling mahal dalam keuangan pribadi</b> hampir selalu berasal dari meremehkan bunga majemuk: bunga kartu kredit yang berbunga lagi, pinjaman harian, atau menunda menabung. Ironisnya, rumus yang sama juga bekerja untuk keuntunganmu bila arahnya dibalik.
 </div>
 
 <h3>Yang TIDAK perlu kamu lakukan</h3>
@@ -3493,7 +3493,7 @@ Laporan keuangan dibuat oleh <b>manajemen</b> — pihak yang justru <b>berkepent
 <p>Persen &amp; CAGR sudah dibahas lebih awal di modul <b>Membaca Rasio &amp; Metrik Kinerja</b>, karena kamu membutuhkannya sejak pelajaran rasio.</p>
 
 <div class="callout">
-<b>💡 Kalau waktumu terbatas,</b> kuasai dua hal ini lebih dulu: <b>bunga majemuk</b> dan <b>nilai waktu uang</b>. Keduanya langsung terpakai untuk keputusan pribadi hari ini juga — memilih cicilan, menilai tawaran investasi, dan memutuskan kapan sebaiknya melunasi utang.
+<b>Kalau waktumu terbatas,</b> kuasai dua hal ini lebih dulu: <b>bunga majemuk</b> dan <b>nilai waktu uang</b>. Keduanya langsung terpakai untuk keputusan pribadi hari ini juga — memilih cicilan, menilai tawaran investasi, dan memutuskan kapan sebaiknya melunasi utang.
 </div>
 `,
           keyPoints: [
@@ -3598,7 +3598,7 @@ Jadi kalau melihat CFₜ, bacalah: <i>"arus kas pada tahun ke-berapa pun yang se
 Artinya uangmu menjadi <b>1,331 kali lipat</b> setelah 3 tahun.
 </div>
 
-<h3>Coba sendiri — lihat arti tiap simbol 👇</h3>
+<h3>Coba sendiri — lihat arti tiap simbol</h3>
 <div data-demo="js-playground">// Membongkar rumus FV = PV x (1 + r)^n
 const PV = 1000000;  // Present Value  = nilai SEKARANG (Rp1 juta)
 const r  = 0.10;     // rate           = bunga 10% per tahun (ditulis 0,10)
@@ -3781,7 +3781,7 @@ Bunga 9% → 72 ÷ 9 = <b>8 tahun</b>. Bunga 6% → 12 tahun.
 <p>Bagaimana memutuskan sebuah proyek layak dijalankan? Ini rumus yang dipakai profesional keuangan.</p>
 
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>PV = FV ÷ (1 + r)ⁿ</b>: uang yang datang n tahun lagi harus dibagi (1 + r) sebanyak n kali agar setara dengan uang hari ini (pelajaran sebelumnya). NPV hanyalah melakukan itu untuk <b>beberapa tahun sekaligus</b>, lalu menjumlahkannya.
 </div>
 
@@ -3813,7 +3813,7 @@ Keterangan: <b>CF<sub>t</sub></b> = arus kas pada tahun ke-t, <b>r</b> = tingkat
   <tr><td><b>NPV negatif</b></td><td>Menghancurkan nilai</td><td>Tolak</td></tr>
 </table>
 
-<h3>Coba sendiri — hitung NPV 👇</h3>
+<h3>Coba sendiri — hitung NPV</h3>
 <div data-demo="js-playground">// NPV: apakah proyek ini layak?
 const investasiAwal = 100000000;   // Rp100 juta keluar sekarang
 const arusKas = [30000000, 40000000, 50000000, 30000000];  // tahun 1-4
@@ -3898,7 +3898,7 @@ Aturannya: <b>IRR lebih tinggi dari biaya modal → layak.</b>
 <p>Rumus penutup: cara menghitung nilai dari <b>arus kas berulang</b> — dipakai untuk cicilan, pensiun, obligasi, dan bagian terpenting DCF.</p>
 
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 NPV = menjumlahkan nilai hari ini dari kas tiap tahun (pelajaran sebelumnya). Pelajaran ini membahas kasus khusus: kasnya <b>sama besar setiap tahun</b>. Karena polanya teratur, penjumlahan panjang itu bisa dipersingkat jadi satu rumus.
 </div>
 
@@ -4074,7 +4074,7 @@ Tanpa FCF, DCF tidak punya bahan. Tanpa DCF, FCF hanya angka tahunan tanpa kesim
           duration: "14 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Ekuitas</b> = bagian milik pemilik (neraca), <b>laba bersih</b> = sisa setelah semua beban, bunga, dan pajak (laba rugi), dan <b>ROE</b> = laba bersih ÷ ekuitas. Modul ini memakai ketiganya untuk menjawab pertanyaan baru: <i>berapa harga yang pantas untuk membeli sebagian bisnis?</i>
 </div>
 
@@ -4180,7 +4180,7 @@ Hasilnya sama bila dihitung untuk seluruh perusahaan: kapitalisasi pasar ÷ laba
           duration: "11 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>PER = Harga ÷ EPS</b> — PT Kopi Sari: Rp600 ÷ Rp40 = <b>15</b>, artinya sekitar 15 tahun laba untuk menebus harga bila labanya tetap (pelajaran sebelumnya).
 </div>
 
@@ -4251,7 +4251,7 @@ Hasilnya sama bila dihitung untuk seluruh perusahaan: kapitalisasi pasar ÷ laba
           duration: "11 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 PER membandingkan harga dengan <b>laba</b> (laporan laba rugi). PBV membandingkan harga dengan <b>ekuitas</b> — angka dari <b>neraca</b>: Aset − Kewajiban.
 </div>
 
@@ -4276,7 +4276,7 @@ PER membandingkan harga dengan <b>laba</b> (laporan laba rugi). PBV membandingka
   <tr><td><b>&gt; 1</b></td><td>Premium — pasar yakin perusahaan akan tumbuh / punya aset tak berwujud (merek)</td></tr>
 </table>
 
-<h3>💥 Dampak & kegunaan</h3>
+<h3>Dampak & kegunaan</h3>
 <ul>
   <li>Paling berguna untuk perusahaan <b>padat aset</b> (bank, properti, keuangan).</li>
   <li>PBV rendah menarik value investor — <b>tapi selidiki dulu</b> kenapa murah (aset bermasalah?).</li>
@@ -4326,7 +4326,7 @@ PER membandingkan harga dengan <b>laba</b> (laporan laba rugi). PBV membandingka
           duration: "11 menit",
           content: `
 <div class="callout ingat">
-<b>🔙 Ingat dulu</b><br>
+<b>Ingat dulu</b><br>
 <b>Kapitalisasi pasar</b> = harga per lembar × jumlah lembar (PT Kopi Sari: Rp600 miliar). <b>EBITDA</b> = laba operasi + penyusutan &amp; amortisasi — kira-kira kas yang dihasilkan kegiatan inti, karena penyusutan bukan uang keluar (pelajaran Metrik Lain).
 </div>
 
@@ -4403,7 +4403,7 @@ PER membandingkan harga dengan <b>laba</b> (laporan laba rugi). PBV membandingka
 <p><b>Multiple = kelipatan.</b> Ini rasio antara <b>harga</b> dengan suatu <b>ukuran kinerja</b> perusahaan.</p>
 
 <div class="callout">
-🏪 <b>Analogi warung.</b> Ada warung yang labanya <b>Rp100 juta/tahun</b>. Penjualnya minta <b>Rp1,5 miliar</b>.<br><br>
+<b>Analogi warung.</b> Ada warung yang labanya <b>Rp100 juta/tahun</b>. Penjualnya minta <b>Rp1,5 miliar</b>.<br><br>
 Multiple-nya = 1.500 ÷ 100 = <b>15×</b><br><br>
 Artinya kamu membayar <b>15 kali lipat laba setahun</b>. Cara cepat membacanya: <i>"kalau labanya tetap segitu, butuh ±15 tahun untuk balik modal."</i>
 </div>
@@ -4498,7 +4498,7 @@ if (targetPE > rataPE) {
 </ul>
 
 <div class="callout">
-⚠️ Kalau ada yang berkata <i>"P/E-nya cuma 8, murah banget!"</i>, tanyakan dulu: <b>trailing atau forward?</b> Forward P/E yang rendah sering datang dari ramalan laba yang optimistis. Kalau ramalannya meleset, "murah"-nya ikut hilang.
+Kalau ada yang berkata <i>"P/E-nya cuma 8, murah banget!"</i>, tanyakan dulu: <b>trailing atau forward?</b> Forward P/E yang rendah sering datang dari ramalan laba yang optimistis. Kalau ramalannya meleset, "murah"-nya ikut hilang.
 </div>
 
 <h3>6. Kenapa multiple berbeda-beda antar perusahaan?</h3>
@@ -4511,7 +4511,7 @@ if (targetPE > rataPE) {
 </ul>
 <p>Itu sebabnya industri berbeda punya norma berbeda: perusahaan teknologi biasanya ber-P/E lebih tinggi dari perbankan, dan itu <b>wajar</b>, bukan tanda kemahalan.</p>
 
-<h3>7. Lima jebakan yang wajib diwaspadai 🚩</h3>
+<h3>7. Lima jebakan yang wajib diwaspadai</h3>
 <ol>
   <li><b>P/E rendah ≠ murah.</b> Bisa jadi <i>value trap</i> — pasar sudah tahu bisnisnya sedang menurun, dan labanya akan menyusut. Yang murah hari ini jadi mahal tahun depan.</li>
   <li><b>P/E tinggi ≠ mahal.</b> Kalau tumbuh sangat cepat, itu bisa wajar. Di situlah <b>PEG</b> berguna.</li>
@@ -4521,7 +4521,7 @@ if (targetPE > rataPE) {
 </ol>
 
 <div class="callout">
-<b>💡 Cara pakai yang benar.</b> Multiple menjawab <i>"berapa harga yang dibayar pasar"</i>, <b>bukan</b> <i>"berapa nilai sebenarnya"</i>. Gunakan sebagai <b>penyaring cepat</b> untuk mempersempit pilihan — lalu dalami dengan kualitas bisnis (moat, manajemen, alokasi modal) dan arus kasnya sebelum memutuskan.
+<b>Cara pakai yang benar.</b> Multiple menjawab <i>"berapa harga yang dibayar pasar"</i>, <b>bukan</b> <i>"berapa nilai sebenarnya"</i>. Gunakan sebagai <b>penyaring cepat</b> untuk mempersempit pilihan — lalu dalami dengan kualitas bisnis (moat, manajemen, alokasi modal) dan arus kasnya sebelum memutuskan.
 </div>
 `,
           keyPoints: [
@@ -4639,7 +4639,7 @@ Alasannya masuk akal: operasi harian bisa didelegasikan ke manajer yang cakap. T
 </table>
 
 <div class="callout warn">
-<b>🚩 Tanda bahaya:</b> perusahaan yang <b>terus-menerus menerbitkan saham baru</b> untuk membiayai operasi sehari-hari. Artinya bisnisnya belum sanggup menghidupi dirinya sendiri, dan bagian kepemilikanmu menyusut tiap tahun. Periksa <b>jumlah saham beredar</b> selama 5 tahun terakhir — kalau naik terus tanpa akuisisi yang berarti, itu pertanda.
+<b>Tanda bahaya:</b> perusahaan yang <b>terus-menerus menerbitkan saham baru</b> untuk membiayai operasi sehari-hari. Artinya bisnisnya belum sanggup menghidupi dirinya sendiri, dan bagian kepemilikanmu menyusut tiap tahun. Periksa <b>jumlah saham beredar</b> selama 5 tahun terakhir — kalau naik terus tanpa akuisisi yang berarti, itu pertanda.
 </div>
 
 <h3>Lima pilihan memakai uang (hanya ada ini)</h3>
@@ -5004,7 +5004,7 @@ Perusahaan berspread negatif yang terus berekspansi sedang <b>menggali lubangnya
 <b>Yang berbahaya: terjebak di tengah.</b> Tidak cukup istimewa untuk memasang harga premium, tapi juga tidak cukup efisien untuk bersaing harga. Posisi ini paling sering kalah.
 </div>
 
-<h3>Coba sendiri — bandingkan dua strategi 👇</h3>
+<h3>Coba sendiri — bandingkan dua strategi</h3>
 <div data-demo="js-playground">// Pendapatan = Harga x Volume. Ubah angkanya & jalankan lagi.
 const strategi = [
   { nama: "Premium (harga tinggi)", harga: 500000, volume: 1000, biayaVariabel: 200000 },
@@ -5149,7 +5149,7 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
 <b>Cara menilainya (praktis):</b> baca <b>laporan tahunan beberapa tahun ke belakang</b>. Apakah janji tahun lalu <b>ditepati</b>? Apakah mereka <b>mengakui kegagalan</b> dengan jujur, atau selalu menyalahkan keadaan? Rekam jejak berbicara lebih keras daripada visi di slide presentasi.
 </div>
 
-<h3>🚩 Tanda bahaya manajemen</h3>
+<h3>Tanda bahaya manajemen</h3>
 <ul>
   <li>Strategi berganti-ganti; ikut tren tanpa arah.</li>
   <li>Terlalu banyak berjanji, jarang menepati.</li>
@@ -5204,7 +5204,7 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
 <div data-diagram="matrix" data-cells="Tumbuh tapi bakar uang — rapuh|Pemenang — tumbuh &amp; hasilkan kas|Menyusut &amp; merugi — jurang|Stabil tapi stagnan" data-xlabel="Makin besar arus kas bebas" data-ylabel="Makin cepat tumbuh" data-caption="Pertumbuhan tanpa kas adalah jebakan — perhatikan kuadran kiri atas"></div>
 
 
-<h3>✅ Pola bisnis pemenang</h3>
+<h3>Pola bisnis pemenang</h3>
 <table class="tbl">
   <tr><th>Pola</th><th>Kenapa penting</th></tr>
   <tr><td><b>Pendapatan mudah ditebak</b></td><td>Berulang/langganan → perencanaan mudah, risiko rendah</td></tr>
@@ -5213,7 +5213,7 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
   <tr><td><b>Utang rendah</b></td><td>Tahan menghadapi krisis; tidak dipaksa menjual aset saat sulit</td></tr>
 </table>
 
-<h3>⚠️ Lima jurang kehancuran</h3>
+<h3>Lima jurang kehancuran</h3>
 <ol>
   <li><b>Sindrom katak rebus</b> — perusahaan menurun <b>perlahan</b> sehingga tak terasa, sampai terlambat. Dalam bisnis, <b>diam = mundur</b>: pesaing bergerak, biaya naik, selera berubah.</li>
   <li><b>Red flag akuntansi</b> — laba naik tapi <b>arus kas</b> tidak; piutang & persediaan menumpuk lebih cepat dari penjualan; utang membengkak. (Contoh nyatanya ada di pelajaran <i>Studi Kasus: Membaca Laporan Perusahaan</i>.)</li>
@@ -5302,7 +5302,7 @@ Jadi bagi bank, <b>uang adalah bahan baku sekaligus barang dagangan</b>.
 </table>
 
 <div class="callout warn">
-<b>⚠️ Kesalahan paling umum pemula:</b> melihat DER bank 9× lalu menyimpulkan "bank ini sangat berisiko, hindari". Padahal itu justru struktur normal perbankan. Yang benar-benar mengukur risiko bank adalah <b>CAR</b> dan <b>NPL</b> — dua hal yang akan kita pelajari nanti.
+<b>Kesalahan paling umum pemula:</b> melihat DER bank 9× lalu menyimpulkan "bank ini sangat berisiko, hindari". Padahal itu justru struktur normal perbankan. Yang benar-benar mengukur risiko bank adalah <b>CAR</b> dan <b>NPL</b> — dua hal yang akan kita pelajari nanti.
 </div>
 
 <h3>Lalu alat apa yang dipakai?</h3>
@@ -5390,7 +5390,7 @@ Jadi bagi bank, <b>uang adalah bahan baku sekaligus barang dagangan</b>.
 </table>
 
 <div class="callout">
-🏪 <b>Analogi warung.</b> Giro &amp; tabungan itu <b>bahan baku murah</b>; deposito itu <b>bahan baku mahal</b>. Dua warung menjual dengan harga jual sama — yang bahan bakunya lebih murah, untungnya lebih besar. Sesederhana itu.
+<b>Analogi warung.</b> Giro &amp; tabungan itu <b>bahan baku murah</b>; deposito itu <b>bahan baku mahal</b>. Dua warung menjual dengan harga jual sama — yang bahan bakunya lebih murah, untungnya lebih besar. Sesederhana itu.
 </div>
 
 <h3>Rumusnya</h3>
@@ -5407,7 +5407,7 @@ Jadi bagi bank, <b>uang adalah bahan baku sekaligus barang dagangan</b>.
 
 <div data-demo="casa-nim"></div>
 
-<h3>🏰 CASA sebenarnya adalah moat</h3>
+<h3>CASA sebenarnya adalah moat</h3>
 <p>Ingat pelajaran <b>Economic Moat</b>? CASA tinggi adalah salah satu parit paling nyata di dunia bisnis, karena <b>sangat sulit ditiru</b>. Sumbernya:</p>
 <ul>
   <li><b>Jaringan cabang &amp; ATM</b> yang luas — butuh puluhan tahun dan modal besar.</li>
@@ -5420,7 +5420,7 @@ Jadi bagi bank, <b>uang adalah bahan baku sekaligus barang dagangan</b>.
 <b>Kenapa pesaing sulit mengejar:</b> bank lain bisa saja menaikkan bunga deposito untuk menarik dana besar-besaran. Tapi itu <b>dana mahal</b> — biaya dananya naik, NIM-nya tergerus. Menarik <b>dana murah</b> butuh ekosistem &amp; kebiasaan nasabah, bukan sekadar promo. Inilah <i>switching cost</i> dalam wujud paling nyata.
 </div>
 
-<h3>🚩 Tiga hal yang wajib diwaspadai</h3>
+<h3>Tiga hal yang wajib diwaspadai</h3>
 <ol>
   <li><b>CASA turun saat suku bunga naik.</b> Ketika bunga deposito jadi menarik, nasabah memindahkan uangnya ke sana. Perhatikan <b>trennya beberapa kuartal</b>, jangan satu titik.</li>
   <li><b>Kualitas CASA berbeda-beda.</b> Giro dari segelintir korporasi besar mudah kabur sekaligus. Tabungan dari jutaan nasabah ritel jauh lebih <b>lengket</b> — walau nominal CASA-nya sama.</li>
@@ -5510,7 +5510,7 @@ Jadi bagi bank, <b>uang adalah bahan baku sekaligus barang dagangan</b>.
 <p>Bank di Indonesia umumnya ber-NIM sekitar <b>4–6%</b> — relatif tinggi dibanding banyak negara lain. NIM dipengaruhi dua sisi: <b>biaya dana</b> (turun kalau CASA tinggi) dan <b>imbal hasil kredit</b> (naik kalau menyalurkan ke segmen berisiko lebih tinggi seperti mikro dan konsumer).</p>
 
 <div class="callout warn">
-<b>⚠️ NIM tinggi belum tentu kabar baik.</b> Bank yang menyalurkan kredit mikro bisa ber-NIM 8%, tapi kredit macetnya juga jauh lebih besar. <b>NIM tinggi + NPL tinggi</b> artinya bank itu dibayar mahal karena menanggung risiko besar — bukan karena unggul. Selalu baca NIM bersama NPL.
+<b>NIM tinggi belum tentu kabar baik.</b> Bank yang menyalurkan kredit mikro bisa ber-NIM 8%, tapi kredit macetnya juga jauh lebih besar. <b>NIM tinggi + NPL tinggi</b> artinya bank itu dibayar mahal karena menanggung risiko besar — bukan karena unggul. Selalu baca NIM bersama NPL.
 </div>
 
 <h3>2. LDR — Loan to Deposit Ratio</h3>
@@ -5624,7 +5624,7 @@ Versi internasionalnya disebut <b>CIR</b> (Cost to Income Ratio).<br><br>
 </table>
 
 <div class="callout warn">
-<b>⚠️ Selalu lihat NPL Gross.</b> Ini pola yang perlu kamu kenali: ketika sebuah bank hanya menonjolkan "NPL net 0,8%" tanpa menyebut gross-nya, periksa sendiri di laporannya. Batas yang diawasi regulator adalah <b>NPL gross 5%</b>.
+<b>Selalu lihat NPL Gross.</b> Ini pola yang perlu kamu kenali: ketika sebuah bank hanya menonjolkan "NPL net 0,8%" tanpa menyebut gross-nya, periksa sendiri di laporannya. Batas yang diawasi regulator adalah <b>NPL gross 5%</b>.
 </div>
 
 <h3>CKPN — bantalan kerugian</h3>
@@ -5639,7 +5639,7 @@ CKPN dicatat sebagai <b>beban</b> — jadi menambah cadangan berarti <b>langsung
 Di atas <b>100%</b> berarti seluruh kredit bermasalah sudah dicadangkan penuh — posisi konservatif dan aman.
 </div>
 
-<h3>💥 Di sinilah kecurangan sering bersembunyi</h3>
+<h3>Di sinilah kecurangan sering bersembunyi</h3>
 <p>Ingat pelajaran <b>Mendeteksi Manipulasi Laporan Keuangan</b>? CKPN adalah salah satu pos paling mudah dimainkan di seluruh laporan keuangan, karena besarnya <b>bergantung pada penilaian manajemen</b>.</p>
 
 <table class="tbl">
@@ -5650,7 +5650,7 @@ Di atas <b>100%</b> berarti seluruh kredit bermasalah sudah dicadangkan penuh �
 </table>
 
 <div class="callout warn">
-<b>🚩 Tanda bahaya yang paling sering terlewat:</b> NPL <b>turun</b> sementara <b>kredit direstrukturisasi melonjak</b>. Artinya kredit bermasalah tidak sembuh — hanya dipindahkan ke kategori lain dengan mengubah syarat pembayarannya. Angka NPL-nya membaik, kenyataannya tidak.
+<b>Tanda bahaya yang paling sering terlewat:</b> NPL <b>turun</b> sementara <b>kredit direstrukturisasi melonjak</b>. Artinya kredit bermasalah tidak sembuh — hanya dipindahkan ke kategori lain dengan mengubah syarat pembayarannya. Angka NPL-nya membaik, kenyataannya tidak.
 </div>
 
 <h3>Cara membacanya yang benar</h3>
@@ -5762,7 +5762,7 @@ Tanpa aturan modal minimum, bank punya godaan untuk beroperasi dengan modal seti
 <p>Ketentuan <b>Basel III</b> — kerangka internasional yang juga diadopsi Indonesia — mensyaratkan CAR minimum sekitar <b>8%</b>, ditambah beberapa lapisan penyangga tambahan sehingga dalam praktiknya menjadi lebih tinggi. Bank-bank besar Indonesia umumnya menjaga CAR jauh di atas ketentuan, sering di kisaran <b>20%-an</b>.</p>
 
 <div class="callout warn">
-<b>⚠️ CAR terlalu tinggi juga bukan pujian.</b> Modal menganggur tidak menghasilkan. CAR 30% berarti bank menyimpan bantalan yang jauh melebihi kebutuhan — aman, tapi <b>ROE-nya tertekan</b> karena modal besar dibagi laba yang sama. Ini contoh nyata pelajaran <b>alokasi modal</b>: kalau modal berlebih tak bisa dipakai produktif, sebaiknya dikembalikan ke pemegang saham lewat dividen.
+<b>CAR terlalu tinggi juga bukan pujian.</b> Modal menganggur tidak menghasilkan. CAR 30% berarti bank menyimpan bantalan yang jauh melebihi kebutuhan — aman, tapi <b>ROE-nya tertekan</b> karena modal besar dibagi laba yang sama. Ini contoh nyata pelajaran <b>alokasi modal</b>: kalau modal berlebih tak bisa dipakai produktif, sebaiknya dikembalikan ke pemegang saham lewat dividen.
 </div>
 
 <h3>Tiga rasio, tiga pertanyaan berbeda</h3>
@@ -5859,7 +5859,7 @@ Kalau <b>ROE &lt; biaya ekuitas</b> → PBV pantas <b>di bawah 1×</b>
 </table>
 
 <div class="callout warn">
-<b>🚩 Jebakan "bank murah".</b> Ini penerapan langsung dari <i>value trap</i> yang kamu pelajari di <b>Valuasi Relatif &amp; Multiples</b>. Bank dengan PBV 0,5× terlihat sangat murah — tapi tanyakan dulu: <b>kenapa</b>?<br><br>
+<b>Jebakan "bank murah".</b> Ini penerapan langsung dari <i>value trap</i> yang kamu pelajari di <b>Valuasi Relatif &amp; Multiples</b>. Bank dengan PBV 0,5× terlihat sangat murah — tapi tanyakan dulu: <b>kenapa</b>?<br><br>
 Biasanya jawabannya: ROE-nya rendah karena biaya dananya mahal (CASA rendah), atau NPL-nya bermasalah. Murahnya <b>pantas</b>. Dan celakanya, kalau kredit macetnya terus bertambah, nilai bukunya sendiri akan menyusut — sehingga PBV yang tadinya 0,5× ternyata tidak semurah kelihatannya.
 </div>
 
@@ -6039,7 +6039,7 @@ Biasanya jawabannya: ROE-nya rendah karena biaya dananya mahal (CASA rendah), at
 </div>
 
 <div class="callout ingat">
-<b>🔙 Tiga istilah dulu</b><br>
+<b>Tiga istilah dulu</b><br>
 <b>Modal kerja</b> = aset lancar − kewajiban lancar (pelajaran Persediaan &amp; Modal Kerja).<br>
 <b>Laba ditahan</b> = tumpukan laba dari tahun ke tahun yang <b>tidak dibagikan</b> sebagai dividen, tercatat di bagian ekuitas neraca. Perusahaan muda atau yang sering rugi laba ditahannya kecil.<br>
 <b>EBIT</b> (<i>Earnings Before Interest and Taxes</i>) = laba sebelum bunga dan pajak — kira-kira sama dengan <b>laba operasi</b> di laporan laba rugi.
@@ -6069,7 +6069,7 @@ Biasanya jawabannya: ROE-nya rendah karena biaya dananya mahal (CASA rendah), at
   <tr><td><b>di bawah 1,81</b></td><td>Rawan</td><td>Risiko kebangkrutan tinggi</td></tr>
 </table>
 
-<h3>Coba sendiri — hitung Z-Score 👇</h3>
+<h3>Coba sendiri — hitung Z-Score</h3>
 <div data-demo="js-playground">// Altman Z-Score (ubah angkanya & jalankan lagi)
 const X1 = 0.20;  // Modal Kerja / Total Aset
 const X2 = 0.15;  // Laba Ditahan / Total Aset
@@ -6242,7 +6242,7 @@ console.log("Catatan: ini indikator risiko, BUKAN ramalan harga saham.");</div>
 Ini <b>rata-rata tertimbang</b> semua kemungkinan — bukan ramalan pasti, tapi cara membandingkan pilihan secara adil.
 </div>
 
-<h3>Coba sendiri — hitung nilai harapan 👇</h3>
+<h3>Coba sendiri — hitung nilai harapan</h3>
 <div data-demo="js-playground">// Analisis skenario: berapa "nilai harapan" (expected value)?
 const skenario = [
   { nama: "Terbaik ", peluang: 0.30, hasil: 100 },
@@ -6323,7 +6323,7 @@ console.log("Ini rata-rata tertimbang semua kemungkinan, bukan ramalan pasti.");
 Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kalau perkiraanmu meleset 20%, kamu masih aman.
 </div>
 
-<h3>💥 Kenapa ini pelindung terbaik</h3>
+<h3>Kenapa ini pelindung terbaik</h3>
 <ul>
   <li>Melindungi dari <b>kesalahan analisis</b>-mu sendiri.</li>
   <li>Melindungi dari <b>kejadian tak terduga</b>.</li>
@@ -6737,7 +6737,7 @@ Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kala
   <li>Piutang (penjualan kredit belum dibayar): <b>Rp40 juta</b></li>
 </ul>
 
-<h3>Coba sendiri — hitung "napas" (runway) tokonya 👇</h3>
+<h3>Coba sendiri — hitung "napas" (runway) tokonya</h3>
 <div data-demo="js-playground">const kas = 30;                // juta
 const pengeluaranBulanan = 25; // juta
 const piutang = 40;            // penjualan kredit belum dibayar
@@ -7098,7 +7098,7 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
 Biaya 2% per tahun terdengar sepele. Tapi biaya dipungut <b>setiap tahun</b>, dari <b>seluruh</b> danamu, dan menggerus <b>efek bunga majemuk</b>. Dalam puluhan tahun, dampaknya bisa memangkas <b>sepertiga hasil akhir</b> atau lebih.
 </div>
 
-<h3>Coba sendiri — lihat dampak biaya 👇</h3>
+<h3>Coba sendiri — lihat dampak biaya</h3>
 <div data-demo="js-playground">// Dampak biaya tahunan terhadap hasil 20 tahun
 const modalAwal = 100000000;   // Rp100 juta
 const returnKotor = 0.10;      // 10% per tahun sebelum biaya
@@ -7188,7 +7188,7 @@ Riset jangka panjang (mis. laporan <b>SPIVA</b> dari S&amp;P) secara konsisten m
   <tr><td>Kinerja ditampilkan sejak <b>tanggal pilihan</b></td><td>Periode dipilih agar terlihat paling bagus (<i>cherry picking</i>)</td></tr>
 </table>
 
-<h3>🚩 Tanda bahaya saat ditawari produk keuangan</h3>
+<h3>Tanda bahaya saat ditawari produk keuangan</h3>
 <ul>
   <li>Menjanjikan imbal hasil <b>pasti</b> atau "bebas risiko" dengan hasil tinggi.</li>
   <li>Mendesakmu memutuskan <b>cepat-cepat</b> ("promo terbatas").</li>
@@ -7306,7 +7306,7 @@ Manajer dengan hasil bagus 3 tahun berturut-turut mungkin memang hebat — atau 
   <tr><td><b>Beban fee bertingkat</b></td><td>Kamu bayar fee ke dana pensiun, dana pensiun bayar fee ke GP, GP kadang menaruh di fund lain. Tiap lapis memotong hasilmu</td></tr>
 </table>
 
-<h3>💡 Kenapa ini berguna bagi kamu</h3>
+<h3>Kenapa ini berguna bagi kamu</h3>
 <div class="callout">
 Kamu mungkin tidak akan pernah menjadi LP sebuah private equity. Tapi kamu <b>sudah</b> menjadi capital allocator untuk uangmu sendiri — dan menghadapi persoalan yang <b>persis sama</b>:<br><br>
 • Berapa porsi ke tabungan, emas, saham, properti? <b>(alokasi aset)</b><br>
@@ -7491,7 +7491,7 @@ Bedanya hanya nol di belakang angkanya.
   <li>"Rp10.000-mu <b>tak lagi cukup</b> membeli satu bakso"</li>
 </ul>
 
-<h3>Coba sendiri — lihat uangmu menyusut 👇</h3>
+<h3>Coba sendiri — lihat uangmu menyusut</h3>
 <div data-demo="js-playground">// Bagaimana inflasi menggerus daya beli uang yang menganggur
 const uang = 10000000;   // Rp10 juta hari ini
 const inflasi = 0.04;    // 4% per tahun
@@ -7588,7 +7588,7 @@ console.log("Ubah angka inflasi jadi 0.08 lalu jalankan lagi - lihat bedanya.");
 </table>
 
 <div class="callout">
-<b>💡 Kenapa ekspektasi begitu penting?</b> Dua penyebab pertama bisa mereda sendiri: panen membaik, harga BBM dunia turun. Ekspektasi yang sudah terbentuk jauh lebih sulit dihentikan. Karena itu bank sentral bekerja keras menjaga <b>kepercayaan</b> bahwa inflasi akan tetap rendah — sesuatu yang dibahas di pelajaran berikutnya tentang kebijakan moneter.
+<b>Kenapa ekspektasi begitu penting?</b> Dua penyebab pertama bisa mereda sendiri: panen membaik, harga BBM dunia turun. Ekspektasi yang sudah terbentuk jauh lebih sulit dihentikan. Karena itu bank sentral bekerja keras menjaga <b>kepercayaan</b> bahwa inflasi akan tetap rendah — sesuatu yang dibahas di pelajaran berikutnya tentang kebijakan moneter.
 </div>
 
 <h3>Cara mengukurnya: sekeranjang belanja</h3>
@@ -7614,7 +7614,7 @@ console.log("Ubah angka inflasi jadi 0.08 lalu jalankan lagi - lihat bedanya.");
 </table>
 
 <div class="callout warn">
-<b>⚠️ "Inflasi turun" bukan berarti harga turun.</b> Kalau inflasi turun dari 5% menjadi 3%, harga <b>tetap naik</b> — hanya lebih lambat. Harga baru benar-benar turun bila terjadi <b>deflasi</b> (inflasi negatif).
+<b>"Inflasi turun" bukan berarti harga turun.</b> Kalau inflasi turun dari 5% menjadi 3%, harga <b>tetap naik</b> — hanya lebih lambat. Harga baru benar-benar turun bila terjadi <b>deflasi</b> (inflasi negatif).
 </div>
 
 <h3>Kenapa angka resmi terasa beda dengan dompetmu?</h3>
@@ -7721,7 +7721,7 @@ console.log("Ubah angka inflasi jadi 0.08 lalu jalankan lagi - lihat bedanya.");
   <li><b>Giro Wajib Minimum (GWM)</b> — berapa persen dana bank yang wajib disimpan di BI. Dinaikkan = bank punya lebih sedikit uang untuk dipinjamkan.</li>
 </ul>
 
-<h3>💥 Dampak langsung ke bisnis &amp; investasimu</h3>
+<h3>Dampak langsung ke bisnis &amp; investasimu</h3>
 <table class="tbl">
   <tr><th>Saat suku bunga NAIK</th><th>Akibatnya</th></tr>
   <tr><td>Biaya pinjaman usaha</td><td>Naik → ekspansi jadi mahal, laba tertekan</td></tr>
@@ -7807,7 +7807,7 @@ console.log("Ubah angka inflasi jadi 0.08 lalu jalankan lagi - lihat bedanya.");
 <br><br>Artinya: <b>berapa persen dari seluruh kegiatan ekonomi yang berhasil dipungut menjadi pajak.</b>
 </div>
 
-<h3>Coba sendiri — hitung tax ratio 👇</h3>
+<h3>Coba sendiri — hitung tax ratio</h3>
 <div data-demo="js-playground">// Tax ratio = seberapa besar porsi ekonomi yang terpungut jadi pajak
 const negara = [
   { nama: "Negara A", pdb: 20000, pajak: 2000 },   // dalam triliun Rupiah
@@ -8436,7 +8436,7 @@ Perhatikan kesamaannya: semuanya <b>berulang, punya aturan jelas, dan benar-sala
   <tr><td><b>Mencium yang janggal</b></td><td>Cara mencurangi laporan berganti wajah, polanya berulang</td></tr>
 </table>
 
-<h3>💎 Yang makin langka: gabungannya</h3>
+<h3>Yang makin langka: gabungannya</h3>
 <div class="callout">
 Banyak orang menguasai <b>satu</b> dari tiga hal ini. Sangat sedikit yang menguasai <b>ketiganya</b>:<br><br>
 <b>1. Paham angka</b> — bisa membaca laporan dan tahu mana yang mencurigakan.<br>
@@ -8447,7 +8447,7 @@ Itulah yang sebenarnya kamu bangun sepanjang platform ini, tanpa disebut secara 
 
 <p>Perhatikan betapa seringnya ketiga jalur saling bertemu di materi yang sudah kamu lewati: <b>pandas</b> untuk laporan keuangan, <b>FCF</b> untuk menilai produk AI dan protokol kripto, <b>alokasi modal</b> untuk treasury DAO, <b>audit</b> untuk forensik blockchain. Persimpangan itu bukan kebetulan — di situlah keahlian yang sulit ditiru terbentuk.</p>
 
-<h3>🧭 Cara tetap relevan</h3>
+<h3>Cara tetap relevan</h3>
 <div class="callout">
 • <b>Pelajari yang mendasar lebih dalam, yang berubah secukupnya.</b> Satu jam memahami arus kas lebih bernilai daripada satu jam menghafal menu aplikasi.<br>
 • <b>Jadilah orang yang memverifikasi.</b> Saat mesin menghasilkan laporan dalam detik, yang langka adalah orang yang tahu kapan laporan itu salah.<br>

@@ -505,7 +505,7 @@ const DEMOS = {};
 /* ---------- Demo: Neural Network (forward pass) ---------- */
 DEMOS["neural-net"] = function (root) {
   const box = h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🧠 <b>Demo: satu jaringan saraf kecil</b>" }),
+    h("div", { class: "demo-head", html: "<b>Satu jaringan saraf kecil</b>" }),
     h("p", { class: "demo-hint", text: "Klik tombol ciri-ciri di bawah. Lihat sinyal mengalir & neuron menyala menentukan: kucing atau bukan." }),
   ]);
 
@@ -670,7 +670,7 @@ DEMOS["learning-loop"] = function (root) {
   }, "↺ Reset");
 
   const box = h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "📉 <b>Demo: AI belajar mengurangi kesalahan</b>" }),
+    h("div", { class: "demo-head", html: "<b>AI belajar mengurangi kesalahan</b>" }),
     h("p", { class: "demo-hint", text: "Garis = tebakan AI, titik = data nyata. Tiap latihan, AI menggeser garis agar kesalahannya makin kecil — persis cara model belajar." }),
     s, lossText, lossBar,
     h("div", { class: "demo-controls" }, [auto, once, reset]),
@@ -713,7 +713,7 @@ DEMOS["pixel-grid"] = function (root) {
   const clear = h("button", { class: "btn ghost", onclick: () => { grid.fill(0); cells.forEach((c) => c.classList.remove("on")); refreshNums(); } }, "🧹 Bersihkan");
 
   const box = h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🔢 <b>Demo: bagaimana komputer 'melihat' gambar</b>" }),
+    h("div", { class: "demo-head", html: "<b>Bagaimana komputer 'melihat' gambar</b>" }),
     h("p", { class: "demo-hint", text: "Gambar angka/bentuk dengan menyeret mouse di kotak kiri. Di kanan, lihat: bagi komputer, gambar hanyalah deretan angka (0 dan 1)." }),
     h("div", { class: "px-wrap" }, [gridEl, numsEl]),
     h("div", { class: "demo-controls" }, [clear]),
@@ -783,7 +783,7 @@ DEMOS["next-word"] = function (root) {
   const reset = h("button", { class: "btn ghost", onclick: () => { words = ["Hari"]; render(); } }, "↺ Mulai lagi");
 
   const box = h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "💬 <b>Demo: cara ChatGPT menyusun kalimat</b>" }),
+    h("div", { class: "demo-head", html: "<b>Cara ChatGPT menyusun kalimat</b>" }),
     h("p", { class: "demo-hint", text: "Klik kata berikutnya (angka = perkiraan kemungkinan). Lihat — model bahasa tidak 'berpikir', ia hanya menebak kata demi kata. Yang tertebal = paling mungkin." }),
     sentenceEl, choicesEl,
     h("div", { class: "demo-controls" }, [reset]),
@@ -801,7 +801,7 @@ DEMOS["hash-demo"] = function (root) {
   }
   input.addEventListener("input", update);
   const box = h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "#️⃣ <b>Demo: hash (sidik jari digital)</b>" }),
+    h("div", { class: "demo-head", html: "<b>Hash (sidik jari digital)</b>" }),
     h("p", { class: "demo-hint", text: "Ketik apa saja. 'Hash' mengubahnya jadi kode unik. Ubah satu huruf saja → kodenya berubah total. Inilah yang mengunci blok-blok blockchain." }),
     input, out,
   ]);
@@ -878,7 +878,7 @@ DEMOS["blockchain-builder"] = function (root) {
   for (let i = 0; i < blocks.length; i++) mine(i);
 
   const box = h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🔗 <b>Demo: kenapa blockchain anti-curang</b>" }),
+    h("div", { class: "demo-head", html: "<b>Kenapa blockchain anti-curang</b>" }),
     h("p", { class: "demo-hint", html: "Tiap blok terkunci ke blok sebelumnya lewat hash. <b>Coba ubah data blok mana pun</b> → blok itu & semua blok sesudahnya langsung jadi <b>rusak (merah)</b>. Untuk memperbaikinya harus 'menambang ulang' satu per satu — itulah yang membuat pemalsuan hampir mustahil." }),
     chain,
   ]);
@@ -927,7 +927,7 @@ DEMOS["tx-flow"] = function (root) {
   };
 
   const box = h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "📡 <b>Demo: perjalanan sebuah transaksi</b>" }),
+    h("div", { class: "demo-head", html: "<b>Perjalanan sebuah transaksi</b>" }),
     track, desc,
     h("div", { class: "demo-controls" }, [play]),
   ]);
@@ -970,7 +970,7 @@ DEMOS["equation-sim"] = function (root) {
   const reset = h("button", { class: "btn ghost", onclick: () => { A = K = E = 0; draw(); } }, "↺ Reset");
 
   const box = h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "⚖️ <b>Demo: persamaan akuntansi selalu seimbang</b>" }),
+    h("div", { class: "demo-head", html: "<b>Persamaan akuntansi selalu seimbang</b>" }),
     h("p", { class: "demo-hint", text: "Klik transaksi di bawah. Perhatikan: sisi kiri (Aset) SELALU sama dengan sisi kanan (Kewajiban + Ekuitas), berapa pun transaksinya." }),
     h("div", { class: "eqs-cards" }, [cardA, cardK, cardE]),
     eqLine,
@@ -1019,7 +1019,7 @@ DEMOS["debit-credit"] = function (root) {
   }
 
   const box = h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🎯 <b>Demo: latihan Debit atau Kredit</b>" }),
+    h("div", { class: "demo-head", html: "<b>Latihan Debit atau Kredit</b>" }),
     h("p", { class: "demo-hint", text: "Tebak: untuk menambah akun yang muncul, dicatat di Debit atau Kredit? Aturan: Beban & Aset → Debit; Kewajiban, Ekuitas, Pendapatan → Kredit." }),
     q, btnRow, fb, score,
   ]);
@@ -1060,7 +1060,7 @@ DEMOS["profit-calc"] = function (root) {
   }
 
   const box = h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🧮 <b>Demo: kalkulator laba rugi</b>" }),
+    h("div", { class: "demo-head", html: "<b>Kalkulator laba rugi</b>" }),
     h("p", { class: "demo-hint", text: "Ubah angka-angka (dalam juta Rupiah) dan lihat laba bersih serta marginnya berubah langsung." }),
     h("div", { class: "pc-form" }, rows),
     out,
@@ -1128,7 +1128,7 @@ DEMOS["decision-tree"] = function (root) {
   }
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🌳 <b>Demo: pohon keputusan bekerja</b>" }),
+    h("div", { class: "demo-head", html: "<b>Pohon keputusan bekerja</b>" }),
     h("p", { class: "demo-hint", text: "Nyalakan/matikan ciri-cirinya, lalu lihat jalur mana yang menyala sampai ke jawaban. Perhatikan: pohon tidak pernah menanyakan semua ciri — itulah sebabnya ia cepat." }),
     h("div", { class: "demo-controls" }, tb),
     viz,
@@ -1168,7 +1168,7 @@ DEMOS["double-spend"] = function (root) {
   };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🪙 <b>Demo: masalah salinan digital (double-spending)</b>" }),
+    h("div", { class: "demo-head", html: "<b>Masalah salinan digital (double-spending)</b>" }),
     h("p", { class: "demo-hint", text: "Coba jalankan dua kali: sekali tanpa blockchain, sekali dengan blockchain. Bandingkan hasilnya." }),
     h("div", { class: "demo-controls" }, [sw, jalan]),
     out,
@@ -1227,7 +1227,7 @@ DEMOS["mining-sim"] = function (root) {
   };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "⛏️ <b>Demo: bagaimana penambangan sebenarnya bekerja</b>" }),
+    h("div", { class: "demo-head", html: "<b>Bagaimana penambangan sebenarnya bekerja</b>" }),
     h("p", { class: "demo-hint", text: "Menambang bukan 'memecahkan teka-teki pintar' — ini menebak angka (nonce) berulang kali sampai hash-nya kebetulan diawali sejumlah nol. Naikkan kesulitan dan rasakan bedanya." }),
     h("label", { class: "dm-row" }, [h("span", { text: "Kesulitan: " }), slider, dlabel]),
     h("div", { class: "demo-controls" }, [btn]),
@@ -1283,7 +1283,7 @@ DEMOS["zkp-cave"] = function (root) {
   const rs = h("button", { class: "btn ghost", type: "button", text: "↺ Ulangi", onclick: reset });
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🕳️ <b>Demo: membuktikan tanpa membocorkan (Zero-Knowledge)</b>" }),
+    h("div", { class: "demo-head", html: "<b>Membuktikan tanpa membocorkan (Zero-Knowledge)</b>" }),
     h("p", { class: "demo-hint", text: "Sebuah gua bercabang dua (lorong A dan B) yang tersambung oleh pintu berkata sandi. Pembukti masuk, lalu penjaga minta ia keluar dari lorong tertentu. Yang tahu kata sandi selalu bisa; penipu hanya bisa menebak 50:50. Kata sandinya sendiri tidak pernah diucapkan." }),
     h("div", { class: "demo-controls" }, [sw, btn, rs]),
     ring,
@@ -1333,7 +1333,7 @@ DEMOS["ratio-explorer"] = function (root) {
   }
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "📊 <b>Demo: penjelajah rasio keuangan</b>" }),
+    h("div", { class: "demo-head", html: "<b>Penjelajah rasio keuangan</b>" }),
     h("p", { class: "demo-hint", text: "Ubah angka laporan keuangan (dalam juta Rupiah) dan lihat kelima rasio bergerak. Hijau = sehat, merah = perlu diwaspadai." }),
     h("div", { class: "pc-form" }, rows),
     out,
@@ -1363,7 +1363,7 @@ DEMOS["roi-calc"] = function (root) {
       `<div class="dm-note">⚠️ <b>Jebakan terbesar ROI:</b> angka total menyesatkan tanpa waktu. ROI 30% terdengar bagus — tapi 30% dalam 1 tahun jauh berbeda dari 30% dalam 10 tahun. Coba ubah jumlah tahunnya sambil membiarkan modal &amp; hasil tetap.</div>`;
   }
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "💰 <b>Demo: kalkulator ROI</b>" }),
+    h("div", { class: "demo-head", html: "<b>Kalkulator ROI</b>" }),
     h("p", { class: "demo-hint", text: "Masukkan modal, hasil akhir, dan lamanya. Perhatikan bedanya ROI total dan ROI per tahun." }),
     h("div", { class: "pc-form" }, [num("modal", "Modal awal", "jt"), num("hasil", "Nilai akhir", "jt"), num("tahun", "Lama investasi", "tahun")]),
     out,
@@ -1414,7 +1414,7 @@ DEMOS["diffusion"] = function (root) {
   slider.oninput = draw;
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🌫️ <b>Demo: bagaimana AI gambar (diffusion) bekerja</b>" }),
+    h("div", { class: "demo-head", html: "<b>Bagaimana AI gambar (diffusion) bekerja</b>" }),
     h("p", { class: "demo-hint", text: "Geser dari kiri ke kanan. Model tidak 'melukis' — ia mulai dari noise acak lalu menghapus noise sedikit demi sedikit sampai gambar muncul." }),
     grid,
     h("label", { class: "dm-row" }, [slider, lbl]),
@@ -1455,7 +1455,7 @@ DEMOS["cost-structure"] = function (root) {
   }
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🏭 <b>Demo: biaya tetap, biaya variabel &amp; titik impas</b>" }),
+    h("div", { class: "demo-head", html: "<b>Biaya tetap, biaya variabel &amp; titik impas</b>" }),
     h("p", { class: "demo-hint", text: "Atur biaya dan harga jual, lalu geser volume penjualan. Cari titik di mana rugi berubah jadi laba." }),
     h("div", { class: "pc-form" }, [num("tetap", "Biaya tetap per bulan", "jt"), num("variabel", "Biaya variabel per unit", "rb"), num("harga", "Harga jual per unit", "rb")]),
     h("label", { class: "dm-row" }, [h("span", { text: "Volume: " }), slider, vlbl]),
@@ -1529,7 +1529,7 @@ DEMOS["casa-nim"] = function (root) {
   ];
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🏦 <b>Demo: CASA, biaya dana &amp; NIM sebuah bank</b>" }),
+    h("div", { class: "demo-head", html: "<b>CASA, biaya dana &amp; NIM sebuah bank</b>" }),
     h("p", { class: "demo-hint", text: "Angka dalam triliun Rupiah. Ubah komposisi dananya dan lihat bagaimana biaya dana serta NIM bergerak — inilah yang sebenarnya dinilai analis saat melihat bank." }),
     h("div", { class: "pc-form" }, kolom),
     out,
@@ -1574,7 +1574,7 @@ DEMOS["fcf-calc"] = function (root) {
   ];
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "💵 <b>Demo: kalkulator Free Cash Flow</b>" }),
+    h("div", { class: "demo-head", html: "<b>Kalkulator Free Cash Flow</b>" }),
     h("p", { class: "demo-hint", text: "Angka dalam miliar Rupiah. Pisahkan CapEx pemeliharaan (wajib, sekadar menjaga aset) dari CapEx pertumbuhan (pilihan, untuk memperbesar bisnis) — lalu lihat betapa berbedanya kesimpulannya." }),
     h("div", { class: "pc-form" }, kolom),
     out,
@@ -1617,7 +1617,7 @@ DEMOS["hurdle-rate"] = function (root) {
   ];
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🎯 <b>Demo: biaya modal &amp; ambang kelayakan (hurdle rate)</b>" }),
+    h("div", { class: "demo-head", html: "<b>Biaya modal &amp; ambang kelayakan (hurdle rate)</b>" }),
     h("p", { class: "demo-hint", text: "Berapa hasil minimal yang harus dicapai sebuah proyek agar layak dijalankan? Jawabannya bukan nol — melainkan biaya modalnya sendiri." }),
     h("div", { class: "pc-form" }, kolom),
     out,
@@ -1691,7 +1691,7 @@ DEMOS["anscombe"] = function (root) {
   sync();
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "👀 <b>Demo: kenapa data wajib digambar dulu</b>" }),
+    h("div", { class: "demo-head", html: "<b>Kenapa data wajib digambar dulu</b>" }),
     h("p", { class: "demo-hint", text: "Empat kumpulan data di bawah ini punya statistik ringkasan yang sama. Perhatikan bentuknya." }),
     petak,
     h("div", { class: "demo-controls" }, [tg]),
@@ -1744,7 +1744,7 @@ DEMOS["skala-fitur"] = function (root) {
   sp.oninput = () => { s.peng = parseInt(sp.value, 10); lp.textContent = s.peng + " tahun"; draw(); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "⚖️ <b>Demo: kenapa fitur harus diskalakan dulu</b>" }),
+    h("div", { class: "demo-head", html: "<b>Kenapa fitur harus diskalakan dulu</b>" }),
     h("p", { class: "demo-hint", text: "Model menebak Junior/Senior dengan mencari karyawan termirip (k-NN). Geser nilainya dan perhatikan: tanpa penskalaan, jawabannya bisa keliru." }),
     h("label", { class: "dm-row" }, [h("span", { text: "Gaji: " }), sg, lg]),
     h("label", { class: "dm-row" }, [h("span", { text: "Pengalaman: " }), sp, lp]),
@@ -1803,7 +1803,7 @@ DEMOS["lacak-dana"] = function (root) {
   };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🕵️ <b>Demo: mengikuti aliran dana curian</b>" }),
+    h("div", { class: "demo-head", html: "<b>Mengikuti aliran dana curian</b>" }),
     h("p", { class: "demo-hint", text: "Semua transaksi blockchain tercatat permanen dan terbuka. Ikuti ke mana dana bergerak, dan perhatikan di titik mana jejaknya bertemu dunia nyata." }),
     h("div", { class: "demo-controls" }, [btn, rs]),
     ring,
@@ -1867,7 +1867,7 @@ DEMOS["klaster-alamat"] = function (root) {
   rs.onclick = () => { tahap = 0; gambar(); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🧩 <b>Demo: bagaimana alamat-alamat disatukan</b>" }),
+    h("div", { class: "demo-head", html: "<b>Bagaimana alamat-alamat disatukan</b>" }),
     h("p", { class: "demo-hint", text: "Delapan alamat yang tampak tak berhubungan. Terapkan satu aturan sederhana, lalu lihat berapa banyak yang sebenarnya dimiliki orang yang sama." }),
     petak,
     h("div", { class: "dm-tx" }, [h("span", { html: "Transaksi yang terlihat di blockchain: " + TX.map((t) => "<b>" + t.nama + "</b> (dari " + t.masuk.map((i) => ALAMAT[i]).join(" + ") + ")").join(" · ") })]),
@@ -1938,7 +1938,7 @@ DEMOS["tiga-operasi"] = function (root) {
   }
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🧪 <b>Demo: tiga operasi yang sering tertukar</b>" }),
+    h("div", { class: "demo-head", html: "<b>Tiga operasi yang sering tertukar</b>" }),
     h("p", { class: "demo-hint", text: "Pesan yang sama dilewatkan tiga operasi berbeda. Ubah kunci pembukanya menjadi salah, lalu perhatikan apa yang terjadi." }),
     h("div", { class: "pc-form" }, [
       isian("pesan", "Pesan"),
@@ -1990,7 +1990,7 @@ DEMOS["tukar-kunci"] = function (root) {
   };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🤝 <b>Demo: menyepakati kunci rahasia di jalur terbuka</b>" }),
+    h("div", { class: "demo-head", html: "<b>Menyepakati kunci rahasia di jalur terbuka</b>" }),
     h("p", { class: "demo-hint", text: "Ani dan Budi belum pernah bertemu dan semua percakapannya disadap. Anehnya mereka tetap bisa menyepakati satu angka rahasia. Geser angka rahasia masing-masing dan perhatikan hasil akhirnya." }),
     sl("a", "Rahasia Ani (a): "),
     sl("b", "Rahasia Budi (b): "),
@@ -2093,7 +2093,7 @@ DEMOS["regresi-linear"] = function (root) {
   syncPen();
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "📈 <b>Demo: mencari garis terbaik</b>" }),
+    h("div", { class: "demo-head", html: "<b>Mencari garis terbaik</b>" }),
     h("p", { class: "demo-hint", text: "Sepuluh rumah dengan luas dan harganya. Atur kemiringan dan titik awal garis biru agar sedekat mungkin dengan semua titik." }),
     kanvas,
     h("label", { class: "dm-row" }, [h("span", { text: "Kemiringan (a): " }), slA, lbA]),
@@ -2160,7 +2160,7 @@ DEMOS["ambang-logistik"] = function (root) {
   sl.oninput = () => { ambang = parseFloat(sl.value); lb.textContent = ambang.toFixed(2).replace(".", ","); draw(); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🎚️ <b>Demo: model memberi peluang, manusia memilih ambang</b>" }),
+    h("div", { class: "demo-head", html: "<b>Model memberi peluang, manusia memilih ambang</b>" }),
     h("p", { class: "demo-hint", text: "Dua puluh pemohon kredit. Model regresi logistik menaksir peluang tiap orang gagal bayar. Geser ambangnya dan lihat siapa yang ditolak." }),
     kanvas,
     h("label", { class: "dm-row" }, [h("span", { text: "Ambang penolakan: " }), sl, lb]),
@@ -2269,7 +2269,7 @@ DEMOS["isolasi-anomali"] = function (root) {
   acak.onclick = () => { benih = Math.floor(Math.random() * 100000); draw(); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🌲 <b>Demo: Isolation Forest menemukan transaksi janggal</b>" }),
+    h("div", { class: "demo-head", html: "<b>Isolation Forest menemukan transaksi janggal</b>" }),
     h("p", { class: "demo-hint", text: "29 transaksi kartu tanpa label mana yang penipuan. Model tidak diberi tahu apa pun — ia hanya mengukur seberapa mudah tiap transaksi dipisahkan dari yang lain." }),
     kanvas,
     h("label", { class: "dm-row" }, [h("span", { text: "Ambang skor anomali: " }), sl, lb]),
@@ -2345,7 +2345,7 @@ DEMOS["hutan-korelasi"] = function (root) {
   };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🌳 <b>Demo: hutan hanya pintar kalau pohonnya berbeda-beda</b>" }),
+    h("div", { class: "demo-head", html: "<b>Hutan hanya pintar kalau pohonnya berbeda-beda</b>" }),
     h("p", { class: "demo-hint", text: "Tiap pohon benar 65% dari waktu. Tambah jumlah pohon, lalu ubah seberapa mirip kesalahan antar-pohon — dan lihat batas yang tidak bisa ditembus." }),
     kanvas,
     rN.el, rR.el, rP.el,
@@ -2428,7 +2428,7 @@ DEMOS["tumbuh-daun"] = function (root) {
   sl.oninput = () => { k = parseInt(sl.value, 10); lb.textContent = sl.value; draw(); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🌿 <b>Demo: dua cara menumbuhkan pohon dengan jatah yang sama</b>" }),
+    h("div", { class: "demo-head", html: "<b>Dua cara menumbuhkan pohon dengan jatah yang sama</b>" }),
     h("p", { class: "demo-hint", text: "Data latih 1.000 baris. Setiap pemecahan menurunkan kesalahan dengan besar yang berbeda-beda. Geser jatah pemecahannya." }),
     h("label", { class: "dm-row" }, [h("span", { text: "Jatah pemecahan: " }), sl, lb]),
     wadah,
@@ -2569,7 +2569,7 @@ DEMOS["latih-xor"] = function (root) {
   cek.onchange = () => { berhenti(); linear = cek.checked; buat(); draw(); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🧠 <b>Demo: latih neural network sungguhan di browsermu</b>" }),
+    h("div", { class: "demo-head", html: "<b>Latih neural network sungguhan di browsermu</b>" }),
     h("p", { class: "demo-hint", text: "Soal XOR: jawab 1 hanya bila kedua input berbeda. Jaringan 2 input → 4 neuron tersembunyi → 1 output, mulai dari bobot acak." }),
     kanvas,
     h("div", { class: "demo-controls" }, [tPutar, tSatu, tAcak]),
@@ -2803,7 +2803,7 @@ DEMOS["hash-sungguhan"] = function (root) {
 
   const tombol = (teks, aksi) => { const t = h("button", { class: "btn ghost", type: "button", text: teks }); t.onclick = () => { aksi(); draw(); }; return t; };
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "#️⃣ <b>Demo: sidik jari SHA-256 sungguhan</b>" }),
+    h("div", { class: "demo-head", html: "<b>Sidik jari SHA-256 sungguhan</b>" }),
     h("p", { class: "demo-hint", text: "Ketik apa saja di kedua kotak. Coba ubah satu huruf, satu angka, atau hanya satu spasi — lalu lihat berapa banyak sidik jarinya berubah." }),
     h("label", { class: "krip-label", text: "Teks A" }), a,
     h("label", { class: "krip-label", text: "Teks B" }), b,
@@ -2897,7 +2897,7 @@ DEMOS["tebak-pin"] = function (root) {
   pin.addEventListener("input", () => { pin.value = bersih(); hasil.innerHTML = ""; draw(); });
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🔓 <b>Demo: hash tidak bisa dibalik — tapi bisa ditebak</b>" }),
+    h("div", { class: "demo-head", html: "<b>Hash tidak bisa dibalik — tapi bisa ditebak</b>" }),
     h("p", { class: "demo-hint", text: "Ketik PIN rahasia (maksimal 6 digit). Server hanya menyimpan hash-nya. Lalu jadilah penyerang yang mencuri hash itu dan coba temukan PIN aslinya." }),
     h("label", { class: "dm-row" }, [h("span", { text: "PIN rahasia: " }), pin]),
     out,
@@ -2948,7 +2948,7 @@ DEMOS["buat-dompet"] = function (root) {
   satu.onclick = () => { priv = priv ^ 1n; if (priv === 0n) priv = 2n; draw(true); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "👛 <b>Demo: begini sebuah dompet crypto lahir</b>" }),
+    h("div", { class: "demo-head", html: "<b>Begini sebuah dompet crypto lahir</b>" }),
     h("p", { class: "demo-hint", text: "Tidak ada pendaftaran, tidak ada server. Dompet hanya mengacak satu angka, lalu menghitung dua hal lain darinya — selalu satu arah." }),
     h("div", { class: "demo-controls" }, [baru, satu]),
     out,
@@ -3015,7 +3015,7 @@ DEMOS["tanda-tangan"] = function (root) {
   };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "✍️ <b>Demo: tanda tangan digital sungguhan (ECDSA secp256k1)</b>" }),
+    h("div", { class: "demo-head", html: "<b>Tanda tangan digital sungguhan (ECDSA secp256k1)</b>" }),
     h("p", { class: "demo-hint", text: "Andi dan Budi masing-masing sudah punya sepasang kunci. Andi menandatangani sebuah pesan, lalu jaringan memeriksanya. Setelah itu, jadilah penyerang." }),
     h("div", { class: "krip-blok" }, [
       h("div", { class: "krip-judul", text: "1. DI DOMPET ANDI" }),
@@ -3137,7 +3137,7 @@ DEMOS["perjalanan-transaksi"] = function (root) {
   maju.onclick = () => { if (langkah < LANGKAH.length - 1) { langkah++; draw(); } };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🚚 <b>Demo: perjalanan 0,5 koin dari Andi ke Budi</b>" }),
+    h("div", { class: "demo-head", html: "<b>Perjalanan 0,5 koin dari Andi ke Budi</b>" }),
     h("p", { class: "demo-hint", text: "Semua perhitungan di demo ini sungguhan: kunci, hash, dan tanda tangan dibuat di browsermu. Di langkah 5, kamu bisa menjadi penyerang." }),
     isi,
     h("div", { class: "demo-controls" }, [mundur, maju]),
@@ -3204,7 +3204,7 @@ DEMOS["pohon-merkle"] = function (root) {
   reset.onclick = () => { isian.forEach((x, k) => { x.value = AWAL[k]; }); bukti = -1; draw(); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🌳 <b>Demo: empat transaksi, satu Merkle root</b>" }),
+    h("div", { class: "demo-head", html: "<b>Empat transaksi, satu Merkle root</b>" }),
     h("p", { class: "demo-hint", text: "Setiap kotak berisi 8 karakter pertama hash SHA-256 sungguhan. Ubah salah satu transaksi, atau minta bukti bahwa sebuah transaksi ada di dalam blok." }),
     h("div", { class: "pc-form" }, isian.map((inp, i) => h("label", { class: "pc-row" }, [h("span", { text: "Tx" + (i + 1) }), inp]))),
     kanvas,
@@ -3300,7 +3300,7 @@ DEMOS["pasar-keseimbangan"] = function (root) {
   };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🌶️ <b>Demo: harga cabai di sebuah pasar</b>" }),
+    h("div", { class: "demo-head", html: "<b>Harga cabai di sebuah pasar</b>" }),
     h("p", { class: "demo-hint", text: "Garis biru = berapa kg yang ingin dibeli pembeli di setiap harga. Garis oranye = berapa kg yang ingin dijual pedagang. Geser harganya, atau biarkan pasar mencari harganya sendiri." }),
     kanvas,
     h("label", { class: "dm-row" }, [h("span", { text: "Harga per kg: " }), sl, lb]),
@@ -3382,7 +3382,7 @@ DEMOS["geser-kurva"] = function (root) {
 
   const kejadian = (teks, aksi) => { const t = h("button", { class: "btn ghost", type: "button", text: teks }); t.onclick = aksi; return t; };
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "📉 <b>Demo: apa yang terjadi saat kurvanya bergeser?</b>" }),
+    h("div", { class: "demo-head", html: "<b>Apa yang terjadi saat kurvanya bergeser?</b>" }),
     h("p", { class: "demo-hint", text: "Pasar cabai yang sama. Pilih sebuah kejadian dan bandingkan harga serta jumlah terjual sebelum dan sesudahnya." }),
     h("div", { class: "demo-controls" }, [
       kejadian("🌧️ Hujan terus, panen gagal", () => setel(0, -30, false, "Panen gagal <b>menggeser penawaran ke kiri</b>: pada harga berapa pun, cabai yang tersedia lebih sedikit. Harga naik, <b>jumlah terjual turun</b>. Pembeli yang tetap membeli adalah yang paling membutuhkan atau paling mampu membayar.")),
@@ -3446,7 +3446,7 @@ DEMOS["elastisitas-harga"] = function (root) {
   slU.oninput = () => { ubah = parseInt(slU.value, 10); lbU.textContent = (ubah > 0 ? "+" : "") + ubah + "%"; draw(); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🧮 <b>Demo: naikkan harga — pendapatan naik atau turun?</b>" }),
+    h("div", { class: "demo-head", html: "<b>Naikkan harga — pendapatan naik atau turun?</b>" }),
     h("p", { class: "demo-hint", text: "Pilih produk, lalu ubah harganya. Elastisitas menunjukkan seberapa besar jumlah terjual bereaksi terhadap perubahan harga." }),
     h("div", { class: "demo-controls" }, tombolProduk),
     h("label", { class: "dm-row" }, [h("span", { text: "Perubahan harga: " }), slU, lbU]),
@@ -3499,7 +3499,7 @@ DEMOS["keranjang-ihk"] = function (root) {
   };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🧺 <b>Demo: menghitung inflasi dari sekeranjang belanja</b>" }),
+    h("div", { class: "demo-head", html: "<b>Menghitung inflasi dari sekeranjang belanja</b>" }),
     h("p", { class: "demo-hint", text: "Atur kenaikan harga tiap kelompok dibanding tahun lalu. Inflasi adalah rata-rata kenaikan itu, ditimbang menurut besarnya bagian pengeluaran." }),
     h("div", { class: "demo-controls" }, [
       skenario("🌶️ Harga pangan melonjak", [18, 3, 2, 4, 3, 2]),
@@ -3577,7 +3577,7 @@ DEMOS["inflasi-riil"] = function (root) {
   };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "📉 <b>Demo: angka di rekening vs daya beli sebenarnya</b>" }),
+    h("div", { class: "demo-head", html: "<b>Angka di rekening vs daya beli sebenarnya</b>" }),
     h("p", { class: "demo-hint", text: "Rp10 juta disimpan selama beberapa tahun. Garis biru = angka yang tertulis. Garis merah = berapa banyak barang yang sebenarnya bisa dibeli dengan uang itu." }),
     h("div", { class: "demo-controls" }, [preset("💵 Uang tunai di rumah", 0, false), preset("🏦 Deposito 4,5% (kena pajak)", 4.5, true), preset("📈 Aset tumbuh 9% per tahun", 9, false)]),
     kanvas,
@@ -3696,7 +3696,7 @@ DEMOS["rl-bandit"] = function (root) {
   sl.oninput = () => { eps = parseFloat(sl.value); lb.textContent = Math.round(eps * 100) + "%"; gambarAgen(); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🍜 <b>Demo: dilema warung makan — mencoba yang baru atau setia pada yang dikenal?</b>" }),
+    h("div", { class: "demo-head", html: "<b>Dilema warung makan — mencoba yang baru atau setia pada yang dikenal?</b>" }),
     h("p", { class: "demo-hint", text: "Bagian 1: kamu yang memilih. Bagian 2: lihat bagaimana sebuah agen RL memilih, dengan porsi eksplorasi yang bisa kamu atur." }),
     h("div", { class: "krip-judul", text: "1. KAMU YANG MEMILIH" }),
     h("div", { class: "demo-controls" }, tombolWarung.concat([ulangManual])),
@@ -3858,7 +3858,7 @@ DEMOS["rl-grid"] = function (root) {
   sl.oninput = () => { s.eps = parseFloat(sl.value); lb.textContent = Math.round(s.eps * 100) + "%"; };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🤖 <b>Demo: Q-learning — robot belajar mencapai bendera</b>" }),
+    h("div", { class: "demo-head", html: "<b>Q-learning — robot belajar mencapai bendera</b>" }),
     h("p", { class: "demo-hint", text: "Robot mulai di kiri bawah dan harus mencapai bendera tanpa jatuh ke lubang. Tidak ada yang memberi tahu jalannya — ia hanya menerima angka reward setiap melangkah." }),
     kanvas,
     h("div", { class: "demo-controls" }, [t1, t50, tUji, tUlang]),
@@ -3963,7 +3963,7 @@ DEMOS["aktivasi"] = function (root) {
   slL.oninput = () => { lapisan = parseInt(slL.value, 10); lbL.textContent = slL.value; draw(); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "📈 <b>Demo: bandingkan fungsi aktivasi dan turunannya</b>" }),
+    h("div", { class: "demo-head", html: "<b>Bandingkan fungsi aktivasi dan turunannya</b>" }),
     h("p", { class: "demo-hint", text: "Garis biru = nilai yang keluar dari neuron. Garis hijau putus-putus = turunannya, yaitu seberapa besar sinyal belajar yang bisa lewat. Geser x ke ujung kiri atau kanan dan perhatikan apa yang terjadi." }),
     h("div", { class: "demo-controls" }, tombol),
     kanvas,
@@ -4094,7 +4094,7 @@ DEMOS["roc-auc"] = function (root) {
   tAcak.onclick = () => { benih = 1 + Math.floor(Math.random() * 100000); buat(); draw(); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "📉 <b>Demo: kurva ROC & AUC</b>" }),
+    h("div", { class: "demo-head", html: "<b>Kurva ROC & AUC</b>" }),
     h("p", { class: "demo-hint", text: "Enam puluh kasus: 30 benar-benar positif (merah) dan 30 negatif (hijau). Model memberi skor pada tiap kasus. Geser ambangnya, lalu geser kualitas modelnya." }),
     kanvas,
     h("label", { class: "dm-row" }, [h("span", { text: "Ambang keputusan: " }), slA, lbA]),
@@ -4206,7 +4206,7 @@ DEMOS["jurnal-harian"] = function (root) {
   };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "📒 <b>Demo: jurnal transaksi sehari-hari</b>" }),
+    h("div", { class: "demo-head", html: "<b>Jurnal transaksi sehari-hari</b>" }),
     h("p", { class: "demo-hint", text: "Tentukan akun mana yang didebit dan mana yang dikredit. Setiap jawaban langsung dicatat ke buku besar, sehingga kamu bisa melihat persamaan akuntansinya tetap seimbang." }),
     soalEl,
     h("div", { class: "pc-form" }, [
@@ -4299,7 +4299,7 @@ DEMOS["penyesuaian-dampak"] = function (root) {
   kosong.onclick = () => { kotak.forEach((k, i) => { k.c.checked = false; aktif[i] = false; }); draw(); };
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🧾 <b>Demo: apa yang terjadi bila penyesuaian dilewati</b>" }),
+    h("div", { class: "demo-head", html: "<b>Apa yang terjadi bila penyesuaian dilewati</b>" }),
     h("p", { class: "demo-hint", text: "Sebuah usaha jasa menutup tahun pertamanya. Catatan hariannya sudah rapi, tetapi enam hal di bawah ini belum dicatat karena tidak ada uang yang bergerak. Centang satu per satu." }),
     daftar,
     h("div", { class: "demo-controls" }, [semuaBtn, kosong]),
@@ -4391,7 +4391,7 @@ DEMOS["matriks-kebingungan"] = function (root) {
   pilihP[0].classList.add("aktif");
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🩺 <b>Demo: 100 orang diperiksa oleh sebuah model AI</b>" }),
+    h("div", { class: "demo-head", html: "<b>100 orang diperiksa oleh sebuah model AI</b>" }),
     h("p", { class: "demo-hint", text: "Model memberi setiap orang skor risiko 0–100. Siapa pun yang skornya di atas ambang dianggap sakit. Geser ambangnya dan perhatikan warna tiap orang berubah." }),
     kanvas,
     h("label", { class: "dm-row" }, [h("span", { text: "Ambang skor (≥ ini dianggap sakit): " }), sl, lb]),
@@ -4516,7 +4516,7 @@ DEMOS["roc-langkah"] = function (root) {
   pilih[0].classList.add("aktif");
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "✏️ <b>Demo: menggambar kurva ROC dengan tangan</b>" }),
+    h("div", { class: "demo-head", html: "<b>Menggambar kurva ROC dengan tangan</b>" }),
     h("p", { class: "demo-hint", text: "Enam pasien, diurutkan dari skor tertinggi. Turunkan ambang satu langkah demi satu langkah: pasien sakit membuat garis naik, pasien sehat membuatnya bergeser ke kanan." }),
     h("div", { class: "demo-controls" }, pilih),
     tabel,
@@ -4611,7 +4611,7 @@ DEMOS["peta-metrik"] = function (root) {
   ].map(([t, v]) => { const b = h("button", { class: "btn ghost", type: "button", text: t }); b.onclick = () => pakai(v); return b; });
 
   root.appendChild(h("div", { class: "demo" }, [
-    h("div", { class: "demo-head", html: "🗺️ <b>Demo: satu tabel, banyak metrik</b>" }),
+    h("div", { class: "demo-head", html: "<b>Satu tabel, banyak metrik</b>" }),
     h("p", { class: "demo-hint", text: "Pilih sebuah metrik dan lihat kotak mana yang dipakainya. Ubah angkanya sendiri, atau pakai contoh yang tersedia." }),
     h("div", { class: "demo-controls" }, tombol),
     grid,
@@ -4668,7 +4668,7 @@ function buildPlayground(host, initialCode) {
     }
   });
   const box = h("div", { class: "demo pg" }, [
-    h("div", { class: "demo-head", html: "🧪 <b>Coba kode ini — jalankan langsung di browser</b>" }),
+    h("div", { class: "demo-head", html: "<b>Coba kode ini — jalankan langsung di browser</b>" }),
     h("p", { class: "demo-hint", text: "Ubah kodenya sesukamu, lalu klik Jalankan. Semua berjalan offline & aman di perangkatmu." }),
     ta,
     h("div", { class: "demo-controls" }, [runBtn, resetBtn]),

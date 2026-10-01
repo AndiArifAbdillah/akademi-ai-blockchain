@@ -39,7 +39,7 @@
     var box = document.createElement("div");
     box.className = "pwa-banner pwa-perbarui";
     box.innerHTML =
-      '<span class="pwa-ikon">🔄</span>' +
+      '<span class="pwa-ikon"><svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4"/></svg></span>' +
       '<span class="pwa-teks"><b>Materi terbaru sudah siap</b><br>' +
       "Muat ulang untuk melihat pelajaran dan perbaikan terbaru.</span>";
     var muat = document.createElement("button");
@@ -72,7 +72,7 @@
     var box = document.createElement("div");
     box.className = "pwa-banner";
     box.innerHTML =
-      '<span class="pwa-ikon">📲</span>' +
+      '<span class="pwa-ikon"><svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m-4.5-4.5L12 15l4.5-4.5M5 20h14"/></svg></span>' +
       '<span class="pwa-teks"><b>Pasang sebagai aplikasi</b><br>' +
       "Ada ikon di layar utama &amp; bisa dibuka tanpa internet.</span>";
 
@@ -142,7 +142,7 @@
     if (ada || !document.body) return;
     var t = document.createElement("div");
     t.className = "pwa-offline";
-    t.textContent = "📴 Mode offline — materi dibaca dari penyimpanan HP";
+    t.textContent = "Mode offline — materi dibaca dari penyimpanan HP";
     document.body.appendChild(t);
   }
   window.addEventListener("online", tandaOffline);

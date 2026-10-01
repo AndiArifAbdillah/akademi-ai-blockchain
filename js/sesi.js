@@ -168,11 +168,11 @@ function renderSesi() {
     const lanjut = Progress.resumeLessonId();
     wrap.appendChild(el(`
       <section class="sesi-kosong">
-        <div class="sesi-ikon">🌱</div>
+        <div class="sesi-ikon">${ikon("sesi")}</div>
         <h1>Belum ada yang bisa diulang</h1>
         <p class="lead">Soal ulangan muncul setelah kamu <b>menyelesaikan</b> sebuah pelajaran.
         Selesaikan satu pelajaran dulu, lalu besok sesi harianmu siap.</p>
-        ${lanjut ? `<a class="btn primary besar" href="#/lesson/${lanjut}">Mulai pelajaran →</a>` : ""}
+        ${lanjut ? `<a class="btn primary besar" href="#/lesson/${lanjut}">Mulai pelajaran ${ikon("kanan")}</a>` : ""}
       </section>
     `));
     return wrap;
@@ -189,7 +189,7 @@ function renderSesi() {
         <span class="sesi-hitung">Soal ${ke + 1} dari ${daftar.length}</span>
         <div class="sesi-bar"><i style="width:${(ke / daftar.length) * 100}%"></i></div>
       </div>
-      <p class="sesi-asal">${s.kursus.emoji} ${esc(s.pelajaran.title)}</p>
+      <p class="sesi-asal">${tandaJalur(s.kursus, "kecil")} ${esc(s.pelajaran.title)}</p>
       <h2 class="sesi-tanya">${esc(s.q.q)}</h2>
       <div class="sesi-pilihan"></div>
       <div class="sesi-balas" hidden></div>
@@ -222,7 +222,7 @@ function renderSesi() {
        <div class="sesi-jadwal">${tepat
          ? "Soal ini akan muncul lagi dalam " + Ulangan.JARAK[Progress.data.ulangan[s.kunci].tingkat] + " hari."
          : "Soal ini diulang besok."}</div>
-       <button class="btn primary sesi-lanjut" type="button">${ke + 1 < daftar.length ? "Lanjut →" : "Lihat hasil →"}</button>`;
+       <button class="btn primary sesi-lanjut" type="button">${ke + 1 < daftar.length ? "Lanjut" : "Lihat hasil"} ${ikon("kanan")}</button>`;
     balas.querySelector(".sesi-lanjut").onclick = () => {
       ke++;
       if (ke < daftar.length) gambarSoal();
@@ -241,14 +241,14 @@ function renderSesi() {
 
     panggung.innerHTML = `
       <div class="sesi-hasil">
-        <div class="sesi-ikon">${benar === daftar.length ? "🏆" : benar >= daftar.length / 2 ? "👏" : "💪"}</div>
+        <p class="kicker">Sesi selesai</p>
         <h1>${benar} dari ${daftar.length} benar</h1>
         <p class="sesi-xp">+${xp} XP &nbsp;·&nbsp; total ${Progress.data.xp} XP</p>
-        <p class="lead">🔥 Runtun <b>${r} hari</b>${Tonggak.berikutnya() ? ` — tonggak berikutnya di hari ${Tonggak.berikutnya()}` : ""}</p>
-        ${t ? `<div class="tonggak-rayakan">🎉 <b>Tonggak ${t} hari tercapai!</b><br>${Tonggak.PESAN[t]}</div>` : ""}
+        <p class="lead">${ikon("api")} Runtun <b>${r} hari</b>${Tonggak.berikutnya() ? ` — tonggak berikutnya di hari ${Tonggak.berikutnya()}` : ""}</p>
+        ${t ? `<div class="tonggak-rayakan"><b>Tonggak ${t} hari tercapai.</b><br>${Tonggak.PESAN[t]}</div>` : ""}
         <div class="sesi-aksi">
           <a class="btn primary besar" href="#/">Kembali ke beranda</a>
-          ${Progress.resumeLessonId() ? `<a class="btn ghost besar" href="#/lesson/${Progress.resumeLessonId()}">Lanjut belajar →</a>` : ""}
+          ${Progress.resumeLessonId() ? `<a class="btn ghost besar" href="#/lesson/${Progress.resumeLessonId()}">Lanjut belajar ${ikon("kanan")}</a>` : ""}
         </div>
       </div>`;
   }
