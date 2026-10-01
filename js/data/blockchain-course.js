@@ -580,7 +580,10 @@ const BLOCKCHAIN_COURSE = {
 
 <h3>Fundamental: sidik jari untuk data</h3>
 <div class="callout">
-👆 <b>Sidik jarimu</b> jauh lebih kecil dari tubuhmu, tapi cukup untuk memastikan "ini orang yang sama". Dari sidik jari, polisi tidak bisa menggambar wajahmu — tapi bisa mencocokkan apakah dua sidik jari berasal dari orang yang sama.<br><br>
+👆 <b>Sidik jarimu</b> punya tiga sifat penting:<br>
+• <b>Kecil, tapi mewakili yang besar</b> — satu ujung jari cukup mewakili seluruh dirimu.<br>
+• <b>Unik</b> — dua orang praktis tidak pernah punya sidik jari yang sama.<br>
+• <b>Tidak bisa dibalik</b> — dari sidik jari, polisi bisa mencocokkan pemiliknya, tapi tidak bisa menggambar wajah atau tinggi badanmu.<br><br>
 <b>Hash adalah sidik jari untuk data.</b> Sebuah kalimat, foto, atau file satu gigabyte diubah menjadi deretan pendek berukuran tetap. Dari deretan itu data aslinya tidak bisa dibangun kembali, tapi siapa pun bisa memastikan apakah dua data <b>persis sama</b>.
 </div>
 
@@ -612,6 +615,18 @@ const BLOCKCHAIN_COURSE = {
 
 <div data-demo="hash-sungguhan"></div>
 
+<h3>Contoh hasil SHA-256 sungguhan</h3>
+<p>Semua sidik jari di bawah ini dihitung dengan SHA-256 asli — sama persis dengan yang akan kamu dapat di demo atau di komputer mana pun. Agar muat di layar, hanya awal dan akhirnya yang ditampilkan; aslinya selalu 64 karakter.</p>
+<table class="tbl">
+  <tr><th>Data</th><th>Sidik jarinya (hash SHA-256)</th></tr>
+  <tr><td>kirim 0,5 koin ke Budi</td><td><code>9920abe318a7984c…9d2d3c0b</code></td></tr>
+  <tr><td>kirim <b>50</b> koin ke Budi</td><td class="bad-cell"><code>da2b4cc7ecd34094…bdfdbadd</code> — berubah total</td></tr>
+  <tr><td><b>K</b>irim 0,5 koin ke Budi</td><td class="bad-cell"><code>8f175beb0f4fa1cb…d9091dc9</code> — hanya huruf besar, tetap berubah total</td></tr>
+  <tr><td>halo</td><td><code>a4e63bcacf6c172a…bf16d777</code></td></tr>
+  <tr><td>buku berisi 500.000 huruf</td><td><code>0071c4a7e7200b57…d2ce99f8</code> — tetap 64 karakter</td></tr>
+</table>
+<p>Tiga hal langsung terlihat: mengubah <b>0,5 menjadi 50</b> mengubah seluruh sidik jari, bukan hanya sebagian; bahkan mengganti <b>satu huruf kecil menjadi huruf besar</b> pun begitu; dan kata "halo" maupun buku setebal 500 ribu huruf sama-sama menghasilkan <b>64 karakter</b>.</p>
+
 <h3>Lima sifat hash — dan kenapa blockchain membutuhkannya</h3>
 <table class="tbl">
   <tr><th>Sifat</th><th>Artinya</th><th>Kenapa penting di blockchain</th></tr>
@@ -622,6 +637,35 @@ const BLOCKCHAIN_COURSE = {
   <tr><td><b>Tahan tabrakan</b></td><td>Praktis mustahil menemukan dua data berbeda dengan hash sama</td><td>Satu sidik jari benar-benar mewakili satu data saja</td></tr>
 </table>
 
+<h3>Apa sebenarnya SHA-256?</h3>
+<p><b>SHA</b> singkatan dari <i>Secure Hash Algorithm</i> — "algoritma hash yang aman". SHA-256 adalah anggota keluarga <b>SHA-2</b>, dirancang oleh NSA dan diterbitkan sebagai standar oleh NIST (lembaga standar Amerika Serikat) pada 2001. Angka <b>256</b> adalah panjang hasilnya: 256 bit. Rumusnya terbuka — siapa pun boleh memeriksa dan memakainya, dan justru karena sudah diperiksa para ahli selama puluhan tahun, ia dipercaya.</p>
+
+<h4>Cara kerjanya, tanpa rumus</h4>
+<table class="tbl">
+  <tr><th>Tahap</th><th>Yang terjadi</th></tr>
+  <tr><td>1. Ubah ke bit</td><td>Setiap huruf diubah menjadi 8 angka 0/1. "halo" menjadi 32 bit.</td></tr>
+  <tr><td>2. Ganjal & potong</td><td>Ditambah bit pengganjal dan keterangan panjang data, lalu dipotong per <b>512 bit</b> (64 huruf).</td></tr>
+  <tr><td>3. Aduk 64 putaran</td><td>Setiap potongan diaduk <b>64 kali</b> dengan operasi sederhana: menggeser bit, memutarnya, membandingkannya (XOR), dan menjumlahkannya.</td></tr>
+  <tr><td>4. Sambung-menyambung</td><td>Hasil adukan satu potongan ikut dibawa ke potongan berikutnya — karena itu huruf terakhir pun memengaruhi seluruh hasil.</td></tr>
+  <tr><td>5. Hasil akhir</td><td>Tersisa delapan angka, masing-masing 32 bit — totalnya <b>256 bit</b>, ditulis sebagai 64 karakter.</td></tr>
+</table>
+<div class="callout">
+🃏 <b>Analogi mengocok kartu.</b> Bayangkan mengocok setumpuk kartu 64 kali dengan aturan yang tetap dan diumumkan ke semua orang. Siapa pun yang memulai dari urutan kartu yang sama akan mendapat hasil akhir yang sama persis. Tapi dari hasil akhirnya, tidak ada yang bisa menebak urutan awalnya — terlalu banyak kemungkinan yang teraduk di tengah jalan.
+</div>
+
+<h4>SHA-256 di dunia crypto</h4>
+<table class="tbl">
+  <tr><th>Di mana</th><th>Bagaimana dipakai</th></tr>
+  <tr><td>Bitcoin — blok & ID transaksi</td><td>SHA-256 dijalankan <b>dua kali</b> berturut-turut (<i>double SHA-256</i>)</td></tr>
+  <tr><td>Bitcoin — penambangan</td><td>Penambang mengulang SHA-256 triliunan kali per detik, mencari hash blok yang memenuhi syarat</td></tr>
+  <tr><td>Bitcoin — alamat</td><td>Kunci publik di-hash dengan SHA-256, lalu dengan hash lain bernama RIPEMD-160</td></tr>
+  <tr><td>Ethereum</td><td>Memakai saudaranya, <b>Keccak-256</b> — rumusnya berbeda, tapi hasilnya juga 64 karakter dan sifatnya sama</td></tr>
+  <tr><td>Di luar crypto</td><td>Gembok https di browser, pemeriksaan file unduhan, tanda tangan aplikasi</td></tr>
+</table>
+<div class="callout warn">
+<b>Kenapa harus SHA-256, bukan yang lebih lama?</b> Dulu dunia memakai <b>MD5</b> dan <b>SHA-1</b>. Keduanya sudah dibobol: tabrakan MD5 — dua data berbeda dengan hash sama — ditemukan tahun 2004, dan tabrakan SHA-1 dipamerkan peneliti Google dan CWI Amsterdam tahun 2017. Untuk SHA-256, sampai hari ini belum pernah ada yang menemukan satu pun tabrakan. Karena itu sifat "tahan tabrakan" bukan teori: ia menentukan apakah sebuah hash masih layak dipercaya.
+</div>
+
 <h3>64 karakter itu apa?</h3>
 <p>Hash SHA-256 ditulis dalam <b>heksadesimal</b> — sistem angka yang memakai 16 simbol: 0–9 lalu a–f. Satu karakter heksadesimal mewakili <b>4 bit</b>, jadi 64 karakter = 256 bit. Dari situlah namanya: SHA-<b>256</b>.</p>
 <p>Banyaknya kemungkinan hash adalah 2<sup>256</sup> — sekitar 1 diikuti 77 angka nol. Sebagai pembanding, jumlah butir pasir di seluruh pantai Bumi diperkirakan "hanya" sekitar 1 diikuti 19 angka nol.</p>
@@ -629,6 +673,15 @@ const BLOCKCHAIN_COURSE = {
 <div class="callout warn">
 <b>⚠️ Hash bukan enkripsi.</b> Enkripsi punya kunci dan memang dirancang untuk dibuka kembali. Hash tidak punya kunci dan tidak bisa "dibuka" oleh siapa pun, termasuk pembuatnya. Perbedaan keduanya dibahas tuntas di modul Kriptografi Mendalam.
 </div>
+
+<h3>Kenapa ini penting untuk pelajaran berikutnya</h3>
+<p>Hash adalah fondasi dua hal yang akan segera kamu pelajari:</p>
+<table class="tbl">
+  <tr><th>Nanti</th><th>Peran sidik jari</th></tr>
+  <tr><td><b>Tanda tangan digital</b></td><td>Dompetmu tidak menandatangani pesan lengkapnya, melainkan <b>sidik jarinya</b> (<code>9920abe318a7984c…9d2d3c0b</code>). Kalau ada yang mengubah 0,5 menjadi 50, sidik jarinya berubah dan tanda tangan lama tidak cocok lagi.</td></tr>
+  <tr><td><b>Rantai blok</b></td><td>Setiap blok menyimpan sidik jari blok sebelumnya. Mengubah satu blok lama mengubah sidik jarinya, sehingga semua blok sesudahnya ikut "putus" — itulah asal nama <i>blockchain</i>.</td></tr>
+</table>
+<p>Singkatnya: <b>hash menjaga isinya tidak berubah</b>, dan <b>tanda tangan membuktikan siapa yang menyetujuinya</b>. Keduanya selalu bekerja berpasangan.</p>
 
 <h3>Di mana hash dipakai?</h3>
 <table class="tbl">
@@ -648,6 +701,8 @@ const BLOCKCHAIN_COURSE = {
             "SHA-256 menghasilkan 64 karakter heksadesimal = 256 bit.",
             "Hash bukan enkripsi: tidak ada kunci dan tidak bisa dibuka oleh siapa pun.",
             "Hash dipakai untuk mengunci blok, ID transaksi, alamat dompet, dan penambangan.",
+            "SHA-256 = Secure Hash Algorithm keluarga SHA-2: data dipotong per 512 bit lalu diaduk 64 putaran; Bitcoin memakainya dua kali, Ethereum memakai Keccak-256.",
+            "Yang ditandatangani dompet adalah hash pesan — karena itu mengubah isi transaksi membuat tanda tangannya tidak cocok.",
           ],
           practice: [
             { type: "number", q: "Dengan hash mainan (A=1, B=2, …, Z=26, jumlahkan), berapa hash kata ADA?", answer: 6, tol: 0.5, hint: "A = 1, D = 4.", solution: "1 + 4 + 1 = 6. Kata DAA juga menghasilkan 6 — contoh tabrakan pada hash mainan." },
@@ -697,6 +752,17 @@ const BLOCKCHAIN_COURSE = {
               ],
               answer: 0,
               explain: "Enkripsi menyembunyikan untuk dibuka lagi; hash menyegel dan tidak pernah dibuka.",
+            },
+            {
+              q: "Apa arti angka 256 pada nama SHA-256?",
+              options: [
+                "Panjang hasilnya 256 bit, ditulis sebagai 64 karakter",
+                "Jumlah putaran pengadukan yang dijalankan rumusnya",
+                "Batas panjang data yang boleh dimasukkan, 256 huruf",
+                "Tahun pembuatannya menurut penanggalan para perancang",
+              ],
+              answer: 0,
+              explain: "256 bit ÷ 4 bit per karakter heksadesimal = 64 karakter. Jumlah putarannya 64, dan data sepanjang apa pun boleh dimasukkan.",
             },
           ],
         },
@@ -934,6 +1000,11 @@ Secara matematis, kunci publik didapat dengan "mengalikan" kunci privat dengan s
           title: "Tanda Tangan Digital dari Nol",
           duration: "15 menit",
           content: `
+<div class="callout ingat">
+<b>🔙 Ingat dulu</b><br>
+<b>Hash</b> = sidik jari data: berubah total bila isinya diubah sedikit saja, dan tidak bisa dibalik. <b>Kunci privat</b> = angka rahasia di dompetmu; <b>kunci publik</b> = pasangannya yang boleh diketahui semua orang, dan tidak bisa dibalik menjadi kunci privat. Pelajaran ini menyatukan ketiganya.
+</div>
+
 <p>Di jaringan blockchain tidak ada bank yang mengenalmu. Lalu bagaimana ribuan komputer yakin bahwa pesan <i>"kirim 0,5 koin dari alamat Andi ke Budi"</i> benar-benar dibuat oleh Andi — bukan oleh orang yang mengaku-ngaku?</p>
 
 <h3>Fundamental: masalah yang harus dipecahkan</h3>
@@ -946,8 +1017,14 @@ Secara matematis, kunci publik didapat dengan "mengalikan" kunci privat dengan s
   <tr><td>Tidak bisa dipindah ke pesan lain</td><td>Agar bukti untuk "0,5 koin" tidak bisa dipakai untuk "50 koin"</td></tr>
 </table>
 
-<h3>Kenapa tanda tangan biasa tidak cukup</h3>
-<p>Tanda tangan basahmu <b>sama persis</b> di setiap dokumen. Cukup dipindai, lalu ditempel ke dokumen lain. Tanda tangan digital memecahkan masalah itu dengan cara yang tidak terduga: <b>ia berbeda untuk setiap pesan</b>.</p>
+<h3>Kenapa password dan tanda tangan biasa tidak cukup</h3>
+<p>Saat kamu transfer lewat bank, banklah yang memeriksa: "Benar ini Andi? PIN-nya cocok?" Di blockchain tidak ada bank. Dua cara yang paling dulu terpikir ternyata gagal:</p>
+<table class="tbl">
+  <tr><th>Cara</th><th>Kenapa gagal</th></tr>
+  <tr><td>Mengirim password atau PIN bersama pesan</td><td class="bad-cell">Ribuan komputer asing jadi tahu password Andi — siapa pun langsung bisa memakainya</td></tr>
+  <tr><td>Tanda tangan biasa (coretan nama)</td><td class="bad-cell">Bentuknya <b>sama persis</b> di setiap dokumen — cukup disalin lalu ditempel ke perintah lain</td></tr>
+</table>
+<p>Tanda tangan digital memecahkan keduanya dengan cara yang tidak terduga: <b>rahasianya tidak pernah dikirim</b>, dan <b>bentuk tanda tangannya berbeda untuk setiap pesan</b>.</p>
 
 <div class="callout">
 🔏 <b>Analogi stempel ajaib.</b> Bayangkan Andi punya stempel yang cetakannya <b>berubah bentuk mengikuti isi surat</b>. Setiap orang punya kaca pemeriksa milik Andi (kunci publik) yang hanya cocok bila surat dan capnya sesuai.<br><br>
@@ -967,6 +1044,20 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
 
 <div data-demo="tanda-tangan"></div>
 
+<h3>Kenapa pencuri tidak bisa curang</h3>
+<p>Andi menandatangani pesan "kirim 0,5 koin ke Budi", yang sidik jarinya <code>9920abe318a7984c…9d2d3c0b</code>. Seorang pencuri bernama Rudi mencegat pesan itu di jaringan dan mencoba berbagai cara:</p>
+<table class="tbl">
+  <tr><th>Yang dicoba pencuri</th><th>Yang terjadi</th><th>Hasil</th></tr>
+  <tr><td>Mengubah jumlah menjadi "kirim <b>50</b> koin ke Budi"</td><td>Sidik jarinya menjadi <code>da2b4cc7ecd34094…bdfdbadd</code>; tanda tangan Andi dibuat untuk sidik jari yang lain</td><td class="bad-cell">Ditolak</td></tr>
+  <tr><td>Mengganti penerima menjadi "… ke <b>Rudi</b>"</td><td>Sidik jarinya menjadi <code>721e30684b163d2a…7a4936ae</code></td><td class="bad-cell">Ditolak</td></tr>
+  <tr><td>Menempelkan tanda tangan Andi ke transaksi lain</td><td>Tanda tangan itu hanya cocok dengan sidik jari pesan aslinya</td><td class="bad-cell">Ditolak</td></tr>
+  <tr><td>Membuat tanda tangan baru atas nama Andi</td><td>Butuh kunci privat Andi, yang tidak pernah dikirim ke mana pun</td><td class="bad-cell">Mustahil</td></tr>
+</table>
+<div class="callout">
+<b>Kuncinya ada di sini:</b> <b>memeriksa</b> cukup dengan kunci publik, tapi <b>membuat</b> tanda tangan wajib dengan kunci privat. Semua orang bisa menjadi pemeriksa; hanya pemilik yang bisa menandatangani.<br><br>
+<i>Catatan:</i> transaksi sungguhan bukan kalimat seperti di atas, melainkan data berformat khusus. Tapi prinsipnya sama persis: data itu di-hash, lalu hash-nya yang ditandatangani.
+</div>
+
 <h3>Apa yang dibuktikan — dan apa yang tidak</h3>
 <table class="tbl">
   <tr><th>✅ Dibuktikan</th><th>❌ Tidak dibuktikan</th></tr>
@@ -977,6 +1068,18 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
 
 <div class="callout warn">
 <b>Baris terakhir itu penting.</b> Banyak pencurian crypto tidak membobol matematika sama sekali: korban dibujuk <b>menandatangani sendiri</b> transaksi yang merugikan. Tanda tangannya sah — karena korban memang menandatanganinya. Tanda tangan membuktikan kamu <i>menyetujui</i>, bukan bahwa kamu <i>paham</i> apa yang disetujui.
+</div>
+
+<h3>Kamu sudah sering menandatangani tanpa sadar</h3>
+<p>Setiap kali menekan <b>"Konfirmasi"</b> di dompet crypto seperti MetaMask, dompetmu sedang membuat tanda tangan digital. Tapi tidak semua permintaan tanda tangan sama artinya:</p>
+<table class="tbl">
+  <tr><th>Yang muncul di dompet</th><th>Yang sebenarnya kamu tandatangani</th><th>Risikonya</th></tr>
+  <tr><td><b>Kirim / Confirm</b> transaksi</td><td>Perintah memindahkan aset sekarang juga</td><td>Periksa alamat tujuan dan jumlahnya huruf demi huruf</td></tr>
+  <tr><td><b>Sign in / Sign message</b> berisi teks yang bisa dibaca</td><td>Bukti bahwa kamu pemilik alamat itu, misalnya untuk login</td><td>Umumnya aman bila teksnya jelas dan situsnya asli</td></tr>
+  <tr><td><b>Approve / Permit</b> (izin memakai token)</td><td>Izin bagi sebuah smart contract untuk memindahkan tokenmu <b>kapan saja nanti</b>, kadang tanpa batas jumlah</td><td class="bad-cell">Paling sering disalahgunakan penipu: setelah izin diberikan, token bisa dikuras tanpa meminta tanda tangan lagi</td></tr>
+</table>
+<div class="callout warn">
+<b>Kebiasaan aman:</b> jangan menyetujui apa pun yang tidak kamu pahami; pastikan alamat situsnya benar sebelum menghubungkan dompet; dan cabut izin token lama yang sudah tidak dipakai — banyak dompet dan block explorer menyediakan fitur cabut izin (<i>revoke</i>).
 </div>
 
 <h3>🔍 Intip matematikanya (versi mainan)</h3>
@@ -999,6 +1102,8 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
             "Mengubah satu karakter pesan membuat tanda tangan lama tidak cocok, karena yang ditandatangani adalah hash-nya.",
             "Tanda tangan membuktikan persetujuan dan keutuhan pesan, bukan identitas dunia nyata dan bukan kerahasiaan.",
             "Banyak pencurian terjadi karena korban dibujuk menandatangani sendiri transaksi yang merugikan.",
+            "Password tidak bisa dipakai karena akan terbaca seluruh jaringan; tanda tangan biasa tidak bisa dipakai karena bentuknya sama di setiap dokumen.",
+            "Menekan 'Konfirmasi' di dompet = membuat tanda tangan; izin Approve/Permit paling berbahaya karena bisa dipakai menguras token belakangan.",
           ],
           practice: [
             { type: "number", q: "Versi mainan: kunci privat d = 7, n = 33. Berapa tanda tangan untuk hash pesan 2? (2⁷ sisa bagi 33)", answer: 29, tol: 0.5, hint: "2⁷ = 128. Berapa sisanya bila dibagi 33?", solution: "128 − 3 × 33 = 128 − 99 = 29. Periksa: 29³ = 24389, sisa bagi 33 = 2 — cocok dengan hash pesan." },
@@ -1047,6 +1152,17 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
               ],
               answer: 0,
               explain: "Seluruh jaringan bisa membaca paket transaksi; yang dikirim hanya tanda tangan dan kunci publik.",
+            },
+            {
+              q: "Sebuah situs meminta kamu menyetujui 'Approve' token tanpa batas jumlah. Apa artinya?",
+              options: [
+                "Kontrak itu boleh memindahkan tokenmu kapan saja nanti",
+                "Situs itu hanya ingin memastikan alamat dompetmu asli",
+                "Tokenmu akan dikunci agar tidak bisa dicuri orang lain",
+                "Dompetmu akan membuat kunci privat baru yang lebih aman",
+              ],
+              answer: 0,
+              explain: "Approve memberi izin jangka panjang. Penipu sering memakainya untuk menguras token setelah korban menyetujui sekali saja.",
             },
           ],
         },
