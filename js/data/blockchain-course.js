@@ -3079,13 +3079,18 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
       id: "bc-terapan",
       level: "Terapan",
       title: "DeFi, Stablecoin & Keamanan",
-      summary: "Keuangan tanpa bank: AMM & liquidity pool beserta matematikanya, stablecoin, oracle, bridge, dan penipuan yang wajib dikenali.",
+      summary: "Keuangan tanpa bank: DEX vs CEX, AMM & liquidity pool beserta matematikanya, stablecoin, oracle, pinjaman berjaminan & likuidasi, staking & yield farming, bridge, dan penipuan yang wajib dikenali.",
       lessons: [
         {
           id: "bc-m-4",
           title: "DeFi: Keuangan Tanpa Bank",
           duration: "10 menit",
           content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Smart contract</b> = program yang berjalan sendiri di blockchain; <b>token</b> = buku saldo di dalam sebuah kontrak; <b>gas</b> = biaya menjalankan program itu (modul Ethereum). DeFi menyusun layanan keuangan dari ketiganya.
+</div>
+
 <p><b>DeFi (Decentralized Finance)</b> adalah layanan keuangan — pinjam, simpan, tukar, bunga — yang berjalan lewat smart contract, tanpa bank atau perantara.</p>
 
 <div data-diagram="compare3" data-cols="Menabung::Bank: bunga ditentukan bank::DeFi: bunga ikut pasar|Meminjam::Bank: cek skor kredit::DeFi: wajib ada jaminan|Menukar::Bank: jam kerja::DeFi: 24 jam nonstop" data-caption="Tiga layanan bank yang ditiru DeFi — tanpa kantor dan tanpa petugas"></div>
@@ -3098,6 +3103,18 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
   <li><b>Stablecoin</b> — token yang nilainya dipatok ke aset stabil (mis. 1 USDT ≈ 1 USD) agar tak fluktuatif.</li>
   <li><b>Staking/Yield</b> — mengunci aset untuk membantu jaringan & mendapat imbalan.</li>
 </ul>
+
+<h3>Peta modul ini</h3>
+<table class="tbl">
+  <tr><th>Pelajaran</th><th>Pertanyaan yang dijawab</th></tr>
+  <tr><td>DEX vs CEX</td><td>Apa bedanya bursa terpusat dan bursa di blockchain?</td></tr>
+  <tr><td>AMM &amp; matematikanya</td><td>Bagaimana harga ditentukan tanpa penjual dan pembeli?</td></tr>
+  <tr><td>Stablecoin &amp; oracle</td><td>Bagaimana menjaga harga tetap dan membawa data harga ke blockchain?</td></tr>
+  <tr><td>Pinjaman DeFi</td><td>Bagaimana meminjam tanpa KTP, dan kapan jaminan diambil?</td></tr>
+  <tr><td>Staking &amp; yield</td><td>Dari mana sebenarnya imbal hasil itu datang?</td></tr>
+  <tr><td>Bridge &amp; keamanan</td><td>Di mana uang paling sering hilang?</td></tr>
+</table>
+<p>Satu istilah yang sering muncul di berita: <b>TVL</b> (<i>total value locked</i>) — nilai seluruh aset yang sedang disimpan di sebuah protokol. TVL besar menandakan banyak yang memercayai protokol itu, tapi nilainya ikut naik-turun bersama harga crypto, jadi bukan ukuran pendapatan.</p>
 
 <div class="callout">
 <b>Keunggulan:</b> terbuka untuk siapa saja (cukup wallet), beroperasi 24/7, dan transparan.
@@ -3138,6 +3155,112 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
                 "DEX memungkinkan pertukaran token peer-to-peer lewat smart contract.",
             },
           ],
+        },
+        {
+          id: "bc-dex-1",
+          title: "DEX vs CEX — Cara Kerja Bursa Terdesentralisasi",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Smart contract</b> = program yang berjalan di blockchain; <b>token ERC-20</b> = buku saldo di dalam sebuah kontrak; menekan <b>Konfirmasi</b> di dompet = membuat tanda tangan digital. DeFi menyediakan layanan keuangan tanpa bank (pelajaran sebelumnya). Pelajaran ini membedah layanan DeFi yang paling banyak dipakai: tempat menukar token.
+</div>
+
+<h3>Langkah 1 — Dua jenis bursa crypto</h3>
+<table class="tbl">
+  <tr><th></th><th>CEX (bursa terpusat)</th><th>DEX (bursa terdesentralisasi)</th></tr>
+  <tr><td>Contoh</td><td>Bursa berizin di Indonesia, Binance, Coinbase</td><td>Uniswap, PancakeSwap, Curve, Jupiter</td></tr>
+  <tr><td>Siapa memegang asetmu</td><td>Bursa — kamu memegang <b>saldo di akun</b></td><td><b>Kamu sendiri</b> — aset tetap di dompetmu sampai detik penukaran</td></tr>
+  <tr><td>Cara masuk</td><td>Daftar akun, verifikasi KTP (KYC)</td><td>Hubungkan dompet — tanpa akun</td></tr>
+  <tr><td>Rupiah</td><td>Bisa setor dan tarik rupiah</td><td>Tidak — hanya token ditukar token</td></tr>
+  <tr><td>Kalau lupa kata sandi</td><td>Bisa dipulihkan lewat layanan pelanggan</td><td>Tidak ada yang bisa memulihkan seed phrase-mu</td></tr>
+  <tr><td>Risiko utama</td><td>Bursanya bangkrut, dibobol, atau membekukan akun</td><td>Salah tekan, token palsu, bug kontrak, izin token yang disalahgunakan</td></tr>
+</table>
+<div class="callout warn">
+<b>"Not your keys, not your coins" berlaku di sini.</b> Saldo di CEX adalah janji bursa untuk membayarmu. Ketika bursa FTX bangkrut pada November 2022, jutaan penggunanya tidak bisa menarik dana. Sebaliknya, di DEX tidak ada yang bisa membekukan asetmu — tapi juga tidak ada yang bisa menolongmu bila salah.
+</div>
+
+<h3>Langkah 2 — Order book vs kolam likuiditas</h3>
+<p>CEX mempertemukan pembeli dan penjual lewat <b>order book</b>: daftar penawaran beli dan jual di berbagai harga, seperti pasar lelang. Sebagian besar DEX memakai cara lain: <b>kolam likuiditas</b> (<i>liquidity pool</i>) — kamu tidak berdagang dengan orang lain, melainkan dengan <b>sebuah smart contract</b> yang menyimpan dua jenis token dan menentukan harga dengan rumus. Rumus itu (AMM) dibedah di pelajaran berikutnya.</p>
+
+<h3>Langkah 3 — Apa yang terjadi saat kamu menukar di DEX</h3>
+<table class="tbl">
+  <tr><th>Langkah</th><th>Yang kamu lihat</th><th>Yang sebenarnya terjadi</th></tr>
+  <tr><td>1</td><td>Tombol <b>Connect wallet</b></td><td>Situs hanya membaca alamatmu — belum ada izin apa pun</td></tr>
+  <tr><td>2</td><td>Pilih token dan jumlah, mis. 100 USDC → ETH</td><td>Situs menghitung perkiraan hasil dari isi kolam</td></tr>
+  <tr><td>3</td><td>Tombol <b>Approve</b> (sekali per token)</td><td>Kamu memberi izin kontrak DEX memindahkan USDC-mu — tanda tangan pertama</td></tr>
+  <tr><td>4</td><td>Tombol <b>Swap</b></td><td>Tanda tangan kedua: perintah menukar, dengan batas <b>minimal ETH yang mau kamu terima</b></td></tr>
+  <tr><td>5</td><td>Status "berhasil"</td><td>Dalam satu transaksi, kontrak menarik USDC-mu, menyerahkan ETH dari kolam, dan memperbarui harga</td></tr>
+</table>
+<p>Biayanya dua: <b>fee kolam</b> (umumnya 0,05%–1% dari nilai tukar, dibagikan ke penyedia likuiditas) dan <b>gas</b> jaringan. Di Layer 2 atau rantai murah, gasnya bisa hanya beberapa ratus rupiah; di Ethereum saat ramai bisa ratusan ribu.</p>
+
+<h3>Langkah 4 — Slippage tolerance: batas rugi yang kamu izinkan</h3>
+<p>Harga di DEX bisa bergeser antara saat kamu menekan Swap dan saat transaksinya masuk blok. Pengaturan <b>slippage tolerance</b> menentukan seberapa jauh pergeseran yang masih kamu terima.</p>
+<table class="tbl">
+  <tr><th>Slippage tolerance</th><th>Perkiraan hasil 0,0300 ETH</th><th>Akibatnya</th></tr>
+  <tr><td>0,5%</td><td>Minimal 0,02985 ETH</td><td>Transaksi dibatalkan bila hasilnya lebih buruk — aman, tapi kadang gagal saat pasar bergejolak</td></tr>
+  <tr><td class="bad-cell">10%</td><td>Minimal 0,0270 ETH</td><td>Hampir selalu berhasil — tapi kamu mengizinkan diri dirugikan sampai 10%</td></tr>
+</table>
+
+<h3>Langkah 5 — Bahaya khas DEX</h3>
+<table class="tbl">
+  <tr><th>Bahaya</th><th>Cara kerjanya</th><th>Cara menghindari</th></tr>
+  <tr><td><b>Token palsu</b></td><td>Siapa pun bisa membuat token bernama "USDT" atau meniru proyek populer</td><td>Cocokkan <b>alamat kontrak</b> dengan situs resmi proyeknya, bukan hanya namanya</td></tr>
+  <tr><td><b>Sandwich attack</b></td><td>Bot melihat transaksimu sebelum masuk blok, membeli lebih dulu (harga naik), membiarkanmu membeli di harga lebih mahal, lalu langsung menjual</td><td>Slippage tolerance kecil; jangan menukar jumlah besar di kolam kecil</td></tr>
+  <tr><td><b>Rug pull</b></td><td>Pembuat token menarik seluruh isi kolam, harga token jatuh mendekati nol</td><td>Hindari token baru tanpa rekam jejak; periksa apakah likuiditasnya dikunci</td></tr>
+  <tr><td><b>Izin tanpa batas</b></td><td>Approve "unlimited" ke kontrak jahat membuat tokenmu bisa dikuras kapan saja</td><td>Hanya approve situs resmi; cabut izin lama (revoke)</td></tr>
+</table>
+<div class="callout">
+<b>Agregator DEX</b> (misalnya 1inch atau Jupiter) mencari rute terbaik di banyak DEX sekaligus — kadang memecah satu penukaran ke beberapa kolam agar harga rata-ratanya lebih baik. Ada juga DEX khusus kontrak berjangka (<i>perpetual</i>) yang memakai order book di rantainya sendiri; leverage di sana bisa menghapus seluruh modal dalam hitungan menit.
+</div>
+<div class="callout warn">Materi ini edukasi, bukan ajakan atau saran membeli aset crypto apa pun. Di Indonesia, pastikan memakai bursa yang terdaftar dan diawasi regulator.</div>
+`,
+          keyPoints: [
+            "CEX memegang asetmu (saldo = janji bursa); DEX membiarkan aset tetap di dompetmu sampai penukaran terjadi.",
+            "Kebanyakan DEX tidak memakai order book, melainkan kolam likuiditas yang harganya ditentukan rumus.",
+            "Menukar di DEX = Approve (izin token) lalu Swap (perintah tukar) — dua tanda tangan.",
+            "Slippage tolerance adalah batas rugi yang kamu izinkan; makin besar, makin rawan dirugikan.",
+            "Bahaya khas DEX: token palsu, sandwich attack, rug pull, dan izin tanpa batas."
+          ],
+          practice: [
+            { type: "number", q: "Perkiraan hasil swap 2 ETH, slippage tolerance 1%. Berapa ETH minimal yang diterima sebelum transaksi dibatalkan? (2 desimal)", answer: 1.98, tol: 0.005, unit: "ETH", hint: "2 × (1 − 0,01).", solution: "2 × 0,99 = 1,98 ETH." },
+            { type: "number", q: "Menukar senilai Rp10.000.000 di kolam ber-fee 0,3%. Berapa rupiah fee kolamnya?", answer: 30000, tol: 1, unit: "Rp", hint: "10.000.000 × 0,003.", solution: "Rp30.000 — dibagikan ke penyedia likuiditas kolam itu." }
+          ],
+          quiz: [
+            {
+              q: "Apa perbedaan paling mendasar antara CEX dan DEX?",
+              options: [
+                "Di DEX aset tetap di dompetmu, di CEX bursa yang memegangnya",
+                "Di DEX harga selalu lebih murah daripada harga di CEX",
+                "Di DEX transaksi gratis, di CEX selalu ada biaya gas",
+                "Di DEX hanya token besar yang boleh ditukarkan"
+              ],
+              answer: 0,
+              explain: "Saldo di CEX adalah janji bursa. Di DEX kamu memegang kunci, tapi tidak ada yang bisa memulihkan kesalahanmu."
+            },
+            {
+              q: "Kenapa slippage tolerance 10% berbahaya?",
+              options: [
+                "Kamu mengizinkan diri menerima hasil sampai 10% lebih buruk",
+                "Fee kolamnya otomatis naik menjadi 10% dari nilai tukar",
+                "Transaksinya pasti gagal saat harga sedang bergejolak",
+                "Bursa memotong 10% sebagai denda karena terlalu besar"
+              ],
+              answer: 0,
+              explain: "Batas besar membuat transaksimu mudah dimanfaatkan bot sandwich atau dieksekusi di harga buruk."
+            },
+            {
+              q: "Cara paling tepat memastikan token yang dibeli di DEX bukan token palsu?",
+              options: [
+                "Mencocokkan alamat kontraknya dengan situs resmi proyek",
+                "Memastikan nama dan logonya sama dengan proyek aslinya",
+                "Memilih token yang harganya paling murah di daftar",
+                "Membeli token yang paling banyak dibicarakan hari ini"
+              ],
+              answer: 0,
+              explain: "Nama dan logo bisa ditiru siapa pun. Alamat kontrak adalah identitas yang tidak bisa dipalsukan."
+            }
+          ]
         },
         {
           id: "bc-app-1",
@@ -3431,6 +3554,210 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
           ],
         },
         {
+          id: "bc-defi-1",
+          title: "Meminjam di DeFi — Jaminan, Health Factor & Likuidasi",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Stablecoin</b> = token yang nilainya dipatok ke aset stabil, mis. dolar. <b>Oracle</b> = penyedia data harga dari luar blockchain untuk smart contract (pelajaran sebelumnya). Pinjam-meminjam di DeFi bergantung pada keduanya.
+</div>
+
+<h3>Langkah 1 — Masalahnya: tidak ada yang mengenalmu</h3>
+<p>Bank meminjamkan uang setelah memeriksa KTP, slip gaji, dan riwayat kreditmu. Smart contract tidak bisa melakukan semua itu. Kalau peminjam kabur, tidak ada yang bisa ditagih.</p>
+<p>Solusinya sederhana dan keras: <b>jaminan lebih besar daripada pinjaman</b> (<i>overcollateralized</i>). Mirip menggadaikan emas — hanya saja penggadaiannya dijalankan program, 24 jam, tanpa petugas.</p>
+
+<h3>Langkah 2 — Contoh dengan angka</h3>
+<p>Andi punya <b>1 ETH</b>. Harganya Rp50 juta (angka ilustrasi). Ia butuh uang tapi tidak mau menjual ETH-nya. Ia menyetor 1 ETH ke protokol pinjaman (misalnya Aave), lalu meminjam stablecoin senilai <b>Rp30 juta</b>.</p>
+<table class="tbl">
+  <tr><th>Ukuran</th><th>Hitungan</th><th>Hasil</th></tr>
+  <tr><td>Nilai jaminan</td><td>1 ETH × Rp50 juta</td><td>Rp50 juta</td></tr>
+  <tr><td><b>LTV</b> (rasio pinjaman)</td><td>30 ÷ 50</td><td>60%</td></tr>
+  <tr><td><b>Batas likuidasi</b> untuk ETH (ilustrasi)</td><td>ditetapkan protokol</td><td>80%</td></tr>
+  <tr><td><b>Health factor</b></td><td>(50 × 0,8) ÷ 30</td><td><b>1,33</b></td></tr>
+</table>
+<div class="callout">
+<b>Health factor = nilai jaminan × batas likuidasi ÷ utang</b><br><br>
+Di atas 1 = aman. <b>Di bawah 1 = jaminanmu boleh dilikuidasi</b> oleh siapa pun. Untuk Andi, health factor jatuh ke 1 ketika 0,8 × harga = 30, yaitu saat harga ETH turun ke <b>Rp37,5 juta</b> — cukup turun 25%.
+</div>
+
+<h3>Coba sendiri</h3>
+<div data-demo="defi-likuidasi"></div>
+
+<h3>Langkah 3 — Likuidasi: siapa mengambil apa</h3>
+<p>Saat health factor di bawah 1, pihak lain — disebut <b>likuidator</b>, biasanya bot — boleh melunasi sebagian utang Andi dan sebagai gantinya mengambil jaminan Andi <b>dengan diskon</b> (bonus likuidasi, misalnya 5%). Utang Andi berkurang, tapi ia kehilangan sebagian ETH plus denda itu. Tidak ada yang menelepon untuk mengingatkan; program berjalan begitu syaratnya terpenuhi.</p>
+<div class="callout warn">
+<b>Likuidasi beruntun.</b> Saat harga jatuh tajam, banyak posisi dilikuidasi bersamaan. Jaminan yang dilepas likuidator dijual ke pasar, harga turun lagi, posisi berikutnya ikut dilikuidasi. Inilah sebabnya crypto bisa anjlok sangat dalam dalam hitungan jam.
+</div>
+
+<h3>Langkah 4 — Dari mana bunganya, dan untuk siapa?</h3>
+<p>Penyimpan menaruh stablecoin di kolam pinjaman dan menerima bunga; peminjam membayar bunga. Besarnya diatur rumus berdasarkan <b>utilisasi</b> — berapa persen isi kolam yang sedang dipinjam:</p>
+<table class="tbl">
+  <tr><th>Utilisasi kolam</th><th>Bunga</th><th>Tujuannya</th></tr>
+  <tr><td>Rendah (banyak dana menganggur)</td><td>Turun</td><td>Menarik peminjam</td></tr>
+  <tr><td>Tinggi (hampir habis dipinjam)</td><td>Naik tajam</td><td>Menarik penyimpan baru dan mendorong peminjam melunasi, supaya penyimpan tetap bisa menarik dananya</td></tr>
+</table>
+
+<h3>Langkah 5 — Kenapa orang mau meminjam dengan jaminan sebesar itu?</h3>
+<table class="tbl">
+  <tr><th>Alasan</th><th>Penjelasan</th><th>Risikonya</th></tr>
+  <tr><td>Tidak mau menjual aset</td><td>Butuh dana sekarang tapi yakin asetnya naik</td><td>Kalau justru turun, dilikuidasi</td></tr>
+  <tr><td>Leverage</td><td>Pinjam stablecoin, beli ETH lagi, jaminkan lagi</td><td class="bad-cell">Kerugian berlipat; likuidasi datang jauh lebih cepat</td></tr>
+  <tr><td>Bertaruh harga turun</td><td>Pinjam token, jual sekarang, beli kembali nanti</td><td>Rugi tanpa batas bila harganya justru naik</td></tr>
+</table>
+<div class="callout">
+<b>Flash loan</b> adalah keanehan khas DeFi: meminjam tanpa jaminan, dengan syarat dilunasi <b>dalam transaksi yang sama</b>. Kalau tidak lunas, seluruh transaksi dibatalkan seolah tidak pernah terjadi. Alat ini berguna untuk arbitrase, tapi juga sering dipakai menyerang protokol yang oracle harganya mudah dimanipulasi.
+</div>
+<div class="callout warn">Edukasi, bukan saran investasi. Meminjam dengan jaminan aset yang harganya bergejolak bisa menghapus jaminanmu dalam satu malam.</div>
+`,
+          keyPoints: [
+            "Tanpa KTP dan skor kredit, DeFi meminjamkan dengan jaminan lebih besar daripada pinjaman.",
+            "LTV = utang ÷ jaminan; health factor = jaminan × batas likuidasi ÷ utang; di bawah 1 berarti boleh dilikuidasi.",
+            "Likuidator melunasi sebagian utang dan mengambil jaminan dengan diskon; likuidasi bisa beruntun saat pasar jatuh.",
+            "Bunga diatur rumus berdasarkan utilisasi kolam: makin habis dipinjam, makin tinggi bunganya.",
+            "Leverage mempercepat likuidasi; flash loan harus dilunasi dalam transaksi yang sama."
+          ],
+          practice: [
+            { type: "number", q: "Jaminan Rp40 juta, batas likuidasi 80%, utang Rp20 juta. Berapa health factor-nya?", answer: 1.6, tol: 0.01, hint: "40 × 0,8 ÷ 20.", solution: "32 ÷ 20 = 1,6 — masih aman." },
+            { type: "number", q: "Jaminan 1 ETH, batas likuidasi 80%, utang Rp24 juta. Di harga ETH berapa (juta rupiah) health factor tepat 1?", answer: 30, tol: 0.1, unit: "jt", hint: "0,8 × harga = 24.", solution: "Harga = 24 ÷ 0,8 = Rp30 juta." }
+          ],
+          quiz: [
+            {
+              q: "Kenapa pinjaman di DeFi mewajibkan jaminan lebih besar daripada pinjamannya?",
+              options: [
+                "Karena tidak ada identitas yang bisa ditagih bila peminjam kabur",
+                "Karena bunga DeFi selalu lebih tinggi daripada bunga bank",
+                "Karena stablecoin tidak boleh dipinjamkan tanpa izin bank",
+                "Karena smart contract tidak bisa menghitung pecahan kecil"
+              ],
+              answer: 0,
+              explain: "Program tidak bisa memeriksa KTP atau menagih. Jaminan berlebih menggantikan kepercayaan."
+            },
+            {
+              q: "Health factor sebuah posisi turun ke 0,9. Apa artinya?",
+              options: [
+                "Jaminannya kini boleh dilikuidasi oleh siapa pun",
+                "Pinjamannya otomatis dihapus oleh protokol",
+                "Bunga pinjamannya turun menjadi 90%",
+                "Peminjam masih punya 90% ruang aman"
+              ],
+              answer: 0,
+              explain: "Di bawah 1, likuidator boleh melunasi sebagian utang dan mengambil jaminan dengan diskon."
+            },
+            {
+              q: "Apa yang terjadi pada bunga ketika hampir seluruh isi kolam pinjaman sedang dipinjam?",
+              options: [
+                "Naik tajam untuk menarik penyimpan dan mendorong pelunasan",
+                "Turun agar peminjam baru tetap mau datang ke kolam itu",
+                "Tetap sama karena bunga ditetapkan saat kolam dibuat",
+                "Dihentikan sementara sampai ada penyimpan yang baru"
+              ],
+              answer: 0,
+              explain: "Bunga mengikuti utilisasi. Kolam yang hampir habis menaikkan bunga agar penyimpan tetap bisa menarik dananya."
+            }
+          ]
+        },
+        {
+          id: "bc-defi-2",
+          title: "Staking, Liquid Staking & Yield Farming — Dari Mana Imbal Hasilnya?",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Pada <b>Proof of Stake</b>, validator mengunci koin sebagai jaminan dan ikut membuat blok (pelajaran Konsensus). <b>Kolam likuiditas</b> DEX dan <b>impermanent loss</b> sudah kamu pelajari di pelajaran AMM. Pelajaran ini mengumpulkan semua cara "menghasilkan imbal hasil" di crypto — dan satu pertanyaan yang selalu harus diajukan: <i>uangnya dari mana?</i>
+</div>
+
+<h3>Langkah 1 — Staking: menjadi penjamin jaringan</h3>
+<p>Di jaringan Proof of Stake, siapa pun yang mengunci koin untuk ikut memvalidasi transaksi mendapat imbalan. Sumbernya dua: <b>koin baru</b> yang dicetak jaringan dan <b>biaya transaksi</b> yang dibayar pengguna.</p>
+<table class="tbl">
+  <tr><th>Cara</th><th>Penjelasan</th><th>Catatan</th></tr>
+  <tr><td>Menjalankan validator sendiri</td><td>Di Ethereum butuh 32 ETH dan komputer yang menyala terus</td><td>Kalau curang atau sangat sering mati, sebagian jaminan dipotong (<i>slashing</i>)</td></tr>
+  <tr><td>Lewat bursa atau penyedia</td><td>Titip koin, mereka yang menjalankan validator</td><td>Praktis, tapi kamu kembali memercayai pihak ketiga</td></tr>
+  <tr><td><b>Liquid staking</b></td><td>Setor ETH ke protokol (mis. Lido), terima token tanda bukti (stETH) yang nilainya ikut bertambah</td><td>Token bukti bisa dipakai lagi di DeFi — tapi menambah lapisan risiko</td></tr>
+</table>
+<div class="callout warn">
+<b>Token bukti tidak selalu sama nilainya dengan aslinya.</b> Saat pasar panik pada Juni 2022, stETH sempat diperdagangkan beberapa persen di bawah ETH. Orang yang memakai stETH sebagai jaminan pinjaman dengan leverage terkena likuidasi. Lapisan di atas lapisan — termasuk <i>restaking</i>, memakai ulang jaminan staking untuk mengamankan layanan lain — melipatgandakan imbal hasil sekaligus risikonya.
+</div>
+
+<h3>Langkah 2 — Yield farming: menyewakan likuiditas</h3>
+<p><b>Yield farming</b> berarti menaruh token di kolam DEX atau kolam pinjaman untuk mendapat <b>fee</b> — dan sering kali tambahan <b>token insentif</b> dari protokolnya. Angka imbal hasilnya bisa tampak luar biasa, karena sebagian besar berasal dari token insentif yang baru dicetak.</p>
+
+<h3>Langkah 3 — APR vs APY: jangan tertipu cara menulis</h3>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th><th>Contoh 12% per tahun</th></tr>
+  <tr><td><b>APR</b></td><td>Bunga sederhana per tahun, tanpa bunga berbunga</td><td>12%</td></tr>
+  <tr><td><b>APY</b></td><td>Termasuk efek majemuk bila hasilnya ditanam ulang</td><td>Ditanam ulang tiap bulan: (1 + 0,12 ÷ 12)¹² − 1 = <b>12,68%</b></td></tr>
+</table>
+<p>APY selalu tampak lebih besar daripada APR untuk bunga yang sama — karena itu situs yang ingin terlihat menarik lebih suka menampilkan APY.</p>
+
+<h3>Langkah 4 — Pertanyaan yang menentukan: imbal hasil riil</h3>
+<p>Misalkan staking memberi <b>4% per tahun</b> dalam bentuk koin baru, sementara jumlah koin yang beredar juga bertambah <b>3% per tahun</b>. Porsi kepemilikanmu atas jaringan hanya bertambah sekitar <b>1%</b>. Selebihnya hanyalah kue yang dipotong lebih kecil — persis konsep dilusi di modul Ekonomi.</p>
+<table class="tbl">
+  <tr><th>Sumber imbal hasil</th><th>Penilaian</th></tr>
+  <tr><td class="ok-cell">Biaya yang dibayar pengguna sungguhan (gas, fee swap, bunga pinjaman)</td><td>Bisa berkelanjutan selama penggunanya ada</td></tr>
+  <tr><td>Koin atau token yang baru dicetak</td><td>Hanya menarik bila pemakaian jaringan tumbuh lebih cepat dari pencetakan</td></tr>
+  <tr><td class="bad-cell">Uang dari penyetor baru</td><td>Skema Ponzi — runtuh begitu penyetor baru berhenti datang</td></tr>
+</table>
+
+<h3>Langkah 5 — Daftar periksa sebelum mengunci aset</h3>
+<table class="tbl">
+  <tr><th>Pertanyaan</th><th>Kenapa penting</th></tr>
+  <tr><td>Dari mana imbal hasilnya?</td><td>Fee nyata vs cetak token vs uang penyetor baru</td></tr>
+  <tr><td>Berapa lama asetku terkunci?</td><td>Penarikan staking bisa butuh beberapa hari sampai berminggu-minggu antre</td></tr>
+  <tr><td>Siapa yang memegang kunci?</td><td>Bursa, protokol, atau dirimu sendiri</td></tr>
+  <tr><td>Apa yang bisa salah?</td><td>Slashing, bug kontrak, token bukti lepas dari nilainya, impermanent loss</td></tr>
+  <tr><td>Imbal hasil di atas 20–30% per tahun?</td><td>Hampir pasti ada risiko besar yang belum kamu lihat</td></tr>
+</table>
+<div class="callout warn">Edukasi, bukan saran investasi. Imbal hasil tinggi di crypto hampir selalu dibayar dengan risiko yang sama tingginya.</div>
+`,
+          keyPoints: [
+            "Staking = mengunci koin untuk ikut mengamankan jaringan PoS; imbalannya dari koin baru dan biaya transaksi; risiko slashing.",
+            "Liquid staking memberi token bukti (mis. stETH) yang bisa dipakai lagi, tapi bisa lepas dari nilai aslinya saat panik.",
+            "Yield farming = menyewakan token ke kolam DEX/pinjaman; imbal hasil besar biasanya dari token insentif yang baru dicetak.",
+            "APY memasukkan efek majemuk: APR 12% ditanam ulang tiap bulan = APY 12,68%.",
+            "Imbal hasil riil = imbal hasil dikurangi pertambahan jumlah token; tanyakan selalu dari mana uangnya."
+          ],
+          practice: [
+            { type: "number", q: "APR 24%, hasil ditanam ulang setiap bulan. Berapa APY-nya? (%, 1 desimal)", answer: 26.8, tol: 0.1, unit: "%", hint: "(1 + 0,24 ÷ 12)¹² − 1 = 1,02¹² − 1.", solution: "1,02¹² = 1,268 → APY ≈ 26,8%." },
+            { type: "number", q: "Staking memberi 6% per tahun, jumlah koin beredar bertambah 4% per tahun. Kira-kira berapa persen imbal hasil riilnya?", answer: 2, tol: 0.1, unit: "%", hint: "6 − 4.", solution: "Sekitar 2% — sisanya hanya mengimbangi pengenceran." }
+          ],
+          quiz: [
+            {
+              q: "Dari mana imbalan staking di jaringan Proof of Stake berasal?",
+              options: [
+                "Dari koin baru yang dicetak dan biaya transaksi pengguna",
+                "Dari bunga yang dibayar bank kepada pemegang koin",
+                "Dari selisih harga koin di berbagai bursa berbeda",
+                "Dari iklan yang ditampilkan di dompet para validator"
+              ],
+              answer: 0,
+              explain: "Validator dibayar dengan koin baru dan biaya transaksi. Bagian koin baru juga mengencerkan semua pemegang."
+            },
+            {
+              q: "Apa risiko khusus liquid staking seperti stETH?",
+              options: [
+                "Token buktinya bisa diperdagangkan di bawah nilai aslinya",
+                "Koin yang di-stake otomatis hilang setelah setahun berjalan",
+                "Validatornya wajib dijalankan sendiri di komputer pemilik",
+                "Imbal hasilnya dikenai pajak dua kali lipat dari staking"
+              ],
+              answer: 0,
+              explain: "Saat pasar panik, stETH pernah turun beberapa persen di bawah ETH, memicu likuidasi bagi yang memakainya dengan leverage."
+            },
+            {
+              q: "Situs menampilkan 'APY 2.000%'. Pertanyaan pertama yang paling tepat?",
+              options: [
+                "Dari mana imbal hasil sebesar itu dibayarkan?",
+                "Berapa lama lagi penawaran ini akan berakhir?",
+                "Apakah bisa langsung menyetor dengan rupiah?",
+                "Berapa banyak orang yang sudah ikut menyetor?"
+              ],
+              answer: 0,
+              explain: "Angka setinggi itu hampir selalu dari token insentif yang baru dicetak — atau dari uang penyetor baru."
+            }
+          ]
+        },
+        {
           id: "bc-app-3",
           title: "Bridge & Interoperabilitas",
           duration: "11 menit",
@@ -3555,48 +3882,187 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
         },
       ],
     },
-    /* ---------------- MODUL 9: SKALABILITAS, PRIVASI & DAO ---------------- */
+    /* ---------------- MODUL 9: LAYER 1, LAYER 2, PRIVASI & DAO ---------------- */
     {
       id: "bc-lanjutan",
       level: "Lanjutan",
-      title: "Skalabilitas, Privasi & DAO",
-      summary: "Layer 2 untuk skalabilitas, zero-knowledge proof untuk privasi, dan DAO sebagai organisasi terdesentralisasi.",
+      title: "Layer 1, Layer 2, Privasi & DAO",
+      summary: "Kenapa blockchain dasar (Layer 1) lambat dan trilema yang harus dipilih, Layer 2 (rollup & Lightning) untuk skalabilitas, zero-knowledge proof untuk privasi, dan DAO sebagai organisasi terdesentralisasi.",
       lessons: [
         {
-          id: "bc-adv-1",
-          title: "Layer 2 & Skalabilitas",
-          duration: "12 menit",
+          id: "bc-l1-1",
+          title: "Layer 1 — Blockchain Dasar & Trilema Skalabilitas",
+          duration: "14 menit",
           content: `
-<p>Blockchain seperti Ethereum aman & terdesentralisasi, tapi <b>lambat & mahal</b> saat ramai. Ini bagian dari <b>"trilemma blockchain"</b>.</p>
-
-<div data-diagram="layers" data-items="Layer 2 (murah &amp; cepat)|Layer 1 (aman &amp; terdesentralisasi)" data-caption="L2 menumpang keamanan L1"></div>
-
-
-<div class="callout">
-<b>Trilemma:</b> sulit mencapai <b>Keamanan</b>, <b>Desentralisasi</b>, dan <b>Skalabilitas</b> (kecepatan) sekaligus — biasanya harus mengorbankan salah satu.
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Setiap <b>node</b> menyimpan salinan buku besar dan memeriksa setiap transaksi; <b>konsensus</b> (PoW atau PoS) menentukan siapa yang boleh menambah blok; <b>ruang blok terbatas</b> sehingga biaya gas naik saat ramai (pelajaran Gas &amp; Fee). Ketiganya menjelaskan kenapa blockchain bisa lambat.
 </div>
 
-<h3>Solusi: Layer 2</h3>
-<p><b>Layer 2 (L2)</b> adalah jaringan di "atas" blockchain utama (Layer 1) yang memproses transaksi secara <b>terpisah & murah</b>, lalu hanya menaruh ringkasannya ke L1 yang aman.</p>
-<ul>
-  <li><b>Rollup</b> — mengumpulkan (roll up) banyak transaksi jadi satu, lalu setor buktinya ke L1.
-    <ul>
-      <li><b>Optimistic Rollup</b> (mis. Arbitrum, Optimism) — menganggap transaksi valid kecuali ada yang menantang.</li>
-      <li><b>ZK-Rollup</b> (mis. zkSync) — memakai bukti matematis (zero-knowledge) untuk memastikan validitas.</li>
-    </ul>
-  </li>
-  <li><b>Sidechain</b> — blockchain terpisah yang terhubung, dengan aturannya sendiri.</li>
-</ul>
-
+<h3>Langkah 1 — Apa itu Layer 1?</h3>
+<p><b>Layer 1 (L1)</b> adalah blockchain dasarnya sendiri: ia punya jaringan validator atau penambang sendiri, koin sendiri untuk membayar biaya dan mengamankan jaringan, serta aturan kapan sebuah transaksi dianggap <b>final</b>. Bitcoin, Ethereum, Solana, BNB Chain, Avalanche, Cardano, dan TRON adalah contoh L1.</p>
 <div class="callout">
-<b>Dampak:</b> L2 membuat transaksi <b>jauh lebih murah & cepat</b> (dari dolar jadi sen) sambil tetap "mewarisi" keamanan L1. Inilah cara Web3 melayani jutaan pengguna tanpa biaya gas yang mencekik.
+<b>Analogi:</b> L1 adalah <b>jalan raya utama sekaligus pengadilan terakhir</b> sebuah kota. Semua urusan pada akhirnya dicatat dan diputuskan di sini. Layer 2 — pelajaran berikutnya — adalah jalan tol layang yang dibangun di atasnya.
 </div>
+
+<h3>Langkah 2 — Kenapa L1 lambat?</h3>
+<p>Di bank, satu server memproses transaksi. Di blockchain, <b>ribuan komputer mengerjakan pekerjaan yang sama</b> — setiap node memeriksa setiap transaksi — supaya tidak ada satu pihak pun yang perlu dipercaya. Keamanan itu dibayar dengan kecepatan.</p>
+<table class="tbl">
+  <tr><th>Jaringan</th><th>Blok baru setiap…</th><th>Kapasitas kasar</th></tr>
+  <tr><td>Bitcoin</td><td>sekitar 10 menit</td><td>beberapa transaksi per detik (sekitar 3–7)</td></tr>
+  <tr><td>Ethereum</td><td>12 detik</td><td>belasan sampai puluhan transaksi per detik</td></tr>
+  <tr><td>Solana</td><td>sekitar 0,4 detik</td><td>ribuan transaksi per detik</td></tr>
+  <tr><td>Jaringan kartu pembayaran besar</td><td>—</td><td>rata-rata ribuan transaksi per detik</td></tr>
+</table>
+<p><i>Angka kapasitas sangat bergantung pada jenis transaksinya; anggap sebagai urutan besaran, bukan angka pasti.</i></p>
+
+<h3>Langkah 3 — Trilema: pilih dua, korbankan satu</h3>
+<p>Istilah yang dipopulerkan Vitalik Buterin ini menyebut tiga sifat yang sulit dicapai sekaligus:</p>
+<table class="tbl">
+  <tr><th>Sifat</th><th>Artinya</th></tr>
+  <tr><td><b>Desentralisasi</b></td><td>Banyak pihak biasa bisa ikut menjalankan node dengan komputer sederhana</td></tr>
+  <tr><td><b>Keamanan</b></td><td>Sangat mahal untuk menyerang atau menulis ulang riwayat</td></tr>
+  <tr><td><b>Skalabilitas</b></td><td>Banyak transaksi per detik dengan biaya murah</td></tr>
+</table>
+<p>Setiap L1 mengambil pilihan berbeda:</p>
+<table class="tbl">
+  <tr><th>L1</th><th>Yang diutamakan</th><th>Yang dikorbankan</th></tr>
+  <tr><td>Bitcoin</td><td>Keamanan &amp; desentralisasi — node bisa jalan di komputer biasa</td><td>Kecepatan; pembayaran cepat diserahkan ke lapisan di atasnya</td></tr>
+  <tr><td>Ethereum</td><td>Desentralisasi &amp; keamanan, dengan smart contract</td><td>Kapasitas L1; peningkatan diserahkan ke Layer 2</td></tr>
+  <tr><td>Solana</td><td>Kecepatan &amp; biaya murah</td><td>Validator butuh komputer jauh lebih kuat, jadi lebih sedikit orang yang mampu ikut; jaringannya pernah beberapa kali berhenti berjam-jam pada 2021–2022</td></tr>
+  <tr><td>Rantai dengan sedikit validator</td><td>Cepat dan murah</td><td>Kendali terpusat di sedikit pihak</td></tr>
+</table>
+
+<h3>Langkah 4 — Dua jalan untuk membesar</h3>
+<table class="tbl">
+  <tr><th>Jalan</th><th>Caranya</th><th>Contoh</th></tr>
+  <tr><td>Memperbesar L1 itu sendiri</td><td>Blok lebih cepat atau lebih besar, validator lebih kuat</td><td>Solana</td></tr>
+  <tr><td>L1 tetap ramping, kapasitas ditambah di atasnya</td><td>Transaksi dikerjakan di lapisan kedua, L1 menjadi hakim terakhir</td><td>Ethereum dengan rollup; Bitcoin dengan Lightning</td></tr>
+</table>
+
+<h3>Langkah 5 — Cara menilai sebuah L1</h3>
+<table class="tbl">
+  <tr><th>Pertanyaan</th><th>Yang dilihat</th></tr>
+  <tr><td>Siapa yang menjalankannya?</td><td>Jumlah validator dan seberapa tersebar kepemilikannya</td></tr>
+  <tr><td>Seberapa cepat final?</td><td>Berapa lama sampai transaksi tidak bisa dibatalkan</td></tr>
+  <tr><td>Berapa biaya rata-rata?</td><td>Dan bagaimana biaya itu melonjak saat ramai</td></tr>
+  <tr><td>Pernah berhenti?</td><td>Riwayat gangguan jaringan</td></tr>
+  <tr><td>Untuk apa koinnya?</td><td>Membayar gas dan staking — permintaannya datang dari pemakaian nyata atau hanya spekulasi?</td></tr>
+</table>
+<div class="callout warn">Edukasi, bukan saran investasi. "Lebih cepat" tidak otomatis berarti "lebih baik" — selalu tanyakan apa yang dikorbankan.</div>
 `,
           keyPoints: [
-            "Trilemma blockchain: sulit mencapai keamanan, desentralisasi, & skalabilitas sekaligus.",
-            "Layer 2 memproses transaksi murah/cepat di atas L1, lalu menyetor ringkasan ke L1 yang aman.",
-            "Rollup (Optimistic & ZK) dan sidechain adalah pendekatan L2 utama.",
-            "Dampak: transaksi jauh lebih murah & cepat sambil mewarisi keamanan L1.",
+            "Layer 1 adalah blockchain dasar dengan validator, koin, dan aturan finalitas sendiri (Bitcoin, Ethereum, Solana, dll).",
+            "L1 lambat karena setiap node memeriksa setiap transaksi — keamanan tanpa pihak tepercaya dibayar dengan kecepatan.",
+            "Trilema: desentralisasi, keamanan, dan skalabilitas sulit dicapai sekaligus; tiap L1 memilih pengorbanan berbeda.",
+            "Dua jalan membesar: memperbesar L1 sendiri, atau menjaga L1 ramping dan menambah kapasitas di Layer 2.",
+            "Nilai L1 dari sebaran validator, waktu final, biaya, riwayat gangguan, dan sumber permintaan koinnya."
+          ],
+          practice: [
+            { type: "number", q: "Satu blok muat 4.000 transaksi dan blok muncul setiap 600 detik. Berapa transaksi per detik kapasitasnya? (1 desimal)", answer: 6.7, tol: 0.1, unit: "tx/detik", hint: "4.000 ÷ 600.", solution: "4.000 ÷ 600 ≈ 6,7 transaksi per detik." },
+            { type: "choice", q: "Sebuah L1 sangat cepat dan murah, tapi validatornya hanya puluhan dan semuanya dekat satu perusahaan. Sifat trilema mana yang dikorbankan?", options: ["Skalabilitas", "Desentralisasi", "Kecepatan", "Biaya"], answer: 1, hint: "Siapa yang mengendalikan jaringannya?", solution: "Sedikit validator yang berdekatan = desentralisasi dikorbankan demi kecepatan." }
+          ],
+          quiz: [
+            {
+              q: "Apa yang membuat sebuah jaringan disebut Layer 1?",
+              options: [
+                "Punya validator, koin, dan aturan finalitas sendiri",
+                "Selalu lebih cepat daripada semua jaringan lain",
+                "Dibangun di atas jaringan lain dan menumpang keamanannya",
+                "Hanya bisa dipakai untuk transaksi kecil sehari-hari"
+              ],
+              answer: 0,
+              explain: "L1 adalah blockchain dasarnya sendiri. Yang menumpang keamanan jaringan lain adalah Layer 2."
+            },
+            {
+              q: "Kenapa blockchain Layer 1 umumnya jauh lebih lambat daripada server bank?",
+              options: [
+                "Ribuan node memeriksa setiap transaksi yang sama",
+                "Data transaksinya harus diterjemahkan ke banyak bahasa",
+                "Penambang sengaja memperlambat agar harga koin naik",
+                "Setiap transaksi wajib disetujui oleh bank sentral"
+              ],
+              answer: 0,
+              explain: "Tidak ada server pusat yang dipercaya, jadi banyak komputer mengerjakan pemeriksaan yang sama."
+            },
+            {
+              q: "Trilema blockchain menyebut tiga sifat yang sulit dicapai sekaligus. Apa saja?",
+              options: [
+                "Desentralisasi, keamanan, dan skalabilitas",
+                "Privasi, kecepatan, dan biaya yang murah",
+                "Mining, staking, dan kontrak pintar",
+                "Bitcoin, Ethereum, dan jaringan Solana"
+              ],
+              answer: 0,
+              explain: "Biasanya satu dari tiga sifat itu harus dikorbankan untuk mendapat dua lainnya."
+            }
+          ]
+        },
+        {
+          id: "bc-adv-1",
+          title: "Layer 2 — Rollup, Channel & Cara Kerjanya",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Layer 1</b> lambat karena ribuan node memeriksa setiap transaksi, dan <b>trilema</b> membuat setiap L1 harus mengorbankan sesuatu (pelajaran sebelumnya). <b>Hash</b> merangkum data sebesar apa pun menjadi sidik jari pendek. Layer 2 memakai keduanya.
+</div>
+
+<h3>Langkah 1 — Idenya: kerjakan di luar, setor ringkasannya</h3>
+<p><b>Layer 2 (L2)</b> adalah jaringan yang memproses transaksi <b>di luar</b> L1, lalu menyetor <b>ringkasan</b> dan <b>buktinya</b> ke L1. L1 tidak perlu mengerjakan ulang setiap transaksi; ia cukup menjadi hakim terakhir yang menyimpan ringkasan itu.</p>
+<div class="callout">
+<b>Analogi bus wisata.</b> Seratus orang yang menyetir mobil masing-masing membayar tol seratus kali. Seratus orang dalam satu bus membayar tol <b>sekali</b>, lalu biayanya dibagi rata. L2 adalah busnya; biaya menyetor ke L1 adalah tolnya.
+</div>
+<div data-demo="l2-batch"></div>
+
+<h3>Langkah 2 — Tiga cara utama</h3>
+<table class="tbl">
+  <tr><th>Jenis</th><th>Cara memastikan L2 tidak curang</th><th>Contoh</th></tr>
+  <tr><td><b>Optimistic rollup</b></td><td>Ringkasan <b>dianggap benar</b>, tapi siapa pun boleh menyanggah dengan bukti kecurangan selama masa sanggah — biasanya sekitar <b>7 hari</b></td><td>Arbitrum, Optimism, Base</td></tr>
+  <tr><td><b>ZK rollup</b></td><td>Setiap ringkasan disertai <b>bukti matematis</b> bahwa semua transaksinya sah (zero-knowledge proof — dibahas di pelajaran berikutnya)</td><td>zkSync, Starknet, Scroll, Linea</td></tr>
+  <tr><td><b>Payment channel</b></td><td>Dua pihak membuka "rekening bersama" di L1, bertransaksi berkali-kali di luar rantai, lalu hanya saldo akhirnya yang dicatat saat ditutup</td><td>Lightning Network di Bitcoin</td></tr>
+</table>
+<table class="tbl">
+  <tr><th></th><th>Optimistic</th><th>ZK</th></tr>
+  <tr><td>Menarik aset langsung ke L1</td><td class="bad-cell">Menunggu masa sanggah, ±7 hari</td><td class="ok-cell">Setelah bukti diverifikasi — jauh lebih cepat</td></tr>
+  <tr><td>Kerumitan</td><td>Lebih sederhana dibangun</td><td>Membuat bukti mahal secara komputasi dan rumit</td></tr>
+  <tr><td>Asumsi keamanan</td><td>Minimal ada satu pihak jujur yang mengawasi dan menyanggah</td><td>Matematika buktinya benar</td></tr>
+</table>
+<div class="callout warn">
+<b>Sidechain bukan Layer 2 sejati.</b> Sidechain adalah blockchain terpisah dengan validatornya sendiri yang dihubungkan jembatan. Keamanannya bergantung pada validator sidechain itu, <b>bukan</b> pada L1. Kalau validatornya curang, L1 tidak bisa menolong.
+</div>
+
+<h3>Langkah 3 — Kenapa biaya L2 turun drastis sejak 2024</h3>
+<p>Biaya terbesar sebuah rollup adalah menyimpan data ringkasannya di Ethereum. Upgrade Ethereum pada Maret 2024 (dikenal sebagai Dencun, membawa EIP-4844) menambahkan ruang data khusus yang murah untuk rollup, disebut <b>blob</b>. Biaya transaksi di banyak L2 langsung turun berkali-kali lipat — persis seperti yang terlihat di demo: begitu biaya data per transaksi turun, biaya total ikut turun.</p>
+
+<h3>Langkah 4 — Sisi yang jarang dibahas: sequencer</h3>
+<p>Di kebanyakan rollup saat ini, urutan transaksi ditentukan oleh <b>satu operator</b> yang disebut <b>sequencer</b> — biasanya dijalankan tim pembuat L2 itu sendiri.</p>
+<table class="tbl">
+  <tr><th>Risiko</th><th>Artinya</th></tr>
+  <tr><td>Sequencer mati</td><td>L2 berhenti sementara memproses transaksi baru</td></tr>
+  <tr><td>Sensor</td><td>Operator bisa menunda transaksi tertentu</td></tr>
+  <tr><td>Kunci upgrade</td><td>Tim bisa mengubah kontrak L2; pengguna harus memercayai mereka</td></tr>
+</table>
+<p>Karena itu L2 sering disebut masih memakai "roda bantu". Situs pemantau seperti L2BEAT menilai setiap L2 berdasarkan seberapa jauh roda bantu itu sudah dilepas.</p>
+
+<h3>Langkah 5 — Yang perlu diperhatikan sebagai pengguna</h3>
+<table class="tbl">
+  <tr><th>Hal</th><th>Kenapa penting</th></tr>
+  <tr><td><b>Pilih jaringan yang benar</b> saat mengirim</td><td>Alamat dompet sama di Ethereum, Arbitrum, Base — tapi mengirim lewat jaringan yang salah bisa membuat aset tersangkut</td></tr>
+  <tr><td><b>Jembatan</b> antara L1 dan L2</td><td>Memindahkan aset butuh bridge; pakai jembatan resmi, ingat risiko bridge di modul Terapan</td></tr>
+  <tr><td><b>Likuiditas terpecah</b></td><td>Token yang sama bisa punya harga sedikit berbeda di tiap L2</td></tr>
+  <tr><td><b>Gas tetap dibayar</b></td><td>Banyak L2 memakai ETH untuk gas — siapkan sedikit ETH di jaringan L2 tersebut</td></tr>
+</table>
+`,
+          keyPoints: [
+            "Layer 2 memproses transaksi di luar L1, lalu menyetor ringkasan dan buktinya ke L1 — biaya setor dibagi banyak transaksi.",
+            "Optimistic rollup menganggap benar dengan masa sanggah ±7 hari; ZK rollup menyertakan bukti matematis; payment channel (Lightning) mencatat saldo akhir saja.",
+            "Sidechain bukan L2 sejati: keamanannya dari validator sendiri, bukan dari L1.",
+            "Upgrade Ethereum Maret 2024 menambah ruang data murah (blob) sehingga biaya L2 turun drastis.",
+            "Banyak L2 masih bergantung pada satu sequencer; sebagai pengguna, pilih jaringan yang benar dan pakai jembatan resmi."
+          ],
+          practice: [
+            { type: "number", q: "Biaya setor ke L1 Rp60.000 dibagi 300 transaksi, ditambah biaya data Rp50 per transaksi. Berapa rupiah biaya per transaksi?", answer: 250, tol: 1, unit: "Rp", hint: "60.000 ÷ 300 + 50.", solution: "200 + 50 = Rp250 per transaksi." }
           ],
           quiz: [
             {
@@ -3605,11 +4071,10 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
                 "Memproses transaksi murah di luar L1 lalu menyetor ringkasannya ke L1",
                 "Menggantikan L1 sepenuhnya dengan jaringan yang jauh lebih cepat",
                 "Menyimpan cadangan seluruh data L1 di server terpisah milik tim",
-                "Menghubungkan dua blockchain berbeda agar asetnya bisa bertukar",
+                "Menghubungkan dua blockchain berbeda agar asetnya bisa bertukar"
               ],
               answer: 0,
-              explain:
-                "L2 mengurangi beban & biaya L1 sambil tetap mengandalkan keamanannya.",
+              explain: "L2 mengerjakan transaksi di luar, L1 tetap menjadi hakim terakhir yang menyimpan ringkasannya."
             },
             {
               q: "Apa itu 'trilemma blockchain'?",
@@ -3617,13 +4082,23 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
                 "Sulitnya mencapai keamanan, desentralisasi, dan skalabilitas sekaligus",
                 "Perdebatan antara Proof of Work, Proof of Stake, dan Proof of Authority",
                 "Pilihan antara privasi, kecepatan, dan biaya transaksi yang rendah",
-                "Ketegangan antara penambang, pengembang, dan pemegang token",
+                "Ketegangan antara penambang, pengembang, dan pemegang token"
               ],
               answer: 0,
-              explain:
-                "Ketiga sifat itu saling tarik-menarik; L2 membantu meringankan trade-off.",
+              explain: "Layer 2 adalah salah satu cara mengurangi tekanan trilema tanpa membebani L1."
             },
-          ],
+            {
+              q: "Kenapa menarik aset dari optimistic rollup langsung ke Ethereum bisa butuh sekitar seminggu?",
+              options: [
+                "Ada masa sanggah agar kecurangan sempat dibuktikan",
+                "Ethereum hanya memproses penarikan sekali seminggu",
+                "Tim L2 harus menyetujui setiap penarikan secara manual",
+                "Bukti matematisnya butuh seminggu untuk dihitung ulang"
+              ],
+              answer: 0,
+              explain: "Optimistic rollup menganggap ringkasan benar, jadi perlu waktu bagi siapa pun untuk menyanggah."
+            }
+          ]
         },
         {
           id: "bc-adv-4",
@@ -4891,12 +5366,12 @@ Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan ora
         },
       ],
     },
-    /* ---------------- MODUL 12: REGULASI, CBDC & TOKENISASI ASET ---------------- */
+    /* ---------------- MODUL 12: REGULASI, PRIVASI, CBDC & PETA EKOSISTEM ---------------- */
     {
       id: "bc-pelengkap",
       level: "Pelengkap",
-      title: "Regulasi, CBDC & Tokenisasi Aset",
-      summary: "Crypto bertemu dunia nyata: regulasi & pajak, uang digital bank sentral, dan tokenisasi aset nyata.",
+      title: "Regulasi, Privasi, CBDC & Peta Ekosistem",
+      summary: "Crypto bertemu dunia nyata: regulasi & pajak, blockchain privat & koin privasi, uang digital bank sentral, tokenisasi aset nyata, dan peta seluruh kategori crypto.",
       lessons: [
         {
           id: "bc-app-4",
@@ -4955,6 +5430,95 @@ Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan ora
                 "Exchange berizin membantu kepatuhan & memberi perlindungan lebih dibanding yang ilegal.",
             },
           ],
+        },
+        {
+          id: "bc-priv-1",
+          title: "Publik, Privat & Privasi — Tiga Arti 'Private' di Crypto",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Bitcoin bersifat <b>pseudonim</b>, bukan anonim: nama tidak tercatat, tapi semua transaksi bisa ditelusuri siapa pun (modul Forensik). <b>Zero-knowledge proof</b> membuktikan sesuatu benar tanpa membuka datanya (modul Lanjutan).
+</div>
+
+<p>Kata "private" dipakai untuk beberapa hal yang sangat berbeda di dunia crypto. Mencampuradukkannya adalah sumber salah paham yang umum:</p>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th><th>Dibahas di</th></tr>
+  <tr><td><b>Private key</b></td><td>Kunci rahasia dompetmu</td><td>Modul Fondasi Kriptografi</td></tr>
+  <tr><td><b>Private blockchain</b></td><td>Blockchain yang hanya boleh diikuti pihak tertentu</td><td>Pelajaran ini</td></tr>
+  <tr><td><b>Privacy coin</b></td><td>Koin yang menyembunyikan pengirim, penerima, atau jumlah</td><td>Pelajaran ini</td></tr>
+  <tr><td><b>Private sale</b></td><td>Penjualan token ke investor tertentu sebelum dijual ke publik</td><td>Modul Ekonomi — Siklus Hidup Token</td></tr>
+</table>
+
+<h3>Bagian 1 — Blockchain publik vs privat</h3>
+<table class="tbl">
+  <tr><th></th><th>Publik (permissionless)</th><th>Privat / konsorsium (permissioned)</th></tr>
+  <tr><td>Siapa boleh membaca</td><td>Siapa saja</td><td>Hanya anggota</td></tr>
+  <tr><td>Siapa boleh ikut memvalidasi</td><td>Siapa saja yang memenuhi syarat (stake atau tambang)</td><td>Hanya peserta yang diundang, mis. beberapa bank</td></tr>
+  <tr><td>Contoh</td><td>Bitcoin, Ethereum</td><td>Hyperledger Fabric, R3 Corda; banyak uji coba mata uang digital bank sentral</td></tr>
+  <tr><td>Kelebihan</td><td>Tidak perlu memercayai siapa pun</td><td>Cepat, data bisnis tetap rahasia, ada pihak yang bertanggung jawab</td></tr>
+  <tr><td>Kekurangan</td><td>Lambat, semua data terbuka</td><td>Kepercayaan kembali ke segelintir operator</td></tr>
+</table>
+<div class="callout">
+<b>Pertanyaan jujur untuk blockchain privat:</b> kalau semua pesertanya sudah saling kenal dan saling percaya, apakah blockchain benar-benar diperlukan? Sering kali basis data bersama dengan catatan bertanda tangan digital sudah cukup. Blockchain privat masuk akal ketika beberapa organisasi yang <b>tidak sepenuhnya saling percaya</b> perlu memegang catatan bersama yang tidak bisa diubah diam-diam oleh salah satu pihak.
+</div>
+
+<h3>Bagian 2 — Koin privasi</h3>
+<p>Di Bitcoin, siapa pun bisa melihat bahwa alamat A mengirim 0,5 BTC ke alamat B. Koin privasi dirancang agar hal itu tidak terlihat:</p>
+<table class="tbl">
+  <tr><th>Koin</th><th>Cara menyembunyikan</th></tr>
+  <tr><td><b>Monero</b></td><td><i>Ring signature</i> mencampur tanda tangan pengirim asli dengan beberapa "umpan", sehingga pengirimnya tidak bisa dipastikan; <i>stealth address</i> membuat alamat sekali pakai untuk penerima; jumlahnya juga disembunyikan. Privasi aktif untuk semua transaksi.</td></tr>
+  <tr><td><b>Zcash</b></td><td>Memakai zero-knowledge proof: jaringan bisa memastikan transaksi sah tanpa melihat pengirim, penerima, dan jumlahnya. Privasinya <b>pilihan</b> — ada alamat terbuka dan alamat terlindung.</td></tr>
+</table>
+<div class="callout warn">
+<b>Privasi dan aturan.</b> Privasi keuangan adalah kebutuhan wajar — kamu pun tidak ingin gaji dan belanjamu terlihat semua orang. Tapi aturan anti pencucian uang mewajibkan bursa mengenali penggunanya, sehingga di sejumlah negara bursa menghapus koin privasi dari daftar perdagangannya. Di Indonesia, pengawasan perdagangan aset kripto berpindah dari Bappebti ke OJK pada Januari 2025, dan hanya aset dalam daftar resmi yang boleh diperdagangkan di bursa berizin — periksa daftar terbarunya sebelum bertransaksi.
+</div>
+`,
+          keyPoints: [
+            "\"Private\" punya beberapa arti: private key, private blockchain, privacy coin, dan private sale.",
+            "Blockchain publik terbuka untuk siapa saja; blockchain privat hanya untuk peserta yang diundang dan lebih cepat, tapi kepercayaan kembali ke operator.",
+            "Blockchain privat masuk akal bila beberapa organisasi yang tidak sepenuhnya saling percaya perlu catatan bersama.",
+            "Monero menyembunyikan pengirim, penerima, dan jumlah untuk semua transaksi; Zcash memakai zero-knowledge proof dengan privasi pilihan.",
+            "Aturan anti pencucian uang membuat koin privasi dihapus dari banyak bursa; di Indonesia pengawasan aset kripto kini di OJK."
+          ],
+          practice: [
+            { type: "choice", q: "Lima bank ingin mencatat transfer antarbank bersama tanpa membuka datanya ke publik. Jenis blockchain yang paling cocok?", options: ["Blockchain publik seperti Bitcoin", "Blockchain privat / konsorsium", "Koin privasi", "Tidak bisa memakai blockchain"], answer: 1, hint: "Pesertanya terbatas dan saling dikenal.", solution: "Blockchain konsorsium: hanya bank peserta yang membaca dan memvalidasi." }
+          ],
+          quiz: [
+            {
+              q: "Apa ciri utama blockchain privat (permissioned)?",
+              options: [
+                "Hanya peserta yang diundang yang boleh membaca dan memvalidasi",
+                "Seluruh transaksinya otomatis disembunyikan dari semua peserta",
+                "Pemiliknya tidak perlu memakai private key untuk bertransaksi",
+                "Siapa pun boleh memvalidasi asal memakai koin privasi"
+              ],
+              answer: 0,
+              explain: "Blockchain privat membatasi peserta. Menyembunyikan transaksi dari publik adalah urusan koin privasi."
+            },
+            {
+              q: "Bagaimana Monero menyembunyikan pengirim sebuah transaksi?",
+              options: [
+                "Mencampur tanda tangan asli dengan beberapa umpan",
+                "Mengirim transaksi lewat bank agar tidak tercatat",
+                "Menghapus transaksi dari blok setelah sehari berlalu",
+                "Memakai satu alamat yang sama untuk semua pengguna"
+              ],
+              answer: 0,
+              explain: "Ring signature membuat pengirim asli tidak bisa dibedakan dari beberapa calon lain."
+            },
+            {
+              q: "Kapan blockchain privat lebih masuk akal daripada basis data biasa?",
+              options: [
+                "Saat beberapa organisasi yang tidak saling percaya berbagi catatan",
+                "Saat satu perusahaan ingin menyimpan data pelanggannya sendiri",
+                "Saat datanya sangat besar seperti video dan foto resolusi tinggi",
+                "Saat semua peserta sudah saling percaya sepenuhnya satu sama lain"
+              ],
+              answer: 0,
+              explain: "Kalau semua pihak sudah saling percaya, basis data bersama biasanya cukup dan lebih sederhana."
+            }
+          ]
         },
         {
           id: "bc-pl-1",
@@ -5118,6 +5682,93 @@ Artinya RWA <b>tetap membutuhkan kepercayaan pada pihak di dunia nyata</b> — t
             },
           ],
         },
+        {
+          id: "bc-peta-1",
+          title: "Peta Kategori Crypto — Membaca Label L1, DeFi, GameFi, Meme & Lainnya",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Sampai di sini kamu sudah bertemu Layer 1 dan Layer 2, DEX, pinjaman DeFi, staking, stablecoin, oracle, bridge, NFT, koin privasi, CBDC, dan tokenisasi aset nyata. Situs data crypto mengelompokkan ribuan token ke dalam <b>kategori</b>. Pelajaran ini menyusun peta itu — dan cara membacanya dengan kritis.
+</div>
+
+<h3>Peta besarnya</h3>
+<table class="tbl">
+  <tr><th>Kategori</th><th>Isinya</th><th>Contoh</th><th>Dari mana nilainya diharapkan datang</th></tr>
+  <tr><td><b>Layer 1</b></td><td>Blockchain dasar</td><td>BTC, ETH, SOL</td><td>Permintaan untuk membayar gas, staking, menyimpan nilai</td></tr>
+  <tr><td><b>Layer 2</b></td><td>Jaringan di atas L1</td><td>Arbitrum, Optimism</td><td>Token tata kelola; sering <i>tidak</i> mendapat bagian dari biaya jaringan</td></tr>
+  <tr><td><b>DeFi</b></td><td>DEX, pinjaman, derivatif</td><td>Uniswap, Aave</td><td>Fee protokol — bila memang dibagikan ke pemegang token</td></tr>
+  <tr><td><b>Stablecoin</b></td><td>Token berpatokan dolar</td><td>USDT, USDC</td><td>Bukan untuk naik harga; penerbit untung dari bunga cadangan</td></tr>
+  <tr><td><b>Liquid staking</b></td><td>Token bukti staking</td><td>stETH</td><td>Imbal hasil staking</td></tr>
+  <tr><td><b>Oracle &amp; infrastruktur</b></td><td>Data harga, jembatan, interoperabilitas</td><td>Chainlink, Cosmos</td><td>Biaya layanan dari aplikasi lain</td></tr>
+  <tr><td><b>GameFi &amp; NFT</b></td><td>Game berekonomi token, aset unik</td><td>Axie Infinity</td><td>Pemain yang membeli item — atau pemain baru</td></tr>
+  <tr><td><b>Meme coin</b></td><td>Token berbasis lelucon dan komunitas</td><td>DOGE, SHIB, PEPE</td><td>Hampir murni perhatian dan spekulasi; tanpa arus kas</td></tr>
+  <tr><td><b>Privacy</b></td><td>Koin privasi</td><td>Monero, Zcash</td><td>Permintaan akan transaksi rahasia</td></tr>
+  <tr><td><b>RWA</b></td><td>Aset nyata yang ditokenisasi</td><td>Obligasi pemerintah AS dalam bentuk token</td><td>Imbal hasil aset aslinya</td></tr>
+  <tr><td><b>DePIN</b></td><td>Jaringan fisik yang dibayar token: penyimpanan, nirkabel, sensor</td><td>Filecoin, Helium</td><td>Pembayaran pengguna layanan — bila penggunanya nyata</td></tr>
+  <tr><td><b>Token AI</b></td><td>Proyek yang mengaitkan diri dengan AI</td><td>beragam</td><td>Sangat beragam; banyak yang hanya menumpang tren</td></tr>
+  <tr><td><b>Token bursa</b></td><td>Token milik bursa terpusat</td><td>BNB</td><td>Diskon biaya, pembakaran token dari laba bursa</td></tr>
+</table>
+
+<h3>Tiga cara membaca peta ini dengan kritis</h3>
+<table class="tbl">
+  <tr><th>Kebiasaan</th><th>Kenapa</th></tr>
+  <tr><td><b>Label bukan jaminan mutu</b></td><td>Kategori dibuat situs data untuk memudahkan pencarian. Proyek bagus dan proyek kosong bisa berada di label yang sama.</td></tr>
+  <tr><td><b>Kategori bergiliran naik-turun</b></td><td>Pasar crypto bergerak dalam "narasi": DeFi, lalu NFT, lalu GameFi, lalu meme, lalu AI. Kategori yang sedang naik paling banyak dibicarakan — sering tepat sebelum turun.</td></tr>
+  <tr><td><b>Tanyakan arus kasnya</b></td><td>Untuk setiap token: siapa yang membayar, untuk apa, dan apakah pemegang token ikut menerima? Kalau jawabannya "tidak ada", nilainya hanya bergantung pada pembeli berikutnya.</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Meme coin apa adanya.</b> Sebagian kecil meme coin bertahan bertahun-tahun karena komunitasnya besar. Tapi sebagian besar diluncurkan, dipompa, lalu ditinggal dalam hitungan hari — dan pembeli terakhirlah yang menanggung kerugiannya. Tidak ada laporan keuangan yang bisa dianalisis; harganya murni hasil perhatian. Edukasi, bukan saran investasi.
+</div>
+<p>Modul berikutnya, Ekonomi, memberimu alat untuk menjawab pertanyaan "dari mana nilainya" dengan angka: pendapatan protokol, dilusi, siklus hidup token, dan red flag.</p>
+`,
+          keyPoints: [
+            "Kategori utama: L1, L2, DeFi, stablecoin, liquid staking, oracle/infrastruktur, GameFi/NFT, meme, privacy, RWA, DePIN, token AI, token bursa.",
+            "Setiap kategori punya sumber nilai yang diharapkan berbeda — dari biaya gas, fee protokol, sampai murni perhatian.",
+            "Label kategori bukan jaminan mutu; proyek bagus dan kosong bisa berlabel sama.",
+            "Kategori bergiliran naik-turun mengikuti narasi; yang paling ramai dibicarakan sering sedang di puncak.",
+            "Untuk setiap token tanyakan: siapa membayar, untuk apa, dan apakah pemegang token ikut menerima."
+          ],
+          practice: [
+            { type: "choice", q: "Sebuah token tidak punya produk, tidak ada yang membayar biaya apa pun, dan harganya naik karena ramai di media sosial. Kategori mana yang paling menggambarkannya?", options: ["DeFi", "Meme coin", "Stablecoin", "RWA"], answer: 1, hint: "Dari mana nilainya datang?", solution: "Nilai murni dari perhatian dan spekulasi adalah ciri meme coin." }
+          ],
+          quiz: [
+            {
+              q: "Apa sumber nilai yang diharapkan dari token DePIN?",
+              options: [
+                "Pembayaran pengguna yang memakai layanan jaringan fisiknya",
+                "Bunga dari cadangan dolar yang disimpan oleh penerbitnya",
+                "Lelucon dan komunitas yang ramai di media sosial",
+                "Biaya gas yang dibayar untuk memakai blockchain dasar"
+              ],
+              answer: 0,
+              explain: "DePIN membayar penyedia infrastruktur fisik dengan token; nilainya sehat bila penggunanya nyata."
+            },
+            {
+              q: "Kenapa label kategori di situs data crypto tidak bisa dijadikan penilaian mutu?",
+              options: [
+                "Label hanya pengelompokan; proyek bagus dan kosong bisa sama",
+                "Label hanya diberikan kepada proyek yang sudah terbukti untung",
+                "Label ditentukan oleh regulator setelah audit menyeluruh",
+                "Label menunjukkan urutan harga dari yang tertinggi"
+              ],
+              answer: 0,
+              explain: "Kategori memudahkan pencarian, bukan memberi peringkat kualitas."
+            },
+            {
+              q: "Pertanyaan paling penting untuk menilai token dari kategori apa pun?",
+              options: [
+                "Siapa yang membayar, untuk apa, dan apakah pemegang token menerima",
+                "Seberapa sering token itu dibicarakan di media sosial minggu ini",
+                "Berapa banyak bursa yang sudah mendaftarkan token tersebut",
+                "Seberapa jauh harganya sudah naik dalam satu bulan terakhir"
+              ],
+              answer: 0,
+              explain: "Arus kas dan siapa yang menikmatinya membedakan nilai nyata dari spekulasi."
+            }
+          ]
+        },
       ],
     },
     /* ---------------- MODUL 13: EKONOMI PROTOKOL & MENILAI PROYEK ---------------- */
@@ -5125,7 +5776,7 @@ Artinya RWA <b>tetap membutuhkan kepercayaan pada pihak di dunia nyata</b> — t
       id: "bc-ekonomi",
       level: "Ekonomi",
       title: "Ekonomi Protokol & Menilai Proyek",
-      summary: "Memakai kacamata akuntansi untuk crypto: pendapatan protokol, treasury DAO, dilusi token & real yield, NFT & GameFi, serta moat & red flag.",
+      summary: "Memakai kacamata akuntansi untuk crypto: pendapatan protokol, treasury DAO, dilusi token & real yield, siklus hidup token (private sale, vesting, unlock), NFT & GameFi beserta angkanya, serta moat & red flag.",
       lessons: [
         {
           id: "bc-ek-1",
@@ -5391,6 +6042,127 @@ console.log("Coba ubah emisi jadi 20000000000, lalu jalankan lagi.");</div>
           ],
         },
         {
+          id: "bc-tok-1",
+          title: "Siklus Hidup Token — Seed, Private Sale, Vesting & Unlock",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Dilusi</b> = token baru membuat porsi kepemilikan tiap token mengecil (pelajaran sebelumnya). <b>Kapitalisasi pasar</b> = harga × jumlah yang beredar (<a href="#/lesson/acc-adv-0">Saham, EPS &amp; PER</a>). Pelajaran ini menjawab: siapa yang memegang token sebuah proyek sebelum kamu, dan kapan mereka boleh menjualnya?
+</div>
+
+<h3>Langkah 1 — Dari ide sampai diperdagangkan</h3>
+<table class="tbl">
+  <tr><th>Tahap</th><th>Pembeli</th><th>Harga ilustrasi per token</th></tr>
+  <tr><td><b>Seed</b></td><td>Investor paling awal, saat proyek baru ide</td><td>$0,01</td></tr>
+  <tr><td><b>Private sale</b></td><td>Dana ventura dan investor besar, sebelum dijual umum</td><td>$0,03</td></tr>
+  <tr><td><b>Public sale</b> (ICO / IEO / IDO / launchpad)</td><td>Masyarakat umum</td><td>$0,08</td></tr>
+  <tr><td><b>Listing</b> di bursa</td><td>Siapa saja</td><td>$0,40</td></tr>
+</table>
+<p>Di harga listing, investor seed sudah <b>untung 40 kali lipat</b> dan investor private sale <b>13 kali lipat</b>. Mereka punya alasan kuat untuk menjual begitu diizinkan — dan pembeli di bursa adalah orang yang membeli dari mereka.</p>
+
+<h3>Langkah 2 — Pembagian token (alokasi)</h3>
+<table class="tbl">
+  <tr><th>Kelompok</th><th>Porsi (ilustrasi)</th></tr>
+  <tr><td>Tim &amp; penasihat</td><td>20%</td></tr>
+  <tr><td>Investor seed &amp; private</td><td>18%</td></tr>
+  <tr><td>Public sale</td><td>5%</td></tr>
+  <tr><td>Ekosistem &amp; komunitas (insentif, hibah, airdrop)</td><td>40%</td></tr>
+  <tr><td>Treasury yayasan</td><td>17%</td></tr>
+</table>
+
+<h3>Langkah 3 — Market cap vs FDV</h3>
+<p>Misalkan pasokan maksimal <b>1 miliar token</b>, tapi saat listing baru <b>120 juta</b> yang beredar. Harga $0,40.</p>
+<table class="tbl">
+  <tr><th>Ukuran</th><th>Hitungan</th><th>Hasil</th></tr>
+  <tr><td><b>Market cap</b> (yang beredar)</td><td>120 juta × $0,40</td><td>$48 juta</td></tr>
+  <tr><td><b>FDV</b> (fully diluted value — seandainya semua token sudah beredar)</td><td>1 miliar × $0,40</td><td class="bad-cell">$400 juta</td></tr>
+</table>
+<p>Hanya 12% token yang beredar. Sisanya — 880 juta token — akan masuk ke pasar perlahan. Kalau permintaan tidak tumbuh secepat pasokan, harga harus turun. Token dengan sedikit beredar tapi FDV raksasa disebut <b>low float, high FDV</b>.</p>
+
+<h3>Langkah 4 — Vesting &amp; unlock</h3>
+<p><b>Vesting</b> = jadwal pelepasan token secara bertahap. Pola umum: <b>cliff 12 bulan</b> (terkunci sama sekali), lalu dilepas <b>rata selama 24 bulan</b>. Saat jatah sebuah kelompok mulai terbuka disebut <b>unlock</b>.</p>
+<div data-demo="js-playground">// Jadwal unlock token tim & investor (38% dari 1 miliar = 380 juta token)
+const jatah = 380000000;
+const cliffBulan = 12;     // terkunci penuh 12 bulan
+const lamaRata = 24;       // lalu dilepas rata selama 24 bulan
+const beredarAwal = 120000000;
+
+[0, 6, 12, 13, 18, 24, 36].forEach(function (bulan) {
+  let terbuka = 0;
+  if (bulan >= cliffBulan) {
+    const lewat = Math.min(bulan - cliffBulan + 1, lamaRata);
+    terbuka = jatah * lewat / lamaRata;
+  }
+  const beredar = beredarAwal + terbuka;
+  console.log("Bulan " + bulan + ": token tim & investor terbuka " +
+    Math.round(terbuka / 1e6) + " juta -> total beredar " + Math.round(beredar / 1e6) + " juta");
+});
+console.log("Setiap bulan setelah cliff, sekitar 15,8 juta token baru boleh dijual.");</div>
+<div class="callout warn">
+<b>Hari-hari unlock sering menekan harga.</b> Pemegang yang membeli jauh lebih murah boleh menjual mulai hari itu. Jadwal unlock biasanya terbuka untuk umum — periksa sebelum membeli.
+</div>
+
+<h3>Langkah 5 — Airdrop dan bendera merah</h3>
+<p><b>Airdrop</b> = token dibagikan gratis, biasanya kepada pengguna awal sebuah protokol. Banyak orang "berburu airdrop" dengan memakai protokol baru — sah, tapi waspadai situs palsu yang meminta tanda tangan dompet atas nama "klaim airdrop".</p>
+<table class="tbl">
+  <tr><th>Bendera merah</th><th>Kenapa</th></tr>
+  <tr><td>Tim + investor memegang lebih dari ~40–50%</td><td>Komunitas hanya mendapat sisa; tekanan jual besar menunggu</td></tr>
+  <tr><td>Cliff sangat singkat atau tidak ada</td><td>Orang dalam bisa menjual segera setelah listing</td></tr>
+  <tr><td>FDV jauh di atas market cap</td><td>Sebagian besar pasokan belum masuk pasar</td></tr>
+  <tr><td>Unlock besar dalam beberapa bulan ke depan</td><td>Tekanan jual terjadwal</td></tr>
+  <tr><td>"Private sale" ditawarkan lewat Telegram atau DM</td><td>Hampir selalu penipuan — proyek sungguhan tidak menjual ke orang asing lewat pesan pribadi</td></tr>
+</table>
+<div class="callout warn">Edukasi, bukan saran investasi.</div>
+`,
+          keyPoints: [
+            "Token biasanya dijual bertahap: seed, private sale, public sale, lalu listing — tiap tahap makin mahal.",
+            "Investor awal sering sudah untung berlipat saat listing, sehingga punya alasan kuat untuk menjual.",
+            "Market cap = harga × token beredar; FDV = harga × pasokan maksimal. FDV jauh di atas market cap = banyak pasokan belum masuk pasar.",
+            "Vesting melepas token bertahap (mis. cliff 12 bulan lalu rata 24 bulan); hari unlock sering menekan harga.",
+            "Bendera merah: porsi orang dalam besar, cliff singkat, low float–high FDV, unlock besar dekat, private sale lewat pesan pribadi."
+          ],
+          practice: [
+            { type: "number", q: "Pasokan maksimal 2 miliar token, beredar 300 juta, harga $0,50. Berapa juta dolar FDV-nya?", answer: 1000, tol: 0.5, unit: "juta $", hint: "2.000 juta × 0,50.", solution: "FDV = $1.000 juta (= $1 miliar). Market cap-nya hanya 300 juta × 0,50 = $150 juta." },
+            { type: "number", q: "Investor private sale membeli di $0,05; harga listing $0,60. Berapa kali lipat keuntungannya?", answer: 12, tol: 0.1, unit: "×", hint: "0,60 ÷ 0,05.", solution: "12 kali lipat." }
+          ],
+          quiz: [
+            {
+              q: "Apa beda market cap dan FDV?",
+              options: [
+                "Market cap memakai token beredar, FDV memakai pasokan maksimal",
+                "Market cap dalam rupiah, FDV dalam dolar Amerika Serikat",
+                "Market cap untuk koin L1, FDV hanya untuk token di L2",
+                "Market cap dihitung harian, FDV dihitung setiap tahun"
+              ],
+              answer: 0,
+              explain: "FDV membayangkan semua token sudah beredar. Jarak besar antara keduanya berarti banyak pasokan masih akan datang."
+            },
+            {
+              q: "Kenapa hari unlock token tim dan investor sering menekan harga?",
+              options: [
+                "Mereka membeli jauh lebih murah dan baru boleh menjual hari itu",
+                "Bursa wajib menurunkan harga token pada setiap hari unlock",
+                "Token yang di-unlock otomatis dibakar sehingga harga jatuh",
+                "Proyek wajib membagikan dividen yang mengurangi kasnya"
+              ],
+              answer: 0,
+              explain: "Pasokan baru dari pemegang yang sudah untung besar masuk ke pasar sekaligus."
+            },
+            {
+              q: "Seseorang di Telegram menawarkan 'private sale' token baru dengan diskon besar. Penilaian yang tepat?",
+              options: [
+                "Hampir pasti penipuan; proyek asli tidak menjual lewat pesan pribadi",
+                "Kesempatan langka karena hanya orang terpilih yang ditawari",
+                "Aman asalkan pembayarannya memakai stablecoin seperti USDT",
+                "Aman bila penjualnya menunjukkan bukti transfer dari orang lain"
+              ],
+              answer: 0,
+              explain: "Private sale sungguhan melibatkan investor yang dikenal dan perjanjian resmi, bukan ajakan lewat DM."
+            }
+          ]
+        },
+        {
           id: "bc-pl-3",
           title: "NFT & GameFi — Apa Adanya",
           duration: "13 menit",
@@ -5471,6 +6243,112 @@ console.log("Coba ubah emisi jadi 20000000000, lalu jalankan lagi.");</div>
                 "Model yang bergantung pada arus pemain baru menyerupai skema piramida.",
             },
           ],
+        },
+        {
+          id: "bc-game-1",
+          title: "GameFi Mendalam — Angka di Balik Runtuhnya Play-to-Earn",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Pelajaran sebelumnya menyebut cacat utama banyak GameFi: <b>pemain lama dibayar dari uang pemain baru</b>. Kamu juga sudah kenal <b>dilusi</b> dan <b>siklus hidup token</b>. Pelajaran ini membuktikan cacat itu dengan angka.
+</div>
+
+<h3>Langkah 1 — Anatomi game play-to-earn</h3>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Fungsinya</th><th>Pada Axie Infinity</th></tr>
+  <tr><td><b>NFT karakter</b></td><td>Tiket masuk — harus dibeli sebelum bisa bermain</td><td>Tiga karakter "Axie"</td></tr>
+  <tr><td><b>Token hadiah</b></td><td>Dibayarkan kepada pemain yang bermain — inilah "penghasilan"</td><td>SLP</td></tr>
+  <tr><td><b>Token tata kelola</b></td><td>Hak suara dan bagian dari pendapatan</td><td>AXS</td></tr>
+  <tr><td><b>Keran</b> (<i>faucet</i>)</td><td>Jalan keluarnya token baru ke pemain</td><td>Hadiah harian, kemenangan</td></tr>
+  <tr><td><b>Penyerap</b> (<i>sink</i>)</td><td>Jalan token dimusnahkan</td><td>Membiakkan karakter baru</td></tr>
+</table>
+<p>Ada satu lingkaran tertutup: pemain baru membeli karakter, karakter baru dibuat dengan membakar token, token hadiah dijual oleh pemain lama untuk mendapat uang. <b>Uang yang dicairkan pemain lama hanya bisa datang dari pembeli</b> — dan pembeli terbesarnya adalah pemain baru.</p>
+
+<h3>Langkah 2 — Hitung sendiri</h3>
+<p>Setiap pemain baru membayar biaya masuk untuk membeli karakter, dan setiap pemain mencairkan hadiah tiap minggu. Lihat apa yang terjadi saat arus pemain baru melambat:</p>
+<div data-demo="js-playground">// Uang masuk = pemain baru x biaya masuk; uang keluar = semua pemain x hadiah yang dicairkan
+const biayaMasuk = 3000000;      // Rp, membeli tiga karakter
+const hadiahPerMinggu = 250000;  // Rp, nilai token yang dicairkan tiap pemain per minggu
+let pemain = 1000;
+const pemainBaru = [500, 800, 1200, 1500, 1500, 1200, 800, 400, 200, 100];
+
+pemainBaru.forEach(function (baru, i) {
+  pemain = pemain + baru;
+  const masuk = baru * biayaMasuk;
+  const keluar = pemain * hadiahPerMinggu;
+  const selisih = masuk - keluar;
+  console.log("Minggu " + (i + 1) + ": pemain " + pemain +
+    " | masuk Rp" + (masuk / 1e6).toFixed(0) + " jt | dicairkan Rp" + (keluar / 1e6).toFixed(0) +
+    " jt | " + (selisih >= 0 ? "aman" : "KURANG Rp" + (-selisih / 1e6).toFixed(0) + " jt"));
+});
+console.log("Saat pemain baru melambat, kekurangannya ditanggung lewat harga token yang jatuh.");</div>
+<p>Pada minggu-minggu awal, uang pemain baru jauh melebihi hadiah yang dicairkan — semua tampak untung. Begitu pemain baru berkurang, uang keluar melampaui uang masuk. Tidak ada yang menutup selisihnya, jadi <b>harga token hadiah turun</b>. Hadiah dalam rupiah mengecil, pemain berhenti, pemain baru makin sedikit — spiral ke bawah.</p>
+
+<h3>Langkah 3 — Kisah nyata: Axie Infinity</h3>
+<table class="tbl">
+  <tr><th>Periode</th><th>Yang terjadi</th></tr>
+  <tr><td>2021</td><td>Meledak saat pandemi. Banyak pemain di Filipina dan Asia Tenggara menjadikannya sumber nafkah. Muncul sistem <i>scholarship</i>: pemilik karakter meminjamkan karakter kepada pemain yang tidak mampu membeli, lalu bagi hasil.</td></tr>
+  <tr><td>2021–2022</td><td>Pertumbuhan pemain melambat; token hadiah SLP jatuh lebih dari 99% dari puncaknya; penghasilan pemain menguap.</td></tr>
+  <tr><td>Maret 2022</td><td>Jembatan Ronin — rantai milik Axie — dibobol sekitar US$600 juta lebih. Biro penyelidik AS (FBI) menyebut kelompok peretas Lazarus.</td></tr>
+</table>
+<p>Pola serupa terjadi pada banyak game "x-to-earn" lain, termasuk move-to-earn STEPN pada 2022.</p>
+
+<h3>Langkah 4 — Seperti apa GameFi yang bisa bertahan?</h3>
+<table class="tbl">
+  <tr><th>Rapuh (play-to-earn)</th><th>Lebih sehat (play-and-own)</th></tr>
+  <tr><td>Orang datang untuk mencari uang</td><td>Orang datang karena gamenya seru</td></tr>
+  <tr><td>Hadiah dari cetak token</td><td>Pendapatan dari pemain yang membeli item untuk bersenang-senang, tanpa mengharap untung</td></tr>
+  <tr><td>Keran besar, penyerap kecil</td><td>Penyerap token sepadan dengan keran</td></tr>
+  <tr><td>Harus terus tumbuh agar tidak runtuh</td><td>Tetap jalan walau jumlah pemain stabil</td></tr>
+</table>
+<div class="callout warn">Edukasi, bukan saran investasi. "Penghasilan" dari game yang hidup dari pemain baru adalah pemindahan uang dari pemain terakhir ke pemain pertama.</div>
+`,
+          keyPoints: [
+            "Game play-to-earn biasanya punya NFT karakter (tiket masuk), token hadiah, token tata kelola, keran, dan penyerap token.",
+            "Uang yang dicairkan pemain lama hanya bisa datang dari pembeli — terutama pemain baru.",
+            "Saat pemain baru melambat, uang keluar melampaui uang masuk; selisihnya ditanggung lewat harga token yang jatuh, memicu spiral ke bawah.",
+            "Axie Infinity: booming 2021, token hadiah SLP jatuh >99%, jembatan Ronin dibobol ~US$600 juta lebih pada Maret 2022.",
+            "GameFi yang lebih sehat: gamenya seru, pendapatan dari pemain yang belanja untuk bersenang-senang, penyerap sepadan dengan keran."
+          ],
+          practice: [
+            { type: "number", q: "Minggu ini 300 pemain baru masuk dengan biaya Rp2 juta, sementara 5.000 pemain masing-masing mencairkan Rp150 ribu. Berapa juta rupiah selisihnya? (negatif = kekurangan)", answer: -150, tol: 0.5, unit: "jt", hint: "Masuk 300 × 2 jt; keluar 5.000 × 0,15 jt.", solution: "Masuk Rp600 jt, keluar Rp750 jt → kurang Rp150 jt yang ditanggung lewat harga token turun." }
+          ],
+          quiz: [
+            {
+              q: "Dari mana uang yang dicairkan pemain lama sebuah game play-to-earn sebagian besar berasal?",
+              options: [
+                "Dari pemain baru yang membeli karakter dan token",
+                "Dari iklan yang ditayangkan di dalam permainan",
+                "Dari bunga bank atas dana milik pengembang game",
+                "Dari pemerintah yang mendukung industri game"
+              ],
+              answer: 0,
+              explain: "Tanpa pendapatan dari luar, hadiah yang dicairkan dibayar oleh pembeli baru."
+            },
+            {
+              q: "Apa fungsi 'sink' (penyerap) dalam ekonomi token game?",
+              options: [
+                "Memusnahkan token agar pasokan tidak membanjir",
+                "Mencetak token baru untuk hadiah pemain harian",
+                "Menyimpan token pemain agar tidak bisa dijual",
+                "Mengubah token menjadi rupiah secara otomatis"
+              ],
+              answer: 0,
+              explain: "Keran mengeluarkan token; penyerap membakarnya. Tanpa penyerap sepadan, harga token terus tertekan."
+            },
+            {
+              q: "Ciri GameFi yang lebih mungkin bertahan adalah?",
+              options: [
+                "Orang bermain karena seru dan belanja tanpa mengharap untung",
+                "Hadiah token sangat besar agar pemain baru terus berdatangan",
+                "Harga karakter awal dibuat tinggi agar pemain lama untung",
+                "Token hadiah hanya bisa dicairkan setahun sekali saja"
+              ],
+              answer: 0,
+              explain: "Ekonomi yang sehat ditopang belanja pemain yang mencari hiburan, bukan uang pemain baru."
+            }
+          ]
         },
         {
           id: "bc-ek-4",

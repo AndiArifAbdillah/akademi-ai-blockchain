@@ -4725,6 +4725,95 @@ DEMOS["n8n-alur"] = function (root) {
   draw();
 };
 
+/* ---------- Demo Layer 2: satu setoran ke L1 dibagi ramai-ramai ---------- */
+DEMOS["l2-batch"] = function (root) {
+  const SETOR = 40000;   // biaya tetap satu kali menyetor ringkasan ke L1 (Rp, ilustrasi)
+  const DATA = 100;      // biaya data per transaksi di dalam setoran (Rp, ilustrasi)
+  const L1 = 40000;      // biaya satu transaksi langsung di L1 (Rp, ilustrasi)
+  const LANGKAH = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000];
+  const rupiah = (n) => "Rp" + Math.round(n).toLocaleString("id-ID");
+  const slider = h("input", { type: "range", min: "0", max: String(LANGKAH.length - 1), value: "0", class: "dm-range", "aria-label": "Jumlah transaksi dalam satu setoran" });
+  const label = h("b");
+  const out = h("div", { class: "dm-out" });
+
+  function draw() {
+    const n = LANGKAH[+slider.value];
+    const perTx = SETOR / n + DATA;
+    label.textContent = n.toLocaleString("id-ID") + " transaksi";
+    const lebar = (v) => Math.max(1.5, Math.min(100, (v / L1) * 100)).toFixed(1) + "%";
+    out.innerHTML =
+      '<div class="dm-bar"><span>Langsung di L1</span><div class="dm-track"><div class="dm-fill bad" style="width:100%"></div></div><b>' + rupiah(L1) + "</b></div>" +
+      '<div class="dm-bar"><span>Lewat L2</span><div class="dm-track"><div class="dm-fill ok" style="width:' + lebar(perTx) + '"></div></div><b>' + rupiah(perTx) + "</b></div>" +
+      '<div class="dm-line"><span>Biaya setor ke L1 dibagi ' + n.toLocaleString("id-ID") + " orang</span><b>" + rupiah(SETOR / n) + "</b></div>" +
+      '<div class="dm-line"><span>Biaya data milik tiap transaksi</span><b>' + rupiah(DATA) + "</b></div>" +
+      '<div class="dm-line big ' + (perTx < L1 / 10 ? "good" : "") + '"><span>Biaya per transaksi di L2</span><b>' + rupiah(perTx) + " (" + (L1 / perTx).toFixed(perTx > 4000 ? 1 : 0) + "× lebih murah)</b></div>" +
+      '<div class="dm-note">' + (n === 1
+        ? "Kalau setorannya hanya berisi satu transaksi, L2 tidak menghemat apa pun — biaya setornya ditanggung sendirian."
+        : n < 100
+        ? "Makin banyak transaksi yang menumpang dalam satu setoran, makin kecil bagian biaya setor yang ditanggung tiap orang."
+        : "Pada jumlah besar, biaya setor hampir hilang terbagi; yang tersisa hanyalah biaya data milik tiap transaksi. Karena itu turunnya harga ruang data di L1 (upgrade blob tahun 2024) langsung membuat L2 makin murah.") + "</div>";
+  }
+  slider.addEventListener("input", draw);
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Kenapa Layer 2 bisa murah</b>" }),
+    h("p", { class: "demo-hint", text: "Geser jumlah transaksi yang dikumpulkan dalam satu setoran ke Layer 1. Angka biaya adalah ilustrasi." }),
+    h("div", { class: "dm-row" }, [h("span", { text: "Isi satu setoran:" }), slider, label]),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo DeFi: jaminan, health factor & likuidasi ---------- */
+DEMOS["defi-likuidasi"] = function (root) {
+  const BATAS = 0.8;   // batas likuidasi (liquidation threshold), ilustrasi
+  const BONUS = 0.05;  // bonus untuk likuidator, ilustrasi
+  const jt = (n) => "Rp" + n.toLocaleString("id-ID", { maximumFractionDigits: 1 }) + " jt";
+  const harga = h("input", { type: "range", min: "20", max: "80", step: "0.5", value: "50", class: "dm-range", "aria-label": "Harga 1 ETH dalam juta rupiah" });
+  const pinjam = h("input", { type: "range", min: "5", max: "40", step: "1", value: "30", class: "dm-range", "aria-label": "Pinjaman dalam juta rupiah" });
+  const lHarga = h("b"), lPinjam = h("b");
+  const out = h("div", { class: "dm-out" });
+
+  function draw() {
+    const p = +harga.value, u = +pinjam.value;
+    const jaminan = p * 1; // 1 ETH
+    const hf = (jaminan * BATAS) / u;
+    const hargaLikuidasi = u / BATAS;
+    lHarga.textContent = jt(p);
+    lPinjam.textContent = jt(u);
+    const status = hf >= 1.5 ? "aman" : hf >= 1 ? "waspada" : "likuidasi";
+    const bar = Math.max(2, Math.min(100, (hf / 2) * 100));
+    let catatan;
+    if (status === "likuidasi") {
+      const dilunasi = u / 2; // separuh utang dilunasi likuidator (ilustrasi)
+      const diambil = (dilunasi * (1 + BONUS)) / p;
+      catatan = "<b>Likuidasi terjadi.</b> Seorang likuidator melunasi separuh utang (" + jt(dilunasi) + ") lalu mengambil jaminanmu senilai itu <b>plus bonus 5%</b>: " +
+        diambil.toFixed(3).replace(".", ",") + " ETH hilang dari jaminanmu. Bonus itulah denda yang kamu bayar karena terlambat menambah jaminan.";
+    } else if (status === "waspada") {
+      catatan = "<b>Waspada.</b> Harga ETH cukup turun ke " + jt(hargaLikuidasi) + " (" + Math.round((1 - hargaLikuidasi / p) * 100) + "% dari harga sekarang) dan jaminanmu dilikuidasi. Tambah jaminan atau lunasi sebagian utang.";
+    } else {
+      catatan = "<b>Aman untuk sekarang.</b> Likuidasi baru terjadi bila harga ETH turun ke " + jt(hargaLikuidasi) + " — turun " + Math.round((1 - hargaLikuidasi / p) * 100) + "% dari harga sekarang.";
+    }
+    out.innerHTML =
+      '<div class="dm-line"><span>Jaminan: 1 ETH × harga sekarang</span><b>' + jt(jaminan) + "</b></div>" +
+      '<div class="dm-line"><span>Utang (stablecoin)</span><b>' + jt(u) + "</b></div>" +
+      '<div class="dm-line"><span>Rasio pinjaman (LTV) = utang ÷ jaminan</span><b>' + Math.round((u / jaminan) * 100) + "%</b></div>" +
+      '<div class="dm-line"><span>Health factor = jaminan × ' + BATAS.toString().replace(".", ",") + " ÷ utang</span><b>" + hf.toFixed(2).replace(".", ",") + "</b></div>" +
+      '<div class="dm-bar"><span>Health factor</span><div class="dm-track"><div class="dm-fill ' + (status === "aman" ? "ok" : status === "likuidasi" ? "bad" : "") + '" style="width:' + bar + '%"></div></div><b>' + (status === "likuidasi" ? "di bawah 1" : status) + "</b></div>" +
+      '<div class="dm-line big ' + (status === "aman" ? "good" : status === "likuidasi" ? "bad" : "") + '"><span>Harga ETH saat likuidasi</span><b>' + jt(hargaLikuidasi) + "</b></div>" +
+      '<div class="dm-note">' + catatan + "</div>";
+  }
+  harga.addEventListener("input", draw);
+  pinjam.addEventListener("input", draw);
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Meminjam dengan jaminan 1 ETH</b>" }),
+    h("p", { class: "demo-hint", text: "Geser harga ETH ke bawah seperti saat pasar jatuh, atau ubah besar pinjaman. Batas likuidasi 80% dan bonus likuidator 5% adalah angka ilustrasi." }),
+    h("div", { class: "dm-row" }, [h("span", { text: "Harga 1 ETH:" }), harga, lHarga]),
+    h("div", { class: "dm-row" }, [h("span", { text: "Pinjaman:" }), pinjam, lPinjam]),
+    out,
+  ]));
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";
