@@ -4814,6 +4814,87 @@ DEMOS["defi-likuidasi"] = function (root) {
   draw();
 };
 
+/* ---------- Demo airdrop: aman atau bahaya? ---------- */
+DEMOS["airdrop-cek"] = function (root) {
+  const KASUS = [
+    {
+      teks: "Kamu mencari \"claim airdrop Arbitrum\" di mesin pencari. Hasil teratas berlabel <i>Sponsor</i> membawa ke <b>arbitrum-claim-drop.xyz</b>, yang meminta <b>Approve</b> USDT tanpa batas jumlah.",
+      jawab: "bahaya",
+      jelas: "Iklan di hasil pencarian sering dipakai penipu, domainnya bukan domain resmi, dan klaim airdrop tidak pernah membutuhkan izin memindahkan USDT-mu. Izin tanpa batas ini cukup untuk menguras seluruh USDT di dompet.",
+    },
+    {
+      teks: "Situs quest yang kamu buka dari tautan di akun resmi proyek meminta <b>Sign message</b> berisi teks terbaca: <i>\"Masuk ke situs ini. Nonce: 82311\"</i>. Tidak ada jumlah token atau alamat tujuan.",
+      jawab: "aman",
+      jelas: "Tanda tangan pesan teks yang bisa dibaca, untuk login, tidak memindahkan aset. Tetap pastikan alamat situsnya benar — tapi permintaan ini sendiri wajar.",
+    },
+    {
+      teks: "Di dompetmu tiba-tiba muncul token bernama <b>\"ETH-Bonus.com — klaim 5 ETH\"</b> yang tidak pernah kamu beli.",
+      jawab: "bahaya",
+      jelas: "Ini token umpan. Siapa pun bisa mengirim token ke alamatmu. Namanya sengaja berisi alamat situs penguras dompet. Abaikan — jangan dibuka, dijual, atau diklaim.",
+    },
+    {
+      teks: "Akun bernama <b>\"Support Resmi\"</b> mengirim DM di Discord: <i>\"Dompetmu lolos airdrop, tapi perlu verifikasi. Kirim 12 kata pemulihanmu.\"</i>",
+      jawab: "bahaya",
+      jelas: "Tidak ada airdrop, admin, atau layanan resmi yang pernah meminta seed phrase. Siapa pun yang memegangnya menguasai seluruh dompetmu. Admin asli juga tidak pernah mengirim DM lebih dulu.",
+    },
+    {
+      teks: "Pengumuman di dokumentasi resmi menautkan halaman klaim. Halaman itu meminta transaksi <b>Claim</b> ke kontrak distribusi; dompet menunjukkan kamu akan <b>menerima</b> 420 token sesuai pengumuman dan membayar gas kecil.",
+      jawab: "aman",
+      jelas: "Inilah bentuk klaim yang wajar: sumbernya resmi, transaksinya menambah token ke dompetmu, dan yang kamu bayar hanya gas. Tetap periksa alamat kontraknya bila diumumkan.",
+    },
+    {
+      teks: "Sebuah situs ingin \"memverifikasi kepemilikan NFT-mu untuk bonus airdrop\" dan meminta tanda tangan <b>setApprovalForAll</b> untuk koleksi NFT-mu.",
+      jawab: "bahaya",
+      jelas: "setApprovalForAll memberi izin memindahkan SEMUA NFT dari koleksi itu. Memverifikasi kepemilikan cukup dengan membaca alamatmu — tidak butuh izin apa pun.",
+    },
+  ];
+  let skor = 0, dijawab = 0;
+  const hasilAkhir = h("div", { class: "dm-note" });
+  const daftar = h("div", { class: "ac-daftar" });
+
+  function perbaruiSkor() {
+    hasilAkhir.innerHTML = dijawab < KASUS.length
+      ? "Sudah dijawab " + dijawab + " dari " + KASUS.length + "."
+      : "<b>Skor: " + skor + " dari " + KASUS.length + ".</b> " + (skor === KASUS.length
+        ? "Semua benar — kamu siap mengenali jebakan yang paling sering memakan korban."
+        : "Baca lagi penjelasan yang kamu lewatkan; satu salah tekan di dunia nyata bisa menghabiskan isi dompet.");
+  }
+
+  KASUS.forEach((k, i) => {
+    const hasil = h("div", { class: "ac-hasil", hidden: "" });
+    const tombol = ["aman", "bahaya"].map((pilihan) => {
+      const b = h("button", { class: "btn ghost", type: "button", text: pilihan === "aman" ? "Wajar" : "Bahaya" });
+      b.onclick = () => {
+        if (kartu.classList.contains("terjawab")) return;
+        kartu.classList.add("terjawab");
+        const benar = pilihan === k.jawab;
+        if (benar) skor++;
+        dijawab++;
+        b.classList.add(benar ? "ac-benar" : "ac-salah");
+        hasil.hidden = false;
+        hasil.className = "ac-hasil " + (benar ? "ok" : "no");
+        hasil.innerHTML = "<b>" + (benar ? "Tepat." : "Kurang tepat.") + " Jawabannya: " + (k.jawab === "aman" ? "wajar" : "bahaya") + ".</b> " + k.jelas;
+        perbaruiSkor();
+      };
+      return b;
+    });
+    const kartu = h("div", { class: "ac-kartu" }, [
+      h("p", { class: "ac-teks", html: "<b>" + (i + 1) + ".</b> " + k.teks }),
+      h("div", { class: "demo-controls" }, tombol),
+      hasil,
+    ]);
+    daftar.appendChild(kartu);
+  });
+  perbaruiSkor();
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Wajar atau bahaya?</b>" }),
+    h("p", { class: "demo-hint", text: "Enam situasi yang sering dialami pemburu airdrop. Putuskan dulu, baru baca penjelasannya." }),
+    daftar,
+    hasilAkhir,
+  ]));
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

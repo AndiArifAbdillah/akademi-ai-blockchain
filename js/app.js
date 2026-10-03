@@ -1492,6 +1492,9 @@ const GLOSSARY = [
   ["Koin Privasi", "Koin yang menyembunyikan pengirim, penerima, atau jumlah transaksi, mis. Monero dan Zcash."],
   ["Blockchain Privat", "Blockchain yang hanya boleh dibaca dan divalidasi peserta yang diundang (permissioned)."],
   ["Play-to-Earn", "Model game yang membayar pemain dengan token; rapuh bila hadiahnya dibayar dari uang pemain baru."],
+  ["Snapshot", "Pencatatan keadaan semua alamat pada satu blok tertentu; dipakai menentukan siapa berhak menerima airdrop."],
+  ["Sybil", "Satu orang yang berpura-pura menjadi banyak pengguna lewat banyak dompet; biasanya dicoret dari daftar airdrop."],
+  ["Hardware Wallet", "Perangkat fisik penyimpan kunci privat yang tidak terhubung ke internet; cocok untuk dompet simpanan."],
 ];
 
 function renderGlossary() {

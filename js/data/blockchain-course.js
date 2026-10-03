@@ -5776,7 +5776,7 @@ Sampai di sini kamu sudah bertemu Layer 1 dan Layer 2, DEX, pinjaman DeFi, staki
       id: "bc-ekonomi",
       level: "Ekonomi",
       title: "Ekonomi Protokol & Menilai Proyek",
-      summary: "Memakai kacamata akuntansi untuk crypto: pendapatan protokol, treasury DAO, dilusi token & real yield, siklus hidup token (private sale, vesting, unlock), NFT & GameFi beserta angkanya, serta moat & red flag.",
+      summary: "Memakai kacamata akuntansi untuk crypto: pendapatan protokol, treasury DAO, dilusi token & real yield, siklus hidup token (private sale, vesting, unlock), airdrop & cara aman berburunya, NFT & GameFi beserta angkanya, serta moat & red flag.",
       lessons: [
         {
           id: "bc-ek-1",
@@ -6104,7 +6104,7 @@ console.log("Setiap bulan setelah cliff, sekitar 15,8 juta token baru boleh diju
 </div>
 
 <h3>Langkah 5 — Airdrop dan bendera merah</h3>
-<p><b>Airdrop</b> = token dibagikan gratis, biasanya kepada pengguna awal sebuah protokol. Banyak orang "berburu airdrop" dengan memakai protokol baru — sah, tapi waspadai situs palsu yang meminta tanda tangan dompet atas nama "klaim airdrop".</p>
+<p><b>Airdrop</b> = token dibagikan gratis, biasanya kepada pengguna awal sebuah protokol. Banyak orang "berburu airdrop" dengan memakai protokol baru — sah, tapi waspadai situs palsu yang meminta tanda tangan dompet atas nama "klaim airdrop". Airdrop dan cara aman berburunya dibahas tuntas di dua pelajaran berikutnya.</p>
 <table class="tbl">
   <tr><th>Bendera merah</th><th>Kenapa</th></tr>
   <tr><td>Tim + investor memegang lebih dari ~40–50%</td><td>Komunitas hanya mendapat sisa; tekanan jual besar menunggu</td></tr>
@@ -6159,6 +6159,222 @@ console.log("Setiap bulan setelah cliff, sekitar 15,8 juta token baru boleh diju
               ],
               answer: 0,
               explain: "Private sale sungguhan melibatkan investor yang dikenal dan perjanjian resmi, bukan ajakan lewat DM."
+            }
+          ]
+        },
+        {
+          id: "bc-air-1",
+          title: "Airdrop dari Nol — Kenapa Proyek Membagikan Token Gratis",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Token sebuah proyek dibagi ke tim, investor, publik, dan <b>komunitas</b>; jatah komunitas sering dibagikan lewat airdrop (pelajaran Siklus Hidup Token). Untuk menerima token, cukup <b>alamat dompet</b> — sama seperti alamat kotak surat yang boleh diketahui siapa pun.
+</div>
+
+<h3>Langkah 1 — Apa itu airdrop?</h3>
+<p><b>Airdrop</b> = token yang dibagikan gratis ke banyak alamat dompet. Kata ini berasal dari bantuan yang "dijatuhkan dari udara". Penerimanya biasanya orang yang <b>sudah memakai</b> sebuah protokol sebelum tokennya ada.</p>
+<div class="callout">
+<b>Contoh paling terkenal:</b> pada September 2020, bursa terdesentralisasi Uniswap membagikan <b>400 token UNI</b> ke setiap alamat yang pernah memakainya sebelum tanggal tertentu. Saat dibagikan, nilainya sekitar US$1.200 — dan beberapa bulan kemudian sempat bernilai berkali-kali lipat. Sejak itu, "memakai protokol baru sebelum punya token" menjadi kebiasaan banyak orang.
+</div>
+
+<h3>Langkah 2 — Kenapa proyek mau membagikan token gratis?</h3>
+<table class="tbl">
+  <tr><th>Alasan</th><th>Penjelasan</th></tr>
+  <tr><td>Menyebarkan kepemilikan</td><td>Token tata kelola yang hanya dipegang tim dan investor terlihat terpusat; airdrop menyebarnya ke ribuan pengguna</td></tr>
+  <tr><td>Membalas pengguna awal</td><td>Orang yang memakai produk saat masih sepi dan berisiko diberi bagian</td></tr>
+  <tr><td>Pemasaran</td><td>Kabar airdrop menarik perhatian dan pengguna baru</td></tr>
+  <tr><td>Menarik pengguna dari pesaing</td><td>Kadang dibagikan juga ke pengguna protokol lain yang mirip</td></tr>
+</table>
+
+<h3>Langkah 3 — Jenis-jenis airdrop</h3>
+<table class="tbl">
+  <tr><th>Jenis</th><th>Cara dapat</th></tr>
+  <tr><td><b>Retroaktif</b></td><td>Dihitung dari pemakaian di masa lalu — kamu tidak tahu sebelumnya bahwa akan dapat</td></tr>
+  <tr><td><b>Program poin</b></td><td>Proyek mengumumkan poin untuk setiap aktivitas, lalu kelak poin ditukar token — kriteria dan nilainya sering tidak jelas sampai akhir</td></tr>
+  <tr><td><b>Tugas / quest</b></td><td>Menyelesaikan tugas: mengikuti akun, mencoba fitur, mengisi formulir</td></tr>
+  <tr><td><b>Pemegang token</b></td><td>Diberikan kepada pemegang token tertentu pada saat pencatatan (<i>snapshot</i>)</td></tr>
+  <tr><td class="bad-cell"><b>Token tak diminta</b></td><td>Token asing yang tiba-tiba muncul di dompet — sering umpan penipuan (dibahas di pelajaran berikutnya)</td></tr>
+</table>
+
+<h3>Langkah 4 — Perjalanan sebuah airdrop</h3>
+<div data-diagram="flow" data-steps="Pemakaian awal|Snapshot|Kriteria & filter|Pengumuman|Klaim|Diperdagangkan" data-caption="Dari memakai protokol sampai token bisa dijual"></div>
+<table class="tbl">
+  <tr><th>Tahap</th><th>Yang terjadi</th></tr>
+  <tr><td><b>Snapshot</b></td><td>Proyek mencatat keadaan semua alamat pada satu blok tertentu — aktivitas sesudahnya tidak dihitung</td></tr>
+  <tr><td><b>Kriteria</b></td><td>Misalnya: berapa kali bertransaksi, berapa bulan aktif, berapa nilai yang dipakai, apakah memakai beberapa fitur</td></tr>
+  <tr><td><b>Filter sybil</b></td><td>Satu orang yang memakai ratusan dompet untuk berpura-pura menjadi banyak pengguna disebut <i>sybil</i>. Proyek menyaringnya dengan teknik klasterisasi alamat — persis yang kamu pelajari di modul Forensik — lalu mencoret dompet-dompet itu.</td></tr>
+  <tr><td><b>Klaim</b></td><td>Penerima mengklaim di situs resmi dalam jangka waktu tertentu; sebagian token kadang terkunci (vesting)</td></tr>
+</table>
+
+<h3>Langkah 5 — Hitung dulu: apakah berburu airdrop menguntungkan?</h3>
+<p>Berburu airdrop bukan uang gratis: ada biaya gas, waktu, dan risiko. Pakai <b>nilai harapan</b> (dari jalur Akuntansi):</p>
+<table class="tbl">
+  <tr><th>Komponen</th><th>Contoh ilustrasi</th></tr>
+  <tr><td>Biaya gas: 40 transaksi × Rp25 ribu</td><td>Rp1 juta</td></tr>
+  <tr><td>Peluang proyek benar-benar membagikan token kepadamu</td><td>30%</td></tr>
+  <tr><td>Nilai airdrop bila dapat</td><td>Rp2 juta</td></tr>
+  <tr><td><b>Nilai harapan</b></td><td><b>0,3 × 2 juta − 1 juta = −Rp400 ribu</b></td></tr>
+</table>
+<p>Dengan angka seperti ini, rata-ratanya justru rugi — belum menghitung waktu yang habis. Airdrop terkenal yang bernilai besar menarik perhatian, tapi banyak proyek tidak pernah membagikan token, atau membagikan dalam jumlah kecil.</p>
+<div class="callout warn">
+<b>Airdrop dump.</b> Token yang didapat gratis sering langsung dijual penerimanya, sehingga harganya kerap turun tajam pada hari-hari pertama perdagangan. Edukasi, bukan saran investasi.
+</div>
+`,
+          keyPoints: [
+            "Airdrop = token yang dibagikan gratis ke banyak alamat, biasanya kepada pengguna awal sebuah protokol.",
+            "Proyek melakukannya untuk menyebarkan kepemilikan, membalas pengguna awal, dan pemasaran.",
+            "Jenisnya: retroaktif, program poin, tugas/quest, pemegang token, dan token tak diminta (sering umpan penipuan).",
+            "Alurnya: pemakaian → snapshot → kriteria & filter sybil → klaim → diperdagangkan.",
+            "Hitung nilai harapannya: biaya gas dan waktu sering lebih besar daripada peluang × nilai airdrop."
+          ],
+          practice: [
+            { type: "number", q: "Biaya gas berburu Rp600 ribu, peluang dapat 25%, nilai airdrop bila dapat Rp4 juta. Berapa ribu rupiah nilai harapannya?", answer: 400, tol: 1, unit: "ribu", hint: "0,25 × 4.000 ribu − 600 ribu.", solution: "1.000 − 600 = +Rp400 ribu — positif, tapi waktu yang terpakai belum dihitung." },
+            { type: "choice", q: "Kamu aktif memakai sebuah protokol setelah tanggal snapshot diumumkan. Apa akibatnya?", options: ["Aktivitas itu dihitung dua kali lipat", "Aktivitas itu tidak ikut dihitung", "Kamu otomatis didiskualifikasi", "Snapshot diulang setiap hari"], answer: 1, hint: "Snapshot = foto keadaan pada satu blok.", solution: "Yang dihitung hanya keadaan sampai blok snapshot." }
+          ],
+          quiz: [
+            {
+              q: "Apa yang dimaksud dengan 'snapshot' dalam airdrop?",
+              options: [
+                "Pencatatan keadaan semua alamat pada satu blok tertentu",
+                "Foto layar bukti bahwa kamu sudah mengikuti akun proyek",
+                "Daftar harga token pada hari pertama mulai diperdagangkan",
+                "Salinan seed phrase yang disimpan sebagai cadangan klaim"
+              ],
+              answer: 0,
+              explain: "Aktivitas setelah snapshot tidak dihitung untuk airdrop tersebut."
+            },
+            {
+              q: "Kenapa proyek mencoret dompet-dompet 'sybil' dari daftar penerima?",
+              options: [
+                "Satu orang berpura-pura menjadi banyak pengguna lewat banyak dompet",
+                "Dompet itu terlalu baru sehingga belum boleh menerima token",
+                "Pemiliknya belum melakukan verifikasi KTP di situs proyek",
+                "Dompet itu menyimpan terlalu banyak token dari proyek lain"
+              ],
+              answer: 0,
+              explain: "Airdrop ditujukan untuk menyebar kepemilikan ke banyak orang, bukan ke satu orang dengan ratusan dompet."
+            },
+            {
+              q: "Kenapa harga token sering turun tajam tak lama setelah airdrop?",
+              options: [
+                "Banyak penerima yang mendapatkannya gratis langsung menjualnya",
+                "Proyek wajib membakar setengah pasokan setelah airdrop",
+                "Bursa menurunkan harga sebagai biaya pendaftaran token",
+                "Token airdrop baru boleh dijual dengan harga separuh"
+              ],
+              answer: 0,
+              explain: "Pasokan besar dari penerima yang tidak membayar apa pun masuk ke pasar sekaligus."
+            }
+          ]
+        },
+        {
+          id: "bc-air-2",
+          title: "Cara Aman Berburu Airdrop",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Menekan <b>Konfirmasi</b> di dompet = membuat tanda tangan; izin <b>Approve</b> atau <b>Permit</b> bisa dipakai menguras token belakangan (pelajaran Tanda Tangan Digital). <b>Seed phrase</b> = kunci induk seluruh dompetmu. Hampir semua kerugian pemburu airdrop terjadi karena salah satu dari dua hal ini — bukan karena blockchain-nya dibobol.
+</div>
+
+<h3>Langkah 1 — Siapkan dua dompet</h3>
+<table class="tbl">
+  <tr><th></th><th>Dompet simpanan</th><th>Dompet berburu</th></tr>
+  <tr><td>Isinya</td><td>Aset yang benar-benar kamu simpan</td><td>Dana kecil secukupnya untuk gas dan tugas</td></tr>
+  <tr><td>Dihubungkan ke situs baru?</td><td class="ok-cell">Tidak pernah</td><td>Ya, situs untuk berburu</td></tr>
+  <tr><td>Sebaiknya</td><td>Dompet perangkat keras (hardware wallet) bila nilainya besar</td><td>Dompet aplikasi biasa, seed phrase berbeda</td></tr>
+  <tr><td>Kalau bocor</td><td>—</td><td>Kerugian terbatas pada isi dompet berburu</td></tr>
+</table>
+<p>Prinsipnya seperti membawa dompet berisi uang secukupnya ke pasar malam, sementara tabungan tetap di rumah.</p>
+
+<h3>Langkah 2 — Masuk hanya lewat pintu resmi</h3>
+<ul>
+  <li>Ambil alamat situs dari <b>sumber resmi</b> proyek — dokumentasi atau akun resminya — lalu simpan sebagai <b>bookmark</b>. Buka selalu dari bookmark itu.</li>
+  <li><b>Jangan klik iklan</b> di hasil pencarian dan jangan klik tautan di balasan komentar; penipu sering memasang iklan dengan nama proyek populer.</li>
+  <li>Admin asli <b>tidak pernah mengirim DM lebih dulu</b>. "Support" yang menghubungimu duluan hampir pasti penipu.</li>
+</ul>
+
+<h3>Langkah 3 — Baca setiap permintaan tanda tangan</h3>
+<table class="tbl">
+  <tr><th>Yang muncul di dompet</th><th>Penilaian</th></tr>
+  <tr><td>Sign message berisi teks yang bisa dibaca untuk login</td><td class="ok-cell">Umumnya wajar</td></tr>
+  <tr><td>Transaksi klaim yang <b>menambah</b> token ke dompetmu, membayar gas kecil</td><td class="ok-cell">Wajar bila sumbernya resmi</td></tr>
+  <tr><td>Approve atau Permit token yang tidak ada hubungannya dengan tugasmu</td><td class="bad-cell">Tolak</td></tr>
+  <tr><td><b>setApprovalForAll</b> untuk koleksi NFT</td><td class="bad-cell">Tolak, kecuali kamu sengaja menjual NFT di pasar resmi</td></tr>
+  <tr><td>Pesan berisi kode acak yang tidak bisa dibaca</td><td class="bad-cell">Tolak — kamu tidak tahu apa yang kamu setujui</td></tr>
+</table>
+
+<h3>Latihan: wajar atau bahaya?</h3>
+<div data-demo="airdrop-cek"></div>
+
+<h3>Langkah 4 — Penipuan yang paling sering memakan korban</h3>
+<table class="tbl">
+  <tr><th>Modus</th><th>Cara kerjanya</th></tr>
+  <tr><td><b>Situs klaim palsu</b></td><td>Tampilan meniru situs asli; tombol "Claim" sebenarnya meminta izin menguras token</td></tr>
+  <tr><td><b>Token umpan</b></td><td>Token asing muncul di dompet dengan nama berisi alamat situs; situs itu adalah penguras dompet</td></tr>
+  <tr><td><b>"Verifikasi" seed phrase</b></td><td>Diminta lewat DM, formulir, atau situs palsu — tujuannya mengambil alih seluruh dompet</td></tr>
+  <tr><td><b>Bayar dulu untuk klaim</b></td><td>"Kirim 0,05 ETH untuk biaya pencairan" — airdrop asli hanya meminta gas yang dibayar dari dompetmu sendiri saat transaksi</td></tr>
+  <tr><td><b>Kursus atau grup "airdrop pasti cuan"</b></td><td>Menjual janji, atau menyuruh membeli token tertentu yang sedang dipompa</td></tr>
+</table>
+
+<h3>Langkah 5 — Kebiasaan rutin</h3>
+<table class="tbl">
+  <tr><th>Kebiasaan</th><th>Kenapa</th></tr>
+  <tr><td>Cabut izin token lama secara berkala</td><td>Pemeriksa izin token seperti di Etherscan atau revoke.cash menunjukkan kontrak mana yang masih boleh memindahkan tokenmu</td></tr>
+  <tr><td>Catat biaya gas yang sudah keluar</td><td>Supaya tahu apakah perburuanmu untung atau rugi</td></tr>
+  <tr><td>Jangan menyetor dana besar demi "poin"</td><td>Kriteria bisa berubah, dan dana yang disetor ikut menanggung risiko kontrak</td></tr>
+  <tr><td>Hindari membuat banyak dompet untuk satu orang</td><td>Melanggar aturan sebagian besar proyek, mudah terdeteksi, dan semua dompet bisa dicoret</td></tr>
+  <tr><td>Perbarui aplikasi dompet &amp; browser</td><td>Celah keamanan lama sering dipakai penguras dompet</td></tr>
+</table>
+
+<div class="callout warn">
+<b>Setelah benar-benar menerima airdrop:</b> klaim hanya dari tautan resmi, pindahkan hasilnya ke dompet simpanan bila nilainya berarti, dan ingat bahwa penghasilan dari aset kripto bisa terkena pajak — aturan di Indonesia berubah beberapa kali, jadi periksa ketentuan terbaru dari Direktorat Jenderal Pajak atau konsultan pajak. Edukasi, bukan saran investasi.
+</div>
+`,
+          keyPoints: [
+            "Pisahkan dompet simpanan (tidak pernah dihubungkan ke situs baru) dan dompet berburu berisi dana kecil.",
+            "Masuk hanya lewat alamat resmi yang disimpan sebagai bookmark; jangan klik iklan pencarian atau DM 'support'.",
+            "Klaim yang wajar menambah token ke dompetmu dan hanya meminta gas; tolak Approve, Permit, dan setApprovalForAll yang tidak terkait.",
+            "Tidak ada airdrop asli yang meminta seed phrase atau 'biaya pencairan'; token asing di dompet sering umpan penguras.",
+            "Cabut izin token lama berkala, catat biaya gas, jangan setor dana besar demi poin, dan hindari banyak dompet untuk satu orang."
+          ],
+          practice: [
+            { type: "choice", q: "Kamu menemukan situs klaim airdrop lewat iklan di hasil pencarian. Langkah yang paling aman?", options: ["Langsung klaim sebelum kuota habis", "Tutup, lalu buka alamat dari dokumentasi atau akun resmi proyek", "Klaim memakai dompet simpanan agar cepat", "Tanyakan ke 'support' yang menghubungimu lewat DM"], answer: 1, hint: "Dari mana alamat situs seharusnya diambil?", solution: "Iklan pencarian sering dipakai penipu. Ambil alamat dari sumber resmi, simpan sebagai bookmark." }
+          ],
+          quiz: [
+            {
+              q: "Kenapa pemburu airdrop disarankan memakai dompet terpisah?",
+              options: [
+                "Agar kerugian bila tertipu hanya sebatas isi dompet berburu",
+                "Agar peluang mendapat airdrop menjadi dua kali lebih besar",
+                "Agar biaya gas di dompet berburu menjadi gratis",
+                "Agar proyek tidak bisa melihat aktivitas di dompet itu"
+              ],
+              answer: 0,
+              explain: "Dompet simpanan tidak pernah dihubungkan ke situs baru, sehingga tetap aman walau dompet berburu bermasalah."
+            },
+            {
+              q: "Sebuah situs 'klaim airdrop' meminta Approve USDT tanpa batas. Apa yang sebaiknya dilakukan?",
+              options: [
+                "Tolak, karena klaim tidak butuh izin memindahkan USDT-mu",
+                "Setujui saja, karena izin itu bisa dicabut kapan pun",
+                "Setujui, asalkan USDT di dompet sedang sedikit",
+                "Tolak sekali, lalu setujui bila diminta lagi"
+              ],
+              answer: 0,
+              explain: "Izin tanpa batas cukup untuk menguras USDT. Klaim yang wajar justru menambah token ke dompetmu."
+            },
+            {
+              q: "Token asing bernama 'Klaim-Bonus.com' muncul di dompetmu. Apa langkah yang tepat?",
+              options: [
+                "Abaikan; jangan dibuka, dijual, atau diklaim",
+                "Kunjungi situsnya untuk memastikan nilainya",
+                "Segera jual sebelum harganya sempat turun",
+                "Kirim balik ke pengirimnya agar tidak tercatat"
+              ],
+              answer: 0,
+              explain: "Ini token umpan yang mengarahkan korban ke situs penguras dompet."
             }
           ]
         },
