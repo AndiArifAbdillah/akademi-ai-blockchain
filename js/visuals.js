@@ -2757,7 +2757,7 @@ const KriptoMini = (function () {
     const X = afin(add(kali(mod(z * w, N), G), kali(mod(r * w, N), [Q[0], Q[1]])));
     return !!X && X[0] % N === r;
   }
-  return { keccak256: (teks) => keccak256Bytes(new TextEncoder().encode(String(teks))), alamatEthereum: alamatEthereum, sha256: sha256, acakKunci: acakKunci, kunciPublik: kunciPublik, publikHex: publikHex, tandaTangani: tandaTangani, periksa: periksa, hex: hex };
+  return { sha256Bytes: sha256Bytes, hexKeBytes: hexKeBytes, keccak256: (teks) => keccak256Bytes(new TextEncoder().encode(String(teks))), alamatEthereum: alamatEthereum, sha256: sha256, acakKunci: acakKunci, kunciPublik: kunciPublik, publikHex: publikHex, tandaTangani: tandaTangani, periksa: periksa, hex: hex };
 })();
 
 /* Pembantu tampilan untuk demo kripto */
@@ -4893,6 +4893,180 @@ DEMOS["airdrop-cek"] = function (root) {
     daftar,
     hasilAkhir,
   ]));
+};
+
+/* ---------- Demo: mengintip blok Bitcoin sungguhan & memeriksa hash-nya sendiri ---------- */
+DEMOS["intip-blok"] = function (root) {
+  const API = "https://mempool.space/api";
+  const GENESIS = {
+    id: "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+    height: 0, timestamp: 1231006505, tx_count: 1, size: 285, difficulty: 1,
+    header: "0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c",
+  };
+  let blok = null, hashSebelumnyaTadi = null;
+  const status = h("div", { class: "dm-note" });
+  const isi = h("div");
+  const balik = (hx) => hx.match(/../g).reverse().join("");
+  const le = (hx) => parseInt(balik(hx), 16);
+  const angka = (n, d) => Number(n).toLocaleString("id-ID", { maximumFractionDigits: d || 0 });
+
+  async function ambil(url, jenis) {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return jenis === "json" ? r.json() : r.text();
+  }
+  async function muat(id) {
+    status.textContent = "Mengambil data dari jaringan Bitcoin…";
+    try {
+      const b = await ambil(API + "/block/" + id, "json");
+      b.header = (await ambil(API + "/block/" + id + "/header", "text")).trim();
+      tampil(b);
+    } catch (e) {
+      status.innerHTML = "Tidak bisa mengambil data sekarang (mungkin sedang offline). Tekan <b>Blok pertama (2009)</b> — datanya tersimpan di aplikasi.";
+    }
+  }
+
+  function tampil(b) {
+    const tadi = hashSebelumnyaTadi;
+    blok = b;
+    const H = b.header;
+    const bagian = {
+      versi: H.slice(0, 8), sebelum: H.slice(8, 72), merkle: H.slice(72, 136),
+      waktu: H.slice(136, 144), bits: H.slice(144, 152), nonce: H.slice(152, 160),
+    };
+    const prev = balik(bagian.sebelum);
+    hashSebelumnyaTadi = prev;
+    const waktu = new Date(le(bagian.waktu) * 1000).toLocaleString("id-ID", { dateStyle: "long", timeStyle: "short" });
+    const ukuran = b.size < 10000 ? angka(b.size) + " byte" : angka(b.size / 1e6, 2) + " MB";
+    status.innerHTML = b.height === 0
+      ? "Ini <b>blok pertama</b> Bitcoin, dibuat 3 Januari 2009. Kolom hash blok sebelumnya berisi nol semua — tidak ada blok sebelum dia."
+      : tadi && tadi === b.id
+      ? "<b>Perhatikan:</b> hash blok ini sama persis dengan kolom <i>hash blok sebelumnya</i> pada blok yang barusan kamu lihat. Itulah rantainya."
+      : "Data ini diambil langsung dari jaringan Bitcoin, saat ini juga.";
+    isi.innerHTML =
+      '<div class="dm-out">' +
+      '<div class="dm-line"><span>Nomor blok (tinggi)</span><b>' + angka(b.height) + "</b></div>" +
+      '<div class="dm-line"><span>Waktu dibuat</span><b>' + waktu + "</b></div>" +
+      '<div class="dm-line"><span>Jumlah transaksi</span><b>' + angka(b.tx_count) + "</b></div>" +
+      '<div class="dm-line"><span>Ukuran</span><b>' + ukuran + "</b></div>" +
+      '<div class="dm-line"><span>Nonce (angka tebakan penambang)</span><b>' + angka(le(bagian.nonce)) + "</b></div>" +
+      '<div class="dm-line"><span>Tingkat kesulitan</span><b>' + angka(b.difficulty) + "</b></div>" +
+      "</div>" +
+      '<span class="krip-label">Hash blok ini</span><div class="krip-hasil sidik">' + b.id + "</div>" +
+      '<span class="krip-label">Hash blok sebelumnya (tertulis di dalam blok ini)</span><div class="krip-hasil">' + prev + "</div>" +
+      '<span class="krip-label">Merkle root (sidik jari semua transaksinya)</span><div class="krip-hasil">' + balik(bagian.merkle) + "</div>" +
+      '<span class="krip-label">Kepala blok: 80 byte yang di-hash penambang</span>' +
+      '<div class="krip-hasil intip-header">' +
+      '<span class="ih-versi" title="versi">' + bagian.versi + '</span><span class="ih-sebelum" title="hash blok sebelumnya">' + bagian.sebelum +
+      '</span><span class="ih-merkle" title="merkle root">' + bagian.merkle + '</span><span class="ih-waktu" title="waktu">' + bagian.waktu +
+      '</span><span class="ih-bits" title="target kesulitan">' + bagian.bits + '</span><span class="ih-nonce" title="nonce">' + bagian.nonce + "</span></div>" +
+      '<div class="ih-ket"><span class="ih-sebelum">hash sebelumnya</span><span class="ih-merkle">merkle root</span><span class="ih-waktu">waktu</span><span class="ih-nonce">nonce</span></div>';
+    const tombol = h("button", { class: "btn primary", type: "button", text: "Hitung hash-nya sendiri" });
+    const hasil = h("div");
+    tombol.onclick = () => {
+      const bytes = KriptoMini.hexKeBytes(H);
+      const satu = KriptoMini.sha256Bytes(bytes);
+      const dua = KriptoMini.sha256Bytes(KriptoMini.hexKeBytes(satu));
+      const akhir = balik(dua);
+      const cocok = akhir === b.id;
+      const nol = akhir.match(/^0*/)[0].length;
+      hasil.innerHTML =
+        '<span class="krip-label">SHA-256 dua kali atas 80 byte di atas, urutan byte dibalik</span>' +
+        '<div class="krip-hasil ' + (cocok ? "ok" : "bad") + '">' + akhir + "</div>" +
+        '<div class="dm-note">' + (cocok
+          ? "<b>Cocok.</b> Kamu baru saja memeriksa sendiri — tanpa memercayai siapa pun — bahwa hash blok ini memang hasil dari isinya. Hash itu diawali <b>" + nol + " angka nol</b>: penambang mencoba triliunan nonce sampai menemukan hasil serendah ini. Itulah bukti kerjanya."
+          : "Hasilnya tidak cocok — data yang diterima mungkin rusak di jalan.") +
+        " <i>Catatan: Bitcoin menampilkan hash dengan urutan byte terbalik, kebiasaan teknis sejak awal; demo ini membaliknya untukmu.</i></div>";
+    };
+    isi.appendChild(h("div", { class: "demo-controls" }, [tombol]));
+    isi.appendChild(hasil);
+    mundur.disabled = b.height === 0;
+  }
+
+  const terbaru = h("button", { class: "btn", type: "button", text: "Ambil blok terbaru" });
+  const pertama = h("button", { class: "btn ghost", type: "button", text: "Blok pertama (2009)" });
+  const mundur = h("button", { class: "btn ghost", type: "button", text: "Mundur ke blok sebelumnya", disabled: "" });
+  terbaru.onclick = async () => {
+    status.textContent = "Mencari blok terbaru…";
+    hashSebelumnyaTadi = null;
+    try { muat((await ambil(API + "/blocks/tip/hash", "text")).trim()); }
+    catch (e) { status.innerHTML = "Tidak bisa terhubung (mungkin sedang offline). Tekan <b>Blok pertama (2009)</b> — datanya tersimpan di aplikasi."; }
+  };
+  pertama.onclick = () => { hashSebelumnyaTadi = null; tampil(Object.assign({}, GENESIS)); };
+  mundur.onclick = () => { if (blok && blok.height > 0) muat(hashSebelumnyaTadi); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Mengintip blok Bitcoin sungguhan</b>" }),
+    h("p", { class: "demo-hint", text: "Ambil blok terbaru langsung dari jaringan (butuh internet), atau buka blok pertama yang tersimpan di aplikasi. Lalu periksa sendiri hash-nya." }),
+    h("div", { class: "demo-controls" }, [terbaru, pertama, mundur]),
+    status,
+    isi,
+  ]));
+  status.textContent = "Pilih salah satu tombol di atas.";
+};
+
+/* ---------- Demo: membaca config.json model & menghitung parameternya ---------- */
+DEMOS["intip-config"] = function (root) {
+  const MODEL = {
+    "gpt2": { nama: "GPT-2 (kecil)", resmi: "124 juta", n_layer: 12, n_embd: 768, n_head: 12, vocab_size: 50257, n_positions: 1024 },
+    "gpt2-medium": { nama: "GPT-2 Medium", resmi: "355 juta", n_layer: 24, n_embd: 1024, n_head: 16, vocab_size: 50257, n_positions: 1024 },
+    "gpt2-large": { nama: "GPT-2 Large", resmi: "774 juta", n_layer: 36, n_embd: 1280, n_head: 20, vocab_size: 50257, n_positions: 1024 },
+    "gpt2-xl": { nama: "GPT-2 XL", resmi: "1,5 miliar", n_layer: 48, n_embd: 1600, n_head: 25, vocab_size: 50257, n_positions: 1024 },
+  };
+  let kunci = "gpt2", sumber = "tersimpan di aplikasi";
+  const jt = (n) => (n / 1e6).toLocaleString("id-ID", { maximumFractionDigits: 1 }) + " juta";
+  const gb = (n) => (n / 1e9).toLocaleString("id-ID", { maximumFractionDigits: 2 }) + " GB";
+  const pre = h("pre", { class: "code" });
+  const out = h("div", { class: "dm-out" });
+  const ket = h("div", { class: "dm-note" });
+
+  function draw(cfg) {
+    const c = cfg || MODEL[kunci];
+    pre.textContent = JSON.stringify({ n_layer: c.n_layer, n_embd: c.n_embd, n_head: c.n_head, vocab_size: c.vocab_size, n_positions: c.n_positions }, null, 2);
+    const d = c.n_embd, L = c.n_layer;
+    const emb = c.vocab_size * d, pos = c.n_positions * d, lapis = 12 * d * d, semua = L * lapis;
+    const total = emb + pos + semua;
+    out.innerHTML =
+      '<div class="dm-line"><span>Kamus token: vocab_size × n_embd = ' + c.vocab_size.toLocaleString("id-ID") + " × " + d + "</span><b>" + jt(emb) + "</b></div>" +
+      '<div class="dm-line"><span>Posisi: n_positions × n_embd</span><b>' + jt(pos) + "</b></div>" +
+      '<div class="dm-line"><span>Satu lapisan ≈ 12 × n_embd² (attention 4, MLP 8)</span><b>' + jt(lapis) + "</b></div>" +
+      '<div class="dm-line"><span>Semua lapisan: ' + L + " × satu lapisan</span><b>" + jt(semua) + "</b></div>" +
+      '<div class="dm-line big good"><span>Total hitungan kita</span><b>' + jt(total) + "</b></div>" +
+      '<div class="dm-line"><span>Angka resmi ' + MODEL[kunci].nama + "</span><b>" + MODEL[kunci].resmi + "</b></div>" +
+      '<div class="dm-line"><span>Memori bila tiap angka 2 byte</span><b>' + gb(total * 2) + "</b></div>";
+    ket.innerHTML = "Data config: <b>" + sumber + "</b>. Bagian terbesar ada di lapisan-lapisannya: makin lebar (<i>n_embd</i>) dan makin banyak lapisannya (<i>n_layer</i>), jumlah parameter melonjak — karena lebar dikuadratkan. Rumus ini khusus model bergaya GPT-2; keluarga model lain memakai susunan lapisan yang sedikit berbeda.";
+  }
+  const pilih = Object.keys(MODEL).map((k) => {
+    const b = h("button", { class: "btn ghost", type: "button", text: MODEL[k].nama });
+    b.onclick = () => { kunci = k; sumber = "tersimpan di aplikasi"; pilih.forEach((x) => x.classList.toggle("aktif", x === b)); draw(); };
+    return b;
+  });
+  pilih[0].classList.add("aktif");
+  const asli = h("button", { class: "btn primary", type: "button", text: "Ambil config.json asli dari Hugging Face" });
+  asli.onclick = async () => {
+    ket.textContent = "Mengambil config.json…";
+    try {
+      const r = await fetch("https://huggingface.co/openai-community/" + kunci + "/resolve/main/config.json");
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const c = await r.json();
+      sumber = "diambil langsung dari huggingface.co/openai-community/" + kunci;
+      draw(c);
+    } catch (e) {
+      sumber = "tersimpan di aplikasi (tidak bisa terhubung ke Hugging Face)";
+      draw();
+    }
+  };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Membaca config.json & menghitung parameter</b>" }),
+    h("p", { class: "demo-hint", text: "Pilih ukuran model GPT-2. Angka di config.json cukup untuk memperkirakan berapa banyak parameter di dalamnya." }),
+    h("div", { class: "demo-controls" }, pilih),
+    pre,
+    h("div", { class: "demo-controls" }, [asli]),
+    out,
+    ket,
+  ]));
+  draw();
 };
 
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */

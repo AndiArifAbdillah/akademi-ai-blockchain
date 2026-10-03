@@ -1495,6 +1495,8 @@ const GLOSSARY = [
   ["Snapshot", "Pencatatan keadaan semua alamat pada satu blok tertentu; dipakai menentukan siapa berhak menerima airdrop."],
   ["Sybil", "Satu orang yang berpura-pura menjadi banyak pengguna lewat banyak dompet; biasanya dicoret dari daftar airdrop."],
   ["Hardware Wallet", "Perangkat fisik penyimpan kunci privat yang tidak terhubung ke internet; cocok untuk dompet simpanan."],
+  ["Block Explorer", "Situs untuk membaca isi blockchain publik — blok, transaksi, alamat, kontrak — tanpa akun dan tanpa dompet."],
+  ["Interpretabilitas", "Bidang riset yang mencoba memahami apa arti angka-angka di dalam model AI dan kenapa model menjawab begitu."],
 ];
 
 function renderGlossary() {

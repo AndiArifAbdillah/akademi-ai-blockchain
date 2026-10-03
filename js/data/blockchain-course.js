@@ -2756,7 +2756,7 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
       id: "bc-menengah",
       level: "Menengah",
       title: "Ethereum, Smart Contract & Token",
-      summary: "Dari uang digital menuju komputer dunia: Ethereum, smart contract, gas, token & NFT, serta DApp — konsepnya dulu, kodenya di modul Proyek.",
+      summary: "Dari uang digital menuju komputer dunia: Ethereum, smart contract, gas, token & NFT, DApp, lalu mengintip semuanya sendiri lewat block explorer — konsepnya dulu, kodenya di modul Proyek.",
       lessons: [
         {
           id: "bc-m-1",
@@ -3071,6 +3071,128 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
                 "Logika DApp berjalan di smart contract, bukan server terpusat.",
             },
           ],
+        },
+        {
+          id: "bc-intip-1",
+          title: "Mengintip Isi Blockchain — Membaca Blok, Transaksi & Kontrak Sendiri",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Setiap blok menyimpan <b>hash blok sebelumnya</b> sehingga terbentuk rantai; <b>merkle root</b> adalah satu sidik jari untuk semua transaksi di blok itu; penambang mengganti-ganti <b>nonce</b> sampai hash bloknya cukup kecil; dan <b>token</b> hanyalah buku saldo di dalam sebuah kontrak. Semua itu selama ini kamu pelajari dari penjelasan. Sekarang kita melihatnya langsung.
+</div>
+
+<h3>Langkah 1 — Block explorer: mesin pencari untuk blockchain</h3>
+<p>Blockchain publik bisa dibaca siapa pun, tanpa akun dan tanpa izin. Alat untuk membacanya disebut <b>block explorer</b>. Kamu bisa mengetik nomor blok, ID transaksi, atau alamat dompet, lalu melihat isinya.</p>
+<table class="tbl">
+  <tr><th>Jaringan</th><th>Block explorer yang umum</th></tr>
+  <tr><td>Bitcoin</td><td>mempool.space</td></tr>
+  <tr><td>Ethereum</td><td>etherscan.io</td></tr>
+  <tr><td>Layer 2 &amp; rantai lain</td><td>Masing-masing punya, mis. arbiscan.io (Arbitrum), basescan.org (Base), solscan.io (Solana)</td></tr>
+</table>
+<div class="callout warn">
+<b>Block explorer hanya untuk membaca.</b> Ia tidak pernah perlu kamu hubungkan ke dompet dan tidak pernah meminta tanda tangan. Situs "explorer" yang meminta <i>Connect wallet</i> untuk sekadar melihat data patut dicurigai.
+</div>
+
+<h3>Langkah 2 — Intip satu blok, lalu periksa hash-nya sendiri</h3>
+<div data-demo="intip-blok"></div>
+<p>Di demo itu terjadi sesuatu yang tidak mungkin di sistem bank: kamu <b>memeriksa sendiri</b> kebenaran data, tanpa perlu memercayai siapa pun — termasuk situs yang memberi datanya. Kalau satu angka saja di kepala blok diubah, hash yang kamu hitung tidak akan cocok.</p>
+<table class="tbl">
+  <tr><th>Yang terlihat di halaman blok</th><th>Artinya</th></tr>
+  <tr><td>Tinggi (height)</td><td>Nomor urut blok sejak blok pertama tahun 2009</td></tr>
+  <tr><td>Hash</td><td>Sidik jari blok ini — diawali banyak angka nol karena bukti kerja</td></tr>
+  <tr><td>Hash sebelumnya</td><td>Mata rantai ke blok sebelumnya</td></tr>
+  <tr><td>Merkle root</td><td>Satu sidik jari untuk ribuan transaksi di dalamnya</td></tr>
+  <tr><td>Nonce &amp; tingkat kesulitan</td><td>Tebakan yang ditemukan penambang dan seberapa sulit targetnya</td></tr>
+</table>
+
+<h3>Langkah 3 — Membaca sebuah transaksi Bitcoin</h3>
+<p>Transaksi Bitcoin terdiri dari <b>masukan</b> (koin yang dibelanjakan) dan <b>keluaran</b> (ke mana koin dikirim). Biasanya ada satu keluaran kembali ke pengirim — <b>uang kembalian</b>, seperti membayar Rp100.000 untuk belanjaan Rp70.000.</p>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Contoh</th></tr>
+  <tr><td>Masukan</td><td>0,0100 BTC</td></tr>
+  <tr><td>Keluaran ke penerima</td><td>0,0060 BTC</td></tr>
+  <tr><td>Keluaran kembalian ke pengirim</td><td>0,0039 BTC</td></tr>
+  <tr><td><b>Biaya</b> = masukan − semua keluaran</td><td><b>0,0001 BTC</b> — tidak tertulis sebagai keluaran, diambil penambang</td></tr>
+</table>
+<p>Kolom <b>konfirmasi</b> menunjukkan berapa blok sudah ditumpuk di atas blok yang memuat transaksi itu. Makin banyak, makin mustahil dibatalkan.</p>
+
+<h3>Langkah 4 — Membaca transaksi dan kontrak di Etherscan</h3>
+<table class="tbl">
+  <tr><th>Kolom</th><th>Artinya</th></tr>
+  <tr><td>From / To</td><td>Pengirim dan tujuan — tujuannya bisa dompet biasa atau <b>smart contract</b></td></tr>
+  <tr><td>Value</td><td>ETH yang ikut dikirim (sering 0 untuk transaksi token)</td></tr>
+  <tr><td>Transaction fee</td><td>Gas terpakai × harga gas</td></tr>
+  <tr><td>Input data</td><td>Fungsi kontrak yang dipanggil, mis. <i>transfer</i> atau <i>approve</i></td></tr>
+  <tr><td>Logs / events</td><td>Catatan yang dipancarkan kontrak, mis. <i>Transfer</i> dari A ke B sebanyak sekian token</td></tr>
+</table>
+<p>Halaman sebuah <b>kontrak token</b> paling menarik untuk diintip. Ambil contoh kontrak USDT di Ethereum, alamatnya <code>0xdAC17F958D2ee523a2206206994597C13D831ec7</code>:</p>
+<table class="tbl">
+  <tr><th>Tab</th><th>Yang bisa kamu lihat</th></tr>
+  <tr><td><b>Contract</b></td><td>Kode sumbernya, bila sudah diverifikasi — program yang mengatur token itu</td></tr>
+  <tr><td><b>Read Contract</b></td><td>Memanggil fungsi baca, mis. <i>balanceOf</i>: ketik alamat mana pun dan lihat saldonya — gratis, tanpa dompet</td></tr>
+  <tr><td><b>Holders</b></td><td>Daftar pemegang dan saldonya — inilah "buku saldo" yang dijelaskan di pelajaran Token</td></tr>
+  <tr><td><b>Transfers</b></td><td>Setiap perpindahan token, berurutan</td></tr>
+</table>
+
+<h3>Langkah 5 — Latihan: menemukan pesan tersembunyi di blok pertama</h3>
+<ol>
+  <li>Buka <b>mempool.space</b>, ketik <b>0</b> di kolom pencarian untuk membuka blok pertama.</li>
+  <li>Klik satu-satunya transaksi di dalamnya — transaksi <i>coinbase</i>, yang menciptakan 50 BTC pertama.</li>
+  <li>Buka detail transaksinya dan lihat bagian masukan (<i>coinbase</i>). Sebagian explorer langsung menampilkannya sebagai teks; sebagian lagi dalam heksadesimal yang bisa diubah menjadi teks.</li>
+</ol>
+<p>Kamu akan menemukan kalimat: <i>"The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"</i> — judul berita surat kabar Inggris hari itu tentang dana talangan bank. Pembuat Bitcoin menanamkannya sebagai bukti tanggal, dan banyak orang membacanya sebagai pesan tentang alasan Bitcoin dibuat.</p>
+
+<div class="callout warn">
+<b>Transparan itu dua arah.</b> Kalau kamu bisa melihat isi dompet orang lain, orang lain juga bisa melihat isi dompetmu. Jangan memamerkan alamat dompet utama di media sosial — cara penelusurannya dibahas di modul Forensik.
+</div>
+`,
+          keyPoints: [
+            "Block explorer (mempool.space, etherscan.io, dll) membaca blockchain publik tanpa akun; ia tidak pernah perlu dihubungkan ke dompet.",
+            "Halaman blok memuat tinggi, hash, hash sebelumnya, merkle root, nonce, dan tingkat kesulitan.",
+            "Hash blok bisa diperiksa sendiri: SHA-256 dua kali atas 80 byte kepala blok — tanpa memercayai siapa pun.",
+            "Biaya transaksi Bitcoin = masukan − semua keluaran; keluaran kembalian kembali ke pengirim.",
+            "Di Etherscan, kontrak token bisa dibaca kodenya, saldo alamat mana pun (balanceOf), dan daftar pemegangnya."
+          ],
+          practice: [
+            { type: "number", q: "Masukan 0,05 BTC; keluaran ke penerima 0,03 BTC dan kembalian 0,0198 BTC. Berapa biaya transaksinya? (BTC)", answer: 0.0002, tol: 0.00001, unit: "BTC", hint: "Masukan − semua keluaran.", solution: "0,05 − 0,03 − 0,0198 = 0,0002 BTC." },
+            { type: "choice", q: "Sebuah situs yang mengaku block explorer meminta kamu Connect wallet sebelum menampilkan isi blok. Penilaianmu?", options: ["Wajar, semua explorer begitu", "Patut dicurigai — membaca data tidak butuh dompet", "Wajar bila memakai dompet simpanan", "Wajar bila situsnya berbayar"], answer: 1, hint: "Apa yang dibutuhkan untuk sekadar membaca blockchain publik?", solution: "Blockchain publik bisa dibaca tanpa dompet. Permintaan connect wallet di sini adalah tanda bahaya." }
+          ],
+          quiz: [
+            {
+              q: "Bagaimana kamu bisa memastikan hash sebuah blok Bitcoin benar tanpa memercayai situs mana pun?",
+              options: [
+                "Menghitung SHA-256 dua kali atas 80 byte kepala bloknya sendiri",
+                "Membandingkan hash itu di tiga block explorer yang berbeda",
+                "Menanyakan langsung kepada penambang yang membuat blok itu",
+                "Memeriksa apakah hash itu diawali angka nol yang banyak"
+              ],
+              answer: 0,
+              explain: "Kepala blok berisi semua data penting; hash-nya bisa dihitung ulang siapa pun dan harus cocok persis."
+            },
+            {
+              q: "Di halaman transaksi Bitcoin, di mana biaya transaksinya?",
+              options: [
+                "Selisih antara total masukan dan total keluaran",
+                "Keluaran terakhir yang dikirim ke alamat penambang",
+                "Kolom khusus yang ditulis pengirim di dalam keluaran",
+                "Jumlah konfirmasi dikali harga Bitcoin hari itu"
+              ],
+              answer: 0,
+              explain: "Biaya tidak tertulis sebagai keluaran; ia adalah sisa masukan yang tidak dibelanjakan, diambil penambang."
+            },
+            {
+              q: "Tab 'Holders' pada halaman kontrak token di Etherscan menunjukkan apa?",
+              options: [
+                "Daftar alamat pemegang token beserta saldonya",
+                "Daftar tim pengembang yang memegang kunci kontrak",
+                "Daftar bursa yang memperdagangkan token tersebut",
+                "Daftar transaksi yang masih menunggu masuk blok"
+              ],
+              answer: 0,
+              explain: "Itulah buku saldo di dalam kontrak — yang membuat 'memiliki token' berarti tercatat di tabel itu."
+            }
+          ]
         },
       ],
     },

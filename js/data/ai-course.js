@@ -6501,7 +6501,7 @@ Cara belajarnya tetap sama persis dengan pelajaran sebelumnya: hitung target, uk
       id: "ai-mahir",
       level: "Mahir",
       title: "AI Generatif & LLM",
-      summary: "Cara kerja ChatGPT, AI pembuat gambar, GAN & diffusion lebih dalam, RLHF & alignment, serta AI suara & multimodal.",
+      summary: "Cara kerja ChatGPT, AI pembuat gambar, GAN & diffusion lebih dalam, RLHF & alignment, AI suara & multimodal, lalu mengintip isi model sendiri: token, peluang, parameter, dan neuron.",
       lessons: [
         {
           id: "ai-a-1",
@@ -6836,6 +6836,115 @@ Suara adalah <b>getaran udara</b>. Mikrofon mengubahnya jadi gelombang, lalu kom
                 "Suara bisa ditiru AI; verifikasi lewat kanal yang kamu kendalikan sendiri.",
             },
           ],
+        },
+        {
+          id: "ai-intip-1",
+          title: "Mengintip Isi AI — Token, Peluang, Parameter & Neuron",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+LLM memotong teks menjadi <b>token</b>, menghitung <b>peluang</b> setiap kandidat token berikutnya lewat softmax, dan pengetahuannya tersimpan di miliaran <b>parameter</b> yang tersusun dalam lapisan-lapisan Transformer. Semua itu selama ini kamu pelajari dari penjelasan. Sekarang kita mengintipnya langsung.
+</div>
+
+<h3>Langkah 1 — Kenapa AI lebih sulit diintip daripada blockchain</h3>
+<table class="tbl">
+  <tr><th></th><th>Blockchain publik</th><th>Model AI</th></tr>
+  <tr><td>Datanya terbuka?</td><td class="ok-cell">Ya, siapa pun bisa membaca setiap blok</td><td>Model tertutup (ChatGPT, Claude) tidak; model terbuka bisa diunduh</td></tr>
+  <tr><td>Bisa diperiksa ulang?</td><td class="ok-cell">Ya, hash bisa dihitung sendiri</td><td>Sebagian — angkanya bisa dibaca, tapi sulit dimengerti</td></tr>
+  <tr><td>Kenapa begitu?</td><td>Dirancang agar siapa pun tak perlu percaya</td><td>Kemampuannya muncul dari miliaran angka yang dilatih, bukan dari aturan yang ditulis manusia</td></tr>
+</table>
+<p>Kita mengintip AI lapis demi lapis, dari yang paling mudah sampai yang paling sulit.</p>
+
+<h3>Lapis 1 — Token: bagaimana teksmu dipotong</h3>
+<p>Beberapa penyedia model menyediakan halaman <b>tokenizer</b> — misalnya halaman Tokenizer di situs platform OpenAI — tempat kamu mengetik kalimat dan melihat potongan tokennya diwarnai satu per satu.</p>
+<table class="tbl">
+  <tr><th>Coba ketik</th><th>Yang biasanya terlihat</th></tr>
+  <tr><td><i>"I like learning artificial intelligence"</i></td><td>Kata-kata umum utuh satu token</td></tr>
+  <tr><td><i>"Saya suka belajar kecerdasan buatan"</i></td><td>Lebih banyak token, karena kata bahasa Indonesia sering dipecah</td></tr>
+  <tr><td>Angka panjang seperti <i>1234567</i></td><td>Dipotong per beberapa digit — salah satu sebab model kadang keliru berhitung</td></tr>
+</table>
+
+<h3>Lapis 2 — Peluang kata berikutnya</h3>
+<p><b>Transformer Explainer</b> (poloclub.github.io/transformer-explainer) menjalankan model GPT-2 <b>langsung di browsermu</b>. Ketik awal kalimat, lalu lihat daftar kandidat token berikutnya lengkap dengan peluangnya. Geser pengaturan <b>temperature</b> dan perhatikan peluangnya menajam atau merata — persis yang kamu hitung di pelajaran Probabilitas.</p>
+<p>Alat lain, <b>LLM Visualization</b> (bbycroft.net/llm), menggambar seluruh perjalanan satu token melewati lapisan-lapisan model kecil dalam bentuk tiga dimensi, langkah demi langkah.</p>
+
+<h3>Lapis 3 — Arsitektur &amp; parameter: membaca config.json</h3>
+<p>Model terbuka di <b>Hugging Face</b> selalu menyertakan beberapa berkas. Yang paling mudah dibaca:</p>
+<table class="tbl">
+  <tr><th>Berkas</th><th>Isinya</th></tr>
+  <tr><td><b>config.json</b></td><td>Ukuran arsitektur: jumlah lapisan, lebar, jumlah "kepala" attention, besar kamus token</td></tr>
+  <tr><td><b>tokenizer.json</b></td><td>Daftar semua token yang dikenal model</td></tr>
+  <tr><td><b>model.safetensors</b></td><td>Parameternya sendiri — miliaran angka, ukurannya bisa puluhan GB</td></tr>
+</table>
+<div data-demo="intip-config"></div>
+<table class="tbl">
+  <tr><th>Kunci di config.json (GPT-2)</th><th>Artinya</th></tr>
+  <tr><td><b>n_layer</b></td><td>Jumlah lapisan Transformer yang ditumpuk</td></tr>
+  <tr><td><b>n_embd</b></td><td>Lebar: panjang vektor yang mewakili setiap token</td></tr>
+  <tr><td><b>n_head</b></td><td>Jumlah "kepala" attention yang bekerja bersamaan di tiap lapisan</td></tr>
+  <tr><td><b>vocab_size</b></td><td>Banyaknya token di kamus model</td></tr>
+  <tr><td><b>n_positions</b></td><td>Panjang konteks maksimal (dalam token)</td></tr>
+</table>
+
+<h3>Lapis 4 — Melihat neuron belajar</h3>
+<p><b>TensorFlow Playground</b> (playground.tensorflow.org) memperlihatkan jaringan saraf kecil saat sedang dilatih: setiap neuron digambar sebagai kotak kecil yang menunjukkan pola apa yang sedang ia kenali, dan garis antar-neuron menebal atau menipis mengikuti bobotnya. Demo jaringan XOR di modul Arsitektur bekerja dengan prinsip yang sama.</p>
+
+<h3>Lapis 5 — Yang paling sulit: apa arti angka-angka itu?</h3>
+<p>Memiliki miliaran parameter tidak sama dengan memahaminya. Bidang riset <b>interpretabilitas</b> mencoba menerjemahkan isi model menjadi konsep yang bisa dimengerti manusia.</p>
+<div class="callout">
+<b>Contoh yang terkenal:</b> pada 2024, peneliti Anthropic menemukan jutaan "fitur" di dalam model Claude 3 Sonnet — pola aktivasi yang menyala untuk konsep tertentu, misalnya Jembatan Golden Gate. Ketika fitur itu diperkuat secara buatan, model menyebut-nyebut jembatan itu dalam hampir setiap jawaban, bahkan menganggap dirinya adalah jembatan itu. Situs <b>Neuronpedia</b> memungkinkan siapa pun menjelajahi fitur-fitur serupa pada model terbuka.
+</div>
+<div class="callout warn">
+<b>Batas yang jujur.</b> Kita bisa melihat token, peluang, ukuran, bahkan sebagian fitur. Tapi untuk model besar, belum ada yang bisa menjelaskan sepenuhnya <i>kenapa</i> model memberi jawaban tertentu. Model tertutup lebih sulit lagi: yang terlihat hanya masukan dan keluarannya, sementara data latih dan bobotnya tidak dibuka. Karena itu jawaban AI untuk hal penting tetap perlu diperiksa.
+</div>
+`,
+          keyPoints: [
+            "Blockchain dirancang terbuka dan bisa diperiksa ulang; AI menyimpan kemampuannya dalam miliaran angka yang sulit dimengerti.",
+            "Halaman tokenizer memperlihatkan potongan token; bahasa Indonesia umumnya butuh lebih banyak token daripada bahasa Inggris.",
+            "Transformer Explainer menjalankan GPT-2 di browser dan menampilkan peluang token berikutnya beserta efek temperature.",
+            "config.json memuat ukuran arsitektur; parameter model bergaya GPT-2 ≈ vocab × lebar + lapisan × 12 × lebar².",
+            "Interpretabilitas mencari konsep di dalam model (mis. fitur Golden Gate di Claude 3 Sonnet), tapi model besar belum bisa dijelaskan sepenuhnya."
+          ],
+          practice: [
+            { type: "number", q: "Model bergaya GPT-2: n_layer 10, n_embd 500, vocab_size 20.000, posisi diabaikan. Berapa juta parameternya?", answer: 40, tol: 0.1, unit: "juta", hint: "Kamus: 20.000 × 500. Lapisan: 10 × 12 × 500².", solution: "10 juta + 30 juta = 40 juta parameter." },
+            { type: "number", q: "Model 124 juta parameter disimpan 4 byte per angka. Kira-kira berapa MB ukurannya?", answer: 496, tol: 2, unit: "MB", hint: "124 juta × 4 byte.", solution: "Sekitar 496 MB." }
+          ],
+          quiz: [
+            {
+              q: "Kenapa memiliki seluruh parameter sebuah model belum berarti memahaminya?",
+              options: [
+                "Kemampuannya tersebar di miliaran angka yang tidak berlabel konsep",
+                "Parameter model selalu dienkripsi sehingga tidak bisa dibaca",
+                "Parameter hanya bisa dibuka oleh perusahaan pembuat modelnya",
+                "Parameter berubah setiap kali model menjawab pertanyaan"
+              ],
+              answer: 0,
+              explain: "Angka-angka itu hasil pelatihan, bukan aturan yang ditulis manusia. Interpretabilitas mencoba menerjemahkannya."
+            },
+            {
+              q: "Di config.json model GPT-2, apa arti n_layer?",
+              options: [
+                "Jumlah lapisan Transformer yang ditumpuk",
+                "Jumlah token yang dikenal oleh model",
+                "Panjang konteks maksimal dalam token",
+                "Jumlah kepala attention di tiap lapisan"
+              ],
+              answer: 0,
+              explain: "Jumlah token = vocab_size, panjang konteks = n_positions, kepala attention = n_head."
+            },
+            {
+              q: "Kenapa jumlah parameter melonjak tajam saat model dibuat lebih lebar (n_embd lebih besar)?",
+              options: [
+                "Karena parameter tiap lapisan sebanding dengan kuadrat lebarnya",
+                "Karena setiap lebar tambahan menambah satu lapisan baru",
+                "Karena kamus token ikut membesar setiap model melebar",
+                "Karena lebar tambahan disimpan dua kali di berkas model"
+              ],
+              answer: 0,
+              explain: "Satu lapisan ≈ 12 × n_embd². Lebar dua kali lipat membuat parameter lapisan empat kali lipat."
+            }
+          ]
         },
       ],
     },
