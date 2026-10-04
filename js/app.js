@@ -23,7 +23,7 @@ const MODULE_ORDER = [
   // 📊 Akuntansi
   "acc-dasar", "acc-pemula", "acc-menengah", "acc-pendalaman", "acc-fundamental",
   "acc-mikro", "acc-terapan", "acc-audit", "acc-matematika", "acc-lanjutan", "acc-kualitas",
-  "acc-bank", "acc-prospek", "acc-proyek", "acc-investasi", "acc-makro", "acc-arah",
+  "acc-bank", "acc-prospek", "acc-proyek", "acc-investasi", "acc-teknikal", "acc-makro", "acc-arah",
 ];
 (function urutkanModul() {
   const pos = (id) => {
@@ -1497,6 +1497,23 @@ const GLOSSARY = [
   ["Hardware Wallet", "Perangkat fisik penyimpan kunci privat yang tidak terhubung ke internet; cocok untuk dompet simpanan."],
   ["Block Explorer", "Situs untuk membaca isi blockchain publik — blok, transaksi, alamat, kontrak — tanpa akun dan tanpa dompet."],
   ["Interpretabilitas", "Bidang riset yang mencoba memahami apa arti angka-angka di dalam model AI dan kenapa model menjawab begitu."],
+  ["Analisis Teknikal", "Cara menilai saham atau aset dari pola harga dan volume perdagangannya, bukan dari laporan keuangan."],
+  ["Candlestick", "Batang grafik yang memuat empat harga dalam satu periode: buka, tutup, tertinggi, dan terendah."],
+  ["Moving Average", "Rata-rata harga beberapa hari terakhir yang dihitung ulang setiap hari, sehingga garisnya ikut bergerak dan meratakan naik-turun harian."],
+  ["EMA", "Exponential Moving Average: rata-rata bergerak yang memberi bobot lebih besar pada harga terbaru, sehingga lebih cepat bereaksi."],
+  ["Golden Cross", "Saat moving average 50 hari memotong moving average 200 hari dari bawah ke atas; kebalikannya disebut death cross."],
+  ["MACD", "Moving Average Convergence Divergence: EMA 12 hari dikurangi EMA 26 hari, untuk membaca arah dan tenaga tren harga."],
+  ["Histogram", "Diagram batang yang menunjukkan sebaran data: berapa banyak data jatuh di tiap rentang. Di MACD, histogram = garis MACD − garis sinyal."],
+  ["RSI", "Relative Strength Index: rata-rata kenaikan dibanding rata-rata penurunan harga (biasanya 14 hari) dalam skala 0–100. Di atas 70 jenuh beli, di bawah 30 jenuh jual."],
+  ["Resistance", "Level harga yang berkali-kali menahan kenaikan. Pasangannya, support, adalah level yang berkali-kali menahan penurunan."],
+  ["Volatilitas", "Seberapa liar harga bergerak naik-turun; biasanya diukur dengan simpangan baku return."],
+  ["Simpangan Baku", "Standard deviation: ukuran seberapa jauh data rata-rata menyimpang dari nilai rata-ratanya."],
+  ["Drawdown", "Penurunan nilai dari puncak tertinggi sebelumnya ke titik terendah sesudahnya, dalam persen."],
+  ["Dividend Yield", "Dividen per lembar setahun ÷ harga saham — persen uang tunai yang kembali setiap tahun."],
+  ["Earnings Yield", "EPS ÷ harga saham, sama dengan 1 ÷ PER — laba setahun dibanding harga yang dibayar."],
+  ["Payout Ratio", "Bagian laba yang dibagikan sebagai dividen: dividen per lembar ÷ EPS."],
+  ["Yield Trap", "Saham yang dividend yield-nya tampak sangat tinggi karena harganya jatuh, padahal dividennya kemungkinan akan dipangkas."],
+  ["Obligasi", "Surat utang: penerbit membayar kupon (bunga) tetap setiap tahun dan mengembalikan pokoknya saat jatuh tempo."],
 ];
 
 function renderGlossary() {

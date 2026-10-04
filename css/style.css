@@ -1524,3 +1524,37 @@ a.resume-card:hover .resume-btn { gap: 12px; }
 .ih-nonce { background: color-mix(in srgb, var(--s1) 26%, transparent); }
 .ih-ket { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 10px; font-size: .76rem; }
 .ih-ket span { padding: 1px 7px; }
+/* ---------- Demo analisis teknikal: candlestick, MACD, volatilitas ---------- */
+.lilin-sumbu { stroke-width: 2.5; }
+.lilin-sumbu.lilin-naik { stroke: var(--ok); }
+.lilin-sumbu.lilin-turun { stroke: var(--bad); }
+.lilin-badan.lilin-naik { fill: var(--ok); }
+.lilin-badan.lilin-turun { fill: var(--bad); }
+.macd-harga { fill: none; stroke: var(--faint); stroke-width: 1.4; }
+.macd-cepat { fill: none; stroke: var(--s0); stroke-width: 1.8; }
+.macd-lambat { fill: none; stroke: var(--s3); stroke-width: 1.8; }
+.macd-garis { fill: none; stroke: var(--text); stroke-width: 1.6; }
+.macd-sinyal { fill: none; stroke: var(--s1); stroke-width: 1.8; stroke-dasharray: 5 3; }
+.macd-batang.pos { fill: var(--ok); opacity: .8; }
+.macd-batang.neg { fill: var(--bad); opacity: .8; }
+.macd-kursor { stroke: var(--text); stroke-width: 1; stroke-dasharray: 3 3; opacity: .6; }
+.macd-titik { fill: var(--accent); stroke: var(--surface); stroke-width: 1.5; }
+.macd-legenda { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .78rem; color: var(--muted); margin: 6px 0 2px; }
+.macd-legenda span { display: inline-flex; align-items: center; gap: 6px; }
+.macd-legenda span::before { content: ""; width: 16px; height: 0; border-top: 2.5px solid currentColor; }
+.macd-legenda .lg-harga::before { border-color: var(--faint); }
+.macd-legenda .lg-cepat::before { border-color: var(--s0); }
+.macd-legenda .lg-lambat::before { border-color: var(--s3); }
+.macd-legenda .lg-macd::before { border-color: var(--text); }
+.macd-legenda .lg-sinyal::before { border-top-style: dashed; border-color: var(--s1); }
+.vol-puncak { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 4; opacity: .7; }
+.vol-dd { stroke: var(--bad); stroke-width: 2.5; }
+.vol-titik-dasar { fill: var(--bad); stroke: var(--surface); stroke-width: 1.5; }
+.vol-label { fill: var(--bad); font-weight: 700; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+.tek-svg .vt-xs { font-size: 12px; }
+.tek-svg .vt-bold { font-size: 14px; }
+@media (max-width: 560px) {
+  .tek-svg .vt-xs { font-size: 17px; }
+  .tek-svg .vt-xs.vol-n { font-size: 13px; }
+  .tek-svg .vt-bold { font-size: 19px; }
+}

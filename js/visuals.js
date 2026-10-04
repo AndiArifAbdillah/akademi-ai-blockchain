@@ -5069,6 +5069,269 @@ DEMOS["intip-config"] = function (root) {
   draw();
 };
 
+/* ---------- Demo: anatomi candlestick ---------- */
+DEMOS["lilin"] = function (root) {
+  // Dua lilin: naik (O 1.000 → C 1.080) dan turun (O 1.080 → C 1.010), harga dalam Rupiah
+  const L = [
+    { nama: "Lilin naik", o: 1000, h: 1100, l: 980, c: 1080, kelas: "lilin-naik" },
+    { nama: "Lilin turun", o: 1080, h: 1095, l: 990, c: 1010, kelas: "lilin-turun" },
+  ];
+  const Y = (v) => 20 + ((1110 - v) / (1110 - 970)) * 220;
+  let g = '<svg viewBox="0 0 520 270" class="viz-svg tek-svg" role="img" aria-label="Anatomi dua candlestick: naik dan turun">';
+  L.forEach((k, i) => {
+    const x = 150 + i * 220;
+    const atas = Math.max(k.o, k.c), bawah = Math.min(k.o, k.c);
+    g += '<line x1="' + x + '" y1="' + Y(k.h) + '" x2="' + x + '" y2="' + Y(k.l) + '" class="lilin-sumbu ' + k.kelas + '"/>';
+    g += '<rect x="' + (x - 22) + '" y="' + Y(atas) + '" width="44" height="' + (Y(bawah) - Y(atas)) + '" rx="3" class="lilin-badan ' + k.kelas + '"/>';
+    const label = (teks, v, kanan) => {
+      const lx = kanan ? x + 34 : x - 34;
+      g += '<line x1="' + (kanan ? x + 24 : x - 24) + '" y1="' + Y(v) + '" x2="' + (kanan ? x + 30 : x - 30) + '" y2="' + Y(v) + '" class="vline dim"/>';
+      g += '<text x="' + lx + '" y="' + (Y(v) + 4) + '" text-anchor="' + (kanan ? "start" : "end") + '" class="vt-xs">' + teks + "</text>";
+    };
+    label("Tinggi " + k.h.toLocaleString("id-ID"), k.h, true);
+    label("Rendah " + k.l.toLocaleString("id-ID"), k.l, true);
+    label("Buka " + k.o.toLocaleString("id-ID"), k.o, false);
+    label("Tutup " + k.c.toLocaleString("id-ID"), k.c, false);
+    g += '<text x="' + x + '" y="262" text-anchor="middle" class="vt-bold">' + k.nama + "</text>";
+  });
+  g += "</svg>";
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Membaca satu batang candlestick</b>" }),
+    h("p", { class: "demo-hint", text: "Badan = jarak harga buka ke harga tutup. Sumbu tipis = harga tertinggi dan terendah hari itu. Hijau naik, merah turun." }),
+    h("div", { class: "dm-viz", html: g }),
+  ]));
+};
+
+/* ---------- Demo: grafik harga, EMA, MACD & histogram ---------- */
+DEMOS["macd-grafik"] = function (root) {
+  // Harga contoh 140 hari (dibuat dengan rumus tetap, bukan saham sungguhan):
+  // datar bergelombang → naik → mendatar di puncak → turun
+  const HARGA = (function () {
+    let s = 7, x = 1000;
+    const out = [];
+    const acak = () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648 - 0.5; };
+    for (let i = 0; i < 140; i++) {
+      const arah = i < 60 ? 7 * Math.sin(i / 3.2) : i < 95 ? 9 : i < 112 ? 0.5 : -8;
+      x = x + arah + acak() * 22;
+      out.push(Math.round(x));
+    }
+    return out;
+  })();
+  function ema(a, n) {
+    const k = 2 / (n + 1), o = new Array(a.length).fill(null);
+    const mulai = a.findIndex((v) => v != null);
+    const awal = mulai + n - 1;
+    if (mulai < 0 || awal >= a.length) return o;
+    let e = a.slice(mulai, awal + 1).reduce((s, x) => s + x, 0) / n;
+    o[awal] = e;
+    for (let i = awal + 1; i < a.length; i++) { e = a[i] * k + e * (1 - k); o[i] = e; }
+    return o;
+  }
+  let P = [12, 26, 9], data, hari;
+  function hitung() {
+    const cepat = ema(HARGA, P[0]), lambat = ema(HARGA, P[1]);
+    // EMA dibulatkan 1 desimal agar hitungan di layar (EMA cepat − EMA lambat = MACD) selalu pas
+    const r1 = (v) => Math.round(v * 10) / 10;
+    const macd = HARGA.map((_, i) => (cepat[i] != null && lambat[i] != null ? r1(cepat[i]) - r1(lambat[i]) : null));
+    const sinyal = ema(macd, P[2]);
+    const hist = macd.map((v, i) => (v != null && sinyal[i] != null ? v - sinyal[i] : null));
+    data = { cepat: cepat, lambat: lambat, macd: macd, sinyal: sinyal, hist: hist, mulai: sinyal.findIndex((v) => v != null) };
+  }
+  const kanvas = h("div", { class: "dm-viz" });
+  const slider = h("input", { type: "range", class: "dm-range", "aria-label": "Pilih hari" });
+  const lHari = h("b");
+  const out = h("div", { class: "dm-out" });
+  const n = HARGA.length, X0 = 8, W = 504;
+  const X = (i) => X0 + (i / (n - 1)) * W;
+  const angka = (v, d) => (v == null ? "—" : Number(v).toLocaleString("id-ID", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }).replace("-", "−"));
+
+  function garis(arr, y, kelas) {
+    let d = "";
+    arr.forEach((v, i) => { if (v != null) d += (d ? "L" : "M") + X(i).toFixed(1) + " " + y(v).toFixed(1); });
+    return '<path d="' + d + '" class="' + kelas + '"/>';
+  }
+  function draw() {
+    const min = Math.min(...HARGA) - 15, max = Math.max(...HARGA) + 15;
+    const Y1 = (v) => 22 + ((max - v) / (max - min)) * 150;
+    const besar = Math.max(...data.macd.concat(data.sinyal).concat(data.hist).filter((v) => v != null).map(Math.abs));
+    const Y2 = (v) => 272 - (v / besar) * 68;
+    let g = '<svg viewBox="0 0 520 350" class="viz-svg tek-svg" role="img" aria-label="Grafik harga dengan dua garis EMA, dan panel MACD dengan garis sinyal dan histogram">';
+    g += '<text x="' + (X0 + W) + '" y="12" text-anchor="end" class="vt-xs">Harga &amp; EMA</text>';
+    [min + 15, (min + max) / 2, max - 15].forEach((v) => {
+      g += '<line x1="' + X0 + '" y1="' + Y1(v) + '" x2="' + (X0 + W) + '" y2="' + Y1(v) + '" class="vline dim"/>';
+      g += '<text x="' + (X0 + 2) + '" y="' + (Y1(v) - 4) + '" class="vt-xs">' + angka(v) + "</text>";
+    });
+    g += garis(HARGA, Y1, "macd-harga");
+    g += garis(data.cepat, Y1, "macd-cepat");
+    g += garis(data.lambat, Y1, "macd-lambat");
+    g += '<text x="' + (X0 + W) + '" y="198" text-anchor="end" class="vt-xs">MACD, sinyal &amp; histogram</text>';
+    g += '<line x1="' + X0 + '" y1="' + Y2(0) + '" x2="' + (X0 + W) + '" y2="' + Y2(0) + '" class="vline dim"/>';
+    const lebar = Math.max(2, (W / n) * 0.85);
+    data.hist.forEach((v, i) => {
+      if (v == null) return;
+      const y0 = Y2(0), y1 = Y2(v);
+      g += '<rect x="' + (X(i) - lebar / 2).toFixed(1) + '" y="' + Math.min(y0, y1).toFixed(1) + '" width="' + lebar.toFixed(1) + '" height="' + Math.max(0.6, Math.abs(y1 - y0)).toFixed(1) + '" class="macd-batang ' + (v >= 0 ? "pos" : "neg") + '"/>';
+    });
+    g += garis(data.macd, Y2, "macd-garis");
+    g += garis(data.sinyal, Y2, "macd-sinyal");
+    g += '<line x1="' + X(hari) + '" y1="18" x2="' + X(hari) + '" y2="342" class="macd-kursor"/>';
+    g += '<circle cx="' + X(hari) + '" cy="' + Y1(HARGA[hari]) + '" r="4" class="macd-titik"/>';
+    g += "</svg>";
+    kanvas.innerHTML = g;
+
+    const m = data.macd[hari], s = data.sinyal[hari], hi = data.hist[hari], hk = data.hist[hari - 1];
+    lHari.textContent = "hari ke-" + (hari + 1);
+    let baca;
+    if (hk != null && Math.sign(hi) !== Math.sign(hk)) {
+      baca = hi > 0
+        ? "<b>Persilangan ke atas:</b> MACD baru saja memotong garis sinyal dari bawah — histogram berubah dari merah ke hijau. Banyak pedagang membacanya sebagai tanda momentum berbalik naik."
+        : "<b>Persilangan ke bawah:</b> MACD baru saja memotong garis sinyal dari atas — histogram berubah dari hijau ke merah. Momentum naik kehilangan tenaga.";
+    } else if (hi > 0) {
+      baca = hi > hk ? "MACD di atas garis sinyal dan histogram <b>membesar</b>: momentum naik sedang menguat." : "MACD masih di atas garis sinyal, tapi histogram <b>mengecil</b>: momentum naik mulai melemah.";
+    } else {
+      baca = hi < hk ? "MACD di bawah garis sinyal dan histogram merah <b>memanjang</b>: tekanan turun sedang menguat." : "MACD masih di bawah garis sinyal, tapi histogram merah <b>memendek</b>: tekanan turun mulai mereda.";
+    }
+    if (hari < 60) baca += " <i>Perhatikan: pada fase harga datar ini, persilangan datang silih berganti — kebanyakan sinyalnya palsu.</i>";
+    out.innerHTML =
+      '<div class="dm-line"><span>Harga penutupan</span><b>Rp' + angka(HARGA[hari]) + "</b></div>" +
+      '<div class="dm-line"><span>EMA ' + P[0] + " (cepat)</span><b>" + angka(data.cepat[hari], 1) + "</b></div>" +
+      '<div class="dm-line"><span>EMA ' + P[1] + " (lambat)</span><b>" + angka(data.lambat[hari], 1) + "</b></div>" +
+      '<div class="dm-line"><span>MACD = cepat − lambat</span><b>' + angka(m, 1) + "</b></div>" +
+      '<div class="dm-line"><span>Sinyal = EMA ' + P[2] + " dari MACD</span><b>" + angka(s, 1) + "</b></div>" +
+      '<div class="dm-line big ' + (hi >= 0 ? "good" : "bad") + '"><span>Histogram = MACD − sinyal</span><b>' + angka(hi, 1) + "</b></div>" +
+      '<div class="dm-note">' + baca + "</div>";
+  }
+  function setel(p) {
+    P = p;
+    hitung();
+    slider.min = String(data.mulai + 1);
+    slider.max = String(n - 1);
+    hari = Math.min(Math.max(hari || 70, data.mulai + 1), n - 1);
+    slider.value = String(hari);
+    draw();
+  }
+  slider.addEventListener("input", () => { hari = +slider.value; draw(); });
+  const pilihan = [[12, 26, 9], [5, 35, 5]].map((p) => {
+    const b = h("button", { class: "btn ghost", type: "button", text: p.join(" / ") + (p[0] === 12 ? " (standar)" : "") });
+    b.onclick = () => { pilihan.forEach((x) => x.classList.toggle("aktif", x === b)); setel(p); };
+    return b;
+  });
+  pilihan[0].classList.add("aktif");
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Grafik harga, MACD & histogram</b>" }),
+    h("p", { class: "demo-hint", text: "Harga contoh 140 hari (bukan saham sungguhan). Geser hari untuk membaca nilai MACD, garis sinyal, dan histogramnya." }),
+    h("div", { class: "demo-controls" }, pilihan),
+    kanvas,
+    h("div", { class: "dm-row" }, [h("span", { text: "Geser:" }), slider, lHari]),
+    h("div", { class: "macd-legenda", html: '<span class="lg-harga">harga</span><span class="lg-cepat">EMA cepat</span><span class="lg-lambat">EMA lambat</span><span class="lg-macd">MACD</span><span class="lg-sinyal">sinyal</span>' }),
+    out,
+  ]));
+  setel([12, 26, 9]);
+};
+
+/* ---------- Demo: volatilitas, drawdown & histogram return harian ---------- */
+DEMOS["volatil-histogram"] = function (root) {
+  // Dua saham contoh 250 hari bursa (dibuat dengan rumus tetap, bukan saham sungguhan)
+  function seri(seed, sd, drift) {
+    let s = seed, x = 1000;
+    const u = () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; };
+    const p = [x], r = [];
+    for (let i = 0; i < 250; i++) {
+      const ret = drift + sd * (u() + u() + u() - 1.5) * 2;
+      r.push(ret);
+      x = x * (1 + ret);
+      p.push(x);
+    }
+    return { p: p, r: r };
+  }
+  const SAHAM = [
+    Object.assign({ nama: "Saham A — tenang" }, seri(32, 0.008, 0.0006)),
+    Object.assign({ nama: "Saham B — liar" }, seri(211, 0.03, 0.0011)),
+  ];
+  SAHAM.forEach((o) => {
+    const m = o.r.reduce((a, b) => a + b, 0) / o.r.length;
+    o.rata = m;
+    o.sd = Math.sqrt(o.r.reduce((a, b) => a + (b - m) * (b - m), 0) / (o.r.length - 1));
+    let pk = o.p[0], ip = 0, cp = 0;
+    o.mdd = 0; o.iPuncak = 0; o.iDasar = 0;
+    o.puncak = o.p.map((v, i) => {
+      if (v > pk) { pk = v; cp = i; }
+      const d = v / pk - 1;
+      if (d < o.mdd) { o.mdd = d; o.iDasar = i; ip = cp; o.iPuncak = ip; }
+      return pk;
+    });
+    // histogram: kotak selebar 1%, dari −9% sampai +9%
+    o.bin = new Array(18).fill(0);
+    o.r.forEach((v) => { const k = Math.min(17, Math.max(0, Math.floor(v * 100) + 9)); o.bin[k]++; });
+  });
+  const tinggiMaks = Math.max(...SAHAM.map((o) => Math.max(...o.bin)));
+  const pMin = Math.min(...SAHAM.map((o) => Math.min(...o.p))), pMax = Math.max(...SAHAM.map((o) => Math.max(...o.p)));
+  const persen = (v, d) => (v >= 0 ? "+" : "−") + Math.abs(v * 100).toLocaleString("id-ID", { minimumFractionDigits: d, maximumFractionDigits: d }) + "%";
+  const kanvas = h("div", { class: "dm-viz" });
+  const out = h("div", { class: "dm-out" });
+  let pilih = 1;
+
+  function draw() {
+    const o = SAHAM[pilih];
+    const X0 = 8, W = 504;
+    const X = (i) => X0 + (i / 250) * W;
+    const Y = (v) => 24 + ((pMax - v) / (pMax - pMin)) * 130;
+    let g = '<svg viewBox="0 0 520 340" class="viz-svg tek-svg" role="img" aria-label="Grafik harga dan histogram return harian">';
+    g += '<text x="' + (X0 + W) + '" y="12" text-anchor="end" class="vt-xs">Harga · putus-putus = puncak sejauh ini</text>';
+    [1000, Math.round(pMax / 100) * 100, Math.round(pMin / 100) * 100].forEach((v) => {
+      g += '<line x1="' + X0 + '" y1="' + Y(v) + '" x2="' + (X0 + W) + '" y2="' + Y(v) + '" class="vline dim"/>';
+      g += '<text x="' + (X0 + 2) + '" y="' + (Y(v) - 4) + '" class="vt-xs">' + v.toLocaleString("id-ID") + "</text>";
+    });
+    const jalur = (arr) => arr.map((v, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1)).join("");
+    g += '<path d="' + jalur(o.puncak) + '" class="vol-puncak"/>';
+    g += '<path d="' + jalur(o.p) + '" class="macd-harga"/>';
+    g += '<line x1="' + X(o.iDasar) + '" y1="' + Y(o.puncak[o.iDasar]) + '" x2="' + X(o.iDasar) + '" y2="' + Y(o.p[o.iDasar]) + '" class="vol-dd"/>';
+    g += '<circle cx="' + X(o.iPuncak) + '" cy="' + Y(o.p[o.iPuncak]) + '" r="4" class="macd-titik"/>';
+    g += '<circle cx="' + X(o.iDasar) + '" cy="' + Y(o.p[o.iDasar]) + '" r="4" class="vol-titik-dasar"/>';
+    const kiri = o.iDasar > 125, yLabel = (Y(o.puncak[o.iDasar]) + Y(o.p[o.iDasar])) / 2 + 5;
+    g += '<text x="' + (X(o.iDasar) + (kiri ? -8 : 8)) + '" y="' + yLabel + '" text-anchor="' + (kiri ? "end" : "start") + '" class="vt-xs vol-label">drawdown ' + persen(o.mdd, 1) + "</text>";
+    // histogram
+    const HY = 318, HH = 112, bw = W / 18;
+    g += '<text x="' + (X0 + W) + '" y="186" text-anchor="end" class="vt-xs">Histogram return harian (jumlah hari)</text>';
+    o.bin.forEach((c, k) => {
+      const t = (c / tinggiMaks) * HH;
+      g += '<rect x="' + (X0 + k * bw + 2).toFixed(1) + '" y="' + (HY - t).toFixed(1) + '" width="' + (bw - 4).toFixed(1) + '" height="' + Math.max(t, c ? 1 : 0).toFixed(1) + '" class="macd-batang ' + (k >= 9 ? "pos" : "neg") + '"/>';
+      if (c) g += '<text x="' + (X0 + k * bw + bw / 2).toFixed(1) + '" y="' + (HY - t - 4).toFixed(1) + '" text-anchor="middle" class="vt-xs vol-n">' + c + "</text>";
+    });
+    g += '<line x1="' + X0 + '" y1="' + HY + '" x2="' + (X0 + W) + '" y2="' + HY + '" class="vline dim"/>';
+    [-6, -3, 0, 3, 6].forEach((v) => {
+      g += '<text x="' + (X0 + (v + 9) * bw).toFixed(1) + '" y="' + (HY + 17) + '" text-anchor="middle" class="vt-xs">' + (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v) + "%</text>";
+    });
+    g += "</svg>";
+    kanvas.innerHTML = g;
+
+    const akhir = o.p[250] / o.p[0] - 1;
+    out.innerHTML =
+      '<div class="dm-line"><span>Hasil setahun (1.000 → ' + Math.round(o.p[250]).toLocaleString("id-ID") + ")</span><b>" + persen(akhir, 1) + "</b></div>" +
+      '<div class="dm-line"><span>Volatilitas harian (simpangan baku return)</span><b>' + persen(o.sd, 2).slice(1) + "</b></div>" +
+      '<div class="dm-line"><span>Volatilitas tahunan ≈ harian × √250</span><b>' + persen(o.sd * Math.sqrt(250), 0).slice(1) + "</b></div>" +
+      '<div class="dm-line big ' + (o.mdd > -0.15 ? "good" : "bad") + '"><span>Drawdown terdalam (puncak → dasar)</span><b>' + persen(o.mdd, 1) + "</b></div>" +
+      '<div class="dm-note">Untuk kembali ke puncak dari dasar itu, harga harus naik <b>' + persen(1 / (1 + o.mdd) - 1, 1) + "</b>. " +
+      (pilih === 1
+        ? "Hasil akhirnya hampir sama dengan Saham A, tapi di tengah jalan nilainya sempat merosot " + persen(o.mdd, 1).slice(1) + " dari puncak. Histogramnya melebar: hari naik/turun 4–7% sering terjadi."
+        : "Histogramnya ramping dan tinggi: hampir semua hari bergerak di bawah 2%. Perjalanannya tenang dan drawdown-nya dangkal.") + "</div>";
+  }
+  const tombol = SAHAM.map((o, i) => {
+    const b = h("button", { class: "btn ghost" + (i === pilih ? " aktif" : ""), type: "button", text: o.nama });
+    b.onclick = () => { pilih = i; tombol.forEach((x, j) => x.classList.toggle("aktif", j === i)); draw(); };
+    return b;
+  });
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Volatilitas, drawdown &amp; histogram return</b>" }),
+    h("p", { class: "demo-hint", text: "Dua saham contoh, sama-sama mulai dari 1.000 dan setahun kemudian sama-sama untung sekitar 12–15%. Bandingkan perjalanannya." }),
+    h("div", { class: "demo-controls" }, tombol),
+    kanvas,
+    out,
+  ]));
+  draw();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

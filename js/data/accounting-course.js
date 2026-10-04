@@ -4066,7 +4066,7 @@ Tanpa FCF, DCF tidak punya bahan. Tanpa DCF, FCF hanya angka tahunan tanpa kesim
       id: "acc-lanjutan",
       level: "Lanjutan",
       title: "Valuasi Relatif & Multiples",
-      summary: "Menilai harga lewat perbandingan, mulai dari nol: apa itu saham, EPS & PER, lalu PEG, PBV & nilai buku, EV/EBITDA, dan jebakan valuasi relatif.",
+      summary: "Menilai harga lewat perbandingan, mulai dari nol: apa itu saham, EPS & PER, lalu PEG, PBV & nilai buku, EV/EBITDA, berbagai jenis yield, dan jebakan valuasi relatif.",
       lessons: [
         {
           id: "acc-adv-0",
@@ -4388,6 +4388,149 @@ PER membandingkan harga dengan <b>laba</b> (laporan laba rugi). PBV membandingka
                 "EV/EBITDA memperhitungkan utang & mengabaikan efek pajak/pendanaan.",
             },
           ],
+        },
+        {
+          id: "acc-yield-1",
+          title: "Yield — Satu Kata, Banyak Arti",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Di pelajaran Saham, EPS &amp; PER kamu membalik PER PT Kopi Sari menjadi <b>earnings yield</b>: 1 ÷ 15 = <b>6,7%</b>. Di pelajaran Free Cash Flow kamu bertemu <b>FCF yield</b>. Keduanya memakai kata yang sama — <i>yield</i> — karena idenya memang sama.
+</div>
+
+<h3>Satu ide di balik semua yield</h3>
+<p><b>Yield</b> (imbal hasil) menjawab satu pertanyaan: <b>"Dari setiap Rp100 yang kubayar, berapa rupiah yang kembali kepadaku setiap tahun — tanpa harus menjual asetnya?"</b></p>
+<div class="callout">
+<b>Yield = Penghasilan per tahun ÷ Harga yang dibayar</b><br><br>
+Yang berubah dari satu jenis ke jenis lain hanyalah <b>apa yang dihitung sebagai penghasilan</b>: bunga, dividen, laba, kas bebas, uang sewa, atau imbalan token.
+</div>
+<table class="tbl">
+  <tr><th>Jenis yield</th><th>Penghasilan yang dihitung</th><th>Contoh</th></tr>
+  <tr><td>Bunga deposito</td><td>Bunga setahun</td><td>Rp40 rb ÷ Rp1 jt = 4%</td></tr>
+  <tr><td><b>Dividend yield</b></td><td>Dividen tunai per lembar setahun</td><td>PT Kopi Sari: 24 ÷ 600 = 4%</td></tr>
+  <tr><td><b>Earnings yield</b></td><td>Laba per lembar (EPS) = 1 ÷ PER</td><td>40 ÷ 600 = 6,7%</td></tr>
+  <tr><td><b>FCF yield</b></td><td>Arus kas bebas seluruh perusahaan</td><td>30 miliar ÷ 600 miliar = 5%</td></tr>
+  <tr><td>Yield obligasi</td><td>Kupon (bunga) obligasi setahun</td><td>Rp60 rb ÷ Rp900 rb = 6,7%</td></tr>
+  <tr><td>Rental yield</td><td>Uang sewa bersih setahun</td><td>Rp30 jt ÷ Rp1 miliar = 3%</td></tr>
+  <tr><td>Staking yield (crypto)</td><td>Token imbalan setahun</td><td>5 token ÷ 100 token = 5%</td></tr>
+</table>
+
+<h3>1. Dividend yield &amp; payout ratio</h3>
+<p>PT Kopi Sari mencetak EPS <b>Rp40</b>. Misalkan perusahaan membagikan <b>Rp24</b> per lembar sebagai dividen tunai dan menahan sisanya, Rp16, untuk membuka kedai baru.</p>
+<table class="tbl">
+  <tr><th>Ukuran</th><th>Rumus</th><th>PT Kopi Sari</th></tr>
+  <tr><td><b>Dividend yield</b></td><td>Dividen per lembar ÷ Harga</td><td>24 ÷ 600 = <b>4%</b></td></tr>
+  <tr><td><b>Payout ratio</b></td><td>Dividen per lembar ÷ EPS</td><td>24 ÷ 40 = <b>60%</b></td></tr>
+  <tr><td>Earnings yield</td><td>EPS ÷ Harga</td><td>40 ÷ 600 = 6,7%</td></tr>
+</table>
+<p>Bedanya: <b>dividend yield</b> hanya menghitung uang yang benar-benar dibayarkan ke tanganmu; <b>earnings yield</b> menghitung seluruh laba, termasuk bagian yang ditahan untuk tumbuh. Perusahaan yang tidak membagi dividen sama sekali tetap punya earnings yield.</p>
+
+<h3>2. Yield obligasi: kenapa harga dan yield bergerak berlawanan</h3>
+<p><b>Obligasi</b> adalah surat utang. Pemerintah atau perusahaan meminjam uang, membayar <b>kupon</b> (bunga) dalam jumlah tetap setiap tahun, lalu mengembalikan <b>pokoknya</b> saat jatuh tempo. Obligasi bisa diperjualbelikan sebelum jatuh tempo, jadi harganya bisa berubah — tapi kuponnya <b>tidak</b>.</p>
+<p>Contoh: obligasi bernilai pokok Rp1.000.000 dengan kupon 6% → pemegangnya menerima <b>Rp60.000 per tahun</b>, siapa pun pemegangnya dan berapa pun ia membelinya.</p>
+<table class="tbl">
+  <tr><th>Harga obligasi di pasar</th><th>Kupon setahun</th><th>Yield saat ini</th></tr>
+  <tr><td>Rp1.100.000</td><td>Rp60.000</td><td>5,45%</td></tr>
+  <tr><td>Rp1.000.000</td><td>Rp60.000</td><td>6,00%</td></tr>
+  <tr><td>Rp900.000</td><td>Rp60.000</td><td>6,67%</td></tr>
+</table>
+<p>Karena kuponnya tetap, <b>harga turun → yield naik</b>, dan <b>harga naik → yield turun</b>. Kalau suku bunga di pasar naik menjadi 8%, tidak ada yang mau membayar penuh untuk obligasi berkupon 6%, sehingga harganya turun sampai yield-nya kembali menarik. Jadi berita <i>"yield obligasi pemerintah naik"</i> sebenarnya berarti <b>harga obligasinya sedang turun</b>.</p>
+<p>Pembeli di harga Rp900.000 juga akan menerima pokok penuh Rp1.000.000 saat jatuh tempo — untung tambahan Rp100.000. Yield yang ikut menghitung keuntungan itu disebut <b>yield to maturity</b>, dan angkanya lebih tinggi lagi.</p>
+
+<h3>3. Rental yield: kotor vs bersih</h3>
+<p>Rumah seharga Rp1 miliar disewakan Rp40 juta setahun → <b>yield kotor 4%</b>. Tapi pemilik masih membayar PBB, perbaikan, dan menanggung bulan-bulan kosong tanpa penyewa — misalnya Rp10 juta setahun. <b>Yield bersihnya</b> (40 − 10) ÷ 1.000 = <b>3%</b>. Iklan properti hampir selalu menyebut angka kotornya.</p>
+
+<h3>4. Yield crypto: APR, APY, dan dari mana imbalannya</h3>
+<p>Platform crypto memakai dua istilah:</p>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Arti</th><th>Contoh</th></tr>
+  <tr><td><b>APR</b></td><td>Imbal hasil setahun <b>tanpa</b> bunga berbunga</td><td>12%</td></tr>
+  <tr><td><b>APY</b></td><td>Imbal hasil setahun <b>dengan</b> imbalan yang ditanam ulang</td><td>APR 12% dibayar bulanan: (1 + 0,12 ÷ 12)<sup>12</sup> − 1 = <b>12,68%</b></td></tr>
+</table>
+<p>Yang lebih penting dari angkanya adalah <b>sumbernya</b>. Sebagian besar imbalan staking berasal dari <b>token baru yang dicetak</b>. Kalau jumlah token beredar bertambah 6% setahun dan kamu menerima imbalan 6%, porsi kepemilikanmu hanya bertahan — kamu tidak bertambah kaya, kamu hanya tidak ikut terencerkan. Imbalan yang dibayar dari <b>pendapatan biaya sungguhan</b> disebut <i>real yield</i> (dibahas di <a href="#/lesson/bc-defi-2">Staking &amp; Yield Farming</a> dan <a href="#/lesson/bc-ek-3">Dilusi Token &amp; 'Real Yield'</a>).</p>
+<div class="callout warn">
+<b>Yield tidak melindungi dari turunnya harga.</b> Imbalan 10% setahun atas token yang harganya turun 50% tetap rugi besar: 1 × 1,10 × 0,5 = 0,55 → <b>−45%</b>.
+</div>
+
+<h3>5. Yield on cost — angka yang terasa enak tapi menyesatkan</h3>
+<p>Kamu membeli saham PT Kopi Sari bertahun-tahun lalu di Rp400. Dividennya sekarang Rp24 → <b>yield on cost</b> 24 ÷ 400 = 6%. Rasanya hebat. Tapi untuk keputusan <i>hari ini</i> — menahan atau memindahkan uangnya — yang relevan adalah yield saat ini, 24 ÷ 600 = <b>4%</b>, karena itulah yang akan kamu dapat seandainya uang yang sama (Rp600) ditaruh di sini mulai sekarang.</p>
+
+<h3>6. Jebakan yield tinggi</h3>
+<p>Tahun lalu PT Mundur membagikan dividen Rp100 per lembar. Labanya merosot, dan harga sahamnya jatuh dari Rp2.000 ke Rp800. Aplikasi saham sekarang menampilkan dividend yield <b>12,5%</b> (100 ÷ 800) — tiga kali lipat pesaingnya. Tampak murah dan dermawan.</p>
+<p>Masalahnya, angka itu memakai dividen <b>tahun lalu</b>. Pasar menjatuhkan harganya justru karena menduga dividen itu tidak akan bertahan. Kalau tahun ini dividennya dipangkas menjadi Rp20, yield sebenarnya hanya <b>2,5%</b>. Inilah <b>yield trap</b>.</p>
+<table class="tbl">
+  <tr><th>Tanda bahaya</th><th>Kenapa</th></tr>
+  <tr><td>Payout ratio di atas 100%</td><td>Dividen lebih besar dari laba — dibayar dari tabungan atau utang</td></tr>
+  <tr><td>FCF lebih kecil dari total dividen</td><td>Kas bebasnya tidak cukup untuk membayar</td></tr>
+  <tr><td>Utang naik dari tahun ke tahun</td><td>Bisa jadi dividen dibiayai pinjaman</td></tr>
+  <tr><td>Dividen spesial sekali bayar</td><td>Tidak akan berulang tahun depan</td></tr>
+</table>
+<div class="callout">
+<b>Aturan praktis:</b> yield yang jauh lebih tinggi daripada perusahaan sejenis adalah <b>pertanyaan</b>, bukan jawaban. Cari tahu dulu kenapa harganya jatuh.
+</div>
+
+<h3>Yield hanyalah sebagian dari hasil</h3>
+<p>Hasil total sebuah investasi = <b>yield + perubahan harga</b>. Saham dengan dividend yield 2% yang labanya tumbuh 10% per tahun bisa memberi hasil jauh lebih besar daripada saham ber-yield 8% yang labanya terus menyusut. Yield memberitahu apa yang kamu terima sekarang; pertumbuhan menentukan apa yang kamu terima nanti.</p>
+`,
+          keyPoints: [
+            "Semua yield punya ide yang sama: penghasilan per tahun ÷ harga yang dibayar.",
+            "Dividend yield = dividen per lembar ÷ harga; payout ratio = dividen ÷ EPS; earnings yield = EPS ÷ harga = 1 ÷ PER.",
+            "Kupon obligasi tetap, jadi harga obligasi dan yield-nya selalu bergerak berlawanan.",
+            "APY memperhitungkan imbalan yang ditanam ulang; imbalan staking dari pencetakan token baru hanya mencegah pengenceran.",
+            "Yield yang jauh lebih tinggi daripada sejenisnya sering berarti harga jatuh karena dividen diduga akan dipangkas (yield trap)."
+          ],
+          practice: [
+            { type: "number", q: "Dividen Rp150 per lembar setahun, harga saham Rp3.000. Berapa dividend yield-nya? (%)", answer: 5, tol: 0.05, unit: "%", hint: "Dividen per lembar ÷ harga × 100%.", solution: "150 ÷ 3.000 = 5%." },
+            { type: "number", q: "Obligasi berkupon Rp70.000 setahun dibeli di harga Rp875.000. Berapa yield saat ini? (%)", answer: 8, tol: 0.05, unit: "%", hint: "Kupon setahun ÷ harga obligasi.", solution: "70.000 ÷ 875.000 = 8%." },
+            { type: "number", q: "Sebuah platform menawarkan APR 12% yang dibayar dan ditanam ulang setiap bulan. Berapa APY-nya? (%)", answer: 12.68, tol: 0.05, unit: "%", hint: "(1 + 0,12 ÷ 12) pangkat 12, lalu dikurangi 1.", solution: "1,01 pangkat 12 = 1,1268 → APY 12,68%." }
+          ],
+          quiz: [
+            {
+              q: "Apa ide yang sama di balik semua jenis yield?",
+              options: [
+                "Penghasilan per tahun dibagi harga yang dibayar",
+                "Kenaikan harga aset selama satu tahun terakhir",
+                "Laba bersih perusahaan dibagi jumlah sahamnya",
+                "Selisih harga beli dan harga jual pada hari ini"
+              ],
+              answer: 0,
+              explain: "Bunga, dividen, laba, kas bebas, sewa, atau imbalan token — semuanya dibagi harga yang dibayar."
+            },
+            {
+              q: "Berita: 'yield obligasi pemerintah naik tajam'. Apa yang terjadi pada harga obligasinya?",
+              options: [
+                "Harganya turun",
+                "Harganya naik",
+                "Harganya tetap",
+                "Kuponnya naik"
+              ],
+              answer: 0,
+              explain: "Kupon obligasi tetap. Yield hanya bisa naik kalau harga yang dibayar untuk kupon itu turun."
+            },
+            {
+              q: "Dividend yield sebuah saham 14%, sementara perusahaan sejenis sekitar 4%. Sikap yang paling tepat?",
+              options: [
+                "Selidiki kenapa harganya jatuh dan apakah dividennya bertahan",
+                "Segera beli, karena yield-nya tiga kali lipat pesaingnya",
+                "Abaikan, karena dividend yield tidak ada artinya sama sekali",
+                "Tunggu sampai yield-nya naik lagi menjadi 20% lebih dulu"
+              ],
+              answer: 0,
+              explain: "Yield setinggi itu biasanya muncul karena harga jatuh; pasar sering menduga dividennya akan dipangkas."
+            },
+            {
+              q: "Staking memberi imbalan 6% setahun, dan jumlah token beredar juga bertambah 6% setahun dari pencetakan baru. Apa artinya bagi yang ikut staking?",
+              options: [
+                "Porsi kepemilikannya kira-kira tetap, bukan bertambah",
+                "Kekayaannya pasti bertambah 6% bila dihitung dalam rupiah",
+                "Ia rugi 6% karena jumlah token beredar ikut bertambah",
+                "Tidak ada hubungan antara pencetakan token dan imbalan"
+              ],
+              answer: 0,
+              explain: "Imbalan dari pencetakan baru hanya mengimbangi pengenceran. Yang tidak ikut staking justru porsinya menyusut."
+            }
+          ]
         },
         {
           id: "acc-adv-5",
@@ -7385,7 +7528,711 @@ Bedanya hanya nol di belakang angkanya.
         },
       ],
     },
-    /* ---------------- MODUL 16: EKONOMI MAKRO UNTUK BISNIS ---------------- */
+    /* ---------------- MODUL 16: MEMBACA GRAFIK HARGA: ANALISIS TEKNIKAL ---------------- */
+    {
+      id: "acc-teknikal",
+      level: "Teknikal",
+      title: "Membaca Grafik Harga: Analisis Teknikal",
+      summary: "Candlestick, volume & tren, moving average, MACD & histogram, RSI, support-resistance, volatilitas & drawdown — dibahas jujur beserta batasnya, lalu ditutup kamus cepat semua metrik investasi.",
+      lessons: [
+        {
+          id: "acc-tek-1",
+          title: "Membaca Grafik Harga — Candlestick, Volume & Tren",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Harga saham terbentuk dari tawar-menawar pembeli dan penjual di bursa setiap hari (pelajaran Saham, EPS &amp; PER). Di modul Valuasi kamu menilai apakah harga itu wajar dengan membandingkannya terhadap laba, ekuitas, dan arus kas. Modul ini melihat dari sisi yang sama sekali lain: <b>pola gerak harganya sendiri</b>.
+</div>
+
+<h3>Dua cara memandang saham yang sama</h3>
+<table class="tbl">
+  <tr><th></th><th>Analisis fundamental</th><th>Analisis teknikal</th></tr>
+  <tr><td>Pertanyaan utama</td><td>Berapa nilai bisnis ini?</td><td>Ke mana harga cenderung bergerak, dan kapan?</td></tr>
+  <tr><td>Bahan bakunya</td><td>Laporan keuangan</td><td>Harga dan volume perdagangan</td></tr>
+  <tr><td>Rentang waktu</td><td>Tahunan</td><td>Hitungan menit sampai bulan</td></tr>
+  <tr><td>Alatnya</td><td>PER, PBV, ROE, DCF</td><td>Candlestick, moving average, MACD, RSI</td></tr>
+</table>
+<p>Grafik dan indikator teknikal adalah layar pertama yang muncul di hampir setiap aplikasi saham dan bursa crypto. Memahami artinya membuatmu tidak mudah terpukau oleh "sinyal" yang beredar di media sosial. Seberapa bisa diandalkan alat-alat ini dibahas jujur di akhir modul.</p>
+<div class="callout warn">
+<b>Bukan ajakan trading.</b> Modul ini menjelaskan cara orang membaca grafik, bukan rekomendasi untuk membeli atau menjual apa pun.
+</div>
+
+<h3>Candlestick: empat harga dalam satu batang</h3>
+<p>Satu batang <b>candlestick</b> (lilin) merangkum satu periode — bisa sehari, sejam, atau seminggu, tergantung pilihan di aplikasi. Ia memuat empat harga sekaligus:</p>
+<table class="tbl">
+  <tr><th>Harga</th><th>Arti</th><th>Letaknya di lilin</th></tr>
+  <tr><td><b>Open</b> (buka)</td><td>Harga transaksi pertama periode itu</td><td>Salah satu ujung badan</td></tr>
+  <tr><td><b>Close</b> (tutup)</td><td>Harga transaksi terakhir</td><td>Ujung badan yang lain</td></tr>
+  <tr><td><b>High</b> (tertinggi)</td><td>Harga paling tinggi yang sempat terjadi</td><td>Ujung atas sumbu</td></tr>
+  <tr><td><b>Low</b> (terendah)</td><td>Harga paling rendah yang sempat terjadi</td><td>Ujung bawah sumbu</td></tr>
+</table>
+<div data-demo="lilin"></div>
+<p>Badan <b>hijau</b> berarti harga tutup lebih tinggi daripada harga buka — harga naik selama periode itu. Badan <b>merah</b> berarti sebaliknya. Hati-hati: di beberapa bursa Asia Timur seperti Tiongkok, warnanya terbalik — merah justru berarti naik.</p>
+<p>Bentuk lilin juga bercerita:</p>
+<ul>
+  <li><b>Badan panjang, sumbu pendek</b> — satu pihak (pembeli atau penjual) menguasai hampir sepanjang hari.</li>
+  <li><b>Sumbu atas panjang</b> — pembeli sempat mendorong harga tinggi, tapi penjual menekannya kembali sebelum tutup.</li>
+  <li><b>Badan sangat tipis</b> (disebut <i>doji</i>) — harga tutup hampir sama dengan harga buka: pembeli dan penjual sama kuat, pasar ragu.</li>
+</ul>
+
+<h3>Volume: berapa banyak yang ikut setuju</h3>
+<p><b>Volume</b> adalah jumlah saham (atau token) yang berpindah tangan dalam satu periode, biasanya digambar sebagai batang di bawah grafik harga. Harga memberitahu <i>apa</i> yang terjadi; volume memberitahu <i>seberapa banyak</i> orang yang terlibat.</p>
+<table class="tbl">
+  <tr><th>Harga</th><th>Volume</th><th>Bacaan umum</th></tr>
+  <tr><td>Naik</td><td>Besar</td><td>Banyak yang ikut membeli — kenaikan lebih meyakinkan</td></tr>
+  <tr><td>Naik</td><td>Kecil</td><td>Hanya sedikit transaksi — kenaikan kurang meyakinkan, mudah berbalik</td></tr>
+  <tr><td>Turun</td><td>Besar</td><td>Banyak yang buru-buru menjual — tekanan jual kuat</td></tr>
+</table>
+<p>Saham yang sepi transaksi juga mudah "digoreng": sedikit uang saja sudah cukup untuk menggerakkan harganya.</p>
+
+<h3>Tren: arah besar di balik naik-turun harian</h3>
+<p>Harga tidak pernah naik lurus. Yang dicari adalah pola <b>puncak</b> dan <b>lembah</b>-nya:</p>
+<table class="tbl">
+  <tr><th>Tren</th><th>Cirinya</th></tr>
+  <tr><td><b>Naik</b> (uptrend)</td><td>Puncak makin tinggi <b>dan</b> lembah makin tinggi</td></tr>
+  <tr><td><b>Turun</b> (downtrend)</td><td>Puncak makin rendah <b>dan</b> lembah makin rendah</td></tr>
+  <tr><td><b>Mendatar</b> (sideways)</td><td>Harga bolak-balik di antara dua batas tanpa arah jelas</td></tr>
+</table>
+<p>Tren juga bergantung pada <b>rentang waktu</b> yang dilihat. Saham yang sedang turun dalam grafik harian bisa saja masih naik dalam grafik mingguan. Karena itu, sebutkan selalu rentang waktunya: "tren naik di grafik mingguan".</p>
+`,
+          keyPoints: [
+            "Analisis fundamental menilai bisnis dari laporan keuangan; analisis teknikal membaca pola harga dan volume.",
+            "Satu candlestick memuat harga buka, tutup, tertinggi, dan terendah; hijau berarti tutup lebih tinggi daripada buka.",
+            "Sumbu panjang menunjukkan harga sempat ke sana lalu ditolak; doji menunjukkan pembeli dan penjual sama kuat.",
+            "Kenaikan dengan volume besar lebih meyakinkan daripada kenaikan dengan volume kecil.",
+            "Tren naik = puncak dan lembah makin tinggi; tren selalu bergantung pada rentang waktu grafiknya."
+          ],
+          practice: [
+            { type: "number", q: "Lilin harian: buka Rp1.200, tutup Rp1.260. Berapa persen kenaikan hari itu? (%)", answer: 5, tol: 0.05, unit: "%", hint: "(Tutup − buka) ÷ buka × 100%.", solution: "(1.260 − 1.200) ÷ 1.200 = 5%." },
+            { type: "choice", q: "Lilin harian: buka 500, tertinggi 520, terendah 465, tutup 470. Warna badannya?", options: ["Hijau, karena harga tertinggi 520", "Merah, karena tutup lebih rendah dari buka", "Hijau, karena terendah lebih rendah dari tutup", "Tidak berwarna, karena ini doji"], answer: 1, hint: "Bandingkan harga tutup dengan harga buka.", solution: "Tutup 470 lebih rendah daripada buka 500, jadi badannya merah." },
+            { type: "choice", q: "Tiga puncak terakhir: 100, 110, 125. Tiga lembah terakhir: 90, 98, 112. Trennya?", options: ["Tren naik", "Tren turun", "Mendatar", "Tidak bisa dibaca"], answer: 0, hint: "Lihat apakah puncak dan lembah sama-sama makin tinggi.", solution: "Puncak dan lembah sama-sama makin tinggi → tren naik." }
+          ],
+          quiz: [
+            {
+              q: "Pada candlestick, apa arti badan berwarna hijau?",
+              options: [
+                "Harga tutup lebih tinggi daripada harga buka",
+                "Volume hari itu lebih besar daripada kemarin",
+                "Harga tertinggi hari itu memecahkan rekor baru",
+                "Perusahaan baru mengumumkan laba yang naik"
+              ],
+              answer: 0,
+              explain: "Warna badan hanya membandingkan harga tutup dengan harga buka pada periode itu."
+            },
+            {
+              q: "Harga naik tajam, tapi volumenya sangat kecil. Bagaimana membacanya?",
+              options: [
+                "Kenaikannya kurang meyakinkan karena sedikit yang ikut",
+                "Kenaikannya pasti berlanjut karena penjual sudah habis",
+                "Volume tidak berpengaruh pada arti kenaikan harga",
+                "Itu tanda perusahaan baru menerbitkan saham baru"
+              ],
+              answer: 0,
+              explain: "Kenaikan yang hanya didukung sedikit transaksi mudah berbalik, dan saham yang sepi mudah digerakkan."
+            },
+            {
+              q: "Apa ciri tren naik (uptrend)?",
+              options: [
+                "Puncak dan lembah harganya makin lama makin tinggi",
+                "Setiap hari candlestick-nya selalu berwarna hijau",
+                "Volume perdagangannya naik terus setiap harinya",
+                "Harga selalu di atas harga pembukaan awal tahun"
+              ],
+              answer: 0,
+              explain: "Tren naik tetap punya hari-hari merah; yang penting puncak dan lembahnya terus naik."
+            }
+          ]
+        },
+        {
+          id: "acc-tek-2",
+          title: "Moving Average — Meratakan Harga yang Berisik",
+          duration: "13 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Rata-rata</b> = jumlah semua data ÷ banyaknya data. Di pelajaran sebelumnya kamu melihat harga naik-turun setiap hari; arah besarnya (tren) sulit dilihat dari satu-dua batang candlestick saja.
+</div>
+
+<h3>Moving average: rata-rata yang ikut berjalan</h3>
+<p><b>Moving average</b> (MA, rata-rata bergerak) adalah rata-rata harga penutupan beberapa hari terakhir. Disebut "bergerak" karena setiap hari jendelanya bergeser: hari terlama dibuang, hari terbaru dimasukkan. Hasilnya digambar sebagai garis halus yang menembus naik-turun harga harian.</p>
+<div class="callout">
+<b>SMA (Simple Moving Average) n hari</b> = jumlah harga tutup n hari terakhir ÷ n
+</div>
+<p>Contoh harga tutup tujuh hari: 100, 102, 101, 105, 107, 106, 110. SMA 3 hari baru bisa dihitung mulai hari ke-3:</p>
+<table class="tbl">
+  <tr><th>Hari</th><th>Harga</th><th>SMA 3</th><th>EMA 3</th></tr>
+  <tr><td>1</td><td>100</td><td>—</td><td>—</td></tr>
+  <tr><td>2</td><td>102</td><td>—</td><td>—</td></tr>
+  <tr><td>3</td><td>101</td><td>(100 + 102 + 101) ÷ 3 = 101,00</td><td>101,00 (awalnya = SMA)</td></tr>
+  <tr><td>4</td><td>105</td><td>102,67</td><td>103,00</td></tr>
+  <tr><td>5</td><td>107</td><td>104,33</td><td>105,00</td></tr>
+  <tr><td>6</td><td>106</td><td>106,00</td><td>105,50</td></tr>
+  <tr><td>7</td><td>110</td><td>107,67</td><td>107,75</td></tr>
+</table>
+
+<h3>EMA: memberi suara lebih besar pada hari terbaru</h3>
+<p>SMA memperlakukan semua hari sama penting. <b>EMA</b> (Exponential Moving Average) memberi bobot lebih besar pada harga terbaru, sehingga lebih cepat bereaksi.</p>
+<div class="callout">
+<b>EMA hari ini = Harga hari ini × k + EMA kemarin × (1 − k)</b><br>
+dengan <b>k = 2 ÷ (n + 1)</b>. Untuk EMA 3 hari, k = 2 ÷ 4 = 0,5.<br><br>
+Hari ke-4: 105 × 0,5 + 101 × 0,5 = <b>103</b><br>
+Hari ke-5: 107 × 0,5 + 103 × 0,5 = <b>105</b>
+</div>
+<p>Lihat hari ke-4 di tabel: harga melompat ke 105. EMA langsung naik ke 103, sementara SMA baru 102,67. Itulah arti "lebih cepat bereaksi". Untuk EMA yang lebih panjang, k lebih kecil — EMA 12 hari memakai k = 2 ÷ 13 ≈ 0,15 — sehingga satu hari baru tidak terlalu menggeser garisnya.</p>
+
+<h3>MA yang paling sering dipakai</h3>
+<table class="tbl">
+  <tr><th>MA</th><th>Kira-kira mewakili</th><th>Dipakai untuk</th></tr>
+  <tr><td>20 hari</td><td>Sebulan hari bursa</td><td>Tren jangka pendek</td></tr>
+  <tr><td>50 hari</td><td>Sekitar 2,5 bulan</td><td>Tren jangka menengah</td></tr>
+  <tr><td>200 hari</td><td>Hampir setahun hari bursa</td><td>Tren jangka panjang</td></tr>
+</table>
+<p>Kebiasaan umum: harga di atas MA 200 dianggap berada dalam tren naik jangka panjang. Saat <b>MA 50 memotong MA 200 dari bawah ke atas</b>, peristiwanya dijuluki <b>golden cross</b>; saat memotong dari atas ke bawah, disebut <b>death cross</b>. Julukannya dramatis, tapi isinya sederhana: rata-rata jangka menengah baru saja melewati rata-rata jangka panjang.</p>
+
+<h3>Kelemahan utama: selalu terlambat</h3>
+<p>MA dihitung dari harga hari-hari yang <b>sudah lewat</b>, jadi ia selalu tertinggal dari harga (<i>lag</i>). Saat golden cross terjadi, harga biasanya sudah naik cukup jauh.</p>
+<table class="tbl">
+  <tr><th></th><th>MA pendek (mis. 10 hari)</th><th>MA panjang (mis. 200 hari)</th></tr>
+  <tr><td>Kecepatan</td><td class="ok-cell">Cepat mengikuti perubahan</td><td>Lambat</td></tr>
+  <tr><td>Sinyal palsu</td><td>Banyak — ikut tertipu gerak acak</td><td class="ok-cell">Sedikit — garisnya halus</td></tr>
+</table>
+<p>Saat harga bergerak <b>mendatar</b>, harga dan MA saling silang berkali-kali. Setiap silangan tampak seperti sinyal, padahal tidak ada tren sama sekali. Pedagang menyebut kerugian akibat sinyal bolak-balik ini <i>whipsaw</i>.</p>
+`,
+          keyPoints: [
+            "SMA n hari = rata-rata harga tutup n hari terakhir; jendelanya bergeser setiap hari.",
+            "EMA hari ini = harga × k + EMA kemarin × (1 − k), dengan k = 2 ÷ (n + 1); EMA lebih cepat bereaksi daripada SMA.",
+            "MA 20, 50, dan 200 hari mewakili tren pendek, menengah, dan panjang.",
+            "Golden cross: MA 50 memotong MA 200 ke atas; death cross: memotong ke bawah.",
+            "MA selalu terlambat dan sering memberi sinyal palsu saat harga mendatar."
+          ],
+          practice: [
+            { type: "number", q: "Harga tutup tiga hari terakhir: 200, 210, 220. Berapa SMA 3 hari-nya?", answer: 210, tol: 0.1, hint: "Jumlahkan lalu bagi 3.", solution: "(200 + 210 + 220) ÷ 3 = 210." },
+            { type: "number", q: "EMA kemarin 100, harga hari ini 110, k = 0,5. Berapa EMA hari ini?", answer: 105, tol: 0.1, hint: "Harga × k + EMA kemarin × (1 − k).", solution: "110 × 0,5 + 100 × 0,5 = 105." },
+            { type: "number", q: "Berapa nilai k untuk EMA 9 hari?", answer: 0.2, tol: 0.001, hint: "k = 2 ÷ (n + 1).", solution: "2 ÷ (9 + 1) = 0,2." }
+          ],
+          quiz: [
+            {
+              q: "Kenapa garis moving average selalu 'terlambat' mengikuti harga?",
+              options: [
+                "Ia dihitung dari harga hari-hari yang sudah lewat",
+                "Aplikasi saham sengaja menundanya agar tidak membingungkan",
+                "Ia hanya diperbarui sekali seminggu oleh bursa efek",
+                "Ia memakai harga pembukaan, bukan harga penutupan"
+              ],
+              answer: 0,
+              explain: "Rata-rata masa lalu baru bergeser setelah harga baru masuk ke dalam hitungannya."
+            },
+            {
+              q: "Apa beda utama EMA dibanding SMA?",
+              options: [
+                "EMA memberi bobot lebih besar pada harga terbaru",
+                "EMA hanya memakai harga tertinggi pada setiap hari",
+                "EMA dihitung dari volume, bukan dari harga saham",
+                "EMA selalu lebih tinggi daripada harga hari ini"
+              ],
+              answer: 0,
+              explain: "Bobot k diberikan pada harga hari ini, sisanya pada EMA kemarin — hari terbaru paling berpengaruh."
+            },
+            {
+              q: "Apa yang dimaksud golden cross?",
+              options: [
+                "MA 50 hari memotong MA 200 hari dari bawah ke atas",
+                "Harga emas dunia naik melewati rekor tertingginya",
+                "Harga saham naik dua kali lipat dalam setahun",
+                "MA 200 hari memotong MA 50 hari dari bawah ke atas"
+              ],
+              answer: 0,
+              explain: "Rata-rata jangka menengah melewati rata-rata jangka panjang; kebalikannya disebut death cross."
+            }
+          ]
+        },
+        {
+          id: "acc-tek-3",
+          title: "MACD & Histogram — Mengukur Tenaga Tren",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>EMA</b> adalah rata-rata bergerak yang memberi bobot lebih besar pada harga terbaru, dengan k = 2 ÷ (n + 1). EMA pendek bereaksi cepat; EMA panjang bereaksi lambat. Kalau harga terus naik, EMA pendek akan berada di atas EMA panjang.
+</div>
+
+<h3>Idenya: seberapa jauh dua EMA saling menjauh</h3>
+<p>Bayangkan dua pelari: si cepat (EMA 12 hari) dan si lambat (EMA 26 hari). Saat harga mulai naik kencang, si cepat melesat duluan dan <b>jaraknya</b> dari si lambat makin lebar. Saat kenaikan kehilangan tenaga, si cepat melambat dan jaraknya menyempit — bahkan sebelum harga benar-benar berbalik turun.</p>
+<p>Jarak itulah yang diukur <b>MACD</b> — <i>Moving Average Convergence Divergence</i>: dua rata-rata yang saling mendekat (<i>convergence</i>) atau menjauh (<i>divergence</i>). Indikator ini diperkenalkan Gerald Appel pada akhir 1970-an; histogramnya ditambahkan Thomas Aspray pada 1986.</p>
+
+<h3>Tiga bagian MACD</h3>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Rumus</th><th>Membaca apa</th></tr>
+  <tr><td><b>Garis MACD</b></td><td>EMA 12 − EMA 26 (dari harga tutup)</td><td>Arah dan tenaga tren</td></tr>
+  <tr><td><b>Garis sinyal</b></td><td>EMA 9 dari garis MACD</td><td>Rata-rata MACD itu sendiri</td></tr>
+  <tr><td><b>Histogram</b></td><td>Garis MACD − garis sinyal</td><td>Apakah tenaga itu sedang bertambah atau berkurang</td></tr>
+</table>
+<p>Contoh satu hari: EMA 12 = 1.105 dan EMA 26 = 1.090 → MACD = <b>15</b>. Garis sinyalnya 12 → histogram = 15 − 12 = <b>+3</b>.</p>
+
+<h3>Mengikuti histogram dari hari ke hari</h3>
+<p>Garis sinyal adalah EMA 9 dari MACD, jadi k = 2 ÷ 10 = 0,2. Perhatikan lima hari berikut:</p>
+<table class="tbl">
+  <tr><th>Hari</th><th>MACD</th><th>Sinyal</th><th>Histogram</th><th>Bacaan</th></tr>
+  <tr><td>1</td><td>10</td><td>6,0</td><td class="ok-cell">+4,0</td><td>MACD di atas sinyal</td></tr>
+  <tr><td>2</td><td>13</td><td>7,4</td><td class="ok-cell">+5,6</td><td>Membesar: tenaga naik menguat</td></tr>
+  <tr><td>3</td><td>14</td><td>8,7</td><td class="ok-cell">+5,3</td><td>Mulai mengecil</td></tr>
+  <tr><td>4</td><td>12</td><td>9,4</td><td class="ok-cell">+2,6</td><td>Melemah, walau MACD masih tinggi</td></tr>
+  <tr><td>5</td><td>9</td><td>9,3</td><td class="bad-cell">−0,3</td><td>Persilangan ke bawah</td></tr>
+</table>
+<p>Hari ke-2: sinyal = 13 × 0,2 + 6,0 × 0,8 = 7,4. Hari ke-3: 14 × 0,2 + 7,4 × 0,8 = 8,7, dan seterusnya.</p>
+<p>Yang penting: <b>histogram sudah menyusut sejak hari ke-3</b>, dua hari sebelum MACD memotong garis sinyal. Histogram adalah selisih MACD terhadap rata-ratanya sendiri, sehingga ia mengukur <b>percepatan</b> — seperti speedometer yang menunjukkan mobil mulai mengerem walau masih melaju maju.</p>
+
+<h3>Coba sendiri</h3>
+<div data-demo="macd-grafik"></div>
+
+<h3>Cara orang membaca MACD</h3>
+<table class="tbl">
+  <tr><th>Yang terlihat</th><th>Bacaan umum</th></tr>
+  <tr><td>MACD di atas nol</td><td>EMA pendek di atas EMA panjang — harga belakangan lebih tinggi dari rata-rata jangka menengahnya</td></tr>
+  <tr><td>MACD memotong sinyal ke atas</td><td>Histogram berubah dari merah ke hijau — momentum berbalik naik</td></tr>
+  <tr><td>Histogram hijau memendek</td><td>Kenaikan kehilangan tenaga</td></tr>
+  <tr><td>Histogram merah memendek</td><td>Tekanan turun mereda</td></tr>
+  <tr><td><b>Divergensi</b>: harga mencetak puncak baru, tapi puncak MACD lebih rendah</td><td>Kenaikan terakhir lebih lemah dari sebelumnya — peringatan klasik</td></tr>
+</table>
+
+<h3>Batas-batas MACD</h3>
+<ul>
+  <li><b>Sinyal palsu saat pasar mendatar.</b> Geser demo ke 60 hari pertama: persilangan datang silih berganti tanpa tren yang berarti.</li>
+  <li><b>Tetap terlambat.</b> MACD dibangun dari EMA, jadi ia mewarisi kelambatannya.</li>
+  <li><b>Satuannya rupiah.</b> MACD 15 pada saham seharga Rp1.000 jauh lebih berarti daripada MACD 15 pada saham Rp10.000. Angka MACD dua saham berbeda tidak bisa dibandingkan langsung.</li>
+  <li><b>Pengaturan 12/26/9 bukan hukum alam.</b> Itu hanya kebiasaan. Mengubahnya menghasilkan sinyal di hari-hari yang berbeda — coba tombol 5/35/5 di demo.</li>
+</ul>
+`,
+          keyPoints: [
+            "Garis MACD = EMA 12 − EMA 26; garis sinyal = EMA 9 dari MACD; histogram = MACD − sinyal.",
+            "MACD di atas nol berarti EMA pendek di atas EMA panjang.",
+            "Histogram mengukur percepatan: ia sering menyusut sebelum MACD memotong garis sinyal.",
+            "Persilangan MACD dan sinyal mengubah warna histogram; divergensi dengan harga adalah peringatan klasik.",
+            "MACD terlambat, sering salah saat harga mendatar, dan satuannya rupiah sehingga tak bisa dibandingkan antar-saham."
+          ],
+          practice: [
+            { type: "number", q: "EMA 12 = 2.050, EMA 26 = 2.020, garis sinyal = 24. Berapa nilai histogramnya?", answer: 6, tol: 0.1, hint: "Hitung MACD dulu, lalu kurangi sinyal.", solution: "MACD = 2.050 − 2.020 = 30; histogram = 30 − 24 = 6." },
+            { type: "number", q: "MACD hari ini 20, garis sinyal kemarin 15, k = 0,2. Berapa garis sinyal hari ini?", answer: 16, tol: 0.1, hint: "MACD × k + sinyal kemarin × (1 − k).", solution: "20 × 0,2 + 15 × 0,8 = 4 + 12 = 16." },
+            { type: "choice", q: "Histogram MACD masih hijau, tapi memendek empat hari berturut-turut. Bacaan yang tepat?", options: ["Momentum naik sedang menguat", "Momentum naik melemah, walau harga bisa masih naik", "Harga pasti turun besok", "Volume sedang mengering"], answer: 1, hint: "Histogram mengukur selisih MACD terhadap rata-ratanya.", solution: "Histogram yang menyusut berarti MACD mulai mendekati sinyalnya: tenaga naik berkurang." }
+          ],
+          quiz: [
+            {
+              q: "Garis MACD dihitung dari apa?",
+              options: [
+                "EMA 12 hari dikurangi EMA 26 hari",
+                "EMA 26 hari dibagi EMA 12 hari",
+                "Rata-rata volume 12 hari terakhir",
+                "Harga tertinggi dikurangi terendah"
+              ],
+              answer: 0,
+              explain: "Selisih EMA cepat dan EMA lambat — makin lebar selisihnya, makin kuat trennya."
+            },
+            {
+              q: "Histogram MACD menunjukkan apa?",
+              options: [
+                "Selisih antara garis MACD dan garis sinyalnya",
+                "Jumlah saham yang diperdagangkan setiap harinya",
+                "Perbandingan harga saham dengan harga sektornya",
+                "Selisih harga tertinggi dan terendah setiap hari"
+              ],
+              answer: 0,
+              explain: "Histogram = MACD − sinyal; ia menunjukkan apakah tenaga tren sedang bertambah atau berkurang."
+            },
+            {
+              q: "Histogram masih positif tapi mengecil empat hari berturut-turut. Artinya?",
+              options: [
+                "Momentum naik melemah, walau harga bisa masih naik",
+                "Harga pasti turun tajam pada pembukaan besok pagi",
+                "Momentum naik justru sedang bertambah makin kuat",
+                "Volume perdagangan sedang naik dengan sangat cepat"
+              ],
+              answer: 0,
+              explain: "Histogram mengukur percepatan; ia bisa menyusut walau harga masih naik pelan."
+            },
+            {
+              q: "Kenapa MACD saham seharga Rp10.000 tidak bisa langsung dibandingkan dengan MACD saham Rp500?",
+              options: [
+                "MACD dinyatakan dalam rupiah, ikut besar kecilnya harga",
+                "Saham yang mahal tidak boleh memakai indikator MACD",
+                "Bursa memakai rumus MACD berbeda untuk tiap harga",
+                "MACD hanya berlaku untuk saham di bawah Rp1.000"
+              ],
+              answer: 0,
+              explain: "MACD adalah selisih dua harga rata-rata, jadi besarnya ikut tingkat harga sahamnya."
+            }
+          ]
+        },
+        {
+          id: "acc-tek-4",
+          title: "RSI, Support & Resistance",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+MACD mengukur tenaga tren, tapi satuannya rupiah sehingga tidak bisa dibandingkan antar-saham. Indikator di pelajaran ini menjawab pertanyaan serupa dalam <b>skala 0–100</b> yang sama untuk semua saham.
+</div>
+
+<h3>RSI: seberapa kuat kenaikan dibanding penurunan</h3>
+<p><b>RSI</b> (<i>Relative Strength Index</i>) diperkenalkan J. Welles Wilder pada 1978. Ia membandingkan rata-rata kenaikan harian dengan rata-rata penurunan harian, biasanya selama <b>14 hari</b>.</p>
+<ol>
+  <li>Ambil perubahan harga tutup 14 hari terakhir. Pisahkan hari naik dan hari turun.</li>
+  <li><b>Rata-rata kenaikan</b> = total kenaikan ÷ 14. <b>Rata-rata penurunan</b> = total penurunan ÷ 14 (ditulis positif).</li>
+  <li><b>RS</b> = rata-rata kenaikan ÷ rata-rata penurunan.</li>
+  <li><b>RSI = 100 − 100 ÷ (1 + RS)</b></li>
+</ol>
+<div class="callout">
+<b>Contoh:</b> dalam 14 hari, total kenaikan Rp28 dan total penurunan Rp14.<br>
+Rata-rata kenaikan = 28 ÷ 14 = 2; rata-rata penurunan = 14 ÷ 14 = 1.<br>
+RS = 2 ÷ 1 = 2 → RSI = 100 − 100 ÷ 3 = <b>66,7</b>
+</div>
+<table class="tbl">
+  <tr><th>Keadaan 14 hari</th><th>RSI</th></tr>
+  <tr><td>Semua hari naik, tak ada penurunan</td><td>100</td></tr>
+  <tr><td>Kenaikan sama besar dengan penurunan</td><td>50</td></tr>
+  <tr><td>Semua hari turun, tak ada kenaikan</td><td>0</td></tr>
+</table>
+<p>Aplikasi saham melanjutkan hitungan hari-hari berikutnya dengan cara perataan khusus dari Wilder, mirip EMA, tapi idenya tetap sama.</p>
+
+<h3>Membaca RSI</h3>
+<table class="tbl">
+  <tr><th>RSI</th><th>Sebutan</th><th>Bacaan umum</th></tr>
+  <tr><td>Di atas 70</td><td><b>Jenuh beli</b> (overbought)</td><td>Kenaikan sudah sangat dominan; mungkin akan berhenti sejenak</td></tr>
+  <tr><td>30–70</td><td>Wajar</td><td>—</td></tr>
+  <tr><td>Di bawah 30</td><td><b>Jenuh jual</b> (oversold)</td><td>Penurunan sudah sangat dominan; mungkin mereda</td></tr>
+</table>
+<div class="callout warn">
+<b>Jenuh beli bukan berarti pasti turun.</b> Dalam tren naik yang kuat, RSI bisa bertahan di atas 70 selama berminggu-minggu. Orang yang menjual hanya karena RSI 70 bisa tertinggal jauh dari kenaikan berikutnya.
+</div>
+
+<h3>Support &amp; resistance: lantai dan langit-langit harga</h3>
+<p><b>Support</b> adalah level harga yang berkali-kali menahan penurunan — seolah ada lantai. <b>Resistance</b> adalah level yang berkali-kali menahan kenaikan — seolah ada langit-langit.</p>
+<p>Kenapa bisa terjadi? Karena ingatan manusia. Misalnya banyak orang membeli di Rp1.000, lalu harga turun ke Rp800. Saat harga kembali ke Rp1.000, banyak dari mereka yang lega "balik modal" dan menjual — resistance terbentuk. Angka bulat seperti Rp1.000 atau Rp5.000 juga sering menjadi patokan banyak orang.</p>
+<p>Saat resistance <b>ditembus</b> dengan volume besar, level itu sering berubah menjadi support. Penjual yang tadinya menunggu di sana sudah habis, sementara orang yang menyesal tidak membeli menunggu harga kembali ke level itu untuk masuk.</p>
+
+<h3>Bollinger Bands, sekilas</h3>
+<p><b>Bollinger Bands</b> adalah tiga garis: MA 20 hari di tengah, lalu dua pita di atas dan di bawahnya sejauh dua kali <b>simpangan baku</b> (ukuran seberapa liar harga bergerak — dibahas di pelajaran berikutnya). Pita yang menyempit menandakan pasar sedang tenang; pita yang melebar menandakan harga sedang bergerak liar.</p>
+
+<h3>Tak ada alat yang berdiri sendiri</h3>
+<p>Pedagang biasanya mencari beberapa alat yang menunjuk ke arah yang sama. Misalnya: harga turun ke support Rp1.000 yang sudah tiga kali bertahan, RSI 28, dan histogram MACD merah mulai memendek. Tiga alat sepakat bahwa tekanan jual sedang mereda. Itu tetap <b>bukan jaminan</b> — support yang sudah bertahan tiga kali bisa jebol pada percobaan keempat. Karena itu, pedagang yang disiplin menentukan lebih dulu batas rugi yang mereka terima <b>sebelum</b> membeli.</p>
+`,
+          keyPoints: [
+            "RSI = 100 − 100 ÷ (1 + RS), dengan RS = rata-rata kenaikan ÷ rata-rata penurunan, biasanya 14 hari.",
+            "RSI 50 berarti kenaikan sama dengan penurunan; di atas 70 jenuh beli, di bawah 30 jenuh jual.",
+            "Jenuh beli bukan berarti pasti turun; dalam tren kuat RSI bisa lama di atas 70.",
+            "Support menahan penurunan, resistance menahan kenaikan; resistance yang ditembus sering menjadi support.",
+            "Bollinger Bands = MA 20 ± 2 simpangan baku; tidak ada indikator yang bisa dipakai sendirian."
+          ],
+          practice: [
+            { type: "number", q: "Rata-rata kenaikan 3, rata-rata penurunan 1. Berapa RSI-nya?", answer: 75, tol: 0.1, hint: "RS = 3 ÷ 1; RSI = 100 − 100 ÷ (1 + RS).", solution: "RS = 3 → RSI = 100 − 100 ÷ 4 = 75." },
+            { type: "number", q: "Dalam 14 hari, total kenaikan Rp21 dan total penurunan Rp21. Berapa RSI-nya?", answer: 50, tol: 0.1, hint: "Rata-rata kenaikan dan penurunan sama besar → RS = 1.", solution: "RS = 1 → RSI = 100 − 100 ÷ 2 = 50." },
+            { type: "choice", q: "Harga sudah tiga kali memantul naik di sekitar Rp2.000. Level Rp2.000 disebut?", options: ["Resistance", "Support", "Golden cross", "Histogram"], answer: 1, hint: "Level yang menahan penurunan.", solution: "Support — level tempat penurunan berkali-kali tertahan." }
+          ],
+          quiz: [
+            {
+              q: "RSI bernilai 50 berarti apa?",
+              options: [
+                "Rata-rata kenaikan sama besar dengan rata-rata penurunan",
+                "Harga saham sudah turun separuh dari puncak tertingginya",
+                "Separuh investor sedang untung dan separuhnya rugi",
+                "Harga berada tepat di tengah support dan resistance"
+              ],
+              answer: 0,
+              explain: "RS = 1 menghasilkan RSI = 100 − 100 ÷ 2 = 50."
+            },
+            {
+              q: "RSI sebuah saham bertahan di 78 selama tiga minggu. Pembacaan yang paling tepat?",
+              options: [
+                "Kenaikannya kuat; jenuh beli tidak berarti pasti segera turun",
+                "Saham pasti turun besok karena RSI sudah lewat 70",
+                "Perusahaan sedang mengalami masalah keuangan berat",
+                "Indikatornya rusak, karena RSI tak boleh lewat 70"
+              ],
+              answer: 0,
+              explain: "Dalam tren naik yang kuat, RSI bisa lama di atas 70. Angka itu menggambarkan kekuatan, bukan ramalan."
+            },
+            {
+              q: "Kenapa resistance yang sudah ditembus sering berubah menjadi support?",
+              options: [
+                "Banyak yang menyesal tak membeli dan menunggu harga kembali ke situ",
+                "Bursa efek menetapkan level itu sebagai batas bawah harga",
+                "Perusahaan wajib membeli kembali sahamnya di harga itu",
+                "Harga memang tidak bisa turun di bawah harga lama"
+              ],
+              answer: 0,
+              explain: "Penjual di level itu sudah habis, dan calon pembeli menunggu di sana — level lama menjadi lantai baru."
+            }
+          ]
+        },
+        {
+          id: "acc-tek-5",
+          title: "Volatilitas, Drawdown & Batas Analisis Teknikal",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>CAGR</b> (pelajaran Persen, Rasio &amp; CAGR) merangkum pertumbuhan rata-rata per tahun dari nilai awal ke nilai akhir. Masalahnya, CAGR hanya melihat dua titik itu — ia tidak menceritakan apa yang terjadi di tengah perjalanan.
+</div>
+
+<h3>Histogram: gambar sebaran data</h3>
+<p>Kata <b>histogram</b> di MACD sebenarnya meminjam istilah statistik. Dalam statistik, histogram adalah diagram batang yang menunjukkan <b>sebaran</b> data: data dikelompokkan ke dalam "kotak" yang sama lebar, lalu tinggi tiap batang menunjukkan berapa banyak data yang masuk ke kotak itu.</p>
+<p>Untuk saham, data yang menarik adalah <b>return harian</b> — perubahan harga dalam persen dari hari ke hari. Kotak "0% sampai +1%" berisi semua hari yang naiknya kurang dari 1%, kotak "−3% sampai −2%" berisi hari-hari yang turun 2–3%, dan seterusnya.</p>
+<div data-demo="volatil-histogram"></div>
+<p>Histogram yang <b>ramping dan tinggi</b> berarti hampir semua hari bergerak sedikit. Histogram yang <b>lebar dan pendek</b> berarti hari-hari dengan gerakan besar sering terjadi.</p>
+
+<h3>Volatilitas: seberapa liar harga bergerak</h3>
+<p><b>Volatilitas</b> mengukur lebarnya histogram itu dengan satu angka: <b>simpangan baku</b> (<i>standard deviation</i>) return harian — kira-kira, rata-rata seberapa jauh return tiap hari menyimpang dari return rata-ratanya. Aplikasi menghitungnya untukmu; yang penting adalah artinya.</p>
+<div class="callout">
+<b>Volatilitas tahunan ≈ volatilitas harian × √250</b><br>
+(sekitar 250 hari bursa dalam setahun; √250 ≈ 15,8)<br><br>
+Volatilitas harian 1% → sekitar <b>16% setahun</b>. Volatilitas harian 3% → sekitar <b>47% setahun</b>.
+</div>
+<p>Volatilitas bukan sekadar membuat jantung berdebar — ia juga <b>menggerus hasil</b>. Dua investasi berikut sama-sama punya rata-rata return 10% per tahun:</p>
+<table class="tbl">
+  <tr><th>Tahun</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>Hasil akhir Rp100 jt</th><th>CAGR</th></tr>
+  <tr><td>Tenang</td><td>+8%</td><td>+12%</td><td>+10%</td><td>+9%</td><td>+11%</td><td class="ok-cell">Rp161 jt</td><td>10,0%</td></tr>
+  <tr><td>Liar</td><td>+40%</td><td>−20%</td><td>+35%</td><td>−15%</td><td>+10%</td><td class="bad-cell">Rp141 jt</td><td>7,2%</td></tr>
+</table>
+<p>Kenapa? Karena turun 20% lalu naik 20% tidak kembali ke titik awal: 100 × 0,8 × 1,2 = 96. Makin liar perjalanannya, makin besar yang tergerus.</p>
+
+<h3>Drawdown: dalamnya jurang dari puncak</h3>
+<p><b>Drawdown</b> adalah penurunan dari puncak tertinggi sebelumnya ke titik terendah sesudahnya. <b>Maximum drawdown</b> adalah yang terdalam selama periode yang dilihat.</p>
+<p>Contoh harga: 100 → 120 → <b>150</b> → <b>90</b> → 110 → 160. Puncaknya 150, lalu jatuh ke 90: drawdown = 90 ÷ 150 − 1 = <b>−40%</b>. Walau akhirnya harga naik ke 160, pemiliknya sempat melihat 40% nilainya lenyap.</p>
+<p>Yang sering dilupakan: <b>naik kembali selalu lebih berat daripada turun</b>.</p>
+<table class="tbl">
+  <tr><th>Turun dari puncak</th><th>Harus naik berapa untuk kembali?</th></tr>
+  <tr><td>−10%</td><td>+11,1%</td></tr>
+  <tr><td>−20%</td><td>+25%</td></tr>
+  <tr><td>−40%</td><td>+66,7%</td></tr>
+  <tr><td>−50%</td><td class="bad-cell">+100%</td></tr>
+  <tr><td>−80%</td><td class="bad-cell">+400%</td></tr>
+</table>
+<p>Drawdown besar bukan teori. IHSG kehilangan lebih dari separuh nilainya sepanjang 2008. Bitcoin turun lebih dari 75% dari puncaknya pada 2018 dan sekali lagi pada 2022. Sebelum membeli apa pun, tanyakan: "Kalau nilainya turun separuh, apakah aku sanggup menahannya — secara keuangan dan secara mental?"</p>
+
+<h3>Batas analisis teknikal — dibahas jujur</h3>
+<table class="tbl">
+  <tr><th>Masalah</th><th>Penjelasan</th></tr>
+  <tr><td><b>Semua orang melihat grafik yang sama</b></td><td>Jutaan pedagang memakai indikator yang sama. Pola yang terlalu jelas cepat dimanfaatkan sampai keuntungannya hilang.</td></tr>
+  <tr><td><b>Overfitting</b></td><td>Coba 100 kombinasi pengaturan pada data masa lalu, pasti ada satu yang tampak hebat — kebetulan saja. Di masa depan, kombinasi itu biasanya gagal. Ini masalah yang sama dengan model AI yang menghafal data latihnya.</td></tr>
+  <tr><td><b>Biaya transaksi</b></td><td>Biaya beli-jual saham di Indonesia umumnya sekitar 0,3–0,4% sekali bolak-balik, termasuk pajak penjualan 0,1%. Bolak-balik 80 kali setahun dengan seluruh modal menghabiskan sekitar 28% modal hanya untuk biaya.</td></tr>
+  <tr><td><b>Pengaruh emosi</b></td><td>Aturan yang jelas di atas kertas sulit dijalankan saat uang sungguhan sedang turun.</td></tr>
+</table>
+<div class="callout warn">
+<b>Bukti dari Brasil.</b> Studi Chague, De Losso &amp; Giovannetti (2019) mengamati semua orang yang melakukan <i>day trading</i> kontrak berjangka indeks di bursa Brasil. Dari mereka yang bertahan lebih dari 300 hari, sekitar <b>97% merugi</b>, dan hanya sekitar 1% yang penghasilannya melebihi upah minimum.
+</div>
+<p>Apakah berarti grafik tidak ada gunanya? Tidak juga. Salah satu pola yang paling kuat buktinya di riset akademis adalah <b>momentum</b>: saham yang naik paling kencang dalam 3–12 bulan terakhir cenderung masih unggul beberapa bulan berikutnya (Jegadeesh &amp; Titman, 1993). Tapi keunggulannya tipis, mudah termakan biaya, dan sesekali berbalik keras.</p>
+<p>Kegunaan yang paling realistis bagi orang biasa:</p>
+<ul>
+  <li><b>Mengukur risiko</b> — volatilitas dan drawdown memberitahu seberapa berat perjalanan yang harus ditahan.</li>
+  <li><b>Memahami apa yang dilihat orang lain</b> — saat semua orang bicara soal "support jebol", kamu tahu maksudnya.</li>
+  <li><b>Tidak membeli karena panik atau ikut-ikutan</b> — RSI 90 setelah kenaikan 200% dalam sebulan adalah alasan untuk menahan diri, bukan alasan untuk ikut.</li>
+</ul>
+<p>Banyak investor jangka panjang memakai pembagian sederhana: analisis fundamental untuk memutuskan <b>apa</b> yang dibeli, dan disiplin — misalnya membeli rutin setiap bulan — untuk menjawab <b>kapan</b>, alih-alih menebak puncak dan dasar.</p>
+`,
+          keyPoints: [
+            "Histogram dalam statistik menunjukkan sebaran data; histogram return harian yang lebar berarti harga sering bergerak jauh.",
+            "Volatilitas = simpangan baku return; volatilitas tahunan ≈ volatilitas harian × √250.",
+            "Volatilitas menggerus hasil: rata-rata return sama, tapi CAGR investasi yang liar lebih rendah.",
+            "Maximum drawdown = penurunan terdalam dari puncak; turun 50% membutuhkan naik 100% untuk kembali.",
+            "Analisis teknikal dibatasi persaingan, overfitting, biaya, dan emosi; sekitar 97% day trader Brasil yang bertahan lebih dari 300 hari merugi."
+          ],
+          practice: [
+            { type: "number", q: "Harga bergerak 200 → 300 → 180 → 250. Berapa maximum drawdown-nya? (%, tulis negatif)", answer: -40, tol: 0.1, unit: "%", hint: "Puncak tertinggi sebelum titik terendah, lalu terendah ÷ puncak − 1.", solution: "Puncak 300, dasar 180: 180 ÷ 300 − 1 = −40%." },
+            { type: "number", q: "Sebuah aset turun 60% dari puncaknya. Berapa persen ia harus naik untuk kembali ke puncak?", answer: 150, tol: 0.1, unit: "%", hint: "Sisa nilainya 0,4. Berapa kali lipat agar kembali ke 1?", solution: "1 ÷ 0,4 = 2,5 → harus naik 150%." },
+            { type: "number", q: "Volatilitas harian sebuah saham 2%. Kira-kira berapa volatilitas tahunannya? (%)", answer: 31.6, tol: 0.5, unit: "%", hint: "Kalikan dengan √250 ≈ 15,8.", solution: "2% × 15,8 ≈ 31,6% per tahun." }
+          ],
+          quiz: [
+            {
+              q: "Saham A dan B sama-sama untung sekitar 13% setahun, tapi drawdown A −8% dan B −40%. Apa artinya?",
+              options: [
+                "Perjalanan B jauh lebih berisiko walau hasil akhirnya mirip",
+                "Keduanya sama berisikonya karena hasil akhirnya sama",
+                "Saham A lebih berisiko karena drawdown-nya lebih kecil",
+                "Drawdown hanya penting bagi perusahaan, bukan investor"
+              ],
+              answer: 0,
+              explain: "Pemilik B sempat kehilangan 40% di tengah jalan — risiko yang tidak terlihat dari hasil akhirnya."
+            },
+            {
+              q: "Harga turun 50% dari puncaknya. Berapa kenaikan yang diperlukan untuk kembali ke puncak?",
+              options: [
+                "100%",
+                "50%",
+                "75%",
+                "150%"
+              ],
+              answer: 0,
+              explain: "Dari 50 kembali ke 100 berarti naik dua kali lipat, yaitu +100%."
+            },
+            {
+              q: "Apa yang ditunjukkan histogram return harian yang lebar dan pendek?",
+              options: [
+                "Harga sering bergerak jauh: volatilitasnya tinggi",
+                "Harga hampir tidak pernah bergerak setiap harinya",
+                "Saham itu pasti memberi untung besar setahun",
+                "Volume perdagangannya sangat kecil dan sepi"
+              ],
+              answer: 0,
+              explain: "Batang-batang yang tersebar jauh dari nol berarti hari dengan naik-turun besar sering terjadi."
+            },
+            {
+              q: "Apa temuan studi day trader di Brasil (2019)?",
+              options: [
+                "Sekitar 97% yang bertahan lebih dari 300 hari merugi",
+                "Sebagian besar day trader untung setelah setahun",
+                "Day trader yang memakai MACD hampir selalu untung",
+                "Kerugian hanya dialami yang trading kurang sebulan"
+              ],
+              answer: 0,
+              explain: "Bahkan yang paling tekun hampir semuanya rugi, dan hanya sekitar 1% yang penghasilannya melebihi upah minimum."
+            }
+          ]
+        },
+        {
+          id: "acc-tek-6",
+          title: "Kamus Cepat Metrik Investasi",
+          duration: "12 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Sepanjang jalur ini kamu sudah bertemu puluhan singkatan: CAGR, margin, ROI, ROE, PER, PBV, EV/EBITDA, FCF, yield, sampai MACD dan RSI. Pelajaran ini merangkum semuanya dalam satu halaman, lengkap dengan tautan ke pelajaran asalnya untuk mengulang.
+</div>
+
+<h3>Kelompokkan menurut pertanyaannya</h3>
+<p>Cara termudah mengingat metrik bukan menghafal rumusnya, tapi mengingat <b>pertanyaan</b> yang dijawabnya.</p>
+
+<h3>1. Seberapa cepat tumbuh?</h3>
+<table class="tbl">
+  <tr><th>Metrik</th><th>Rumus singkat</th><th>Pelajaran</th></tr>
+  <tr><td><b>Perubahan persen</b></td><td>(Baru − Lama) ÷ Lama</td><td><a href="#/lesson/acc-mat-1">Persen, Rasio &amp; CAGR</a></td></tr>
+  <tr><td><b>CAGR</b></td><td>(Akhir ÷ Awal)<sup>1 ÷ tahun</sup> − 1</td><td><a href="#/lesson/acc-mat-1">Persen, Rasio &amp; CAGR</a></td></tr>
+</table>
+
+<h3>2. Seberapa untung bisnisnya?</h3>
+<table class="tbl">
+  <tr><th>Metrik</th><th>Rumus singkat</th><th>Pelajaran</th></tr>
+  <tr><td><b>Gross margin</b></td><td>Laba kotor ÷ Pendapatan</td><td><a href="#/lesson/acc-m-3">Laporan Laba Rugi</a></td></tr>
+  <tr><td><b>Operating margin</b></td><td>Laba operasi ÷ Pendapatan</td><td><a href="#/lesson/acc-m-3">Laporan Laba Rugi</a></td></tr>
+  <tr><td><b>Net margin</b></td><td>Laba bersih ÷ Pendapatan</td><td><a href="#/lesson/acc-a-2">Membaca Rasio Keuangan</a></td></tr>
+  <tr><td><b>Margin FCF</b></td><td>Free cash flow ÷ Pendapatan</td><td><a href="#/lesson/acc-fund-2">Free Cash Flow</a></td></tr>
+</table>
+
+<h3>3. Seberapa pintar memakai modal?</h3>
+<table class="tbl">
+  <tr><th>Metrik</th><th>Rumus singkat</th><th>Pelajaran</th></tr>
+  <tr><td><b>ROI</b></td><td>(Hasil − Biaya) ÷ Biaya</td><td><a href="#/lesson/acc-fund-3">ROI</a></td></tr>
+  <tr><td><b>ROA</b></td><td>Laba bersih ÷ Total aset</td><td><a href="#/lesson/acc-fund-4">ROE, ROA &amp; ROIC</a></td></tr>
+  <tr><td><b>ROE</b></td><td>Laba bersih ÷ Ekuitas</td><td><a href="#/lesson/acc-fund-4">ROE, ROA &amp; ROIC</a></td></tr>
+  <tr><td><b>ROIC</b></td><td>Laba operasi setelah pajak ÷ (Utang berbunga + Ekuitas)</td><td><a href="#/lesson/acc-fund-4">ROE, ROA &amp; ROIC</a></td></tr>
+</table>
+
+<h3>4. Seberapa sehat keuangannya?</h3>
+<table class="tbl">
+  <tr><th>Metrik</th><th>Rumus singkat</th><th>Pelajaran</th></tr>
+  <tr><td><b>Current ratio</b></td><td>Aset lancar ÷ Kewajiban lancar</td><td><a href="#/lesson/acc-a-2">Membaca Rasio Keuangan</a></td></tr>
+  <tr><td><b>Quick ratio</b></td><td>(Aset lancar − Persediaan) ÷ Kewajiban lancar</td><td><a href="#/lesson/acc-adv-4">Likuiditas &amp; Efisiensi</a></td></tr>
+  <tr><td><b>DER</b></td><td>Total kewajiban ÷ Ekuitas</td><td><a href="#/lesson/acc-a-2">Membaca Rasio Keuangan</a></td></tr>
+  <tr><td><b>Free cash flow</b></td><td>Arus kas operasi − Belanja modal</td><td><a href="#/lesson/acc-fund-2">Free Cash Flow</a></td></tr>
+</table>
+
+<h3>5. Mahal atau murah?</h3>
+<table class="tbl">
+  <tr><th>Metrik</th><th>Rumus singkat</th><th>Pelajaran</th></tr>
+  <tr><td><b>PER</b></td><td>Harga ÷ EPS</td><td><a href="#/lesson/acc-adv-0">Saham, EPS &amp; PER</a></td></tr>
+  <tr><td><b>PEG</b></td><td>PER ÷ Pertumbuhan laba (%)</td><td><a href="#/lesson/acc-adv-2">PER, PEG &amp; Pertumbuhan</a></td></tr>
+  <tr><td><b>PBV (P/B)</b></td><td>Harga ÷ Nilai buku per lembar</td><td><a href="#/lesson/acc-adv-1">PBV &amp; Nilai Buku</a></td></tr>
+  <tr><td><b>EV/EBITDA</b></td><td>(Kapitalisasi + Utang − Kas) ÷ EBITDA</td><td><a href="#/lesson/acc-adv-3">EV/EBITDA</a></td></tr>
+  <tr><td><b>Earnings, dividend &amp; FCF yield</b></td><td>Penghasilan setahun ÷ Harga</td><td><a href="#/lesson/acc-yield-1">Yield</a></td></tr>
+</table>
+
+<h3>6. Seberapa berat perjalanannya?</h3>
+<table class="tbl">
+  <tr><th>Metrik</th><th>Rumus singkat</th><th>Pelajaran</th></tr>
+  <tr><td><b>Volatilitas</b></td><td>Simpangan baku return; tahunan ≈ harian × √250</td><td><a href="#/lesson/acc-tek-5">Volatilitas &amp; Drawdown</a></td></tr>
+  <tr><td><b>Maximum drawdown</b></td><td>Titik terendah ÷ Puncak sebelumnya − 1</td><td><a href="#/lesson/acc-tek-5">Volatilitas &amp; Drawdown</a></td></tr>
+</table>
+
+<h3>7. Ke mana arah dan tenaga harga?</h3>
+<table class="tbl">
+  <tr><th>Metrik</th><th>Rumus singkat</th><th>Pelajaran</th></tr>
+  <tr><td><b>SMA / EMA</b></td><td>Rata-rata harga n hari / rata-rata berbobot</td><td><a href="#/lesson/acc-tek-2">Moving Average</a></td></tr>
+  <tr><td><b>MACD &amp; histogram</b></td><td>EMA 12 − EMA 26; histogram = MACD − sinyal</td><td><a href="#/lesson/acc-tek-3">MACD &amp; Histogram</a></td></tr>
+  <tr><td><b>RSI</b></td><td>100 − 100 ÷ (1 + RS)</td><td><a href="#/lesson/acc-tek-4">RSI, Support &amp; Resistance</a></td></tr>
+</table>
+
+<h3>Satu perusahaan, satu kartu skor</h3>
+<p>Semua angka PT Kopi Sari yang sudah kamu hitung di pelajaran-pelajaran sebelumnya, dikumpulkan di satu tempat:</p>
+<table class="tbl">
+  <tr><th>Pertanyaan</th><th>Metrik</th><th>Nilai</th></tr>
+  <tr><td>Untung?</td><td>ROE (laba 40 ÷ ekuitas 300)</td><td>13%</td></tr>
+  <tr><td>Mahal?</td><td>PER</td><td>15</td></tr>
+  <tr><td>Mahal dibanding pertumbuhannya?</td><td>PEG (laba tumbuh 10%)</td><td>1,5</td></tr>
+  <tr><td>Mahal dibanding asetnya?</td><td>PBV</td><td>2</td></tr>
+  <tr><td>Mahal kalau dibeli seluruhnya, termasuk utang?</td><td>EV/EBITDA</td><td>10</td></tr>
+  <tr><td>Berapa yang kembali ke tangan setiap tahun?</td><td>Earnings yield / dividend yield</td><td>6,7% / 4%</td></tr>
+</table>
+<p>Tidak ada satu angka pun yang cukup untuk memutuskan. Bersama-sama, angka-angka itu bercerita: bisnis yang cukup menguntungkan, dihargai sedikit di atas pertumbuhannya, dengan imbal hasil yang bisa dibandingkan dengan bunga deposito.</p>
+
+<h3>Lima aturan memakai metrik apa pun</h3>
+<ol>
+  <li><b>Bandingkan dengan yang sejenis.</b> PBV 1 murah untuk perusahaan teknologi, tapi biasa untuk bank.</li>
+  <li><b>Lihat trennya.</b> Margin 15% yang terus turun dari 25% bercerita lain daripada margin 15% yang naik dari 5%.</li>
+  <li><b>Gabungkan beberapa pertanyaan.</b> Bisnis bagus? Keuangan sehat? Harga wajar? Ketiganya perlu dijawab.</li>
+  <li><b>Tanyakan dari mana angkanya.</b> Laba bisa dipoles; kas lebih sulit dipoles.</li>
+  <li><b>Jangan campur jenis pertanyaannya.</b> Metrik teknikal bercerita tentang gerak harga, bukan tentang bisnisnya. RSI 25 tidak membuat bisnis yang buruk menjadi bagus.</li>
+</ol>
+`,
+          keyPoints: [
+            "Ingat metrik lewat pertanyaannya: tumbuh, untung, efisien memakai modal, sehat, mahal-murah, berisiko, dan arah harga.",
+            "Pertumbuhan: CAGR. Keuntungan: margin. Efisiensi modal: ROI, ROA, ROE, ROIC. Kesehatan: current ratio, DER, FCF.",
+            "Valuasi: PER, PEG, PBV, EV/EBITDA, dan berbagai yield. Risiko: volatilitas dan drawdown. Teknikal: MA, MACD, RSI.",
+            "Satu metrik tidak pernah cukup; bandingkan dengan yang sejenis dan lihat trennya bertahun-tahun.",
+            "Metrik teknikal membaca harga, metrik fundamental membaca bisnis — keduanya menjawab pertanyaan yang berbeda."
+          ],
+          practice: [
+            { type: "number", q: "Laba bersih Rp15 miliar, pendapatan Rp120 miliar. Berapa net margin-nya? (%)", answer: 12.5, tol: 0.05, unit: "%", hint: "Laba bersih ÷ pendapatan × 100%.", solution: "15 ÷ 120 = 12,5%." },
+            { type: "number", q: "PER sebuah saham 20 dan labanya tumbuh 10% per tahun. Berapa PEG-nya?", answer: 2, tol: 0.05, hint: "PEG = PER ÷ pertumbuhan laba (%).", solution: "20 ÷ 10 = 2." },
+            { type: "choice", q: "Kamu ingin tahu apakah sebuah saham naik dengan tenang atau dengan naik-turun tajam. Metrik apa yang paling membantu?", options: ["PER", "Maximum drawdown", "Current ratio", "Gross margin"], answer: 1, hint: "Pertanyaannya tentang perjalanan harga.", solution: "Drawdown (bersama volatilitas) mengukur seberapa berat perjalanan harganya." }
+          ],
+          quiz: [
+            {
+              q: "Kamu ingin tahu apakah harga saham mahal dibanding labanya. Metrik apa yang paling tepat?",
+              options: [
+                "PER",
+                "ROE",
+                "RSI",
+                "DER"
+              ],
+              answer: 0,
+              explain: "PER = harga ÷ EPS — berapa kali laba setahun yang dibayar untuk satu lembar saham."
+            },
+            {
+              q: "Metrik mana yang mengukur seberapa besar utang dibanding modal sendiri?",
+              options: [
+                "DER",
+                "PEG",
+                "MACD",
+                "CAGR"
+              ],
+              answer: 0,
+              explain: "DER = total kewajiban ÷ ekuitas; makin tinggi, makin berat beban utangnya."
+            },
+            {
+              q: "Sebuah saham punya RSI 25 dan PER 8. Pernyataan mana yang benar?",
+              options: [
+                "RSI soal tenaga gerak harga, PER soal harga dibanding laba",
+                "Keduanya sama-sama mengukur seberapa murah sahamnya",
+                "RSI soal laba perusahaan, PER soal gerak harganya",
+                "Keduanya mengukur seberapa besar risiko utangnya"
+              ],
+              answer: 0,
+              explain: "Dua metrik itu menjawab pertanyaan berbeda; keduanya rendah tidak otomatis berarti layak dibeli."
+            }
+          ]
+        },
+      ],
+    },
+    /* ---------------- MODUL 17: EKONOMI MAKRO UNTUK BISNIS ---------------- */
     {
       id: "acc-makro",
       level: "Makro",
@@ -8314,7 +9161,7 @@ Contoh deposito berbunga 4,5% yang dipotong pajak bunga 20% → bersih 3,6%. Den
         },
       ],
     },
-    /* ---------------- MODUL 17: MASA DEPAN AKUNTANSI & PEKERJAAN KEUANGAN ---------------- */
+    /* ---------------- MODUL 18: MASA DEPAN AKUNTANSI & PEKERJAAN KEUANGAN ---------------- */
     {
       id: "acc-arah",
       level: "Arah",
