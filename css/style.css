@@ -1603,3 +1603,10 @@ a.resume-card:hover .resume-btn { gap: 12px; }
 .ag-kode { font-size: .78rem; word-break: break-all; }
 .ag-pilihan { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
 .ag-soal { text-align: left; white-space: normal; line-height: 1.4; height: auto; }
+
+/* ---------- Demo serangan reentrancy ---------- */
+.rr-kode { font-size: .76rem; margin: 10px 0; }
+.rr-lapis { display: inline-block; min-width: 54px; font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+
+/* Blok kode di dalam pelajaran tetap memakai huruf kode (aturan ".lesson-body pre" di atas lebih spesifik daripada ".code") */
+.lesson-body pre.code, .lesson-body .code { font-family: var(--font-kode); }

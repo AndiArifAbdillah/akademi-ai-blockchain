@@ -1588,6 +1588,17 @@ const GLOSSARY = [
   ["Product-Market Fit", "Keadaan ketika produk memuaskan pasar yang cukup besar: pengguna datang dan bertahan tanpa terus didorong."],
   ["Kohort", "Sekelompok pengguna yang mulai pada waktu yang sama, dipakai untuk mengukur berapa persen yang masih aktif dari waktu ke waktu."],
   ["Pivot", "Mengubah arah usaha secara sadar berdasarkan data — segmen, masalah, atau salurannya — tanpa membuang semua yang sudah dipelajari."],
+  ["Reentrancy", "Serangan ketika kontrak penerima memanggil ulang fungsi penarikan sebelum saldo pengirim sempat dicatat, sehingga dana terkuras berulang kali."],
+  ["Proxy", "Pola kontrak yang bisa di-upgrade: pengguna memakai alamat proxy yang menyimpan data, sementara logikanya ada di kontrak lain yang bisa diganti."],
+  ["Allowance", "Izin di token ERC-20 yang dibuat lewat approve: berapa banyak token yang boleh diambil pihak lain lewat transferFrom."],
+  ["Slither", "Alat analisis statis untuk Solidity yang mencari pola berbahaya di kode tanpa menjalankannya."],
+  ["Bug Bounty", "Program yang membayar peretas etis bila menemukan dan melaporkan celah keamanan."],
+  ["Token Honeypot", "Token jebakan yang bisa dibeli tapi tidak bisa dijual, karena kodenya memblokir penjualan selain oleh pembuat."],
+  ["Address Poisoning", "Penipuan dengan mengirim transaksi bernilai nol dari alamat yang mirip alamat langgananmu, berharap kamu menyalin alamat palsu dari riwayat."],
+  ["UX", "User Experience: pengalaman memakai produk dari awal sampai tujuan pengguna tercapai."],
+  ["Pitch", "Presentasi singkat yang menjelaskan masalah, solusi, bukti, dan tim sebuah proyek kepada juri, investor, atau calon mitra."],
+  ["Demo Day", "Acara penutup program inkubasi atau kelas tempat setiap tim memamerkan dan mempresentasikan proyeknya."],
+  ["AI Engineer", "Peran yang membangun aplikasi di atas model AI yang sudah ada — RAG, agen, dan evaluasinya."],
 ];
 
 function renderGlossary() {

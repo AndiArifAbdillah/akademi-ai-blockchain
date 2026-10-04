@@ -4874,7 +4874,7 @@ Kontrak <b>Celengan</b> sudah kamu coba di Remix VM — hanya kamu yang bisa mel
       id: "bc-dapp",
       level: "DApp",
       title: "Membangun DApp: Foundry, Frontend & Keamanan",
-      summary: "Alur kerja developer profesional: tes otomatis & fuzzing dengan Foundry, jaringan lokal Anvil, deploy dengan skrip, menghubungkan web lewat ethers.js, dan keamanan produksi.",
+      summary: "Alur kerja developer profesional: tes otomatis & fuzzing dengan Foundry, jaringan lokal Anvil, deploy dengan skrip, OpenZeppelin & pola kontrak, menghubungkan web lewat ethers.js, DApp fullstack + AI, lalu keamanan smart contract & deteksi penipuan.",
       lessons: [
         {
           id: "bc-fdy-1",
@@ -5157,6 +5157,121 @@ forge script script/Celengan.s.sol \\
           ]
         },
         {
+          id: "bc-dev-1",
+          title: "OpenZeppelin & Pola Kontrak Profesional — Token, Izin & Upgrade",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Celengan memakai <b>require(msg.sender == pemilik)</b> untuk membatasi siapa yang boleh menarik, dan diuji dengan <b>forge test</b>. Token (pelajaran Token, NFT &amp; Standar ERC) hanyalah buku saldo di dalam kontrak yang mengikuti standar <b>ERC-20</b>.
+</div>
+
+<h3>Jangan menulis ulang yang sudah teruji</h3>
+<p>Kode yang memegang uang adalah sasaran serangan paling menarik di dunia. Karena itu developer profesional <b>tidak</b> menulis token, kontrol akses, atau pengaman dari nol. Mereka memakai <b>OpenZeppelin Contracts</b>: pustaka sumber terbuka yang sudah diaudit berkali-kali dan dipakai oleh ribuan proyek. Kode yang sudah diserang banyak orang lalu diperbaiki jauh lebih aman daripada kode baru buatan sendiri.</p>
+
+<h3>Token ERC-20 dalam belasan baris</h3>
+<pre class="code">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
+contract PoinKelas is ERC20, Ownable {
+    constructor() ERC20("Poin Kelas", "POIN") Ownable(msg.sender) {
+        _mint(msg.sender, 1000 * 10 ** decimals());   // 1.000 POIN untuk pembuat
+    }
+
+    function cetak(address ke, uint256 jumlah) public onlyOwner {
+        _mint(ke, jumlah);
+    }
+}</pre>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Artinya</th></tr>
+  <tr><td><b>is ERC20, Ownable</b></td><td>Mewarisi semua fungsi ERC-20 (transfer, approve, balanceOf, …) dan fitur pemilik</td></tr>
+  <tr><td><b>ERC20("Poin Kelas", "POIN")</b></td><td>Nama dan simbol token</td></tr>
+  <tr><td><b>Ownable(msg.sender)</b></td><td>Yang men-deploy menjadi pemilik — seperti Celengan, tapi sudah teruji</td></tr>
+  <tr><td><b>10 ** decimals()</b></td><td>Token ERC-20 bawaannya punya 18 desimal, persis seperti ETH dan wei</td></tr>
+  <tr><td><b>onlyOwner</b></td><td>Pengganti require(msg.sender == pemilik) yang bisa dipakai ulang di banyak fungsi</td></tr>
+</table>
+<p>Di Remix, baris <i>import</i> itu langsung berfungsi — Remix mengunduh pustakanya otomatis. Di Foundry, pasang dulu dengan <b>forge install OpenZeppelin/openzeppelin-contracts</b>. Kalau ingin titik awal yang lebih cepat lagi, <b>OpenZeppelin Contracts Wizard</b> di situs OpenZeppelin membuatkan kode token lewat centang-centang pilihan.</p>
+
+<h3>approve dan transferFrom: izin yang sering disalahgunakan</h3>
+<p>ERC-20 punya dua cara memindahkan token. <b>transfer</b>: pemilik mengirim sendiri. <b>approve</b> lalu <b>transferFrom</b>: pemilik memberi <i>izin</i> (allowance) kepada pihak lain — misalnya kontrak DEX — untuk mengambil token sampai jumlah tertentu. Banyak aplikasi meminta izin <b>tak terbatas</b> supaya pengguna tidak perlu menyetujui lagi. Bila kontrak itu kelak dibobol, atau ternyata situs penipu, semua token jenis itu bisa diambil. Dari sisi pengembang: minta izin secukupnya. Dari sisi pengguna: cabut izin lama yang tidak dipakai.</p>
+
+<h3>Kontrak tidak bisa diubah — kecuali lewat proxy</h3>
+<p>Kode kontrak permanen. Untuk memungkinkan perbaikan, sebagian proyek memakai pola <b>proxy</b>: pengguna selalu berinteraksi dengan alamat proxy yang menyimpan data, sedangkan logikanya ada di kontrak lain yang bisa diganti.</p>
+<div data-diagram="flow" data-steps="Pengguna|Proxy (alamat tetap, menyimpan data)|Logika v1 → bisa diganti v2" data-caption="Pola proxy: alamat dan data tetap, logika bisa diganti"></div>
+<table class="tbl">
+  <tr><th>Keuntungan</th><th>Harga yang dibayar</th></tr>
+  <tr><td>Bug bisa diperbaiki tanpa memindahkan pengguna</td><td>Pemegang kunci upgrade bisa mengganti logika menjadi apa saja — termasuk yang mencuri dana</td></tr>
+  <tr><td>Fitur bisa ditambah</td><td>Lebih rumit: urutan penyimpanan data tidak boleh berubah, dan constructor diganti fungsi <i>initialize</i></td></tr>
+</table>
+<p>Pola yang umum adalah <b>UUPS</b> dan <b>Transparent Proxy</b>, keduanya tersedia di OpenZeppelin. Saat menilai sebuah proyek, selalu tanyakan: <b>siapa yang memegang kunci upgrade?</b> Kunci itu sebaiknya dipegang dompet multi-tanda-tangan dan dibatasi jeda waktu, bukan satu orang.</p>
+
+<h3>Menghemat gas</h3>
+<table class="tbl">
+  <tr><th>Kebiasaan</th><th>Kenapa lebih murah</th></tr>
+  <tr><td>Simpan sesedikit mungkin di <i>storage</i></td><td>Menulis slot penyimpanan baru adalah salah satu operasi termahal di Ethereum</td></tr>
+  <tr><td>Pakai <b>event</b> untuk riwayat</td><td>Log jauh lebih murah daripada menyimpan riwayat di dalam kontrak</td></tr>
+  <tr><td><b>constant</b> dan <b>immutable</b></td><td>Nilai yang tidak pernah berubah tidak perlu dibaca dari storage</td></tr>
+  <tr><td><b>Custom error</b> menggantikan pesan teks panjang</td><td>Pesan teks ikut disimpan di bytecode; error berbentuk kode lebih ringkas</td></tr>
+</table>
+<pre class="code">error BukanPemilik();
+
+function tarik(uint256 jumlah) public {
+    if (msg.sender != pemilik) revert BukanPemilik();
+    // ...
+}</pre>
+<p>Hemat gas penting, tapi <b>keamanan dan kejelasan selalu didahulukan</b>. Trik penghematan yang membuat kode sulit dibaca justru menyembunyikan bug.</p>
+`,
+          keyPoints: [
+            "Pakai pustaka teruji seperti OpenZeppelin Contracts untuk token, kontrol akses, dan pengaman — jangan menulis dari nol.",
+            "Token ERC-20 cukup mewarisi ERC20 dan Ownable; onlyOwner membatasi fungsi untuk pemilik.",
+            "approve memberi izin pihak lain mengambil token; izin tak terbatas berbahaya bila kontraknya dibobol atau palsu.",
+            "Pola proxy (UUPS, Transparent) memungkinkan upgrade, tapi pemegang kunci upgrade bisa mengganti logika menjadi apa saja.",
+            "Hemat gas: storage sesedikit mungkin, event untuk riwayat, constant/immutable, custom error — keamanan tetap nomor satu."
+          ],
+          practice: [
+            { type: "number", q: "Token ERC-20 dengan 18 desimal. Berapa nilai mentah (satuan terkecil) untuk 5 token? Tulis dalam pangkat: 5 × 10 pangkat berapa?", answer: 18, tol: 0.5, hint: "Sama seperti ETH dan wei.", solution: "5 token = 5 × 10¹⁸ satuan terkecil, jadi pangkatnya 18." },
+            { type: "choice", q: "Sebuah proyek DeFi memakai proxy yang kunci upgrade-nya dipegang satu dompet biasa milik pendiri. Apa risikonya?", options: ["Tidak ada, proxy membuat kontrak lebih aman", "Pendiri (atau pencuri kuncinya) bisa mengganti logika untuk mengambil dana", "Biaya gas pengguna menjadi dua kali lipat", "Token tidak bisa diperdagangkan di DEX"], answer: 1, hint: "Siapa yang bisa mengganti logikanya?", solution: "Pemegang kunci upgrade bisa mengganti logika menjadi apa saja. Idealnya kunci dipegang multi-tanda-tangan dengan jeda waktu." }
+          ],
+          quiz: [
+            {
+              q: "Kenapa developer profesional memakai OpenZeppelin alih-alih menulis token sendiri?",
+              options: [
+                "Kodenya sudah diaudit dan diuji oleh banyak proyek",
+                "Token OpenZeppelin tidak membutuhkan biaya gas",
+                "Hanya token OpenZeppelin yang diterima bursa",
+                "OpenZeppelin menjamin harga tokennya naik"
+              ],
+              answer: 0,
+              explain: "Kode yang memegang uang paling sering diserang; pustaka yang sudah teruji jauh lebih aman."
+            },
+            {
+              q: "Apa bahaya memberi izin approve tak terbatas ke sebuah kontrak?",
+              options: [
+                "Semua token jenis itu bisa diambil bila kontraknya jahat",
+                "Token akan otomatis terbakar setelah satu bulan",
+                "Dompet tidak bisa menerima token baru lagi",
+                "Biaya gas setiap transfer menjadi berlipat"
+              ],
+              answer: 0,
+              explain: "transferFrom bisa mengambil sampai batas izin; izin tak terbatas berarti seluruh saldo token itu."
+            },
+            {
+              q: "Apa yang diganti saat kontrak berpola proxy di-upgrade?",
+              options: [
+                "Kontrak logikanya; alamat dan data tetap",
+                "Alamat proxy beserta seluruh datanya",
+                "Seluruh blockchain tempat kontrak berada",
+                "Kunci privat semua penggunanya"
+              ],
+              answer: 0,
+              explain: "Pengguna tetap memakai alamat proxy yang sama; proxy diarahkan ke kontrak logika baru."
+            }
+          ]
+        },
+        {
           id: "bc-pro-3",
           title: "Hubungkan Web ke Smart Contract (ethers.js)",
           duration: "13 menit",
@@ -5248,6 +5363,114 @@ console.log("Setoran masuk!");</pre>
           ],
         },
         {
+          id: "bc-dev-3",
+          title: "DApp Fullstack + AI — Menyatukan Kontrak, Web, Dompet & Model",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>ethers.js</b> menghubungkan halaman web ke kontrak: <i>provider</i> untuk membaca, <i>signer</i> (dompet pengguna) untuk menandatangani, dan <b>ABI</b> sebagai daftar fungsinya. Dari jalur AI: agen memanggil <b>alat</b>, dan kunci yang memegang uang harus dijaga dengan batas yang ketat.
+</div>
+
+<h3>Bagian-bagian sebuah DApp sungguhan</h3>
+<table class="tbl">
+  <tr><th>Lapisan</th><th>Isinya</th><th>Contoh alat</th></tr>
+  <tr><td><b>Smart contract</b></td><td>Aturan dan uang — bagian yang harus dipercaya</td><td>Solidity + Foundry</td></tr>
+  <tr><td><b>Frontend</b></td><td>Halaman yang dilihat pengguna</td><td>React / Next.js</td></tr>
+  <tr><td><b>Penghubung dompet</b></td><td>Tombol Connect, ganti jaringan, menandatangani</td><td>ethers.js, atau viem + wagmi</td></tr>
+  <tr><td><b>Pembacaan &amp; indeks</b></td><td>Mengumpulkan event menjadi data yang mudah dicari, mis. riwayat setoran</td><td>Node RPC, The Graph, Ponder</td></tr>
+  <tr><td><b>Backend</b> (bila perlu)</td><td>Data yang tidak perlu di blockchain, kunci API, pemanggilan AI</td><td>Server atau fungsi serverless</td></tr>
+</table>
+<p>Prinsip yang menentukan pembagian: <b>simpan di blockchain hanya yang perlu dipercaya bersama</b> — uang, kepemilikan, aturan. Sisanya lebih murah dan cepat di server biasa.</p>
+
+<h3>Di mana AI masuk?</h3>
+<table class="tbl">
+  <tr><th>Pola</th><th>Contoh</th><th>Siapa yang menandatangani</th></tr>
+  <tr><td><b>AI menjelaskan</b></td><td>Sebelum pengguna menandatangani, AI menerjemahkan isi transaksi: "Kamu akan memberi izin kontrak X mengambil semua USDC-mu"</td><td>Pengguna</td></tr>
+  <tr><td><b>AI menyusun</b></td><td>Pengguna mengetik "setor 0,01 ETH ke celengan kelas"; AI menyusun transaksinya, pengguna memeriksa lalu menyetujui</td><td>Pengguna</td></tr>
+  <tr><td><b>AI menganalisis</b></td><td>Ringkasan riwayat, peringatan transaksi janggal, jawaban atas pertanyaan tentang data on-chain</td><td>Tidak ada — hanya membaca</td></tr>
+  <tr><td><b>Agen bertindak</b></td><td>Agen dengan dompet sendiri membayar layanan lewat x402</td><td>Agen, dengan batas ketat</td></tr>
+</table>
+<div data-diagram="pipeline" data-stages="Pengguna mengetik niat::bahasa sehari-hari|Backend + AI::menyusun transaksi|Frontend menampilkan::isi yang mudah dibaca|Dompet pengguna::memeriksa &amp; menandatangani|Kontrak::menjalankan aturan" data-caption="AI menyusun dan menjelaskan; keputusan dan tanda tangan tetap di tangan pengguna"></div>
+
+<h3>Contoh: tombol "Jelaskan transaksi ini"</h3>
+<pre class="code">// Di BACKEND — kunci API AI tidak pernah dikirim ke browser
+async function jelaskan(tx) {
+  const isi = decodeFunctionData({ abi, data: tx.data });   // terjemahkan calldata dengan ABI
+  const prompt = "Jelaskan dalam satu kalimat sederhana apa yang terjadi bila " +
+    "pengguna menandatangani: fungsi " + isi.functionName +
+    ", argumen " + JSON.stringify(isi.args) + ", nilai " + tx.value + " wei. " +
+    "Sebutkan risikonya bila ada.";
+  return await tanyaModel(prompt);
+}</pre>
+<p>Perhatikan: data transaksi diterjemahkan dulu dengan <b>ABI</b> oleh kode (pasti benar), baru AI diminta menjelaskannya dalam bahasa manusia. AI tidak diminta menebak isi transaksi dari deretan heksadesimal.</p>
+
+<h3>Aturan keamanan fullstack</h3>
+<table class="tbl">
+  <tr><th>Jangan</th><th>Lakukan</th></tr>
+  <tr><td>Menaruh kunci API AI atau RPC berbayar di kode frontend</td><td>Simpan di backend; frontend memanggil backend-mu</td></tr>
+  <tr><td>Memberi AI akses ke kunci privat pengguna</td><td>AI hanya menyusun; pengguna menandatangani di dompetnya</td></tr>
+  <tr><td>Menampilkan angka mentah (wei, 6 desimal) apa adanya</td><td>Ubah ke satuan yang dibaca manusia, tampilkan jaringan dan alamat tujuan</td></tr>
+  <tr><td>Memercayai teks dari pengguna atau situs lain sebagai perintah</td><td>Waspadai prompt injection: AI tidak boleh bisa memicu transaksi sendiri</td></tr>
+</table>
+
+<h3>Latihan: dari Celengan ke DApp</h3>
+<ol>
+  <li>Kontrak Celengan sudah teruji dengan Foundry dan hidup di Sepolia.</li>
+  <li>Buat halaman dengan tombol Connect, kolom setor, dan tampilan saldoKas (pelajaran ethers.js).</li>
+  <li>Tampilkan riwayat dari event <b>Setor</b>.</li>
+  <li>Tambahkan tombol "Jelaskan" yang memanggil backend untuk menerjemahkan transaksi sebelum ditandatangani.</li>
+  <li>Minta tiga temanmu mencobanya tanpa dibantu, dan catat di mana mereka bingung.</li>
+</ol>
+`,
+          keyPoints: [
+            "DApp terdiri dari kontrak, frontend, penghubung dompet, pembacaan/indeks data, dan backend bila perlu.",
+            "Simpan di blockchain hanya yang perlu dipercaya bersama: uang, kepemilikan, aturan.",
+            "Pola AI di DApp: menjelaskan, menyusun, menganalisis, dan agen bertindak dengan batas ketat.",
+            "Terjemahkan calldata dengan ABI lewat kode, baru minta AI menjelaskannya dalam bahasa manusia.",
+            "Kunci API di backend, kunci privat tetap di dompet pengguna, dan AI tidak boleh memicu transaksi sendiri."
+          ],
+          practice: [
+            { type: "choice", q: "Data mana yang paling tepat disimpan di smart contract?", options: ["Foto profil pengguna", "Riwayat obrolan dengan asisten AI", "Saldo setoran setiap anggota celengan", "Teks deskripsi halaman beranda"], answer: 2, hint: "Mana yang perlu dipercaya bersama dan menyangkut uang?", solution: "Saldo setoran menyangkut uang dan harus bisa diperiksa semua anggota; sisanya cukup di server biasa." },
+            { type: "choice", q: "Developer menaruh kunci API model AI di kode JavaScript frontend. Apa masalahnya?", options: ["Tidak ada masalah, kodenya diperkecil", "Siapa pun bisa membuka kode itu dan memakai kuncinya", "Model AI menolak panggilan dari browser", "Transaksi blockchain menjadi lebih lambat"], answer: 1, hint: "Kode frontend dikirim utuh ke browser setiap pengunjung.", solution: "Semua kode frontend bisa dibaca pengunjung; kunci itu akan dicuri dan tagihannya membengkak." }
+          ],
+          quiz: [
+            {
+              q: "Dalam pola 'AI menyusun transaksi', siapa yang seharusnya menandatangani?",
+              options: [
+                "Pengguna, setelah memeriksa isinya",
+                "Model AI dengan kunci pengguna",
+                "Server backend secara otomatis",
+                "Kontrak pintar itu sendiri"
+              ],
+              answer: 0,
+              explain: "AI hanya membantu menyusun dan menjelaskan; keputusan dan tanda tangan tetap milik pengguna."
+            },
+            {
+              q: "Kenapa calldata diterjemahkan dengan ABI lebih dulu sebelum dijelaskan AI?",
+              options: [
+                "Agar isinya pasti benar, AI hanya menjelaskan",
+                "Agar model AI tidak perlu dipanggil sama sekali",
+                "Agar biaya gas transaksinya menjadi lebih murah",
+                "Agar transaksi bisa dikirim tanpa tanda tangan"
+              ],
+              answer: 0,
+              explain: "Kode menerjemahkan data secara pasti; menebak dari heksadesimal membuka peluang AI mengarang."
+            },
+            {
+              q: "Di mana kunci API layanan AI sebaiknya disimpan dalam DApp?",
+              options: [
+                "Di backend, tidak pernah dikirim ke browser",
+                "Di kode frontend agar respons lebih cepat",
+                "Di dalam smart contract agar tidak bisa diubah",
+                "Di dompet MetaMask milik setiap pengguna"
+              ],
+              answer: 0,
+              explain: "Kode frontend dan isi kontrak sama-sama bisa dibaca publik."
+            }
+          ]
+        },
+        {
           id: "bc-pro-4",
           title: "Use-case Nyata & Keamanan Produksi",
           duration: "11 menit",
@@ -5313,6 +5536,98 @@ console.log("Setoran masuk!");</pre>
                 "Pelacakan rantai pasok yang transparan & anti-palsu adalah use-case nyata blockchain.",
             },
           ],
+        },
+        {
+          id: "bc-dev-2",
+          title: "Keamanan Smart Contract & Deteksi Penipuan — Reentrancy, Audit & Pola Jahat",
+          duration: "17 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Di Celengan, uang dikirim dengan <b>.call</b> setelah semua pemeriksaan selesai, dan pelajaran Remix sempat menyebut serangan bernama <i>reentrancy</i>. Pelajaran Foundry menunjukkan bagaimana tes dan fuzzing menangkap bug sebelum sampai ke mainnet.
+</div>
+
+<h3>Reentrancy: masuk lagi sebelum pintu dikunci</h3>
+<p>Saat kontrak mengirim ETH ke kontrak lain, penerima boleh menjalankan kodenya sendiri (fungsi <i>receive</i>). Kalau pengirim belum mencatat bahwa uangnya sudah dikirim, penerima bisa memanggil fungsi penarikan <b>lagi</b> — berulang-ulang — sebelum saldonya dinolkan. Itulah yang terjadi pada <b>The DAO</b> tahun 2016: sekitar 3,6 juta ETH terkuras, dan komunitas Ethereum akhirnya memutuskan <i>hard fork</i> untuk mengembalikannya — asal mula pemisahan Ethereum dan Ethereum Classic.</p>
+<div data-demo="reentrancy-sim"></div>
+<p>Perbaikannya disebut pola <b>Checks–Effects–Interactions</b>: periksa syarat dulu, <b>catat perubahan</b>, baru <b>berinteraksi</b> dengan pihak luar. Sebagai lapisan tambahan, OpenZeppelin menyediakan pengaman <b>ReentrancyGuard</b> (modifier <i>nonReentrant</i>) yang menolak pemanggilan ulang di tengah jalan.</p>
+
+<h3>Celah lain yang sering muncul</h3>
+<table class="tbl">
+  <tr><th>Celah</th><th>Contoh</th><th>Pencegahan</th></tr>
+  <tr><td><b>Kontrol akses</b></td><td>Fungsi cetak token atau tarik dana lupa diberi onlyOwner</td><td>Tes "bukan pemilik tidak boleh…" untuk setiap fungsi penting</td></tr>
+  <tr><td><b>Manipulasi oracle</b></td><td>Harga diambil dari satu kolam DEX kecil yang mudah digerakkan dengan pinjaman kilat</td><td>Oracle terdesentralisasi, harga rata-rata waktu</td></tr>
+  <tr><td><b>Kunci bocor</b></td><td>Kunci pemilik atau bridge dicuri — mis. Ronin Bridge 2022, sekitar US$625 juta</td><td>Multi-tanda-tangan, perangkat terpisah, batas penarikan</td></tr>
+  <tr><td><b>Tanda tangan buta</b></td><td>Bybit 2025, sekitar US$1,5 miliar: penanda tangan menyetujui transaksi yang tampilannya sudah dimanipulasi</td><td>Periksa isi transaksi di perangkat terpisah sebelum menandatangani</td></tr>
+</table>
+<p>Perhatikan: dua kerugian terbesar di tabel itu bukan karena bug di kode Solidity, melainkan karena <b>kunci dan proses manusia</b>. Keamanan bukan hanya soal kode.</p>
+
+<h3>Alat pemeriksa</h3>
+<table class="tbl">
+  <tr><th>Alat</th><th>Caranya</th><th>Menangkap</th></tr>
+  <tr><td><b>Tes unit &amp; fuzz</b> (Foundry)</td><td>Menjalankan kontrak dengan masukan pilihan dan acak</td><td>Perilaku yang tidak sesuai harapan</td></tr>
+  <tr><td><b>Tes invarian</b> (Foundry, fungsi <i>invariant_…</i>)</td><td>Memastikan sesuatu selalu benar setelah urutan panggilan acak, mis. "kas = jumlah semua setoran"</td><td>Bug yang muncul dari kombinasi langkah</td></tr>
+  <tr><td><b>Analisis statis</b> (Slither, Aderyn)</td><td>Membaca kode tanpa menjalankannya: <i>slither .</i></td><td>Pola berbahaya yang sudah dikenal, termasuk reentrancy</td></tr>
+  <tr><td><b>Audit &amp; bug bounty</b></td><td>Ahli manusia membaca kode; peretas etis dibayar bila menemukan celah</td><td>Kesalahan logika bisnis yang tidak terlihat alat</td></tr>
+</table>
+<p>Audit bukan jaminan. Banyak protokol yang sudah diaudit tetap dibobol, karena kode berubah setelah audit atau celahnya ada di luar cakupan audit.</p>
+
+<h3>Mendeteksi penipuan dari data on-chain</h3>
+<table class="tbl">
+  <tr><th>Pola penipuan</th><th>Tandanya</th></tr>
+  <tr><td><b>Phishing izin</b> (approval / permit)</td><td>Situs palsu meminta approve tak terbatas atau tanda tangan permit; setelah disetujui, token dikuras</td></tr>
+  <tr><td><b>Address poisoning</b></td><td>Transfer bernilai 0 dari alamat yang awal dan akhirnya mirip alamat langgananmu, berharap kamu menyalin alamat palsu dari riwayat</td></tr>
+  <tr><td><b>Token honeypot</b></td><td>Bisa dibeli tapi tidak bisa dijual — kodenya memblokir penjualan selain oleh pembuat</td></tr>
+  <tr><td><b>Rug pull</b></td><td>Pembuat menarik seluruh likuiditas atau mencetak token baru dalam jumlah besar lalu menjualnya</td></tr>
+</table>
+<p>AI membantu mendeteksi pola ini dalam skala besar: model <b>deteksi anomali</b> seperti Isolation Forest (<a href="#/lesson/ai-alg-5">Isolation Forest</a>) menandai alamat yang perilakunya janggal, dan analisis jaringan menemukan kumpulan alamat yang dikendalikan pihak yang sama. Hasilnya tetap berupa <b>dugaan</b> yang harus diperiksa manusia — label yang salah bisa merugikan orang yang tidak bersalah.</p>
+`,
+          keyPoints: [
+            "Reentrancy: penerima memanggil ulang fungsi penarikan sebelum saldo dicatat; The DAO 2016 kehilangan sekitar 3,6 juta ETH.",
+            "Pola Checks–Effects–Interactions (periksa, catat, baru kirim) dan ReentrancyGuard mencegahnya.",
+            "Kerugian terbesar sering datang dari kunci yang bocor dan tanda tangan buta, bukan hanya bug kode.",
+            "Lapisan pemeriksaan: tes unit & fuzz, tes invarian, analisis statis (Slither, Aderyn), audit, dan bug bounty — tak satu pun menjamin aman.",
+            "Pola penipuan on-chain: phishing izin, address poisoning, token honeypot, rug pull; AI membantu menandai dugaan, manusia memeriksa."
+          ],
+          practice: [
+            { type: "choice", q: "Urutan mana yang mengikuti pola Checks–Effects–Interactions?", options: ["Kirim ETH → catat saldo → periksa syarat", "Periksa syarat → kirim ETH → catat saldo", "Periksa syarat → catat saldo → kirim ETH", "Catat saldo → kirim ETH → periksa syarat"], answer: 2, hint: "Interaksi dengan pihak luar paling akhir.", solution: "Periksa, catat perubahan, baru kirim — sehingga pemanggilan ulang melihat saldo yang sudah dinolkan." },
+            { type: "number", q: "Bank berisi 9 ETH; penyerang menyetor 1 ETH (total 10 ETH) ke kontrak yang rentan reentrancy dan menarik 1 ETH per lapisan. Berapa ETH paling banyak yang bisa ia ambil?", answer: 10, tol: 0.5, unit: "ETH", hint: "Serangan berulang sampai kas bank habis.", solution: "Setiap lapisan mengirim 1 ETH sampai kas habis: 10 ETH, padahal ia hanya menyetor 1 ETH." }
+          ],
+          quiz: [
+            {
+              q: "Kenapa kode yang mengirim ETH sebelum menolkan saldo rentan reentrancy?",
+              options: [
+                "Penerima bisa memanggil penarikan lagi saat saldonya belum nol",
+                "ETH yang dikirim lewat call selalu hilang di tengah jalan",
+                "Kontrak penerima tidak bisa menerima ETH sama sekali",
+                "Biaya gas pengiriman menjadi terlalu mahal untuk dibayar"
+              ],
+              answer: 0,
+              explain: "Fungsi receive penerima berjalan di tengah pengiriman dan bisa masuk lagi ke fungsi yang sama."
+            },
+            {
+              q: "Apa pelajaran dari kasus Bybit 2025?",
+              options: [
+                "Kerugian besar bisa datang dari tanda tangan buta, bukan bug kode",
+                "Smart contract yang sudah diaudit tidak mungkin dibobol",
+                "Bursa terpusat selalu lebih aman daripada DeFi",
+                "Reentrancy adalah satu-satunya celah yang berbahaya"
+              ],
+              answer: 0,
+              explain: "Penanda tangan menyetujui transaksi yang tampilannya dimanipulasi. Keamanan mencakup proses dan manusia."
+            },
+            {
+              q: "Sebuah token bisa dibeli tapi transaksi jualnya selalu gagal untuk semua orang kecuali pembuatnya. Ini disebut?",
+              options: [
+                "Token honeypot",
+                "Address poisoning",
+                "Liquid staking",
+                "Impermanent loss"
+              ],
+              answer: 0,
+              explain: "Kodenya sengaja memblokir penjualan; pembeli terjebak memegang token yang tidak bisa dijual."
+            }
+          ]
         },
         {
           id: "bc-pro-studi",

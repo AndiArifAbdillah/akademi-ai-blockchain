@@ -9269,7 +9269,7 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
       id: "ai-arah",
       level: "Arah",
       title: "Masa Depan AI",
-      summary: "Apa yang arahnya sudah terukur, apa yang benar-benar belum diketahui, dan cara membaca ramalan tentang AI.",
+      summary: "Apa yang arahnya sudah terukur, apa yang benar-benar belum diketahui, cara membaca ramalan tentang AI, dan cara masuk bekerja di industri AI.",
       lessons: [
         {
           id: "ai-arah-1",
@@ -9465,6 +9465,109 @@ Keduanya dinyatakan oleh orang yang sangat kompeten. <b>Kompetensi tidak membuat
               explain: "Alat berganti tiap tahun; konsep dan kemampuan menilai kebenaran bertahan jauh lebih lama.",
             },
           ],
+        },
+        {
+          id: "ai-karier-1",
+          title: "Bekerja di Industri AI — Peran, Portofolio & Cara Masuk",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Sepanjang jalur ini kamu sudah bertemu banyak pekerjaan yang berbeda: menyiapkan data dan melatih model klasik, membangun aplikasi dengan API dan RAG, merakit agen, menjalankan model di produksi (MLOps), sampai menilai ekonominya. Industri AI juga terbagi menurut pekerjaan-pekerjaan itu.
+</div>
+
+<h3>Peta peran</h3>
+<table class="tbl">
+  <tr><th>Peran</th><th>Pekerjaan sehari-hari</th><th>Bekal utama</th></tr>
+  <tr><td><b>Data Analyst</b></td><td>Menjawab pertanyaan bisnis dari data</td><td>SQL, spreadsheet, visualisasi, statistik dasar</td></tr>
+  <tr><td><b>Data Scientist</b></td><td>Membangun model untuk memprediksi atau menjelaskan</td><td>Python, pandas, scikit-learn, metrik model</td></tr>
+  <tr><td><b>ML Engineer</b></td><td>Melatih model dan membawanya ke produksi</td><td>Python, PyTorch, MLOps, rekayasa perangkat lunak</td></tr>
+  <tr><td><b>AI Engineer</b></td><td>Membangun aplikasi di atas model besar: RAG, agen, evaluasi</td><td>API model, prompt, vector database, pemrograman web</td></tr>
+  <tr><td><b>Data / MLOps Engineer</b></td><td>Membuat aliran data dan sistem model tetap jalan dan terpantau</td><td>Cloud, basis data, otomasi</td></tr>
+  <tr><td><b>AI Product Manager</b></td><td>Menentukan masalah apa yang diselesaikan AI dan mengukur hasilnya</td><td>Pemahaman pengguna, metrik, dasar teknis AI</td></tr>
+  <tr><td><b>Research Scientist</b></td><td>Menemukan metode baru</td><td>Matematika mendalam, publikasi; sering butuh S2/S3</td></tr>
+</table>
+<p>Tidak semua pekerjaan AI berarti melatih model sendiri. Banyak lowongan baru justru untuk orang yang bisa <b>merakit</b> model yang sudah ada menjadi produk yang berguna dan bisa diandalkan.</p>
+
+<h3>Portofolio mengalahkan sertifikat</h3>
+<p>Perekrut ingin bukti bahwa kamu bisa menyelesaikan masalah nyata. Tiga proyek yang selesai dan bisa dicoba lebih meyakinkan daripada sepuluh sertifikat kursus.</p>
+<table class="tbl">
+  <tr><th>Proyek yang baik</th><th>Proyek yang lemah</th></tr>
+  <tr><td>Masalah nyata dengan data nyata, mis. "memprediksi keterlambatan pengiriman toko daring keluarga"</td><td>Dataset latihan yang sudah dipakai jutaan orang tanpa sudut pandang baru</td></tr>
+  <tr><td>Ada evaluasi yang jujur: metrik, kasus gagal, keterbatasan</td><td>Hanya menampilkan akurasi tertinggi</td></tr>
+  <tr><td>Bisa dicoba: tautan aplikasi, kode di GitHub, README yang jelas</td><td>Hanya tangkapan layar</td></tr>
+  <tr><td>Ditulis: apa yang kamu pelajari dan apa yang akan kamu ubah</td><td>Tanpa penjelasan sama sekali</td></tr>
+</table>
+
+<h3>Jalan masuk yang realistis</h3>
+<ol>
+  <li><b>Pilih satu peran sasaran</b> dari tabel di atas, jangan semuanya sekaligus.</li>
+  <li><b>Kuasai dasarnya</b>: Python, SQL, statistik, dan cara mengevaluasi model.</li>
+  <li><b>Bangun 2–3 proyek</b> yang sesuai peran itu, satu di antaranya dari masalah yang kamu kenal sendiri.</li>
+  <li><b>Tunjukkan di tempat terbuka</b>: GitHub, Hugging Face, Kaggle, atau tulisan singkat tentang prosesnya.</li>
+  <li><b>Bergabung dengan komunitas</b> dan acara seperti hackathon atau kelas intensif — banyak lowongan pertama datang dari kenalan, bukan dari lamaran dingin.</li>
+  <li><b>Mulai dari tempat yang memberi banyak belajar</b>: magang, proyek lepas kecil, atau peran data di perusahaan non-teknologi.</li>
+</ol>
+
+<h3>Keterampilan yang bertahan meski alatnya berganti</h3>
+<table class="tbl">
+  <tr><th>Keterampilan</th><th>Kenapa tahan lama</th></tr>
+  <tr><td><b>Merumuskan masalah</b></td><td>Model bisa menulis kode, tapi tidak tahu masalah mana yang layak diselesaikan</td></tr>
+  <tr><td><b>Evaluasi</b></td><td>Memastikan sistem AI benar-benar bekerja — dan tahu kapan ia gagal — makin penting saat AI makin banyak dipakai</td></tr>
+  <tr><td><b>Memahami data</b></td><td>Kualitas data menentukan kualitas hasil</td></tr>
+  <tr><td><b>Komunikasi</b></td><td>Menjelaskan hasil, risiko, dan biaya kepada orang non-teknis</td></tr>
+  <tr><td><b>Etika &amp; keamanan</b></td><td>Regulasi dan risiko AI terus bertambah</td></tr>
+</table>
+<div class="callout warn">
+<b>Jujur soal pasar kerja.</b> Alat AI juga mengotomatiskan sebagian pekerjaan pemula, termasuk menulis kode sederhana. Yang dicari perusahaan bergeser ke orang yang bisa memakai AI untuk bekerja lebih cepat <b>dan</b> memeriksa hasilnya dengan benar. Gelar dari kursus singkat saja jarang cukup; proyek, pemahaman, dan rekam jejak yang membedakan.
+</div>
+`,
+          keyPoints: [
+            "Peran di industri AI beragam: data analyst, data scientist, ML engineer, AI engineer, MLOps, AI product manager, research scientist.",
+            "Banyak pekerjaan baru adalah merakit model yang sudah ada menjadi produk yang andal, bukan melatih model dari nol.",
+            "Portofolio 2–3 proyek nyata yang bisa dicoba dan dievaluasi dengan jujur lebih meyakinkan daripada sertifikat.",
+            "Jalan masuk: pilih satu peran, kuasai dasar, bangun proyek, tunjukkan secara terbuka, dan aktif di komunitas.",
+            "Keterampilan yang bertahan: merumuskan masalah, evaluasi, memahami data, komunikasi, etika dan keamanan."
+          ],
+          practice: [
+            { type: "choice", q: "Kamu senang membangun aplikasi chatbot dengan RAG dan agen di atas API model. Peran mana yang paling cocok?", options: ["Research Scientist", "AI Engineer", "Data Analyst", "MLOps Engineer"], answer: 1, hint: "Peran yang membangun aplikasi di atas model besar.", solution: "AI Engineer membangun aplikasi di atas model yang sudah ada: RAG, agen, dan evaluasinya." },
+            { type: "choice", q: "Proyek portofolio mana yang paling meyakinkan perekrut?", options: ["Klasifikasi bunga iris dengan akurasi 100%", "Prediksi keterlambatan pengiriman toko keluarga, lengkap dengan kasus gagal dan tautan demo", "Sepuluh sertifikat kursus daring", "Tangkapan layar hasil chatbot"], answer: 1, hint: "Masalah nyata, evaluasi jujur, bisa dicoba.", solution: "Proyek dari masalah nyata dengan evaluasi jujur dan demo menunjukkan kemampuan menyelesaikan masalah sungguhan." }
+          ],
+          quiz: [
+            {
+              q: "Peran apa yang membangun aplikasi di atas model besar seperti RAG dan agen?",
+              options: [
+                "AI Engineer",
+                "Research Scientist",
+                "Data Analyst",
+                "Akuntan Biaya"
+              ],
+              answer: 0,
+              explain: "AI Engineer merakit model yang sudah ada menjadi aplikasi, beserta evaluasinya."
+            },
+            {
+              q: "Kenapa portofolio proyek lebih meyakinkan daripada kumpulan sertifikat?",
+              options: [
+                "Proyek menunjukkan kemampuan menyelesaikan masalah nyata",
+                "Sertifikat kursus dilarang dicantumkan dalam lamaran",
+                "Perekrut tidak pernah membaca bagian pendidikan",
+                "Proyek selalu dibayar lebih tinggi oleh perusahaan"
+              ],
+              answer: 0,
+              explain: "Proyek yang bisa dicoba dan dievaluasi dengan jujur adalah bukti langsung kemampuan."
+            },
+            {
+              q: "Keterampilan mana yang paling tahan lama meski alat AI terus berganti?",
+              options: [
+                "Merumuskan masalah dan mengevaluasi hasil",
+                "Menghafal semua perintah satu pustaka",
+                "Mengetik kode secepat mungkin tanpa tes",
+                "Mengikuti setiap model baru di hari rilis"
+              ],
+              answer: 0,
+              explain: "Alat berganti cepat; kemampuan memilih masalah dan memeriksa hasil tetap dibutuhkan."
+            }
+          ]
         },
       ],
     },

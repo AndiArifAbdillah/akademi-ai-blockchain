@@ -5702,6 +5702,76 @@ DEMOS["analis-onchain"] = function (root) {
   ]));
 };
 
+/* ---------- Demo: serangan reentrancy, langkah demi langkah ---------- */
+DEMOS["reentrancy-sim"] = function (root) {
+  // Bank berisi 5 ETH: 4 ETH milik nasabah lain + 1 ETH setoran penyerang.
+  let aman = false, jejak = [], i = 0;
+  function buatJejak() {
+    const s = { kas: 5, tercatat: 1, dompet: 0 };
+    const t = [];
+    const catat = (d, teks, jenis) => t.push({ d: d, teks: teks, jenis: jenis || "", kas: s.kas, tercatat: s.tercatat, dompet: s.dompet });
+    catat(0, "Penyerang menyetor 1 ETH, lalu memanggil <b>tarikSemua()</b>.");
+    function tarik(d) {
+      const jumlah = s.tercatat;
+      catat(d, "tarikSemua(): saldo tercatat penyerang = <b>" + jumlah + " ETH</b>.");
+      if (aman) {
+        s.tercatat = 0;
+        catat(d, "Versi aman: saldo <b>dinolkan dulu</b>, sebelum mengirim uang.", "ok");
+      }
+      if (jumlah === 0) { catat(d, "Saldo tercatat 0 → tidak ada yang dikirim. Serangan berhenti di sini.", "ok"); return; }
+      if (s.kas < jumlah) { catat(d, "Kas bank tinggal " + s.kas + " ETH, tidak cukup → berhenti.", "bad"); return; }
+      s.kas -= jumlah; s.dompet += jumlah;
+      catat(d, "Bank mengirim " + jumlah + " ETH ke kontrak penyerang.", aman ? "" : "bad");
+      catat(d, "Kiriman itu memicu <b>receive()</b> milik penyerang, yang langsung memanggil tarikSemua() <b>lagi</b>.", "bad");
+      tarik(d + 1);
+      if (!aman) { s.tercatat = 0; }
+    }
+    tarik(1);
+    if (!aman) catat(0, "Semua lapisan panggilan selesai. Baru sekarang saldo penyerang dinolkan — sudah terlambat.", "bad");
+    catat(0, aman ? "Hasil: penyerang hanya mendapat kembali 1 ETH miliknya sendiri." : "Hasil: penyerang mengambil <b>" + s.dompet + " ETH</b>, padahal hanya menyetor 1 ETH. Uang nasabah lain habis.", aman ? "ok" : "bad");
+    return t;
+  }
+  const kode = h("pre", { class: "code rr-kode" });
+  const log = h("div", { class: "dm-log" });
+  const out = h("div", { class: "dm-out" });
+  const lanjut = h("button", { class: "btn", type: "button", text: "Langkah berikutnya" });
+  const semua = h("button", { class: "btn ghost", type: "button", text: "Jalankan semua" });
+  const vRentan = h("button", { class: "btn ghost aktif", type: "button", text: "Versi rentan" });
+  const vAman = h("button", { class: "btn ghost", type: "button", text: "Versi aman" });
+  const KODE_RENTAN = "function tarikSemua() public {\n    uint256 jumlah = saldo[msg.sender];\n    // 1. kirim dulu\n    (bool ok, ) = msg.sender.call{value: jumlah}(\"\");\n    require(ok);\n    // 2. baru dicatat\n    saldo[msg.sender] = 0;\n}";
+  const KODE_AMAN = "function tarikSemua() public {\n    uint256 jumlah = saldo[msg.sender];\n    // 1. catat dulu\n    saldo[msg.sender] = 0;\n    // 2. baru kirim\n    (bool ok, ) = msg.sender.call{value: jumlah}(\"\");\n    require(ok);\n}";
+  function tampil() {
+    log.innerHTML = "";
+    jejak.slice(0, i).forEach((l) => log.appendChild(h("div", { class: "dm-li " + l.jenis, html: "<span class=\"rr-lapis\">" + (l.d ? "lapis " + l.d : "") + "</span>" + l.teks, style: "margin-left:" + Math.min(l.d, 5) * 10 + "px" })));
+    const s = i ? jejak[i - 1] : { kas: 5, tercatat: 1, dompet: 0 };
+    out.innerHTML =
+      '<div class="dm-line"><span>Kas bank (milik semua nasabah)</span><b>' + s.kas + " ETH</b></div>" +
+      '<div class="dm-line"><span>Saldo penyerang menurut catatan bank</span><b>' + s.tercatat + " ETH</b></div>" +
+      '<div class="dm-line big ' + (s.dompet > 1 ? "bad" : s.dompet ? "good" : "") + '"><span>ETH yang sudah diterima penyerang</span><b>' + s.dompet + " ETH</b></div>";
+    lanjut.disabled = semua.disabled = i >= jejak.length;
+  }
+  function pilih(v) {
+    aman = v; jejak = buatJejak(); i = 0;
+    kode.textContent = aman ? KODE_AMAN : KODE_RENTAN;
+    vRentan.classList.toggle("aktif", !aman); vAman.classList.toggle("aktif", aman);
+    tampil();
+  }
+  lanjut.onclick = () => { i++; tampil(); };
+  semua.onclick = () => { i = jejak.length; tampil(); };
+  vRentan.onclick = () => pilih(false);
+  vAman.onclick = () => pilih(true);
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Serangan reentrancy</b>" }),
+    h("p", { class: "demo-hint", text: "Bank menyimpan 5 ETH: 4 ETH milik nasabah lain dan 1 ETH milik penyerang. Jalankan langkah demi langkah, lalu bandingkan dengan versi aman." }),
+    h("div", { class: "demo-controls" }, [vRentan, vAman]),
+    kode,
+    h("div", { class: "demo-controls" }, [lanjut, semua]),
+    out,
+    log,
+  ]));
+  pilih(false);
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

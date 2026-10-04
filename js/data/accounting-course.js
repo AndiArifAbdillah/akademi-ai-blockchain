@@ -6943,12 +6943,12 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
         },
       ],
     },
-    /* ---------------- MODUL 15: DARI IDE KE USAHA: POLA PIKIR FOUNDER ---------------- */
+    /* ---------------- MODUL 15: DARI IDE KE DEMO DAY: MEMBANGUN USAHA SENDIRI ---------------- */
     {
       id: "acc-founder",
       level: "Founder",
-      title: "Dari Ide ke Usaha: Pola Pikir Founder",
-      summary: "Untuk yang ingin membangun usaha atau produk sendiri: pola pikir founder, menguji ide lewat wawancara yang jujur, merangkum rencana dalam Lean Canvas beserta angka titik impasnya, lalu membangun MVP dan mengukur product-market fit.",
+      title: "Dari Ide ke Demo Day: Membangun Usaha Sendiri",
+      summary: "Untuk yang ingin membangun usaha atau produk sendiri: pola pikir founder, menguji ide lewat wawancara yang jujur, merangkum rencana dalam Lean Canvas beserta angka titik impasnya, membangun MVP dan mengukur product-market fit, UI/UX produk digital, sampai pitch di Demo Day.",
       lessons: [
         {
           id: "acc-fdr-1",
@@ -7368,6 +7368,214 @@ Siklus <b>Build–Measure–Learn</b>: bangun versi terkecil, ukur apa yang dila
               ],
               answer: 0,
               explain: "40% atau lebih pengguna merasa sangat kehilangan bila produk itu hilang."
+            }
+          ]
+        },
+        {
+          id: "acc-fdr-5",
+          title: "UI/UX untuk Produk Digital — Membuat Orang Paham Tanpa Dijelaskan",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Retensi</b> mengukur berapa banyak pengguna yang masih memakai produkmu setelah beberapa minggu. Banyak pengguna pergi bukan karena produknya tidak berguna, melainkan karena mereka <b>bingung</b> di menit-menit pertama.
+</div>
+
+<h3>UI dan UX itu berbeda</h3>
+<table class="tbl">
+  <tr><th></th><th>UI (User Interface)</th><th>UX (User Experience)</th></tr>
+  <tr><td>Menjawab</td><td>Seperti apa tampilannya?</td><td>Bagaimana rasanya memakai produk ini dari awal sampai tujuan tercapai?</td></tr>
+  <tr><td>Contoh</td><td>Warna tombol, huruf, jarak, ikon</td><td>Berapa langkah untuk membeli tiket, apa yang terjadi saat gagal</td></tr>
+</table>
+<p>Tampilan yang cantik tidak menolong bila pengguna tidak tahu harus menekan apa. UX yang baik sering terasa "biasa saja" — karena semuanya berjalan seperti yang diharapkan.</p>
+
+<h3>Lima prinsip yang paling sering dilanggar</h3>
+<table class="tbl">
+  <tr><th>Prinsip</th><th>Artinya</th><th>Contoh</th></tr>
+  <tr><td><b>Jelas</b></td><td>Satu layar, satu tujuan utama</td><td>Satu tombol utama yang menonjol, bukan lima tombol sama besar</td></tr>
+  <tr><td><b>Beri umpan balik</b></td><td>Setiap tindakan langsung ditanggapi</td><td>"Sedang memproses…", lalu "Berhasil" atau pesan gagal yang jelas</td></tr>
+  <tr><td><b>Konsisten</b></td><td>Hal yang sama terlihat dan bekerja sama di mana pun</td><td>Tombol "Batal" selalu di posisi yang sama</td></tr>
+  <tr><td><b>Cegah kesalahan</b></td><td>Lebih baik mencegah daripada meminta maaf</td><td>Konfirmasi sebelum tindakan yang tidak bisa dibatalkan</td></tr>
+  <tr><td><b>Mudah diakses</b></td><td>Bisa dipakai oleh lebih banyak orang</td><td>Kontras teks cukup, huruf tidak terlalu kecil, tombol cukup besar untuk jari</td></tr>
+</table>
+<p>Sebagian besar pengguna di Indonesia mengakses internet lewat ponsel. Rancang untuk layar kecil lebih dulu (<i>mobile first</i>), baru diperluas ke layar besar.</p>
+
+<h3>Menguji dengan lima orang</h3>
+<p>Kamu tidak butuh laboratorium. Riset Jakob Nielsen menunjukkan bahwa menguji dengan sekitar <b>5 pengguna</b> sudah menemukan sebagian besar masalah kegunaan — sekitar 85% — dan lebih efektif menguji 5 orang berkali-kali daripada 15 orang sekali.</p>
+<ol>
+  <li>Beri satu tugas nyata: "Belilah satu tiket untuk acara Sabtu."</li>
+  <li>Minta mereka berpikir keras sambil mencoba. <b>Jangan membantu</b>.</li>
+  <li>Catat di mana mereka ragu, salah tekan, atau bertanya.</li>
+  <li>Perbaiki tiga masalah terbesar, lalu uji lagi dengan lima orang lain.</li>
+</ol>
+
+<h3>UX khusus produk Web3</h3>
+<p>Produk blockchain punya kesulitan tambahan yang tidak ada di aplikasi biasa:</p>
+<table class="tbl">
+  <tr><th>Masalah</th><th>Cara yang lebih baik</th></tr>
+  <tr><td>Langsung meminta "Connect Wallet" saat halaman dibuka</td><td>Biarkan orang melihat-lihat dulu; minta sambungan hanya saat dibutuhkan</td></tr>
+  <tr><td>Pengguna tidak tahu transaksinya sedang apa</td><td>Tampilkan tahapannya: menunggu tanda tangan → dikirim → menunggu blok → berhasil, atau gagal beserta alasannya</td></tr>
+  <tr><td>Angka mentah dan alamat panjang</td><td>Tampilkan "0,01 ETH (± Rp…)" dan nama yang mudah dikenali; alamat disingkat tapi bisa disalin utuh</td></tr>
+  <tr><td>Jaringan salah</td><td>Deteksi otomatis dan tawarkan tombol pindah jaringan</td></tr>
+  <tr><td>Pengguna menandatangani tanpa paham</td><td>Jelaskan dengan bahasa manusia apa yang akan disetujui dan risikonya</td></tr>
+  <tr><td>Pengguna baru belum punya dompet</td><td>Pertimbangkan dompet yang dibuat lewat email atau akun media sosial (<i>embedded wallet</i>), dengan biaya gas ditanggung aplikasi di awal</td></tr>
+</table>
+<div class="callout">
+<b>Ukuran sederhana:</b> berapa langkah dan berapa detik yang dibutuhkan orang baru untuk mencapai manfaat utama produkmu? Setiap langkah yang dihapus biasanya menaikkan jumlah orang yang sampai ke tujuan.
+</div>
+`,
+          keyPoints: [
+            "UI = tampilan; UX = pengalaman memakai produk dari awal sampai tujuan tercapai.",
+            "Prinsip dasar: jelas, beri umpan balik, konsisten, cegah kesalahan, mudah diakses — dan rancang untuk ponsel lebih dulu.",
+            "Uji dengan sekitar 5 pengguna berkali-kali; jangan membantu, catat di mana mereka bingung.",
+            "UX Web3: minta sambungan dompet hanya saat perlu, tampilkan tahapan transaksi, angka yang mudah dibaca, dan penjelasan sebelum menandatangani.",
+            "Ukur berapa langkah dan detik yang dibutuhkan orang baru untuk mencapai manfaat utama."
+          ],
+          practice: [
+            { type: "number", q: "Alur pembelian tiket punya 8 langkah. Dari 200 pengunjung, 50 berhasil membeli. Berapa persen yang berhasil?", answer: 25, tol: 0.05, unit: "%", hint: "Berhasil ÷ pengunjung × 100%.", solution: "50 ÷ 200 = 25%. Mengurangi langkah biasanya menaikkan angka ini." },
+            { type: "choice", q: "Saat uji kegunaan, peserta tampak bingung mencari tombol bayar. Apa yang sebaiknya kamu lakukan saat itu?", options: ["Langsung menunjukkan tombolnya", "Diam, amati, dan catat kebingungannya", "Menghentikan uji dan memulai dengan peserta lain", "Menjelaskan cara kerja aplikasinya dari awal"], answer: 1, hint: "Tujuan uji adalah menemukan masalah, bukan menyelesaikan tugas.", solution: "Kebingungan itu justru temuan berharga. Kalau dibantu, masalahnya tersembunyi." }
+          ],
+          quiz: [
+            {
+              q: "Apa beda utama UI dan UX?",
+              options: [
+                "UI soal tampilan; UX soal pengalaman memakai dari awal sampai akhir",
+                "UI untuk aplikasi seluler; UX hanya untuk situs web di komputer",
+                "UI dikerjakan programmer; UX dikerjakan bagian pemasaran saja",
+                "Keduanya sama persis, hanya istilah yang berbeda"
+              ],
+              answer: 0,
+              explain: "Tampilan yang cantik tidak menolong bila pengalaman memakainya membingungkan."
+            },
+            {
+              q: "Menurut riset Nielsen, berapa pengguna yang cukup untuk satu putaran uji kegunaan?",
+              options: [
+                "Sekitar 5 orang",
+                "Minimal 50 orang",
+                "Minimal 500 orang",
+                "Cukup 1 orang"
+              ],
+              answer: 0,
+              explain: "Sekitar 5 orang menemukan sebagian besar masalah; lebih baik diulang beberapa putaran."
+            },
+            {
+              q: "Mana praktik UX Web3 yang baik?",
+              options: [
+                "Menampilkan tahapan transaksi sampai berhasil atau gagal",
+                "Meminta Connect Wallet begitu halaman pertama dibuka",
+                "Menampilkan jumlah dalam wei agar terlihat teliti",
+                "Membiarkan pengguna menebak jaringan yang dipakai"
+              ],
+              answer: 0,
+              explain: "Pengguna perlu tahu apa yang sedang terjadi; transaksi blockchain tidak selesai seketika."
+            }
+          ]
+        },
+        {
+          id: "acc-fdr-6",
+          title: "Pitch & Demo Day — Menceritakan Proyekmu dalam Tiga Menit",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Lean Canvas merangkum masalah, segmen, solusi, dan angka dalam satu halaman. Retensi dan uji Sean Ellis menunjukkan apakah produkmu dibutuhkan. Pitch adalah cara menceritakan semua itu dengan singkat kepada orang yang belum mengenalmu.
+</div>
+
+<h3>Pitch menjawab satu pertanyaan</h3>
+<p>Juri, investor, atau calon mitra semuanya bertanya hal yang sama: <b>"Kenapa saya harus peduli pada proyek ini, dan kenapa tim ini yang akan berhasil?"</b> Pitch yang baik bukan kumpulan semua fitur, melainkan cerita yang membuat pertanyaan itu terjawab.</p>
+
+<h3>Susunan slide yang umum</h3>
+<table class="tbl">
+  <tr><th>#</th><th>Slide</th><th>Isinya</th></tr>
+  <tr><td>1</td><td>Pembuka</td><td>Nama proyek + satu kalimat: "TiketAman: tiket acara yang tidak bisa dipalsukan dan tidak bisa dicalokan."</td></tr>
+  <tr><td>2</td><td>Masalah</td><td>Cerita nyata atau angka dari wawancaramu</td></tr>
+  <tr><td>3</td><td>Solusi</td><td>Cara kerjanya, dalam bahasa pengguna</td></tr>
+  <tr><td>4</td><td>Demo</td><td>Tunjukkan, jangan hanya bercerita</td></tr>
+  <tr><td>5</td><td>Kenapa sekarang</td><td>Apa yang berubah sehingga solusi ini baru mungkin sekarang</td></tr>
+  <tr><td>6</td><td>Pasar</td><td>Berapa banyak calon pengguna dan berapa nilainya</td></tr>
+  <tr><td>7</td><td>Model bisnis</td><td>Siapa membayar berapa untuk apa</td></tr>
+  <tr><td>8</td><td>Bukti</td><td>Pengguna, uji coba, retensi, surat minat, pendapatan pertama</td></tr>
+  <tr><td>9</td><td>Pesaing</td><td>Cara orang mengatasinya sekarang, dan kenapa kamu berbeda</td></tr>
+  <tr><td>10</td><td>Tim &amp; langkah berikutnya</td><td>Kenapa kalian, dan apa yang kalian minta: mitra, pendanaan, pengguna uji</td></tr>
+</table>
+
+<h3>Ukuran pasar: TAM, SAM, SOM</h3>
+<table class="tbl">
+  <tr><th>Lapisan</th><th>Arti</th><th>Contoh TiketAman (angka misalkan)</th></tr>
+  <tr><td><b>TAM</b></td><td>Seluruh pasar bila semua orang memakai</td><td>Semua tiket acara di Indonesia</td></tr>
+  <tr><td><b>SAM</b></td><td>Bagian yang bisa dijangkau model bisnismu</td><td>Acara kampus &amp; konser kecil: misalkan 2 juta tiket/tahun × Rp4.000 = Rp8 miliar</td></tr>
+  <tr><td><b>SOM</b></td><td>Bagian yang realistis direbut dalam beberapa tahun</td><td>Misalkan 5% dari SAM = Rp400 juta/tahun</td></tr>
+</table>
+<p>Juri lebih percaya pada hitungan dari bawah ke atas (jumlah acara × penonton × harga) daripada angka "pasar triliunan" yang dikutip dari laporan.</p>
+
+<h3>Demo yang tidak mengkhianatimu</h3>
+<ul>
+  <li><b>Satu alur saja</b>, dari masalah ke hasil — bukan tur semua menu.</li>
+  <li><b>Siapkan rekaman video cadangan</b>. Internet, dompet, dan testnet bisa gagal tepat saat kamu di panggung.</li>
+  <li><b>Isi data contoh lebih dulu</b>, supaya layar tidak kosong.</li>
+  <li><b>Perbesar tampilan</b> agar terbaca dari kursi belakang.</li>
+</ul>
+
+<h3>Tiga menit itu sekitar 400 kata</h3>
+<p>Orang berbicara sekitar 130 kata per menit dalam presentasi. Pitch tiga menit berarti kira-kira <b>400 kata</b> — tulis naskahnya, potong sampai muat, lalu latih dengan pengatur waktu minimal lima kali. Kalimat pertama adalah yang paling penting: langsung ke masalah, bukan "Selamat pagi, perkenalkan nama kami…".</p>
+
+<h3>Apa yang biasanya dinilai juri</h3>
+<table class="tbl">
+  <tr><th>Kriteria</th><th>Pertanyaan di kepala juri</th></tr>
+  <tr><td>Masalah</td><td>Nyata, jelas, dan cukup penting?</td></tr>
+  <tr><td>Solusi &amp; inovasi</td><td>Benar-benar menyelesaikan masalahnya? Kenapa memakai teknologi ini?</td></tr>
+  <tr><td>Eksekusi teknis</td><td>Benar-benar jalan, atau hanya gambar?</td></tr>
+  <tr><td>Kelayakan bisnis</td><td>Ada yang mau membayar? Angkanya masuk akal?</td></tr>
+  <tr><td>Tim &amp; presentasi</td><td>Paham masalahnya? Bisa menjawab pertanyaan dengan jujur?</td></tr>
+</table>
+
+<h3>Menghadapi pertanyaan</h3>
+<p>Siapkan jawaban untuk pertanyaan yang paling kamu takuti: "Kenapa harus pakai blockchain?", "Apa bedanya dengan pesaing X?", "Dari mana uangnya?". Kalau tidak tahu jawabannya, katakan dengan jujur dan jelaskan bagaimana kamu akan mencari tahu. Juri jauh lebih menghargai kejujuran daripada jawaban yang dikarang.</p>
+`,
+          keyPoints: [
+            "Pitch menjawab: kenapa harus peduli pada proyek ini, dan kenapa tim ini yang akan berhasil.",
+            "Susunan umum: pembuka satu kalimat, masalah, solusi, demo, kenapa sekarang, pasar, model bisnis, bukti, pesaing, tim & permintaan.",
+            "TAM–SAM–SOM: hitung dari bawah ke atas (jumlah × harga), bukan mengutip angka pasar raksasa.",
+            "Demo: satu alur, data contoh terisi, tampilan diperbesar, dan rekaman video cadangan.",
+            "Tiga menit ≈ 400 kata; latih minimal lima kali dan siapkan jawaban jujur untuk pertanyaan tersulit."
+          ],
+          practice: [
+            { type: "number", q: "Pembicara rata-rata 130 kata per menit. Berapa kata, kira-kira, untuk pitch 5 menit?", answer: 650, tol: 1, unit: "kata", hint: "Kata per menit × menit.", solution: "130 × 5 = 650 kata." },
+            { type: "number", q: "SAM: 2 juta tiket per tahun × Rp4.000. Bila SOM 5% dari SAM, berapa juta rupiah SOM per tahun?", answer: 400, tol: 0.5, unit: "juta Rp", hint: "SAM = 8 miliar; 5% dari itu.", solution: "2.000.000 × 4.000 = Rp8 miliar; 5% = Rp400 juta per tahun." }
+          ],
+          quiz: [
+            {
+              q: "Kalimat pembuka pitch mana yang paling kuat?",
+              options: [
+                "Panitia kampus rugi jutaan rupiah karena tiket palsu",
+                "Selamat pagi, perkenalkan kami dari kelompok nomor tiga",
+                "Proyek kami memakai teknologi blockchain yang terbaru",
+                "Kami sudah bekerja keras selama sepuluh minggu penuh"
+              ],
+              answer: 0,
+              explain: "Langsung ke masalah nyata menarik perhatian; perkenalan dan teknologi bisa menyusul."
+            },
+            {
+              q: "Kenapa perlu menyiapkan rekaman video cadangan untuk demo?",
+              options: [
+                "Internet, dompet, atau testnet bisa gagal di panggung",
+                "Juri hanya menilai video, bukan demo langsung",
+                "Video membuat produknya terlihat lebih canggih",
+                "Demo langsung tidak diizinkan di Demo Day"
+              ],
+              answer: 0,
+              explain: "Demo langsung paling meyakinkan, tapi cadangan menyelamatkanmu bila sesuatu di luar kendali gagal."
+            },
+            {
+              q: "Hitungan ukuran pasar mana yang paling dipercaya juri?",
+              options: [
+                "Dari bawah ke atas: jumlah pengguna × harga",
+                "Angka pasar global dari laporan konsultan",
+                "Perkiraan tanpa sumber agar terdengar besar",
+                "Jumlah penduduk Indonesia dikali satu dolar"
+              ],
+              answer: 0,
+              explain: "Hitungan dari bawah ke atas menunjukkan kamu paham siapa pembelinya dan berapa yang mereka bayar."
             }
           ]
         },
