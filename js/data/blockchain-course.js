@@ -5400,7 +5400,7 @@ console.log("Setelah blok 0 diubah, sah?", sah());</div>
       id: "bc-forensik",
       level: "Forensik",
       title: "Forensik Blockchain — Melacak Aliran Dana",
-      summary: "Kripto itu pseudonim, bukan anonim. Pelajari cara analis melacak dana curian, bagaimana alamat dikaitkan ke identitas lewat jalur hukum, dan batas etikanya.",
+      summary: "Kripto itu pseudonim, bukan anonim. Pelajari cara analis melacak dana curian, bagaimana alamat dikaitkan ke identitas lewat jalur hukum, memakai AI sebagai analis on-chain, dan batas etikanya.",
       lessons: [
         {
           id: "bc-for-1",
@@ -5943,6 +5943,115 @@ Yang penting dipahami: <b>privasi finansial adalah kebutuhan wajar</b>, tapi di 
                 "Transaksi 2016 justru lebih mudah dianalisis hari ini daripada saat transaksi itu terjadi.",
             },
           ],
+        },
+        {
+          id: "bc-ai-1",
+          title: "AI sebagai Analis On-Chain — Bertanya pada Data Blockchain",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Data blockchain publik bisa dibaca siapa pun lewat block explorer (pelajaran Mengintip Isi Blockchain), dan analis melacak aliran dana dengan membaca transaksi demi transaksi (Dasar Penelusuran On-Chain). Dari jalur AI: <b>agen</b> adalah model yang memutuskan langkah, lalu memanggil <b>alat</b> — misalnya API — untuk mengambil data (<a href="#/lesson/ai-agen-1">Agen AI dari Nol</a>).
+</div>
+
+<h3>Kenapa butuh AI?</h3>
+<p>Blockchain besar mencatat ratusan ribu sampai jutaan transaksi setiap hari. Datanya terbuka, tapi terlalu banyak untuk dibaca manusia satu per satu. AI membantu di dua tempat: <b>menerjemahkan pertanyaan</b> dalam bahasa sehari-hari menjadi kueri atau panggilan API, dan <b>merangkum hasilnya</b> menjadi penjelasan yang bisa dipahami.</p>
+
+<h3>Dari mana datanya</h3>
+<table class="tbl">
+  <tr><th>Sumber</th><th>Contoh</th><th>Cocok untuk</th></tr>
+  <tr><td><b>API block explorer</b></td><td>mempool.space (Bitcoin), Etherscan (Ethereum)</td><td>Blok, transaksi, saldo, dan biaya terbaru</td></tr>
+  <tr><td><b>Node RPC</b></td><td>Penyedia RPC atau node sendiri</td><td>Membaca langsung dari jaringan, termasuk memanggil fungsi kontrak</td></tr>
+  <tr><td><b>Data terindeks + SQL</b></td><td>Dune, The Graph</td><td>Pertanyaan besar: "berapa total transfer USDC bulan ini?"</td></tr>
+  <tr><td><b>Platform berlabel</b></td><td>Nansen, Arkham (sebagian berbayar)</td><td>Alamat yang sudah diberi label, mis. "dompet bursa X"</td></tr>
+</table>
+
+<h3>Pembagian kerja yang benar</h3>
+<div data-diagram="pipeline" data-stages="Pertanyaan::bahasa sehari-hari|AI menerjemahkan::jadi kueri atau panggilan API|Alat mengambil &amp; menghitung::angka pasti dari data|AI menjelaskan::dengan menyebut sumbernya|Manusia memeriksa::2–3 angka dicek ulang" data-caption="Angka berasal dari data dan kode; AI menerjemahkan dan menjelaskan"></div>
+<div class="callout warn">
+<b>Aturan emas: jangan pernah meminta AI "mengingat" data on-chain.</b> Model bisa mengarang alamat dompet, hash transaksi, dan angka yang terdengar meyakinkan. Berikan datanya, minta ia menunjukkan hitungan atau kodenya, lalu periksa.
+</div>
+
+<h3>Coba sendiri — data Bitcoin sungguhan</h3>
+<div data-demo="analis-onchain"></div>
+
+<h3>Contoh: pertanyaan menjadi SQL</h3>
+<p>Platform seperti Dune menyimpan data blockchain dalam tabel yang bisa ditanya dengan SQL. AI cukup pandai menulis SQL, misalnya untuk pertanyaan "Berapa transfer USDC di atas 1 juta dolar di Ethereum kemarin?":</p>
+<pre class="code">SELECT COUNT(*) AS jumlah, SUM(amount) AS total
+FROM transfer_token                      -- nama tabel contoh
+WHERE blockchain = 'ethereum'
+  AND symbol = 'USDC'
+  AND amount > 1000000
+  AND block_time >= CURRENT_DATE - INTERVAL '1' DAY
+  AND block_time &lt; CURRENT_DATE</pre>
+<p>Sebelum memercayai hasilnya, periksa kuerinya seperti memeriksa pekerjaan orang lain: Apakah jaringannya benar? Apakah rentang waktunya benar — dan dalam zona waktu apa (biasanya UTC)? Apakah kolom <i>amount</i> sudah dalam USDC, atau masih dalam satuan terkecil?</p>
+
+<h3>Kesalahan AI yang paling sering dalam analisis on-chain</h3>
+<table class="tbl">
+  <tr><th>Kesalahan</th><th>Contoh</th></tr>
+  <tr><td><b>Satuan &amp; desimal</b></td><td>USDC punya 6 desimal: angka mentah 2.500.000.000 berarti 2.500 USDC, bukan 2,5 miliar. ETH punya 18 desimal (wei)</td></tr>
+  <tr><td><b>Mengarang data</b></td><td>Menyebut hash transaksi atau alamat yang tidak pernah ada</td></tr>
+  <tr><td><b>Salah label</b></td><td>Menganggap dompet bursa sebagai satu orang "paus" — padahal isinya dana ribuan pengguna</td></tr>
+  <tr><td><b>Korelasi dianggap kepemilikan</b></td><td>Dua alamat sering bertransaksi belum tentu milik orang yang sama</td></tr>
+  <tr><td><b>Data basi &amp; zona waktu</b></td><td>"Kemarin" menurut UTC berbeda dengan WIB</td></tr>
+</table>
+
+<h3>Latihan langsung: eksplorasi data dengan AI</h3>
+<ol>
+  <li><b>Pilih satu pertanyaan yang sempit</b>, misalnya "Berapa biaya rata-rata transaksi Bitcoin minggu ini?"</li>
+  <li><b>Ambil datanya sendiri</b> — dari API atau ekspor CSV block explorer.</li>
+  <li><b>Berikan data itu ke AI</b>, minta ia menulis kode atau langkah hitungannya, bukan langsung jawabannya.</li>
+  <li><b>Cek ulang dua atau tiga angka</b> secara manual di block explorer.</li>
+  <li><b>Tulis kesimpulan beserta sumbernya</b>, termasuk keterbatasannya.</li>
+</ol>
+<p>Data on-chain memang terbuka, tapi bukan berarti boleh dipakai untuk membongkar identitas orang. Batas etikanya dibahas di pelajaran berikutnya.</p>
+`,
+          keyPoints: [
+            "AI membantu menerjemahkan pertanyaan menjadi kueri atau panggilan API, lalu menjelaskan hasilnya.",
+            "Sumber data: API block explorer, node RPC, data terindeks + SQL (Dune, The Graph), dan platform berlabel.",
+            "Aturan emas: angka diambil dan dihitung oleh alat; jangan meminta AI mengingat data on-chain.",
+            "Periksa kueri buatan AI: jaringan, rentang waktu dan zona waktunya, serta satuan dan desimal.",
+            "USDC punya 6 desimal dan ETH 18 desimal — salah desimal adalah kesalahan paling umum."
+          ],
+          practice: [
+            { type: "number", q: "Kolom amount mentah sebuah transfer USDC berisi 2500000000. Berapa USDC sebenarnya? (USDC punya 6 desimal)", answer: 2500, tol: 0.01, unit: "USDC", hint: "Bagi dengan 10 pangkat 6.", solution: "2.500.000.000 ÷ 1.000.000 = 2.500 USDC." },
+            { type: "number", q: "Dari 15 blok, total imbalan penambang 47,05 BTC dan total biaya transaksi 0,175 BTC. Berapa persen imbalan yang berasal dari biaya? (2 desimal)", answer: 0.37, tol: 0.01, unit: "%", hint: "Biaya ÷ imbalan × 100%.", solution: "0,175 ÷ 47,05 × 100% ≈ 0,37%." }
+          ],
+          quiz: [
+            {
+              q: "Kenapa AI tidak boleh diminta 'mengingat' data on-chain seperti saldo atau hash transaksi?",
+              options: [
+                "Model bisa mengarang angka dan alamat yang meyakinkan",
+                "Data on-chain dilarang dibaca oleh model AI mana pun",
+                "Model AI hanya bisa membaca data milik Bitcoin",
+                "Jawaban AI selalu lebih lambat dari block explorer"
+              ],
+              answer: 0,
+              explain: "Model menebak dari pola; data yang benar harus diambil langsung dari sumbernya."
+            },
+            {
+              q: "AI menulis kueri yang menghasilkan 'transfer USDC senilai 2,5 miliar'. Apa yang perlu diperiksa dulu?",
+              options: [
+                "Apakah angkanya masih dalam satuan terkecil (6 desimal)",
+                "Apakah kuerinya ditulis dengan huruf kapital semua",
+                "Apakah AI yang dipakai adalah model paling baru",
+                "Apakah transfer itu terjadi pada hari kerja"
+              ],
+              answer: 0,
+              explain: "Angka mentah USDC harus dibagi 1.000.000; tanpa itu hasilnya sejuta kali terlalu besar."
+            },
+            {
+              q: "Pembagian kerja yang tepat antara AI dan alat dalam analisis on-chain?",
+              options: [
+                "Alat mengambil dan menghitung data; AI menerjemahkan dan menjelaskan",
+                "AI mengingat semua data; alat hanya menampilkan grafiknya",
+                "AI mengirim transaksi; alat menebak siapa pemilik alamatnya",
+                "Alat menulis kesimpulan; AI mengambil data dari ingatannya"
+              ],
+              answer: 0,
+              explain: "Angka harus berasal dari data dan kode yang bisa diperiksa; AI kuat di bahasa dan penjelasan."
+            }
+          ]
         },
         {
           id: "bc-for-6",

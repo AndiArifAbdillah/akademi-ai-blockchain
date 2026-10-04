@@ -6948,7 +6948,7 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
       id: "acc-founder",
       level: "Founder",
       title: "Dari Ide ke Usaha: Pola Pikir Founder",
-      summary: "Untuk yang ingin membangun usaha atau produk sendiri: pola pikir founder, menguji ide lewat wawancara yang jujur, dan merangkum rencana dalam Lean Canvas beserta angka titik impasnya.",
+      summary: "Untuk yang ingin membangun usaha atau produk sendiri: pola pikir founder, menguji ide lewat wawancara yang jujur, merangkum rencana dalam Lean Canvas beserta angka titik impasnya, lalu membangun MVP dan mengukur product-market fit.",
       lessons: [
         {
           id: "acc-fdr-1",
@@ -7262,6 +7262,112 @@ Ide adalah <b>tebakan</b> yang harus diuji, dan yang diukur adalah apa yang <b>d
               ],
               answer: 0,
               explain: "Titik impas = 25.000.000 ÷ 2.500 = 10.000 tiket per bulan."
+            }
+          ]
+        },
+        {
+          id: "acc-fdr-4",
+          title: "MVP & Product-Market Fit — Membangun Produk Digital Sungguhan",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Siklus <b>Build–Measure–Learn</b>: bangun versi terkecil, ukur apa yang dilakukan pengguna, lalu putuskan. Di Lean Canvas, asumsi yang <b>paling berisiko</b> diuji lebih dulu, masing-masing dengan batas lulus.
+</div>
+
+<h3>MVP bukan produk setengah jadi</h3>
+<p><b>MVP</b> (<i>Minimum Viable Product</i>) adalah versi produk yang memungkinkan kamu <b>belajar sebanyak mungkin dengan usaha sekecil mungkin</b> (Eric Ries). Kata kuncinya "belajar". MVP yang baik tetap harus berguna dan bisa diandalkan untuk satu hal kecil — yang dipotong adalah jumlah fiturnya, bukan mutunya.</p>
+<table class="tbl">
+  <tr><th>Jenis MVP</th><th>Caranya</th><th>Contoh untuk TiketAman</th></tr>
+  <tr><td><b>Concierge</b></td><td>Layani pengguna secara manual dan terang-terangan</td><td>Tim sendiri menjual tiket dan memeriksa QR di pintu untuk satu acara</td></tr>
+  <tr><td><b>Wizard of Oz</b></td><td>Tampak otomatis, padahal di belakangnya manusia</td><td>Halaman jual ulang tampak otomatis, tapi batas harga diperiksa manual</td></tr>
+  <tr><td><b>Satu fitur inti</b></td><td>Hanya fitur yang menyelesaikan masalah utama</td><td>Tiket anti-palsu dulu; pasar jual ulang menyusul</td></tr>
+  <tr><td><b>Tanpa kode</b></td><td>Rangkai alat yang sudah ada</td><td>Formulir + pembayaran + otomasi n8n untuk mengirim tiket</td></tr>
+</table>
+
+<h3>Memotong cakupan dengan MoSCoW</h3>
+<table class="tbl">
+  <tr><th>Kelompok</th><th>Arti</th><th>Contoh</th></tr>
+  <tr><td><b>Must</b></td><td>Tanpa ini produknya tidak berguna</td><td>Membeli tiket, memeriksa keaslian tiket di pintu</td></tr>
+  <tr><td><b>Should</b></td><td>Penting, tapi bisa menyusul</td><td>Jual ulang dengan batas harga</td></tr>
+  <tr><td><b>Could</b></td><td>Menyenangkan bila ada</td><td>Koleksi tiket sebagai kenang-kenangan</td></tr>
+  <tr><td><b>Won't</b> (untuk sekarang)</td><td>Sengaja ditunda</td><td>Token milik platform, aplikasi seluler sendiri</td></tr>
+</table>
+
+<h3>Produk "sungguhan" butuh lebih dari fitur</h3>
+<ul>
+  <li><b>Jalan masuk yang mulus</b> — pengguna baru sampai ke manfaat utamanya secepat mungkin (sering disebut <i>aha moment</i>).</li>
+  <li><b>Andal</b> — satu kegagalan di pintu masuk acara bisa membunuh kepercayaan.</li>
+  <li><b>Saluran bantuan</b> — tempat pengguna bertanya ketika bingung.</li>
+  <li><b>Pengukuran</b> — tanpa data pemakaian, kamu tidak bisa belajar apa pun.</li>
+  <li><b>Pembayaran, syarat, dan privasi</b> — terutama bila memegang uang atau data orang.</li>
+</ul>
+
+<h3>Mengukur: retensi lebih jujur daripada jumlah pendaftar</h3>
+<p>Jumlah pendaftar mudah dinaikkan dengan promosi. Yang sulit dipalsukan adalah <b>retensi</b>: berapa persen pengguna yang <b>masih memakai</b> setelah beberapa minggu. Cara membacanya dengan <b>kohort</b> — sekelompok pengguna yang mulai pada waktu yang sama:</p>
+<table class="tbl">
+  <tr><th>Kohort 100 pengguna</th><th>Minggu 1</th><th>Minggu 2</th><th>Minggu 4</th><th>Minggu 8</th></tr>
+  <tr><td>Produk A</td><td>45%</td><td>32%</td><td>25%</td><td class="ok-cell">24%</td></tr>
+  <tr><td>Produk B</td><td>50%</td><td>28%</td><td>12%</td><td class="bad-cell">3%</td></tr>
+</table>
+<p>Produk B awalnya tampak lebih baik, tapi kurvanya terus turun hampir ke nol: orang mencoba lalu pergi. Kurva Produk A <b>mendatar</b> di sekitar 24% — ada sekelompok orang yang terus memakainya. Kurva yang mendatar adalah salah satu tanda paling kuat bahwa produkmu benar-benar dibutuhkan.</p>
+
+<h3>Product-market fit</h3>
+<p><b>Product-market fit</b> (PMF) adalah keadaan ketika produkmu memuaskan pasar yang cukup besar — pengguna datang dan bertahan bahkan sebelum kamu mendorongnya keras-keras. Selain kurva retensi yang mendatar, ada uji sederhana dari Sean Ellis: tanyakan kepada pengguna aktif, <i>"Bagaimana perasaanmu kalau produk ini tidak bisa dipakai lagi?"</i> Bila <b>40% atau lebih</b> menjawab <b>"sangat kecewa"</b>, itu pertanda kuat sudah ada PMF.</p>
+<table class="tbl">
+  <tr><th>Sinyal</th><th>Belum PMF</th><th>Mendekati PMF</th></tr>
+  <tr><td>Kurva retensi</td><td>Terus turun ke nol</td><td>Mendatar di atas nol</td></tr>
+  <tr><td>"Sangat kecewa" tanpa produkmu</td><td>Di bawah 40%</td><td>40% atau lebih</td></tr>
+  <tr><td>Pengguna baru datang dari</td><td>Iklan dan dorongan tim</td><td>Rekomendasi pengguna lain</td></tr>
+</table>
+
+<h3>Kalau belum: ubah arah dengan sadar</h3>
+<p>Mengubah arah (<i>pivot</i>) bukan kegagalan, asal didasari data. Yang diubah bisa <b>segmennya</b> (dari konser kecil ke seminar kampus), <b>masalahnya</b> (dari calo ke absensi peserta), atau <b>salurannya</b> (dari media sosial ke kerja sama dengan BEM). Yang tidak boleh adalah terus membangun fitur baru sambil berharap kurva retensi berubah sendiri.</p>
+`,
+          keyPoints: [
+            "MVP = versi untuk belajar sebanyak mungkin dengan usaha sekecil mungkin; fiturnya sedikit, mutunya tetap layak.",
+            "Jenis MVP: concierge, Wizard of Oz, satu fitur inti, dan rakitan tanpa kode.",
+            "MoSCoW memotong cakupan: Must, Should, Could, Won't (untuk sekarang).",
+            "Retensi per kohort lebih jujur daripada jumlah pendaftar; kurva yang mendatar adalah tanda kuat produk dibutuhkan.",
+            "Uji Sean Ellis: 40% atau lebih pengguna 'sangat kecewa' tanpa produkmu menandakan product-market fit."
+          ],
+          practice: [
+            { type: "number", q: "Kohort 250 pengguna; setelah minggu ke-8 masih 60 yang aktif. Berapa persen retensinya?", answer: 24, tol: 0.05, unit: "%", hint: "Yang masih aktif ÷ jumlah awal × 100%.", solution: "60 ÷ 250 = 24%." },
+            { type: "number", q: "Dari 120 pengguna aktif yang disurvei, 52 menjawab 'sangat kecewa'. Berapa persennya? (1 desimal)", answer: 43.3, tol: 0.1, unit: "%", hint: "52 ÷ 120 × 100%.", solution: "52 ÷ 120 ≈ 43,3% — di atas batas 40%, pertanda baik." }
+          ],
+          quiz: [
+            {
+              q: "Apa tujuan utama sebuah MVP?",
+              options: [
+                "Belajar sebanyak mungkin dengan usaha sekecil mungkin",
+                "Meluncurkan semua fitur sekaligus agar terlihat lengkap",
+                "Membuat produk murah dengan mutu seadanya",
+                "Mengumpulkan pendaftar sebanyak-banyaknya"
+              ],
+              answer: 0,
+              explain: "MVP adalah alat belajar; yang dipotong jumlah fitur, bukan mutu."
+            },
+            {
+              q: "Kurva retensi mana yang paling menjanjikan?",
+              options: [
+                "Turun di awal, lalu mendatar di sekitar 25%",
+                "Mulai tinggi, lalu terus turun mendekati 0%",
+                "Naik turun tanpa pola dari minggu ke minggu",
+                "Selalu 100% karena belum ada yang diukur"
+              ],
+              answer: 0,
+              explain: "Kurva yang mendatar berarti ada kelompok pengguna yang terus memakai produkmu."
+            },
+            {
+              q: "Dalam uji Sean Ellis, ambang yang menandakan product-market fit adalah?",
+              options: [
+                "Minimal 40% 'sangat kecewa'",
+                "Minimal 10% 'sangat kecewa'",
+                "Minimal 90% 'cukup puas'",
+                "Minimal 1.000 pendaftar"
+              ],
+              answer: 0,
+              explain: "40% atau lebih pengguna merasa sangat kehilangan bila produk itu hilang."
             }
           ]
         },

@@ -5493,6 +5493,215 @@ DEMOS["perlu-blockchain"] = function (root) {
   nilai();
 };
 
+/* ---------- Demo: putaran kerja agen AI (pikir → panggil alat → hasil → jawab) ---------- */
+DEMOS["agen-loop"] = function (root) {
+  // Jejak agen yang sudah disiapkan (bukan model sungguhan) untuk memperlihatkan polanya.
+  const LANGKAH = [
+    { j: "pikir", t: "Aku perlu harga cappuccino, tapi menu Warung Kopi Sari tidak ada di ingatanku. Panggil alat <b>lihat_menu</b>." },
+    { j: "aksi", t: "lihat_menu({ \"nama\": \"cappuccino\" })" },
+    { j: "hasil", t: "{ \"nama\": \"Cappuccino\", \"harga\": 28000 }" },
+    { j: "pikir", t: "Tiga cangkir berarti 3 × 28.000. Hitungan kuserahkan ke <b>kalkulator</b> supaya tidak salah." },
+    { j: "aksi", t: "kalkulator({ \"ekspresi\": \"3 * 28000\" })" },
+    { j: "hasil", t: "84000" },
+    { j: "pikir", t: "Sekarang perlu kurs dolar hari ini. Panggil alat <b>kurs</b>." },
+    { j: "aksi", t: "kurs({ \"dari\": \"USD\", \"ke\": \"IDR\" })" },
+    { j: "hasil", t: "{ \"kurs\": 16250, \"catatan\": \"angka contoh\" }" },
+    { j: "aksi", t: "kalkulator({ \"ekspresi\": \"84000 / 16250\" })" },
+    { j: "hasil", t: "5.1692…" },
+    { j: "jawab", t: "Tiga cappuccino di Warung Kopi Sari harganya <b>Rp84.000</b>, sekitar <b>US$5,17</b> dengan kurs Rp16.250 per dolar." },
+  ];
+  const LABEL = { pikir: "Pikir", aksi: "Panggil alat", hasil: "Hasil alat", jawab: "Jawaban" };
+  let i = 0, tanpaAlat = false;
+  const log = h("div", { class: "ag-log" });
+  const info = h("div", { class: "dm-sub" });
+  const lanjut = h("button", { class: "btn", type: "button", text: "Langkah berikutnya" });
+  const ulang = h("button", { class: "btn ghost", type: "button", text: "Ulangi" });
+  const saklar = h("button", { class: "btn ghost", type: "button", text: "Coba tanpa alat" });
+  function render() {
+    log.innerHTML = "";
+    if (tanpaAlat) {
+      log.appendChild(h("div", { class: "ag-langkah jawab salah", html: "<span class=\"ag-jenis\">Jawaban</span>Kira-kira <b>US$4,50</b> untuk tiga cappuccino." }));
+      log.appendChild(h("div", { class: "dm-note", html: "Tanpa alat, model hanya bisa menebak dari pola teks yang pernah dilihatnya. Harga menu warung ini dan kurs hari ini tidak ada di dalam parameternya — jadi jawabannya terdengar yakin, tapi angkanya karangan." }));
+      lanjut.disabled = true;
+      info.textContent = "Panggilan model: 1 · panggilan alat: 0";
+      return;
+    }
+    LANGKAH.slice(0, i).forEach((l) => log.appendChild(h("div", { class: "ag-langkah " + l.j, html: "<span class=\"ag-jenis\">" + LABEL[l.j] + "</span>" + l.t })));
+    // Satu keluaran model = satu keputusan: memanggil alat atau menjawab ("pikir" ikut di keluaran yang sama)
+    const nModel = LANGKAH.slice(0, i).filter((l) => l.j === "aksi" || l.j === "jawab").length;
+    const nAlat = LANGKAH.slice(0, i).filter((l) => l.j === "aksi").length;
+    info.textContent = "Panggilan model: " + nModel + " · panggilan alat: " + nAlat;
+    lanjut.disabled = i >= LANGKAH.length;
+    if (i >= LANGKAH.length) log.appendChild(h("div", { class: "dm-note", text: "Selesai. Setiap kali model memutuskan langkah, itu satu panggilan model yang dibayar per token — agen yang berputar terlalu lama bisa mahal." }));
+  }
+  lanjut.onclick = () => { i++; render(); };
+  ulang.onclick = () => { i = 0; tanpaAlat = false; saklar.textContent = "Coba tanpa alat"; render(); };
+  saklar.onclick = () => { tanpaAlat = !tanpaAlat; i = 0; saklar.textContent = tanpaAlat ? "Kembali memakai alat" : "Coba tanpa alat"; lanjut.disabled = false; render(); };
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Putaran kerja sebuah agen</b>" }),
+    h("p", { class: "demo-hint", html: "Tugas: <i>\"Berapa harga 3 cappuccino di Warung Kopi Sari dalam dolar AS?\"</i> Alat yang tersedia: lihat_menu, kalkulator, kurs." }),
+    h("div", { class: "demo-controls" }, [lanjut, ulang, saklar]),
+    info,
+    log,
+  ]));
+  render();
+};
+
+/* ---------- Demo: alur pembayaran agen ke API dengan x402 ---------- */
+DEMOS["x402-alur"] = function (root) {
+  // Alur mengikuti x402 versi 2 (header PAYMENT-REQUIRED, PAYMENT-SIGNATURE, PAYMENT-RESPONSE).
+  // Harga, alamat, dan hash adalah contoh.
+  const harga = h("input", { class: "pc-input", type: "text", inputmode: "decimal", value: "0,01", "aria-label": "Harga per panggilan dalam USDC" });
+  const batas = h("input", { class: "pc-input", type: "text", inputmode: "decimal", value: "0,05", "aria-label": "Batas belanja harian dalam USDC" });
+  const tombol = h("button", { class: "btn", type: "button", text: "Agen meminta data cuaca" });
+  const reset = h("button", { class: "btn ghost", type: "button", text: "Hari baru" });
+  const ringkas = h("div", { class: "dm-out" });
+  const log = h("div", { class: "dm-log" });
+  let terpakai = 0, ke = 0;
+  const angka = (s) => { const v = parseFloat(String(s).replace(",", ".")); return isNaN(v) ? 0 : v; };
+  const usdc = (v) => v.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 4 }) + " USDC";
+  const heks = (n) => { let s = ""; let x = (n * 2654435761) >>> 0; for (let k = 0; k < 8; k++) { s += "0123456789abcdef"[x & 15]; x = (x * 1103515245 + 12345) >>> 0; } return s; };
+  function ringkasan() {
+    ringkas.innerHTML =
+      '<div class="dm-line"><span>Panggilan berbayar hari ini</span><b>' + ke + "</b></div>" +
+      '<div class="dm-line"><span>Terpakai dari batas</span><b>' + usdc(terpakai) + " / " + usdc(angka(batas.value)) + "</b></div>";
+  }
+  tombol.onclick = () => {
+    const p = angka(harga.value), b = angka(batas.value);
+    const langkah = [];
+    langkah.push(["", "<b>1. Agen → Server API:</b> GET /cuaca?kota=Jakarta"]);
+    langkah.push(["", "<b>2. Server → Agen:</b> <code>402 Payment Required</code> + header <b>PAYMENT-REQUIRED</b>: { skema: \"exact\", jaringan: \"base\", aset: \"USDC\", jumlah: \"" + String(p).replace(".", ",") + "\", bayarKe: \"0x2F…9a1\" }"]);
+    if (terpakai + p > b + 1e-12) {
+      langkah.push(["bad", "<b>3. Agen memeriksa kebijakan:</b> sudah terpakai " + usdc(terpakai) + "; tambahan " + usdc(p) + " melewati batas harian " + usdc(b) + ". <b>Agen tidak membayar</b> dan meminta persetujuan pemiliknya."]);
+    } else {
+      ke++;
+      terpakai += p;
+      langkah.push(["", "<b>3. Agen memeriksa kebijakan:</b> masih di bawah batas → menandatangani <i>izin transfer</i> " + usdc(p) + " dengan kunci dompetnya. Belum ada uang yang berpindah."]);
+      langkah.push(["", "<b>4. Agen → Server API:</b> mengulang GET /cuaca + header <b>PAYMENT-SIGNATURE</b>: (izin bertanda tangan)"]);
+      langkah.push(["", "<b>5. Server → Facilitator:</b> verifikasi tanda tangan ✓, lalu <i>settle</i> — facilitator mengirim transaksi USDC ke blockchain."]);
+      langkah.push(["ok", "<b>6. Server → Agen:</b> <code>200 OK</code> + data cuaca + header <b>PAYMENT-RESPONSE</b>: { tx: \"0x" + heks(ke) + "…\" }"]);
+    }
+    log.innerHTML = "";
+    langkah.forEach((l) => log.appendChild(h("div", { class: "dm-li " + l[0], html: l[1] })));
+    ringkasan();
+  };
+  reset.onclick = () => { terpakai = 0; ke = 0; log.innerHTML = ""; ringkasan(); };
+  [harga, batas].forEach((x) => x.addEventListener("input", ringkasan));
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Agen membayar API per panggilan (x402)</b>" }),
+    h("p", { class: "demo-hint", text: "Tekan tombolnya berkali-kali. Perhatikan apa yang terjadi saat belanja agen mendekati batas harian." }),
+    h("div", { class: "dm-row" }, [h("span", { text: "Harga per panggilan" }), harga, h("span", { class: "dm-sub", text: "USDC" })]),
+    h("div", { class: "dm-row" }, [h("span", { text: "Batas belanja harian" }), batas, h("span", { class: "dm-sub", text: "USDC" })]),
+    h("div", { class: "demo-controls" }, [tombol, reset]),
+    ringkas,
+    log,
+    h("p", { class: "dm-note", text: "Alur dan nama header mengikuti x402 versi 2. Harga, alamat, dan hash transaksi di sini hanya contoh." }),
+  ]));
+  ringkasan();
+};
+
+/* ---------- Demo: agen analis on-chain dengan data Bitcoin sungguhan (mempool.space) ---------- */
+DEMOS["analis-onchain"] = function (root) {
+  const API = "https://mempool.space/api";
+  // Cadangan bila offline: 15 blok #969846–#969860 dan kondisi mempool, diambil 4 Oktober 2026.
+  // [tinggi, waktu, jumlah transaksi, imbalan total (sat), total biaya (sat), pool]
+  const CADANGAN_BLOK = [[969860,1791124133,4402,313507843,1007843,"F2Pool"],[969859,1791124132,3650,316560419,4060419,"AntPool"],[969858,1791122604,4164,315665533,3165533,"SpiderPool"],[969857,1791121118,6148,313277280,777280,"Foundry USA"],[969856,1791120879,4850,313805252,1305252,"Braiins Pool"],[969855,1791120432,6988,312895334,395334,"NiceHash"],[969854,1791120392,7074,313074033,574033,"AntPool"],[969853,1791120224,6703,313101018,601018,"Foundry USA"],[969852,1791120197,6202,313876716,1376716,"F2Pool"],[969851,1791119624,7216,312936922,436922,"F2Pool"],[969850,1791119545,6692,313124966,624966,"Foundry USA"],[969849,1791119370,6692,313129190,629190,"Foundry USA"],[969848,1791119193,6782,313020962,520962,"Foundry USA"],[969847,1791119087,8052,312858235,358235,"Foundry USA"],[969846,1791119061,5058,314126235,1626235,"AntPool"]];
+  const CADANGAN_FEE = { fastestFee: 4, halfHourFee: 3, hourFee: 1, economyFee: 1, minimumFee: 1 };
+  const CADANGAN_MEMPOOL = { count: 78984, vsize: 42446211, total_fee: 10787635 };
+
+  const fmt = (v, d) => Number(v).toLocaleString("id-ID", { maximumFractionDigits: d == null ? 0 : d });
+  async function ambil(jalur, cadangan) {
+    try {
+      const r = await fetch(API + jalur, { cache: "no-store" });
+      if (!r.ok) throw new Error(r.status);
+      return { data: await r.json(), langsung: true };
+    } catch (e) {
+      return { data: cadangan, langsung: false };
+    }
+  }
+  const keBlok = (b) => Array.isArray(b) ? { height: b[0], timestamp: b[1], tx_count: b[2], reward: b[3], fees: b[4], pool: b[5] } : { height: b.height, timestamp: b.timestamp, tx_count: b.tx_count, reward: b.extras.reward, fees: b.extras.totalFees, pool: b.extras.pool.name };
+
+  const SOAL = [
+    {
+      t: "Siapa yang paling banyak menambang di 15 blok terakhir, dan berapa transaksi per blok?",
+      rencana: "Butuh daftar blok terbaru beserta nama pool penambangnya → panggil alat <b>daftar_blok</b> (GET /api/v1/blocks).",
+      jalankan: async () => {
+        const r = await ambil("/v1/blocks", CADANGAN_BLOK);
+        const b = r.data.map(keBlok);
+        const pool = {};
+        b.forEach((x) => (pool[x.pool] = (pool[x.pool] || 0) + 1));
+        const urut = Object.entries(pool).sort((p, q) => q[1] - p[1]);
+        const rata = b.reduce((s, x) => s + x.tx_count, 0) / b.length;
+        const menit = (b[0].timestamp - b[b.length - 1].timestamp) / 60 / (b.length - 1);
+        return {
+          r: r, mentah: JSON.stringify(r.data.slice(0, 1), null, 0).slice(0, 220) + "…",
+          hitung: "Blok #" + b[b.length - 1].height + "–#" + b[0].height + " · hitung blok per pool: " + urut.map((p) => p[0] + " " + p[1]).join(", ") + " · rata-rata transaksi = jumlah ÷ " + b.length,
+          jawab: "Dari 15 blok terakhir, <b>" + urut[0][0] + "</b> menambang paling banyak (" + urut[0][1] + " blok, " + fmt(urut[0][1] / b.length * 100) + "%). Rata-rata satu blok berisi <b>" + fmt(rata) + " transaksi</b>, dan jarak antarblok rata-rata " + fmt(menit, 1) + " menit (targetnya 10 menit; sampel 15 blok wajar meleset).",
+        };
+      },
+    },
+    {
+      t: "Apakah jaringan Bitcoin sedang ramai? Berapa biaya kirim yang wajar sekarang?",
+      rencana: "Butuh antrean transaksi (mempool) dan saran biaya → panggil <b>info_mempool</b> (GET /api/mempool), <b>saran_biaya</b> (GET /api/v1/fees/recommended), dan <b>harga</b> (GET /api/v1/prices).",
+      jalankan: async () => {
+        const m = await ambil("/mempool", CADANGAN_MEMPOOL);
+        const f = await ambil("/v1/fees/recommended", CADANGAN_FEE);
+        const p = await ambil("/v1/prices", { USD: 85125 });
+        const vmb = m.data.vsize / 1e6;
+        const sat = f.data.fastestFee * 140;
+        const usd = sat / 1e8 * p.data.USD;
+        return {
+          r: { langsung: m.langsung && f.langsung && p.langsung },
+          mentah: JSON.stringify({ count: m.data.count, vsize: m.data.vsize }) + " " + JSON.stringify(f.data),
+          hitung: "Antrean " + fmt(vmb, 1) + " vMB ÷ ±1 vMB per blok ≈ " + fmt(vmb) + " blok · transaksi biasa ±140 vB × " + f.data.fastestFee + " sat/vB = " + fmt(sat) + " sat",
+          jawab: "Ada <b>" + fmt(m.data.count) + " transaksi</b> menunggu, sekitar " + fmt(vmb) + " blok antrean. Tapi saran biaya tercepat hanya <b>" + f.data.fastestFee + " sat/vB</b>, jadi transaksi biasa (±140 vB) cukup membayar sekitar <b>" + fmt(sat) + " sat ≈ US$" + fmt(usd, 2) + "</b> untuk masuk blok berikutnya. " + (f.data.fastestFee <= 5 ? "Antreannya panjang, tapi sebagian besar berisi transaksi berbiaya sangat rendah yang memang tidak terburu-buru." : "Biaya sedang tinggi; kalau tidak terburu-buru, saran biaya satu jam (" + f.data.hourFee + " sat/vB) jauh lebih murah."),
+        };
+      },
+    },
+    {
+      t: "Berapa total imbalan penambang di 15 blok terakhir, dan berapa persen yang berasal dari biaya transaksi?",
+      rencana: "Butuh imbalan dan total biaya per blok → panggil <b>daftar_blok</b> (GET /api/v1/blocks), lalu jumlahkan dengan <b>kalkulator</b>.",
+      jalankan: async () => {
+        const r = await ambil("/v1/blocks", CADANGAN_BLOK);
+        const b = r.data.map(keBlok);
+        const rew = b.reduce((s, x) => s + x.reward, 0), fee = b.reduce((s, x) => s + x.fees, 0);
+        return {
+          r: r, mentah: "reward & totalFees dari " + b.length + " blok (satuan satoshi)",
+          hitung: "Σ imbalan = " + fmt(rew) + " sat · Σ biaya = " + fmt(fee) + " sat · biaya ÷ imbalan × 100%",
+          jawab: "Penambang menerima <b>" + fmt(rew / 1e8, 3) + " BTC</b> dari 15 blok itu. Hanya <b>" + fmt(fee / rew * 100, 2) + "%</b> berasal dari biaya transaksi; sisanya subsidi blok baru (3,125 BTC per blok sejak halving 2024). Ini menunjukkan keamanan Bitcoin masih sangat bergantung pada subsidi yang terus berkurang tiap halving.",
+        };
+      },
+    },
+  ];
+
+  const out = h("div", { class: "ag-log" });
+  const tombol = SOAL.map((s, i) => {
+    const b = h("button", { class: "btn ghost ag-soal", type: "button", text: s.t });
+    b.onclick = async () => {
+      tombol.forEach((x) => x.classList.toggle("aktif", x === b));
+      out.innerHTML = "";
+      const tambah = (j, label, isi) => out.appendChild(h("div", { class: "ag-langkah " + j, html: "<span class=\"ag-jenis\">" + label + "</span>" + isi }));
+      tambah("pikir", "Rencana", s.rencana);
+      const tunggu = h("div", { class: "dm-sub", text: "Memanggil alat…" });
+      out.appendChild(tunggu);
+      const hsl = await s.jalankan();
+      tunggu.remove();
+      tambah("aksi", "Panggil alat", hsl.r.langsung ? "Data langsung dari mempool.space" : "Tidak tersambung — memakai data cadangan 4 Oktober 2026");
+      tambah("hasil", "Data mentah", "<code class=\"ag-kode\">" + hsl.mentah.replace(/</g, "&lt;") + "</code>");
+      tambah("hasil", "Hitungan (oleh kode, bukan model)", hsl.hitung);
+      tambah("jawab", "Jawaban", hsl.jawab);
+      out.appendChild(h("div", { class: "dm-note", html: "Periksa sendiri di <b>mempool.space</b>. Analis yang baik selalu bisa menunjukkan dari mana setiap angka berasal." }));
+    };
+    return b;
+  });
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Agen analis on-chain</b>" }),
+    h("p", { class: "demo-hint", text: "Pilih pertanyaan. Demo ini mengambil data Bitcoin sungguhan, lalu menunjukkan langkah yang dilakukan agen analis: rencana, panggilan alat, data mentah, hitungan, jawaban." }),
+    h("div", { class: "ag-pilihan" }, tombol),
+    out,
+  ]));
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

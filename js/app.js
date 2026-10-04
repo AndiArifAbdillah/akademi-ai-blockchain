@@ -1576,6 +1576,18 @@ const GLOSSARY = [
   ["Founder", "Orang yang memulai sebuah usaha dan bertanggung jawab atas hasilnya ketika belum ada jawaban pasti."],
   ["Lean Canvas", "Rangkuman ide bisnis dalam sembilan kotak di satu halaman: masalah, segmen, proposisi nilai, solusi, saluran, pendapatan, biaya, metrik, dan keunggulan."],
   ["Margin Kontribusi", "Harga jual dikurangi biaya variabel per unit — bagian yang dipakai untuk menutup biaya tetap."],
+  ["Agen AI", "Sistem AI yang diberi tujuan dan alat, lalu memutuskan sendiri langkah-langkahnya — memanggil alat, membaca hasil, dan mengulang sampai tugas selesai."],
+  ["A2A", "Agent2Agent: standar terbuka dari Google (2025) agar agen AI dari pembuat berbeda bisa saling berkenalan, berbagi tugas, dan bertukar hasil."],
+  ["x402", "Standar pembayaran terbuka yang memakai kode HTTP 402: server meminta bayaran, agen menandatangani izin transfer stablecoin, lalu datanya diberikan."],
+  ["AP2", "Agent Payments Protocol dari Google (2025): bukti persetujuan bertanda tangan (mandat) bahwa pengguna benar-benar menyuruh agen berbelanja."],
+  ["Facilitator", "Dalam x402: layanan yang memverifikasi tanda tangan pembayaran dan menyelesaikan transaksinya di blockchain atas nama server."],
+  ["Prompt Injection", "Serangan berupa instruksi tersembunyi di data yang dibaca AI (halaman web, email, dokumen) agar AI mengikuti perintah penyerang."],
+  ["USDC", "Stablecoin yang nilainya dijaga setara 1 dolar AS, diterbitkan Circle; punya 6 desimal."],
+  ["Dune", "Platform analitik yang menyimpan data blockchain dalam tabel yang bisa ditanya dengan SQL."],
+  ["MVP", "Minimum Viable Product: versi produk untuk belajar sebanyak mungkin dari pengguna dengan usaha sekecil mungkin."],
+  ["Product-Market Fit", "Keadaan ketika produk memuaskan pasar yang cukup besar: pengguna datang dan bertahan tanpa terus didorong."],
+  ["Kohort", "Sekelompok pengguna yang mulai pada waktu yang sama, dipakai untuk mengukur berapa persen yang masih aktif dari waktu ke waktu."],
+  ["Pivot", "Mengubah arah usaha secara sadar berdasarkan data — segmen, masalah, atau salurannya — tanpa membuang semua yang sudah dipelajari."],
 ];
 
 function renderGlossary() {

@@ -1590,3 +1590,16 @@ a.resume-card:hover .resume-btn { gap: 12px; }
 .pb-soal:first-child { border-top: 0; }
 .pb-soal p { margin: 0 0 2px; font-size: .92rem; }
 .pb-soal .demo-controls { margin-top: 6px; }
+
+/* ---------- Demo agen AI: putaran kerja, x402, analis on-chain ---------- */
+.ag-log { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+.ag-langkah { border-left: 3px solid var(--border); background: var(--surface-2); border-radius: 8px; padding: 9px 12px; font-size: .9rem; line-height: 1.55; overflow-wrap: anywhere; }
+.ag-langkah.pikir { border-left-color: var(--s0); }
+.ag-langkah.aksi { border-left-color: var(--s3); font-family: "Consolas", "Courier New", monospace; font-size: .82rem; }
+.ag-langkah.hasil { border-left-color: var(--s2); font-family: "Consolas", "Courier New", monospace; font-size: .82rem; }
+.ag-langkah.jawab { border-left-color: var(--ok); background: var(--ok-soft); }
+.ag-langkah.jawab.salah { border-left-color: var(--bad); background: var(--bad-soft); }
+.ag-jenis { display: block; font-family: var(--font-ui); font-size: .7rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.ag-kode { font-size: .78rem; word-break: break-all; }
+.ag-pilihan { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.ag-soal { text-align: left; white-space: normal; line-height: 1.4; height: auto; }
