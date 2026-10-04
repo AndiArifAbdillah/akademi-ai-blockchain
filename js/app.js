@@ -18,12 +18,12 @@ const MODULE_ORDER = [
   "ai-mahir", "ai-lanjutan", "ai-otomasi", "ai-proyek", "ai-terapan", "ai-ekonomi", "ai-arah",
   // ⛓️ Blockchain
   "bc-dasar", "bc-pemula", "bc-fundamental", "bc-pendalaman", "bc-matematika",
-  "bc-kriptografi", "bc-menengah", "bc-terapan", "bc-lanjutan", "bc-proyek",
+  "bc-kriptografi", "bc-menengah", "bc-terapan", "bc-lanjutan", "bc-proyek", "bc-dapp",
   "bc-forensik", "bc-pelengkap", "bc-ekonomi", "bc-arah",
   // 📊 Akuntansi
   "acc-dasar", "acc-pemula", "acc-menengah", "acc-pendalaman", "acc-fundamental",
   "acc-mikro", "acc-terapan", "acc-audit", "acc-matematika", "acc-lanjutan", "acc-kualitas",
-  "acc-bank", "acc-prospek", "acc-proyek", "acc-investasi", "acc-teknikal", "acc-makro", "acc-arah",
+  "acc-bank", "acc-prospek", "acc-proyek", "acc-founder", "acc-investasi", "acc-teknikal", "acc-makro", "acc-arah",
 ];
 (function urutkanModul() {
   const pos = (id) => {
@@ -1559,6 +1559,23 @@ const GLOSSARY = [
   ["Payout Ratio", "Bagian laba yang dibagikan sebagai dividen: dividen per lembar ÷ EPS."],
   ["Yield Trap", "Saham yang dividend yield-nya tampak sangat tinggi karena harganya jatuh, padahal dividennya kemungkinan akan dipangkas."],
   ["Obligasi", "Surat utang: penerbit membayar kupon (bunga) tetap setiap tahun dan mengembalikan pokoknya saat jatuh tempo."],
+  ["Remix IDE", "Editor, compiler, dan alat deploy smart contract yang berjalan di browser (remix.ethereum.org), tanpa instalasi."],
+  ["Remix VM", "Blockchain tiruan di dalam browser pada Remix: 10 akun berisi 100 ETH mainan, transaksi tanpa persetujuan dompet."],
+  ["Faucet", "Situs yang membagikan koin testnet gratis supaya developer bisa membayar gas saat berlatih."],
+  ["Bytecode", "Hasil compile smart contract: kode mesin yang benar-benar dijalankan dan disimpan di blockchain."],
+  ["ABI", "Application Binary Interface: daftar fungsi sebuah kontrak beserta bentuk masukan dan keluarannya, agar aplikasi tahu cara memanggilnya."],
+  ["Payable", "Penanda fungsi Solidity yang boleh menerima ETH; jumlah yang dikirim terbaca di msg.value."],
+  ["Revert", "Pembatalan seluruh transaksi karena sebuah syarat gagal; perubahan batal, tapi gas yang terpakai tetap dibayar."],
+  ["Wei", "Satuan terkecil ETH: 1 ETH = 10^18 wei."],
+  ["Gwei", "1 miliar wei (10^9 wei); satuan yang biasa dipakai untuk harga gas."],
+  ["Foundry", "Kotak perkakas developer Ethereum di terminal: forge (build, tes, deploy), cast, anvil, dan chisel."],
+  ["Anvil", "Blockchain lokal dari Foundry yang berjalan di laptop (127.0.0.1:8545) untuk mencoba kontrak tanpa testnet."],
+  ["Fuzzing", "Pengujian dengan ratusan masukan acak untuk menemukan kasus yang tidak terpikir oleh penulis tes."],
+  ["Cheatcode", "Perintah khusus saat tes Foundry (vm.prank, vm.deal, vm.expectRevert) untuk menyamar sebagai alamat lain, mencetak ETH mainan, dan sebagainya."],
+  ["Keystore", "Berkas terenkripsi kata sandi untuk menyimpan kunci privat, supaya kunci tidak perlu diketik di perintah."],
+  ["Founder", "Orang yang memulai sebuah usaha dan bertanggung jawab atas hasilnya ketika belum ada jawaban pasti."],
+  ["Lean Canvas", "Rangkuman ide bisnis dalam sembilan kotak di satu halaman: masalah, segmen, proposisi nilai, solusi, saluran, pendapatan, biaya, metrik, dan keunggulan."],
+  ["Margin Kontribusi", "Harga jual dikurangi biaya variabel per unit — bagian yang dipakai untuk menutup biaya tetap."],
 ];
 
 function renderGlossary() {

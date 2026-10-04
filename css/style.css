@@ -1563,3 +1563,30 @@ a.resume-card:hover .resume-btn { gap: 12px; }
 .pr-tanda { flex: 0 0 auto; align-self: stretch; width: 44px; min-height: 42px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--text); font: inherit; font-size: 1.15rem; line-height: 1; cursor: pointer; }
 .pr-tanda:hover { border-color: var(--text); }
 .pr-tanda:focus-visible { outline: none; border-color: var(--text); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+/* ---------- Demo simulasi Remix (Deploy & Run) & cek "perlu blockchain?" ---------- */
+.rx-panel { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 12px; align-items: center; margin-top: 10px; }
+.rx-label { font-size: .72rem; font-weight: 800; letter-spacing: .08em; color: var(--muted); }
+.rx-baris-isi { display: flex; align-items: center; gap: 8px; }
+.rx-panel .pc-input.lebar { width: 100%; }
+.rx-kontrak { grid-column: 1 / -1; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; background: var(--surface-2); margin-top: 6px; }
+.rx-kontrak-judul { font-family: "Consolas", "Courier New", monospace; font-size: .78rem; color: var(--muted); margin-bottom: 6px; word-break: break-all; }
+.rx-fn-baris { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 7px 0; }
+.rx-fn { font: inherit; font-size: .84rem; font-weight: 700; border-radius: 7px; padding: 7px 12px; border: 0; cursor: pointer; color: #fff; min-width: 92px; }
+.rx-fn.biru { background: #2f6aa8; }
+.rx-fn.oranye { background: #b8641c; }
+.rx-fn.merah { background: #a83a2c; }
+.rx-fn:hover { filter: brightness(1.1); }
+.rx-legenda { font-size: .8rem; color: var(--muted); margin: 12px 0; line-height: 2.1; }
+.rx-legenda .rx-fn { min-width: 0; padding: 2px 8px; font-size: .74rem; cursor: default; }
+.rx-terminal { background: var(--code-bg); color: var(--code-text); border-radius: 10px; padding: 4px 12px; font-family: "Consolas", "Courier New", monospace; font-size: .76rem; line-height: 1.6; max-height: 280px; overflow-y: auto; margin-top: 6px; }
+.rx-baris { padding: 7px 0; border-bottom: 1px dashed rgba(255, 255, 255, .12); overflow-wrap: anywhere; }
+.rx-baris:last-child { border-bottom: 0; }
+.rx-baris.baca { color: var(--code-biru); }
+.rx-tanda { font-weight: 800; }
+.rx-tanda.ok { color: var(--code-hijau); }
+.rx-tanda.bad { color: #f0a090; }
+.pb-soal { border-top: 1px dashed var(--border); padding: 10px 0 4px; }
+.pb-soal:first-child { border-top: 0; }
+.pb-soal p { margin: 0 0 2px; font-size: .92rem; }
+.pb-soal .demo-controls { margin-top: 6px; }

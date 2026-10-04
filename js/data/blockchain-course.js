@@ -4352,13 +4352,361 @@ Setiap <b>node</b> menyimpan salinan buku besar dan memeriksa setiap transaksi; 
         },
       ],
     },
-    /* ---------------- MODUL 10: PROYEK PRODUKSI WEB3 ---------------- */
+    /* ---------------- MODUL 10: SMART CONTRACT PERTAMAMU: SOLIDITY & REMIX ---------------- */
     {
       id: "bc-proyek",
       level: "Proyek",
-      title: "Proyek Produksi Web3",
-      summary: "Praktik nyata: siapkan dompet & testnet, kenali bahasa Solidity, deploy smart contract, hubungkan ke web, dan pahami keamanan produksi.",
+      title: "Smart Contract Pertamamu: Solidity & Remix",
+      summary: "Dari membaca kode Solidity sampai kontrakmu hidup di testnet: Remix IDE, Remix VM, pemilik, uang masuk, require & event, lalu deploy ke Sepolia dan verifikasi di Etherscan.",
       lessons: [
+        {
+          id: "bc-a-2",
+          title: "Mengenal Solidity (Bahasa Smart Contract)",
+          duration: "12 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Smart contract</b> = program yang disimpan dan dijalankan di blockchain (modul Ethereum). <b>Mengubah</b> data di blockchain butuh transaksi dan <b>gas</b>; <b>membaca</b> saja gratis. Sekarang saatnya melihat isi sebuah kontrak.
+</div>
+
+<p><b>Solidity</b> adalah bahasa pemrograman paling populer untuk menulis smart contract di Ethereum. Sintaksnya mirip JavaScript/C++.</p>
+
+<h3>Contoh smart contract sederhana</h3>
+<pre class="code">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Penyimpanan {
+    uint256 private angka;          // variabel disimpan di blockchain
+
+    // Menyimpan nilai baru
+    function simpan(uint256 _angka) public {
+        angka = _angka;
+    }
+
+    // Membaca nilai (gratis, tidak ubah data)
+    function baca() public view returns (uint256) {
+        return angka;
+    }
+}</pre>
+
+<h3>Dibaca baris demi baris</h3>
+<table class="tbl">
+  <tr><th>Baris</th><th>Artinya</th></tr>
+  <tr><td><b>// SPDX-License-Identifier: MIT</b></td><td>Keterangan lisensi kode (izin orang lain memakainya)</td></tr>
+  <tr><td><b>pragma solidity ^0.8.0;</b></td><td>"Kode ini untuk Solidity versi 0.8 ke atas"</td></tr>
+  <tr><td><b>contract Penyimpanan { … }</b></td><td>Satu kontrak bernama Penyimpanan; semua isinya di antara kurung kurawal</td></tr>
+  <tr><td><b>uint256 private angka;</b></td><td>Satu "laci" data bernama <i>angka</i>, berisi bilangan bulat tak negatif. Disimpan permanen di blockchain</td></tr>
+  <tr><td><b>function simpan(uint256 _angka) public</b></td><td>Tombol yang bisa ditekan siapa pun untuk mengisi laci dengan angka baru → mengubah data → butuh gas</td></tr>
+  <tr><td><b>function baca() public view returns (uint256)</b></td><td>Tombol untuk melihat isi laci; <i>view</i> berarti hanya melihat → gratis</td></tr>
+</table>
+<p><i>Catatan:</i> "private" hanya berarti kontrak lain tidak bisa membaca laci itu lewat kode. Semua data di blockchain publik tetap <b>bisa dilihat siapa pun</b> lewat block explorer — jangan pernah menyimpan rahasia di smart contract.</p>
+
+<h3>Yang perlu dipahami</h3>
+<ul>
+  <li><b>contract</b> — mirip "class", wadah kode & data.</li>
+  <li><b>function ... public</b> — fungsi yang bisa dipanggil dari luar.</li>
+  <li><b>view</b> — fungsi yang hanya membaca (tidak mengubah data, jadi gratis/tanpa gas).</li>
+  <li>Mengubah data (mis. <code>simpan</code>) butuh transaksi & <b>biaya gas</b>.</li>
+</ul>
+
+<div class="callout">
+<b>Coba sendiri:</b> di pelajaran berikutnya kamu menjalankan kontrak ini di <b>Remix IDE</b> (remix.ethereum.org) — langsung di browser, tanpa dompet dan tanpa uang.
+</div>
+`,
+          keyPoints: [
+            "Solidity = bahasa utama smart contract Ethereum (mirip JS/C++).",
+            "'contract' adalah wadah kode; fungsi 'view' hanya membaca (gratis).",
+            "Mengubah data di blockchain memerlukan transaksi & biaya gas.",
+          ],
+          quiz: [
+            {
+              q: "Fungsi dengan keyword 'view' di Solidity berarti?",
+              options: [
+                "Hanya membaca data tanpa mengubahnya, sehingga tidak perlu gas",
+                "Hanya boleh dipanggil oleh pemilik kontrak yang bersangkutan",
+                "Menampilkan antarmuka kontrak kepada pengguna lewat browser",
+                "Menyembunyikan isi fungsi dari siapa pun yang membaca kontrak",
+              ],
+              answer: 0,
+              explain:
+                "'view' menandai fungsi baca-saja yang tidak mengubah state.",
+            },
+            {
+              q: "Kapan kamu perlu membayar gas?",
+              options: [
+                "Saat menulis atau mengubah data yang tersimpan di blockchain",
+                "Setiap kali membuka aplikasi dompet dan memeriksa saldo",
+                "Saat membaca isi sebuah kontrak lewat block explorer",
+                "Ketika menerima kiriman token dari pengguna yang lain",
+              ],
+              answer: 0,
+              explain:
+                "Operasi tulis mengubah state blockchain sehingga butuh gas.",
+            },
+          ],
+        },
+        {
+          id: "bc-remix-1",
+          title: "Remix IDE dari Nol — Menulis & Menjalankan Kontrak Tanpa Dompet",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Kontrak <b>Penyimpanan</b> di pelajaran sebelumnya punya fungsi <b>simpan</b> (mengubah data → butuh transaksi dan gas) dan <b>baca</b> (<i>view</i> → hanya membaca, gratis). Sekarang kita menjalankannya sungguhan.
+</div>
+
+<h3>Apa itu Remix?</h3>
+<p><b>Remix IDE</b> adalah tempat menulis, meng-<i>compile</i>, dan menjalankan smart contract langsung di browser, di alamat <b>remix.ethereum.org</b>. IDE (<i>Integrated Development Environment</i>) artinya semua alat ada dalam satu layar: editor kode, penerjemah (compiler), dan tombol untuk men-<i>deploy</i>. Gratis, tanpa instalasi, dan itulah sebabnya hampir semua kelas Solidity dimulai di sini.</p>
+<div class="callout">
+<b>Paling nyaman di laptop.</b> Remix bisa dibuka di HP, tapi layarnya terlalu sempit untuk bekerja. Kalau sedang memakai HP, pelajari dulu konsepnya lewat simulasi di pelajaran berikutnya.
+</div>
+
+<h3>Tur layar Remix</h3>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Letak</th><th>Gunanya</th></tr>
+  <tr><td><b>Icon Panel</b></td><td>Deretan ikon di tepi kiri</td><td>Memilih alat (plugin): File Explorer, Solidity Compiler, Deploy &amp; Run, dan lainnya</td></tr>
+  <tr><td><b>Side Panel</b></td><td>Kolom di samping ikon</td><td>Isi alat yang sedang dipilih</td></tr>
+  <tr><td><b>Main Panel</b></td><td>Tengah</td><td>Editor kode, satu tab per berkas</td></tr>
+  <tr><td><b>Terminal</b></td><td>Bawah</td><td>Catatan setiap transaksi dan hasilnya — tempat pertama yang dilihat saat ada masalah</td></tr>
+  <tr><td><b>Top Bar</b> &amp; panel kanan</td><td>Atas &amp; kanan</td><td>Memilih <i>workspace</i>, tema, pengaturan, dan asisten RemixAI</td></tr>
+</table>
+<div class="callout warn">
+<b>Berkasmu tersimpan di browser, bukan di internet.</b> Remix menyimpan berkas di penyimpanan browser (IndexedDB). Menghapus data browser atau memakai mode penyamaran bisa membuat semuanya hilang. Simpan salinan kode penting di tempat lain — misalnya GitHub — atau pakai Remix Desktop.
+</div>
+
+<h3>Empat langkah pertama</h3>
+<div data-diagram="pipeline" data-stages="Tulis::berkas .sol di File Explorer|Compile::Solidity Compiler, Ctrl+S|Deploy::Deploy &amp; Run di Remix VM|Coba::tekan tombol fungsi, baca terminal" data-caption="Siklus kerja di Remix — diulang setiap kali kode diubah"></div>
+
+<h4>1. Tulis</h4>
+<p>Buka <b>File Explorer</b>, klik kanan folder <i>contracts</i> → <b>New File</b>, beri nama <b>Penyimpanan.sol</b>, lalu tempel kode kontrak Penyimpanan dari pelajaran sebelumnya.</p>
+
+<h4>2. Compile</h4>
+<p><b>Compile</b> menerjemahkan kode Solidity yang bisa dibaca manusia menjadi <b>bytecode</b> yang dijalankan blockchain, sekaligus menghasilkan <b>ABI</b> — daftar fungsi kontrak beserta bentuknya. Buka <b>Solidity Compiler</b>, pastikan versi di kolom <b>COMPILER</b> cocok dengan baris <i>pragma</i>, lalu tekan tombol Compile atau <b>Ctrl+S</b>. Centang <b>Auto Compile</b> supaya Remix meng-compile sendiri setiap kali kamu mengetik.</p>
+<table class="tbl">
+  <tr><th>Pesan yang muncul</th><th>Biasanya karena</th></tr>
+  <tr><td>ParserError: Expected ';'</td><td>Lupa titik koma di akhir baris</td></tr>
+  <tr><td>Source file requires different compiler version</td><td>Versi COMPILER tidak sesuai baris <i>pragma</i></td></tr>
+  <tr><td>DeclarationError: Undeclared identifier</td><td>Salah ketik nama variabel atau fungsi</td></tr>
+  <tr><td>TypeError</td><td>Jenis data tidak cocok, mis. memasukkan teks ke angka</td></tr>
+</table>
+<p>Kotak <b>merah</b> berarti error — kontrak belum bisa di-deploy sebelum diperbaiki. Kotak <b>kuning</b> berarti peringatan — kontrak tetap jalan, tapi baca isinya.</p>
+
+<h4>3. Deploy di Remix VM</h4>
+<p>Buka <b>Deploy &amp; Run Transactions</b>. Di bagian <b>ENVIRONMENT</b>, pilih <b>Remix VM</b> — blockchain tiruan yang berjalan di dalam browsermu. Remix VM menyediakan <b>10 akun</b> yang masing-masing berisi <b>100 ETH</b> mainan, dan setiap transaksi langsung jalan tanpa perlu persetujuan dompet. Pilih kontrak <i>Penyimpanan</i>, lalu tekan <b>Deploy</b>.</p>
+
+<h4>4. Coba</h4>
+<p>Kontrak yang baru dibuat muncul di bagian <b>Deployed Contracts</b>. Klik untuk membuka daftar fungsinya. Warna tombolnya punya arti:</p>
+<table class="tbl">
+  <tr><th>Warna tombol</th><th>Jenis fungsi</th><th>Yang terjadi saat ditekan</th></tr>
+  <tr><td><b>Biru</b></td><td><i>view</i> atau <i>pure</i></td><td>Hanya membaca — tanpa transaksi, tanpa gas</td></tr>
+  <tr><td><b>Oranye</b></td><td>Mengubah data</td><td>Membuat transaksi — memakai gas</td></tr>
+  <tr><td><b>Merah</b></td><td><i>payable</i></td><td>Membuat transaksi yang bisa ikut mengirim ETH lewat kolom <b>VALUE</b></td></tr>
+</table>
+<p>Ketik 42 di samping <b>simpan</b>, tekan tombolnya, lalu tekan <b>baca</b>. Di terminal, transaksi yang berhasil ditandai centang hijau, beserta pengirim (<i>from</i>), tujuan (<i>to</i>), dan gas yang terpakai. Klik barisnya untuk melihat detail lengkap.</p>
+
+<h3>Remix VM, testnet, atau mainnet?</h3>
+<table class="tbl">
+  <tr><th></th><th>Remix VM</th><th>Testnet (mis. Sepolia)</th><th>Mainnet</th></tr>
+  <tr><td>Uangnya</td><td>Mainan, di browsermu saja</td><td>Mainan, dari faucet</td><td class="bad-cell">Sungguhan</td></tr>
+  <tr><td>Butuh dompet?</td><td class="ok-cell">Tidak</td><td>Ya (MetaMask)</td><td>Ya</td></tr>
+  <tr><td>Siapa yang bisa melihat</td><td>Hanya kamu</td><td>Semua orang</td><td>Semua orang</td></tr>
+  <tr><td>Dipakai untuk</td><td>Mencoba cepat, bolak-balik</td><td>Uji coba terbuka, demo</td><td>Produk sungguhan</td></tr>
+</table>
+<p>Kebiasaan yang baik: kontrak baru <b>selalu</b> dicoba dulu di Remix VM sampai semua fungsinya benar, baru dibawa ke testnet.</p>
+`,
+          keyPoints: [
+            "Remix IDE (remix.ethereum.org) = editor, compiler, dan alat deploy smart contract di browser, tanpa instalasi.",
+            "Berkas Remix tersimpan di penyimpanan browser; simpan salinan kode penting di tempat lain.",
+            "Compile menghasilkan bytecode dan ABI; versi COMPILER harus cocok dengan baris pragma.",
+            "Remix VM = blockchain tiruan di browser dengan 10 akun × 100 ETH, transaksi tanpa persetujuan dompet.",
+            "Tombol biru = view/pure (gratis), oranye = transaksi, merah = payable (bisa mengirim ETH)."
+          ],
+          practice: [
+            { type: "choice", q: "Remix menampilkan: 'Source file requires different compiler version'. Apa yang perlu kamu lakukan?", options: ["Menambahkan titik koma di akhir baris", "Mengganti versi di kolom COMPILER agar sesuai baris pragma", "Memilih ENVIRONMENT Remix VM", "Menghapus data browser lalu memulai ulang"], answer: 1, hint: "Pesannya menyebut versi compiler.", solution: "Versi compiler harus memenuhi baris pragma, mis. pragma ^0.8.24 butuh compiler 0.8.24 ke atas." },
+            { type: "choice", q: "Di Deployed Contracts, tombol 'baca' berwarna biru. Apa artinya?", options: ["Fungsi itu mengirim ETH", "Fungsi itu hanya membaca, tanpa transaksi dan gas", "Fungsi itu hanya untuk pemilik", "Fungsi itu gagal di-compile"], answer: 1, hint: "Ingat arti view.", solution: "Biru = view atau pure: dijalankan sebagai panggilan baca, bukan transaksi." }
+          ],
+          quiz: [
+            {
+              q: "Apa keuntungan utama mencoba kontrak di Remix VM sebelum testnet?",
+              options: [
+                "Cepat dan gratis dicoba berulang tanpa dompet",
+                "Kontraknya langsung bisa dipakai orang lain",
+                "Kontrak di Remix VM otomatis diaudit Remix",
+                "Hasilnya otomatis tercatat di blockchain asli"
+              ],
+              answer: 0,
+              explain: "Remix VM berjalan di browsermu dengan ETH mainan, jadi kesalahan bisa diulang tanpa biaya dan tanpa dompet."
+            },
+            {
+              q: "Di mana Remix menyimpan berkas kodemu secara bawaan?",
+              options: [
+                "Di penyimpanan browser pada perangkatmu",
+                "Di server Ethereum Foundation secara permanen",
+                "Di blockchain, bersama kontrak yang di-deploy",
+                "Di akun MetaMask yang sedang terhubung"
+              ],
+              answer: 0,
+              explain: "Berkas ada di IndexedDB browser; menghapus data browser bisa menghapusnya, jadi buat salinan."
+            },
+            {
+              q: "Tombol fungsi berwarna merah di Remix menandakan fungsi apa?",
+              options: [
+                "Fungsi payable yang bisa menerima ETH",
+                "Fungsi yang gagal saat terakhir dipanggil",
+                "Fungsi yang hanya boleh dipanggil pemilik",
+                "Fungsi view yang membaca data tanpa gas"
+              ],
+              answer: 0,
+              explain: "Merah = payable: transaksinya bisa membawa ETH dari kolom VALUE."
+            }
+          ]
+        },
+        {
+          id: "bc-remix-2",
+          title: "Solidity Praktis di Remix — Pemilik, Uang Masuk, Syarat & Event",
+          duration: "17 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Di Remix VM ada <b>10 akun</b> berisi 100 ETH mainan, dipilih lewat kolom <b>ACCOUNT</b>. Tombol <b>biru</b> hanya membaca, <b>oranye</b> membuat transaksi, <b>merah</b> membuat transaksi yang bisa membawa ETH lewat kolom <b>VALUE</b>.
+</div>
+
+<p>Kontrak Penyimpanan bisa diubah siapa saja dan tidak pernah memegang uang. Kontrak sungguhan hampir selalu perlu tiga hal lagi: <b>siapa pemiliknya</b>, <b>bisa menerima uang</b>, dan <b>syarat</b> yang menolak permintaan yang tidak sah. Kita buat celengan bersama: siapa pun boleh menyetor, hanya pemilik yang boleh menarik.</p>
+
+<pre class="code">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract Celengan {
+    address public pemilik;                       // yang boleh menarik
+    mapping(address => uint256) public setoran;   // catatan: alamat → total setoran
+
+    event Setor(address dari, uint256 jumlah);    // pengumuman yang tercatat di log
+    event Tarik(uint256 jumlah);
+
+    constructor() {
+        pemilik = msg.sender;                     // yang men-deploy menjadi pemilik
+    }
+
+    function setor() public payable {
+        require(msg.value > 0, "Setoran harus lebih dari 0");
+        setoran[msg.sender] += msg.value;
+        emit Setor(msg.sender, msg.value);
+    }
+
+    function tarik(uint256 jumlah) public {
+        require(msg.sender == pemilik, "Hanya pemilik yang boleh menarik");
+        require(jumlah &lt;= address(this).balance, "Saldo celengan kurang");
+        (bool berhasil, ) = payable(pemilik).call{value: jumlah}("");
+        require(berhasil, "Gagal mengirim ETH");
+        emit Tarik(jumlah);
+    }
+
+    function saldoKas() public view returns (uint256) {
+        return address(this).balance;
+    }
+}</pre>
+
+<h3>Kosakata baru, satu per satu</h3>
+<table class="tbl">
+  <tr><th>Kode</th><th>Artinya</th></tr>
+  <tr><td><b>address</b></td><td>Jenis data untuk alamat dompet atau kontrak</td></tr>
+  <tr><td><b>constructor</b></td><td>Fungsi yang dijalankan <b>sekali saja</b>, saat kontrak di-deploy</td></tr>
+  <tr><td><b>msg.sender</b></td><td>Alamat yang mengirim transaksi atau panggilan saat ini</td></tr>
+  <tr><td><b>mapping(address => uint256)</b></td><td>Tabel pencarian: masukkan alamat, keluar angka. Alamat yang belum pernah menyetor bernilai 0</td></tr>
+  <tr><td><b>payable</b></td><td>Fungsi ini boleh menerima ETH. Tanpa kata ini, transaksi yang membawa ETH akan ditolak</td></tr>
+  <tr><td><b>msg.value</b></td><td>Jumlah ETH yang ikut dikirim, dalam satuan <b>wei</b></td></tr>
+  <tr><td><b>require(syarat, "pesan")</b></td><td>Kalau syaratnya tidak terpenuhi, transaksi <b>dibatalkan</b> (<i>revert</i>) dengan pesan itu</td></tr>
+  <tr><td><b>event</b> &amp; <b>emit</b></td><td>Pengumuman yang tercatat di <i>log</i> transaksi — murah, dan mudah dipantau aplikasi</td></tr>
+  <tr><td><b>address(this).balance</b></td><td>Saldo ETH milik kontrak ini sendiri</td></tr>
+  <tr><td><b>.call{value: jumlah}("")</b></td><td>Cara yang dianjurkan untuk mengirim ETH. Hasilnya (<i>berhasil</i>) wajib diperiksa</td></tr>
+</table>
+
+<h3>Satuan: wei, gwei, ether</h3>
+<p>Blockchain tidak mengenal pecahan, jadi ETH dihitung dalam satuan terkecil:</p>
+<table class="tbl">
+  <tr><th>Satuan</th><th>Nilai</th><th>Biasa dipakai untuk</th></tr>
+  <tr><td><b>wei</b></td><td>Satuan terkecil</td><td>Semua angka di dalam kontrak (msg.value, balance)</td></tr>
+  <tr><td><b>gwei</b></td><td>1.000.000.000 wei (10<sup>9</sup>)</td><td>Harga gas</td></tr>
+  <tr><td><b>ether</b></td><td>1.000.000.000.000.000.000 wei (10<sup>18</sup>)</td><td>Jumlah yang dibaca manusia</td></tr>
+</table>
+<p>Kolom VALUE di Remix punya pilihan satuan. Mengetik <b>1</b> dengan satuan Ether sama dengan mengetik <b>1000000000000000000</b> dengan satuan Wei. Salah memilih satuan adalah kesalahan pemula yang paling sering.</p>
+
+<h3>Coba sendiri</h3>
+<div data-demo="remix-sim"></div>
+<p>Lakukan berurutan, dan perhatikan terminal setiap kali:</p>
+<ol>
+  <li>Dengan <b>Akun 1</b>, setor 1 ETH. Lalu tekan <b>saldoKas</b>.</li>
+  <li>Ganti ke <b>Akun 2</b>, setor 2 ETH. Tekan <b>setoran</b> untuk Akun 2.</li>
+  <li>Masih dengan Akun 2, coba <b>tarik</b> 0,5. Transaksinya gagal — kenapa?</li>
+  <li>Kembali ke Akun 1, tarik 0,5. Kali ini berhasil.</li>
+  <li>Setor dengan VALUE <b>0</b>. Baca pesan revert-nya.</li>
+</ol>
+
+<h3>Revert: dibatalkan, tapi tetap bayar</h3>
+<p>Saat <i>require</i> gagal, <b>semua</b> perubahan dalam transaksi itu dibatalkan — seolah tidak pernah terjadi. Tapi gas yang sudah terpakai sampai titik gagal <b>tetap dibayar</b>, karena para validator sudah bekerja menjalankannya. Di mainnet, kesalahan ini memakan uang sungguhan. Itulah satu lagi alasan mencoba semua kemungkinan gagal di Remix VM lebih dulu.</p>
+<div class="callout warn">
+<b>Kenapa tidak memakai .transfer()?</b> Banyak tutorial lama memakai <i>payable(x).transfer(jumlah)</i>. Cara itu hanya meneruskan sedikit sekali gas, sehingga bisa gagal saat penerimanya dompet berbentuk smart contract. Cara yang dianjurkan sekarang adalah <i>.call</i> lalu memeriksa hasilnya — seperti di kontrak di atas. Mengirim uang ke luar juga sebaiknya dilakukan <b>setelah</b> semua pemeriksaan dan pencatatan selesai; urutan yang salah membuka celah serangan <i>reentrancy</i> (dibahas di pelajaran keamanan).
+</div>
+`,
+          keyPoints: [
+            "constructor berjalan sekali saat deploy; pemilik = msg.sender saat itu.",
+            "payable membuat fungsi bisa menerima ETH; jumlahnya ada di msg.value dalam satuan wei.",
+            "require membatalkan seluruh transaksi bila syaratnya gagal — tapi gas yang terpakai tetap dibayar.",
+            "1 ether = 10¹⁸ wei; 1 gwei = 10⁹ wei. Salah satuan di kolom VALUE adalah kesalahan pemula paling umum.",
+            "event/emit mencatat pengumuman di log; kirim ETH dengan .call lalu periksa hasilnya."
+          ],
+          practice: [
+            { type: "number", q: "Berapa gwei dalam 0,25 ETH?", answer: 250000000, tol: 1, unit: "gwei", hint: "1 ETH = 1.000.000.000 gwei.", solution: "0,25 × 1.000.000.000 = 250.000.000 gwei." },
+            { type: "number", q: "Sebuah transaksi memakai 45.900 gas dengan harga gas 2 gwei. Berapa gwei biayanya?", answer: 91800, tol: 1, unit: "gwei", hint: "Gas terpakai × harga gas.", solution: "45.900 × 2 = 91.800 gwei = 0,0000918 ETH." },
+            { type: "choice", q: "Akun 2 memanggil tarik(1) pada Celengan milik Akun 1. Apa yang terjadi?", options: ["Berhasil, karena Akun 2 pernah menyetor", "Revert dengan pesan 'Hanya pemilik yang boleh menarik'", "Berhasil, tapi ETH dikirim ke Akun 1", "Tidak terjadi apa pun dan tidak ada gas terpakai"], answer: 1, hint: "Lihat require pertama di fungsi tarik.", solution: "msg.sender (Akun 2) ≠ pemilik (Akun 1), jadi require gagal dan transaksi dibatalkan. Gas yang terpakai tetap dibayar." }
+          ],
+          quiz: [
+            {
+              q: "Siapa yang menjadi pemilik Celengan?",
+              options: [
+                "Alamat yang mengirim transaksi deploy",
+                "Alamat yang menyetor paling banyak",
+                "Alamat pertama yang memanggil tarik",
+                "Pembuat Remix yang meng-compile kode"
+              ],
+              answer: 0,
+              explain: "constructor berjalan sekali saat deploy dan menyimpan msg.sender saat itu sebagai pemilik."
+            },
+            {
+              q: "Apa yang terjadi bila require di tengah fungsi gagal?",
+              options: [
+                "Semua perubahan dibatalkan, tapi gas terpakai tetap dibayar",
+                "Perubahan sebelum require tetap tersimpan di blockchain",
+                "Transaksi dibatalkan dan seluruh gasnya dikembalikan",
+                "Kontrak berhenti total dan tidak bisa dipakai lagi"
+              ],
+              answer: 0,
+              explain: "Revert membatalkan seluruh transaksi, tapi pekerjaan yang sudah dijalankan tetap harus dibayar."
+            },
+            {
+              q: "Kamu ingin menyetor 1 ETH, tapi mengetik 1 dengan satuan Wei. Apa yang terjadi?",
+              options: [
+                "Yang terkirim hanya 1 wei, nyaris nol",
+                "Remix otomatis mengubahnya menjadi 1 ETH",
+                "Transaksi pasti gagal karena salah satuan",
+                "Yang terkirim 1 gwei, seharga 1 ETH"
+              ],
+              answer: 0,
+              explain: "1 ETH = 10¹⁸ wei. Kolom VALUE mengikuti satuan yang dipilih, tanpa menebak maksudmu."
+            },
+            {
+              q: "Kenapa fungsi setor diberi kata payable?",
+              options: [
+                "Agar transaksinya boleh membawa ETH",
+                "Agar fungsinya hanya bisa dipanggil pemilik",
+                "Agar fungsinya gratis tanpa biaya gas",
+                "Agar setoran tercatat di dalam event"
+              ],
+              answer: 0,
+              explain: "Tanpa payable, transaksi yang membawa ETH ke fungsi itu akan ditolak."
+            }
+          ]
+        },
         {
           id: "bc-pro-1",
           title: "Setup Dompet & Jaringan Uji (Testnet)",
@@ -4420,159 +4768,393 @@ Setiap <b>node</b> menyimpan salinan buku besar dan memeriksa setiap transaksi; 
           ],
         },
         {
-          id: "bc-a-2",
-          title: "Mengenal Solidity (Bahasa Smart Contract)",
-          duration: "12 menit",
+          id: "bc-pro-2",
+          title: "Deploy ke Testnet Sepolia dari Remix & Verifikasi Kontrak",
+          duration: "15 menit",
           content: `
 <div class="callout ingat">
 <b>Ingat dulu</b><br>
-<b>Smart contract</b> = program yang disimpan dan dijalankan di blockchain (modul Ethereum). <b>Mengubah</b> data di blockchain butuh transaksi dan <b>gas</b>; <b>membaca</b> saja gratis. Dompet dan testnet sudah kamu siapkan di pelajaran sebelumnya — sekarang saatnya melihat isi sebuah kontrak.
+Kontrak <b>Celengan</b> sudah kamu coba di Remix VM — hanya kamu yang bisa melihatnya, dan ia hilang bila data browser dihapus. Di pelajaran sebelumnya kamu juga sudah menyiapkan <b>MetaMask</b> di jaringan uji <b>Sepolia</b> dan mengambil ETH uji dari <b>faucet</b>.
 </div>
 
-<p><b>Solidity</b> adalah bahasa pemrograman paling populer untuk menulis smart contract di Ethereum. Sintaksnya mirip JavaScript/C++.</p>
-
-<h3>Contoh smart contract sederhana</h3>
-<pre class="code">// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
-contract Penyimpanan {
-    uint256 private angka;          // variabel disimpan di blockchain
-
-    // Menyimpan nilai baru
-    function simpan(uint256 _angka) public {
-        angka = _angka;
-    }
-
-    // Membaca nilai (gratis, tidak ubah data)
-    function baca() public view returns (uint256) {
-        return angka;
-    }
-}</pre>
-
-<h3>Dibaca baris demi baris</h3>
-<table class="tbl">
-  <tr><th>Baris</th><th>Artinya</th></tr>
-  <tr><td><b>// SPDX-License-Identifier: MIT</b></td><td>Keterangan lisensi kode (izin orang lain memakainya)</td></tr>
-  <tr><td><b>pragma solidity ^0.8.0;</b></td><td>"Kode ini untuk Solidity versi 0.8 ke atas"</td></tr>
-  <tr><td><b>contract Penyimpanan { … }</b></td><td>Satu kontrak bernama Penyimpanan; semua isinya di antara kurung kurawal</td></tr>
-  <tr><td><b>uint256 private angka;</b></td><td>Satu "laci" data bernama <i>angka</i>, berisi bilangan bulat tak negatif. Disimpan permanen di blockchain</td></tr>
-  <tr><td><b>function simpan(uint256 _angka) public</b></td><td>Tombol yang bisa ditekan siapa pun untuk mengisi laci dengan angka baru → mengubah data → butuh gas</td></tr>
-  <tr><td><b>function baca() public view returns (uint256)</b></td><td>Tombol untuk melihat isi laci; <i>view</i> berarti hanya melihat → gratis</td></tr>
-</table>
-<p><i>Catatan:</i> "private" hanya berarti kontrak lain tidak bisa membaca laci itu lewat kode. Semua data di blockchain publik tetap <b>bisa dilihat siapa pun</b> lewat block explorer — jangan pernah menyimpan rahasia di smart contract.</p>
-
-<h3>Yang perlu dipahami</h3>
-<ul>
-  <li><b>contract</b> — mirip "class", wadah kode & data.</li>
-  <li><b>function ... public</b> — fungsi yang bisa dipanggil dari luar.</li>
-  <li><b>view</b> — fungsi yang hanya membaca (tidak mengubah data, jadi gratis/tanpa gas).</li>
-  <li>Mengubah data (mis. <code>simpan</code>) butuh transaksi & <b>biaya gas</b>.</li>
-</ul>
-
-<div class="callout">
-<b>Coba sendiri:</b> Buka <b>Remix IDE</b> (remix.ethereum.org) di browser — editor Solidity gratis tanpa instalasi, lengkap dengan jaringan uji coba.
-</div>
-`,
-          keyPoints: [
-            "Solidity = bahasa utama smart contract Ethereum (mirip JS/C++).",
-            "'contract' adalah wadah kode; fungsi 'view' hanya membaca (gratis).",
-            "Mengubah data di blockchain memerlukan transaksi & biaya gas.",
-          ],
-          quiz: [
-            {
-              q: "Fungsi dengan keyword 'view' di Solidity berarti?",
-              options: [
-                "Hanya membaca data tanpa mengubahnya, sehingga tidak perlu gas",
-                "Hanya boleh dipanggil oleh pemilik kontrak yang bersangkutan",
-                "Menampilkan antarmuka kontrak kepada pengguna lewat browser",
-                "Menyembunyikan isi fungsi dari siapa pun yang membaca kontrak",
-              ],
-              answer: 0,
-              explain:
-                "'view' menandai fungsi baca-saja yang tidak mengubah state.",
-            },
-            {
-              q: "Kapan kamu perlu membayar gas?",
-              options: [
-                "Saat menulis atau mengubah data yang tersimpan di blockchain",
-                "Setiap kali membuka aplikasi dompet dan memeriksa saldo",
-                "Saat membaca isi sebuah kontrak lewat block explorer",
-                "Ketika menerima kiriman token dari pengguna yang lain",
-              ],
-              answer: 0,
-              explain:
-                "Operasi tulis mengubah state blockchain sehingga butuh gas.",
-            },
-          ],
-        },
-        {
-          id: "bc-pro-2",
-          title: "Tulis & Deploy Smart Contract (Remix)",
-          duration: "13 menit",
-          content: `
-<p>Kita akan menulis smart contract dan men-<b>deploy</b>-nya ke testnet — tanpa instalasi apa pun, lewat <b>Remix IDE</b> di browser.</p>
-
-<h3>Contoh kontrak penghitung</h3>
-<pre class="code">// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
-contract Penghitung {
-    uint256 public jumlah;          // tersimpan di blockchain, bisa dibaca publik
-
-    function tambah() public {      // menulis -> butuh transaksi & gas
-        jumlah = jumlah + 1;
-    }
-
-    function baca() public view returns (uint256) {  // membaca -> gratis
-        return jumlah;
-    }
-}</pre>
+<p>Sekarang Celengan dipindahkan ke blockchain sungguhan yang terbuka: <b>testnet Sepolia</b>. Setelah ini, siapa pun di dunia bisa melihat dan memanggil kontrakmu — tetap tanpa uang sungguhan.</p>
 
 <h3>Langkah deploy</h3>
 <ol>
-  <li>Buka <b>remix.ethereum.org</b>, buat file <code>Penghitung.sol</code>, tempel kode di atas.</li>
-  <li>Tab <b>Solidity Compiler</b> → klik <b>Compile</b>.</li>
-  <li>Tab <b>Deploy & Run</b> → Environment pilih <b>"Injected Provider - MetaMask"</b> (memakai dompet & testnet-mu).</li>
-  <li>Klik <b>Deploy</b> → setujui transaksi di MetaMask (membayar gas dengan ETH testnet).</li>
-  <li>Setelah jadi, panggil <b>tambah()</b> (butuh transaksi) lalu <b>baca()</b> (gratis) untuk melihat nilainya naik.</li>
+  <li><b>Siapkan MetaMask.</b> Buka, buka kuncinya, pastikan jaringan yang aktif adalah <b>Sepolia</b> dan ada sedikit ETH uji.</li>
+  <li><b>Hubungkan Remix ke dompet.</b> Di <b>Deploy &amp; Run</b>, ubah <b>ENVIRONMENT</b> dari Remix VM menjadi <b>Browser Extension</b>, lalu pilih MetaMask. Di Remix versi lama pilihan ini bernama <i>Injected Provider - MetaMask</i>. Setujui permintaan sambungan di MetaMask.</li>
+  <li><b>Periksa kolom ACCOUNT.</b> Kini yang tampil alamat dompetmu sendiri beserta saldo Sepolia-nya, bukan akun mainan Remix VM.</li>
+  <li><b>Deploy.</b> Pilih kontrak Celengan, tekan <b>Deploy</b>. MetaMask muncul menampilkan perkiraan biaya gas. Periksa jaringannya sekali lagi, lalu <b>Confirm</b>.</li>
+  <li><b>Tunggu satu blok.</b> Sekitar belasan detik kemudian, terminal Remix menampilkan transaksi yang berhasil beserta tautan ke block explorer. Kontrakmu muncul di <b>Deployed Contracts</b>.</li>
 </ol>
-
-<div class="callout">
-<b>Selamat — kontrakmu kini hidup di blockchain!</b> Siapa pun bisa melihat dan memanggilnya. Karena <b>immutable</b>, kode tak bisa diubah setelah deploy — uji matang dulu di testnet.
+<div class="callout warn">
+<b>Remix men-deploy ke jaringan apa pun yang sedang aktif di MetaMask.</b> Kalau dompetmu sedang di mainnet, kontrak ter-deploy ke mainnet dengan ETH sungguhan. Biasakan memakai <b>dompet khusus developer</b> yang terpisah dari dompet simpanan, dan selalu baca nama jaringan di jendela konfirmasi.
 </div>
+
+<h3>Melihat kontrakmu di block explorer</h3>
+<p>Buka <b>sepolia.etherscan.io</b> dan tempel alamat kontrakmu. Kamu akan melihat transaksi <i>Contract Creation</i>, saldo kontrak, dan setiap transaksi setor atau tarik berikutnya — persis yang kamu pelajari di pelajaran Mengintip Isi Blockchain.</p>
+<p>Tapi tab <b>Contract</b> masih menampilkan deretan bytecode yang tidak bisa dibaca. Orang lain tidak tahu apa isi kontrakmu — dan tidak punya alasan untuk memercayainya.</p>
+
+<h3>Verifikasi: membuka kode sumber ke publik</h3>
+<p><b>Verifikasi</b> artinya mengunggah kode sumber Solidity ke block explorer, yang kemudian meng-compile ulang kode itu dan memeriksa bahwa hasilnya <b>persis sama</b> dengan bytecode di blockchain. Setelah terverifikasi, kode bisa dibaca siapa pun, dan tab <b>Read Contract</b> serta <b>Write Contract</b> muncul untuk memanggil fungsi langsung dari Etherscan.</p>
+<table class="tbl">
+  <tr><th>Cara</th><th>Yang dibutuhkan</th></tr>
+  <tr><td>Saklar verifikasi saat deploy di Remix</td><td>API key Etherscan yang diisi di Settings Remix</td></tr>
+  <tr><td>Plugin <b>Contract Verification</b> di Remix</td><td>Alamat kontrak dan API key</td></tr>
+  <tr><td>Manual di Etherscan (<i>Verify &amp; Publish</i>)</td><td>Kode sumber, versi compiler yang <b>sama persis</b>, pengaturan optimasi yang sama, dan jenis lisensi</td></tr>
+</table>
+
+<h3>Memakai kontrak yang sudah ada</h3>
+<p>Besok kamu membuka Remix lagi, dan daftar Deployed Contracts kosong. Kontraknya tidak hilang — ia ada di blockchain. Buka berkas Celengan.sol, compile, lalu tempel alamat kontraknya dan tekan <b>Add Contract</b> (di Remix lama: <i>At Address</i>). Tidak ada deploy ulang dan tidak ada biaya.</p>
+
+<h3>Masalah yang sering muncul</h3>
+<table class="tbl">
+  <tr><th>Gejala</th><th>Penyebab umum</th></tr>
+  <tr><td>Pilihan MetaMask tidak muncul</td><td>Ekstensi belum terpasang, terkunci, atau diblokir di browser itu</td></tr>
+  <tr><td>"insufficient funds"</td><td>ETH uji habis — ambil lagi di faucet</td></tr>
+  <tr><td>Transaksi lama tertahan</td><td>Jaringan uji sedang ramai; tunggu atau naikkan biaya gas di MetaMask</td></tr>
+  <tr><td>Verifikasi gagal</td><td>Versi compiler atau pengaturan optimasi berbeda dari saat deploy</td></tr>
+  <tr><td>Kontrak ter-deploy di jaringan yang salah</td><td>MetaMask sedang di jaringan lain saat menekan Deploy</td></tr>
+</table>
+
+<h3>Sebelum mainnet</h3>
+<p>Di mainnet, langkahnya sama persis — itulah yang membuatnya berbahaya. Kontrak tidak bisa diubah setelah di-deploy, dan kunci pemilik memegang kendali penuh. Kontrak yang akan memegang uang orang lain perlu tes otomatis yang lengkap, pemeriksaan keamanan, dan idealnya audit — alat untuk itu dibahas di pelajaran-pelajaran berikutnya.</p>
 `,
           keyPoints: [
-            "Remix IDE memungkinkan menulis, compile, dan deploy smart contract dari browser.",
-            "'Injected Provider - MetaMask' menghubungkan Remix ke dompet & testnet-mu.",
-            "Fungsi tulis (tambah) butuh transaksi & gas; fungsi view (baca) gratis.",
-            "Kontrak bersifat immutable setelah deploy — uji matang di testnet dulu.",
+            "ENVIRONMENT 'Browser Extension' (dulu 'Injected Provider - MetaMask') menghubungkan Remix ke dompet dan jaringan yang aktif.",
+            "Remix men-deploy ke jaringan yang sedang aktif di MetaMask — selalu periksa nama jaringan sebelum Confirm.",
+            "Verifikasi mengunggah kode sumber ke explorer dan memastikan hasil compile-nya sama persis dengan bytecode di blockchain.",
+            "Verifikasi gagal biasanya karena versi compiler atau pengaturan optimasi berbeda.",
+            "Kontrak yang sudah ada dimuat ulang lewat Add Contract (dulu At Address) tanpa deploy ulang."
+          ],
+          practice: [
+            { type: "number", q: "Deploy memakai 480.000 gas dengan harga gas 2 gwei. Berapa ETH biayanya?", answer: 0.00096, tol: 0.000001, unit: "ETH", hint: "Gas × harga gas = gwei; 1 ETH = 1.000.000.000 gwei.", solution: "480.000 × 2 = 960.000 gwei = 0,00096 ETH." },
+            { type: "choice", q: "Kontrak sudah ter-deploy kemarin. Hari ini Deployed Contracts di Remix kosong. Apa yang dilakukan?", options: ["Deploy ulang kontraknya", "Compile, tempel alamat kontrak, lalu Add Contract", "Hapus data browser lalu muat ulang", "Kontraknya hilang, tidak bisa dipakai lagi"], answer: 1, hint: "Kontraknya ada di blockchain, bukan di Remix.", solution: "Add Contract memuat kontrak yang sudah ada dari alamatnya, tanpa biaya." }
           ],
           quiz: [
             {
-              q: "Saat deploy lewat Remix, Environment apa yang dipilih agar memakai dompet & testnet?",
+              q: "Kenapa verifikasi kontrak di Etherscan penting?",
               options: [
-                "Injected Provider — MetaMask",
-                "Remix VM (Cancun)",
-                "Hardhat Provider",
-                "WalletConnect Relay",
+                "Orang lain bisa membaca dan memeriksa kode yang benar-benar berjalan",
+                "Kontrak yang terverifikasi otomatis bebas dari celah keamanan",
+                "Kontrak yang belum diverifikasi tidak bisa menerima transaksi",
+                "Verifikasi membuat biaya gas kontrak menjadi lebih murah"
               ],
               answer: 0,
-              explain:
-                "'Injected Provider - MetaMask' menyuntikkan koneksi dompet & jaringan yang aktif.",
+              explain: "Verifikasi membuktikan kode sumber cocok dengan bytecode, tapi tidak menjamin kodenya aman."
             },
             {
-              q: "Mengapa kontrak harus diuji matang sebelum deploy ke mainnet?",
+              q: "MetaMask sedang aktif di mainnet saat kamu menekan Deploy di Remix. Apa yang terjadi bila kamu menekan Confirm?",
               options: [
-                "Karena kode di mainnet tak bisa diubah, sehingga bug jadi permanen",
-                "Karena biaya deploy di mainnet dihitung per percobaan yang gagal",
-                "Karena mainnet hanya mengizinkan satu kali deploy per alamat dompet",
-                "Karena kontrak bermasalah akan otomatis dihapus oleh jaringan",
+                "Kontrak ter-deploy ke mainnet dengan ETH sungguhan",
+                "Remix otomatis mengalihkannya ke testnet Sepolia",
+                "Transaksi pasti ditolak karena salah jaringan",
+                "Kontrak ter-deploy ke Remix VM sebagai cadangan"
               ],
               answer: 0,
-              explain:
-                "Sifat immutable membuat kesalahan permanen; testnet adalah tempat menguji.",
+              explain: "Remix memakai jaringan apa pun yang aktif di dompet. Selalu baca nama jaringan di jendela konfirmasi."
             },
+            {
+              q: "Verifikasi manual di Etherscan gagal. Penyebab paling umum?",
+              options: [
+                "Versi compiler atau pengaturan optimasi berbeda",
+                "Kontrak belum menerima setoran ETH sama sekali",
+                "Nama berkas .sol berbeda dengan nama kontrak",
+                "Alamat dompet pemilik belum diverifikasi KYC"
+              ],
+              answer: 0,
+              explain: "Explorer meng-compile ulang kodenya; hasilnya harus identik dengan bytecode, jadi pengaturannya harus sama."
+            }
+          ]
+        },
+      ],
+    },
+    /* ---------------- MODUL 11: MEMBANGUN DAPP: FOUNDRY, FRONTEND & KEAMANAN ---------------- */
+    {
+      id: "bc-dapp",
+      level: "DApp",
+      title: "Membangun DApp: Foundry, Frontend & Keamanan",
+      summary: "Alur kerja developer profesional: tes otomatis & fuzzing dengan Foundry, jaringan lokal Anvil, deploy dengan skrip, menghubungkan web lewat ethers.js, dan keamanan produksi.",
+      lessons: [
+        {
+          id: "bc-fdy-1",
+          title: "Foundry — Perkakas Developer & Tes Otomatis",
+          duration: "17 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Di Remix kamu menguji Celengan dengan menekan tombol satu per satu: setor, ganti akun, coba tarik, lihat revert. Itu cukup untuk lima kemungkinan. Kontrak sungguhan punya ratusan kemungkinan — dan setiap kali kode diubah, semuanya harus diuji ulang.
+</div>
+
+<h3>Kenapa perlu alat selain Remix?</h3>
+<p>Developer profesional menulis <b>tes otomatis</b>: kode kecil yang memeriksa kontrak dan bisa dijalankan ulang dalam hitungan detik. <b>Foundry</b> adalah salah satu kotak perkakas paling populer untuk itu. Ia berjalan di terminal, dan tesnya ditulis dalam <b>Solidity</b> juga — jadi tidak perlu belajar bahasa lain.</p>
+<table class="tbl">
+  <tr><th>Alat Foundry</th><th>Kegunaannya</th></tr>
+  <tr><td><b>forge</b></td><td>Compile, tes, deploy, dan verifikasi kontrak</td></tr>
+  <tr><td><b>cast</b></td><td>Memanggil kontrak, mengirim transaksi, dan membaca data blockchain dari terminal</td></tr>
+  <tr><td><b>anvil</b></td><td>Menjalankan blockchain lokal di laptopmu</td></tr>
+  <tr><td><b>chisel</b></td><td>Mencoba potongan Solidity secara interaktif</td></tr>
+</table>
+<table class="tbl">
+  <tr><th></th><th>Remix</th><th>Foundry</th><th>Hardhat</th></tr>
+  <tr><td>Tempat</td><td>Browser</td><td>Terminal</td><td>Terminal</td></tr>
+  <tr><td>Bahasa tes</td><td>Klik manual</td><td>Solidity</td><td>JavaScript/TypeScript</td></tr>
+  <tr><td>Cocok untuk</td><td>Belajar, coba cepat</td><td>Tes cepat, fuzzing, proyek serius</td><td>Tim yang sudah memakai JavaScript</td></tr>
+</table>
+
+<h3>Memasang Foundry</h3>
+<p>Di Windows, Foundry dipasang lewat <b>Git Bash</b> atau <b>WSL</b> — PowerShell dan Command Prompt tidak didukung. Di macOS/Linux cukup terminal biasa.</p>
+<pre class="code">curl -L https://getfoundry.sh/install | bash
+# tutup lalu buka lagi terminalnya, kemudian:
+foundryup
+forge --version</pre>
+
+<h3>Proyek pertama</h3>
+<pre class="code">forge init celengan
+cd celengan
+forge build</pre>
+<table class="tbl">
+  <tr><th>Folder/berkas</th><th>Isinya</th></tr>
+  <tr><td><b>src/</b></td><td>Kontrak (contoh bawaan: Counter.sol). Pindahkan Celengan.sol ke sini</td></tr>
+  <tr><td><b>test/</b></td><td>Tes, berakhiran <b>.t.sol</b></td></tr>
+  <tr><td><b>script/</b></td><td>Skrip deploy, berakhiran <b>.s.sol</b></td></tr>
+  <tr><td><b>lib/</b></td><td>Pustaka, termasuk <b>forge-std</b> untuk menulis tes</td></tr>
+  <tr><td><b>foundry.toml</b></td><td>Pengaturan proyek</td></tr>
+</table>
+
+<h3>Menulis tes untuk Celengan</h3>
+<p>Buat berkas <b>test/Celengan.t.sol</b>:</p>
+<pre class="code">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import {Test} from "forge-std/Test.sol";
+import {Celengan} from "../src/Celengan.sol";
+
+contract CelenganTest is Test {
+    Celengan celengan;
+    address budi = makeAddr("budi");          // alamat palsu untuk tes
+
+    function setUp() public {                 // dijalankan sebelum SETIAP tes
+        celengan = new Celengan();            // pemiliknya: kontrak tes ini
+        vm.deal(budi, 10 ether);              // beri Budi 10 ETH mainan
+    }
+
+    function test_SetorMenambahSaldo() public {
+        vm.prank(budi);                       // panggilan berikutnya dikirim oleh Budi
+        celengan.setor{value: 1 ether}();
+        assertEq(celengan.saldoKas(), 1 ether);
+        assertEq(celengan.setoran(budi), 1 ether);
+    }
+
+    function test_BukanPemilikTidakBisaTarik() public {
+        vm.prank(budi);
+        vm.expectRevert("Hanya pemilik yang boleh menarik");
+        celengan.tarik(1);
+    }
+
+    function testFuzz_Setor(uint96 jumlah) public {
+        vm.assume(jumlah > 0);                // abaikan tebakan 0
+        vm.deal(budi, jumlah);
+        vm.prank(budi);
+        celengan.setor{value: jumlah}();
+        assertEq(celengan.saldoKas(), jumlah);
+    }
+}</pre>
+<table class="tbl">
+  <tr><th>Kode</th><th>Artinya</th></tr>
+  <tr><td><b>setUp()</b></td><td>Persiapan yang diulang sebelum setiap tes, supaya tiap tes mulai dari keadaan bersih</td></tr>
+  <tr><td><b>test_…</b></td><td>Setiap fungsi berawalan <i>test</i> adalah satu tes</td></tr>
+  <tr><td><b>assertEq(a, b)</b></td><td>"Pastikan a sama dengan b" — kalau tidak, tes gagal</td></tr>
+  <tr><td><b>vm.prank(x)</b></td><td>Panggilan berikutnya seolah dikirim oleh alamat x</td></tr>
+  <tr><td><b>vm.deal(x, n)</b></td><td>Isi saldo alamat x sebanyak n</td></tr>
+  <tr><td><b>vm.expectRevert("…")</b></td><td>"Panggilan berikutnya HARUS gagal dengan pesan ini"</td></tr>
+  <tr><td><b>vm.assume(syarat)</b></td><td>Lewati tebakan acak yang tidak memenuhi syarat</td></tr>
+</table>
+<p>Perintah <b>vm.…</b> disebut <i>cheatcode</i>: kemampuan khusus yang hanya ada saat tes, seperti menyamar menjadi alamat lain atau mencetak ETH mainan.</p>
+
+<h3>Menjalankan tes</h3>
+<pre class="code">forge test</pre>
+<p>Keluarannya kira-kira seperti ini (angka gas di komputermu akan berbeda):</p>
+<pre class="code">Ran 3 tests for test/Celengan.t.sol:CelenganTest
+[PASS] testFuzz_Setor(uint96) (runs: 256, μ: 54210, ~: 54321)
+[PASS] test_BukanPemilikTidakBisaTarik() (gas: 13466)
+[PASS] test_SetorMenambahSaldo() (gas: 54120)
+Suite result: ok. 3 passed; 0 failed; 0 skipped</pre>
+<p>Tambahkan <b>-vvvv</b> (<i>forge test -vvvv</i>) untuk melihat jejak lengkap setiap panggilan — sangat membantu saat tes gagal.</p>
+
+<h3>Fuzzing: biarkan komputer mencari kasus aneh</h3>
+<p>Tes <b>testFuzz_Setor</b> punya parameter. Foundry mengisinya dengan angka acak dan menjalankannya <b>256 kali</b> secara bawaan — termasuk angka ekstrem yang tidak terpikir olehmu. Kalau satu saja gagal, Foundry menunjukkan angka penyebabnya (<i>counterexample</i>), sehingga bug-nya bisa diulang dan diperbaiki.</p>
+<div class="callout">
+<b>Tes yang menangkap bug.</b> Coba hapus baris <i>require(msg.sender == pemilik, …)</i> dari Celengan, lalu jalankan <i>forge test</i> lagi. Tes <b>test_BukanPemilikTidakBisaTarik</b> langsung gagal, karena tarikan oleh Budi kini berhasil padahal seharusnya ditolak. Bayangkan bug itu lolos ke mainnet — siapa pun bisa menguras celengan.
+</div>
+`,
+          keyPoints: [
+            "Foundry = forge (build, tes, deploy), cast (bicara dengan blockchain), anvil (blockchain lokal), chisel (mencoba Solidity).",
+            "Di Windows, pasang lewat Git Bash atau WSL: curl -L https://getfoundry.sh/install | bash, lalu foundryup.",
+            "forge init membuat folder src/, test/, script/, lib/; tes berakhiran .t.sol dan ditulis dalam Solidity.",
+            "Cheatcode seperti vm.prank, vm.deal, dan vm.expectRevert membantu menguji siapa yang boleh melakukan apa.",
+            "Tes berparameter adalah fuzz test: dijalankan 256 kali dengan nilai acak dan menunjukkan counterexample bila gagal."
           ],
+          practice: [
+            { type: "number", q: "Kamu punya 4 fuzz test dan 6 tes biasa. Dengan pengaturan bawaan, berapa kali total fungsi tes dijalankan oleh forge test?", answer: 1030, tol: 0.5, hint: "Setiap fuzz test dijalankan 256 kali; tes biasa sekali.", solution: "4 × 256 + 6 = 1.024 + 6 = 1.030 kali." },
+            { type: "choice", q: "Cheatcode mana yang dipakai untuk memeriksa bahwa panggilan berikutnya HARUS gagal?", options: ["vm.prank", "vm.deal", "vm.expectRevert", "vm.assume"], answer: 2, hint: "Revert = gagal.", solution: "vm.expectRevert membuat tes gagal bila panggilan berikutnya ternyata berhasil." }
+          ],
+          quiz: [
+            {
+              q: "Apa keunggulan tes otomatis dibanding menguji dengan klik di Remix?",
+              options: [
+                "Bisa dijalankan ulang dalam detik setiap kode diubah",
+                "Membuat kontrak otomatis lolos audit keamanan",
+                "Menghapus kebutuhan untuk mencoba di testnet",
+                "Membuat biaya gas di mainnet menjadi gratis"
+              ],
+              answer: 0,
+              explain: "Tes otomatis mengulang ratusan pemeriksaan dalam detik, sehingga perubahan kecil yang merusak langsung ketahuan."
+            },
+            {
+              q: "Apa fungsi vm.prank(budi) di dalam tes Foundry?",
+              options: [
+                "Membuat panggilan berikutnya seolah dikirim Budi",
+                "Memberi Budi saldo ETH mainan untuk tes",
+                "Memastikan panggilan Budi berikutnya gagal",
+                "Membuat alamat baru bernama Budi di testnet"
+              ],
+              answer: 0,
+              explain: "prank mengganti msg.sender untuk satu panggilan berikutnya; saldo diberi lewat vm.deal."
+            },
+            {
+              q: "Apa yang dilakukan fuzz test?",
+              options: [
+                "Menjalankan tes berkali-kali dengan nilai masukan acak",
+                "Menjalankan tes di mainnet dengan uang sungguhan",
+                "Memeriksa ejaan nama fungsi dan variabel kontrak",
+                "Mengukur kecepatan internet saat deploy kontrak"
+              ],
+              answer: 0,
+              explain: "Foundry mengisi parameter tes dengan nilai acak (256 kali secara bawaan) untuk mencari kasus yang terlewat."
+            }
+          ]
+        },
+        {
+          id: "bc-fdy-2",
+          title: "Anvil, Cast & Script — Alur Kerja DApp dari Laptop ke Testnet",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>forge build</b> meng-compile, <b>forge test</b> menjalankan tes. Di Remix kamu men-deploy dengan menekan tombol; di Foundry, deploy ditulis sebagai <b>skrip</b> supaya bisa diulang persis sama di jaringan mana pun.
+</div>
+
+<h3>Peta alur kerja sebuah DApp</h3>
+<div data-diagram="pipeline" data-stages="Kontrak &amp; tes::forge test, fuzz|Jaringan lokal::anvil + cast|Testnet::Sepolia, verifikasi|Frontend::web + dompet pengguna|Audit &amp; mainnet::sebelum uang sungguhan" data-caption="Setiap tahap menyaring kesalahan sebelum menjadi mahal"></div>
+<p>Makin ke kanan, kesalahan makin mahal: di tes cuma butuh beberapa detik, di testnet butuh ETH mainan dan waktu, di mainnet bisa berarti uang pengguna hilang permanen.</p>
+
+<h3>1. Anvil: blockchain pribadi di laptop</h3>
+<pre class="code">anvil</pre>
+<p>Anvil langsung menjalankan blockchain di <b>http://127.0.0.1:8545</b> (chain ID <b>31337</b>), lengkap dengan <b>10 akun</b> berisi <b>10.000 ETH</b> mainan beserta kunci privatnya. Blok dibuat seketika, jadi kamu bisa mencoba seperti di Remix VM — tapi dari terminal dan skrip.</p>
+<div class="callout warn">
+<b>Kunci privat Anvil diketahui seluruh dunia.</b> Kunci yang dicetak Anvil sama di semua komputer. Jangan pernah memakainya — atau mengirim uang sungguhan ke alamatnya — di jaringan mana pun selain Anvil.
+</div>
+
+<h3>2. Skrip deploy</h3>
+<p>Buat <b>script/Celengan.s.sol</b>:</p>
+<pre class="code">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import {Script} from "forge-std/Script.sol";
+import {Celengan} from "../src/Celengan.sol";
+
+contract DeployCelengan is Script {
+    function run() public {
+        vm.startBroadcast();      // transaksi sesudah ini benar-benar dikirim
+        new Celengan();
+        vm.stopBroadcast();
+    }
+}</pre>
+<p>Jalankan ke Anvil, dengan kunci akun pertama Anvil (buka terminal kedua; Anvil tetap berjalan di terminal pertama):</p>
+<pre class="code">forge script script/Celengan.s.sol \\
+  --rpc-url http://127.0.0.1:8545 \\
+  --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 \\
+  --broadcast</pre>
+<p>Tanpa <b>--broadcast</b>, skrip hanya disimulasikan — berguna untuk memeriksa dulu sebelum mengirim sungguhan. Alamat kontrak yang baru dibuat tercetak di keluaran.</p>
+
+<h3>3. Cast: bicara dengan kontrak dari terminal</h3>
+<pre class="code"># membaca (gratis) — ganti ALAMAT dengan alamat kontrakmu
+cast call ALAMAT "saldoKas()(uint256)" --rpc-url http://127.0.0.1:8545
+
+# menulis (transaksi) — setor 1 ETH
+cast send ALAMAT "setor()" --value 1ether \\
+  --rpc-url http://127.0.0.1:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+
+# alat bantu satuan
+cast to-wei 0.5          # 500000000000000000
+cast from-wei 1000000000000000000</pre>
+<p>Ini persis tombol biru dan merah di Remix, hanya saja dalam bentuk perintah yang bisa disimpan dan diulang.</p>
+
+<h3>4. Ke testnet dengan aman</h3>
+<p>Untuk Sepolia, kunci privat <b>jangan</b> diketik di perintah — perintah tersimpan di riwayat terminal. Simpan kunci dompet khusus developer di <b>keystore</b> terenkripsi:</p>
+<pre class="code">cast wallet import dev --interactive   # tempel kunci, lalu buat kata sandi</pre>
+<p>Alamat RPC (pintu masuk ke jaringan, dari penyedia seperti Alchemy, Infura, atau RPC publik) dan API key Etherscan disimpan di berkas <b>.env</b>:</p>
+<pre class="code">SEPOLIA_RPC_URL=https://...
+ETHERSCAN_API_KEY=...</pre>
+<pre class="code">source .env
+forge script script/Celengan.s.sol \\
+  --rpc-url $SEPOLIA_RPC_URL --account dev --broadcast \\
+  --verify --etherscan-api-key $ETHERSCAN_API_KEY</pre>
+<p><b>--verify</b> sekaligus mengunggah kode sumber ke Etherscan, sehingga orang lain bisa membaca dan memeriksa kontrakmu.</p>
+<div class="callout warn">
+<b>Masukkan .env ke .gitignore.</b> Berkas .env yang ikut terunggah ke GitHub adalah salah satu cara paling umum kunci dan API key bocor. Ada robot yang memindai GitHub terus-menerus untuk mencarinya.
+</div>
+
+<h3>5. Lalu frontend</h3>
+<p>Setelah kontrak hidup di testnet, langkah berikutnya adalah halaman web yang memanggilnya lewat dompet pengguna — dibahas di pelajaran berikutnya dengan <b>ethers.js</b>. ABI yang dibutuhkan frontend ada di folder <b>out/</b> hasil <i>forge build</i>.</p>
+`,
+          keyPoints: [
+            "Alur DApp: kontrak & tes → jaringan lokal (Anvil) → testnet → frontend → audit & mainnet; makin ke kanan makin mahal kesalahannya.",
+            "anvil menjalankan blockchain lokal di 127.0.0.1:8545 dengan 10 akun × 10.000 ETH; kuncinya diketahui umum.",
+            "forge script dengan --broadcast benar-benar mengirim transaksi deploy; tanpa itu hanya simulasi.",
+            "cast call membaca, cast send mengirim transaksi; cast to-wei/from-wei mengubah satuan.",
+            "Untuk testnet: kunci di keystore (cast wallet import), RPC & API key di .env yang dimasukkan ke .gitignore."
+          ],
+          practice: [
+            { type: "number", q: "Berapa chain ID bawaan jaringan lokal Anvil?", answer: 31337, tol: 0.5, hint: "Angkanya dicetak saat anvil dijalankan.", solution: "Chain ID Anvil adalah 31337." },
+            { type: "choice", q: "Kamu menjalankan forge script ke Sepolia tanpa --broadcast. Apa yang terjadi?", options: ["Kontrak langsung ter-deploy ke Sepolia", "Skrip hanya disimulasikan, tidak ada transaksi terkirim", "Kontrak ter-deploy ke Anvil", "Skrip gagal karena flag itu wajib"], answer: 1, hint: "broadcast = menyiarkan transaksi.", solution: "Tanpa --broadcast, forge script hanya menjalankan simulasi." }
+          ],
+          quiz: [
+            {
+              q: "Kenapa kunci privat yang dicetak Anvil tidak boleh dipakai di jaringan sungguhan?",
+              options: [
+                "Kunci itu sama di semua komputer dan diketahui umum",
+                "Kunci itu otomatis kedaluwarsa setelah satu jam",
+                "Kunci itu hanya bisa menandatangani transaksi kecil",
+                "Kunci itu terlalu pendek untuk jaringan Ethereum"
+              ],
+              answer: 0,
+              explain: "Siapa pun yang pernah menjalankan Anvil punya kunci yang sama, jadi dana di alamat itu bisa diambil siapa saja."
+            },
+            {
+              q: "Apa beda cast call dan cast send?",
+              options: [
+                "call hanya membaca; send mengirim transaksi",
+                "call untuk testnet; send khusus mainnet",
+                "call mengirim ETH; send mengirim token",
+                "call butuh kata sandi; send tidak perlu"
+              ],
+              answer: 0,
+              explain: "Sama seperti tombol biru (baca) dan oranye/merah (transaksi) di Remix."
+            },
+            {
+              q: "Cara paling aman menyimpan kunci dompet developer untuk deploy ke testnet dengan Foundry?",
+              options: [
+                "Keystore terenkripsi lewat cast wallet import",
+                "Diketik langsung di setiap perintah deploy",
+                "Ditulis di README proyek agar tidak lupa",
+                "Disimpan di .env lalu diunggah ke GitHub"
+              ],
+              answer: 0,
+              explain: "Perintah tersimpan di riwayat terminal dan berkas yang terunggah bisa dipindai robot; keystore terenkripsi dengan kata sandi."
+            }
+          ]
         },
         {
           id: "bc-pro-3",
@@ -4583,7 +5165,7 @@ contract Penghitung {
 
 <div class="callout ingat">
 <b>Ingat dulu</b><br>
-Kontrak <b>Penghitung</b> dari pelajaran sebelumnya punya dua fungsi: <b>tambah()</b> (mengubah data → butuh transaksi bertanda tangan dan gas) dan <b>baca()</b> (gratis). Tanda tangan dibuat oleh kunci privat di dompet — kode website tidak pernah boleh melihat kunci itu.
+Kontrak <b>Celengan</b> yang sudah kamu deploy ke Sepolia punya fungsi <b>setor()</b> (payable → transaksi bertanda tangan yang membawa ETH dan memakai gas) dan <b>saldoKas()</b> (view → gratis). Tanda tangan dibuat oleh kunci privat di dompet — kode website tidak pernah boleh melihat kunci itu.
 </div>
 
 <h3>Kamus kecil sebelum membaca kode</h3>
@@ -4607,26 +5189,26 @@ await provider.send("eth_requestAccounts", []);   // minta izin connect
 const signer = await provider.getSigner();          // yang menandatangani transaksi</pre>
 
 <h3>2. Sambungkan ke kontrak</h3>
-<pre class="code">// ABI = "daftar menu" fungsi kontrak (dihasilkan saat compile di Remix)
+<pre class="code">// ABI = "daftar menu" fungsi kontrak (dihasilkan saat compile di Remix atau forge build)
 const abi = [
-  "function tambah() public",
-  "function baca() view returns (uint256)"
+  "function setor() payable",
+  "function saldoKas() view returns (uint256)"
 ];
 const alamatKontrak = "0x...";   // alamat hasil deploy
 
 const kontrak = new ethers.Contract(alamatKontrak, abi, signer);</pre>
 
 <h3>3. Baca & tulis</h3>
-<pre class="code">// Membaca (gratis, instan)
-const nilai = await kontrak.baca();
-console.log("Jumlah sekarang:", nilai.toString());
+<pre class="code">// Membaca (gratis, instan) — hasilnya dalam wei
+const saldo = await kontrak.saldoKas();
+console.log("Saldo celengan:", ethers.formatEther(saldo), "ETH");
 
-// Menulis (butuh gas, perlu konfirmasi di MetaMask)
-const tx = await kontrak.tambah();
+// Menulis (butuh gas, perlu konfirmasi di MetaMask) — ikut mengirim 0,01 ETH
+const tx = await kontrak.setor({ value: ethers.parseEther("0.01") });
 await tx.wait();                 // tunggu transaksi dikonfirmasi
-console.log("Berhasil ditambah!");</pre>
+console.log("Setoran masuk!");</pre>
 
-<p>Alurnya dalam bahasa sehari-hari: website meminta izin tersambung ke dompet → mengambil <i>signer</i> (dompet pengguna) → membuat "remote" kontrak dari alamat dan ABI-nya → menekan tombol <i>baca</i> (langsung dijawab) atau <i>tambah</i> (MetaMask muncul meminta persetujuan dan gas, lalu kode menunggu sampai transaksi masuk blok).</p>
+<p>Alurnya dalam bahasa sehari-hari: website meminta izin tersambung ke dompet → mengambil <i>signer</i> (dompet pengguna) → membuat "remote" kontrak dari alamat dan ABI-nya → menekan tombol <i>saldoKas</i> (langsung dijawab) atau <i>setor</i> (MetaMask muncul meminta persetujuan untuk ETH yang disetor dan gasnya, lalu kode menunggu sampai transaksi masuk blok).</p>
 
 <div class="callout">
 <b>Itulah sebuah DApp!</b> Frontend web biasa + <b>ethers.js</b> + <b>smart contract</b> sebagai backend. <b>ABI</b> memberi tahu kode cara memanggil fungsi; <b>signer</b> menandatangani transaksi tulis.
@@ -4813,7 +5395,7 @@ console.log("Setelah blok 0 diubah, sah?", sah());</div>
         },
       ],
     },
-    /* ---------------- MODUL 11: FORENSIK BLOCKCHAIN — MELACAK ALIRAN DANA ---------------- */
+    /* ---------------- MODUL 12: FORENSIK BLOCKCHAIN — MELACAK ALIRAN DANA ---------------- */
     {
       id: "bc-forensik",
       level: "Forensik",
@@ -5488,7 +6070,7 @@ Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan ora
         },
       ],
     },
-    /* ---------------- MODUL 12: REGULASI, PRIVASI, CBDC & PETA EKOSISTEM ---------------- */
+    /* ---------------- MODUL 13: REGULASI, PRIVASI, CBDC & PETA EKOSISTEM ---------------- */
     {
       id: "bc-pelengkap",
       level: "Pelengkap",
@@ -5893,7 +6475,7 @@ Sampai di sini kamu sudah bertemu Layer 1 dan Layer 2, DEX, pinjaman DeFi, staki
         },
       ],
     },
-    /* ---------------- MODUL 13: EKONOMI PROTOKOL & MENILAI PROYEK ---------------- */
+    /* ---------------- MODUL 14: EKONOMI PROTOKOL & MENILAI PROYEK ---------------- */
     {
       id: "bc-ekonomi",
       level: "Ekonomi",
@@ -6779,7 +7361,7 @@ console.log("Saat pemain baru melambat, kekurangannya ditanggung lewat harga tok
         },
       ],
     },
-    /* ---------------- MODUL 14: MASA DEPAN CRYPTO & BLOCKCHAIN ---------------- */
+    /* ---------------- MODUL 15: MASA DEPAN CRYPTO & BLOCKCHAIN ---------------- */
     {
       id: "bc-arah",
       level: "Arah",

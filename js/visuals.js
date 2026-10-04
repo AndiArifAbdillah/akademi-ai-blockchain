@@ -5332,6 +5332,167 @@ DEMOS["volatil-histogram"] = function (root) {
   draw();
 };
 
+/* ---------- Demo: simulasi panel Deploy & Run di Remix VM (kontrak Celengan) ---------- */
+DEMOS["remix-sim"] = function (root) {
+  // Tiruan sederhana: tiga akun Remix VM, kontrak Celengan sudah di-deploy oleh Akun 1.
+  // Angka gas adalah perkiraan; biaya gas dihitung dengan harga gas 1 gwei.
+  const AKUN = [
+    { nama: "Akun 1", alamat: "0x5B3…eddC4", eth: 100 },
+    { nama: "Akun 2", alamat: "0xAb8…35cb2", eth: 100 },
+    { nama: "Akun 3", alamat: "0x4B2…C02db", eth: 100 },
+  ];
+  const KONTRAK = "0xd91…39138";
+  const GWEI = 1e-9;
+  let kas = 0, pemilik = 0, pernahSetor = [false, false, false];
+  const setoran = [0, 0, 0];
+
+  const fmt = (v, d) => Number(v).toLocaleString("id-ID", { maximumFractionDigits: d == null ? 6 : d });
+  const wei = (eth) => BigInt(Math.round(eth * 1e6)) * 1000000000000n;
+  const pilihAkun = h("select", { class: "pc-input lebar", "aria-label": "Akun pengirim" });
+  const isiAkun = () => {
+    const sel = pilihAkun.value || "0";
+    pilihAkun.innerHTML = "";
+    AKUN.forEach((a, i) => pilihAkun.appendChild(h("option", { value: String(i), text: a.nama + " — " + fmt(a.eth, 5) + " ETH" })));
+    pilihAkun.value = sel;
+  };
+  const nilai = h("input", { class: "pc-input", type: "text", inputmode: "decimal", value: "1", "aria-label": "Value dalam ether" });
+  const jumlahTarik = h("input", { class: "pc-input", type: "text", inputmode: "decimal", value: "0,5", "aria-label": "Jumlah yang ditarik dalam ether" });
+  const pilihSetoran = h("select", { class: "pc-input", "aria-label": "Alamat yang dicek setorannya" });
+  AKUN.forEach((a, i) => pilihSetoran.appendChild(h("option", { value: String(i), text: a.nama })));
+  const terminal = h("div", { class: "rx-terminal", "aria-live": "polite" });
+  const angka = (s) => { const v = parseFloat(String(s).replace(",", ".")); return isNaN(v) ? 0 : v; };
+
+  function catat(baris, jenis) {
+    const el = h("div", { class: "rx-baris " + (jenis || "") , html: baris });
+    terminal.insertBefore(el, terminal.firstChild);
+    while (terminal.children.length > 6) terminal.removeChild(terminal.lastChild);
+  }
+  function transaksi(fungsi, value, jalankan) {
+    const i = +pilihAkun.value, a = AKUN[i];
+    const hasil = jalankan(i);
+    const gas = hasil.gas;
+    a.eth -= gas * GWEI;
+    if (hasil.ok) a.eth -= value;
+    const kepala = "<b>[vm]</b> from: " + a.alamat + " to: Celengan." + fungsi + " " + KONTRAK + (value ? " value: " + wei(value).toLocaleString("id-ID") + " wei" : "");
+    if (hasil.ok) {
+      catat("<span class=\"rx-tanda ok\">✓</span> " + kepala + "<br>status: berhasil · gas: " + fmt(gas, 0) + (hasil.log ? "<br>logs: " + hasil.log : ""), "ok");
+    } else {
+      catat("<span class=\"rx-tanda bad\">✗</span> " + kepala + "<br>status: <b>gagal (revert)</b> · alasan: \"" + hasil.alasan + "\"<br>Semua perubahan dibatalkan, tapi gas " + fmt(gas, 0) + " yang sudah terpakai tetap dibayar.", "bad");
+    }
+    isiAkun();
+  }
+  function panggil(fungsi, isi) {
+    catat("<span class=\"rx-tanda\">→</span> <b>call</b> to Celengan." + fungsi + "<br>" + isi + " <i>(membaca saja: tanpa transaksi, tanpa gas)</i>", "baca");
+  }
+
+  const tombol = (label, warna, onclick, judul) => {
+    const b = h("button", { class: "rx-fn " + warna, type: "button", text: label, title: judul });
+    b.onclick = onclick;
+    return b;
+  };
+  const fSetor = tombol("setor", "merah", () => {
+    const v = angka(nilai.value);
+    transaksi("setor()", v, (i) => {
+      if (v <= 0) return { ok: false, gas: 23100, alasan: "Setoran harus lebih dari 0" };
+      if (v > AKUN[i].eth - 0.01) return { ok: false, gas: 21000, alasan: "saldo akun tidak cukup" };
+      const gas = pernahSetor[i] ? 28900 : 45900;
+      pernahSetor[i] = true;
+      setoran[i] += v; kas += v;
+      return { ok: true, gas: gas, log: "Setor(dari: " + AKUN[i].alamat + ", jumlah: " + fmt(v) + " ETH)" };
+    });
+  }, "payable — menerima ETH lewat kolom VALUE");
+  const fTarik = tombol("tarik", "oranye", () => {
+    const j = angka(jumlahTarik.value);
+    transaksi("tarik(uint256)", 0, (i) => {
+      if (i !== pemilik) return { ok: false, gas: 23600, alasan: "Hanya pemilik yang boleh menarik" };
+      if (j > kas + 1e-12) return { ok: false, gas: 24100, alasan: "Saldo celengan kurang" };
+      kas -= j; AKUN[i].eth += j;
+      return { ok: true, gas: 36400, log: "Tarik(jumlah: " + fmt(j) + " ETH)" };
+    });
+  }, "mengubah data — butuh transaksi & gas");
+  const fPemilik = tombol("pemilik", "biru", () => panggil("pemilik()", "0: address: <b>" + AKUN[pemilik].alamat + "</b>"), "view — hanya membaca");
+  const fSaldo = tombol("saldoKas", "biru", () => panggil("saldoKas()", "0: uint256: <b>" + wei(kas).toLocaleString("id-ID") + "</b> wei (= " + fmt(kas) + " ETH)"), "view — hanya membaca");
+  const fSetoran = tombol("setoran", "biru", () => {
+    const k = +pilihSetoran.value;
+    panggil("setoran(" + AKUN[k].alamat + ")", "0: uint256: <b>" + wei(setoran[k]).toLocaleString("id-ID") + "</b> wei (= " + fmt(setoran[k]) + " ETH)");
+  }, "view — hanya membaca");
+
+  isiAkun();
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Simulasi panel Deploy &amp; Run</b>" }),
+    h("p", { class: "demo-hint", text: "Tiruan sederhana Remix VM. Kontrak Celengan sudah di-deploy oleh Akun 1. Ganti akun, isi VALUE, lalu tekan tombol fungsi dan baca terminalnya." }),
+    h("div", { class: "rx-panel" }, [
+      h("label", { class: "rx-label", text: "ACCOUNT" }), pilihAkun,
+      h("label", { class: "rx-label", text: "VALUE" }), h("div", { class: "rx-baris-isi" }, [nilai, h("span", { class: "dm-sub", text: "ether" })]),
+      h("div", { class: "rx-kontrak" }, [
+        h("div", { class: "rx-kontrak-judul", text: "CELENGAN AT " + KONTRAK }),
+        h("div", { class: "rx-fn-baris" }, [fSetor]),
+        h("div", { class: "rx-fn-baris" }, [fTarik, jumlahTarik, h("span", { class: "dm-sub", text: "ether" })]),
+        h("div", { class: "rx-fn-baris" }, [fPemilik, fSaldo]),
+        h("div", { class: "rx-fn-baris" }, [fSetoran, pilihSetoran]),
+      ]),
+    ]),
+    h("div", { class: "rx-legenda", html: "<span class=\"rx-fn merah\">payable</span> menerima ETH · <span class=\"rx-fn oranye\">transaksi</span> mengubah data · <span class=\"rx-fn biru\">view</span> hanya membaca" }),
+    h("div", { class: "rx-label", text: "TERMINAL" }),
+    terminal,
+    h("p", { class: "dm-note", text: "Angka gas di simulasi ini perkiraan, dan biaya gas dihitung dengan harga gas 1 gwei. Di Remix sungguhan angkanya sedikit berbeda, tapi polanya sama." }),
+  ]));
+  catat("Kontrak Celengan di-deploy oleh Akun 1 ke " + KONTRAK + ". Pemiliknya = pengirim transaksi deploy.", "baca");
+};
+
+/* ---------- Demo: apakah idemu benar-benar butuh blockchain? ---------- */
+DEMOS["perlu-blockchain"] = function (root) {
+  const SOAL = [
+    { t: "Ada beberapa pihak yang perlu menulis atau mengubah data yang sama.", k: "banyak" },
+    { t: "Pihak-pihak itu tidak saling percaya, dan tidak ada satu pihak yang mau atau boleh menjadi admin tunggal.", k: "percaya" },
+    { t: "Orang luar perlu bisa memeriksa sendiri kebenaran datanya tanpa bertanya ke siapa pun.", k: "periksa" },
+    { t: "Ada aset digital (uang, token, tiket, sertifikat) yang harus bisa dimiliki dan dipindahkan tanpa izin perantara.", k: "aset" },
+    { t: "Datanya aman bila terbuka untuk umum dan tersimpan permanen — tidak ada data pribadi atau rahasia.", k: "publik" },
+  ];
+  const jawab = {};
+  const out = h("div", { class: "dm-out" });
+  const daftar = h("div", { class: "pb-daftar" });
+  SOAL.forEach((s, i) => {
+    const ya = h("button", { class: "btn ghost", type: "button", text: "Ya" });
+    const tidak = h("button", { class: "btn ghost", type: "button", text: "Tidak" });
+    const set = (v) => { jawab[s.k] = v; ya.classList.toggle("aktif", v); tidak.classList.toggle("aktif", !v); nilai(); };
+    ya.onclick = () => set(true);
+    tidak.onclick = () => set(false);
+    daftar.appendChild(h("div", { class: "pb-soal" }, [h("p", { html: "<b>" + (i + 1) + ".</b> " + s.t }), h("div", { class: "demo-controls" }, [ya, tidak])]));
+  });
+  function nilai() {
+    const n = Object.keys(jawab).length;
+    if (n < SOAL.length) {
+      out.innerHTML = '<div class="dm-note">Jawab kelima pertanyaan dulu (' + n + " dari " + SOAL.length + " terjawab).</div>";
+      return;
+    }
+    let kelas, judul, isi;
+    if (!jawab.publik) {
+      kelas = "bad"; judul = "Jangan taruh datanya di blockchain publik";
+      isi = "Data di blockchain publik bisa dibaca siapa pun dan tidak bisa dihapus. Simpan data pribadi di server biasa; paling jauh, simpan sidik jarinya (hash) di blockchain sebagai bukti.";
+    } else if ((jawab.banyak && jawab.percaya) || jawab.aset) {
+      kelas = "good"; judul = "Blockchain masuk akal untuk ide ini";
+      isi = jawab.aset
+        ? "Ada aset yang harus bisa berpindah tanpa izin perantara — itu kekuatan utama blockchain. Tetap uji dulu: apakah calon pengguna mau membayar biaya gas dan repot memakai dompet?"
+        : "Banyak pihak yang tidak saling percaya menulis data yang sama — inilah masalah yang dipecahkan blockchain. Pastikan juga pengguna mau memakai dompet.";
+    } else if (jawab.periksa) {
+      kelas = ""; judul = "Mungkin cukup: database biasa + bukti di blockchain";
+      isi = "Kalau yang dibutuhkan hanya bukti bahwa data tidak diubah diam-diam, simpan datanya di database biasa dan catat hash-nya secara berkala di blockchain. Lebih murah, lebih cepat, dan tetap bisa diperiksa.";
+    } else {
+      kelas = "bad"; judul = "Database biasa lebih cocok";
+      isi = "Ada satu pihak yang dipercaya dan tidak ada aset yang berpindah tangan. Database biasa lebih murah, lebih cepat, dan kesalahannya bisa diperbaiki. Memaksakan blockchain hanya menambah biaya dan kerumitan.";
+    }
+    out.innerHTML = '<div class="dm-line big ' + kelas + '"><span>' + judul + "</span></div>" + '<div class="dm-note">' + isi + "</div>";
+  }
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Apakah idemu benar-benar butuh blockchain?</b>" }),
+    h("p", { class: "demo-hint", text: "Jawab jujur untuk ide yang sedang kamu pikirkan." }),
+    daftar,
+    out,
+  ]));
+  nilai();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";

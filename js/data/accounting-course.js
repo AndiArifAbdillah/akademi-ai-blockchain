@@ -6943,7 +6943,331 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
         },
       ],
     },
-    /* ---------------- MODUL 15: DUNIA INVESTASI & PENGELOLAAN DANA ---------------- */
+    /* ---------------- MODUL 15: DARI IDE KE USAHA: POLA PIKIR FOUNDER ---------------- */
+    {
+      id: "acc-founder",
+      level: "Founder",
+      title: "Dari Ide ke Usaha: Pola Pikir Founder",
+      summary: "Untuk yang ingin membangun usaha atau produk sendiri: pola pikir founder, menguji ide lewat wawancara yang jujur, dan merangkum rencana dalam Lean Canvas beserta angka titik impasnya.",
+      lessons: [
+        {
+          id: "acc-fdr-1",
+          title: "Pola Pikir Founder — Jatuh Cinta pada Masalah, Bukan pada Solusi",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Di pelajaran Membangun &amp; Menilai Bisnis: <b>unit economics</b> = untung atau rugi per satu pelanggan, <b>margin kontribusi</b> = harga − biaya variabel per unit, dan <b>runway</b> = kas ÷ pengeluaran bersih per bulan — berapa bulan bisnis bisa bertahan.
+</div>
+
+<h3>Founder bukan sekadar "punya ide"</h3>
+<p><b>Founder</b> adalah orang yang memulai usaha dan bertanggung jawab atas hasilnya ketika belum ada jawaban pasti. Bedanya dengan bekerja di perusahaan yang sudah jalan:</p>
+<table class="tbl">
+  <tr><th></th><th>Karyawan di perusahaan mapan</th><th>Founder di awal usaha</th></tr>
+  <tr><td>Tugasnya</td><td>Sudah ditentukan</td><td>Harus dicari sendiri setiap minggu</td></tr>
+  <tr><td>Informasi</td><td>Cukup lengkap</td><td>Hampir semuanya tebakan</td></tr>
+  <tr><td>Ukuran berhasil</td><td>Target dari atasan</td><td>Apakah ada orang yang benar-benar mau memakai dan membayar</td></tr>
+</table>
+
+<h3>Enam kebiasaan berpikir</h3>
+<p><b>1. Jatuh cinta pada masalah, bukan pada solusi.</b> "Aku mau membuat aplikasi berbasis blockchain" adalah solusi yang mencari masalah. "Panitia acara kampus kehilangan uang karena tiket palsu dan calo" adalah masalah. Masalah yang jelas bisa diselesaikan dengan banyak cara — dan kamu bebas mengganti caranya tanpa kehilangan arah.</p>
+<p><b>2. Ide adalah tebakan.</b> Tulis idemu sebagai kalimat yang bisa terbukti salah:</p>
+<div class="callout">
+"Kami percaya <b>[siapa]</b> akan <b>[melakukan apa]</b> karena <b>[alasan]</b>. Kami tahu kami benar bila <b>[angka]</b> dalam <b>[waktu]</b>."<br><br>
+Contoh: "Kami percaya panitia acara kampus akan menjual tiket lewat sistem kami karena kerugian akibat tiket palsu. Kami tahu kami benar bila 3 dari 10 panitia yang kami temui mau mencobanya dalam 30 hari."
+</div>
+<p><b>3. Kecepatan belajar lebih penting daripada kesempurnaan.</b> Siklus <i>Build–Measure–Learn</i> dari buku <i>The Lean Startup</i> (Eric Ries, 2011): bangun versi sekecil mungkin, ukur apa yang <b>dilakukan</b> orang (bukan apa yang mereka katakan), lalu putuskan.</p>
+<div data-diagram="pipeline" data-stages="Bangun::versi terkecil yang bisa dicoba|Ukur::apa yang dilakukan pengguna|Pelajari::lanjut, ubah arah, atau berhenti" data-caption="Siklus belajar — makin cepat diputar, makin cepat menemukan yang benar"></div>
+<p><b>4. Kecil dan dalam dulu.</b> Seratus orang yang sangat membutuhkan produkmu lebih berharga daripada sepuluh ribu orang yang biasa-biasa saja. Di awal, lakukan hal-hal yang "tidak bisa diperbesar": menemui pengguna satu per satu, membantu mereka secara manual. Dari situ kamu belajar paling banyak.</p>
+<p><b>5. Uang adalah oksigen.</b> Usaha mati saat kasnya habis, bukan saat idenya buruk. Selalu tahu runway-mu, dan tanyakan: dengan pertumbuhan sekarang, apakah pendapatan akan menutup pengeluaran sebelum kas habis? Kalau ya, usahamu bisa bertahan tanpa bergantung pada pendanaan baru.</p>
+<p><b>6. Jujur pada angka.</b> Pujian teman, jumlah <i>like</i>, dan "ide yang keren banget" bukan bukti. Bukti adalah orang yang kembali memakai, membayar, atau mengajak orang lain.</p>
+
+<h3>Kenapa usaha rintisan gagal</h3>
+<p>Analisis CB Insights atas ratusan catatan kegagalan startup berulang kali menempatkan dua alasan di urutan teratas: <b>tidak ada kebutuhan pasar</b> — produk yang tidak benar-benar dibutuhkan orang — dan <b>kehabisan uang</b>. Keduanya bisa dicegah dengan kebiasaan nomor 1, 2, dan 5.</p>
+<div class="callout warn">
+<b>Jebakan khas di Web3 dan AI.</b> Membuat token sebelum ada pengguna, menempelkan blockchain pada masalah yang cukup diselesaikan dengan database biasa, atau membungkus API AI tanpa pembeda yang tidak bisa ditiru orang lain dalam seminggu. Proyek hackathon yang menang belum tentu usaha yang bisa hidup — juri menilai demo, pasar menilai apakah orang mau membayar.
+</div>
+
+<h3>Tim kecil yang lengkap</h3>
+<table class="tbl">
+  <tr><th>Peran</th><th>Fokusnya</th></tr>
+  <tr><td><b>Pembangun</b></td><td>Membuat produknya berjalan: kode, kontrak, infrastruktur</td></tr>
+  <tr><td><b>Penggerak</b></td><td>Menemui pengguna, menjual, mencari mitra dan dana</td></tr>
+  <tr><td><b>Perancang</b></td><td>Membuat produk mudah dipahami dan enak dipakai</td></tr>
+</table>
+<p>Satu orang bisa memegang lebih dari satu peran. Yang paling sering hilang di tim teknis adalah <b>penggerak</b>: produk jadi, tapi tidak ada yang menemui calon pengguna.</p>
+`,
+          keyPoints: [
+            "Mulai dari masalah yang jelas, bukan dari teknologi; masalah boleh dipecahkan dengan cara apa pun.",
+            "Tulis ide sebagai hipotesis yang bisa terbukti salah, lengkap dengan angka dan batas waktu.",
+            "Build–Measure–Learn: bangun versi terkecil, ukur perilaku pengguna, lalu putuskan lanjut, ubah, atau berhenti.",
+            "Usaha mati saat kas habis; selalu tahu runway dan kapan pendapatan menutup pengeluaran.",
+            "Dua alasan utama kegagalan startup: produk tidak dibutuhkan pasar dan kehabisan uang."
+          ],
+          practice: [
+            { type: "number", q: "Kas tim Rp120 juta, pengeluaran bersih Rp15 juta per bulan. Berapa bulan runway-nya?", answer: 8, tol: 0.05, unit: "bulan", hint: "Runway = kas ÷ pengeluaran bersih per bulan.", solution: "120 ÷ 15 = 8 bulan." },
+            { type: "choice", q: "Mana yang merupakan pernyataan MASALAH, bukan solusi?", options: ["Kami ingin membuat aplikasi AI untuk mahasiswa", "Kami ingin memakai blockchain untuk pendidikan", "Mahasiswa rantau sering bertengkar soal pembagian biaya listrik kos", "Kami ingin membuat token untuk komunitas kampus"], answer: 2, hint: "Mana yang menyebut siapa yang kesulitan dan apa kesulitannya?", solution: "Hanya pilihan ketiga yang menyebut siapa yang punya masalah dan masalahnya apa; yang lain sudah memilih teknologinya." }
+          ],
+          quiz: [
+            {
+              q: "Kenapa founder dianjurkan 'jatuh cinta pada masalah, bukan pada solusi'?",
+              options: [
+                "Agar bebas mengganti cara tanpa kehilangan arah",
+                "Agar produk selalu memakai teknologi terbaru",
+                "Agar tidak perlu menemui calon pengguna",
+                "Agar bisa langsung mencari investor besar"
+              ],
+              answer: 0,
+              explain: "Solusi pertama jarang yang terbaik; masalah yang jelas menjadi pegangan saat solusinya harus diganti."
+            },
+            {
+              q: "Menurut CB Insights, dua alasan teratas kegagalan startup adalah?",
+              options: [
+                "Tidak ada kebutuhan pasar dan kehabisan uang",
+                "Teknologi kurang canggih dan kantor terlalu kecil",
+                "Terlalu banyak pengguna dan server tidak kuat",
+                "Nama produk kurang menarik dan logo kurang bagus"
+              ],
+              answer: 0,
+              explain: "Produk yang tidak dibutuhkan dan kas yang habis jauh lebih sering membunuh usaha daripada masalah teknis."
+            },
+            {
+              q: "Mana bukti yang paling kuat bahwa idemu dibutuhkan?",
+              options: [
+                "Calon pengguna kembali memakai dan mau membayar",
+                "Teman-teman bilang idenya keren sekali",
+                "Unggahan tentang idenya mendapat banyak like",
+                "Juri hackathon memberi nilai tertinggi"
+              ],
+              answer: 0,
+              explain: "Perilaku — memakai lagi, membayar — jauh lebih jujur daripada pujian."
+            }
+          ]
+        },
+        {
+          id: "acc-fdr-2",
+          title: "Menguji Ide Sebelum Membangun — Wawancara yang Tidak Membohongimu",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Ide adalah <b>tebakan</b> yang harus diuji, dan yang diukur adalah apa yang <b>dilakukan</b> orang, bukan apa yang mereka katakan. Pelajaran ini menunjukkan cara mengujinya sebelum menulis satu baris kode pun.
+</div>
+
+<h3>Dari mana ide yang bagus datang</h3>
+<ul>
+  <li><b>Masalahmu sendiri</b> — kamu paham rasanya dan tahu orang lain yang mengalaminya.</li>
+  <li><b>Pekerjaan berulang yang masih ribet</b> — "kenapa ini masih pakai spreadsheet dan pesan WhatsApp?"</li>
+  <li><b>Perubahan baru</b> — teknologi atau aturan baru membuat hal yang dulu mustahil kini mungkin, misalnya agen AI yang bisa membayar sendiri atau stablecoin yang memudahkan pembayaran lintas negara.</li>
+</ul>
+<div class="callout">
+<b>Template pernyataan masalah:</b><br>
+<b>[Siapa]</b> kesulitan <b>[apa]</b> saat <b>[kapan]</b>. Sekarang mereka mengatasinya dengan <b>[cara sekarang]</b>, dan itu merugikan mereka <b>[berapa waktu atau uang]</b>.
+</div>
+
+<h3>Menyaring ide dengan tiga pertanyaan</h3>
+<p>Beri nilai 1–5 untuk masing-masing, lalu kalikan:</p>
+<table class="tbl">
+  <tr><th>Ide</th><th>Seberapa sering terjadi</th><th>Seberapa sakit</th><th>Mau membayar</th><th>Skor</th></tr>
+  <tr><td>Aplikasi patungan biaya kos</td><td>4</td><td>3</td><td>2</td><td>24</td></tr>
+  <tr><td>Sertifikat lomba yang bisa diverifikasi</td><td>2</td><td>3</td><td>3</td><td>18</td></tr>
+  <tr><td>Tiket acara anti-palsu &amp; anti-calo</td><td>3</td><td>5</td><td>4</td><td class="ok-cell">60</td></tr>
+</table>
+<p>Dikalikan, bukan dijumlahkan, karena satu nilai rendah saja sudah cukup mematikan ide: masalah yang sangat sering terjadi tapi tidak ada yang mau membayar tetap sulit menjadi usaha.</p>
+
+<h3>Wawancara: kenapa orang suka membohongimu</h3>
+<p>Kalau kamu bertanya "Menurutmu ideku bagus?", hampir semua orang menjawab "bagus" — karena sopan, bukan karena butuh. Buku <b><i>The Mom Test</i></b> (Rob Fitzpatrick, 2013) memberi tiga aturan supaya jawaban tetap jujur, bahkan bila yang ditanya ibumu sendiri:</p>
+<ol>
+  <li><b>Bicarakan hidup mereka, bukan idemu.</b></li>
+  <li><b>Tanyakan hal spesifik di masa lalu</b>, bukan pendapat atau janji di masa depan.</li>
+  <li><b>Lebih banyak mendengar</b> daripada berbicara.</li>
+</ol>
+<table class="tbl">
+  <tr><th>Pertanyaan yang menipu</th><th>Pertanyaan yang jujur</th></tr>
+  <tr><td>"Kamu mau pakai aplikasi ini?"</td><td>"Kapan terakhir kali kamu mengalami masalah ini? Ceritakan apa yang terjadi."</td></tr>
+  <tr><td>"Kalau ada, kamu mau bayar berapa?"</td><td>"Sekarang kamu mengatasinya bagaimana? Sudah keluar uang atau waktu berapa?"</td></tr>
+  <tr><td>"Bagus nggak idenya?"</td><td>"Apa yang sudah kamu coba untuk menyelesaikannya?"</td></tr>
+  <tr><td>"Fitur X berguna nggak?"</td><td>"Bagian mana yang paling menyebalkan dari proses itu?"</td></tr>
+</table>
+<p>Kalau seseorang belum pernah mencoba menyelesaikan masalahnya sama sekali, kemungkinan besar masalahnya tidak cukup sakit.</p>
+
+<h3>Pujian bukan data, komitmen adalah data</h3>
+<table class="tbl">
+  <tr><th>Komitmen</th><th>Contoh</th></tr>
+  <tr><td><b>Waktu</b></td><td>Mau menjadwalkan uji coba atau pertemuan lanjutan</td></tr>
+  <tr><td><b>Reputasi</b></td><td>Mau mengenalkanmu ke atasan atau ke panitia lain</td></tr>
+  <tr><td><b>Uang</b></td><td>Mau membayar uang muka, pre-order, atau memakai versi berbayar</td></tr>
+</table>
+<p>Wawancarai orang dari satu kelompok yang sama sampai jawaban mereka mulai berulang. Dalam praktik, itu sering terjadi setelah sekitar 10–20 orang.</p>
+
+<h3>Eksperimen murah sebelum membangun</h3>
+<table class="tbl">
+  <tr><th>Eksperimen</th><th>Caranya</th><th>Yang diukur</th></tr>
+  <tr><td><b>Halaman daftar tunggu</b></td><td>Satu halaman yang menjelaskan janji produk + formulir</td><td>Persen pengunjung yang mendaftar</td></tr>
+  <tr><td><b>Versi manual</b></td><td>Layani beberapa pengguna secara manual seolah produknya sudah ada</td><td>Apakah mereka memakai lagi dan mau membayar</td></tr>
+  <tr><td><b>Prototipe klik</b></td><td>Gambar layar yang bisa diklik, tanpa kode sungguhan</td><td>Di mana orang bingung</td></tr>
+</table>
+<p>Contoh: 400 orang mengunjungi halaman daftar tunggu, 36 mendaftar → tingkat konversi 36 ÷ 400 = <b>9%</b>. Tetapkan dulu batas lulusnya <b>sebelum</b> eksperimen — misalnya "minimal 5%" — supaya kamu tidak menafsirkan hasil sesuai harapan.</p>
+
+<h3>Untuk ide Web3: apakah benar-benar perlu blockchain?</h3>
+<div data-demo="perlu-blockchain"></div>
+`,
+          keyPoints: [
+            "Ide bagus sering datang dari masalah sendiri, pekerjaan berulang yang ribet, atau perubahan teknologi dan aturan.",
+            "Saring ide dengan frekuensi × rasa sakit × kesediaan membayar; satu nilai rendah cukup mematikan ide.",
+            "The Mom Test: bicarakan hidup mereka, tanyakan hal spesifik di masa lalu, dan lebih banyak mendengar.",
+            "Pujian bukan data; komitmen waktu, reputasi, atau uang adalah data.",
+            "Uji dengan eksperimen murah dan tetapkan batas lulus sebelum melihat hasilnya."
+          ],
+          practice: [
+            { type: "number", q: "Halaman daftar tunggu dikunjungi 1.250 orang dan 75 mendaftar. Berapa persen tingkat konversinya?", answer: 6, tol: 0.05, unit: "%", hint: "Pendaftar ÷ pengunjung × 100%.", solution: "75 ÷ 1.250 = 6%." },
+            { type: "number", q: "Sebuah ide dinilai: frekuensi 5, rasa sakit 4, kesediaan membayar 1. Berapa skornya?", answer: 20, tol: 0.5, hint: "Kalikan ketiganya.", solution: "5 × 4 × 1 = 20 — sering dan sakit, tapi hampir tak ada yang mau membayar." },
+            { type: "choice", q: "Pertanyaan wawancara mana yang paling sesuai The Mom Test?", options: ["Kalau aplikasinya jadi, kamu mau pakai?", "Menurutmu ideku bagus nggak?", "Kapan terakhir kamu mengalami masalah ini, dan apa yang kamu lakukan?", "Kamu mau bayar berapa untuk fitur ini?"], answer: 2, hint: "Hal spesifik di masa lalu.", solution: "Cerita nyata di masa lalu menunjukkan apakah masalahnya benar-benar terjadi dan seberapa sakit." }
+          ],
+          quiz: [
+            {
+              q: "Kenapa pertanyaan 'Kamu mau pakai aplikasi ini?' menghasilkan data yang buruk?",
+              options: [
+                "Orang cenderung menjawab sopan tentang masa depan",
+                "Pertanyaannya terlalu pendek untuk dipahami",
+                "Orang tidak suka ditanya soal aplikasi",
+                "Jawabannya selalu tidak, jadi tidak berguna"
+              ],
+              answer: 0,
+              explain: "Janji tentang masa depan murah diucapkan; cerita nyata di masa lalu jauh lebih jujur."
+            },
+            {
+              q: "Mana sinyal komitmen paling kuat dari calon pengguna?",
+              options: [
+                "Mau membayar uang muka untuk versi awal",
+                "Bilang idenya sangat menarik dan inovatif",
+                "Menyukai unggahan tentang produknya",
+                "Berjanji akan mencobanya kalau sudah jadi"
+              ],
+              answer: 0,
+              explain: "Uang adalah komitmen paling mahal; pujian dan janji tidak memerlukan pengorbanan apa pun."
+            },
+            {
+              q: "Kenapa batas lulus eksperimen ditetapkan sebelum melihat hasilnya?",
+              options: [
+                "Agar hasilnya tidak ditafsirkan sesuai harapan",
+                "Agar eksperimennya selesai lebih cepat",
+                "Agar jumlah pengunjung bertambah banyak",
+                "Agar investor langsung tertarik mendanai"
+              ],
+              answer: 0,
+              explain: "Tanpa batas yang ditentukan di awal, angka apa pun mudah dianggap 'lumayan bagus'."
+            }
+          ]
+        },
+        {
+          id: "acc-fdr-3",
+          title: "Lean Canvas & Rencana Eksekusi — Ide Bisnis dalam Satu Halaman",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Margin kontribusi</b> = harga − biaya variabel per unit, dan <b>titik impas (unit)</b> = biaya tetap ÷ margin kontribusi per unit (pelajaran Membangun &amp; Menilai Bisnis). Ide yang lolos wawancara kini perlu dirangkum menjadi rencana.
+</div>
+
+<h3>Kenapa satu halaman?</h3>
+<p>Rencana bisnis 40 halaman sudah usang sebelum selesai dibaca, karena di awal usaha hampir semua isinya masih tebakan yang berubah setiap minggu. <b>Lean Canvas</b> (Ash Maurya, diadaptasi dari <i>Business Model Canvas</i> karya Alexander Osterwalder) merangkum ide dalam sembilan kotak di satu halaman — cepat ditulis, cepat diubah.</p>
+
+<h3>Contoh: TiketAman</h3>
+<p>Ide dari pelajaran sebelumnya: tiket acara sebagai token di jaringan Layer 2. Smart contract membatasi harga jual ulang paling tinggi 110% dari harga awal, dan penyelenggara mendapat 5% dari setiap penjualan ulang.</p>
+<table class="tbl">
+  <tr><th>Kotak</th><th>Isi untuk TiketAman</th></tr>
+  <tr><td><b>1. Masalah</b></td><td>Tiket palsu; calo menjual 3–5 kali harga; penyelenggara tidak mendapat apa pun dari jual ulang</td></tr>
+  <tr><td><b>2. Segmen pelanggan</b></td><td>Penyelenggara acara kampus dan konser kecil (500–3.000 penonton). Pengguna awal: panitia yang pernah kena tiket palsu</td></tr>
+  <tr><td><b>3. Proposisi nilai unik</b></td><td>"Tiket yang tidak bisa dipalsukan dan tidak bisa dijual lebih dari 110%."</td></tr>
+  <tr><td><b>4. Solusi</b></td><td>Tiket = token; jual ulang hanya lewat pasar resmi dengan batas harga; pemindaian kode QR bertanda tangan di pintu masuk</td></tr>
+  <tr><td><b>5. Saluran</b></td><td>Himpunan mahasiswa, BEM, komunitas penyelenggara acara</td></tr>
+  <tr><td><b>6. Arus pendapatan</b></td><td>Biaya layanan Rp4.000 per tiket, dibayar pembeli</td></tr>
+  <tr><td><b>7. Struktur biaya</b></td><td>Gas L2, server, biaya pembayaran, pemasaran, tim</td></tr>
+  <tr><td><b>8. Metrik kunci</b></td><td>Tiket terjual per bulan; persen penyelenggara yang memakai lagi</td></tr>
+  <tr><td><b>9. Keunggulan tak tertiru</b></td><td>Jaringan penyelenggara kampus dan riwayat acara yang bebas tiket palsu</td></tr>
+</table>
+<p>Isi berurutan dari masalah dan segmen, karena kotak lainnya bergantung pada keduanya. Kotak 9 boleh kosong di awal — keunggulan yang sungguhan biasanya baru terbentuk setelah usaha berjalan.</p>
+
+<h3>Apakah angkanya masuk akal?</h3>
+<table class="tbl">
+  <tr><th>Per tiket</th><th>Rupiah</th></tr>
+  <tr><td>Biaya layanan</td><td>4.000</td></tr>
+  <tr><td>− Gas L2 &amp; server (misalkan)</td><td>(500)</td></tr>
+  <tr><td>− Biaya pembayaran (misalkan)</td><td>(1.000)</td></tr>
+  <tr><td><b>= Margin kontribusi</b></td><td><b>2.500</b></td></tr>
+</table>
+<p>Biaya tetap misalkan Rp25 juta per bulan. <b>Titik impas</b> = 25.000.000 ÷ 2.500 = <b>10.000 tiket per bulan</b> — kira-kira 10 acara berisi 1.000 penonton setiap bulan. Pertanyaan berikutnya: apakah ada cukup acara di segmen yang dipilih? Kalau tidak, segmennya harus diperluas atau harganya diubah. Hitungan sederhana ini sering membunuh ide lebih cepat — dan lebih murah — daripada membangun produknya.</p>
+
+<h3>Rencana eksekusi: uji asumsi paling berisiko lebih dulu</h3>
+<p>Setiap kotak kanvas berisi asumsi. Jangan mulai dari yang paling mudah dibangun; mulailah dari yang <b>kalau salah, seluruh ide runtuh</b>.</p>
+<table class="tbl">
+  <tr><th>Asumsi</th><th>Cara menguji</th><th>Batas lulus</th></tr>
+  <tr><td>Penyelenggara mau pindah dari formulir online + transfer bank</td><td>Wawancara 15 penyelenggara</td><td>5 bersedia mencoba</td></tr>
+  <tr><td>Pembeli mau membayar biaya layanan Rp4.000</td><td>1 acara uji dengan versi manual</td><td>Penjualan tidak turun lebih dari 10%</td></tr>
+  <tr><td>Pembeli bisa memakai dompet tanpa bingung</td><td>Prototipe di testnet, 20 orang mencoba</td><td>80% berhasil tanpa dibantu</td></tr>
+</table>
+<table class="tbl">
+  <tr><th>Minggu</th><th>Target</th></tr>
+  <tr><td>1–2</td><td>Wawancara 15 penyelenggara, tulis ulang kanvas</td></tr>
+  <tr><td>3–4</td><td>Prototipe di testnet + 1 acara uji gratis</td></tr>
+  <tr><td>5–8</td><td>3 acara berbayar sungguhan</td></tr>
+  <tr><td>9–12</td><td>Ukur: minimal 2 dari 3 penyelenggara memakai lagi? Lanjut, ubah, atau berhenti</td></tr>
+</table>
+<div class="callout">
+<b>Kapan perlu rencana bisnis lengkap?</b> Saat mengajukan pinjaman bank, hibah, atau pendanaan yang meminta dokumen terperinci. Lean Canvas tidak menggantikannya — ia membantumu tahu isi yang benar sebelum menulis dokumen panjang.
+</div>
+`,
+          keyPoints: [
+            "Lean Canvas merangkum ide dalam 9 kotak: masalah, segmen, proposisi nilai, solusi, saluran, pendapatan, biaya, metrik, keunggulan.",
+            "Isi dari masalah dan segmen pelanggan; kotak keunggulan tak tertiru boleh kosong di awal.",
+            "Periksa angka sejak awal: margin kontribusi per unit dan titik impas = biaya tetap ÷ margin kontribusi.",
+            "Uji asumsi yang paling berisiko lebih dulu, masing-masing dengan cara menguji dan batas lulus.",
+            "Rencana 90 hari berisi target mingguan yang berakhir dengan keputusan: lanjut, ubah arah, atau berhenti."
+          ],
+          practice: [
+            { type: "number", q: "Biaya layanan Rp5.000 per tiket, biaya variabel Rp2.000 per tiket, biaya tetap Rp30 juta per bulan. Berapa tiket per bulan untuk titik impas?", answer: 10000, tol: 0.5, unit: "tiket", hint: "Margin kontribusi = 5.000 − 2.000; lalu biaya tetap ÷ margin.", solution: "Margin = Rp3.000; 30.000.000 ÷ 3.000 = 10.000 tiket per bulan." },
+            { type: "choice", q: "Asumsi mana yang sebaiknya diuji PALING DULU untuk TiketAman?", options: ["Warna logo yang paling disukai", "Penyelenggara mau pindah dari cara mereka sekarang", "Jaringan L2 mana yang tercepat", "Nama domain yang paling mudah diingat"], answer: 1, hint: "Asumsi mana yang kalau salah membuat seluruh ide runtuh?", solution: "Tanpa penyelenggara yang mau memakai, teknologi dan merek tidak ada artinya." }
+          ],
+          quiz: [
+            {
+              q: "Kenapa Lean Canvas lebih cocok daripada rencana bisnis 40 halaman di awal usaha?",
+              options: [
+                "Isinya masih tebakan yang cepat berubah",
+                "Investor dilarang membaca dokumen panjang",
+                "Rencana bisnis panjang tidak boleh berisi angka",
+                "Lean Canvas otomatis menghitung titik impas"
+              ],
+              answer: 0,
+              explain: "Satu halaman cepat ditulis ulang setiap kali wawancara atau eksperimen mengubah pemahamanmu."
+            },
+            {
+              q: "Kotak mana yang sebaiknya diisi paling awal?",
+              options: [
+                "Masalah dan segmen pelanggan",
+                "Keunggulan tak tertiru",
+                "Struktur biaya dan saluran",
+                "Metrik kunci dan solusi"
+              ],
+              answer: 0,
+              explain: "Proposisi nilai, solusi, dan saluran semuanya bergantung pada masalah siapa yang sedang diselesaikan."
+            },
+            {
+              q: "Margin kontribusi Rp2.500 per tiket dan biaya tetap Rp25 juta per bulan. Apa artinya?",
+              options: [
+                "Perlu menjual 10.000 tiket per bulan untuk impas",
+                "Setiap tiket menghasilkan laba bersih Rp25.000",
+                "Usaha pasti untung bila menjual tiket apa pun",
+                "Perlu menjual 2.500 tiket per bulan untuk impas"
+              ],
+              answer: 0,
+              explain: "Titik impas = 25.000.000 ÷ 2.500 = 10.000 tiket per bulan."
+            }
+          ]
+        },
+      ],
+    },
+    /* ---------------- MODUL 16: DUNIA INVESTASI & PENGELOLAAN DANA ---------------- */
     {
       id: "acc-investasi",
       level: "Investasi",
@@ -7528,7 +7852,7 @@ Bedanya hanya nol di belakang angkanya.
         },
       ],
     },
-    /* ---------------- MODUL 16: MEMBACA GRAFIK HARGA: ANALISIS TEKNIKAL ---------------- */
+    /* ---------------- MODUL 17: MEMBACA GRAFIK HARGA: ANALISIS TEKNIKAL ---------------- */
     {
       id: "acc-teknikal",
       level: "Teknikal",
@@ -8232,7 +8556,7 @@ Sepanjang jalur ini kamu sudah bertemu puluhan singkatan: CAGR, margin, ROI, ROE
         },
       ],
     },
-    /* ---------------- MODUL 17: EKONOMI MAKRO UNTUK BISNIS ---------------- */
+    /* ---------------- MODUL 18: EKONOMI MAKRO UNTUK BISNIS ---------------- */
     {
       id: "acc-makro",
       level: "Makro",
@@ -9161,7 +9485,7 @@ Contoh deposito berbunga 4,5% yang dipotong pajak bunga 20% → bersih 3,6%. Den
         },
       ],
     },
-    /* ---------------- MODUL 18: MASA DEPAN AKUNTANSI & PEKERJAAN KEUANGAN ---------------- */
+    /* ---------------- MODUL 19: MASA DEPAN AKUNTANSI & PEKERJAAN KEUANGAN ---------------- */
     {
       id: "acc-arah",
       level: "Arah",
