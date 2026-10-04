@@ -1558,3 +1558,8 @@ a.resume-card:hover .resume-btn { gap: 12px; }
   .tek-svg .vt-xs.vol-n { font-size: 13px; }
   .tek-svg .vt-bold { font-size: 19px; }
 }
+
+/* ---------- Latihan: tombol ganti tanda plus/minus di samping kolom jawaban ---------- */
+.pr-tanda { flex: 0 0 auto; align-self: stretch; width: 44px; min-height: 42px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--text); font: inherit; font-size: 1.15rem; line-height: 1; cursor: pointer; }
+.pr-tanda:hover { border-color: var(--text); }
+.pr-tanda:focus-visible { outline: none; border-color: var(--text); box-shadow: 0 0 0 3px var(--accent-soft); }

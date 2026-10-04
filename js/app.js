@@ -1039,6 +1039,36 @@ function renderQuiz(lesson, onLulus) {
 }
 
 /* ---------- Komponen: Latihan Praktik ---------- */
+// Membaca jawaban angka gaya Indonesia (16,7 · 10.000 · 1.234,5) maupun gaya Inggris (16.7 · 10,000).
+// Mengembalikan daftar tafsiran: "2.000" bisa berarti 2 atau 2000, jadi keduanya dikembalikan.
+// Daftar kosong = bukan angka.
+function tafsirAngka(teks) {
+  let s = String(teks).replace(/[−–]/g, "-").replace(/\s|rp|%/gi, "");
+  const minus = s[0] === "-";
+  s = s.replace(/^[+-]/, "");
+  if (!/^[\d.,]*\d[\d.,]*$/.test(s)) return [];
+  const jadi = (x) => (minus ? -1 : 1) * Number(x);
+  const nTitik = (s.match(/\./g) || []).length, nKoma = (s.match(/,/g) || []).length;
+  let hasil;
+  if (!nTitik && !nKoma) {
+    hasil = [jadi(s)];
+  } else if (nTitik && nKoma) {
+    // Pemisah yang paling akhir adalah desimal, yang lain pemisah ribuan
+    const desimal = s.lastIndexOf(",") > s.lastIndexOf(".") ? "," : ".";
+    const ribuan = desimal === "," ? "." : ",";
+    const [utuh, pecahan, ...lebih] = s.split(desimal);
+    const kelompok = utuh.split(ribuan);
+    const ribuanRapi = /^[1-9]\d{0,2}$/.test(kelompok[0]) && kelompok.slice(1).every((k) => k.length === 3);
+    hasil = lebih.length || !ribuanRapi ? [] : [jadi(kelompok.join("") + "." + pecahan)];
+  } else {
+    const bagian = s.split(nTitik ? "." : ",");
+    const ribuanRapi = /^[1-9]\d{0,2}$/.test(bagian[0]) && bagian.slice(1).every((k) => k.length === 3);
+    if (bagian.length > 2) hasil = ribuanRapi ? [jadi(bagian.join(""))] : [];
+    else hasil = ribuanRapi ? [jadi(bagian.join(".")), jadi(bagian.join(""))] : [jadi(bagian.join("."))];
+  }
+  return hasil.filter((x) => isFinite(x));
+}
+
 function renderPractice(lesson) {
   const box = el(`<section class="practice"><p class="kicker">Latihan · ${lesson.practice.length} soal</p><h3>Coba hitung sendiri</h3><p class="pr-sub">Kerjakan dulu, baru periksa. Ada petunjuk kalau buntu.</p></section>`);
 
@@ -1046,7 +1076,7 @@ function renderPractice(lesson) {
     const item = el(`<div class="pr-item"></div>`);
     item.appendChild(el(`<p class="pr-q"><b>${pi + 1}.</b> ${esc(p.q)}</p>`));
     const fb = el(`<div class="pr-fb" hidden></div>`);
-    let getAnswer;
+    let getAnswer, inp = null;
 
     if (p.type === "choice") {
       const opts = el(`<div class="pr-opts"></div>`);
@@ -1065,14 +1095,24 @@ function renderPractice(lesson) {
       getAnswer = () => chosen;
     } else {
       const inWrap = el(`<div class="pr-inwrap"></div>`);
-      const inp = el(`<input class="pr-input" type="number" placeholder="jawabanmu" step="any">`);
+      // Kolom teks (bukan type="number") agar koma desimal & titik ribuan gaya Indonesia diterima
+      inp = el(`<input class="pr-input" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="jawabanmu">`);
+      // Papan angka desimal di HP sering tanpa tombol minus — sediakan tombol pengganti tanda
+      const tanda = el(`<button type="button" class="pr-tanda" title="Ganti tanda plus/minus" aria-label="Ganti tanda plus atau minus">±</button>`);
+      tanda.onclick = () => {
+        const v = inp.value.trim();
+        inp.value = /^[-−–]/.test(v) ? v.replace(/^[-−–]\s*/, "") : "-" + v;
+        inp.focus();
+      };
       inWrap.appendChild(inp);
+      inWrap.appendChild(tanda);
       if (p.unit) inWrap.appendChild(el(`<span class="pr-unit">${esc(p.unit)}</span>`));
       item.appendChild(inWrap);
-      getAnswer = () => (inp.value === "" ? null : parseFloat(inp.value));
+      getAnswer = () => (inp.value.trim() === "" ? null : tafsirAngka(inp.value));
     }
 
     const check = el(`<button class="btn primary pr-check">Periksa</button>`);
+    if (inp) inp.addEventListener("keydown", (e) => { if (e.key === "Enter") check.click(); });
     const hintBtn = el(`<button class="btn ghost pr-hint-btn">${ikon("lampu")} Petunjuk</button>`);
     const hintBox = el(`<div class="pr-hint" hidden></div>`);
     if (p.hint) {
@@ -1084,11 +1124,16 @@ function renderPractice(lesson) {
 
     check.onclick = () => {
       const a = getAnswer();
-      if (a === null || (typeof a === "number" && isNaN(a))) {
+      if (a === null) {
         alert("Isi jawabanmu dulu, ya.");
         return;
       }
-      const correct = p.type === "choice" ? a === p.answer : Math.abs(a - p.answer) < (p.tol || 0.001);
+      if (Array.isArray(a) && !a.length) {
+        alert("Tulis jawabanmu sebagai angka, misalnya 16,7 atau 10.000.");
+        return;
+      }
+      // Jawaban angka bisa punya dua tafsiran (mis. "2.000"); benar bila salah satunya cocok
+      const correct = p.type === "choice" ? a === p.answer : a.some((x) => Math.abs(x - p.answer) < (p.tol || 0.001));
       item.classList.add("answered");
       fb.hidden = false;
       fb.className = "pr-fb " + (correct ? "ok" : "no");
