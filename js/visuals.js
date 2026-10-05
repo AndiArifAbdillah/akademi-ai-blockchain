@@ -633,6 +633,127 @@ Object.assign(DIAGRAMS, {
   },
 });
 
+/* ---------- Gambar untuk matematika Bitcoin ---------- */
+Object.assign(DIAGRAMS, {
+  /* Kurva y² = x³ + 7 di bilangan biasa, dengan aturan tambah titik.
+     data-mode="tambah" data-p="-1.5" data-q="1"  → P + Q
+     data-mode="ganda"  data-p="1"                → P + P (garis singgung) */
+  "kurva-riil": (ds) => {
+    const ganda = ds.mode === "ganda";
+    const titik = (x) => [x, Math.sqrt(x * x * x + 7)];
+    const P = titik(+ds.p), Q = ganda ? P : titik(+ds.q);
+    const m = ganda ? (3 * P[0] * P[0]) / (2 * P[1]) : (Q[1] - P[1]) / (Q[0] - P[0]);
+    const x3 = m * m - P[0] - Q[0], y3 = m * (P[0] - x3) - P[1];
+    const R3 = [x3, -y3], R = [x3, y3]; // titik potong ketiga, lalu dicerminkan
+    const XA = -2.4, XB = 2.9, YA = -5.4, YB = 5.4, L = 40, T = 12, W = 440, H = 280;
+    const sx = (x) => L + ((x - XA) / (XB - XA)) * W, sy = (y) => T + ((YB - y) / (YB - YA)) * H;
+    const akar = -Math.cbrt(7);
+    let atas = "", bawah = "";
+    for (let i = 0; i <= 160; i++) {
+      const x = akar + (i / 160) * (2.62 - akar), y = Math.sqrt(Math.max(0, x * x * x + 7));
+      atas += (i ? "L" : "M") + sx(x).toFixed(1) + " " + sy(y).toFixed(1);
+      bawah += (i ? "L" : "M") + sx(x).toFixed(1) + " " + sy(-y).toFixed(1);
+    }
+    // garis lewat P (dan Q) diperpanjang sampai sedikit melewati titik-titik
+    const xs = [P[0], Q[0], R3[0]], xa = Math.min(...xs) - 0.5, xb = Math.max(...xs) + 0.5;
+    const gy = (x) => P[1] + m * (x - P[0]);
+    let body = `<line x1="${L}" y1="${sy(0)}" x2="${L + W}" y2="${sy(0)}" class="vline dim"/><line x1="${sx(0)}" y1="${T}" x2="${sx(0)}" y2="${T + H}" class="vline dim"/>`;
+    body += `<path d="${atas}" class="vline aktif" style="stroke-width:2.5"/><path d="${bawah}" class="vline aktif" style="stroke-width:2.5"/>`;
+    body += `<line x1="${sx(xa).toFixed(1)}" y1="${sy(gy(xa)).toFixed(1)}" x2="${sx(xb).toFixed(1)}" y2="${sy(gy(xb)).toFixed(1)}" class="vline" style="stroke:var(--s0);stroke-width:2.5"/>`;
+    body += `<line x1="${sx(R3[0]).toFixed(1)}" y1="${sy(R3[1]).toFixed(1)}" x2="${sx(R[0]).toFixed(1)}" y2="${sy(R[1]).toFixed(1)}" class="vline" style="stroke-dasharray:5 4"/>`;
+    const tanda = (pt, label, kanan, aksen, bawah) =>
+      `<circle cx="${sx(pt[0]).toFixed(1)}" cy="${sy(pt[1]).toFixed(1)}" r="6" class="vdot" ${aksen ? 'style="fill:var(--s1)"' : ""}/>` +
+      `<text x="${(sx(pt[0]) + (kanan ? 11 : -11)).toFixed(1)}" y="${(sy(pt[1]) + (bawah ? 24 : -9)).toFixed(1)}" text-anchor="${kanan ? "start" : "end"}" class="vt-xs vt-tegas">${label}</text>`;
+    body += ganda ? tanda(P, "P", true) : tanda(P, "P", false) + tanda(Q, "Q", false);
+    // label titik ketiga di kanan-bawah, menjauhi garis yang terus naik ke kanan
+    body += tanda(R3, "titik ketiga", true, false, true) + tanda(R, ganda ? "P + P = 2P" : "P + Q", true, true);
+    const cat = ganda
+      ? `<span>Garis singgung di P mengenai kurva di titik ketiga.</span> <span>Cerminkan → <b>2P</b></span>`
+      : `<span>Garis lewat P dan Q mengenai kurva di titik ketiga.</span> <span>Cerminkan → <b>P + Q</b></span>`;
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 304" class="viz-svg viz-besar" role="img" aria-label="Kurva eliptik y kuadrat sama dengan x pangkat tiga tambah 7">${body}</svg>`, cat);
+  },
+
+  /* Kurva y² = x³ + 7 (mod p) sebagai titik-titik, plus lompatan G, 2G, ..., kG.
+     data-p="17" data-g="15,13" data-k="7" */
+  "kurva-mod": (ds) => {
+    const p = +ds.p || 17, k = +ds.k || 0, G = String(ds.g || "15,13").split(",").map(Number);
+    const mod = (a) => ((a % p) + p) % p;
+    const inv = (a) => { for (let b = 1; b < p; b++) if (mod(a * b) === 1) return b; return 0; };
+    const tambah = (A, B) => {
+      if (!A) return B;
+      if (A[0] === B[0] && mod(A[1] + B[1]) === 0) return null;
+      const m = A[0] === B[0] ? mod(3 * A[0] * A[0] * inv(mod(2 * A[1]))) : mod((B[1] - A[1]) * inv(mod(B[0] - A[0])));
+      const x = mod(m * m - A[0] - B[0]);
+      return [x, mod(m * (A[0] - x) - A[1])];
+    };
+    const c = Math.min(20, 340 / p), x0 = (520 - c * p) / 2 + 10, y0 = 14, sx = (x) => x0 + x * c + c / 2, sy = (y) => y0 + (p - 1 - y) * c + c / 2;
+    let body = `<rect x="${x0}" y="${y0}" width="${c * p}" height="${c * p}" rx="6" class="vbox"/>`;
+    for (let v = 0; v < p; v += 4) {
+      body += `<text x="${sx(v)}" y="${y0 + c * p + 18}" text-anchor="middle" class="vt-xs">${v}</text>`;
+      body += `<text x="${x0 - 8}" y="${sy(v) + 4}" text-anchor="end" class="vt-xs">${v}</text>`;
+    }
+    for (let x = 0; x < p; x++) for (let y = 0; y < p; y++)
+      if (mod(y * y) === mod(x * x * x + 7)) body += `<circle cx="${sx(x)}" cy="${sy(y)}" r="${c * 0.22}" class="vfill-text"/>`;
+    const jalur = [];
+    let K = null;
+    for (let i = 1; i <= k; i++) { K = tambah(K, G); if (!K) break; jalur.push(K); }
+    let garis = "";
+    jalur.forEach((t, i) => { if (i) garis += `<line x1="${sx(jalur[i - 1][0])}" y1="${sy(jalur[i - 1][1])}" x2="${sx(t[0])}" y2="${sy(t[1])}" class="vline" style="stroke:var(--s1);stroke-width:1.5;opacity:.7"/>`; });
+    jalur.forEach((t, i) => {
+      const akhir = i === jalur.length - 1;
+      garis += `<circle cx="${sx(t[0])}" cy="${sy(t[1])}" r="${c * 0.34}" class="vdot" ${akhir ? 'style="fill:var(--s1)"' : ""}/>`;
+      garis += `<text x="${sx(t[0]) + c * 0.45}" y="${sy(t[1]) - c * 0.35}" class="vt-xs vt-tegas">${i === 0 ? "G" : i + 1 + "G"}</text>`;
+    });
+    const H = y0 + c * p + 28;
+    const akhir = jalur[jalur.length - 1];
+    const cat = k ? `<span>Titik abu-abu: semua titik di kurva (mod ${p}).</span> <span>Titik oranye: G, 2G, …, ${k}G.</span><br>Kunci privat <b>${k}</b> → kunci publik <b>${k}G = (${akhir[0]}, ${akhir[1]})</b>` : `Ada ${p} kemungkinan nilai x dan y; hanya titik-titik ini yang memenuhi y² = x³ + 7 (mod ${p})`;
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 ${H}" class="viz-svg viz-besar" role="img" aria-label="Titik-titik kurva eliptik modulo ${p}">${body}${garis}</svg>`, cat);
+  },
+
+  /* Pasokan Bitcoin dari waktu ke waktu, dengan titik-titik halving */
+  "pasokan-btc": (ds) => {
+    // tahun halving (sampai 2024 sungguhan, setelahnya perkiraan tiap ~4 tahun)
+    const th = [2009.0, 2012.91, 2016.52, 2020.36, 2024.3, 2028.3, 2032.3, 2036.3, 2040.3, 2044.3, 2048.3, 2052.3, 2056.3, 2060.3];
+    let total = 0;
+    const tit = [[th[0], 0]];
+    for (let e = 0; e < th.length - 1; e++) { total += 210000 * 50 / Math.pow(2, e); tit.push([th[e + 1], total]); }
+    const XA = 2009, XB = 2060, L = 62, W = 430, T = 34, H = 190;
+    const sx = (x) => L + ((x - XA) / (XB - XA)) * W, sy = (v) => T + (1 - v / 21e6) * H;
+    let body = `<line x1="${L}" y1="${sy(21e6)}" x2="${L + W}" y2="${sy(21e6)}" class="vline" style="stroke:var(--bad);stroke-dasharray:6 4"/>`;
+    body += `<text x="${L + W}" y="${sy(21e6) - 8}" text-anchor="end" class="vt-xs">batas 21 juta</text>`;
+    [10e6, 20e6].forEach((v) => { body += `<text x="${L - 8}" y="${sy(v) + 4}" text-anchor="end" class="vt-xs">${v / 1e6} jt</text>`; });
+    [2009, 2020, 2030, 2040, 2050, 2060].forEach((x) => { body += `<text x="${sx(x)}" y="${T + H + 20}" text-anchor="middle" class="vt-xs">${x}</text>`; });
+    body += `<line x1="${L}" y1="${T + H}" x2="${L + W}" y2="${T + H}" class="vaxis"/>`;
+    let d = "";
+    tit.forEach((t, i) => { d += (i ? "L" : "M") + sx(t[0]).toFixed(1) + " " + sy(t[1]).toFixed(1); });
+    body += `<path d="${d}" class="vline aktif"/>`;
+    tit.slice(1, 6).forEach((t) => { body += `<circle cx="${sx(t[0]).toFixed(1)}" cy="${sy(t[1]).toFixed(1)}" r="4.5" class="vdot"/>`; });
+    body += `<circle cx="${sx(2026.19).toFixed(1)}" cy="${sy(20e6).toFixed(1)}" r="6.5" class="vdot" style="fill:var(--s1)"/>`;
+    body += `<text x="${sx(2026.19) + 4}" y="${sy(20e6) + 36}" class="vt-xs vt-tegas">Maret 2026: 20 juta</text>`;
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 254" class="viz-svg viz-besar" role="img" aria-label="Grafik pasokan Bitcoin yang mendekati 21 juta">${body}</svg>`,
+      `<span>Titik oranye: halving (2012, 2016, 2020, 2024, lalu perkiraan 2028).</span> <span>Setiap halving, kurva makin landai.</span>`);
+  },
+
+  /* Perlombaan rantai: rantai jujur z blok di depan, penyerang menambang diam-diam.
+     data-z="6" data-serang="4" */
+  "rantai-kejar": (ds) => {
+    const z = +ds.z || 6, s = +ds.serang || 0, n = Math.max(z, s) + 1;
+    const bw = Math.min(56, (520 - 130) / n - 8), gap = 8, x0 = 124;
+    const blok = (i, y, isi, cls) => `<rect x="${x0 + i * (bw + gap)}" y="${y}" width="${bw}" height="38" rx="7" class="vbox ${cls}"/>` +
+      `<text x="${x0 + i * (bw + gap) + bw / 2}" y="${y + 24}" text-anchor="middle" class="vt-xs vt-tegas">${isi}</text>`;
+    let body = `<text x="${x0 - 10}" y="${48}" text-anchor="end" class="vt-xs vt-tegas">Jujur</text>`;
+    body += `<text x="${x0 - 10}" y="${132}" text-anchor="end" class="vt-xs vt-tegas">Penyerang</text>`;
+    body += blok(0, 24, "Tx", "aktif accent");
+    for (let i = 1; i <= z; i++) body += blok(i, 24, "+" + i, "ok");
+    body += `<line x1="${x0 + bw / 2}" y1="62" x2="${x0 + bw / 2}" y2="108" class="vline" style="stroke-dasharray:4 4"/>`;
+    body += blok(0, 108, "Tx'", "bad");
+    for (let i = 1; i < s; i++) body += blok(i, 108, "", "bad");
+    const H = 156;
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 ${H}" class="viz-svg viz-besar" role="img" aria-label="Rantai jujur dan rantai rahasia penyerang">${body}</svg>`,
+      `<span>Rantai jujur: transaksimu + <b>${z}</b> konfirmasi.</span> <span>Penyerang diam-diam sudah punya <b>${s}</b> blok.</span><br><span>Tx' = transaksi tandingan yang mengirim uang yang sama ke dompet penyerang.</span> <span>Penyerang menang kalau rantai rahasianya menjadi lebih panjang.</span>`);
+  },
+});
+
 /* ============================================================
    DEMO INTERAKTIF  (fungsi(container) yang membangun UI)
    ============================================================ */

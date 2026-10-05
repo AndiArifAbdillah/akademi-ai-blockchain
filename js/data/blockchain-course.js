@@ -2046,12 +2046,12 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
         },
       ],
     },
-    /* ---------------- MODUL 6: MATEMATIKA KUNCI & PENAMBANGAN ---------------- */
+    /* ---------------- MODUL 6: MATEMATIKA BITCOIN: KUNCI, PENAMBANGAN & PASOKAN ---------------- */
     {
       id: "bc-matematika",
       level: "Matematika",
-      title: "Matematika Kunci & Penambangan",
-      summary: "Untuk apa matematika di crypto, membaca simbol, aritmetika modulo & fungsi satu arah, serta peluang penambangan & serangan 51%.",
+      title: "Matematika Bitcoin: Kunci, Penambangan & Pasokan",
+      summary: "Isi matematika Bitcoin dengan angka kecil yang bisa dihitung sendiri: peta tujuh bagiannya, modulo, kurva eliptik y² = x³ + 7, peluang menambang, penyesuaian kesulitan, deret 21 juta, dan rumus konfirmasi dari whitepaper.",
       lessons: [
         {
           id: "bc-mat-intro",
@@ -2167,6 +2167,110 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
               explain: "Kolam otomatis menjual token yang naik dan membeli yang turun demi menjaga hasil kali tetap.",
             },
           ],
+        },
+        {
+          id: "bc-btcm-1",
+          title: "Peta Matematika Bitcoin — Tujuh Bagian yang Menjaga Semuanya",
+          duration: "12 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Hash</b> adalah sidik jari data: data berubah sedikit, sidik jarinya berubah total (<a href="#/lesson/bc-fund-1">Hash dari Nol</a>). <b>Kunci privat</b> adalah angka rahasia; <b>kunci publik</b> dibuat darinya dan boleh dibagikan (<a href="#/lesson/bc-kunci-1">Kunci Privat, Kunci Publik &amp; Alamat</a>).
+</div>
+
+<p>Bitcoin tidak dijaga satpam, bank, atau pemerintah. Yang menjaganya adalah <b>matematika</b>. Kedengarannya rumit, tapi isinya bisa dipetakan menjadi <b>tujuh bagian</b>, dan setiap bagian menjawab satu pertanyaan sederhana.</p>
+
+<div data-diagram="network" data-center="Bitcoin" data-nodes="Hash SHA-256|Kurva eliptik|Tanda tangan|Merkle tree|Proof of Work|Deret 21 juta|Peluang konfirmasi" data-caption="Tujuh bagian matematika di dalam Bitcoin"></div>
+
+<h3>Tujuh bagian, tujuh pertanyaan</h3>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Pertanyaan yang dijawab</th><th>Matematikanya</th></tr>
+  <tr><td><b>1. Hash SHA-256</b></td><td>Bagaimana tahu data tidak diubah?</td><td>Fungsi satu arah dengan 2<sup>256</sup> kemungkinan hasil (<a href="#/lesson/bc-fund-1">pelajaran</a>)</td></tr>
+  <tr><td><b>2. Kurva eliptik</b></td><td>Bagaimana kunci publik dibuat dari kunci privat tanpa bisa dibalik?</td><td>y² = x³ + 7 (mod p) dan K = k × G (<a href="#/lesson/bc-btcm-2">pelajaran</a>)</td></tr>
+  <tr><td><b>3. Tanda tangan</b></td><td>Bagaimana membuktikan pemilik tanpa membuka kunci privat?</td><td>ECDSA dan Schnorr, dihitung di atas kurva yang sama (<a href="#/lesson/bc-kri-2">pelajaran</a>)</td></tr>
+  <tr><td><b>4. Merkle tree</b></td><td>Bagaimana membuktikan satu transaksi ada di antara ribuan?</td><td>Hash berpasangan; cukup sekitar log₂(n) hash sebagai bukti (<a href="#/lesson/bc-fund-3">pelajaran</a>)</td></tr>
+  <tr><td><b>5. Proof of Work</b></td><td>Siapa yang berhak menulis blok berikutnya?</td><td>Hash blok harus lebih kecil dari angka target; peluangnya bisa dihitung (<a href="#/lesson/bc-mat-2">pelajaran</a>)</td></tr>
+  <tr><td><b>6. Jadwal &amp; pasokan</b></td><td>Bagaimana blok tetap ~10 menit dan koin tidak lewat 21 juta?</td><td>Penyesuaian kesulitan dan deret 50 + 25 + 12,5 + … (<a href="#/lesson/bc-btcm-3">pelajaran</a>)</td></tr>
+  <tr><td><b>7. Peluang konfirmasi</b></td><td>Berapa lama menunggu sampai transaksi aman?</td><td>Distribusi Poisson dan rumus "mengejar ketertinggalan" (<a href="#/lesson/bc-btcm-4">pelajaran</a>)</td></tr>
+</table>
+
+<h3>Bagaimana ketujuhnya bekerja bersama</h3>
+<div data-diagram="pipeline" data-stages="Kunci::kurva eliptik membuat kunci publik &amp; alamat|Tanda tangan::membuktikan kamu pemilik koinnya|Blok::transaksi diikat Merkle tree|Menambang::Proof of Work memilih penulis blok|Menunggu::peluang konfirmasi menentukan aman" data-caption="Perjalanan satu transaksi melewati hampir semua bagian matematika Bitcoin"></div>
+
+<h3>Angka raksasa: 2<sup>256</sup></h3>
+<p>Hash SHA-256 dan kunci Bitcoin sama-sama hidup di sekitar angka <b>2<sup>256</sup></b>. Kalau ditulis lengkap, angka itu punya <b>78 digit</b>:</p>
+<pre class="code">115.792.089.237.316.195.423.570.985.008.687.907.
+853.269.984.665.640.564.039.457.584.007.913.129.
+639.936</pre>
+<div data-diagram="bar" data-bars="Penduduk bumi:10|Butir pasir di bumi:19|Atom di bumi:51|Kemungkinan kunci:78" data-unit=" digit" data-caption="Banyaknya digit: setiap tambahan satu digit berarti sepuluh kali lebih besar"></div>
+<div class="callout">
+<b>Seberapa mustahil menebak kunci orang lain?</b> Bayangkan sebuah komputer menebak <b>1 triliun kunci per detik</b>, tanpa henti, sejak alam semesta lahir 13,8 miliar tahun lalu. Totalnya sekitar 4,4 × 10<sup>29</sup> tebakan — hanya sekitar <b>4 × 10<sup>−48</sup></b> bagian dari semua kemungkinan. Bukan sekadar sulit: secara praktis mustahil.
+</div>
+<p>Catatan kecil: banyaknya kunci privat yang sah sebenarnya sedikit di bawah 2<sup>256</sup>, yaitu sekitar 1,158 × 10<sup>77</sup>. Angkanya tetap 78 digit.</p>
+
+<h3>Yang dijamin matematika — dan yang tidak</h3>
+<p>Matematika menjamin bahwa setiap orang bisa <b>memeriksa sendiri</b>: tanda tangan asli atau palsu, blok sah atau tidak, imbalan penambang sesuai jadwal atau tidak. Tapi <b>aturannya sendiri</b> — termasuk batas 21 juta — adalah kesepakatan yang ditulis di perangkat lunak. Aturan itu bertahan karena hampir semua pengguna menolak blok yang melanggarnya. Untuk mengubahnya, sebagian besar pengguna harus sepakat berganti perangkat lunak, dan itu sangat sulit terjadi.</p>
+
+<div class="callout">
+<b>Tidak perlu jago matematika untuk memahami ini.</b> Pelajaran-pelajaran berikutnya memakai angka kecil yang bisa dihitung dengan tangan: kurva dengan 17 kemungkinan, bukan 78 digit.
+</div>
+`,
+          keyPoints: [
+            "Matematika Bitcoin bisa dipetakan menjadi tujuh bagian: hash, kurva eliptik, tanda tangan, Merkle tree, Proof of Work, jadwal & pasokan, dan peluang konfirmasi.",
+            "Setiap bagian menjawab satu pertanyaan: data tidak diubah, kunci tidak bisa dibalik, pemilik terbukti, transaksi tercatat, penulis blok terpilih, pasokan terjaga, transaksi aman.",
+            "2^256 punya 78 digit; menebak 1 triliun kunci per detik sejak alam semesta lahir hanya mencoba sekitar 4 × 10^-48 bagian kemungkinan.",
+            "Matematika menjamin semua orang bisa memeriksa; aturannya (termasuk 21 juta) bertahan karena kesepakatan pengguna."
+          ],
+          practice: [
+            { type: "number", q: "Sebuah blok berisi 1.024 transaksi. Dengan Merkle tree, berapa hash yang dibutuhkan untuk membuktikan satu transaksi ada di blok itu? (log₂ 1.024)", answer: 10, tol: 0.5, unit: "hash", hint: "2 dipangkatkan berapa supaya menjadi 1.024?", solution: "2¹⁰ = 1.024, jadi cukup 10 hash — bukan 1.024." },
+            { type: "number", q: "Kalau sebuah kunci diperpanjang 1 bit, banyaknya kemungkinan kunci menjadi berapa kali lipat?", answer: 2, tol: 0.01, unit: "kali", hint: "Setiap bit hanya punya dua pilihan: 0 atau 1.", solution: "Satu bit tambahan menggandakan kemungkinan: 2²⁵⁷ = 2 × 2²⁵⁶." }
+          ],
+          quiz: [
+            {
+              q: "Bagian matematika mana yang menjawab \"siapa yang berhak menulis blok berikutnya?\"",
+              options: [
+                "Proof of Work",
+                "Merkle tree",
+                "Kurva eliptik",
+                "Deret 21 juta"
+              ],
+              answer: 0,
+              explain: "Penambang berlomba mencari hash yang lebih kecil dari target; yang pertama menemukannya berhak menulis blok."
+            },
+            {
+              q: "Mengapa menebak kunci privat orang lain dianggap mustahil?",
+              options: [
+                "Kemungkinannya 78 digit, terlalu banyak dicoba",
+                "Kunci privat disimpan di server yang dijaga",
+                "Komputer dilarang mencoba menebak kunci",
+                "Kunci privat berubah setiap sepuluh menit"
+              ],
+              answer: 0,
+              explain: "Bahkan triliunan tebakan per detik selama umur alam semesta hanya menyentuh bagian sangat kecil dari semua kemungkinan."
+            },
+            {
+              q: "Merkle tree berguna untuk...",
+              options: [
+                "Bukti transaksi ada di blok dengan sedikit hash",
+                "Membuat kunci publik dari kunci privat",
+                "Menentukan imbalan penambang setiap blok",
+                "Mengatur agar blok muncul tiap 10 menit"
+              ],
+              answer: 0,
+              explain: "Cukup sekitar log₂(n) hash untuk membuktikan satu transaksi di antara n transaksi."
+            },
+            {
+              q: "Batas 21 juta Bitcoin dijaga oleh...",
+              options: [
+                "Aturan yang dipatuhi semua pengguna",
+                "Rumus kurva eliptik y² = x³ + 7",
+                "Bank sentral di setiap negara",
+                "Satu perusahaan pemilik Bitcoin"
+              ],
+              answer: 0,
+              explain: "Matematika membuat pelanggaran mudah diperiksa; aturan itu bertahan karena hampir semua pengguna menolak blok yang melanggar."
+            }
+          ]
         },
         {
           id: "bc-mat-0",
@@ -2352,6 +2456,214 @@ console.log("Di sini p cuma 23. Kripto nyata memakai angka ratusan digit.");</di
           ],
         },
         {
+          id: "bc-btcm-2",
+          title: "Kurva Eliptik dengan Angka Kecil — Dari Kunci Privat ke Kunci Publik",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Modulo</b> adalah "matematika jam": hanya sisa baginya yang dipakai, misalnya 20 mod 17 = 3 (<a href="#/lesson/bc-mat-1">Aritmetika Modulo</a>). <b>Kunci privat</b> hanyalah sebuah angka rahasia (<a href="#/lesson/bc-kunci-1">Kunci Privat, Kunci Publik &amp; Alamat</a>).
+</div>
+
+<p>Kunci publik Bitcoin dibuat dari kunci privat memakai <b>kurva eliptik</b>. Arah majunya cepat, arah mundurnya praktis mustahil. Di pelajaran ini kita menghitungnya sendiri — dengan angka yang cukup kecil untuk dihitung di kertas.</p>
+
+<h3>Kurvanya: y² = x³ + 7</h3>
+<p>Bitcoin memakai kurva dengan rumus <b>y² = x³ + 7</b>. Kalau digambar dengan bilangan biasa, bentuknya seperti ini. Pada kurva ini ada aturan aneh tapi konsisten untuk <b>"menambah" dua titik</b>:</p>
+<div data-diagram="kurva-riil" data-mode="tambah" data-p="-1.8" data-q="0.5" data-caption="Menambah dua titik: tarik garis, temukan titik ketiga, lalu cerminkan"></div>
+<ol>
+  <li>Tarik garis lurus melewati titik <b>P</b> dan <b>Q</b>.</li>
+  <li>Garis itu pasti memotong kurva di <b>satu titik lagi</b>.</li>
+  <li>Cerminkan titik ketiga itu ke seberang sumbu x. Hasilnya disebut <b>P + Q</b>.</li>
+</ol>
+<p>Bagaimana kalau titiknya ditambah dengan <b>dirinya sendiri</b> (P + P)? Garisnya diganti <b>garis singgung</b> — garis yang hanya menyentuh kurva di P.</p>
+<div data-diagram="kurva-riil" data-mode="ganda" data-p="1" data-caption="Menggandakan titik: garis singgung di P, lalu cerminkan"></div>
+
+<h3>Rumusnya, supaya komputer bisa menghitung</h3>
+<div class="callout">
+<b>Kemiringan garis (m):</b><br>
+Lewat P dan Q: <b>m = (y₂ − y₁) ÷ (x₂ − x₁)</b><br>
+Garis singgung (P + P): <b>m = 3x₁² ÷ (2y₁)</b><br><br>
+<b>Titik hasilnya:</b><br>
+<b>x₃ = m² − x₁ − x₂</b><br>
+<b>y₃ = m × (x₁ − x₃) − y₁</b>
+</div>
+<p>Dengan bilangan biasa, hasilnya penuh angka desimal yang harus dibulatkan, dan pembulatan membuat komputer bisa berbeda pendapat. Karena itu Bitcoin menghitung semuanya dalam <b>mod p</b>: setiap hasil diambil sisa baginya, sehingga semua angka selalu bulat.</p>
+
+<h3>Kurva yang sama, di dunia mod 17</h3>
+<p>Kita pakai p = 17 supaya kecil. Sekarang yang dicari adalah pasangan bilangan bulat x dan y (0 sampai 16) yang memenuhi <b>y² mod 17 = (x³ + 7) mod 17</b>. Ternyata ada 17 pasangan:</p>
+<div data-diagram="kurva-mod" data-p="17" data-caption="Kurva y² = x³ + 7 (mod 17): bukan garis lengkung lagi, melainkan titik-titik yang tersebar"></div>
+<p>Ditambah satu titik khusus bernama <b>titik tak hingga</b>, yang berperan seperti angka 0 (P + titik tak hingga = P). Jadi totalnya 18 titik.</p>
+
+<h3>"Membagi" di dunia mod</h3>
+<p>Rumus kemiringan memakai pembagian, padahal kita hanya punya bilangan bulat. Caranya: <b>membagi dengan b sama dengan mengalikan dengan kebalikan b</b>, yaitu angka yang kalau dikali b hasilnya 1 (mod 17).</p>
+<table class="tbl">
+  <tr><th>Bilangan</th><th>Kebalikannya (mod 17)</th><th>Bukti</th></tr>
+  <tr><td>9</td><td>2</td><td>9 × 2 = 18, dan 18 mod 17 = 1</td></tr>
+  <tr><td>13</td><td>4</td><td>13 × 4 = 52, dan 52 mod 17 = 1</td></tr>
+  <tr><td>3</td><td>6</td><td>3 × 6 = 18, dan 18 mod 17 = 1</td></tr>
+</table>
+
+<h3>Hitung bersama: dari G ke 2G dan 3G</h3>
+<p>Kita pilih satu titik awal yang disepakati semua orang, namanya <b>G</b> (titik pembangkit). Di kurva mini ini, G = (15, 13).</p>
+<pre class="code">G = (15, 13)
+
+2G = G + G  (pakai garis singgung)
+  m  = 3 × 15² ÷ (2 × 13)
+     = 675 ÷ 26           675 mod 17 = 12, 26 mod 17 = 9
+     = 12 ÷ 9 = 12 × 2 = 24 → 24 mod 17 = 7
+  x₃ = 7² − 15 − 15 = 19   → 19 mod 17 = 2
+  y₃ = 7 × (15 − 2) − 13 = 78 → 78 mod 17 = 10
+  2G = (2, 10)
+
+Cek: 10² = 100 → 100 mod 17 = 15
+     2³ + 7 = 15                      Cocok!
+
+3G = 2G + G  (pakai garis lewat dua titik)
+  m  = (13 − 10) ÷ (15 − 2) = 3 ÷ 13 = 3 × 4 = 12
+  x₃ = 12² − 2 − 15 = 127  → 127 mod 17 = 8
+  y₃ = 12 × (2 − 8) − 10 = −82 → −82 mod 17 = 3
+  3G = (8, 3)</pre>
+<p>Kalau diteruskan, hasilnya:</p>
+<pre class="code"> 1G = (15, 13)     10G = (1, 5)
+ 2G = (2, 10)      11G = (10, 2)
+ 3G = (8, 3)       12G = (5, 9)
+ 4G = (12, 1)      13G = (6, 11)
+ 5G = (6, 6)       14G = (12, 16)
+ 6G = (5, 8)       15G = (8, 14)
+ 7G = (10, 15)     16G = (2, 7)
+ 8G = (1, 12)      17G = (15, 4)
+ 9G = (3, 0)       18G = titik tak hingga</pre>
+<p>Perhatikan 17G = (15, 4) adalah cermin G = (15, 13), karena 4 = 17 − 13. Setelah 18 langkah, kita kembali ke "nol".</p>
+
+<h3>Kunci privat dan kunci publik</h3>
+<div data-diagram="kurva-mod" data-p="17" data-g="15,13" data-k="7" data-caption="Kunci privat 7: melompat dari G sebanyak tujuh kali"></div>
+<table class="tbl">
+  <tr><th></th><th>Di kurva mini</th><th>Sifatnya</th></tr>
+  <tr><td><b>Kunci privat</b> k</td><td>7</td><td>Rahasia; dipilih acak</td></tr>
+  <tr><td><b>Kunci publik</b> K = k × G</td><td>7G = (10, 15)</td><td>Boleh dibagikan ke siapa pun</td></tr>
+</table>
+<p>Lihat gambar di atas: lompatan G, 2G, 3G, … tampak <b>melompat ke sana kemari tanpa pola</b>. Kalau orang hanya tahu kunci publik (10, 15), ia harus menebak berapa kali lompatannya. Di kurva mini cukup mencoba 18 kemungkinan. Di Bitcoin, kemungkinannya sekitar <b>1,16 × 10<sup>77</sup></b>. Teka-teki "berapa k-nya?" ini disebut <b>masalah logaritma diskret</b>.</p>
+
+<h3>Kenapa maju cepat tapi mundur mustahil?</h3>
+<p>Untuk maju, komputer tidak perlu menambah G satu per satu. Ia memakai cara <b>gandakan lalu tambah</b>. Contoh: 7 = 4 + 2 + 1, jadi 7G = 4G + 2G + G, dan 4G cukup didapat dengan menggandakan 2G.</p>
+<table class="tbl">
+  <tr><th>Arah</th><th>Cara terbaik yang diketahui</th><th>Banyak langkah (kunci Bitcoin)</th></tr>
+  <tr><td><b>Maju</b>: k → K</td><td>Gandakan lalu tambah</td><td>Sekitar 512 operasi</td></tr>
+  <tr><td><b>Mundur</b>: K → k</td><td>Mencoba dengan cara paling cerdas sekalipun</td><td>Sekitar 2<sup>128</sup> ≈ 3,4 × 10<sup>38</sup> operasi</td></tr>
+</table>
+<p>Inilah "pintu satu arah" yang menjaga setiap dompet Bitcoin.</p>
+
+<h3>Kurva Bitcoin sungguhan</h3>
+<p>Kurva Bitcoin bernama <b>secp256k1</b>. Rumusnya persis sama, y² = x³ + 7 (mod p). Bedanya hanya ukuran: p = 2<sup>256</sup> − 2<sup>32</sup> − 977, sebuah bilangan prima 78 digit, dan titik G-nya sudah ditetapkan untuk semua orang. Kunci privatmu adalah angka acak raksasa k, kunci publikmu adalah k × G, dan alamatmu adalah hash dari kunci publik itu.</p>
+<div class="callout warn">
+<b>Satu ancaman yang diwaspadai:</b> komputer kuantum yang cukup besar secara teori bisa menjalankan cara mundur yang jauh lebih cepat. Komputer seperti itu belum ada, tapi persiapannya sudah dibahas (<a href="#/lesson/bc-kri-3">Ancaman Komputer Kuantum</a>).
+</div>
+
+<h3>Coba sendiri</h3>
+<p>Kode ini menghitung kunci publik dari kunci privat di kurva mini, lalu "menyerang" balik dengan mencoba satu per satu. Ganti <b>kunciPrivat</b> dengan angka 1 sampai 17.</p>
+<div data-demo="js-playground">// Kurva mini Bitcoin: y² = x³ + 7 (mod 17)
+const p = 17;
+const mod = (a) => ((a % p) + p) % p;
+
+// "Membagi" di dunia mod: cari b sehingga a × b ≡ 1
+function kebalikan(a) {
+  for (let b = 1; b &lt; p; b++) if (mod(a * b) === 1) return b;
+}
+
+// null = titik tak hingga (berperan seperti angka 0)
+function tambah(P, Q) {
+  if (P === null) return Q;
+  if (Q === null) return P;
+  if (P[0] === Q[0] &amp;&amp; mod(P[1] + Q[1]) === 0) return null;
+  let m;
+  if (P[0] === Q[0]) m = mod(3 * P[0] * P[0] * kebalikan(mod(2 * P[1])));  // garis singgung
+  else m = mod((Q[1] - P[1]) * kebalikan(mod(Q[0] - P[0])));             // garis lewat P dan Q
+  const x = mod(m * m - P[0] - Q[0]);
+  return [x, mod(m * (P[0] - x) - P[1])];
+}
+
+function kali(k, G) {               // k × G dengan menambah berulang
+  let hasil = null;
+  for (let i = 0; i &lt; k; i++) hasil = tambah(hasil, G);
+  return hasil;
+}
+
+const teks = (T) => "(" + T[0] + ", " + T[1] + ")";
+const G = [15, 13];
+const kunciPrivat = 7;              // coba ganti: 1 sampai 17
+const kunciPublik = kali(kunciPrivat, G);
+console.log("Kunci publik:", teks(kunciPublik));
+
+// Menyerang: cari kunci privat dari kunci publik dengan mencoba satu per satu
+for (let tebak = 1; tebak &lt;= 18; tebak++) {
+  const K = kali(tebak, G);
+  if (K !== null &amp;&amp; K[0] === kunciPublik[0] &amp;&amp; K[1] === kunciPublik[1]) {
+    console.log("Ketemu! Kunci privatnya " + tebak + " — mudah, karena hanya ada 18 kemungkinan.");
+    break;
+  }
+}</div>
+`,
+          keyPoints: [
+            "Kurva Bitcoin: y² = x³ + 7. Dua titik \"ditambah\" dengan menarik garis, mencari titik ketiga, lalu mencerminkannya.",
+            "Rumus: m = (y₂ − y₁) ÷ (x₂ − x₁) atau 3x₁² ÷ (2y₁); x₃ = m² − x₁ − x₂; y₃ = m(x₁ − x₃) − y₁ — semuanya dihitung mod p.",
+            "Membagi di dunia mod = mengalikan dengan kebalikan (mod 17: kebalikan 9 adalah 2).",
+            "Kunci publik K = k × G. Di kurva mini, k = 7 dan G = (15, 13) menghasilkan (10, 15).",
+            "Maju cepat (gandakan lalu tambah, sekitar 512 operasi); mundur butuh sekitar 2^128 operasi — itulah masalah logaritma diskret.",
+            "Bitcoin memakai kurva secp256k1: rumus yang sama dengan p prima 78 digit."
+          ],
+          practice: [
+            { type: "number", q: "Di dunia mod 17, berapa kebalikan dari 3? (angka b sehingga 3 × b mod 17 = 1)", answer: 6, tol: 0.5, hint: "Coba 3 × 1, 3 × 2, … sampai hasilnya 18, 35, atau 52.", solution: "3 × 6 = 18, dan 18 mod 17 = 1. Jadi kebalikan 3 adalah 6." },
+            { type: "number", q: "2G = (2, 10). Hitung 4G = 2G + 2G dengan garis singgung. Berapa koordinat x dari 4G?", answer: 12, tol: 0.5, hint: "m = 3 × 2² ÷ (2 × 10) = 12 ÷ 20; 20 mod 17 = 3, dan kebalikan 3 adalah 6. Lalu x₃ = m² − 2 − 2, ambil mod 17.", solution: "m = 12 × 6 = 72 → 72 mod 17 = 4. x₃ = 4² − 2 − 2 = 12. Cocok dengan tabel: 4G = (12, 1)." },
+            { type: "number", q: "Masih dari soal sebelumnya (m = 4, x₃ = 12). Berapa koordinat y dari 4G?", answer: 1, tol: 0.5, hint: "y₃ = m × (x₁ − x₃) − y₁ = 4 × (2 − 12) − 10, lalu ambil mod 17 (tambahkan 17 berulang kalau negatif).", solution: "4 × (−10) − 10 = −50. −50 + 51 = 1, jadi y = 1 dan 4G = (12, 1)." }
+          ],
+          quiz: [
+            {
+              q: "Bagaimana dua titik di kurva eliptik \"ditambahkan\"?",
+              options: [
+                "Garis lewat keduanya, cari titik ketiga, cerminkan",
+                "Koordinat x dan y keduanya dijumlahkan langsung",
+                "Ambil titik yang letaknya paling tinggi",
+                "Kalikan koordinat x keduanya lalu ambil akarnya"
+              ],
+              answer: 0,
+              explain: "Garis lewat P dan Q memotong kurva di titik ketiga; cerminannya terhadap sumbu x adalah P + Q."
+            },
+            {
+              q: "Mengapa Bitcoin menghitung kurva dalam mod p, bukan bilangan biasa?",
+              options: [
+                "Supaya semua angka bulat dan hasil semua komputer sama",
+                "Supaya kurvanya terlihat lebih indah saat digambar",
+                "Supaya kunci privat bisa dihitung balik dengan mudah",
+                "Supaya ukuran kunci menjadi lebih kecil dari 17"
+              ],
+              answer: 0,
+              explain: "Bilangan desimal perlu dibulatkan; dengan mod p semua hasil bulat dan pasti."
+            },
+            {
+              q: "Di kurva mini, kunci privat 7 menghasilkan kunci publik (10, 15). Mana yang boleh dibagikan?",
+              options: [
+                "Hanya (10, 15)",
+                "Hanya angka 7",
+                "Keduanya boleh",
+                "Tidak keduanya"
+              ],
+              answer: 0,
+              explain: "Kunci publik boleh dibagikan; kunci privat harus tetap rahasia."
+            },
+            {
+              q: "Mengapa kunci privat Bitcoin tidak bisa dihitung balik dari kunci publik?",
+              options: [
+                "Cara mundur terbaik butuh sekitar 2^128 operasi",
+                "Kunci publik dienkripsi ulang setiap hari",
+                "Rumus kurvanya dirahasiakan oleh pembuatnya",
+                "Kunci publik tidak pernah disimpan di blockchain"
+              ],
+              answer: 0,
+              explain: "Maju hanya sekitar 512 operasi, tapi mundur butuh sekitar 2^128 operasi: masalah logaritma diskret."
+            }
+          ]
+        },
+        {
           id: "bc-mat-2",
           title: "Probabilitas Penambangan & Serangan 51%",
           duration: "13 menit",
@@ -2393,7 +2705,7 @@ Penambang mencoba angka acak (<b>nonce</b>) sampai hash blok memenuhi syarat. Ka
 
 <div class="callout warn">
 <b>Inilah alasan "tunggu 6 konfirmasi".</b> Tiap blok tambahan membuat peluang pembatalan <b>turun secara eksponensial</b>. Tapi perhatikan: jika <b>q lebih besar dari 0,5</b> (mayoritas daya), rasio q/p melebihi 1 dan peluang penyerang <b>mendekati kepastian</b> — itulah makna sesungguhnya "serangan 51%".
-<br><br><i>Catatan: rumus di atas adalah perkiraan sederhana; perhitungan aslinya (di whitepaper Bitcoin) sedikit lebih rumit dan menghasilkan angka lebih kecil lagi.</i>
+<br><br><i>Catatan: rumus di atas adalah perkiraan sederhana yang menganggap penyerang baru mulai saat kamu berhenti menunggu. Perhitungan lengkap di whitepaper Bitcoin juga menghitung blok yang diam-diam sudah ditambang penyerang selama kamu menunggu, sehingga hasilnya <b>lebih besar</b>: untuk penyerang 30% dan 6 konfirmasi, sekitar 13% — bukan 0,6%. Rumus lengkapnya dibahas di <a href="#/lesson/bc-btcm-4">Berapa Konfirmasi yang Aman?</a></i>
 </div>
 
 <div class="callout">
@@ -2436,6 +2748,284 @@ Penambang mencoba angka acak (<b>nonce</b>) sampai hash blok memenuhi syarat. Ka
                 "Dengan mayoritas daya, penyerang secara statistik akan selalu bisa menyusul.",
             },
           ],
+        },
+        {
+          id: "bc-btcm-3",
+          title: "Jadwal & Pasokan Bitcoin — Kesulitan, Waktu Blok, dan Deret 21 Juta",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Menambang berarti menebak angka (nonce) berulang-ulang sampai hash blok memenuhi syarat (<a href="#/lesson/bc-deep-2">Cara Kerja Penambangan</a>, <a href="#/lesson/bc-mat-2">Probabilitas Penambangan</a>). Setiap sekitar 4 tahun, imbalan penambang dibagi dua — itulah <b>halving</b> (<a href="#/lesson/bc-deep-1">21 Juta &amp; Halving</a>).
+</div>
+
+<h3>Syarat sebenarnya: hash ≤ target</h3>
+<p>Sebelumnya syarat menambang disederhanakan menjadi "hash harus diawali sekian bit nol". Aslinya: hash blok dibaca sebagai <b>angka raksasa</b>, dan angka itu harus <b>lebih kecil atau sama dengan</b> sebuah angka bernama <b>target</b>.</p>
+<div class="callout">
+<b>Peluang berhasil sekali coba ≈ target ÷ 2<sup>256</sup></b><br>
+Target makin kecil → peluang makin kecil → menambang makin sulit.<br>
+"Diawali k bit nol" hanyalah kasus khusus ketika target = 2<sup>256 − k</sup>.
+</div>
+
+<h3>Penyesuaian kesulitan: termostat Bitcoin</h3>
+<p>Kalau penambang bertambah, tebakan per detik naik dan blok muncul lebih cepat dari 10 menit. Bitcoin memperbaikinya sendiri <b>setiap 2.016 blok</b> (sekitar 2 minggu = 20.160 menit):</p>
+<div class="callout">
+<b>Target baru = target lama × (waktu nyata 2.016 blok ÷ 20.160 menit)</b><br>
+Perubahannya dibatasi paling banyak 4 kali lipat, naik ataupun turun.
+</div>
+<div data-diagram="cycle" data-steps="Penambang bertambah|Blok lebih cepat dari 10 menit|Tiap 2.016 blok: target dikecilkan|Blok kembali sekitar 10 menit" data-center="Termostat" data-caption="Seperti termostat AC: terlalu cepat didinginkan, terlalu lambat dihangatkan"></div>
+<pre class="code">Contoh: 2.016 blok selesai dalam 12 hari
+  waktu nyata  = 12 × 24 × 60 = 17.280 menit
+  faktor       = 17.280 ÷ 20.160 = 0,857
+  target baru  = target lama × 0,857   (lebih kecil 14,3%)
+  kesulitan    = 1 ÷ 0,857 = 1,167      (naik sekitar 16,7%)</pre>
+
+<h3>"10 menit" itu rata-rata, bukan jadwal</h3>
+<p>Setiap tebakan adalah undian yang berdiri sendiri, sehingga waktu sampai blok berikutnya sangat bervariasi. Peluang blok muncul dalam t menit adalah <b>1 − e<sup>−t/10</sup></b>:</p>
+<div data-diagram="bar" data-bars="Dalam 1 menit:9.5|Dalam 10 menit:63.2|Dalam 20 menit:86.5|Dalam 30 menit:95|Dalam 60 menit:99.8" data-unit="%" data-caption="Peluang blok berikutnya sudah muncul, kalau rata-ratanya 10 menit"></div>
+<ul>
+  <li>Hanya sekitar <b>63%</b> blok muncul dalam 10 menit.</li>
+  <li>Sekitar <b>5%</b> blok butuh lebih dari 30 menit, dan sekitar 1 dari 400 butuh lebih dari satu jam.</li>
+  <li>Sifat uniknya: kalau sudah menunggu 15 menit, perkiraan sisa waktunya <b>tetap</b> sekitar 10 menit. Undian tidak "ingat" sudah berapa lama kamu menunggu.</li>
+</ul>
+
+<h3>Deret 21 juta</h3>
+<p>Imbalan blok berganti setiap <b>210.000 blok</b> (sekitar 4 tahun). Setiap periode itu disebut satu <b>era</b>:</p>
+<table class="tbl">
+  <tr><th>Era</th><th>Imbalan per blok</th><th>Koin baru di era itu</th><th>Total sampai akhir era</th></tr>
+  <tr><td>1 (2009–2012)</td><td>50 BTC</td><td>10.500.000</td><td>10.500.000 (50%)</td></tr>
+  <tr><td>2 (2012–2016)</td><td>25 BTC</td><td>5.250.000</td><td>15.750.000 (75%)</td></tr>
+  <tr><td>3 (2016–2020)</td><td>12,5 BTC</td><td>2.625.000</td><td>18.375.000 (87,5%)</td></tr>
+  <tr><td>4 (2020–2024)</td><td>6,25 BTC</td><td>1.312.500</td><td>19.687.500 (93,75%)</td></tr>
+  <tr><td>5 (2024–2028)</td><td>3,125 BTC</td><td>656.250</td><td>20.343.750 (96,875%)</td></tr>
+</table>
+<div class="callout">
+<b>Kenapa totalnya 21 juta?</b><br>
+210.000 × 50 × (1 + ½ + ¼ + ⅛ + …)<br>
+= 10.500.000 × 2 = <b>21.000.000</b><br><br>
+Deret 1 + ½ + ¼ + … tidak pernah melewati 2: seperti makan setengah pizza, lalu setengah sisanya, lalu setengah sisanya lagi — kamu tidak akan pernah makan lebih dari satu pizza utuh.
+</div>
+<div data-diagram="pasokan-btc" data-caption="Pasokan Bitcoin naik cepat di awal, lalu makin landai menuju 21 juta"></div>
+<p>Koin ke-20 juta ditambang pada <b>9 Maret 2026</b> di blok 939.999, artinya 95,24% dari batas sudah beredar. Sisa satu juta terakhir akan keluar sedikit demi sedikit selama lebih dari satu abad. Perlu diingat juga: diperkirakan beberapa juta BTC sudah hilang selamanya karena pemiliknya kehilangan kunci.</p>
+
+<h3>Kenapa tepatnya 20.999.999,9769 BTC?</h3>
+<p>Imbalan dihitung dalam <b>satoshi</b> (1 BTC = 100.000.000 satoshi), dan satoshi tidak bisa dipecah. Saat imbalan dibagi dua, sisa pecahannya <b>dibuang</b>. Era terakhir (era ke-33) imbalannya hanya 1 satoshi per blok; setelah itu imbalannya 0, sekitar tahun 2140. Jumlah semuanya sedikit di bawah 21 juta. Buktikan sendiri:</p>
+<div data-demo="js-playground">// Menjumlahkan seluruh imbalan blok Bitcoin dalam satoshi (bilangan bulat)
+let imbalan = 50 * 100000000;   // 50 BTC dalam satoshi
+let total = 0;
+let era = 0;
+while (imbalan > 0) {
+  total += 210000 * imbalan;
+  era++;
+  imbalan = Math.floor(imbalan / 2);   // halving: pecahan satoshi dibuang
+}
+console.log("Jumlah era:", era);
+console.log("Total satoshi:", total);
+console.log("Total BTC:", total / 100000000);</div>
+`,
+          keyPoints: [
+            "Syarat menambang: hash blok (sebagai angka) ≤ target; peluang per coba ≈ target ÷ 2^256.",
+            "Setiap 2.016 blok, target baru = target lama × (waktu nyata ÷ 20.160 menit), dibatasi 4 kali lipat.",
+            "Waktu blok acak: hanya ~63% blok muncul dalam 10 menit, ~5% butuh lebih dari 30 menit.",
+            "Imbalan berganti tiap 210.000 blok: 210.000 × 50 × (1 + ½ + ¼ + …) = 21 juta.",
+            "Karena satoshi tidak bisa dipecah, totalnya 20.999.999,9769 BTC; koin ke-20 juta ditambang 9 Maret 2026."
+          ],
+          practice: [
+            { type: "number", q: "2.016 blok terakhir selesai dalam 16 hari. Target lama dikali berapa? (16 × 24 × 60 ÷ 20.160, dua angka di belakang koma)", answer: 1.14, tol: 0.006, unit: "kali", hint: "16 hari = 23.040 menit.", solution: "23.040 ÷ 20.160 = 1,14. Target membesar, jadi menambang dipermudah karena blok terlalu lambat." },
+            { type: "number", q: "Berapa BTC yang sudah ditambang ketika era 3 berakhir?", answer: 18375000, tol: 0.5, unit: "BTC", hint: "210.000 × (50 + 25 + 12,5).", solution: "210.000 × 87,5 = 18.375.000 BTC, atau 87,5% dari 21 juta." },
+            { type: "number", q: "Dalam satu kali penyesuaian, target paling banyak bisa berubah berapa kali lipat?", answer: 4, tol: 0.01, unit: "kali", hint: "Lihat batas dalam kotak rumus penyesuaian kesulitan.", solution: "Perubahan target dibatasi paling banyak 4 kali lipat dalam satu penyesuaian, naik ataupun turun." }
+          ],
+          quiz: [
+            {
+              q: "Kalau target diperkecil, apa yang terjadi?",
+              options: [
+                "Menambang makin sulit",
+                "Menambang makin mudah",
+                "Imbalan blok bertambah",
+                "Blok jadi lebih besar"
+              ],
+              answer: 0,
+              explain: "Hash harus lebih kecil dari target; target kecil berarti lebih sedikit hash yang memenuhi syarat."
+            },
+            {
+              q: "2.016 blok selesai dalam 12 hari (lebih cepat dari 2 minggu). Apa yang dilakukan jaringan?",
+              options: [
+                "Target dikecilkan, kesulitan naik sekitar 16,7%",
+                "Target dibesarkan supaya blok lebih cepat lagi",
+                "Imbalan blok dipotong setengah saat itu juga",
+                "Penambang baru dilarang ikut menambang"
+              ],
+              answer: 0,
+              explain: "Faktor 17.280 ÷ 20.160 = 0,857; target mengecil dan kesulitan naik sekitar 1 ÷ 0,857 = 1,167."
+            },
+            {
+              q: "Sudah 15 menit belum ada blok baru. Kira-kira berapa lama lagi?",
+              options: [
+                "Tetap sekitar 10 menit",
+                "Pasti kurang dari 1 menit",
+                "Sekitar 25 menit lagi",
+                "Blok berikutnya batal"
+              ],
+              answer: 0,
+              explain: "Setiap tebakan berdiri sendiri, jadi perkiraan sisa waktu tidak berkurang meski sudah lama menunggu."
+            },
+            {
+              q: "Mengapa total Bitcoin sedikit di bawah 21 juta (20.999.999,9769)?",
+              options: [
+                "Pecahan satoshi dibuang setiap halving",
+                "Sebagian koin dibakar setiap tahun",
+                "Satoshi Nakamoto menyimpan sisanya",
+                "Ada kesalahan hitung di whitepaper"
+              ],
+              answer: 0,
+              explain: "Imbalan dihitung dalam satoshi bulat; pembagian dua membuang sisa pecahan sehingga total sedikit kurang dari 21 juta."
+            }
+          ]
+        },
+        {
+          id: "bc-btcm-4",
+          title: "Berapa Konfirmasi yang Aman? — Rumus Peluang dari Whitepaper Bitcoin",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>q</b> adalah porsi daya komputasi penyerang dan <b>p = 1 − q</b> porsi penambang jujur. Perkiraan sederhana peluang penyerang mengejar dari z blok tertinggal adalah <b>(q ÷ p)<sup>z</sup></b> (<a href="#/lesson/bc-mat-2">Probabilitas Penambangan &amp; Serangan 51%</a>). Pelajaran ini membahas rumus lengkapnya, yang ada di bagian 11 whitepaper Bitcoin.
+</div>
+
+<h3>Skenarionya</h3>
+<p>Seseorang membayarmu dengan Bitcoin. Kamu menunggu <b>z konfirmasi</b> (z blok baru di atas blok transaksimu), lalu menyerahkan barang. Diam-diam, ia sudah menambang <b>rantai tandingan</b> berisi transaksi lain yang mengirim uang yang sama ke dompetnya sendiri. Kalau rantai tandingannya berhasil menjadi lebih panjang, jaringan akan beralih ke rantai itu, dan pembayaranmu hilang.</p>
+<div data-diagram="rantai-kejar" data-z="6" data-serang="4" data-caption="Selama kamu menunggu 6 konfirmasi, penyerang tidak diam saja"></div>
+
+<h3>Langkah 1: berapa blok yang sudah dimiliki penyerang?</h3>
+<p>Selama penambang jujur membuat z blok, penyerang rata-rata membuat <b>λ = z × q ÷ p</b> blok. Tapi jumlah sebenarnya acak. Peluang penyerang sudah punya tepat k blok mengikuti <b>distribusi Poisson</b>:</p>
+<div class="callout">
+<b>Peluang punya k blok = λ<sup>k</sup> × e<sup>−λ</sup> ÷ k!</b><br>
+(k! dibaca "k faktorial" = 1 × 2 × … × k; 0! = 1)
+</div>
+<pre class="code">Penyerang 10% (q = 0,1 ; p = 0,9)
+Kamu menunggu z = 6 konfirmasi
+  λ = 6 × 0,1 ÷ 0,9 = 0,667
+
+  punya 0 blok : 51,3%
+  punya 1 blok : 34,2%
+  punya 2 blok : 11,4%
+  punya 3 blok :  2,5%
+  punya 4 blok :  0,4%</pre>
+
+<h3>Langkah 2: dari ketertinggalan, bisakah ia menyusul?</h3>
+<p>Setelah itu, setiap blok baru ibarat lemparan koin berat sebelah: penambang jujur menang dengan peluang p, penyerang dengan peluang q. Matematika "penjudi yang bangkrut" (<i>gambler's ruin</i>) menunjukkan peluang penyerang <b>pernah</b> menyusul dari ketertinggalan d blok adalah <b>(q ÷ p)<sup>d</sup></b>, selama q lebih kecil dari p. Tiap tambahan satu blok ketertinggalan mengalikan peluangnya dengan q ÷ p lagi.</p>
+
+<h3>Rumus lengkapnya</h3>
+<div class="callout">
+<b>P = 1 − Σ<sub>k=0..z</sub> [ λ<sup>k</sup> e<sup>−λ</sup> ÷ k! ] × [ 1 − (q ÷ p)<sup>z−k</sup> ]</b><br><br>
+Cara membacanya: untuk setiap kemungkinan k blok yang sudah dimiliki penyerang, kalikan peluang "punya k blok" dengan peluang "gagal menyusul dari ketertinggalan z − k". Jumlahkan semuanya — itulah peluang penyerang <b>gagal</b>. Kurangkan dari 1 untuk mendapat peluang penyerang <b>berhasil</b>.
+</div>
+
+<h3>Hasilnya</h3>
+<div data-diagram="bar" data-bars="0 konfirmasi:100|1 konfirmasi:62.8|2 konfirmasi:44.6|3 konfirmasi:32.5|4 konfirmasi:23.9|5 konfirmasi:17.7|6 konfirmasi:13.2|8 konfirmasi:7.4|10 konfirmasi:4.2" data-unit="%" data-caption="Peluang penyerang 30% berhasil, menurut rumus lengkap whitepaper"></div>
+<table class="tbl">
+  <tr><th>Konfirmasi (z)</th><th>Penyerang 10%</th><th>Penyerang 30%</th></tr>
+  <tr><td>1</td><td>20,5%</td><td>62,8%</td></tr>
+  <tr><td>2</td><td>5,1%</td><td>44,6%</td></tr>
+  <tr><td>3</td><td>1,3%</td><td>32,5%</td></tr>
+  <tr><td>6</td><td>0,024%</td><td>13,2%</td></tr>
+  <tr><td>10</td><td>0,00012%</td><td>4,2%</td></tr>
+</table>
+<div class="callout warn">
+<b>Lebih besar dari perkiraan sederhana!</b> Untuk penyerang 30% dan 6 konfirmasi, perkiraan sederhana (0,3 ÷ 0,7)<sup>6</sup> hanya 0,6%, sedangkan rumus lengkap memberi <b>13,2%</b>. Bedanya: rumus lengkap ikut menghitung blok yang diam-diam sudah ditambang penyerang selama kamu menunggu.
+</div>
+
+<h3>Berapa konfirmasi agar peluangnya di bawah 0,1%?</h3>
+<div data-diagram="bar" data-bars="Penyerang 10%:5|Penyerang 15%:8|Penyerang 20%:11|Penyerang 25%:15|Penyerang 30%:24|Penyerang 35%:41|Penyerang 40%:89" data-unit=" blok" data-caption="Konfirmasi yang dibutuhkan melonjak saat penyerang mendekati separuh daya jaringan"></div>
+<p>Untuk penyerang 45%, dibutuhkan 340 konfirmasi. Untuk penyerang 50% atau lebih, <b>tidak ada</b> jumlah konfirmasi yang cukup: q ÷ p menjadi 1 atau lebih, sehingga penyerang pada akhirnya selalu bisa menyusul.</p>
+
+<h3>Jadi, apa arti "6 konfirmasi"?</h3>
+<ul>
+  <li>Kalau penyerang menguasai paling banyak 10% daya, 6 konfirmasi membuat peluangnya sekitar <b>0,024%</b> (kira-kira 1 dari 4.100).</li>
+  <li>Angka 6 adalah <b>kebiasaan</b>, bukan aturan protokol. Bursa dan toko memilih sendiri sesuai besar nilai transaksinya.</li>
+  <li>Rumus ini menganggap daya penambang tetap dan penyerang mulai saat transaksi dikirim. Di dunia nyata, menyerang juga sangat mahal — keamanan Bitcoin adalah gabungan matematika dan ekonomi.</li>
+</ul>
+
+<h3>Coba sendiri — kode dari whitepaper</h3>
+<p>Whitepaper Bitcoin menuliskan rumus ini dalam bahasa C. Berikut terjemahannya ke JavaScript. Ganti <b>q</b> lalu jalankan.</p>
+<div data-demo="js-playground">// Terjemahan JavaScript dari kode C di whitepaper Bitcoin (bagian 11)
+function peluangPenyerang(q, z) {
+  const p = 1 - q;
+  if (q >= p) return 1;               // penyerang mayoritas pasti bisa menyusul
+  const lambda = z * (q / p);
+  let gagal = 0;
+  for (let k = 0; k &lt;= z; k++) {
+    let poisson = Math.exp(-lambda);
+    for (let i = 1; i &lt;= k; i++) poisson *= lambda / i;
+    gagal += poisson * (1 - Math.pow(q / p, z - k));
+  }
+  return 1 - gagal;
+}
+
+const q = 0.1;   // porsi daya penyerang — coba 0.3 atau 0.45
+for (let z = 0; z &lt;= 10; z++) {
+  console.log("z = " + z + " → " + (peluangPenyerang(q, z) * 100).toFixed(4) + "%");
+}</div>
+`,
+          keyPoints: [
+            "Penyerang menambang rantai tandingan diam-diam selama kamu menunggu z konfirmasi.",
+            "Banyak blok penyerang mengikuti distribusi Poisson dengan rata-rata λ = z × q ÷ p.",
+            "Dari ketertinggalan d blok, peluang pernah menyusul = (q ÷ p)^d (gambler's ruin), selama q < p.",
+            "Rumus lengkap menggabungkan keduanya dan hasilnya LEBIH BESAR dari perkiraan sederhana: penyerang 30%, 6 konfirmasi → 13,2%, bukan 0,6%.",
+            "Agar di bawah 0,1%: penyerang 10% butuh 5 konfirmasi, 30% butuh 24, 45% butuh 340; penyerang 50% atau lebih tidak bisa dihentikan dengan menunggu.",
+            "\"6 konfirmasi\" adalah kebiasaan (sekitar 0,024% untuk penyerang 10%), bukan aturan protokol."
+          ],
+          practice: [
+            { type: "number", q: "Penyerang q = 0,2 dan kamu menunggu z = 4 konfirmasi. Berapa λ (rata-rata blok penyerang)?", answer: 1, tol: 0.01, hint: "λ = z × q ÷ p, dengan p = 1 − q.", solution: "p = 0,8; λ = 4 × 0,2 ÷ 0,8 = 1. Rata-rata penyerang sudah punya 1 blok." },
+            { type: "number", q: "Dengan perkiraan sederhana, berapa peluang penyerang q = 0,25 menyusul dari ketertinggalan 2 blok? (dalam %, dua angka di belakang koma)", answer: 11.11, tol: 0.02, unit: "%", hint: "q ÷ p = 0,25 ÷ 0,75 = 1/3; lalu pangkat 2.", solution: "(1/3)² = 1/9 ≈ 11,11%." },
+            { type: "number", q: "Menurut tabel whitepaper, berapa konfirmasi yang dibutuhkan agar penyerang 25% punya peluang di bawah 0,1%?", answer: 15, tol: 0.5, unit: "blok", hint: "Lihat grafik konfirmasi yang dibutuhkan.", solution: "15 konfirmasi untuk penyerang 25%." }
+          ],
+          quiz: [
+            {
+              q: "Mengapa rumus lengkap whitepaper memberi peluang lebih besar daripada (q ÷ p)^z?",
+              options: [
+                "Ikut menghitung blok penyerang selama kamu menunggu",
+                "Karena rumus lengkap memakai daya penyerang dua kali",
+                "Karena whitepaper menganggap semua penambang curang",
+                "Karena rumus sederhana sudah memasukkan biaya listrik"
+              ],
+              answer: 0,
+              explain: "Penyerang sudah menambang diam-diam sejak transaksi dikirim, jadi ketertinggalannya lebih kecil dari z."
+            },
+            {
+              q: "Banyaknya blok yang sudah dimiliki penyerang mengikuti distribusi apa?",
+              options: [
+                "Distribusi Poisson",
+                "Distribusi seragam",
+                "Selalu tepat z blok",
+                "Selalu nol blok"
+              ],
+              answer: 0,
+              explain: "Penemuan blok adalah kejadian acak dengan laju tetap; banyaknya dalam selang waktu tertentu mengikuti distribusi Poisson."
+            },
+            {
+              q: "Penyerang menguasai 55% daya komputasi. Berapa konfirmasi yang cukup aman?",
+              options: [
+                "Tidak ada yang cukup",
+                "Cukup 6 konfirmasi",
+                "Cukup 24 konfirmasi",
+                "Cukup 340 konfirmasi"
+              ],
+              answer: 0,
+              explain: "Saat q ≥ p, rasio q ÷ p ≥ 1 sehingga penyerang pada akhirnya selalu bisa menyusul."
+            },
+            {
+              q: "Apa status angka \"6 konfirmasi\" di Bitcoin?",
+              options: [
+                "Kebiasaan, bukan aturan protokol",
+                "Aturan wajib di dalam kode Bitcoin",
+                "Batas maksimal blok per transaksi",
+                "Jumlah penambang yang harus setuju"
+              ],
+              answer: 0,
+              explain: "Protokol tidak mewajibkan angka tertentu; setiap penerima memilih sesuai nilai transaksinya."
+            }
+          ]
         },
       ],
     },
