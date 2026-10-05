@@ -232,6 +232,12 @@ Langkah 2 : dikali 100       →  0,25 × 100 = 25
 Jawaban   : 25%</pre>
 <p>Artinya: <i>"seandainya kelas itu berisi 100 anak, kira-kira 25 anak akan laki-laki."</i></p>
 
+<div class="callout">
+<b>Urutan pembagian itu penting.</b> 5 ÷ 20 — sering juga ditulis <b>5 : 20</b> — artinya <b>5 dibagi ke 20 bagian</b>: angka pertama yang dibagi, angka kedua pembaginya. Bayangkan <b>5 kue dibagi rata ke 20 anak</b>: kuenya lebih sedikit daripada anaknya, jadi setiap anak hanya dapat seperempat kue, yaitu <b>0,25</b>. Kebalikannya, 20 ÷ 5 = 4: 20 kue dibagi ke 5 anak, setiap anak dapat 4 kue.<br><br>
+<b>Cara mengecek:</b> kalikan balik. 0,25 × 20 = 5 — kembali ke angka semula, jadi benar. Sedangkan 4 × 20 = 80, bukan 5.<br><br>
+Sebagai <b>perbandingan</b>, 5 : 20 boleh disederhanakan menjadi <b>1 : 4</b> ("1 dari setiap 4 siswa laki-laki"). Angka 4 muncul di sini — tapi nilainya tetap 1 ÷ 4 = 0,25.
+</div>
+
 <h4>Angka persen yang sering dipakai</h4>
 <table class="tbl">
   <tr><th>Persen</th><th>Artinya</th><th>Contoh</th></tr>
