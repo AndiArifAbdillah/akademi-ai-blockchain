@@ -2036,10 +2036,10 @@ contract PoinKelas {
             {
               q: "Setelah transfer berhasil, apa yang terjadi pada total saldo semua akun?",
               options: [
-                "Tetap sama — hanya berpindah dari pengirim ke penerima",
-                "Bertambah sebesar jumlah yang ditransfer",
-                "Berkurang sebesar biaya gas transfer",
-                "Menjadi dua kali lipat dari sebelumnya"
+                "Tetap sama, hanya berpindah tangan",
+                "Bertambah sebesar jumlah transfer",
+                "Berkurang sebesar biaya gasnya",
+                "Menjadi dua kali lipat"
               ],
               answer: 0,
               explain: "Transfer memindahkan, bukan menciptakan. Hanya cetak yang menambah pasokan."

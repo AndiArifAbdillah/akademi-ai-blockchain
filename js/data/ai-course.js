@@ -150,6 +150,8 @@ const AI_COURSE = {
 <h4>Contoh paling sederhana: melempar koin</h4>
 <p>Sebuah koin punya <b>2 sisi</b>: sisi <b>angka</b> dan sisi <b>gambar</b>. Kalau dilempar, hasilnya hanya bisa salah satu dari <b>2 kemungkinan</b> itu. Karena kedua sisi <b>sama-sama mungkin</b> (tidak ada yang lebih berat atau lebih "disukai"), peluangnya terbagi rata.</p>
 
+<div data-diagram="koin" data-caption="Satu koin, dua kemungkinan yang sama besar"></div>
+
 <div class="callout">
 <b>Rumus peluang:</b><br>
 Peluang = <b>hasil yang diinginkan ÷ semua hasil yang mungkin</b>
@@ -162,6 +164,8 @@ Peluang = <b>1 ÷ 2 = 0,5 = 50%</b>. Dari situlah angka 50% berasal.
 </div>
 
 <h4>Contoh lain dengan rumus yang sama</h4>
+<div data-diagram="dadu" data-pilih="3" data-caption="Dadu muncul angka 3: hanya 1 dari 6 sisi"></div>
+<div data-diagram="dadu" data-pilih="2,4,6" data-caption="Dadu muncul angka genap: 3 dari 6 sisi"></div>
 <table class="tbl">
   <tr><th>Kasus</th><th>Hitungan</th><th>Peluang</th></tr>
   <tr><td>Dadu muncul angka 3</td><td>1 ÷ 6</td><td>≈ 17%</td></tr>
@@ -174,6 +178,8 @@ Peluang = <b>1 ÷ 2 = 0,5 = 50%</b>. Dari situlah angka 50% berasal.
 <b>Kesalahpahaman paling umum:</b> 50% <b>BUKAN</b> berarti pasti bergantian atau pasti separuh-separuh.
 <br><br>Kalau kamu melempar koin <b>10 kali</b>, hasilnya belum tentu tepat 5 gambar + 5 angka. Bisa 7-3, bisa 3-7 — dan itu <b>normal</b>. 50% artinya: kalau dilempar <b>sangat banyak</b> kali, perbandingannya akan <b>mendekati</b> setengah-setengah.
 </div>
+
+<div data-diagram="konvergensi" data-caption="Satu percobaan 1.000 lemparan: awalnya melompat-lompat, lama-lama mendekati 50%"></div>
 
 <h3>Coba sendiri — buktikan dengan simulasi</h3>
 <div data-demo="js-playground">// Simulasi lempar koin - lihat sendiri apa arti "50%"
@@ -206,18 +212,21 @@ console.log("Jalankan berulang kali - hasilnya berbeda-beda tiap kali.");</div>
 <div class="callout">
 <b>Kaitannya ke AI:</b> saat AI berkata <i>"90% ini foto kucing"</i>, artinya ia <b>cukup yakin</b> tapi tidak mutlak. Angka itu disebut skor kepercayaan. Memahami ini membuatmu tidak menelan mentah-mentah jawaban AI.
 </div>
+<div data-diagram="bar" data-bars="Kucing:90|Anjing:7|Rubah:3" data-unit="%" data-caption="Skor keyakinan AI untuk satu foto: jumlahnya 100%, yang tertinggi menjadi jawaban"></div>
 
 <h3>Rata-rata (mean)</h3>
 <p>Rata-rata = <b>jumlahkan semua, lalu bagi jumlah datanya</b>. Contoh nilai 80, 90, 100:<br>
 (80 + 90 + 100) ÷ 3 = <b>90</b>. Rata-rata membantu meringkas banyak angka jadi satu.</p>
+<div data-diagram="ratarata" data-nilai="80,90,100" data-caption="Rata-rata adalah titik keseimbangan: kelebihan nilai 100 (+10) menutup kekurangan nilai 80 (−10)"></div>
 
 <h3>Persentase (%)</h3>
 <p><b>Persen artinya "dari seratus".</b> Simbolnya <b>%</b>.</p>
 
 <div class="callout">
 <b>Cara membayangkannya:</b> apa pun yang kamu bicarakan, anggap <b>dipotong jadi 100 bagian sama besar</b>. Persen memberitahu <b>berapa bagian</b> yang sedang dibicarakan.
-<br><br>🍕 <b>Analogi pizza:</b> satu pizza dipotong jadi <b>100</b> potong kecil. Kalau kamu makan <b>25</b> potong, berarti kamu makan <b>25%</b> pizza itu.
+<br><br><b>Analogi pizza:</b> satu pizza dipotong jadi <b>100</b> potong kecil. Kalau kamu makan <b>25</b> potong, berarti kamu makan <b>25%</b> pizza itu.
 </div>
+<div data-diagram="kotak100" data-isi="25" data-label="seperti 25 potong dari pizza 100 potong" data-caption="25% = 25 bagian dari 100 bagian"></div>
 
 <h4>Bagaimana kalau totalnya bukan 100?</h4>
 <p>Ini yang paling sering membingungkan. Jawabannya: kita <b>ubah dulu</b> seolah-olah totalnya 100.</p>
@@ -227,10 +236,12 @@ console.log("Jalankan berulang kali - hasilnya berbeda-beda tiap kali.");</div>
 </div>
 
 <p><b>Contoh:</b> di kelas ada <b>20</b> siswa, <b>5</b> di antaranya laki-laki. Berapa persen laki-laki?</p>
+<div data-diagram="orang" data-total="20" data-pilih="5" data-label="laki-laki" data-caption="5 dari 20 siswa"></div>
 <pre class="code">Langkah 1 : bagian ÷ total   →  5 ÷ 20 = 0,25
 Langkah 2 : dikali 100       →  0,25 × 100 = 25
 Jawaban   : 25%</pre>
 <p>Artinya: <i>"seandainya kelas itu berisi 100 anak, kira-kira 25 anak akan laki-laki."</i></p>
+<div data-diagram="kotak100" data-isi="25" data-label="seandainya kelasnya berisi 100 anak" data-caption="Diubah ke skala 100: 5 dari 20 sama dengan 25 dari 100"></div>
 
 <div class="callout">
 <b>Urutan pembagian itu penting.</b> 5 ÷ 20 — sering juga ditulis <b>5 : 20</b> — artinya <b>5 dibagi ke 20 bagian</b>: angka pertama yang dibagi, angka kedua pembaginya. Bayangkan <b>5 kue dibagi rata ke 20 anak</b>: kuenya lebih sedikit daripada anaknya, jadi setiap anak hanya dapat seperempat kue, yaitu <b>0,25</b>. Kebalikannya, 20 ÷ 5 = 4: 20 kue dibagi ke 5 anak, setiap anak dapat 4 kue.<br><br>
@@ -239,6 +250,7 @@ Sebagai <b>perbandingan</b>, 5 : 20 boleh disederhanakan menjadi <b>1 : 4</b> ("
 </div>
 
 <h4>Angka persen yang sering dipakai</h4>
+<div data-diagram="persen-lingkaran" data-nilai="100,75,50,25,10,0" data-caption="Persen yang sering dipakai, digambar sebagai lingkaran"></div>
 <table class="tbl">
   <tr><th>Persen</th><th>Artinya</th><th>Contoh</th></tr>
   <tr><td><b>100%</b></td><td>Semuanya / utuh</td><td>Semua jawaban benar</td></tr>

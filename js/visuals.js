@@ -45,9 +45,10 @@ function vWrap(text, maxChars) {
   if (cur) lines.push(cur);
   return lines.slice(0, 3);
 }
-function vFigure(caption, svgMarkup) {
+function vFigure(caption, svgMarkup, catatanHtml) {
   const cap = caption ? `<figcaption>${vEsc(caption)}</figcaption>` : "";
-  return `<figure class="viz">${cap}${svgMarkup}</figure>`;
+  const cat = catatanHtml ? `<p class="viz-catatan">${catatanHtml}</p>` : "";
+  return `<figure class="viz">${cap}${svgMarkup}${cat}</figure>`;
 }
 // Hash sederhana untuk DEMO (bukan kriptografi sungguhan) -> 16 karakter heksadesimal
 function demoHash(str) {
@@ -496,6 +497,141 @@ const DIAGRAMS = {
     </svg>
   </figure>`,
 };
+
+/* ---------- Gambar untuk peluang, persen & rata-rata ---------- */
+const persenID = (x, d) => (Math.round(x * 100 * Math.pow(10, d == null ? 1 : d)) / Math.pow(10, d == null ? 1 : d)).toLocaleString("id-ID") + "%";
+Object.assign(DIAGRAMS, {
+  /* Koin dua sisi; sisi yang dicari diwarnai. <div data-diagram="koin" data-caption="..."></div> */
+  koin: (ds) => {
+    const sisi = (cx, judul, isi, pilih) =>
+      `<circle cx="${cx}" cy="78" r="56" class="vbox ${pilih ? "aktif accent" : ""}"/>` +
+      `<circle cx="${cx}" cy="78" r="44" class="vline dim"/>` + isi +
+      `<text x="${cx}" y="158" text-anchor="middle" class="vt-bold">${judul}</text>`;
+    const bintang = (cx) => {
+      let p = "";
+      for (let i = 0; i < 10; i++) {
+        const r = i % 2 ? 11 : 26, a = -Math.PI / 2 + (i * Math.PI) / 5;
+        p += (i ? "L" : "M") + (cx + r * Math.cos(a)).toFixed(1) + " " + (78 + r * Math.sin(a)).toFixed(1);
+      }
+      return `<path d="${p}Z" class="vfill"/>`;
+    };
+    const body =
+      sisi(150, "ANGKA", `<text x="150" y="90" text-anchor="middle" class="vt-bold" style="font-size:34px">500</text>`, false) +
+      `<text x="260" y="84" text-anchor="middle" class="vt">atau</text>` +
+      sisi(370, "GAMBAR", bintang(370), true);
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 172" class="viz-svg peluang-svg" role="img" aria-label="Koin dengan dua sisi, angka dan gambar">${body}</svg>`,
+      `<span>Diinginkan: 1 sisi (gambar)</span> · <span>Semua kemungkinan: 2 sisi</span><br>1 ÷ 2 = <b>50%</b>`);
+  },
+
+  /* Enam sisi dadu; data-pilih="3" atau "2,4,6" mewarnai sisi yang dicari */
+  dadu: (ds) => {
+    const pilih = String(ds.pilih || "").split(",").map((s) => +s.trim()).filter(Boolean);
+    const T = [[0, 0], [1, 0], [0, 1], [1, 1], [0, 2], [1, 2]];
+    const titik = { 1: [[1, 1]], 2: [[0, 0], [2, 2]], 3: [[0, 0], [1, 1], [2, 2]], 4: [[0, 0], [2, 0], [0, 2], [2, 2]], 5: [[0, 0], [2, 0], [1, 1], [0, 2], [2, 2]], 6: [[0, 0], [2, 0], [0, 1], [2, 1], [0, 2], [2, 2]] };
+    const S = 64, gap = 16, x0 = (520 - (6 * S + 5 * gap)) / 2;
+    let body = "";
+    for (let n = 1; n <= 6; n++) {
+      const x = x0 + (n - 1) * (S + gap), y = 14, aktif = pilih.includes(n);
+      body += `<rect x="${x}" y="${y}" width="${S}" height="${S}" rx="12" class="vbox ${aktif ? "aktif accent" : ""}"/>`;
+      titik[n].forEach(([c, r]) => { body += `<circle cx="${x + 14 + c * 18}" cy="${y + 14 + r * 18}" r="5.5" class="${aktif ? "vfill" : "vfill-text"}"/>`; });
+      body += `<text x="${x + S / 2}" y="${y + S + 18}" text-anchor="middle" class="vt-xs">${n}</text>`;
+    }
+    const k = pilih.length;
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 104" class="viz-svg peluang-svg" role="img" aria-label="Enam sisi dadu, ${k} di antaranya diwarnai">${body}</svg>`,
+      `<span>Diinginkan: ${k} sisi</span> · <span>Semua kemungkinan: 6 sisi</span><br>${k} ÷ 6 = <b>${persenID(k / 6)}</b>`);
+  },
+
+  /* Sekelompok orang; K pertama diwarnai. data-total="20" data-pilih="5" data-label="laki-laki" */
+  orang: (ds) => {
+    const total = +ds.total || 20, k = +ds.pilih || 0, perBaris = Math.min(10, total);
+    const baris = Math.ceil(total / perBaris), W = 520, lebar = 40, x0 = (W - perBaris * lebar) / 2;
+    let body = "";
+    for (let i = 0; i < total; i++) {
+      const cx = x0 + (i % perBaris) * lebar + lebar / 2, cy = 16 + Math.floor(i / perBaris) * 58, kelas = i < k ? "vfill" : "vfill-text";
+      body += `<circle cx="${cx}" cy="${cy + 8}" r="7" class="${kelas}"/><path d="M${cx - 12} ${cy + 40}v-8a12 12 0 0 1 24 0v8z" class="${kelas}"/>`;
+    }
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 ${baris * 58 + 6}" class="viz-svg peluang-svg" role="img" aria-label="${k} dari ${total} orang diwarnai">${body}</svg>`,
+      `${k} ${vEsc(ds.label || "")} dari ${total}<br>${k} ÷ ${total} = ${(k / total).toLocaleString("id-ID")} → <b>${persenID(k / total)}</b>`);
+  },
+
+  /* Persen sebagai 100 kotak; data-isi="25" kotak diwarnai */
+  kotak100: (ds) => {
+    const isi = Math.max(0, Math.min(100, +ds.isi || 0)), s = 19, x0 = 70;
+    let body = "";
+    for (let i = 0; i < 100; i++) {
+      const x = x0 + (i % 10) * (s + 2), y = 10 + Math.floor(i / 10) * (s + 2);
+      body += `<rect x="${x}" y="${y}" width="${s}" height="${s}" rx="3" class="${i < isi ? "vfill" : "vbox"}"/>`;
+    }
+    body += `<text x="310" y="104" class="vt-bold" style="font-size:44px">${isi}%</text>`;
+    body += `<text x="310" y="134" class="vt-xs">${isi} dari 100 kotak</text>`;
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 222" class="viz-svg peluang-svg" role="img" aria-label="${isi} dari 100 kotak diwarnai">${body}</svg>`,
+      ds.label ? vEsc(ds.label) : "");
+  },
+
+  /* Lemparan koin: persen "gambar" makin mendekati 50% saat lemparan makin banyak (simulasi tetap) */
+  konvergensi: (ds) => {
+    let s = +ds.seed || 7, gambar = 0;
+    const acak = () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; };
+    const X0 = 64, W = 426, Y = (p) => 20 + (1 - p) * 150, X = (n) => X0 + (Math.log10(n) / 3) * W;
+    let d = "", tanda = "";
+    const catat = [];
+    for (let n = 1; n <= 1000; n++) {
+      if (acak() > 0.5) gambar++;
+      const p = gambar / n;
+      d += (n === 1 ? "M" : "L") + X(n).toFixed(1) + " " + Y(p).toFixed(1);
+      if (n === 10 || n === 100 || n === 1000) {
+        // label di sisi yang jauh dari garis 50% supaya tidak menabrak garis
+        const ly = p >= 0.5 ? Y(p) - 12 : Y(p) + 24;
+        tanda += `<circle cx="${X(n)}" cy="${Y(p)}" r="5" class="vdot"/>` +
+          `<text x="${X(n)}" y="${ly}" text-anchor="${n === 1000 ? "end" : "middle"}" class="vt-xs vt-tegas">${persenID(p)}</text>`;
+        catat.push(`<span>${n.toLocaleString("id-ID")} lemparan: <b>${persenID(p)}</b></span>`);
+      }
+    }
+    let sumbu = `<line x1="${X0}" y1="${Y(0.5)}" x2="${X0 + W}" y2="${Y(0.5)}" class="vline dim"/><text x="${X0 - 8}" y="${Y(0.5) + 4}" text-anchor="end" class="vt-xs">50%</text>`;
+    sumbu += `<text x="${X0 - 8}" y="${Y(1) + 4}" text-anchor="end" class="vt-xs">100%</text><text x="${X0 - 8}" y="${Y(0) + 4}" text-anchor="end" class="vt-xs">0%</text>`;
+    [1, 10, 100, 1000].forEach((n) => { sumbu += `<text x="${X(n)}" y="196" text-anchor="${n === 1000 ? "end" : "middle"}" class="vt-xs">${n.toLocaleString("id-ID")}</text>`; });
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 204" class="viz-svg peluang-svg" role="img" aria-label="Grafik persen gambar yang mendekati 50 persen saat lemparan bertambah">${sumbu}<path d="${d}" class="vline aktif" style="stroke-width:2"/>${tanda}</svg>`,
+      `<span>Garis bawah: banyaknya lemparan</span> · <span>Garis samping: persen hasil "gambar"</span><br>${catat.join(" · ")}`);
+  },
+
+  /* Rata-rata sebagai garis keseimbangan; data-nilai="80,90,100" */
+  ratarata: (ds) => {
+    const nilai = String(ds.nilai || "").split(",").map(Number).filter((v) => !isNaN(v));
+    const rata = nilai.reduce((a, b) => a + b, 0) / nilai.length, maks = Math.max(...nilai) * 1.15;
+    const lebar = 70, gap = 40, x0 = (520 - (nilai.length * lebar + (nilai.length - 1) * gap)) / 2, Y = (v) => 175 - (v / maks) * 150;
+    let body = "";
+    nilai.forEach((v, i) => {
+      const x = x0 + i * (lebar + gap), selisih = v - rata;
+      body += `<rect x="${x}" y="${Y(v)}" width="${lebar}" height="${175 - Y(v)}" rx="6" class="vfill s0"/>`;
+      // angka ditulis di bawah batang supaya tidak menabrak garis rata-rata
+      body += `<text x="${x + lebar / 2}" y="198" text-anchor="middle" class="vt-bold">${v.toLocaleString("id-ID")}</text>`;
+      body += `<text x="${x + lebar / 2}" y="222" text-anchor="middle" class="vt-xs">${selisih === 0 ? "pas" : (selisih > 0 ? "+" : "−") + Math.abs(selisih).toLocaleString("id-ID")}</text>`;
+    });
+    body += `<line x1="${x0 - 20}" y1="${Y(rata)}" x2="${520 - x0 + 20}" y2="${Y(rata)}" class="vline" style="stroke:var(--s1);stroke-dasharray:6 4"/>`;
+    body += `<text x="${x0 - 28}" y="${Y(rata) - 4}" text-anchor="end" class="vt-xs">rata-rata</text>`;
+    body += `<text x="${x0 - 28}" y="${Y(rata) + 16}" text-anchor="end" class="vt-xs vt-tegas">${rata.toLocaleString("id-ID")}</text>`;
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 232" class="viz-svg peluang-svg" role="img" aria-label="Batang nilai dengan garis rata-rata">${body}</svg>`,
+      `<span>(${nilai.map((v) => v.toLocaleString("id-ID")).join(" + ")}) ÷ ${nilai.length} = <b>${rata.toLocaleString("id-ID")}</b></span> · <span>baris paling bawah = selisih dari rata-rata</span>`);
+  },
+
+  /* Deretan lingkaran persen; data-nilai="100,75,50,25,10,0" */
+  "persen-lingkaran": (ds) => {
+    const nilai = String(ds.nilai || "").split(",").map(Number).filter((v) => !isNaN(v));
+    const lebar = 520 / nilai.length, r = Math.min(30, lebar / 2 - 10);
+    let body = "";
+    nilai.forEach((v, i) => {
+      const cx = lebar * i + lebar / 2, cy = 46, p = Math.max(0, Math.min(100, v)) / 100;
+      body += `<circle cx="${cx}" cy="${cy}" r="${r}" class="vbox"/>`;
+      if (p >= 1) body += `<circle cx="${cx}" cy="${cy}" r="${r}" class="vfill"/>`;
+      else if (p > 0) {
+        const a = -Math.PI / 2 + p * 2 * Math.PI, besar = p > 0.5 ? 1 : 0;
+        body += `<path d="M${cx} ${cy}L${cx} ${cy - r}A${r} ${r} 0 ${besar} 1 ${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}Z" class="vfill"/>`;
+      }
+      body += `<text x="${cx}" y="${cy + r + 20}" text-anchor="middle" class="vt-bold">${v}%</text>`;
+    });
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 112" class="viz-svg peluang-svg" role="img" aria-label="Lingkaran persen">${body}</svg>`);
+  },
+});
 
 /* ============================================================
    DEMO INTERAKTIF  (fungsi(container) yang membangun UI)
