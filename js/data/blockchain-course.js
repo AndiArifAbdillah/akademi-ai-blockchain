@@ -3580,6 +3580,7 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
 <ul>
   <li>Stablecoin adalah <b>tulang punggung DeFi</b> & pembayaran crypto (jembatan ke dunia nyata).</li>
   <li>Pilih jenis dengan hati-hati: fiat/crypto-backed yang transparan jauh lebih aman daripada algoritmik.</li>
+  <li>Ada juga stablecoin yang dipatok ke <b>rupiah</b>, seperti IDRT dan IDRP — dibahas di <a href="#/lesson/bc-idr-1">Stablecoin Rupiah</a>.</li>
 </ul>
 `,
           keyPoints: [
@@ -6499,7 +6500,7 @@ Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan ora
       id: "bc-pelengkap",
       level: "Pelengkap",
       title: "Regulasi, Privasi, CBDC & Peta Ekosistem",
-      summary: "Crypto bertemu dunia nyata: regulasi & pajak, blockchain privat & koin privasi, uang digital bank sentral, tokenisasi aset nyata, dan peta seluruh kategori crypto.",
+      summary: "Crypto bertemu dunia nyata: regulasi & pajak, blockchain privat & koin privasi, uang digital bank sentral, stablecoin rupiah, tokenisasi aset nyata, dan peta seluruh kategori crypto.",
       lessons: [
         {
           id: "bc-app-4",
@@ -6513,7 +6514,7 @@ Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan ora
 
 <h3>Di Indonesia (gambaran umum)</h3>
 <ul>
-  <li>Aset kripto <b>legal diperdagangkan</b> sebagai <b>komoditas</b> (pengawasan berpindah dari Bappebti ke OJK), <b>bukan</b> alat pembayaran yang sah.</li>
+  <li>Aset kripto <b>legal diperdagangkan</b> sebagai <b>aset keuangan digital</b> yang diawasi <b>OJK</b> sejak Januari 2025 (sebelumnya sebagai komoditas di bawah Bappebti), <b>bukan</b> alat pembayaran yang sah.</li>
   <li>Ada <b>pajak</b> atas transaksi kripto (mis. PPN & PPh final) yang biasanya dipotong lewat exchange terdaftar.</li>
   <li>Exchange wajib menerapkan <b>KYC</b> (verifikasi identitas) & <b>AML</b> (anti pencucian uang).</li>
 </ul>
@@ -6527,7 +6528,7 @@ Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan ora
 </div>
 `,
           keyPoints: [
-            "Di Indonesia, kripto legal diperdagangkan sebagai komoditas (diawasi OJK), bukan alat pembayaran sah.",
+            "Di Indonesia, kripto legal diperdagangkan sebagai aset keuangan digital (diawasi OJK sejak 2025), bukan alat pembayaran sah.",
             "Ada pajak transaksi kripto (PPN & PPh final), biasanya dipotong lewat exchange terdaftar.",
             "Exchange wajib menerapkan KYC & AML; gunakan exchange berizin & simpan catatan transaksi.",
             "Dampak: abaikan pajak/regulasi berisiko denda/hukum; aturan berbeda & berubah — konsultasikan ahli.",
@@ -6536,14 +6537,14 @@ Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan ora
             {
               q: "Status aset kripto di Indonesia (gambaran umum)?",
               options: [
-                "Legal diperdagangkan sebagai komoditas, tapi bukan alat pembayaran sah",
+                "Legal diperdagangkan sebagai aset, tapi bukan alat pembayaran sah",
                 "Legal sepenuhnya termasuk untuk pembayaran di toko dan restoran",
                 "Dilarang diperdagangkan maupun dimiliki oleh perorangan",
                 "Hanya boleh dimiliki lembaga keuangan yang sudah berizin",
               ],
               answer: 0,
               explain:
-                "Kripto diperlakukan sebagai komoditas yang boleh diperdagangkan, bukan mata uang resmi.",
+                "Kripto diperlakukan sebagai aset yang boleh diperdagangkan di bursa berizin, bukan mata uang resmi.",
             },
             {
               q: "Mengapa memakai exchange terdaftar/berizin itu penting?",
@@ -6792,6 +6793,131 @@ Saldo rekening bankmu adalah <b>utang bank umum kepadamu</b>. Saat kamu transfer
               ],
               answer: 0,
               explain: "Bila semua orang memindahkan simpanan ke uang bank sentral, bank kehilangan dana untuk disalurkan sebagai kredit."
+            }
+          ]
+        },
+        {
+          id: "bc-idr-1",
+          title: "Stablecoin Rupiah — Token Swasta yang Dipatok Rp1",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Stablecoin</b> seperti USDC dijamin cadangan uang sungguhan, sehingga nilainya bergantung pada kepercayaan kepada penerbitnya (<a href="#/lesson/bc-app-2">Stablecoin</a>). <b>Rupiah Digital</b> adalah utang langsung Bank Indonesia dan alat pembayaran yang sah (pelajaran sebelumnya). Aset kripto di Indonesia diawasi OJK, tapi <b>bukan alat pembayaran</b> (<a href="#/lesson/bc-app-4">Regulasi &amp; Pajak</a>).
+</div>
+
+<h3>Apa itu stablecoin rupiah?</h3>
+<p><b>Stablecoin rupiah</b> adalah token di blockchain yang nilainya dipatok <b>1 token = Rp1</b>, diterbitkan oleh <b>perusahaan swasta</b>, dan dijamin cadangan rupiah sungguhan di rekening bank. Ini versi rupiah dari USDC.</p>
+
+<h3>Siklus hidup sebuah token</h3>
+<div data-diagram="pipeline" data-stages="Setor::Rp1 juta ke rekening penerbit|Cetak::1 juta token dikirim ke dompetmu|Beredar::dikirim, diperdagangkan, dipakai di DeFi|Tebus::token diserahkan kembali|Musnahkan::token dibakar, rupiah ditransfer ke rekeningmu" data-caption="Setiap token yang beredar seharusnya punya pasangan rupiah di rekening cadangan"></div>
+<p>Patokan Rp1 bertahan selama dua janji ditepati: <b>cadangan selalu sebesar token yang beredar</b>, dan <b>penerbit selalu mau menukar kembali</b>. Kalau orang yakin keduanya benar, harga token di bursa akan selalu kembali ke sekitar Rp1 — siapa pun yang melihat harga Rp0,98 bisa membeli lalu menukarnya ke penerbit seharga Rp1.</p>
+
+<h3>Yang sudah beredar</h3>
+<table class="tbl">
+  <tr><th>Token</th><th>Catatan</th></tr>
+  <tr><td><b>IDRT</b></td><td>Salah satu yang tertua, beredar sejak 2019</td></tr>
+  <tr><td><b>XIDR</b></td><td>Diterbitkan StraitsX dari Singapura</td></tr>
+  <tr><td><b>IDRX</b></td><td>Dirancang untuk transaksi 24 jam dan bursa terdesentralisasi</td></tr>
+  <tr><td><b>IDRP</b></td><td>Lulus <i>regulatory sandbox</i> OJK pada 11 Juni 2026. Awal Oktober 2026 beredar sekitar Rp46,7 miliar, sebagian besar di jaringan Kaia, dengan cadangan di rekening escrow BNI dan Bank Nobu</td></tr>
+</table>
+<p>Angka peredaran berubah setiap hari. Lulus sandbox juga <b>bukan izin penuh</b>: penerbit hanya boleh beroperasi terbatas sambil mengurus izin lengkapnya.</p>
+
+<h3>Jangan tertukar dengan Rupiah Digital</h3>
+<table class="tbl">
+  <tr><th></th><th>Stablecoin rupiah</th><th>Rupiah Digital</th><th>Saldo dompet digital</th></tr>
+  <tr><td>Penerbit</td><td>Perusahaan swasta</td><td><b>Bank Indonesia</b></td><td>Perusahaan penerbit</td></tr>
+  <tr><td>Yang berutang kepadamu</td><td>Perusahaan itu</td><td>Bank Indonesia</td><td>Perusahaan itu</td></tr>
+  <tr><td>Boleh dipakai membayar di Indonesia?</td><td class="bad-cell">Tidak</td><td class="ok-cell">Ya — alat pembayaran sah</td><td>Ya — uang elektronik berizin BI, isinya rupiah</td></tr>
+  <tr><td>Berjalan di</td><td>Blockchain publik</td><td>Buku catatan yang dikendalikan BI</td><td>Server perusahaan</td></tr>
+  <tr><td>Keadaan sekarang</td><td>Sudah beredar</td><td>Uji coba wholesale</td><td>Dipakai sehari-hari</td></tr>
+</table>
+
+<h3>Gunanya</h3>
+<ul>
+  <li><b>Jembatan</b> antara rupiah dan aset kripto, tanpa menunggu jam kerja bank.</li>
+  <li><b>Kirim nilai 24 jam</b>, termasuk hari libur, ke alamat mana pun.</li>
+  <li><b>DeFi dalam rupiah</b>: meminjam, meminjamkan, atau menukar tanpa harus melewati dolar.</li>
+  <li><b>Lintas negara</b>: pasangan rupiah–dolar langsung di blockchain.</li>
+</ul>
+
+<h3>Status hukum (Oktober 2026)</h3>
+<ul>
+  <li>Sejak Januari 2025, aset kripto — termasuk stablecoin — diawasi <b>OJK</b> sebagai aset keuangan digital, dan inovasi barunya diuji lewat <i>regulatory sandbox</i>.</li>
+  <li><b>Bank Indonesia</b> memegang sistem pembayaran. Pembayaran di Indonesia tetap wajib memakai rupiah resmi, jadi stablecoin rupiah bukan pengganti uang tunai atau transfer bank untuk membayar.</li>
+  <li>Gubernur BI menyebut stablecoin swasta yang belum diatur jelas sebagai risiko bagi kedaulatan moneter — salah satu alasan BI mempercepat Rupiah Digital.</li>
+  <li>OJK menjadwalkan forum khusus stablecoin pada 8 Oktober 2026. Aturan khusus stablecoin rupiah masih disusun, jadi keadaannya bisa cepat berubah.</li>
+</ul>
+
+<h3>Coba sendiri: apakah cadangannya cukup?</h3>
+<div data-demo="cek-cadangan"></div>
+<p>Perhatikan dua ukuran yang berbeda: <b>rasio cadangan</b> (cukupkah total cadangan?) dan <b>likuiditas</b> (cukupkah kas yang bisa langsung dibayarkan?). Stablecoin bisa lepas patokan walau cadangannya cukup di atas kertas, bila terlalu banyak orang menukar sekaligus. Ini mirip penarikan massal di bank — bedanya, tidak ada LPS yang menjamin.</p>
+
+<h3>Daftar periksa sebelum memakai</h3>
+<table class="tbl">
+  <tr><th>Pertanyaan</th><th>Kenapa penting</th></tr>
+  <tr><td>Siapa penerbitnya, dan apa status izinnya di OJK?</td><td>Penerbit tanpa pengawasan bisa menghilang bersama cadangannya</td></tr>
+  <tr><td>Apakah ada laporan cadangan berkala yang diperiksa pihak independen?</td><td>Tanpa bukti, "dijamin 1:1" hanya janji</td></tr>
+  <tr><td>Bagaimana cara menukar kembali, berapa biaya dan batas minimumnya?</td><td>Kalau sulit ditebus, patokannya rapuh</td></tr>
+  <tr><td>Bisakah penerbit membekukan token di alamat tertentu?</td><td>Hampir semua bisa — demi kepatuhan hukum, tapi itu juga kendali atas asetmu</td></tr>
+  <tr><td>Di jaringan apa token itu beredar?</td><td>Mengirim ke jaringan yang salah bisa membuat token hilang</td></tr>
+</table>
+`,
+          keyPoints: [
+            "Stablecoin rupiah = token swasta yang dipatok 1 token = Rp1 dan dijamin cadangan rupiah di bank.",
+            "Siklusnya: setor → cetak → beredar → tebus → musnahkan; token beredar seharusnya tidak melebihi cadangan.",
+            "Contoh: IDRT, XIDR, IDRX, dan IDRP (lulus sandbox OJK Juni 2026); lulus sandbox bukan izin penuh.",
+            "Bedanya dengan Rupiah Digital: penerbit swasta, bukan alat pembayaran sah, berjalan di blockchain publik.",
+            "Periksa penerbit & izinnya, laporan cadangan, cara penebusan, kemampuan pembekuan, dan jaringannya — rasio cadangan saja tidak cukup tanpa kas yang likuid."
+          ],
+          practice: [
+            { type: "number", q: "Token beredar Rp50 miliar, cadangan Rp48 miliar. Berapa persen rasio cadangannya?", answer: 96, tol: 0.05, unit: "%", hint: "Cadangan ÷ token beredar × 100%.", solution: "48 ÷ 50 = 96% — cadangan kurang Rp2 miliar, tidak semua pemegang bisa ditebus penuh." },
+            { type: "number", q: "Token beredar Rp40 miliar; cadangan berupa kas Rp10 miliar dan obligasi Rp31 miliar. Bila 30% pemegang menukar sekaligus, berapa miliar kekurangan kas yang harus dicari dengan menjual obligasi?", answer: 2, tol: 0.05, unit: "miliar Rp", hint: "30% × 40, lalu kurangi kas yang ada.", solution: "30% × 40 = Rp12 miliar; kas hanya Rp10 miliar, jadi kurang Rp2 miliar walau total cadangan Rp41 miliar (102%)." }
+          ],
+          quiz: [
+            {
+              q: "Apa perbedaan terpenting stablecoin rupiah dengan Rupiah Digital?",
+              options: [
+                "Stablecoin rupiah diterbitkan swasta; Rupiah Digital oleh BI",
+                "Stablecoin rupiah nilainya naik-turun bebas seperti Bitcoin",
+                "Rupiah Digital berjalan di blockchain publik mana pun",
+                "Keduanya sama-sama alat pembayaran sah di Indonesia"
+              ],
+              answer: 0,
+              explain: "Rupiah Digital adalah utang BI dan alat pembayaran sah; stablecoin rupiah adalah utang perusahaan penerbitnya."
+            },
+            {
+              q: "Harga stablecoin rupiah di bursa turun ke Rp0,98. Apa yang biasanya mengembalikannya ke sekitar Rp1?",
+              options: [
+                "Orang membelinya murah lalu menukarnya ke penerbit seharga Rp1",
+                "Bank Indonesia otomatis membeli semua token yang dijual murah",
+                "Penerbit menaikkan harga token secara manual setiap pagi",
+                "Blockchain menolak transaksi di bawah harga patokan"
+              ],
+              answer: 0,
+              explain: "Selama penerbit mau menebus seharga Rp1, selisih harga menjadi peluang yang menutup sendiri."
+            },
+            {
+              q: "Cadangan sebuah stablecoin 102% dari token beredar, tapi hampir semuanya obligasi. Apa risikonya?",
+              options: [
+                "Bisa lepas patokan bila banyak yang menukar sekaligus",
+                "Tidak ada risiko karena rasio cadangannya di atas 100%",
+                "Token otomatis berubah menjadi Rupiah Digital",
+                "Penerbit wajib membagikan bunga obligasi ke pemegang"
+              ],
+              answer: 0,
+              explain: "Obligasi harus dijual dulu sebelum bisa dibayarkan; saat panik, kas yang kurang bisa memicu depeg."
+            },
+            {
+              q: "IDRP lulus regulatory sandbox OJK. Apa artinya?",
+              options: [
+                "Boleh beroperasi terbatas sambil mengurus izin lengkap",
+                "Sudah resmi menjadi alat pembayaran sah di Indonesia",
+                "Cadangannya dijamin penuh oleh negara dan LPS",
+                "Sudah diubah menjadi Rupiah Digital milik BI"
+              ],
+              answer: 0,
+              explain: "Sandbox adalah uji coba di bawah pengawasan, bukan izin penuh dan bukan jaminan negara."
             }
           ]
         },

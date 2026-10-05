@@ -1612,6 +1612,8 @@ const GLOSSARY = [
   ["Bank Koresponden", "Bank di luar negeri tempat sebuah bank membuka rekening untuk melayani transfer lintas negara."],
   ["Nostro", "Rekening milik bank kita yang dibuka di bank lain di luar negeri (kebalikannya: vostro)."],
   ["Proyek Garuda", "Payung pengembangan Rupiah Digital oleh Bank Indonesia sejak 2022, dimulai dari sisi wholesale."],
+  ["Stablecoin Rupiah", "Token swasta di blockchain yang dipatok 1 token = Rp1 dan dijamin cadangan rupiah di bank; bukan alat pembayaran sah dan berbeda dengan Rupiah Digital."],
+  ["Regulatory Sandbox", "Uji coba produk baru di bawah pengawasan regulator (di Indonesia, OJK) dengan izin terbatas sebelum izin penuh."],
 ];
 
 function renderGlossary() {

@@ -5818,6 +5818,50 @@ DEMOS["kliring-netting"] = function (root) {
   hitung();
 };
 
+/* ---------- Demo: cek cadangan stablecoin rupiah & simulasi penarikan massal ---------- */
+DEMOS["cek-cadangan"] = function (root) {
+  // Angka awal mendekati laporan IDRP awal Oktober 2026 (miliar rupiah), lalu bisa diubah.
+  const inp = (nilai, label) => h("input", { class: "pc-input", type: "text", inputmode: "decimal", value: nilai, "aria-label": label });
+  const beredar = inp("46,7", "Token beredar (miliar)");
+  const kas = inp("47", "Cadangan berupa kas di bank (miliar)");
+  const obligasi = inp("0,1", "Cadangan berupa obligasi (miliar)");
+  const tarik = h("input", { type: "range", class: "dm-range", min: "0", max: "100", value: "30", "aria-label": "Persen pemegang yang menukar sekaligus" });
+  const lTarik = h("b");
+  const out = h("div", { class: "dm-out" });
+  // "46,7" (gaya Indonesia) dan "46.7" sama-sama dibaca 46,7
+  const angka = (s) => { const t = String(s).trim(); const v = parseFloat(t.includes(",") ? t.replace(/\./g, "").replace(",", ".") : t); return isNaN(v) ? 0 : v; };
+  const m = (v) => "Rp" + v.toLocaleString("id-ID", { maximumFractionDigits: 2 }) + " miliar";
+  function hitung() {
+    const b = angka(beredar.value), k = angka(kas.value), o = angka(obligasi.value), p = +tarik.value;
+    lTarik.textContent = p + "%";
+    const total = k + o, rasio = b ? total / b * 100 : 0, minta = b * p / 100;
+    const sanggup = minta <= k + 1e-9;
+    out.innerHTML =
+      '<div class="dm-line"><span>Total cadangan</span><b>' + m(total) + "</b></div>" +
+      '<div class="dm-line big ' + (rasio >= 100 ? "good" : "bad") + '"><span>Rasio cadangan (cadangan ÷ token beredar)</span><b>' + rasio.toLocaleString("id-ID", { maximumFractionDigits: 1 }) + "%</b></div>" +
+      '<div class="dm-line"><span>Ditukar sekaligus (' + p + "% pemegang)</span><b>" + m(minta) + "</b></div>" +
+      '<div class="dm-line ' + (sanggup ? "good" : "bad") + '"><span>Kas yang bisa langsung dibayarkan</span><b>' + m(k) + "</b></div>" +
+      '<div class="dm-note">' + (rasio < 100
+        ? "Cadangan <b>lebih kecil</b> daripada token beredar. Kalau semua pemegang menukar, tidak semua bisa dibayar penuh — inilah awal sebuah depeg."
+        : sanggup
+          ? "Cadangan cukup, dan kas di bank cukup untuk membayar semua yang menukar hari ini. Patokan Rp1 bisa dipertahankan."
+          : "Secara total cadangan cukup, tapi kas tunainya tidak cukup untuk penarikan sebesar ini. Penerbit harus menjual obligasi dulu — kalau pasar sedang panik, harga jualnya bisa jatuh, dan antrean penukaran membuat harga token di bursa turun di bawah Rp1.") + "</div>";
+  }
+  [beredar, kas, obligasi].forEach((x) => x.addEventListener("input", hitung));
+  tarik.addEventListener("input", hitung);
+  const baris = (label, el) => h("div", { class: "dm-row" }, [h("span", { text: label }), el, h("span", { class: "dm-sub", text: "miliar" })]);
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Cek cadangan stablecoin rupiah</b>" }),
+    h("p", { class: "demo-hint", text: "Angka awal mendekati laporan sebuah stablecoin rupiah pada awal Oktober 2026. Ubah angkanya, lalu geser berapa persen pemegang yang menukar tokennya sekaligus." }),
+    baris("Token beredar", beredar),
+    baris("Cadangan: kas di bank", kas),
+    baris("Cadangan: obligasi", obligasi),
+    h("div", { class: "dm-row" }, [h("span", { text: "Pemegang yang menukar sekaligus" }), tarik, lTarik]),
+    out,
+  ]));
+  hitung();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";
