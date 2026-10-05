@@ -42,6 +42,10 @@ const BLOCKCHAIN_COURSE = {
 <div class="callout warn">
 <b>Tapi bagaimana kalau...</b> si pencatat curang, membekukan uangmu, atau bukunya hilang? Kita <b>terpaksa memercayai satu pihak</b>. Pertanyaan inilah yang melahirkan blockchain: <i>"Bisakah kita mencatat kepemilikan tanpa harus memercayai satu pihak saja?"</i>
 </div>
+
+<div class="callout">
+<b>Masih ragu crypto itu sungguhan atau tipu-tipu?</b> Wajar. Ada modul khusus untukmu: <a href="#/lesson/bc-skep-1">Crypto untuk yang Ragu</a> — berisi kritik yang memang benar, mitos yang salah sasaran, dan cara menilai sendiri.
+</div>
 `,
           keyPoints: [
             "Uang berharga karena kesepakatan & kepercayaan bersama, bukan nilai kertasnya.",
@@ -562,7 +566,427 @@ const BLOCKCHAIN_COURSE = {
         },
       ],
     },
-    /* ---------------- MODUL 3: FONDASI KRIPTOGRAFI: HASH, KUNCI & TANDA TANGAN ---------------- */
+    /* ---------------- MODUL 3: CRYPTO UNTUK YANG RAGU — KRITIK, MITOS & CARA MENILAI ---------------- */
+    {
+      id: "bc-skeptis",
+      level: "Untuk yang Ragu",
+      title: "Crypto untuk yang Ragu — Kritik, Mitos & Cara Menilai",
+      summary: "Untuk yang tidak percaya pada crypto: kritik yang terbukti benar, mitos yang salah sasaran, dan alat berpikir untuk menilai sendiri tanpa ikut-ikutan.",
+      lessons: [
+        {
+          id: "bc-skep-1",
+          title: "Ragu Itu Sehat — Kritik terhadap Crypto yang Memang Benar",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Bitcoin</b> adalah uang digital tanpa bank pusat: catatannya disimpan bersama oleh ribuan komputer (<a href="#/lesson/bc-p-1">Apa itu Blockchain?</a>). Setelah Bitcoin, lahir ribuan "koin" dan "token" lain — semuanya sering disebut <b>crypto</b> (<a href="#/lesson/bc-p-2">Bitcoin &amp; Lahirnya Cryptocurrency</a>).
+</div>
+
+<p>Kalau kamu tidak percaya pada crypto, modul ini untukmu. Tujuannya <b>bukan</b> membujukmu membeli apa pun. Tujuannya membuat keraguanmu berdiri di atas <b>fakta dan angka</b>, bukan kabar burung. Pelajaran ini dimulai dari kritik yang <b>memang terbukti benar</b>.</p>
+
+<h3>1. Harganya bisa jatuh lebih dari separuh — berulang kali</h3>
+<div data-diagram="bar" data-bars="2011:-93|2013–2015:-85|2017–2018:-84|2021–2022:-77|2025–2026:-50" data-unit="%" data-caption="Penurunan terdalam harga Bitcoin dari puncaknya, di setiap siklus"></div>
+<p>Bitcoin adalah crypto yang paling mapan, dan harganya sudah <b>empat kali</b> jatuh lebih dari 75% dari puncaknya. Siklus terbaru: puncak sekitar <b>US$126 ribu</b> pada 6 Oktober 2025, lalu sekitar <b>US$65 ribu</b> pada Juli 2026 — turun hampir separuh. Koin-koin kecil biasanya jatuh jauh lebih dalam lagi.</p>
+<div class="callout warn">
+<b>Lebih berbahaya lagi kalau memakai utang.</b> Pada <b>10 Oktober 2025</b>, posisi yang dibeli dengan uang pinjaman (<i>leverage</i>) senilai sekitar <b>US$19 miliar</b> dilikuidasi — ditutup paksa — dalam 24 jam. Itu kejadian terbesar dalam sejarah crypto. Orang yang meminjam bisa kehilangan seluruh modalnya walau harga hanya turun sebentar.
+</div>
+<div class="callout">
+<b>Matematika yang sering dilupakan:</b> kalau harga turun <b>80%</b>, uang Rp1 juta tinggal Rp200 ribu. Untuk kembali ke Rp1 juta, harganya harus naik <b>5 kali lipat</b>, yaitu naik <b>400%</b> — bukan 80%.
+</div>
+
+<h3>2. Penipuan berbalut crypto sangat banyak</h3>
+<p>Menurut perusahaan analisis blockchain <b>Chainalysis</b>, kerugian akibat penipuan crypto tahun 2025 setidaknya <b>US$14 miliar</b> yang sudah terlacak, dan diperkirakan melewati <b>US$17 miliar</b>. Penipuan yang meniru orang atau lembaga terpercaya naik lebih dari <b>1.400%</b> dibanding tahun sebelumnya, banyak dibantu AI (suara, wajah, dan pesan palsu).</p>
+<p>Modus yang paling merugikan disebut <b>pig butchering</b> ("menggemukkan babi sebelum disembelih"):</p>
+<div data-diagram="flow" data-steps="Kenalan online|Bangun kepercayaan|Ajak investasi|Untung palsu di layar|Dana tidak bisa ditarik" data-caption="Pola pig butchering: angka untung di layar hanyalah tampilan buatan penipu"></div>
+<p>Kenapa penipu suka memakai crypto? Transfernya <b>tidak bisa dibatalkan</b>, bisa lintas negara dalam hitungan menit, dan banyak korbannya belum paham cara kerjanya.</p>
+
+<h3>3. Bursa dan perantara bisa runtuh atau dibobol</h3>
+<table class="tbl">
+  <tr><th>Kejadian</th><th>Apa yang terjadi</th></tr>
+  <tr><td><b>Terra-LUNA</b><br>Mei 2022</td><td>Stablecoin algoritmik UST lepas dari patokan US$1. Nilai puluhan miliar dolar lenyap dalam beberapa hari.</td></tr>
+  <tr><td><b>FTX</b><br>November 2022</td><td>Salah satu bursa terbesar dunia ternyata memakai dana nasabah diam-diam. Bursa bangkrut; pendirinya dihukum 25 tahun penjara (2024).</td></tr>
+  <tr><td><b>Bybit</b><br>Februari 2025</td><td>Sekitar <b>US$1,5 miliar</b> dicuri — pencurian crypto terbesar sepanjang sejarah. Menurut FBI pelakunya kelompok peretas Korea Utara, yang masuk lewat komputer pengembang layanan dompet yang dipakai bursa itu.</td></tr>
+</table>
+<div class="callout warn">
+<b>Ironinya:</b> crypto lahir supaya orang tidak perlu bergantung pada perantara. Kenyataannya, kebanyakan orang tetap menitipkan asetnya di bursa — dan di Indonesia, aset crypto di bursa <b>tidak dijamin LPS</b> seperti tabungan bank.
+</div>
+
+<h3>4. Sebagian besar koin akhirnya mati</h3>
+<div data-diagram="kotak100" data-isi="53" data-label="Dari setiap 100 token yang pernah tercatat, sekitar 53 sudah mati" data-caption="CoinGecko: 53,2% token yang tercatat di GeckoTerminal sudah mati per akhir 2025"></div>
+<p>Dari sekitar <b>20,2 juta</b> token yang pernah tercatat sampai akhir 2025, sekitar <b>11,6 juta</b> sudah mati: tidak diperdagangkan lagi, ditinggalkan pembuatnya, atau nilainya habis. Sekitar <b>86%</b> kematian itu terjadi di tahun 2025 saja, karena sekarang siapa pun bisa membuat token dalam hitungan menit tanpa produk apa pun.</p>
+<p>Jadi saat orang berkata "crypto", penting ditanya: <b>yang mana?</b> Bitcoin yang berjalan sejak 2009 sangat berbeda dengan koin yang lahir minggu lalu.</p>
+
+<h3>5. Bitcoin memakan listrik yang besar</h3>
+<p>Perkiraan Universitas Cambridge: penambangan Bitcoin memakai sekitar <b>140–190 TWh listrik per tahun</b> (rentangnya lebar karena sulit diukur) — setara konsumsi listrik satu negara berukuran menengah.</p>
+<div data-diagram="stack" data-parts="Energi terbarukan:42.6|Nuklir:9.8|Gas, batu bara &amp; lainnya:47.6" data-caption="Sumber listrik penambangan Bitcoin menurut studi Cambridge (2025)"></div>
+<p>Pendukung berpendapat penambang sering memakai listrik murah atau yang terbuang. Pengkritik menjawab: hampir separuhnya tetap dari bahan bakar fosil. Keduanya fakta. Satu hal yang sering terlewat: kritik energi ini terutama berlaku untuk jaringan <b>Proof of Work</b> seperti Bitcoin. Ethereum pindah ke <b>Proof of Stake</b> pada 2022 dan pemakaian listriknya turun lebih dari 99% (<a href="#/lesson/bc-a-1">Konsensus: PoW vs PoS</a>).</p>
+
+<h3>6. Kebanyakan aktivitas masih spekulasi</h3>
+<p>Sebagian besar transaksi crypto adalah <b>jual beli untuk mencari selisih harga</b>, bukan membayar barang atau jasa. Di Indonesia, OJK mencatat <b>22,93 juta akun</b> konsumen crypto per Juli 2026. Nilai transaksinya naik-turun mengikuti harga: Juli 2026 sebesar <b>Rp20,52 triliun</b>, turun 28% dari bulan sebelumnya. Aktivitas yang mengikuti harga, bukan kebutuhan, adalah ciri pasar yang didorong spekulasi.</p>
+
+<h3>Ringkasan: kritik yang memang benar</h3>
+<table class="tbl">
+  <tr><th>Kritik</th><th>Buktinya</th></tr>
+  <tr><td>Harga sangat liar</td><td>Bitcoin empat kali jatuh lebih dari 75%; koin kecil lebih parah</td></tr>
+  <tr><td>Banyak penipuan</td><td>Lebih dari US$17 miliar (perkiraan 2025), dibantu AI</td></tr>
+  <tr><td>Perantara bisa runtuh</td><td>Terra-LUNA, FTX, Bybit; tidak ada jaminan LPS</td></tr>
+  <tr><td>Kebanyakan token mati</td><td>53,2% dari token yang pernah tercatat</td></tr>
+  <tr><td>Boros energi (Bitcoin)</td><td>140–190 TWh per tahun, hampir separuhnya fosil</td></tr>
+  <tr><td>Dominan spekulasi</td><td>Aktivitas naik-turun mengikuti harga</td></tr>
+</table>
+<div class="callout">
+Kalau semua ini benar, kenapa masih ada orang yang serius membangun di bidang ini? Pelajaran berikutnya membahas <b>kritik yang sering salah sasaran</b> — supaya keraguanmu tepat sasaran dan tidak mudah dipatahkan.
+</div>
+`,
+          keyPoints: [
+            "Modul ini bukan ajakan membeli; tujuannya membuat keraguan berdiri di atas fakta.",
+            "Harga Bitcoin empat kali jatuh lebih dari 75%; turun 80% butuh naik 400% untuk balik modal; utang (leverage) memperparah.",
+            "Penipuan crypto 2025 diperkirakan lebih dari US$17 miliar; pola pig butchering memakai kepercayaan lalu untung palsu di layar.",
+            "Perantara bisa runtuh atau dibobol (Terra-LUNA, FTX, Bybit US$1,5 miliar); aset di bursa tidak dijamin LPS.",
+            "53,2% token yang pernah tercatat sudah mati; Bitcoin memakai 140–190 TWh per tahun; kebanyakan aktivitas masih spekulasi."
+          ],
+          practice: [
+            { type: "number", q: "Harga sebuah koin turun 80% dari harga belimu. Berapa persen harga itu harus NAIK agar kamu kembali ke modal awal?", answer: 400, tol: 0.5, unit: "%", hint: "Modal Rp100 tinggal Rp20. Dari 20 ke 100 itu naik berapa persen?", solution: "Rp100 turun 80% menjadi Rp20. Dari Rp20 ke Rp100 naik Rp80, dan 80 ÷ 20 = 4 = 400%." },
+            { type: "number", q: "Harga turun 50%. Berapa persen harus naik untuk balik modal?", answer: 100, tol: 0.5, unit: "%", hint: "Rp100 tinggal Rp50.", solution: "Dari Rp50 ke Rp100 naik Rp50; 50 ÷ 50 = 100%. Turun separuh butuh naik dua kali lipat." }
+          ],
+          quiz: [
+            {
+              q: "Harga turun 80%. Berapa kenaikan yang dibutuhkan untuk balik modal?",
+              options: [
+                "400%, karena harus naik lima kali lipat",
+                "80%, sama dengan besar penurunannya",
+                "160%, dua kali besar penurunannya",
+                "20%, sisa harga yang belum turun"
+              ],
+              answer: 0,
+              explain: "Rp100 tinggal Rp20; dari 20 ke 100 adalah lima kali lipat, yaitu naik 400%."
+            },
+            {
+              q: "Dalam penipuan pig butchering, apa arti angka untung yang terus naik di aplikasi korban?",
+              options: [
+                "Hanya tampilan buatan penipu",
+                "Keuntungan nyata yang tertahan pajak",
+                "Bunga resmi dari bursa terdaftar",
+                "Harga Bitcoin yang sedang naik"
+              ],
+              answer: 0,
+              explain: "Aplikasinya palsu; angka di layar dibuat agar korban menyetor lebih banyak, dan dananya tidak bisa ditarik."
+            },
+            {
+              q: "Apa pelajaran dari runtuhnya FTX dan dibobolnya Bybit?",
+              options: [
+                "Menitip aset di perantara punya risiko sendiri",
+                "Bitcoin sebagai jaringan berhasil diretas",
+                "Bursa besar selalu dijamin pemerintah",
+                "Crypto tidak bisa dicuri sama sekali"
+              ],
+              answer: 0,
+              explain: "Yang runtuh dan dibobol adalah perusahaan perantara, bukan aturan jaringannya; aset di bursa bergantung pada kejujuran dan keamanan bursa itu."
+            },
+            {
+              q: "Kritik soal boros listrik paling tepat ditujukan kepada jaringan seperti apa?",
+              options: [
+                "Proof of Work seperti Bitcoin",
+                "Semua blockchain tanpa kecuali",
+                "Proof of Stake seperti Ethereum",
+                "Stablecoin yang dipatok rupiah"
+              ],
+              answer: 0,
+              explain: "Proof of Work memakai listrik untuk menambang; Ethereum pindah ke Proof of Stake pada 2022 dan pemakaian listriknya turun lebih dari 99%."
+            }
+          ]
+        },
+        {
+          id: "bc-skep-2",
+          title: "Mitos yang Salah Sasaran — Membedakan Kritik Tepat dari Kabar Burung",
+          duration: "14 menit",
+          content: `
+<p>Kritik yang tepat membuatmu waspada. Mitos justru berbahaya dengan cara yang tidak terduga: kalau kamu menolak crypto dengan alasan yang <b>salah</b>, penjual yang pandai akan mudah mematahkan alasanmu — lalu kamu bisa berbalik percaya sepenuhnya. Lebih aman ragu dengan alasan yang <b>benar</b>.</p>
+
+<div data-diagram="vs" data-left="Kritik yang tepat::Harga sangat liar::Banyak penipuan::Perantara bisa runtuh::Kebanyakan token mati" data-right="Sering salah sasaran::Cuma dipakai penjahat::Bitcoin bisa dipalsukan::Crypto ilegal di Indonesia::Blockchain sama dengan Bitcoin" data-caption="Pelajaran sebelumnya membahas kolom kiri; pelajaran ini membahas kolom kanan"></div>
+
+<h3>Mitos 1: "Crypto cuma dipakai penjahat"</h3>
+<p>Kejahatan memakai crypto itu nyata dan bertambah. Laporan Chainalysis 2026 mencatat alamat-alamat ilegal menerima setidaknya <b>US$154 miliar</b> sepanjang 2025 — rekor tertinggi, naik 162% dari tahun sebelumnya. Sekitar dua pertiganya terkait pihak yang terkena sanksi internasional, dan <b>84%</b> berupa stablecoin.</p>
+<p>Tapi angka itu tetap <b>kurang dari 1%</b> dari seluruh volume transaksi yang bisa dilacak. Selain itu, transaksi blockchain tercatat permanen dan terbuka, sehingga banyak penjahat justru tertangkap karena jejaknya (<a href="#/lesson/bc-for-1">Mitos Anonimitas</a>).</p>
+<div class="callout">
+<b>Versi yang lebih tepat:</b> "Kejahatan memakai crypto bernilai sangat besar dan terus naik, walau porsinya kecil dari seluruh transaksi." Yang salah hanya kata <b>"cuma"</b>.
+</div>
+
+<h3>Mitos 2: "Bitcoin bisa diretas dan dipalsukan seperti uang palsu"</h3>
+<p>Setiap komputer di jaringan Bitcoin memeriksa sendiri setiap transaksi. Koin yang tidak punya tanda tangan sah langsung ditolak, dan untuk menulis ulang riwayat, penyerang butuh lebih dari separuh daya komputasi seluruh dunia (<a href="#/lesson/bc-mat-2">Serangan 51%</a>).</p>
+<p>Jujur saja, aturan Bitcoin pernah punya celah. Pada <b>Agustus 2010</b>, sebuah bug membuat satu transaksi menciptakan sekitar <b>184 miliar BTC</b>. Kesalahan itu ketahuan dan diperbaiki dalam hitungan jam, dan riwayatnya dikembalikan ke versi yang benar. Pada 2018 ditemukan celah serupa dan ditambal sebelum sempat dipakai.</p>
+<div data-diagram="layers" data-items="Aturan jaringan — paling jarang jebol|Smart contract &amp; bridge|Bursa &amp; layanan penitipan|Pengguna: kata sandi, seed phrase, OTP — paling sering jebol" data-caption="Pencurian besar hampir selalu terjadi di lapisan bawah, bukan di aturan jaringannya"></div>
+<div class="callout">
+<b>Versi yang lebih tepat:</b> "Yang sering dibobol adalah pintu-pintunya — bursa, dompet, aplikasi, dan penggunanya — bukan buku besarnya." Pencurian Bybit US$1,5 miliar terjadi lewat komputer pengembang, bukan karena matematika Bitcoin atau Ethereum kalah.
+</div>
+
+<h3>Mitos 3: "Crypto ilegal di Indonesia"</h3>
+<p>Di Indonesia, aset crypto <b>legal dimiliki dan diperdagangkan</b> sebagai <b>aset keuangan digital</b> yang diawasi <b>OJK</b> sejak Januari 2025, lewat platform yang terdaftar. Yang tidak boleh adalah memakainya sebagai <b>alat pembayaran</b>: transaksi pembayaran di Indonesia wajib memakai rupiah. OJK mencatat 22,93 juta akun konsumen crypto per Juli 2026 (<a href="#/lesson/bc-app-4">Regulasi &amp; Pajak Aset Kripto</a>).</p>
+<div class="callout warn">
+<b>Legal tidak sama dengan aman.</b> Banyak platform dan "investasi crypto" yang ilegal tetap beroperasi lewat media sosial. Selalu cek apakah platformnya terdaftar di OJK.
+</div>
+
+<h3>Mitos 4: "Bitcoin itu skema Ponzi"</h3>
+<p><b>Skema Ponzi</b> punya ciri yang jelas: ada <b>pengelola</b> yang <b>menjanjikan untung tetap</b>, lalu membayar "untung" itu dari <b>setoran anggota baru</b>. Skema runtuh saat setoran baru berhenti.</p>
+<div data-diagram="vs" data-left="Skema Ponzi::Ada pengelola pusat::Menjanjikan untung tetap::Dibayar dari setoran baru::Runtuh saat setoran berhenti" data-right="Bitcoin::Tidak ada pengelola pusat::Tidak menjanjikan apa pun::Tidak membayar imbal hasil::Harga dari pembeli &amp; penjual" data-caption="Bitcoin tidak memenuhi ciri Ponzi — tapi banyak produk berlabel crypto justru memenuhinya"></div>
+<p>Kritik yang lebih tajam bentuknya lain: Bitcoin <b>tidak menghasilkan arus kas</b> seperti laba perusahaan atau uang sewa. Harganya sepenuhnya bergantung pada seberapa besar orang lain mau membelinya nanti. Itu membuatnya <b>aset spekulatif</b> — kritik yang sama sering ditujukan pada emas.</p>
+<div class="callout warn">
+<b>Yang memang Ponzi:</b> "robot trading" dengan untung pasti per hari, "staking" yang menjanjikan 1% per hari, arisan crypto berjenjang, dan skema "ajak teman dapat bonus". Ciri-cirinya persis seperti tabel kiri di atas.
+</div>
+
+<h3>Mitos 5: "Blockchain, crypto, dan Bitcoin itu sama saja"</h3>
+<div data-diagram="compare3" data-cols="Teknologi::buku besar bersama::bisa dipakai tanpa koin|Aset::Bitcoin, ether, stablecoin::jutaan token lain|Perusahaan &amp; produk::bursa, aplikasi, proyek::bisa jujur, bisa menipu" data-caption="Tiga lapis yang sering dicampur dalam satu kata: crypto"></div>
+<p>Teknologinya bisa berguna walaupun sebagian besar tokennya tidak bernilai. Contohnya, Bank Indonesia meneliti Rupiah Digital dengan teknologi buku besar bersama tanpa koin spekulatif apa pun (<a href="#/lesson/bc-pl-1">CBDC &amp; Rupiah Digital</a>). Sebaliknya, perusahaan yang menipu tidak membuktikan bahwa teknologinya bohong.</p>
+
+<h3>Mitos 6: "Tidak ada yang benar-benar memakainya"</h3>
+<p>Stablecoin — token yang dipatok ke dolar — beredar sekitar <b>US$305 miliar</b> (data DeFiLlama, September 2026). Stablecoin dipakai untuk mengirim dolar lintas negara 24 jam, dan oleh orang di negara dengan inflasi tinggi untuk menyimpan nilai. Sejak Januari 2024, Bitcoin juga bisa dibeli lewat ETF di bursa saham Amerika.</p>
+<p>Tapi ingat juga: sebagian besar volume tetap untuk jual beli, dan stablecoin pula yang paling banyak dipakai penjahat.</p>
+<div class="callout">
+<b>Versi yang lebih tepat:</b> "Dipakai oleh kelompok tertentu untuk keperluan tertentu — terutama mengirim dolar digital — tapi belum dipakai kebanyakan orang untuk belanja sehari-hari."
+</div>
+
+<h3>Ringkasan</h3>
+<table class="tbl">
+  <tr><th>Pernyataan</th><th>Penilaian</th><th>Versi yang lebih tepat</th></tr>
+  <tr><td>Cuma dipakai penjahat</td><td>Berlebihan</td><td>Nilainya besar dan naik, porsinya di bawah 1%</td></tr>
+  <tr><td>Bitcoin bisa dipalsukan</td><td>Keliru</td><td>Yang sering jebol adalah bursa, aplikasi, dan pengguna</td></tr>
+  <tr><td>Ilegal di Indonesia</td><td>Keliru</td><td>Legal sebagai aset (OJK), dilarang sebagai alat bayar</td></tr>
+  <tr><td>Bitcoin itu Ponzi</td><td>Kurang tepat</td><td>Aset spekulatif tanpa arus kas; banyak produk crypto yang Ponzi</td></tr>
+  <tr><td>Semua sama saja</td><td>Keliru</td><td>Teknologi, aset, dan perusahaan dinilai terpisah</td></tr>
+  <tr><td>Tidak ada yang pakai</td><td>Berlebihan</td><td>Stablecoin dipakai nyata, tapi belum untuk belanja sehari-hari</td></tr>
+</table>
+`,
+          keyPoints: [
+            "Menolak dengan alasan yang salah membuatmu mudah dipatahkan penjual; ragulah dengan alasan yang benar.",
+            "Kejahatan crypto 2025 mencapai rekor US$154 miliar, tapi kurang dari 1% volume yang bisa dilacak; transaksinya juga bisa dilacak.",
+            "Pencurian besar hampir selalu lewat bursa, aplikasi, atau pengguna — bukan karena aturan jaringan Bitcoin jebol (bug 2010 diperbaiki dalam hitungan jam).",
+            "Di Indonesia crypto legal sebagai aset keuangan digital (OJK) tapi dilarang sebagai alat pembayaran.",
+            "Bitcoin bukan Ponzi menurut definisinya, tapi aset spekulatif tanpa arus kas; produk dengan untung pasti per hari adalah tanda Ponzi.",
+            "Pisahkan teknologi, aset, dan perusahaan; stablecoin dipakai nyata (sekitar US$305 miliar) walau belum untuk belanja sehari-hari."
+          ],
+          practice: [
+            {
+              type: "choice",
+              q: "Seorang kenalan menawarkan \"robot trading crypto\": setor minimal Rp5 juta, untung pasti 1% per hari, bonus 10% kalau mengajak teman. Apa penilaian yang paling tepat?",
+              options: [
+                "Ciri skema Ponzi: untung pasti dan bonus dari anggota baru",
+                "Aman selama robotnya memakai kecerdasan buatan",
+                "Wajar, karena harga crypto memang sering naik",
+                "Aman kalau kenalan itu sudah menerima untungnya"
+              ],
+              answer: 0,
+              hint: "Ingat ciri Ponzi di tabel perbandingan.",
+              solution: "Untung tetap yang dijanjikan ditambah bonus perekrutan adalah ciri Ponzi. Pembayaran awal ke anggota lama justru umpan agar orang baru masuk."
+            },
+            {
+              type: "choice",
+              q: "Temanmu berkata: \"Bybit kebobolan US$1,5 miliar, jadi terbukti matematika blockchain bisa dibobol.\" Bagaimana tanggapan yang tepat?",
+              options: [
+                "Yang dibobol adalah sistem bursa, bukan aturan jaringannya",
+                "Benar, sejak itu semua dompet Ethereum tidak aman",
+                "Salah, karena pencurian itu tidak pernah terjadi",
+                "Benar, karena blockchain bisa diubah siapa saja"
+              ],
+              answer: 0,
+              hint: "Lihat gambar lapisan: di lapisan mana pencurian terjadi?",
+              solution: "Penyerang masuk lewat komputer pengembang layanan dompet yang dipakai bursa. Kerugiannya nyata, tapi yang jebol adalah lapisan perantara, bukan aturan jaringannya."
+            }
+          ],
+          quiz: [
+            {
+              q: "Mengapa menolak crypto dengan alasan yang keliru bisa berbahaya?",
+              options: [
+                "Alasan keliru mudah dipatahkan penjual",
+                "OJK akan memberi sanksi kepada yang menolak",
+                "Penolakan membuat harga crypto naik",
+                "Bursa tidak mau melayani orang yang ragu"
+              ],
+              answer: 0,
+              explain: "Kalau alasanmu dipatahkan, kamu bisa berbalik percaya sepenuhnya. Ragu dengan alasan yang benar lebih tahan godaan."
+            },
+            {
+              q: "Mana pernyataan tentang kejahatan crypto 2025 yang paling tepat?",
+              options: [
+                "Nilainya rekor, tapi di bawah 1% volume",
+                "Hampir semua transaksi crypto ilegal",
+                "Tidak ada kejahatan karena blockchain aman",
+                "Kejahatan crypto turun drastis dari 2024"
+              ],
+              answer: 0,
+              explain: "Chainalysis mencatat setidaknya US$154 miliar (rekor), namun porsinya kurang dari 1% volume yang bisa dilacak."
+            },
+            {
+              q: "Mana yang BENAR tentang crypto di Indonesia?",
+              options: [
+                "Legal sebagai aset, tidak sah untuk membayar",
+                "Dilarang dimiliki dan diperdagangkan",
+                "Sah sebagai alat pembayaran di toko",
+                "Dijamin LPS seperti tabungan di bank"
+              ],
+              answer: 0,
+              explain: "Crypto diawasi OJK sebagai aset keuangan digital; pembayaran wajib memakai rupiah, dan aset crypto tidak dijamin LPS."
+            },
+            {
+              q: "Kritik paling tajam terhadap Bitcoin sebagai \"investasi\" adalah...",
+              options: [
+                "Tidak punya arus kas, harga dari pembeli berikutnya",
+                "Ada pengelola yang membayar untung dari setoran",
+                "Jumlah koinnya bisa dicetak tanpa batas",
+                "Semua transaksinya tidak tercatat di mana pun"
+              ],
+              answer: 0,
+              explain: "Bitcoin tidak menghasilkan laba atau sewa; harganya bergantung pada permintaan orang lain. Itu aset spekulatif, bukan Ponzi menurut definisinya."
+            }
+          ]
+        },
+        {
+          id: "bc-skep-3",
+          title: "Menilai Sendiri — Alat Berpikir untuk Orang yang Ragu",
+          duration: "13 menit",
+          content: `
+<p>Dua pelajaran sebelumnya memisahkan kritik yang benar dari mitos. Sekarang kita membuat <b>alat berpikir</b> yang bisa kamu pakai sendiri — untuk crypto, dan sebenarnya untuk tawaran investasi apa pun.</p>
+
+<h3>Pisahkan tiga pertanyaan yang sering dicampur</h3>
+<div data-diagram="pipeline" data-stages="Teknologinya bekerja?::Bitcoin berjalan sejak 2009|Berguna untuk apa?::tergantung masalah yang mau diselesaikan|Layak dibeli sekarang?::tidak ada yang tahu pasti" data-caption="Tiga pertanyaan berbeda, dengan jawaban yang berbeda pula"></div>
+<p>Banyak perdebatan kacau karena tiga pertanyaan ini dicampur:</p>
+<ul>
+  <li>"Teknologinya hebat, <b>jadi</b> harganya pasti naik." Lompatan yang salah: teknologi bagus tidak menjamin harga.</li>
+  <li>"Harganya anjlok, <b>jadi</b> teknologinya bohong." Lompatan yang salah juga: harga turun tidak membuktikan teknologinya tidak bekerja.</li>
+  <li>"Ada penipu memakai crypto, <b>jadi</b> semua orang di bidang ini penipu." Perusahaan dan orang dinilai satu per satu.</li>
+</ul>
+<p>Kamu boleh menjawab "ya, bekerja" untuk pertanyaan pertama sambil tetap menjawab "tidak, saya tidak mau membeli" untuk pertanyaan ketiga. Itu sikap yang konsisten.</p>
+
+<h3>Apakah masalah ini benar-benar butuh blockchain?</h3>
+<p>Banyak proyek menempelkan kata "blockchain" pada masalah yang cukup diselesaikan dengan database biasa. Coba jawab lima pertanyaan ini untuk sebuah ide atau proyek:</p>
+<div data-demo="perlu-blockchain"></div>
+
+<h3>Lima pertanyaan penyaring untuk setiap tawaran</h3>
+<div data-diagram="flow" data-steps="Dari mana untungnya?|Siapa memegang uangku?|Terdaftar di OJK?|Bisa keluar kapan saja?|Kuat kalau turun 80%?" data-caption="Lewati satu per satu; satu jawaban buruk sudah cukup untuk menolak"></div>
+<table class="tbl">
+  <tr><th>Pertanyaan</th><th>Tanda bahaya</th></tr>
+  <tr><td><b>Dari mana untungnya?</b></td><td>Tidak bisa dijelaskan, atau dijawab "dari robot", "dari AI", "rahasia"</td></tr>
+  <tr><td><b>Siapa memegang uangku?</b></td><td>Kamu diminta transfer ke rekening pribadi atau aplikasi yang tidak dikenal</td></tr>
+  <tr><td><b>Terdaftar di OJK?</b></td><td>Tidak terdaftar, atau hanya menunjukkan "akta perusahaan" sebagai bukti</td></tr>
+  <tr><td><b>Bisa keluar kapan saja?</b></td><td>Ada biaya penarikan aneh, harus mengajak teman dulu, atau "dana dikunci"</td></tr>
+  <tr><td><b>Kuat kalau turun 80%?</b></td><td>Uangnya pinjaman, uang sekolah, atau uang kebutuhan bulan depan</td></tr>
+</table>
+
+<h3>Paham tanpa harus membeli</h3>
+<p>Kamu bisa memahami crypto sampai tingkat yang dalam <b>tanpa membeli satu koin pun</b>:</p>
+<ul>
+  <li>Membaca transaksi sungguhan di penjelajah blok (<a href="#/lesson/bc-intip-1">Mengintip Isi Blockchain</a>).</li>
+  <li>Membuat dan menjalankan smart contract dengan uang mainan di Remix (<a href="#/lesson/bc-remix-1">Remix IDE dari Nol</a>).</li>
+  <li>Memakai jaringan uji (testnet) yang koinnya gratis dan tidak bernilai (<a href="#/lesson/bc-pro-1">Setup Dompet &amp; Testnet</a>).</li>
+</ul>
+<p>Justru orang yang paham cara kerjanya paling sulit ditipu, entah ia akhirnya membeli atau tidak.</p>
+
+<h3>Kalau suatu hari tetap ingin mencoba</h3>
+<div class="callout warn">
+<b>Aturan aman:</b>
+<ul>
+  <li>Pakai <b>uang dingin</b> — uang yang kalau hilang seluruhnya, hidupmu tetap berjalan normal.</li>
+  <li>Hanya lewat platform yang <b>terdaftar di OJK</b>.</li>
+  <li><b>Jangan</b> memakai utang atau leverage.</li>
+  <li>Jangan pernah membagikan <b>seed phrase</b>, kata sandi, atau kode OTP kepada siapa pun, termasuk yang mengaku petugas.</li>
+  <li>Abaikan setiap janji <b>untung pasti</b>.</li>
+  <li>Mulai dari jumlah yang sangat kecil, dan catat semua transaksi untuk pajak.</li>
+</ul>
+Ini edukasi, bukan saran investasi.
+</div>
+
+<h3>Ragu yang sehat</h3>
+<div data-diagram="matrix" data-ylabel="Seberapa yakin" data-xlabel="Seberapa paham" data-cells="Yakin tanpa paham: mudah jadi korban|Yakin dan paham: tetap butuh batas risiko|Ragu tanpa paham: mudah berubah saat harga naik|Ragu tapi paham: tujuan modul ini" data-caption="Yang berbahaya bukan yakin atau ragu, melainkan tidak paham"></div>
+<p>Banyak ekonom dan bank sentral skeptis terhadap crypto, dan banyak pengembang yakin padanya. Keduanya punya argumen yang serius. Tujuanmu bukan memilih kubu, tetapi <b>paham</b> — sehingga keputusanmu, apa pun itu, adalah keputusanmu sendiri.</p>
+<div class="callout">
+<b>"Tidak percaya"</b> dan <b>"paham"</b> bisa berjalan bersama. Orang yang ragu dan paham adalah orang yang paling sulit ditipu.
+</div>
+`,
+          keyPoints: [
+            "Pisahkan tiga pertanyaan: teknologinya bekerja? berguna untuk apa? layak dibeli sekarang? — jawabannya bisa berbeda-beda.",
+            "Teknologi bagus tidak menjamin harga naik; harga turun tidak membuktikan teknologinya bohong.",
+            "Uji dulu apakah sebuah masalah benar-benar butuh blockchain, atau cukup database biasa.",
+            "Lima penyaring: dari mana untungnya, siapa memegang uang, terdaftar OJK, bisa keluar kapan saja, kuat kalau turun 80%.",
+            "Crypto bisa dipahami tanpa membeli: penjelajah blok, Remix, dan testnet; kalau mencoba, pakai uang dingin tanpa utang."
+          ],
+          practice: [
+            {
+              type: "choice",
+              q: "Sebuah proyek berkata: \"Kami memakai blockchain agar data nilai rapor sekolah aman.\" Hanya sekolah itu yang menulis nilai, dan nilainya bersifat pribadi. Penilaian yang paling tepat?",
+              options: [
+                "Kemungkinan besar cukup database biasa",
+                "Wajib blockchain agar nilainya tidak hilang",
+                "Pasti penipuan karena memakai kata blockchain",
+                "Harus memakai Bitcoin agar paling aman"
+              ],
+              answer: 0,
+              hint: "Ada berapa pihak yang menulis? Apakah datanya boleh terbuka untuk umum?",
+              solution: "Hanya satu pihak yang menulis dan datanya pribadi, jadi blockchain publik tidak cocok. Tapi itu tidak otomatis penipuan — mungkin hanya salah memilih alat."
+            },
+            {
+              type: "choice",
+              q: "Rina berkata: \"Saya tidak mau membeli crypto, tapi saya akui jaringan Bitcoin bekerja.\" Apakah sikap ini bertentangan?",
+              options: [
+                "Tidak, dua pertanyaan itu memang berbeda",
+                "Ya, kalau mengakui harus ikut membeli",
+                "Ya, kalau menolak membeli harus menolak teknologinya",
+                "Tidak, karena Bitcoin pasti akan dilarang"
+              ],
+              answer: 0,
+              hint: "Ingat tiga pertanyaan yang terpisah.",
+              solution: "Apakah teknologinya bekerja dan apakah layak dibeli adalah dua pertanyaan berbeda. Jawabannya boleh berbeda."
+            }
+          ],
+          quiz: [
+            {
+              q: "\"Teknologi blockchain hebat, jadi harga koin ini pasti naik.\" Apa kesalahannya?",
+              options: [
+                "Mencampur kualitas teknologi dengan harga",
+                "Blockchain sebenarnya tidak pernah bekerja",
+                "Harga koin hanya ditentukan pemerintah",
+                "Tidak ada kesalahan dalam kalimat itu"
+              ],
+              answer: 0,
+              explain: "Teknologi yang bekerja tidak menjamin harga naik; itu dua pertanyaan berbeda."
+            },
+            {
+              q: "Tawaran mana yang paling jelas gagal di penyaring \"Dari mana untungnya?\"",
+              options: [
+                "Untung 2% per hari dari robot rahasia",
+                "Harga bisa naik atau turun sesuai pasar",
+                "Bunga deposito bank yang dijamin LPS",
+                "Dividen dari laba perusahaan terbuka"
+              ],
+              answer: 0,
+              explain: "Untung tinggi yang pasti dan sumbernya dirahasiakan adalah tanda bahaya paling umum."
+            },
+            {
+              q: "Cara memahami crypto secara mendalam tanpa membeli koin apa pun adalah...",
+              options: [
+                "Testnet, Remix, dan penjelajah blok",
+                "Meminjam uang untuk membeli sedikit",
+                "Ikut grup sinyal trading berbayar",
+                "Menitipkan dana ke teman yang paham"
+              ],
+              answer: 0,
+              explain: "Testnet dan Remix memakai koin mainan, dan penjelajah blok bisa dibaca gratis."
+            },
+            {
+              q: "Menurut gambar empat kotak, posisi mana yang paling berbahaya?",
+              options: [
+                "Yakin tanpa paham",
+                "Ragu tapi paham",
+                "Yakin dan paham",
+                "Semua sama bahayanya"
+              ],
+              answer: 0,
+              explain: "Orang yang yakin tanpa paham paling mudah menjadi korban penipuan dan keputusan buruk."
+            }
+          ]
+        },
+      ],
+    },
+    /* ---------------- MODUL 4: FONDASI KRIPTOGRAFI: HASH, KUNCI & TANDA TANGAN ---------------- */
     {
       id: "bc-fundamental",
       level: "Fundamental",
@@ -1374,7 +1798,7 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
         },
       ],
     },
-    /* ---------------- MODUL 4: KONSENSUS, PENAMBANGAN & DOMPET ---------------- */
+    /* ---------------- MODUL 5: KONSENSUS, PENAMBANGAN & DOMPET ---------------- */
     {
       id: "bc-pendalaman",
       level: "Pendalaman",
@@ -1622,7 +2046,7 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
         },
       ],
     },
-    /* ---------------- MODUL 5: MATEMATIKA KUNCI & PENAMBANGAN ---------------- */
+    /* ---------------- MODUL 6: MATEMATIKA KUNCI & PENAMBANGAN ---------------- */
     {
       id: "bc-matematika",
       level: "Matematika",
@@ -2015,7 +2439,7 @@ Penambang mencoba angka acak (<b>nonce</b>) sampai hash blok memenuhi syarat. Ka
         },
       ],
     },
-    /* ---------------- MODUL 6: KRIPTOGRAFI MENDALAM & ERA KUANTUM ---------------- */
+    /* ---------------- MODUL 7: KRIPTOGRAFI MENDALAM & ERA KUANTUM ---------------- */
     {
       id: "bc-kriptografi",
       level: "Kriptografi",
@@ -2751,7 +3175,7 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
         },
       ],
     },
-    /* ---------------- MODUL 7: ETHEREUM, SMART CONTRACT & TOKEN ---------------- */
+    /* ---------------- MODUL 8: ETHEREUM, SMART CONTRACT & TOKEN ---------------- */
     {
       id: "bc-menengah",
       level: "Menengah",
@@ -3196,7 +3620,7 @@ Setiap blok menyimpan <b>hash blok sebelumnya</b> sehingga terbentuk rantai; <b>
         },
       ],
     },
-    /* ---------------- MODUL 8: DEFI, STABLECOIN & KEAMANAN ---------------- */
+    /* ---------------- MODUL 9: DEFI, STABLECOIN & KEAMANAN ---------------- */
     {
       id: "bc-terapan",
       level: "Terapan",
@@ -4005,7 +4429,7 @@ Pada <b>Proof of Stake</b>, validator mengunci koin sebagai jaminan dan ikut mem
         },
       ],
     },
-    /* ---------------- MODUL 9: LAYER 1, LAYER 2, PRIVASI & DAO ---------------- */
+    /* ---------------- MODUL 10: LAYER 1, LAYER 2, PRIVASI & DAO ---------------- */
     {
       id: "bc-lanjutan",
       level: "Lanjutan",
@@ -4353,7 +4777,7 @@ Setiap <b>node</b> menyimpan salinan buku besar dan memeriksa setiap transaksi; 
         },
       ],
     },
-    /* ---------------- MODUL 10: SMART CONTRACT PERTAMAMU: SOLIDITY & REMIX ---------------- */
+    /* ---------------- MODUL 11: SMART CONTRACT PERTAMAMU: SOLIDITY & REMIX ---------------- */
     {
       id: "bc-proyek",
       level: "Proyek",
@@ -4870,7 +5294,7 @@ Kontrak <b>Celengan</b> sudah kamu coba di Remix VM — hanya kamu yang bisa mel
         },
       ],
     },
-    /* ---------------- MODUL 11: MEMBANGUN DAPP: FOUNDRY, FRONTEND & KEAMANAN ---------------- */
+    /* ---------------- MODUL 12: MEMBANGUN DAPP: FOUNDRY, FRONTEND & KEAMANAN ---------------- */
     {
       id: "bc-dapp",
       level: "DApp",
@@ -5711,7 +6135,7 @@ console.log("Setelah blok 0 diubah, sah?", sah());</div>
         },
       ],
     },
-    /* ---------------- MODUL 12: FORENSIK BLOCKCHAIN — MELACAK ALIRAN DANA ---------------- */
+    /* ---------------- MODUL 13: FORENSIK BLOCKCHAIN — MELACAK ALIRAN DANA ---------------- */
     {
       id: "bc-forensik",
       level: "Forensik",
@@ -6495,7 +6919,7 @@ Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan ora
         },
       ],
     },
-    /* ---------------- MODUL 13: REGULASI, PRIVASI, CBDC & PETA EKOSISTEM ---------------- */
+    /* ---------------- MODUL 14: REGULASI, PRIVASI, CBDC & PETA EKOSISTEM ---------------- */
     {
       id: "bc-pelengkap",
       level: "Pelengkap",
@@ -7092,7 +7516,7 @@ Sampai di sini kamu sudah bertemu Layer 1 dan Layer 2, DEX, pinjaman DeFi, staki
         },
       ],
     },
-    /* ---------------- MODUL 14: EKONOMI PROTOKOL & MENILAI PROYEK ---------------- */
+    /* ---------------- MODUL 15: EKONOMI PROTOKOL & MENILAI PROYEK ---------------- */
     {
       id: "bc-ekonomi",
       level: "Ekonomi",
@@ -7978,7 +8402,7 @@ console.log("Saat pemain baru melambat, kekurangannya ditanggung lewat harga tok
         },
       ],
     },
-    /* ---------------- MODUL 15: MASA DEPAN CRYPTO & BLOCKCHAIN ---------------- */
+    /* ---------------- MODUL 16: MASA DEPAN CRYPTO & BLOCKCHAIN ---------------- */
     {
       id: "bc-arah",
       level: "Arah",
