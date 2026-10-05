@@ -1599,6 +1599,18 @@ const GLOSSARY = [
   ["Pitch", "Presentasi singkat yang menjelaskan masalah, solusi, bukti, dan tim sebuah proyek kepada juri, investor, atau calon mitra."],
   ["Demo Day", "Acara penutup program inkubasi atau kelas tempat setiap tim memamerkan dan mempresentasikan proyeknya."],
   ["AI Engineer", "Peran yang membangun aplikasi di atas model AI yang sudah ada — RAG, agen, dan evaluasinya."],
+  ["Kliring", "Tahap mencocokkan dan menghitung transfer antarbank — siapa membayar siapa berapa — sebelum uangnya diselesaikan."],
+  ["Setelmen", "Penyelesaian: saat utang antarbank benar-benar dibayar, di Indonesia lewat rekening giro bank di Bank Indonesia."],
+  ["BI-FAST", "Sistem transfer ritel milik Bank Indonesia: seketika 24/7, maksimal Rp250 juta per transaksi, biaya ke nasabah paling mahal Rp2.500."],
+  ["BI-RTGS", "Real Time Gross Settlement: sistem BI yang menuntaskan transfer bernilai besar (di atas Rp100 juta) satu per satu, seketika."],
+  ["SKNBI", "Sistem Kliring Nasional Bank Indonesia: transfer dikumpulkan lalu diselesaikan neto beberapa kali sehari, sampai Rp1 miliar per transaksi."],
+  ["GPN", "Gerbang Pembayaran Nasional: aturan BI agar transaksi debit domestik diproses di dalam negeri lewat empat lembaga switching."],
+  ["Lembaga Switching", "Perusahaan penghubung antarbank (Artajasa/ATM Bersama, Rintis/Prima, Jalin/Link, Alto) yang meneruskan transaksi kartu dan transfer."],
+  ["QRIS", "Standar kode QR nasional: satu kode bisa dibayar dari aplikasi bank atau dompet digital mana pun."],
+  ["MDR", "Merchant Discount Rate: persentase biaya yang dibayar pedagang untuk setiap transaksi kartu atau QRIS."],
+  ["SWIFT", "Jaringan pesan aman antar lembaga keuangan dunia; yang dikirim perintah pembayaran, bukan uangnya."],
+  ["Bank Koresponden", "Bank di luar negeri tempat sebuah bank membuka rekening untuk melayani transfer lintas negara."],
+  ["Nostro", "Rekening milik bank kita yang dibuka di bank lain di luar negeri (kebalikannya: vostro)."],
 ];
 
 function renderGlossary() {

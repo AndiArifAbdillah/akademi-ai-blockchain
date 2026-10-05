@@ -5416,7 +5416,7 @@ console.log("Keduanya bisa menang. Yang berbahaya adalah terjebak di tengah.");<
       id: "acc-bank",
       level: "Perbankan",
       title: "Menganalisis Bank & Lembaga Keuangan",
-      summary: "Bank tidak bisa dinilai dengan alat biasa. Pelajari CASA & biaya dana, NIM, LDR, NPL & CKPN, CAR, lalu menilai sahamnya lewat PBV & ROE.",
+      summary: "Bank tidak bisa dinilai dengan alat biasa. Pelajari bagaimana uang berpindah antarbank (switching, kliring, RTGS, BI-FAST, SWIFT), CASA & biaya dana, NIM, LDR, NPL & CKPN, CAR, lalu menilai sahamnya lewat PBV & ROE.",
       lessons: [
         {
           id: "acc-bank-1",
@@ -5512,6 +5512,233 @@ Jadi bagi bank, <b>uang adalah bahan baku sekaligus barang dagangan</b>.
                 "Risiko sistemik inilah alasan adanya OJK, batas modal minimum, dan penjaminan LPS.",
             },
           ],
+        },
+        {
+          id: "acc-bayar-1",
+          title: "Bagaimana Uang Berpindah Antarbank — Switching, Kliring, RTGS & BI-FAST",
+          duration: "17 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Uang yang kamu titipkan di bank dicatat bank sebagai <b>kewajiban</b> — utang bank kepadamu (pelajaran sebelumnya: DPK). Artinya, saldo rekeningmu sebenarnya adalah <b>angka di buku catatan bank</b>, bukan tumpukan uang kertas bertuliskan namamu.
+</div>
+
+<h3>Transfer di bank yang sama: cukup mengubah dua baris</h3>
+<p>Budi dan Sari sama-sama nasabah Bank A. Budi mengirim Rp1 juta ke Sari. Tidak ada uang kertas yang bergerak — Bank A cukup mengubah catatannya:</p>
+<table class="tbl">
+  <tr><th>Buku Bank A</th><th>Sebelum</th><th>Sesudah</th></tr>
+  <tr><td>Saldo Budi</td><td>Rp5 juta</td><td>Rp4 juta</td></tr>
+  <tr><td>Saldo Sari</td><td>Rp2 juta</td><td>Rp3 juta</td></tr>
+</table>
+<p>Total utang Bank A kepada nasabahnya tetap Rp7 juta. Hanya pemiliknya yang berganti. Itulah sebabnya transfer sesama bank biasanya gratis dan seketika.</p>
+
+<h3>Beda bank: siapa yang memindahkan uangnya?</h3>
+<p>Sekarang Sari punya rekening di <b>Bank B</b>. Bank A bisa mengurangi saldo Budi, tapi tidak bisa menulis di buku Bank B. Dua hal harus terjadi:</p>
+<table class="tbl">
+  <tr><th>Langkah</th><th>Pertanyaan yang dijawab</th><th>Istilahnya</th></tr>
+  <tr><td><b>1. Pesan</b></td><td>Siapa mengirim berapa ke siapa? Apakah rekening tujuannya ada?</td><td><b>Kliring</b> (<i>clearing</i>)</td></tr>
+  <tr><td><b>2. Penyelesaian</b></td><td>Bank A sudah berutang Rp1 juta ke Bank B. Kapan dan di mana utang itu dibayar?</td><td><b>Setelmen</b> (<i>settlement</i>)</td></tr>
+</table>
+<p>Penyelesaiannya terjadi di <b>Bank Indonesia</b> — "bank-nya para bank". Setiap bank punya rekening giro di BI. Saat Bank A membayar Bank B, BI mengurangi giro Bank A dan menambah giro Bank B.</p>
+<div data-diagram="flow" data-steps="Saldo Budi di Bank A −1 jt|Pesan lewat jalur pembayaran|Giro Bank A di BI −1 jt → giro Bank B +1 jt|Saldo Sari di Bank B +1 jt" data-caption="Transfer antarbank: pesan berjalan, lalu utang antarbank diselesaikan di rekening giro mereka di Bank Indonesia"></div>
+
+<h3>Kliring neto: banyak transfer, sedikit uang berpindah</h3>
+<p>Dalam sehari, nasabah Bank A mengirim ke Bank B, dan nasabah Bank B juga mengirim ke Bank A. Daripada memindahkan dana setiap kali, semua transfer bisa dijumlahkan dulu, lalu hanya <b>selisihnya</b> yang dibayar. Cara ini disebut <b>penyelesaian neto</b>. Kebalikannya, <b>penyelesaian bruto</b>, menyelesaikan setiap transfer satu per satu.</p>
+<div data-demo="kliring-netting"></div>
+
+<h3>Jalur-jalur transfer di Indonesia</h3>
+<table class="tbl">
+  <tr><th>Jalur</th><th>Cara kerja</th><th>Batas per transaksi</th><th>Biaya ke nasabah</th><th>Waktu</th></tr>
+  <tr><td><b>Transfer online</b> lewat jaringan switching (ATM Bersama, Prima, Link, Alto)</td><td>Pesan seketika, penyelesaian antarbank menyusul</td><td>Umumnya sekitar Rp25 juta</td><td>Umumnya Rp6.500</td><td>Seketika</td></tr>
+  <tr><td><b>BI-FAST</b> (sejak akhir 2021)</td><td>Infrastruktur milik BI, seketika</td><td>Rp250 juta</td><td>Paling mahal Rp2.500</td><td>Seketika, 24 jam setiap hari</td></tr>
+  <tr><td><b>SKNBI</b> (kliring)</td><td>Dikumpulkan lalu diselesaikan neto beberapa kali sehari</td><td>Rp1 miliar</td><td>Lebih murah dari RTGS</td><td>Beberapa jam, hari dan jam kerja</td></tr>
+  <tr><td><b>BI-RTGS</b></td><td>Bruto, satu per satu, langsung tuntas</td><td>Di atas Rp100 juta</td><td>Paling mahal</td><td>Seketika, jam operasional</td></tr>
+</table>
+<p>Bank boleh memasang batas yang lebih rendah untuk nasabahnya. BI-FAST juga bisa memakai <b>alias</b> — nomor ponsel atau email — sebagai pengganti nomor rekening.</p>
+<div class="callout">
+<b>Kenapa ada begitu banyak jalur?</b> Setiap jalur menukar hal yang berbeda. RTGS paling aman untuk nominal besar karena setiap transfer langsung tuntas, tapi butuh dana siap pakai yang besar. Kliring neto hemat dana, tapi menunggu jadwal. Jaringan switching cepat, tapi penyelesaian antarbanknya menyusul — bank penerima sementara "menalangi" dulu. BI-FAST dibuat agar transfer kecil sehari-hari bisa seketika <b>dan</b> murah.
+</div>
+
+<h3>Kartu debit, GPN, dan QRIS</h3>
+<p>Saat kartu debit Bank A dipakai di mesin EDC milik Bank B, pesannya juga lewat jaringan switching. Sejak 2017, Bank Indonesia mewajibkan transaksi debit di dalam negeri diproses di dalam negeri lewat <b>GPN (Gerbang Pembayaran Nasional)</b>, dengan empat lembaga switching: Artajasa (ATM Bersama), Rintis (Prima), Jalin (Link), dan Alto. Itulah logo GPN di kartu debitmu.</p>
+<p><b>QRIS</b> menyatukan semua kode QR pembayaran: satu kode di warung bisa dibayar dari aplikasi bank atau dompet digital mana pun. Pedagang membayar biaya <b>MDR</b> (<i>Merchant Discount Rate</i>), persentase kecil dari setiap transaksi. Sejak 1 Oktober 2026:</p>
+<table class="tbl">
+  <tr><th>Jenis pedagang</th><th>MDR 0% sampai</th><th>Di atasnya</th></tr>
+  <tr><td>Usaha mikro</td><td>Rp500.000 per transaksi</td><td>0,3%</td></tr>
+  <tr><td>Usaha kecil, menengah, besar</td><td>Rp100.000 per transaksi</td><td>0,7%</td></tr>
+</table>
+
+<h3>Lalu, di mana blockchain?</h3>
+<p>Di sistem bank, <b>pesan</b> dan <b>penyelesaian</b> adalah dua langkah terpisah yang dijaga pihak tepercaya: jaringan switching dan Bank Indonesia. Di blockchain, keduanya menyatu: transaksi yang masuk blok sudah sekaligus tuntas, dan buku catatannya dipegang bersama, bukan oleh satu bank sentral.</p>
+<p>Tapi jujur saja: untuk transfer rupiah di dalam negeri, BI-FAST sudah seketika, 24 jam, dan paling mahal Rp2.500. Keunggulan blockchain jauh lebih terasa untuk mengirim uang <b>ke luar negeri</b> — topik pelajaran berikutnya.</p>
+`,
+          keyPoints: [
+            "Saldo rekening adalah catatan utang bank kepada nasabah; transfer sesama bank cukup mengubah dua baris catatan.",
+            "Transfer antarbank punya dua langkah: kliring (pesan siapa membayar siapa) dan setelmen (penyelesaian di rekening giro bank di Bank Indonesia).",
+            "Penyelesaian neto hanya memindahkan selisih akhir; penyelesaian bruto (RTGS) menuntaskan setiap transfer satu per satu.",
+            "Jalur di Indonesia: switching (seketika, ±Rp6.500), BI-FAST (24/7, maks Rp250 juta, biaya maks Rp2.500), SKNBI (sampai Rp1 miliar), RTGS (di atas Rp100 juta).",
+            "GPN memproses transaksi debit domestik lewat empat lembaga switching; QRIS menyatukan kode QR dengan MDR 0% sampai batas tertentu."
+          ],
+          practice: [
+            { type: "number", q: "Dalam satu periode kliring, nasabah Bank A mengirim total Rp300 juta ke Bank B, dan nasabah Bank B mengirim total Rp260 juta ke Bank A. Berapa juta rupiah yang harus dibayar Bank A ke Bank B secara neto?", answer: 40, tol: 0.5, unit: "juta Rp", hint: "Kurangkan dua arah transfer.", solution: "300 − 260 = Rp40 juta. Transfer senilai Rp560 juta cukup diselesaikan dengan memindahkan Rp40 juta." },
+            { type: "number", q: "Kamu melakukan 10 transfer antarbank sebulan. Berapa rupiah yang dihemat dengan BI-FAST (Rp2.500) dibanding transfer online biasa (Rp6.500)?", answer: 40000, tol: 1, unit: "Rp", hint: "(6.500 − 2.500) × 10.", solution: "4.000 × 10 = Rp40.000 per bulan." },
+            { type: "number", q: "Pembeli membayar Rp150.000 lewat QRIS di toko berkategori usaha menengah (MDR 0,7% di atas Rp100.000). Berapa rupiah MDR yang dibayar toko?", answer: 1050, tol: 1, unit: "Rp", hint: "Nominalnya di atas Rp100.000, jadi kena 0,7% dari Rp150.000.", solution: "0,7% × 150.000 = Rp1.050." }
+          ],
+          quiz: [
+            {
+              q: "Di mana utang antarbank akhirnya diselesaikan dalam transfer rupiah?",
+              options: [
+                "Di rekening giro masing-masing bank di Bank Indonesia",
+                "Di kantor cabang bank penerima secara tunai",
+                "Di server jaringan switching seperti ATM Bersama",
+                "Di rekening nasabah pengirim di bank tujuan"
+              ],
+              answer: 0,
+              explain: "BI menjadi bank-nya para bank: giro bank pembayar dikurangi, giro bank penerima ditambah."
+            },
+            {
+              q: "Apa keunggulan penyelesaian neto (kliring) dibanding bruto?",
+              options: [
+                "Dana yang harus berpindah antarbank jauh lebih kecil",
+                "Setiap transfer langsung tuntas tanpa menunggu",
+                "Tidak ada risiko bila satu bank gagal membayar",
+                "Bisa dipakai untuk transfer ke luar negeri"
+              ],
+              answer: 0,
+              explain: "Transfer dua arah saling meniadakan; hanya selisihnya yang dibayar, tapi harus menunggu jadwal."
+            },
+            {
+              q: "Mana yang benar tentang BI-FAST?",
+              options: [
+                "Seketika 24/7, maksimal Rp250 juta, biaya paling mahal Rp2.500",
+                "Hanya buka di hari kerja dan khusus nominal di atas Rp100 juta",
+                "Diproses sekali sehari, lalu diselesaikan neto keesokan harinya",
+                "Dijalankan oleh lembaga switching swasta, bukan Bank Indonesia"
+              ],
+              answer: 0,
+              explain: "BI-FAST adalah infrastruktur milik BI untuk transfer ritel yang seketika dan murah."
+            },
+            {
+              q: "Kenapa transfer sesama bank biasanya gratis dan seketika?",
+              options: [
+                "Bank cukup mengubah dua baris di bukunya sendiri",
+                "Bank Indonesia menanggung semua biaya transfernya",
+                "Uang kertasnya disimpan di brankas yang sama",
+                "Transfer sesama bank tidak dicatat sama sekali"
+              ],
+              answer: 0,
+              explain: "Tidak ada utang antarbank yang perlu diselesaikan; hanya pemilik saldo di buku bank itu yang berganti."
+            }
+          ]
+        },
+        {
+          id: "acc-bayar-2",
+          title: "Transfer ke Luar Negeri — SWIFT, Bank Koresponden & Stablecoin",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Transfer antarbank di dalam negeri bisa tuntas karena semua bank punya rekening giro di <b>satu tempat</b>: Bank Indonesia. Untuk mengirim ke luar negeri, rupiah juga harus ditukar dengan mata uang lain memakai <b>kurs</b> — harga satu mata uang dalam mata uang lain, misalnya Rp16.000 per dolar AS (dibahas lengkap di modul Makro).
+</div>
+
+<h3>Masalahnya: tidak ada bank sentral untuk seluruh dunia</h3>
+<p>Bank di Jakarta dan bank di Sydney tidak punya rekening di bank sentral yang sama. Jadi bagaimana uang bisa pindah? Jawabannya: bank-bank saling <b>membuka rekening di bank lain</b>.</p>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya, dari sisi bank Indonesia</th></tr>
+  <tr><td><b>Bank koresponden</b></td><td>Bank luar negeri tempat bank kita membuka rekening</td></tr>
+  <tr><td><b>Rekening nostro</b></td><td>"Rekening <i>kita</i> di bank <i>mereka</i>", mis. rekening dolar AS milik bank Indonesia di sebuah bank di New York</td></tr>
+  <tr><td><b>Rekening vostro</b></td><td>"Rekening <i>mereka</i> di bank <i>kita</i>"</td></tr>
+</table>
+<p>Kalau bank pengirim dan bank penerima tidak saling punya rekening, transfer harus melewati satu atau lebih <b>bank perantara</b> yang punya rekening di keduanya — seperti estafet.</p>
+
+<h3>SWIFT hanya mengirim pesan</h3>
+<p><b>SWIFT</b> adalah jaringan pesan aman yang menghubungkan lebih dari 11.000 lembaga keuangan di lebih dari 200 negara. Yang dikirim lewat SWIFT adalah <b>perintah</b>: "debet rekening kami di bank Anda sebesar sekian, kreditkan ke nasabah ini". Uangnya sendiri berpindah lewat perubahan saldo di rekening nostro dan vostro tadi.</p>
+<div data-diagram="pipeline" data-stages="Bank pengirim::debet rekening nasabah|Bank koresponden::rekening nostro dolar|Bank perantara::bila tak saling kenal|Bank penerima::kreditkan nasabah" data-caption="Transfer lintas negara: pesan lewat SWIFT, uangnya berpindah dari rekening ke rekening di sepanjang rantai"></div>
+
+<h3>Kenapa mahal dan lama?</h3>
+<table class="tbl">
+  <tr><th>Sumber biaya &amp; waktu</th><th>Penjelasan</th></tr>
+  <tr><td>Biaya kirim</td><td>Dipungut bank pengirim</td></tr>
+  <tr><td>Potongan bank perantara</td><td>Setiap bank di rantai bisa memotong; jumlah yang diterima kadang lebih kecil dari yang dikirim</td></tr>
+  <tr><td>Selisih kurs</td><td>Biaya tersembunyi: kurs yang dipakai lebih buruk daripada kurs tengah</td></tr>
+  <tr><td>Jam kerja &amp; hari libur</td><td>Setiap negara di rantai punya jam tutup dan hari liburnya sendiri</td></tr>
+  <tr><td>Pemeriksaan</td><td>Pemeriksaan anti pencucian uang di setiap bank</td></tr>
+</table>
+<p>Menurut data Bank Dunia, biaya rata-rata global untuk mengirim US$200 ke luar negeri sekitar <b>6,5%</b> pada awal 2025. Target pembangunan berkelanjutan PBB ingin biaya ini turun ke <b>di bawah 3%</b> pada 2030. Bagi pekerja migran yang mengirim uang ke keluarga, selisih itu bernilai besar.</p>
+
+<h3>Jalan-jalan pintas yang sudah ada</h3>
+<table class="tbl">
+  <tr><th>Cara</th><th>Idenya</th></tr>
+  <tr><td><b>Layanan remitansi fintech</b></td><td>Punya rekening di kedua negara. Kamu membayar ke rekening mereka di Indonesia, mereka membayar dari rekening mereka di negara tujuan. Uangnya tidak benar-benar menyeberang untuk setiap transfer — cukup <b>dua transfer domestik</b>, lalu mereka menyeimbangkan saldonya secara berkala</td></tr>
+  <tr><td><b>QRIS antarnegara</b></td><td>QRIS sudah tersambung dengan sistem QR beberapa negara, seperti Thailand, Malaysia, dan Singapura, sehingga turis bisa membayar dengan aplikasi dari negaranya sendiri</td></tr>
+  <tr><td><b>Stablecoin</b></td><td>Lihat di bawah</td></tr>
+</table>
+
+<h3>Rute stablecoin</h3>
+<ol>
+  <li>Pengirim membeli stablecoin, misalnya USDC, di bursa kripto dengan rupiah.</li>
+  <li>Stablecoin dikirim ke dompet penerima — tuntas dalam hitungan detik sampai menit, dengan biaya jaringan sangat kecil di Layer 2, kapan pun termasuk hari libur.</li>
+  <li>Penerima menjualnya ke mata uang lokal di bursa di negaranya.</li>
+</ol>
+<table class="tbl">
+  <tr><th></th><th>Rantai bank koresponden</th><th>Stablecoin</th></tr>
+  <tr><td>Kecepatan</td><td>Sering 1–5 hari kerja</td><td>Detik sampai menit, 24/7</td></tr>
+  <tr><td>Biaya pengiriman</td><td>Biaya kirim + potongan perantara</td><td>Biaya jaringan sangat kecil</td></tr>
+  <tr><td>Biaya tersembunyi</td><td>Selisih kurs</td><td>Selisih harga saat membeli dan menjual di bursa, biaya penarikan</td></tr>
+  <tr><td>Kepercayaan</td><td>Bank-bank yang diawasi</td><td>Penerbit stablecoin (cadangannya), bursa, dan kunci dompetmu sendiri</td></tr>
+  <tr><td>Kesalahan alamat</td><td>Bisa ditelusuri dan sering bisa dibatalkan</td><td>Tidak bisa dibatalkan</td></tr>
+</table>
+<div class="callout warn">
+<b>Batasan di Indonesia.</b> Di Indonesia, aset kripto boleh diperdagangkan sebagai aset di bursa yang diawasi, tapi <b>bukan alat pembayaran</b>: transaksi pembayaran di wilayah Indonesia wajib memakai rupiah. Jadi stablecoin bisa menjadi "jembatan" pengiriman, tapi di kedua ujungnya tetap dibutuhkan bursa yang sah untuk menukar ke dan dari mata uang resmi.
+</div>
+<p>Pelajaran pentingnya: biaya transfer internasional yang mahal bukan karena teknologinya sulit, melainkan karena <b>rantai pihak tepercaya</b> yang panjang. Blockchain memotong rantai itu, tapi memindahkan kepercayaan ke penerbit stablecoin, bursa, dan kehati-hatianmu menjaga kunci.</p>
+`,
+          keyPoints: [
+            "Tidak ada bank sentral untuk seluruh dunia; bank saling membuka rekening (nostro/vostro) di bank koresponden.",
+            "SWIFT hanya mengirim pesan perintah; uangnya berpindah lewat perubahan saldo di rekening antarbank di sepanjang rantai.",
+            "Transfer lintas negara mahal dan lama karena biaya kirim, potongan perantara, selisih kurs, jam kerja, dan pemeriksaan di tiap bank.",
+            "Biaya rata-rata global mengirim US$200 sekitar 6,5% (awal 2025); target PBB di bawah 3% pada 2030.",
+            "Stablecoin memotong rantai perantara, tapi bergantung pada penerbit, bursa, dan kunci pengguna — dan di Indonesia kripto bukan alat pembayaran."
+          ],
+          practice: [
+            { type: "number", q: "Mengirim US$200 dengan total biaya 6,5%. Berapa dolar biayanya?", answer: 13, tol: 0.05, unit: "US$", hint: "6,5% × 200.", solution: "0,065 × 200 = US$13 — hampir sepersepuluh uang yang dikirim pekerja migran berpenghasilan kecil." },
+            { type: "number", q: "Kurs tengah Rp16.000 per dolar, tapi bank memakai Rp16.400 saat kamu membeli US$500. Berapa rupiah biaya tersembunyi dari selisih kurs itu?", answer: 200000, tol: 1, unit: "Rp", hint: "Selisih kurs × jumlah dolar.", solution: "(16.400 − 16.000) × 500 = Rp200.000 — tidak tertulis sebagai 'biaya', tapi tetap kamu bayar." }
+          ],
+          quiz: [
+            {
+              q: "Apa yang sebenarnya dikirim lewat jaringan SWIFT?",
+              options: [
+                "Pesan perintah pembayaran antarbank",
+                "Uang tunai dalam bentuk digital",
+                "Token stablecoin milik bank",
+                "Salinan buku tabungan nasabah"
+              ],
+              answer: 0,
+              explain: "SWIFT adalah jaringan pesan; uangnya berpindah lewat saldo rekening nostro dan vostro."
+            },
+            {
+              q: "Rekening nostro dari sudut pandang bank Indonesia adalah?",
+              options: [
+                "Rekening milik bank kita di bank luar negeri",
+                "Rekening bank luar negeri di bank kita",
+                "Rekening giro bank kita di Bank Indonesia",
+                "Rekening nasabah asing di cabang luar negeri"
+              ],
+              answer: 0,
+              explain: "Nostro = 'milik kita, di tempat mereka'; vostro = 'milik mereka, di tempat kita'."
+            },
+            {
+              q: "Kenapa layanan remitansi fintech bisa lebih murah daripada transfer bank biasa?",
+              options: [
+                "Uangnya cukup dipindahkan lewat dua transfer domestik",
+                "Mereka tidak perlu menukar mata uang sama sekali",
+                "Mereka dibebaskan dari semua pemeriksaan hukum",
+                "Mereka memakai rekening giro di bank sentral dunia"
+              ],
+              answer: 0,
+              explain: "Dengan rekening di kedua negara, mereka menghindari rantai bank koresponden untuk setiap transfer."
+            }
+          ]
         },
         {
           id: "acc-bank-2",

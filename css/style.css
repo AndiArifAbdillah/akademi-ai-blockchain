@@ -1610,3 +1610,7 @@ a.resume-card:hover .resume-btn { gap: 12px; }
 
 /* Blok kode di dalam pelajaran tetap memakai huruf kode (aturan ".lesson-body pre" di atas lebih spesifik daripada ".code") */
 .lesson-body pre.code, .lesson-body .code { font-family: var(--font-kode); }
+
+/* ---------- Demo kliring neto ---------- */
+.kn-daftar { display: flex; flex-direction: column; gap: 2px; margin: 10px 0 4px; font-size: .86rem; max-height: 220px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; background: var(--surface-2); }
+.kn-baris span { display: inline-block; min-width: 26px; color: var(--muted); }

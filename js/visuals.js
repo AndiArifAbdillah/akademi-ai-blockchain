@@ -5772,6 +5772,52 @@ DEMOS["reentrancy-sim"] = function (root) {
   pilih(false);
 };
 
+/* ---------- Demo: kliring neto vs penyelesaian bruto antarbank ---------- */
+DEMOS["kliring-netting"] = function (root) {
+  const BANK = ["Bank A", "Bank B", "Bank C"];
+  const AWAL = [[0, 1, 120], [1, 0, 90], [2, 1, 60], [1, 2, 75], [0, 2, 40], [2, 0, 55]];
+  let daftar = AWAL.map((t) => t.slice()), s = 11;
+  const acak = () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; };
+  const rp = (v) => "Rp" + v.toLocaleString("id-ID") + " jt";
+  const kotakDaftar = h("div", { class: "kn-daftar" });
+  const out = h("div", { class: "dm-out" });
+  const tambah = h("button", { class: "btn", type: "button", text: "Tambah 5 transfer acak" });
+  const ulang = h("button", { class: "btn ghost", type: "button", text: "Mulai ulang" });
+  function hitung() {
+    const neto = [0, 0, 0];
+    let bruto = 0;
+    daftar.forEach(([dari, ke, n]) => { neto[dari] -= n; neto[ke] += n; bruto += n; });
+    kotakDaftar.innerHTML = "";
+    daftar.forEach(([dari, ke, n], i) => kotakDaftar.appendChild(h("div", { class: "kn-baris", html: "<span>" + (i + 1) + ".</span> " + BANK[dari] + " → " + BANK[ke] + " <b>" + rp(n) + "</b>" })));
+    const bayar = neto.map((v, i) => [i, v]).filter((x) => x[1] < 0);
+    const terima = neto.map((v, i) => [i, v]).filter((x) => x[1] > 0);
+    const totalNeto = terima.reduce((a, x) => a + x[1], 0);
+    let posisi = neto.map((v, i) => '<div class="dm-line ' + (v > 0 ? "good" : v < 0 ? "bad" : "") + '"><span>' + BANK[i] + (v > 0 ? " menerima" : v < 0 ? " membayar" : " impas") + "</span><b>" + (v ? rp(Math.abs(v)) : "—") + "</b></div>").join("");
+    out.innerHTML =
+      '<div class="dm-line"><span>Cara bruto (RTGS): setiap transfer diselesaikan sendiri-sendiri</span><b>' + daftar.length + " kali · " + rp(bruto) + "</b></div>" +
+      '<div class="dm-line big good"><span>Cara neto (kliring): hanya selisih akhir yang dipindahkan di Bank Indonesia</span><b>' + (bayar.length + terima.length) + " pos · " + rp(totalNeto) + "</b></div>" +
+      posisi +
+      '<div class="dm-note">Dana yang benar-benar harus berpindah antarbank turun dari ' + rp(bruto) + " menjadi " + rp(totalNeto) + " (" + (bruto ? Math.round(totalNeto / bruto * 100) : 0) + "%). Itulah kehebatan kliring. Harganya: penyelesaian menunggu jadwal, dan kalau satu bank gagal membayar selisihnya, semua bank ikut terganggu — alasan transfer besar dan penting memakai RTGS.</div>";
+  }
+  tambah.onclick = () => {
+    for (let k = 0; k < 5; k++) {
+      const dari = Math.floor(acak() * 3);
+      const ke = (dari + 1 + Math.floor(acak() * 2)) % 3;
+      daftar.push([dari, ke, 5 * (2 + Math.floor(acak() * 28))]);
+    }
+    hitung();
+  };
+  ulang.onclick = () => { daftar = AWAL.map((t) => t.slice()); s = 11; hitung(); };
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Kliring: menyelesaikan banyak transfer dengan sedikit uang</b>" }),
+    h("p", { class: "demo-hint", text: "Selama beberapa jam, nasabah tiga bank saling mengirim uang. Bandingkan berapa dana yang harus dipindahkan antarbank bila setiap transfer diselesaikan sendiri-sendiri, dengan bila hanya selisihnya yang dibayar." }),
+    h("div", { class: "demo-controls" }, [tambah, ulang]),
+    kotakDaftar,
+    out,
+  ]));
+  hitung();
+};
+
 /* ---------- Playground JavaScript (jalankan kode di browser) ---------- */
 function pgFormat(v) {
   if (v === undefined) return "undefined";
