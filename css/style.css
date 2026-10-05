@@ -29,6 +29,7 @@
   --j-ai: #3c5d9c;
   --j-blockchain: #9c6a12;
   --j-accounting: #3b7656;
+  --j-coding: #2e7d86;
   /* Seri warna grafik */
   --s0: #3c5d9c; --s1: #b5532b; --s2: #3b7656; --s3: #9c6a12; --s4: #2e7d86;
   /* Kode */
@@ -65,6 +66,7 @@
     --j-ai: #93acdf;
     --j-blockchain: #dcab55;
     --j-accounting: #84c4a0;
+    --j-coding: #7cc3cb;
     --s0: #93acdf; --s1: #e08a5f; --s2: #84c4a0; --s3: #dcab55; --s4: #7cc3cb;
     --code-bg: #0f0e0c;
     --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .25);
@@ -678,6 +680,7 @@ a.resume-card:hover { text-decoration: none; transform: translateY(-2px); box-sh
     --j-ai: #93acdf;
     --j-blockchain: #dcab55;
     --j-accounting: #84c4a0;
+    --j-coding: #7cc3cb;
     --s0: #93acdf; --s1: #e08a5f; --s2: #84c4a0; --s3: #dcab55; --s4: #7cc3cb;
     --code-bg: #0f0e0c;
     --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .25);
@@ -1006,6 +1009,7 @@ h1 { font-family: var(--font-baca); font-weight: 600; }
 .jalur-ai { --c: var(--j-ai); }
 .jalur-blockchain { --c: var(--j-blockchain); }
 .jalur-accounting { --c: var(--j-accounting); }
+.jalur-coding { --c: var(--j-coding); }
 .tanda-jalur { display: inline-flex; align-items: center; justify-content: center; color: var(--c, var(--muted)); flex-shrink: 0; }
 .tanda-jalur svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .tanda-jalur.kecil { width: 16px; height: 16px; }
@@ -1614,3 +1618,18 @@ a.resume-card:hover .resume-btn { gap: 12px; }
 /* ---------- Demo kliring neto ---------- */
 .kn-daftar { display: flex; flex-direction: column; gap: 2px; margin: 10px 0 4px; font-size: .86rem; max-height: 220px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; background: var(--surface-2); }
 .kn-baris span { display: inline-block; min-width: 26px; color: var(--muted); }
+
+/* ---------- Latihan menulis kode (jalur Coding) ---------- */
+.pr-kode { width: 100%; min-height: 0; margin: 4px 0 2px; font-size: .86rem; }
+.pr-uji { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 5px; font-weight: 400; }
+.pr-uji li { padding: 7px 10px; border-radius: 8px; background: var(--surface); border-left: 3px solid var(--border); font-size: .86rem; line-height: 1.5; overflow-wrap: anywhere; color: var(--text); }
+.pr-uji li.ok { border-left-color: var(--ok); }
+.pr-uji li.no { border-left-color: var(--bad); }
+.pr-uji code, .pr-log pre { font-family: var(--font-kode); font-size: .82rem; }
+.pr-saran { display: block; margin-top: 4px; color: var(--muted); }
+.pr-log { margin-top: 8px; font-weight: 400; color: var(--text); }
+.pr-log span { font-size: .78rem; color: var(--muted); }
+.pr-log pre { margin: 4px 0 0; padding: 8px 10px; background: var(--code-bg); color: var(--code-text); border-radius: 8px; white-space: pre-wrap; }
+.pr-jawab { margin-top: 10px; }
+.pr-jawab-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.pr-jawab pre.code { font-family: var(--font-kode); margin: 0; }

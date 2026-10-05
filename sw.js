@@ -9,7 +9,7 @@
    Tanpa itu, pengguna lama akan tetap melihat materi versi lama.
    ============================================================ */
 
-const VERSI = "akademi-v43";
+const VERSI = "akademi-v44";
 // Huruf dari Google Fonts disimpan terpisah agar tidak terhapus setiap kali materi diperbarui.
 const HURUF = "akademi-huruf-v1";
 
@@ -21,6 +21,7 @@ const BERKAS = [
   "./js/data/ai-course.js",
   "./js/data/blockchain-course.js",
   "./js/data/accounting-course.js",
+  "./js/data/coding-course.js",
   "./js/visuals.js",
   "./js/app.js",
   "./js/sesi.js",

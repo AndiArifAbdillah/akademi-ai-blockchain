@@ -5,7 +5,7 @@
    - Pelacak kemajuan via localStorage
    ============================================================ */
 
-const COURSES = [AI_COURSE, BLOCKCHAIN_COURSE, ACCOUNTING_COURSE];
+const COURSES = [AI_COURSE, BLOCKCHAIN_COURSE, ACCOUNTING_COURSE, CODING_COURSE];
 
 /* ---------- Urutan Belajar ----------
    Modul ditulis di file data sesuai waktu pembuatannya. Daftar di bawah menata
@@ -24,6 +24,8 @@ const MODULE_ORDER = [
   "acc-dasar", "acc-pemula", "acc-menengah", "acc-pendalaman", "acc-fundamental",
   "acc-mikro", "acc-terapan", "acc-audit", "acc-matematika", "acc-lanjutan", "acc-kualitas",
   "acc-bank", "acc-prospek", "acc-proyek", "acc-founder", "acc-investasi", "acc-teknikal", "acc-makro", "acc-arah",
+  // 💻 Coding
+  "cd-dasar", "cd-js",
 ];
 (function urutkanModul() {
   const pos = (id) => {
@@ -303,6 +305,7 @@ const TANDA_JALUR = {
   ai: '<circle cx="6.5" cy="7" r="2.2"/><circle cx="17.5" cy="7" r="2.2"/><circle cx="12" cy="17.5" r="2.2"/><path d="M8.7 7h6.6M7.7 8.9l3.2 6.6M16.3 8.9l-3.2 6.6"/>',
   blockchain: '<rect x="2.5" y="9" width="5.5" height="6" rx="1"/><rect x="9.25" y="9" width="5.5" height="6" rx="1"/><rect x="16" y="9" width="5.5" height="6" rx="1"/><path d="M8 12h1.25M14.75 12H16"/>',
   accounting: '<path d="M4 6.5h16M12 6.5V19"/><path d="M6 10.5h3.5M6 13.5h3.5M14.5 10.5H18M14.5 13.5H18"/>',
+  coding: '<path d="M8.5 7.5 4 12l4.5 4.5M15.5 7.5 20 12l-4.5 4.5M13.5 5.5l-3 13"/>',
 };
 function tandaJalur(course, kelas) {
   return `<span class="tanda-jalur jalur-${course.id}${kelas ? " " + kelas : ""}" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false">${TANDA_JALUR[course.id] || ""}</svg></span>`;
@@ -622,7 +625,7 @@ function renderHome() {
     <section class="beranda-kepala">
       <p class="kicker">${sapaan()}</p>
       <h1>${totalDone === 0 ? "Mulai belajar dari nol." : overall >= 100 ? "Semua jalur sudah kamu tuntaskan." : "Lanjutkan belajarmu."}</h1>
-      <p class="lead">AI, Crypto, dan Akuntansi dijelaskan bertahap dalam bahasa Indonesia — dari konsep paling dasar sampai bisa kamu pakai sendiri.</p>
+      <p class="lead">AI, Crypto, Akuntansi, dan Coding dijelaskan bertahap dalam bahasa Indonesia — dari konsep paling dasar sampai bisa kamu pakai sendiri.</p>
     </section>
   `));
 
@@ -1069,10 +1072,94 @@ function tafsirAngka(teks) {
   return hasil.filter((x) => isFinite(x));
 }
 
+/* Latihan menulis kode: kode pengguna dijalankan di Web Worker (jalankanKode di visuals.js)
+   lalu diuji. p.tests = [[ekspresi, nilai yang diharapkan], ...]; ekspresi "@log" membandingkan
+   seluruh keluaran console.log (baris digabung dengan \n). */
+function itemLatihanKode(p, pi) {
+  const item = el(`<div class="pr-item pr-kode-item"></div>`);
+  item.appendChild(el(`<p class="pr-q"><b>${pi + 1}.</b> ${esc(p.q)}</p>`));
+  const ta = el(`<textarea class="pg-code pr-kode" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Tulis kodemu di sini"></textarea>`);
+  ta.value = p.starter || "";
+  ta.rows = Math.max(4, (p.starter || "").split("\n").length + 2);
+  // Kolom ikut memanjang mengikuti isi kode, tanpa batang gulir di dalamnya
+  const sesuaikan = () => { ta.style.height = "auto"; ta.style.height = ta.scrollHeight + 2 + "px"; };
+  ta.addEventListener("input", sesuaikan);
+  requestAnimationFrame(sesuaikan);
+  ta.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab") return;
+    e.preventDefault();
+    const s = ta.selectionStart;
+    ta.value = ta.value.slice(0, s) + "  " + ta.value.slice(ta.selectionEnd);
+    ta.selectionStart = ta.selectionEnd = s + 2;
+  });
+  item.appendChild(ta);
+
+  const check = el(`<button class="btn primary pr-check">Jalankan &amp; periksa</button>`);
+  const ulang = el(`<button class="btn ghost">Kode awal</button>`);
+  const hintBtn = el(`<button class="btn ghost pr-hint-btn">${ikon("lampu")} Petunjuk</button>`);
+  const hintBox = el(`<div class="pr-hint" hidden></div>`);
+  if (p.hint) { hintBox.textContent = p.hint; hintBtn.onclick = () => (hintBox.hidden = !hintBox.hidden); }
+  else hintBtn.style.display = "none";
+  const fb = el(`<div class="pr-fb" hidden></div>`);
+  const lihat = el(`<button class="btn ghost pr-lihat" hidden>Lihat contoh jawaban</button>`);
+  const jawab = el(`<div class="pr-jawab" hidden><span class="pr-jawab-label">Contoh jawaban</span><pre class="code"></pre></div>`);
+  jawab.querySelector("pre").textContent = p.solution || "";
+  ulang.onclick = () => { ta.value = p.starter || ""; sesuaikan(); ta.focus(); };
+  lihat.onclick = () => { jawab.hidden = !jawab.hidden; };
+
+  check.onclick = async () => {
+    const tes = p.tests || [];
+    check.disabled = true;
+    check.textContent = "Menjalankan…";
+    const r = await jalankanKode(ta.value, tes.filter((t) => t[0] !== "@log").map((t) => t[0]));
+    check.disabled = false;
+    check.textContent = "Jalankan & periksa";
+    const baris = [];
+    let lulus = 0, k = 0;
+    if (r.galat) {
+      const saran = jelaskanGalat(r.galat);
+      baris.push(`<li class="no">${esc(r.galat === "WAKTU" ? "Kode dihentikan setelah 3 detik." : r.galat)}${saran ? `<span class="pr-saran">${esc(saran)}</span>` : ""}</li>`);
+    } else {
+      tes.forEach(([ekspr, harap]) => {
+        if (ekspr === "@log") {
+          const dapat = r.logs.join("\n");
+          const ok = dapat === harap;
+          if (ok) lulus++;
+          baris.push(`<li class="${ok ? "ok" : "no"}">Output ${ok ? "sesuai" : `seharusnya <code>${esc(harap).replace(/\n/g, " ⏎ ")}</code>, kodemu menampilkan <code>${esc(dapat || "(kosong)").replace(/\n/g, " ⏎ ")}</code>`}</li>`);
+          return;
+        }
+        const hs = r.hasilTes ? r.hasilTes[k++] : null;
+        const ok = !!(hs && hs.ok && hs.teks === JSON.stringify(harap));
+        if (ok) lulus++;
+        const dapat = hs ? (hs.ok ? `<code>${esc(hs.tampil)}</code>` : `<span>${esc(hs.galat)}</span>`) : "?";
+        baris.push(`<li class="${ok ? "ok" : "no"}"><code>${esc(ekspr)}</code> → ${dapat}${ok ? "" : ` · seharusnya <code>${esc(JSON.stringify(harap))}</code>`}</li>`);
+      });
+    }
+    const benar = !r.galat && lulus === tes.length;
+    const log = r.logs.length && !tes.some((t) => t[0] === "@log")
+      ? `<div class="pr-log"><span>Keluaran console.log:</span><pre>${esc(r.logs.join("\n"))}</pre></div>` : "";
+    fb.hidden = false;
+    fb.className = "pr-fb " + (benar ? "ok" : "no");
+    fb.innerHTML = `<b>${benar ? "Benar! Semua tes lulus." : `Belum tepat — ${lulus} dari ${tes.length} tes lulus.`}</b><ul class="pr-uji">${baris.join("")}</ul>${log}`;
+    if (benar) { item.classList.add("answered"); jawab.hidden = false; lihat.hidden = true; }
+    else lihat.hidden = false;
+  };
+
+  const controls = el(`<div class="pr-controls"></div>`);
+  [check, ulang, hintBtn, lihat].forEach((b) => controls.appendChild(b));
+  item.appendChild(controls);
+  item.appendChild(hintBox);
+  item.appendChild(fb);
+  item.appendChild(jawab);
+  return item;
+}
+
 function renderPractice(lesson) {
-  const box = el(`<section class="practice"><p class="kicker">Latihan · ${lesson.practice.length} soal</p><h3>Coba hitung sendiri</h3><p class="pr-sub">Kerjakan dulu, baru periksa. Ada petunjuk kalau buntu.</p></section>`);
+  const adaKode = lesson.practice.some((p) => p.type === "code");
+  const box = el(`<section class="practice"><p class="kicker">Latihan · ${lesson.practice.length} soal</p><h3>${adaKode ? "Coba tulis kodenya" : "Coba hitung sendiri"}</h3><p class="pr-sub">${adaKode ? "Tulis kodemu, lalu jalankan — tes otomatis langsung memeriksanya. Ada petunjuk kalau buntu." : "Kerjakan dulu, baru periksa. Ada petunjuk kalau buntu."}</p></section>`);
 
   lesson.practice.forEach((p, pi) => {
+    if (p.type === "code") { box.appendChild(itemLatihanKode(p, pi)); return; }
     const item = el(`<div class="pr-item"></div>`);
     item.appendChild(el(`<p class="pr-q"><b>${pi + 1}.</b> ${esc(p.q)}</p>`));
     const fb = el(`<div class="pr-fb" hidden></div>`);
@@ -1622,7 +1709,7 @@ function renderGlossary() {
     <div class="crumb"><a href="#/">Beranda</a> / <span>Glosarium</span></div>
     <p class="kicker">${GLOSSARY.length} istilah</p>
     <h1>Glosarium</h1>
-    <p class="lead">Kamus singkat istilah AI, Crypto, dan Akuntansi. Ketik untuk mencari.</p>
+    <p class="lead">Kamus singkat istilah AI, Crypto, Akuntansi, dan Coding. Ketik untuk mencari.</p>
     <input class="search" type="search" placeholder="Cari istilah... (mis. blockchain, LLM, wallet)">
   `));
   const dl = el(`<dl class="glossary"></dl>`);
@@ -1653,7 +1740,7 @@ function renderFlashcards() {
 
   const filters = [
     ["all", "Semua"], ["ai", "AI"], ["blockchain", "Crypto"],
-    ["accounting", "Akuntansi"], ["glossary", "Glosarium"],
+    ["accounting", "Akuntansi"], ["coding", "Coding"], ["glossary", "Glosarium"],
   ];
   let filter = "all", deck = [], idx = 0, flipped = false;
 

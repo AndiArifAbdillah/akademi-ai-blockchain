@@ -5871,22 +5871,80 @@ function pgFormat(v) {
   }
   return String(v);
 }
-function pgRun(code, outEl) {
+/* Inti penjalan kode. Dipakai di dalam Web Worker (lewat toString) maupun langsung sebagai cadangan.
+   tes = daftar ekspresi yang dievaluasi setelah kode pengguna, mis. "luas(3, 4)". */
+function eksekusiKode(kode, tes) {
   const logs = [];
-  const orig = { log: console.log, error: console.error, warn: console.warn };
-  console.log = function () { logs.push(Array.prototype.map.call(arguments, pgFormat).join(" ")); };
-  console.error = function () { logs.push("⚠ " + Array.prototype.map.call(arguments, pgFormat).join(" ")); };
-  console.warn = console.error;
+  const fmt = (v) => {
+    if (v === undefined) return "undefined";
+    if (v === null) return "null";
+    if (typeof v === "string") return v;
+    if (typeof v === "function") return "[fungsi]";
+    if (typeof v === "object") { try { return JSON.stringify(v); } catch (e) { return String(v); } }
+    return String(v);
+  };
+  const tulis = (awal) => function () { logs.push(awal + Array.prototype.map.call(arguments, fmt).join(" ")); };
+  const konsol = { log: tulis(""), info: tulis(""), warn: tulis("Peringatan: "), error: tulis("Peringatan: ") };
+  const uji = tes || [];
+  let galat = null, hasilTes = null;
   try {
-    new Function('"use strict";\n' + code)();
-  } catch (e) {
-    logs.push("❌ Error: " + e.message);
-  } finally {
-    console.log = orig.log;
-    console.error = orig.error;
-    console.warn = orig.warn;
-  }
-  outEl.textContent = logs.length ? logs.join("\n") : "(Tidak ada output. Gunakan console.log(...) untuk menampilkan hasil.)";
+    const fungsi = new Function("console", '"use strict";\n' + kode + "\n;return [" + uji.map((t) => "() => (" + t + ")").join(",") + "];")(konsol);
+    hasilTes = fungsi.map((f) => {
+      try {
+        const v = f();
+        let teks;
+        try { teks = JSON.stringify(v); } catch (e) { teks = String(v); }
+        return { ok: true, teks: teks === undefined ? "undefined" : teks, tampil: typeof v === "string" ? JSON.stringify(v) : fmt(v) };
+      } catch (e) { return { ok: false, galat: e.name + ": " + e.message }; }
+    });
+  } catch (e) { galat = e.name + ": " + e.message; }
+  return { logs: logs, galat: galat, hasilTes: hasilTes };
+}
+/* Menjalankan kode di Web Worker terpisah, sehingga perulangan tanpa akhir tidak membuat halaman macet:
+   setelah batas waktu, pekerjanya dihentikan. */
+let urlPekerjaKode = null;
+function jalankanKode(kode, tes, batasMs) {
+  return new Promise((selesai) => {
+    let w;
+    try {
+      if (!urlPekerjaKode) {
+        const sumber = eksekusiKode.toString() + "\nself.onmessage = function (e) { self.postMessage(eksekusiKode(e.data.kode, e.data.tes)); };";
+        urlPekerjaKode = URL.createObjectURL(new Blob([sumber], { type: "text/javascript" }));
+      }
+      w = new Worker(urlPekerjaKode);
+    } catch (e) {
+      selesai(eksekusiKode(kode, tes)); // browser tanpa Worker: jalankan langsung
+      return;
+    }
+    const jam = setTimeout(() => { w.terminate(); selesai({ logs: [], galat: "WAKTU", hasilTes: null }); }, batasMs || 3000);
+    w.onmessage = (e) => { clearTimeout(jam); w.terminate(); selesai(e.data); };
+    w.onerror = (e) => { clearTimeout(jam); w.terminate(); if (e.preventDefault) e.preventDefault(); selesai({ logs: [], galat: e.message || "Error", hasilTes: null }); };
+    w.postMessage({ kode: kode, tes: tes || [] });
+  });
+}
+/* Penjelasan ramah untuk pesan error yang paling sering ditemui pemula */
+function jelaskanGalat(g) {
+  if (!g) return "";
+  if (g === "WAKTU") return "Kode berjalan lebih dari 3 detik lalu dihentikan. Mungkin ada perulangan yang tidak pernah berhenti — periksa apakah penghitungnya benar-benar bertambah.";
+  let m;
+  if ((m = /ReferenceError: (\S+) is not defined/.exec(g))) return "Nama \"" + m[1] + "\" belum dikenal. Salah ketik (huruf besar-kecil juga dihitung), atau lupa membuatnya dengan let/const/function?";
+  if (/Assignment to constant variable/.test(g)) return "Nilai variabel const tidak boleh diganti. Pakai let bila nilainya memang akan berubah.";
+  if ((m = /TypeError: (\S+) is not a function/.exec(g))) return "\"" + m[1] + "\" bukan fungsi, jadi tidak bisa dipanggil dengan tanda kurung. Periksa ejaan namanya.";
+  if (/TypeError: Cannot read propert/.test(g)) return "Kamu membaca isi dari sesuatu yang kosong (undefined/null). Periksa apakah datanya sudah ada sebelum dibaca.";
+  if (/SyntaxError/.test(g)) return "Ada salah tulis: periksa pasangan kurung ( ) { } [ ], tanda kutip, dan koma.";
+  return "";
+}
+function pgRun(code, outEl) {
+  outEl.textContent = "Menjalankan…";
+  return jalankanKode(code).then((r) => {
+    const baris = r.logs.slice();
+    if (r.galat) {
+      baris.push((r.galat === "WAKTU" ? "Dihentikan." : "Error — " + r.galat));
+      const saran = jelaskanGalat(r.galat);
+      if (saran) baris.push("Petunjuk: " + saran);
+    }
+    outEl.textContent = baris.length ? baris.join("\n") : "(Tidak ada output. Gunakan console.log(...) untuk menampilkan hasil.)";
+  });
 }
 function buildPlayground(host, initialCode) {
   const ta = h("textarea", { class: "pg-code", spellcheck: "false" });
