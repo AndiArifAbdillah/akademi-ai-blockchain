@@ -1611,6 +1611,7 @@ const GLOSSARY = [
   ["SWIFT", "Jaringan pesan aman antar lembaga keuangan dunia; yang dikirim perintah pembayaran, bukan uangnya."],
   ["Bank Koresponden", "Bank di luar negeri tempat sebuah bank membuka rekening untuk melayani transfer lintas negara."],
   ["Nostro", "Rekening milik bank kita yang dibuka di bank lain di luar negeri (kebalikannya: vostro)."],
+  ["Proyek Garuda", "Payung pengembangan Rupiah Digital oleh Bank Indonesia sejak 2022, dimulai dari sisi wholesale."],
 ];
 
 function renderGlossary() {

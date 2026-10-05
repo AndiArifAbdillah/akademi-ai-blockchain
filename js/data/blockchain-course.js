@@ -6650,83 +6650,150 @@ Bitcoin bersifat <b>pseudonim</b>, bukan anonim: nama tidak tercatat, tapi semua
         },
         {
           id: "bc-pl-1",
-          title: "CBDC & Rupiah Digital",
-          duration: "12 menit",
+          title: "CBDC & Rupiah Digital — Uang Bank Sentral di Era Digital",
+          duration: "15 menit",
           content: `
-<p>Sementara crypto berkembang, <b>bank sentral</b> di banyak negara membuat versi digital mata uang mereka sendiri: <b>CBDC</b>.</p>
-
-<div data-diagram="vs" data-left="CBDC::Diterbitkan bank sentral::Terpusat, nilai stabil" data-right="CRYPTO::Tanpa penerbit pusat::Terdesentralisasi, fluktuatif" data-caption="CBDC bukan crypto"></div>
-
-
-<div class="callout">
-<b>CBDC</b> (Central Bank Digital Currency) = <b>uang resmi negara dalam bentuk digital</b>, diterbitkan &amp; dijamin <b>bank sentral</b>. Nilainya sama persis dengan uang kertasnya — Rp1 digital = Rp1 tunai.
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Saldo rekening bankmu adalah <b>utang bank umum kepadamu</b>. Saat kamu transfer ke bank lain, utang antarbank itu diselesaikan di rekening giro masing-masing bank di <b>Bank Indonesia</b> (<a href="#/lesson/acc-bayar-1">Bagaimana Uang Berpindah Antarbank</a>, jalur Akuntansi). <b>Stablecoin</b> seperti USDC adalah token yang diterbitkan perusahaan swasta dan dijaga setara 1 dolar (<a href="#/lesson/bc-app-2">Stablecoin</a>).
 </div>
 
-<h3>Fundamental: bedanya dengan yang sudah ada</h3>
+<h3>Pertanyaan kuncinya: siapa yang berutang kepadamu?</h3>
+<p>Semua "uang digital" tampak sama di layar ponsel. Bedanya baru terlihat saat ditanya: kalau terjadi masalah, siapa yang wajib membayar?</p>
 <table class="tbl">
-  <tr><th></th><th>CBDC</th><th>Uang di rekening bank</th><th>Crypto (mis. Bitcoin)</th></tr>
-  <tr><td>Penerbit</td><td><b>Bank sentral</b></td><td>Bank umum</td><td>Tidak ada (terdesentralisasi)</td></tr>
-  <tr><td>Risiko bank bangkrut</td><td>Tidak ada</td><td>Ada (dijamin sampai batas tertentu)</td><td>Tidak berlaku</td></tr>
-  <tr><td>Nilai</td><td>Stabil (= mata uang negara)</td><td>Stabil</td><td>Sangat fluktuatif</td></tr>
-  <tr><td>Kendali</td><td>Terpusat pada negara</td><td>Bank</td><td>Pemilik kunci</td></tr>
+  <tr><th>Bentuk uang</th><th>Yang berutang kepadamu</th><th>Kalau penerbitnya bangkrut</th></tr>
+  <tr><td>Uang kertas &amp; logam</td><td><b>Bank Indonesia</b></td><td>Praktis tidak mungkin</td></tr>
+  <tr><td>Saldo rekening bank</td><td>Bank umum</td><td>Dijamin LPS sampai batas tertentu</td></tr>
+  <tr><td>Saldo dompet digital</td><td>Perusahaan penerbitnya</td><td>Bergantung pada dana yang dipisahkan penerbit</td></tr>
+  <tr><td>Stablecoin</td><td>Perusahaan swasta penerbitnya</td><td>Bergantung pada cadangannya</td></tr>
+  <tr><td>Bitcoin</td><td>Tidak ada siapa pun</td><td>Tidak berlaku — tapi harganya naik-turun bebas</td></tr>
+  <tr><td class="ok-cell"><b>Rupiah Digital</b></td><td class="ok-cell"><b>Bank Indonesia</b></td><td class="ok-cell">Sama amannya dengan uang kertas</td></tr>
+</table>
+<p>Di antara semua uang digital yang kamu pakai sehari-hari, belum ada satu pun yang merupakan utang langsung bank sentral. Hanya uang tunai yang begitu. <b>CBDC</b> mengisi kekosongan itu.</p>
+
+<h3>Apa itu CBDC?</h3>
+<div class="callout">
+<b>CBDC</b> (<i>Central Bank Digital Currency</i>) = <b>uang resmi negara dalam bentuk digital, yang diterbitkan langsung oleh bank sentral</b>. Nilainya selalu sama dengan uang kertasnya: Rp1 digital = Rp1 tunai.
+</div>
+<p>Di Indonesia, dasar hukumnya sudah ada. <b>UU P2SK (2023)</b> menetapkan bahwa rupiah terdiri atas <b>rupiah kertas, rupiah logam, dan rupiah digital</b>. Rupiah Digital adalah <b>kewajiban moneter Bank Indonesia</b>, berlaku sebagai alat pembayaran yang sah, dan hanya BI yang berwenang menerbitkan serta mengelolanya.</p>
+<div data-diagram="vs" data-left="CBDC::Diterbitkan bank sentral::Terpusat, nilai tetap" data-right="CRYPTO::Tanpa penerbit pusat::Terdesentralisasi, harga bebas" data-caption="CBDC bukan crypto milik pemerintah"></div>
+<p>CBDC boleh saja memakai teknologi yang mirip blockchain, tapi <b>buku catatannya dipegang bank sentral</b>. Siapa yang boleh ikut mencatat, dan aturan apa yang berlaku, ditentukan BI — kebalikan dari semangat Bitcoin.</p>
+
+<h3>Dua jenis: wholesale dan retail</h3>
+<table class="tbl">
+  <tr><th></th><th>Wholesale</th><th>Retail</th></tr>
+  <tr><td>Dipakai oleh</td><td>Bank dan lembaga keuangan</td><td>Masyarakat umum</td></tr>
+  <tr><td>Gunanya</td><td>Penyelesaian antarbank, jual-beli surat berharga</td><td>Belanja dan menyimpan uang, seperti uang tunai di ponsel</td></tr>
+  <tr><td>Di Indonesia disebut</td><td>w-Rupiah Digital</td><td>r-Rupiah Digital</td></tr>
+</table>
+<p>Rupiah Digital dirancang <b>dua tingkat</b>: BI menerbitkannya ke bank dan lembaga tertentu, lalu merekalah yang menyalurkannya ke masyarakat. Dengan cara ini bank umum tetap berperan, dan BI tidak perlu melayani ratusan juta nasabah sendiri.</p>
+<div data-diagram="flow" data-steps="Bank Indonesia menerbitkan|Bank &amp; lembaga peserta (wholesale)|Masyarakat (retail, tahap akhir)" data-caption="Model dua tingkat Rupiah Digital"></div>
+
+<h3>Proyek Garuda: dari kertas putih sampai uji coba</h3>
+<p><b>Proyek Garuda</b> adalah payung pengembangan Rupiah Digital oleh Bank Indonesia. Desainnya dibagi tiga tahap, dimulai dari yang paling sempit:</p>
+<table class="tbl">
+  <tr><th>Tahap</th><th>Isinya</th></tr>
+  <tr><td><b>Immediate state</b></td><td>w-Rupiah Digital dasar: penerbitan, pemusnahan, dan transfer antarpeserta</td></tr>
+  <tr><td><b>Intermediate state</b></td><td>Wholesale diperluas ke operasi moneter dan transaksi pasar keuangan</td></tr>
+  <tr><td><b>End state</b></td><td>Wholesale dan retail diuji terpadu dari ujung ke ujung</td></tr>
+</table>
+<table class="tbl">
+  <tr><th>Waktu</th><th>Perkembangan</th></tr>
+  <tr><td>November 2022</td><td>BI menerbitkan <i>white paper</i> Proyek Garuda</td></tr>
+  <tr><td>2023</td><td>Dokumen konsultasi dan masukan publik; UU P2SK mengakui rupiah digital</td></tr>
+  <tr><td>2024</td><td>Uji konsep tahap pertama selesai: teknologi buku catatan terdistribusi dinilai memenuhi kebutuhan bisnis dan teknis untuk wholesale</td></tr>
+  <tr><td>2026</td><td>Uji coba berlanjut, termasuk rencana <b>surat berharga negara (SBN) dalam bentuk token</b> yang diselesaikan dengan Rupiah Digital, serta kerja sama lintas negara</td></tr>
+  <tr><td>Retail untuk masyarakat</td><td><b>Belum ada tanggal peluncuran</b></td></tr>
 </table>
 
-<div class="callout warn">
-<b>Perbedaan paling penting:</b> CBDC bersifat <b>terpusat</b> — kebalikan dari semangat desentralisasi crypto. Ia memakai teknologi digital (kadang blockchain), tapi <b>kendalinya tetap di negara</b>. Jadi CBDC bukan "crypto milik pemerintah".
-</div>
-
-<h3>Dua jenis</h3>
+<h3>Kalau BI-FAST sudah cepat, untuk apa Rupiah Digital?</h3>
+<p>Pertanyaan yang adil: transfer rupiah sudah seketika dan murah. Alasan utamanya justru bukan untuk belanja sehari-hari:</p>
 <ul>
-  <li><b>Wholesale</b> — untuk transaksi antarbank &amp; lembaga keuangan (penyelesaian lebih cepat &amp; murah).</li>
-  <li><b>Retail</b> — untuk masyarakat umum, seperti uang tunai digital.</li>
+  <li><b>Tukar-menukar serentak.</b> Saat bank membeli SBN bertoken, token SBN dan Rupiah Digital bisa berpindah dalam <b>satu transaksi yang sama</b> — keduanya terjadi atau keduanya batal. Tidak ada lagi risiko satu pihak sudah menyerahkan barang tapi pihak lain belum membayar.</li>
+  <li><b>Kedaulatan.</b> Kalau suatu hari masyarakat dan bisnis lebih banyak memakai stablecoin dolar buatan perusahaan asing, kemampuan BI menjaga nilai rupiah dan mengatur suku bunga melemah. Rupiah Digital adalah jawaban versi negara.</li>
+  <li><b>Uang yang bisa diprogram.</b> Aturan bisa ditanam pada uangnya, misalnya bantuan yang hanya bisa dipakai untuk keperluan tertentu. Ini kekuatan sekaligus sumber kekhawatiran.</li>
+  <li><b>Lintas negara.</b> Bank sentral di berbagai negara sedang menguji cara menghubungkan CBDC mereka agar transfer antarnegara tidak perlu rantai bank koresponden yang panjang.</li>
 </ul>
 
-<h3>Di Indonesia: Rupiah Digital</h3>
-<p>Bank Indonesia mengembangkan <b>Rupiah Digital</b> melalui inisiatif yang dikenal sebagai <b>Proyek Garuda</b>, dengan tahapan yang dimulai dari sisi <b>wholesale</b>. Tujuannya antara lain memperkuat efisiensi sistem pembayaran &amp; kedaulatan mata uang di era digital.</p>
-
+<h3>Manfaat dan kekhawatiran</h3>
 <table class="tbl">
-  <tr><th>👍 Potensi manfaat</th><th>👎 Kekhawatiran</th></tr>
-  <tr><td>Pembayaran lebih cepat &amp; murah</td><td><b>Privasi</b> — transaksi berpotensi lebih mudah dipantau</td></tr>
-  <tr><td>Menjangkau masyarakat tanpa rekening bank</td><td>Kendali terpusat (mis. kemungkinan pembatasan tertentu)</td></tr>
-  <tr><td>Penyaluran bantuan sosial lebih tepat sasaran</td><td>Dampak pada peran bank umum</td></tr>
+  <tr><th>Potensi manfaat</th><th>Kekhawatiran</th></tr>
+  <tr><td>Penyelesaian antarbank dan surat berharga lebih efisien</td><td><b>Privasi</b>: transaksi berpotensi lebih mudah dipantau</td></tr>
+  <tr><td>Uang bank sentral yang aman, tanpa risiko penerbit bangkrut</td><td><b>Kendali</b>: uang yang bisa diprogram juga bisa dibatasi</td></tr>
+  <tr><td>Bantuan sosial bisa lebih tepat sasaran</td><td><b>Pelarian dana dari bank</b>: saat krisis, orang bisa memindahkan simpanan besar-besaran ke CBDC — karena itu banyak bank sentral mempertimbangkan batas saldo</td></tr>
+  <tr><td>Alternatif resmi bagi stablecoin swasta</td><td>Biaya dan risiko keamanan sistem baru berskala nasional</td></tr>
 </table>
 
+<h3>Bagaimana dengan negara lain?</h3>
+<table class="tbl">
+  <tr><th>Negara</th><th>Keadaan</th></tr>
+  <tr><td>Bahama, Nigeria, Jamaika</td><td>Sudah meluncurkan CBDC retail (2020–2022) — tapi pemakaiannya masih rendah</td></tr>
+  <tr><td>Tiongkok</td><td>Uji coba e-CNY berskala sangat besar</td></tr>
+  <tr><td>Uni Eropa</td><td>Sedang menyiapkan euro digital</td></tr>
+  <tr><td>Amerika Serikat</td><td>Justru melarang lembaga federalnya mengembangkan CBDC lewat perintah eksekutif Januari 2025, terutama karena alasan privasi</td></tr>
+</table>
+<p>Lebih dari 130 negara sedang menjajaki CBDC, tapi hanya segelintir yang benar-benar meluncurkannya ke masyarakat. Pelajarannya: membuat teknologinya relatif mudah; meyakinkan orang untuk memakainya — ketika uang tunai, rekening bank, dan dompet digital sudah nyaman — jauh lebih sulit.</p>
 <div class="callout warn">
-<b>Catatan:</b> perkembangan CBDC bergerak cepat &amp; berbeda tiap negara. Materi ini gambaran umum untuk edukasi — cek sumber resmi (mis. Bank Indonesia) untuk status terbaru.
+<b>Status per Oktober 2026.</b> Perkembangan CBDC bergerak cepat. Untuk keadaan terbaru Rupiah Digital, periksa halaman resmi Bank Indonesia di bi.go.id.
 </div>
 `,
           keyPoints: [
-            "CBDC = uang resmi negara dalam bentuk digital, diterbitkan & dijamin bank sentral; nilainya stabil.",
-            "Berbeda dari crypto: CBDC terpusat & dikendalikan negara, bukan terdesentralisasi.",
-            "Dua jenis: wholesale (antarbank) dan retail (masyarakat umum).",
-            "Indonesia mengembangkan Rupiah Digital (Proyek Garuda), dimulai dari sisi wholesale.",
-            "Manfaat: pembayaran efisien & inklusi; kekhawatiran: privasi & kendali terpusat.",
+            "CBDC = uang resmi negara dalam bentuk digital yang menjadi utang langsung bank sentral; Rp1 digital = Rp1 tunai.",
+            "UU P2SK 2023: rupiah terdiri atas rupiah kertas, logam, dan digital; hanya BI yang menerbitkan dan mengelolanya.",
+            "CBDC bukan crypto: teknologinya bisa mirip blockchain, tapi buku catatannya dikendalikan bank sentral.",
+            "Wholesale untuk antarbank, retail untuk masyarakat; Rupiah Digital memakai model dua tingkat lewat bank.",
+            "Proyek Garuda: immediate, intermediate, end state; per 2026 masih uji coba wholesale (termasuk SBN bertoken), retail belum dijadwalkan."
+          ],
+          practice: [
+            { type: "choice", q: "Kamu menyimpan Rp100.000 dalam bentuk Rupiah Digital. Siapa yang berutang atas uang itu kepadamu?", options: ["Bank tempat kamu membuka rekening", "Bank Indonesia", "Perusahaan dompet digital", "Tidak ada siapa pun"], answer: 1, hint: "Rupiah Digital adalah kewajiban moneter siapa?", solution: "Bank Indonesia — sama seperti uang kertas, Rupiah Digital adalah kewajiban moneter BI." },
+            { type: "choice", q: "Bank membeli SBN bertoken dan membayar dengan Rupiah Digital dalam satu transaksi yang sama. Apa manfaat utamanya?", options: ["Bunga SBN menjadi lebih tinggi", "Token dan pembayaran berpindah bersamaan — keduanya terjadi atau keduanya batal", "Transaksi tidak tercatat di mana pun", "Bank tidak perlu memiliki rekening di BI"], answer: 1, hint: "Risiko apa yang hilang bila serah-terima terjadi serentak?", solution: "Tidak ada lagi risiko satu pihak sudah menyerahkan SBN tapi pembayarannya belum diterima." }
           ],
           quiz: [
             {
-              q: "Apa perbedaan mendasar CBDC dengan Bitcoin?",
+              q: "Apa beda mendasar Rupiah Digital dengan saldo rekening bank?",
               options: [
-                "CBDC diterbitkan dan dikendalikan bank sentral, nilainya pun stabil",
-                "CBDC memakai blockchain publik yang bisa ditambang oleh siapa saja",
-                "CBDC jumlahnya dibatasi secara permanen seperti halnya Bitcoin",
-                "CBDC hanya bisa dipakai untuk transaksi antarnegara",
+                "Rupiah Digital utang Bank Indonesia; saldo rekening utang bank umum",
+                "Rupiah Digital nilainya naik-turun seperti aset kripto pada umumnya",
+                "Saldo rekening bank dijamin langsung oleh Bank Indonesia tanpa batas",
+                "Rupiah Digital hanya boleh dipakai untuk transaksi ke luar negeri"
               ],
               answer: 0,
-              explain:
-                "CBDC adalah uang negara versi digital — terpusat & stabil, bukan terdesentralisasi.",
+              explain: "Rupiah Digital adalah kewajiban moneter BI, sama seperti uang kertas; saldo rekening adalah utang bank umum."
             },
             {
-              q: "Apa kekhawatiran utama terhadap CBDC retail?",
+              q: "Kenapa CBDC tidak bisa disebut crypto milik pemerintah?",
               options: [
-                "Privasi, karena transaksi berpotensi lebih mudah dipantau terpusat",
-                "Nilainya bisa berayun tajam seperti aset kripto pada umumnya",
-                "Jumlahnya terbatas sehingga tidak cukup untuk seluruh penduduk",
-                "Tidak ada pihak yang bertanggung jawab bila terjadi kesalahan",
+                "Buku catatannya dikendalikan bank sentral, bukan dipegang bersama",
+                "CBDC sama sekali tidak memakai teknologi komputer apa pun",
+                "CBDC jumlahnya dibatasi permanen seperti jumlah Bitcoin",
+                "CBDC hanya bisa ditambang oleh bank-bank milik negara"
               ],
               answer: 0,
-              explain: "Sentralisasi memunculkan isu privasi & potensi kontrol atas transaksi.",
+              explain: "Teknologinya bisa mirip, tapi siapa yang mencatat dan aturan apa yang berlaku ditentukan bank sentral."
             },
-          ],
+            {
+              q: "Rupiah Digital tahap pertama (immediate state) berfokus pada apa?",
+              options: [
+                "Wholesale: penerbitan, pemusnahan, dan transfer antarpeserta",
+                "Retail: pembayaran belanja masyarakat di warung dan toko",
+                "Pengganti seluruh uang kertas dan logam secepatnya",
+                "Penambangan rupiah oleh masyarakat dengan komputer"
+              ],
+              answer: 0,
+              explain: "Proyek Garuda dimulai dari sisi wholesale yang paling sempit, baru kemudian diperluas."
+            },
+            {
+              q: "Kenapa banyak bank sentral mempertimbangkan batas saldo CBDC retail?",
+              options: [
+                "Agar simpanan tidak pindah besar-besaran dari bank saat krisis",
+                "Agar biaya pembuatan uang digitalnya bisa ditekan serendah mungkin",
+                "Karena jumlah CBDC yang bisa diterbitkan dibatasi teknologinya",
+                "Karena CBDC berbunga lebih tinggi daripada tabungan biasa"
+              ],
+              answer: 0,
+              explain: "Bila semua orang memindahkan simpanan ke uang bank sentral, bank kehilangan dana untuk disalurkan sebagai kredit."
+            }
+          ]
         },
         {
           id: "bc-pl-2",

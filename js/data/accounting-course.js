@@ -5571,6 +5571,7 @@ Uang yang kamu titipkan di bank dicatat bank sebagai <b>kewajiban</b> — utang 
 <h3>Lalu, di mana blockchain?</h3>
 <p>Di sistem bank, <b>pesan</b> dan <b>penyelesaian</b> adalah dua langkah terpisah yang dijaga pihak tepercaya: jaringan switching dan Bank Indonesia. Di blockchain, keduanya menyatu: transaksi yang masuk blok sudah sekaligus tuntas, dan buku catatannya dipegang bersama, bukan oleh satu bank sentral.</p>
 <p>Tapi jujur saja: untuk transfer rupiah di dalam negeri, BI-FAST sudah seketika, 24 jam, dan paling mahal Rp2.500. Keunggulan blockchain jauh lebih terasa untuk mengirim uang <b>ke luar negeri</b> — topik pelajaran berikutnya.</p>
+<p>Bank Indonesia sendiri sedang menguji versi digital dari uang bank sentral untuk penyelesaian antarbank: <b>Rupiah Digital</b> (<a href="#/lesson/bc-pl-1">CBDC &amp; Rupiah Digital</a>, jalur Crypto).</p>
 `,
           keyPoints: [
             "Saldo rekening adalah catatan utang bank kepada nasabah; transfer sesama bank cukup mengubah dua baris catatan.",
