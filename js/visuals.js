@@ -6006,13 +6006,210 @@ function jalankanPython(kode, tes, status) {
   });
 }
 
+/* ---------- Solidity di browser: compiler solc + EVM ethereumjs, diunduh saat pertama dipakai ---------- */
+const SOL_CDN = {
+  soljson: "https://cdn.jsdelivr.net/npm/solc@0.8.37/soljson.js",
+  evm: "https://cdn.jsdelivr.net/npm/@ethereumjs/evm@10.1.3/+esm",
+  util: "https://cdn.jsdelivr.net/npm/@ethereumjs/util@10.1.3/+esm",
+  ethers: "https://cdn.jsdelivr.net/npm/ethers@6.17.0/+esm",
+};
+/* Inti: compile → deploy ke EVM baru (3 akun × 100 ETH) → jalankan langkah. Dijalankan di worker (lewat toString)
+   dan oleh verify.js di Node untuk menguji contoh jawaban. Langkah berbentuk teks:
+   "[akunN] [+wei] fungsi(arg, ...)", mis. "akun2 +1000 setor()"; akunN di argumen diganti alamatnya. */
+function intiSolidity() {
+  const ALAMAT_AKUN = ["0x5B38Da6a701c568545dCfcB03FcB875f56beddC4", "0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2", "0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db"];
+  const BATAS_GAS = 30000000n;
+  const PANIC = { 1: "assert gagal", 17: "angka melewati batas (overflow/underflow)", 18: "pembagian dengan nol", 50: "nomor urut array melewati batas" };
+  const normal = (v) => {
+    if (typeof v === "bigint") return v <= 9007199254740991n && v >= -9007199254740991n ? Number(v) : v.toString();
+    if (v && typeof v === "object" && typeof v.toArray === "function") return v.toArray().map(normal);
+    if (Array.isArray(v)) return v.map(normal);
+    return v;
+  };
+  const baris = (sumber, posisi) => sumber.slice(0, posisi).split("\n").length;
+  function alasanRevert(dep, iface, ex) {
+    const data = ex.returnValue && ex.returnValue.length ? dep.bytesToHex(ex.returnValue) : "0x";
+    if (data.length > 2) {
+      try {
+        const e = iface.parseError(data);
+        if (e && e.name === "Error") return String(e.args[0]);
+        if (e && e.name === "Panic") return PANIC[Number(e.args[0])] || "panic " + e.args[0];
+        if (e) return e.name;
+      } catch (x) { /* data revert tidak dikenali */ }
+    }
+    const err = ex.exceptionError && (ex.exceptionError.error || String(ex.exceptionError));
+    if (err === "out of gas") return "kehabisan gas";
+    return err === "revert" ? "revert tanpa pesan" : String(err);
+  }
+  async function siapkanSolidity(dep, sumber, namaKontrak) {
+    const masukan = { language: "Solidity", sources: { "Kontrak.sol": { content: sumber } }, settings: { outputSelection: { "*": { "*": ["abi", "evm.bytecode.object"] } } } };
+    const keluar = JSON.parse(dep.compile(JSON.stringify(masukan)));
+    const pesan = keluar.errors || [];
+    const galat = pesan.filter((e) => e.severity === "error");
+    const lokasi = (e) => (e.sourceLocation && e.sourceLocation.start >= 0 ? " (baris " + baris(sumber, e.sourceLocation.start) + ")" : "");
+    if (galat.length) return { galat: galat[0].type + ": " + galat[0].message + lokasi(galat[0]) };
+    const peringatan = pesan.filter((e) => e.severity === "warning").map((e) => e.message + lokasi(e));
+    const semua = (keluar.contracts && keluar.contracts["Kontrak.sol"]) || {};
+    if (namaKontrak && !semua[namaKontrak]) return { galat: "Contract bernama " + namaKontrak + " tidak ditemukan di kodemu." };
+    const nama = namaKontrak || Object.keys(semua).pop();
+    if (!nama) return { galat: "Belum ada contract di kodemu." };
+    const k = semua[nama];
+    if (!k.evm.bytecode.object) return { galat: nama + " tidak bisa di-deploy (interface atau abstract contract)." };
+    const iface = new dep.Interface(k.abi);
+    const evm = await dep.createEVM();
+    const akun = ALAMAT_AKUN.map((a) => dep.createAddressFromString(a));
+    for (const a of akun) await evm.stateManager.putAccount(a, dep.createAccount({ nonce: 0n, balance: 100n * 10n ** 18n }));
+    const r = await evm.runCall({ caller: akun[0], data: dep.hexToBytes("0x" + k.evm.bytecode.object), gasLimit: BATAS_GAS });
+    if (r.execResult.exceptionError) return { galat: "Deploy gagal: " + alasanRevert(dep, iface, r.execResult) };
+    return { nama: nama, abi: k.abi, iface: iface, evm: evm, akun: akun, alamat: r.createdAddress, gasDeploy: Number(r.execResult.executionGasUsed), peringatan: peringatan };
+  }
+  function uraiLangkah(teks) {
+    const m = /^\s*(?:akun([1-3])\s+)?(?:\+(\d+)\s+)?([A-Za-z_]\w*)\s*\(([\s\S]*)\)\s*$/.exec(teks);
+    if (!m) return null;
+    let args;
+    try { args = JSON.parse("[" + m[4].replace(/\bakun([1-3])\b/g, (_, n) => '"' + ALAMAT_AKUN[n - 1] + '"') + "]"); } catch (e) { return null; }
+    return { dari: m[1] ? +m[1] - 1 : 0, nilai: m[2] || "0", fungsi: m[3], args: args };
+  }
+  async function jalankanLangkah(dep, s, langkah) {
+    const l = typeof langkah === "string" ? uraiLangkah(langkah) : langkah;
+    if (!l) return { ok: false, galat: "Langkah tidak bisa dibaca: " + langkah };
+    let f = null;
+    try { f = s.iface.getFunction(l.fungsi); } catch (e) { f = null; }
+    if (!f) return { ok: false, galat: "Fungsi " + l.fungsi + " tidak ditemukan (periksa nama dan kata public)." };
+    let data;
+    try { data = s.iface.encodeFunctionData(f, l.args); } catch (e) { return { ok: false, galat: "Argumen untuk " + l.fungsi + " tidak cocok: " + (e.shortMessage || e.message) }; }
+    const baca = f.stateMutability === "view" || f.stateMutability === "pure";
+    const r = await s.evm.runCall({ caller: s.akun[l.dari || 0], to: s.alamat, data: dep.hexToBytes(data), value: BigInt(l.nilai || 0), gasLimit: BATAS_GAS });
+    const ex = r.execResult;
+    const gas = Number(ex.executionGasUsed);
+    if (ex.exceptionError) return { ok: true, revert: true, alasan: alasanRevert(dep, s.iface, ex), gas: gas, baca: baca };
+    let nilai = null;
+    try {
+      const hasil = s.iface.decodeFunctionResult(f, dep.bytesToHex(ex.returnValue));
+      nilai = hasil.length === 0 ? null : hasil.length === 1 ? normal(hasil[0]) : normal(hasil);
+    } catch (e) { nilai = null; }
+    const log = (ex.logs || []).map((lg) => {
+      try {
+        const p = s.iface.parseLog({ topics: lg[1].map((t) => dep.bytesToHex(t)), data: dep.bytesToHex(lg[2]) });
+        return p.name + "(" + p.args.toArray().map((a) => String(normal(a))).join(", ") + ")";
+      } catch (e) { return "(log)"; }
+    });
+    return { ok: true, revert: false, nilai: nilai, gas: gas, log: log, baca: baca };
+  }
+  async function saldoAkun(dep, s) {
+    const hasil = [];
+    for (const a of s.akun.concat([s.alamat])) {
+      const acc = await s.evm.stateManager.getAccount(a);
+      hasil.push(acc ? acc.balance.toString() : "0");
+    }
+    return hasil;
+  }
+  async function ujiSolidity(dep, sumber, kontrak, langkah) {
+    const s = await siapkanSolidity(dep, sumber, kontrak);
+    if (s.galat) return { galat: s.galat, hasilTes: null };
+    const hasilTes = [];
+    for (const t of langkah) hasilTes.push(await jalankanLangkah(dep, s, t));
+    return { galat: null, hasilTes: hasilTes, peringatan: s.peringatan, gasDeploy: s.gasDeploy };
+  }
+  return { siapkanSolidity: siapkanSolidity, jalankanLangkah: jalankanLangkah, ujiSolidity: ujiSolidity, saldoAkun: saldoAkun, uraiLangkah: uraiLangkah, ALAMAT_AKUN: ALAMAT_AKUN };
+}
+/* AKHIR-INTI-SOLIDITY */
+let pekerjaSol = null, solSiap = false;
+function buatPekerjaSolidity() {
+  const sumber = [
+    'import { createEVM } from "' + SOL_CDN.evm + '";',
+    'import { createAddressFromString, hexToBytes, bytesToHex, createAccount } from "' + SOL_CDN.util + '";',
+    'import { Interface } from "' + SOL_CDN.ethers + '";',
+    "const INTI = (" + intiSolidity.toString() + ")();",
+    "const siap = (async () => {",
+    "  const teks = await (await fetch(" + JSON.stringify(SOL_CDN.soljson) + ")).text();",
+    "  await new Promise((selesai) => { self.Module = { onRuntimeInitialized: selesai }; (0, eval)(teks); if (self.Module.calledRun) selesai(); });",
+    "  const compile = self.Module.cwrap('solidity_compile', 'string', ['string', 'number', 'number']);",
+    "  self.postMessage({ jenis: 'siap' });",
+    "  return { compile, createEVM, createAddressFromString, hexToBytes, bytesToHex, createAccount, Interface };",
+    "})().catch((e) => { self.postMessage({ jenis: 'gagal-muat', pesan: String(e) }); return null; });",
+    "const sesi = new Map();",
+    "self.onmessage = async (e) => {",
+    "  const dep = await siap; if (!dep) return;",
+    "  const m = e.data; let data;",
+    "  try {",
+    "    if (m.jenis === 'uji') data = await INTI.ujiSolidity(dep, m.sumber, m.kontrak, m.langkah);",
+    "    else if (m.jenis === 'deploy') {",
+    "      const s = await INTI.siapkanSolidity(dep, m.sumber, m.kontrak);",
+    "      if (s.galat) data = s;",
+    "      else { sesi.set(m.sesi, s); data = { kontrak: s.nama, abi: s.abi, alamat: s.alamat.toString(), gas: s.gasDeploy, peringatan: s.peringatan, saldo: await INTI.saldoAkun(dep, s) }; }",
+    "    } else if (m.jenis === 'panggil') {",
+    "      const s = sesi.get(m.sesi);",
+    "      data = s ? Object.assign(await INTI.jalankanLangkah(dep, s, m.langkah), { saldo: await INTI.saldoAkun(dep, s) }) : { galat: 'Deploy dulu kontraknya.' };",
+    "    }",
+    "  } catch (x) { data = { galat: String((x && x.message) || x) }; }",
+    "  self.postMessage({ jenis: 'hasil', id: m.id, data: data });",
+    "};",
+  ].join("\n");
+  solSiap = false;
+  return new Worker(URL.createObjectURL(new Blob([sumber], { type: "text/javascript" })), { type: "module" });
+}
+/* Mengirim pesan ke pekerja Solidity. status(tahap): "muat" saat compiler & EVM sedang diunduh, "jalan" saat mulai bekerja. */
+function kirimSolidity(pesan, status) {
+  return new Promise((selesai) => {
+    let w;
+    try { if (!pekerjaSol) pekerjaSol = buatPekerjaSolidity(); w = pekerjaSol; }
+    catch (e) { selesai({ galat: "SOL-TIDAK-DIDUKUNG" }); return; }
+    const id = Math.random();
+    let jam = null;
+    const akhiri = (hasil) => { clearTimeout(jam); clearTimeout(jamMuat); w.removeEventListener("message", dengar); selesai(hasil); };
+    const mulaiJam = () => {
+      if (status) status("jalan");
+      jam = setTimeout(() => { w.terminate(); if (pekerjaSol === w) pekerjaSol = null; akhiri({ galat: "WAKTU" }); }, 15000);
+    };
+    const jamMuat = setTimeout(() => { w.terminate(); if (pekerjaSol === w) pekerjaSol = null; akhiri({ galat: "SOL-GAGAL-MUAT" }); }, 120000);
+    const dengar = (e) => {
+      const m = e.data;
+      if (m.jenis === "siap") { solSiap = true; clearTimeout(jamMuat); if (!jam) mulaiJam(); }
+      else if (m.jenis === "gagal-muat") { if (pekerjaSol === w) pekerjaSol = null; akhiri({ galat: "SOL-GAGAL-MUAT" }); }
+      else if (m.jenis === "hasil" && m.id === id) akhiri(m.data);
+    };
+    w.addEventListener("message", dengar);
+    w.addEventListener("error", () => { if (pekerjaSol === w) pekerjaSol = null; akhiri({ galat: "SOL-GAGAL-MUAT" }); }, { once: true });
+    if (solSiap) { clearTimeout(jamMuat); mulaiJam(); } else if (status) status("muat");
+    w.postMessage(Object.assign({ id: id }, pesan));
+  });
+}
+function jalankanSolidity(sumber, kontrak, langkah, status) {
+  return kirimSolidity({ jenis: "uji", sumber: sumber, kontrak: kontrak, langkah: langkah }, status);
+}
+/* Mencocokkan hasil satu langkah Solidity dengan harapan: nilai, null (cukup tidak revert),
+   "REVERT" (harus revert), atau "REVERT:pesan" (revert dengan pesan itu). "akunN" berarti alamat akun itu. */
+function cocokSolidity(hs, harap) {
+  if (!hs || !hs.ok) return false;
+  if (typeof harap === "string" && /^REVERT/.test(harap)) return hs.revert && (harap.length <= 7 || hs.alasan === harap.slice(7));
+  if (hs.revert) return false;
+  if (harap === null) return true;
+  const akun = ["0x5B38Da6a701c568545dCfcB03FcB875f56beddC4", "0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2", "0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db"];
+  const peta = (v) => {
+    if (Array.isArray(v)) return v.map(peta);
+    if (typeof v === "string" && /^akun[1-3]$/.test(v)) return akun[+v[4] - 1].toLowerCase();
+    if (typeof v === "string" && /^0x[0-9a-fA-F]{40}$/.test(v)) return v.toLowerCase();
+    return v;
+  };
+  return JSON.stringify(peta(hs.nilai)) === JSON.stringify(peta(harap));
+}
+
 /* Penjelasan ramah untuk pesan error yang paling sering ditemui pemula (JavaScript & Python) */
 function jelaskanGalat(g) {
   if (!g) return "";
   if (g === "WAKTU") return "Kode berjalan terlalu lama lalu dihentikan. Mungkin ada perulangan yang tidak pernah berhenti — periksa apakah penghitungnya benar-benar bertambah.";
   if (g === "PY-GAGAL-MUAT") return "Mesin Python gagal diunduh. Periksa koneksi internet, lalu coba lagi.";
   if (g === "PY-TIDAK-DIDUKUNG") return "Browser ini belum bisa menjalankan Python. Coba Chrome, Edge, Firefox, atau Safari versi terbaru.";
+  if (g === "SOL-GAGAL-MUAT") return "Compiler Solidity gagal diunduh. Periksa koneksi internet, lalu coba lagi.";
+  if (g === "SOL-TIDAK-DIDUKUNG") return "Browser ini belum bisa menjalankan Solidity. Coba Chrome, Edge, Firefox, atau Safari versi terbaru.";
   let m;
+  if (/ParserError: Expected ';'/.test(g)) return "Ada titik koma yang terlupa di akhir baris (atau baris sebelumnya).";
+  if ((m = /DeclarationError: Undeclared identifier/.exec(g))) return "Ada nama yang belum dikenal: salah ketik, atau variabelnya belum dibuat.";
+  if (/Data location must be "memory" or "calldata"/.test(g)) return "Parameter atau hasil berjenis string/array perlu kata memory, misalnya: string memory nama.";
+  if (/declared as view, but this expression|declared as pure, but this expression/.test(g)) return "Fungsi view/pure tidak boleh mengubah data. Hapus kata view/pure, atau jangan ubah variabel di dalamnya.";
+  if (/is not implicitly convertible/.test(g)) return "Jenis datanya tidak cocok, misalnya mengembalikan teks dari fungsi yang menjanjikan uint.";
+  if (/Function has no body|Expected '\{'/.test(g)) return "Periksa kurung kurawal { } pada fungsi.";
   if ((m = /NameError: name '([^']+)' is not defined/.exec(g))) return "Nama \"" + m[1] + "\" belum dikenal. Salah ketik (huruf besar-kecil dihitung), atau belum dibuat?";
   if (/IndentationError/.test(g)) return "Masalah indentasi: baris di dalam def, if, for, atau while harus menjorok ke dalam (biasanya 4 spasi) dan rata satu sama lain.";
   if (/unsupported operand type\(s\) for \+: 'int' and 'str'|can only concatenate str/.test(g)) return "Angka dan teks tidak bisa langsung dijumlahkan. Ubah dulu dengan int(...) atau str(...).";
@@ -6087,6 +6284,131 @@ DEMOS["js-playground"] = function (root) {
   const init = (root.textContent || "").trim();
   root.textContent = "";
   buildPlayground(root, init || 'console.log("Halo dari playground!");');
+};
+/* Lab Solidity: Remix mini — compile & deploy kontrak sungguhan ke EVM di browser, lalu panggil fungsinya */
+DEMOS["sol-lab"] = function (root) {
+  const awal = (root.textContent || "").replace(/^\s*\n/, "").replace(/\s+$/, "");
+  const namaKontrak = root.getAttribute("data-kontrak") || "";
+  root.textContent = "";
+  const ALAMAT = ["0x5B38Da6a701c568545dCfcB03FcB875f56beddC4", "0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2", "0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db"];
+  const singkat = (a) => a.slice(0, 5) + "…" + a.slice(-5);
+  const ta = h("textarea", { class: "pg-code", spellcheck: "false", autocapitalize: "off" });
+  ta.value = awal;
+  ta.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab") return;
+    e.preventDefault();
+    const s = ta.selectionStart;
+    ta.value = ta.value.slice(0, s) + "    " + ta.value.slice(ta.selectionEnd);
+    ta.selectionStart = ta.selectionEnd = s + 4;
+  });
+  const deploy = h("button", { class: "btn primary", type: "button", text: "Compile & Deploy" });
+  const ulang = h("button", { class: "btn ghost", type: "button", text: "Kode awal" });
+  const status = h("p", { class: "dm-sub", text: "Tekan Compile & Deploy untuk memasang kontrak di blockchain mini (3 akun × 100 ETH mainan)." });
+  const pilihAkun = h("select", { class: "pc-input lebar", "aria-label": "Akun pengirim" });
+  const nilai = h("input", { class: "pc-input", type: "text", inputmode: "decimal", value: "0", "aria-label": "Value" });
+  const satuan = h("select", { class: "pc-input", "aria-label": "Satuan value" }, ["wei", "gwei", "ether"].map((s) => h("option", { value: s, text: s })));
+  const fungsiBox = h("div", { class: "rx-kontrak" });
+  const terminal = h("div", { class: "rx-terminal", "aria-live": "polite" });
+  const panel = h("div", { class: "rx-panel" }, [
+    h("label", { class: "rx-label", text: "ACCOUNT" }), pilihAkun,
+    h("label", { class: "rx-label", text: "VALUE" }), h("div", { class: "rx-baris-isi" }, [nilai, satuan]),
+    fungsiBox,
+  ]);
+  panel.hidden = true;
+  let sesi = null, saldo = ["0", "0", "0", "0"], nama = "", alamat = "";
+  const keEth = (wei) => {
+    const b = BigInt(wei), satu = 10n ** 18n;
+    const des = (b % satu).toString().padStart(18, "0").slice(0, 4).replace(/0+$/, "");
+    return (b / satu).toString() + (des ? "," + des : "");
+  };
+  const keWei = (teks, s) => {
+    const t = String(teks).trim().replace(",", ".");
+    if (!t) return "0";
+    if (!/^\d*\.?\d*$/.test(t)) return null;
+    const d = { wei: 0, gwei: 9, ether: 18 }[s];
+    const [u, p = ""] = t.split(".");
+    if (p.length > d) return null;
+    return (BigInt(u || "0") * 10n ** BigInt(d) + BigInt((p + "0".repeat(d)).slice(0, d) || "0")).toString();
+  };
+  function isiAkun() {
+    const pilih = pilihAkun.value || "0";
+    pilihAkun.innerHTML = "";
+    ALAMAT.forEach((a, i) => pilihAkun.appendChild(h("option", { value: String(i), text: "Akun " + (i + 1) + " — " + keEth(saldo[i]) + " ETH" })));
+    pilihAkun.value = pilih;
+  }
+  function catat(html, jenis) {
+    terminal.insertBefore(h("div", { class: "rx-baris " + (jenis || ""), html: html }), terminal.firstChild);
+    while (terminal.children.length > 8) terminal.removeChild(terminal.lastChild);
+  }
+  const ubahArg = (tipe, v) => {
+    v = v.trim();
+    if (/\]$/.test(tipe) || tipe === "tuple") return JSON.parse(v || "[]");
+    if (tipe === "bool") return v === "true";
+    if (tipe === "address") return /^akun[1-3]$/i.test(v) ? ALAMAT[+v.slice(4) - 1] : v;
+    return v;
+  };
+  function bangunFungsi(abi) {
+    fungsiBox.innerHTML = "";
+    fungsiBox.appendChild(h("div", { class: "rx-kontrak-judul", text: nama.toUpperCase() + " AT " + singkat(alamat) + " · saldo kontrak " + keEth(saldo[3]) + " ETH" }));
+    abi.filter((f) => f.type === "function").forEach((f) => {
+      const warna = f.stateMutability === "payable" ? "merah" : f.stateMutability === "view" || f.stateMutability === "pure" ? "biru" : "oranye";
+      const masukan = f.inputs.map((p) => h("input", { class: "pc-input lebar", type: "text", placeholder: p.type + (p.name ? " " + p.name : ""), "aria-label": p.name || p.type }));
+      const b = h("button", { class: "rx-fn " + warna, type: "button", text: f.name });
+      b.onclick = async () => {
+        let args;
+        try { args = f.inputs.map((p, i) => ubahArg(p.type, masukan[i].value)); }
+        catch (e) { catat("<span class=\"rx-tanda bad\">✗</span> Isian untuk " + f.name + " tidak bisa dibaca (array ditulis seperti [1, 2]).", "bad"); return; }
+        const wei = keWei(nilai.value, satuan.value);
+        if (wei === null) { catat("<span class=\"rx-tanda bad\">✗</span> VALUE tidak valid.", "bad"); return; }
+        const dari = +pilihAkun.value;
+        const tanda = f.name + "(" + f.inputs.map((p) => p.type).join(",") + ")";
+        const r = await kirimSolidity({ jenis: "panggil", sesi: sesi, langkah: { dari: dari, nilai: wei, fungsi: tanda, args: args } });
+        const kepala = "from: " + singkat(ALAMAT[dari]) + " to: " + nama + "." + f.name + "(" + args.map((a) => JSON.stringify(a)).join(", ") + ")" + (wei !== "0" ? " value: " + BigInt(wei).toLocaleString("id-ID") + " wei" : "");
+        if (r.galat || !r.ok) { catat("<span class=\"rx-tanda bad\">✗</span> " + esc0(r.galat || "Gagal"), "bad"); return; }
+        saldo = r.saldo || saldo;
+        if (r.revert) catat("<span class=\"rx-tanda bad\">✗</span> <b>[vm]</b> " + kepala + "<br>status: <b>gagal (revert)</b> · alasan: \"" + esc0(r.alasan) + "\" · gas " + r.gas.toLocaleString("id-ID"), "bad");
+        else if (r.baca) catat("<span class=\"rx-tanda\">→</span> <b>call</b> to " + nama + "." + f.name + "<br>" + (r.nilai === null ? "(tanpa nilai kembali)" : "hasil: <b>" + esc0(JSON.stringify(r.nilai)) + "</b>") + " <i>(membaca saja: tanpa transaksi)</i>", "baca");
+        else catat("<span class=\"rx-tanda ok\">✓</span> <b>[vm]</b> " + kepala + "<br>status: berhasil · gas " + r.gas.toLocaleString("id-ID") + (r.nilai !== null ? " · hasil: " + esc0(JSON.stringify(r.nilai)) : "") + (r.log && r.log.length ? "<br>logs: " + esc0(r.log.join(", ")) : ""), "ok");
+        isiAkun();
+        fungsiBox.querySelector(".rx-kontrak-judul").textContent = nama.toUpperCase() + " AT " + singkat(alamat) + " · saldo kontrak " + keEth(saldo[3]) + " ETH";
+      };
+      fungsiBox.appendChild(h("div", { class: "rx-fn-baris" }, [b].concat(masukan)));
+    });
+  }
+  const esc0 = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  deploy.onclick = async () => {
+    deploy.disabled = true;
+    sesi = Math.random();
+    const r = await kirimSolidity({ jenis: "deploy", sesi: sesi, sumber: ta.value, kontrak: namaKontrak || undefined }, (tahap) => {
+      status.textContent = tahap === "muat" ? "Memuat compiler Solidity & EVM… (sekali saja, sekitar 9 MB)" : "Compile & deploy…";
+    });
+    deploy.disabled = false;
+    if (r.galat) {
+      panel.hidden = true;
+      const saran = jelaskanGalat(r.galat);
+      status.textContent = "Gagal. Baca pesannya di terminal.";
+      catat("<span class=\"rx-tanda bad\">✗</span> " + esc0(/^SOL-/.test(r.galat) ? "Solidity belum bisa dijalankan." : r.galat) + (saran ? "<br>Petunjuk: " + esc0(saran) : ""), "bad");
+      return;
+    }
+    nama = r.kontrak; alamat = r.alamat; saldo = r.saldo;
+    isiAkun();
+    bangunFungsi(r.abi);
+    panel.hidden = false;
+    status.textContent = "Kontrak terpasang. Pilih akun, isi VALUE bila perlu, lalu tekan tombol fungsinya.";
+    (r.peringatan || []).forEach((p) => catat("Peringatan compiler: " + esc0(p), "baca"));
+    catat("<span class=\"rx-tanda ok\">✓</span> <b>[vm]</b> Kontrak " + esc0(nama) + " di-deploy oleh Akun 1 ke " + singkat(alamat) + " · gas " + r.gas.toLocaleString("id-ID"), "ok");
+  };
+  ulang.onclick = () => { ta.value = awal; };
+  root.appendChild(h("div", { class: "demo pg sol-lab" }, [
+    h("div", { class: "demo-head", html: "<b>Lab Solidity — Remix mini di browser</b>" }),
+    h("p", { class: "demo-hint", text: "Kontrak di-compile dengan compiler Solidity sungguhan dan dijalankan di EVM mini. Tombol biru membaca, oranye mengubah data, merah bisa menerima ETH. Gas dihitung, tapi tidak dipotong dari saldo akun." }),
+    ta,
+    h("div", { class: "demo-controls" }, [deploy, ulang]),
+    status,
+    panel,
+    h("div", { class: "rx-label", text: "TERMINAL" }),
+    terminal,
+  ]));
 };
 DEMOS["py-playground"] = function (root) {
   // Hanya baris kosong di awal/akhir yang dibuang — indentasi Python harus utuh

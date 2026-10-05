@@ -1633,3 +1633,8 @@ a.resume-card:hover .resume-btn { gap: 12px; }
 .pr-jawab { margin-top: 10px; }
 .pr-jawab-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
 .pr-jawab pre.code { font-family: var(--font-kode); margin: 0; }
+
+/* ---------- Lab Solidity & hasil tes Solidity ---------- */
+.sol-lab .rx-panel { margin-top: 6px; }
+.sol-lab .rx-fn-baris .pc-input.lebar { width: auto; flex: 1 1 140px; min-width: 120px; }
+.pr-gas { color: var(--muted); font-size: .78rem; margin-left: 4px; white-space: nowrap; }

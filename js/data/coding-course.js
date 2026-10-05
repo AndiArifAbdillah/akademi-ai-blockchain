@@ -1541,5 +1541,534 @@ print("Di atas rata-rata:", ramai)
         },
       ],
     },
+    /* ---------------- MODUL 4: SOLIDITY: BAHASA SMART CONTRACT ---------------- */
+    {
+      id: "cd-sol",
+      level: "Solidity",
+      title: "Solidity: Bahasa Smart Contract",
+      summary: "Program yang hidup di blockchain: jenis data, msg.sender & require, mapping/struct/event, uang dengan payable, sampai token sendiri — di-compile dan dijalankan di EVM sungguhan lewat Lab Solidity di browser.",
+      lessons: [
+        {
+          id: "cd-sol-1",
+          title: "Solidity dari Nol — Program yang Hidup di Blockchain",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Kamu sudah memakai variabel, fungsi, dan return di JavaScript dan Python. Dari jalur Crypto: <b>smart contract</b> adalah program yang disimpan dan dijalankan di blockchain; <b>membaca</b> datanya gratis, sedangkan <b>mengubah</b> data butuh transaksi dan biaya <b>gas</b> (<a href="#/lesson/bc-m-2">Smart Contract</a>).
+</div>
+
+<h3>Apa yang berbeda dari program biasa?</h3>
+<table class="tbl">
+  <tr><th></th><th>Program JavaScript/Python</th><th>Smart contract Solidity</th></tr>
+  <tr><td>Tinggal di</td><td>Komputer atau server pemiliknya</td><td>Sebuah <b>alamat</b> di blockchain, disalin di ribuan komputer</td></tr>
+  <tr><td>Data</td><td>Hilang saat program ditutup, kecuali disimpan</td><td><b>Variabel kontrak tersimpan permanen</b></td></tr>
+  <tr><td>Biaya menjalankan</td><td>Gratis</td><td>Mengubah data dibayar dengan <b>gas</b></td></tr>
+  <tr><td>Siapa yang bisa memanggil</td><td>Yang diizinkan pemilik</td><td>Siapa pun, kalau fungsinya <b>public</b></td></tr>
+  <tr><td>Memperbaiki bug</td><td>Ubah kode, jalankan ulang</td><td><b>Tidak bisa</b> — kode tidak bisa diubah setelah di-deploy</td></tr>
+</table>
+<p>Poin terakhir itulah yang membuat programmer Solidity sangat berhati-hati: bug di smart contract yang memegang uang bisa berarti uang hilang permanen.</p>
+
+<h3>Kerangka sebuah kontrak</h3>
+<pre class="code">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract Penyimpanan {
+    uint256 public angka;          // variabel kontrak: tersimpan permanen
+
+    function simpan(uint256 _angka) public {
+        angka = _angka;
+    }
+}</pre>
+<table class="tbl">
+  <tr><th>Baris</th><th>Artinya</th></tr>
+  <tr><td><b>SPDX-License-Identifier</b></td><td>Keterangan lisensi kode</td></tr>
+  <tr><td><b>pragma solidity ^0.8.24;</b></td><td>Versi compiler yang dipakai: 0.8.24 ke atas</td></tr>
+  <tr><td><b>contract Penyimpanan { }</b></td><td>Satu kontrak — mirip satu objek yang hidup di blockchain</td></tr>
+  <tr><td><b>uint256 public angka;</b></td><td>Variabel kontrak. <i>public</i> otomatis membuat fungsi baca bernama angka()</td></tr>
+</table>
+
+<h3>Jenis data harus ditulis</h3>
+<p>Berbeda dengan JavaScript dan Python, Solidity mewajibkan setiap variabel dan parameter menyebut <b>jenis datanya</b>:</p>
+<table class="tbl">
+  <tr><th>Jenis</th><th>Isi</th><th>Catatan</th></tr>
+  <tr><td><b>uint256</b> (atau uint)</td><td>Bilangan bulat 0 ke atas</td><td>Paling sering dipakai — tidak bisa negatif</td></tr>
+  <tr><td><b>int256</b></td><td>Bilangan bulat, boleh negatif</td><td>Jarang dipakai</td></tr>
+  <tr><td><b>bool</b></td><td>true / false</td><td></td></tr>
+  <tr><td><b>string</b></td><td>Teks</td><td>Mahal disimpan; di parameter ditulis <i>string memory</i></td></tr>
+  <tr><td><b>address</b></td><td>Alamat dompet atau kontrak</td><td>Contoh: 0x5B38…eddC4</td></tr>
+</table>
+<div class="callout">
+<b>Tidak ada bilangan desimal.</b> Solidity tidak punya angka seperti 3,5. Uang dihitung dalam satuan terkecil — 1 ETH = 1.000.000.000.000.000.000 wei — persis karena itulah satuan wei ada.
+</div>
+
+<h3>Coba sendiri di Lab</h3>
+<div data-demo="sol-lab">
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract Penyimpanan {
+    uint256 public angka;
+
+    function simpan(uint256 _angka) public {
+        angka = _angka;
+    }
+
+    function tambahSatu() public {
+        angka = angka + 1;
+    }
+
+    function kurangiSatu() public {
+        angka = angka - 1;
+    }
+}
+</div>
+<ol>
+  <li>Tekan <b>Compile &amp; Deploy</b>. Pertama kali, compiler Solidity dan EVM diunduh dulu.</li>
+  <li>Tekan <b>angka</b> (biru): hasilnya 0. Membaca tidak membuat transaksi.</li>
+  <li>Isi 41 lalu tekan <b>simpan</b> (oranye), kemudian <b>tambahSatu</b>, lalu baca lagi.</li>
+  <li>Simpan 0, lalu tekan <b>kurangiSatu</b>. Transaksinya gagal: uint tidak boleh di bawah nol, dan Solidity 0.8 otomatis membatalkannya.</li>
+</ol>
+
+<h3>JavaScript vs Solidity</h3>
+<table class="tbl">
+  <tr><th>JavaScript</th><th>Solidity</th></tr>
+  <tr><td>let angka = 5;</td><td>uint256 angka = 5;</td></tr>
+  <tr><td>function tambah(a, b) { return a + b; }</td><td>function tambah(uint a, uint b) public pure returns (uint) { return a + b; }</td></tr>
+  <tr><td>console.log("...")</td><td>Tidak ada di kontrak yang berjalan — pakai <b>event</b> (dibahas dua pelajaran lagi)</td></tr>
+</table>
+<p>Kata <b>pure</b> berarti fungsi itu tidak membaca maupun mengubah data kontrak — hanya menghitung dari masukannya.</p>
+`,
+          keyPoints: [
+            "Smart contract tinggal di sebuah alamat blockchain, datanya tersimpan permanen, dan kodenya tidak bisa diubah setelah deploy.",
+            "Kerangka kontrak: SPDX, pragma solidity, lalu contract Nama { ... }.",
+            "Setiap variabel dan parameter wajib menyebut jenisnya: uint256, int256, bool, string, address.",
+            "Tidak ada bilangan desimal; uang dihitung dalam wei. uint di bawah nol otomatis membatalkan transaksi (Solidity 0.8).",
+            "Variabel public otomatis punya fungsi baca; fungsi pure hanya menghitung dari masukannya."
+          ],
+          practice: [
+            { type: "code", lang: "solidity", contract: "Kalkulator", q: "Lengkapi fungsi tambah agar mengembalikan a + b.", starter: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract Kalkulator {\n    function tambah(uint256 a, uint256 b) public pure returns (uint256) {\n        // tulis kodemu di sini\n    }\n}\n", tests: [["tambah(2, 3)", 5], ["tambah(100, 0)", 100], ["tambah(7, 8)", 15]], hint: "Sama seperti JavaScript: return a + b; — jangan lupa titik koma.", solution: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract Kalkulator {\n    function tambah(uint256 a, uint256 b) public pure returns (uint256) {\n        return a + b;\n    }\n}" },
+            { type: "code", lang: "solidity", contract: "Penghitung", q: "Lengkapi fungsi tambah() agar menaikkan jumlah sebesar 1 setiap dipanggil.", starter: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract Penghitung {\n    uint256 public jumlah;\n\n    function tambah() public {\n        // tulis kodemu di sini\n    }\n}\n", tests: [["jumlah()", 0], ["tambah()", null], ["tambah()", null], ["jumlah()", 2]], hint: "jumlah = jumlah + 1; (atau jumlah += 1;)", solution: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract Penghitung {\n    uint256 public jumlah;\n\n    function tambah() public {\n        jumlah = jumlah + 1;\n    }\n}" }
+          ],
+          quiz: [
+            {
+              q: "Apa yang terjadi pada variabel kontrak setelah transaksi selesai?",
+              options: [
+                "Nilainya tersimpan permanen di blockchain",
+                "Nilainya hilang saat browser ditutup",
+                "Nilainya dikembalikan ke nol setiap hari",
+                "Nilainya hanya tersimpan di dompet pemanggil"
+              ],
+              answer: 0,
+              explain: "Variabel kontrak adalah bagian dari keadaan blockchain dan disalin di setiap node."
+            },
+            {
+              q: "Kenapa uint256 angka = 0; lalu angka = angka - 1; membuat transaksi gagal?",
+              options: [
+                "uint tidak boleh negatif, dan Solidity 0.8 membatalkannya",
+                "Angka nol tidak boleh disimpan di dalam kontrak",
+                "Pengurangan hanya boleh dilakukan oleh pemilik",
+                "Solidity tidak punya operator pengurangan sama sekali"
+              ],
+              answer: 0,
+              explain: "Sejak versi 0.8, hitungan yang melewati batas (overflow/underflow) otomatis di-revert."
+            },
+            {
+              q: "Kenapa Solidity tidak punya bilangan desimal untuk uang?",
+              options: [
+                "Uang dihitung dalam satuan terkecil, yaitu wei",
+                "Semua harga di blockchain selalu bulat dalam ETH",
+                "Desimal hanya boleh dipakai oleh bank sentral",
+                "Komputer tidak bisa menyimpan angka desimal sama sekali"
+              ],
+              answer: 0,
+              explain: "Hitungan desimal rawan pembulatan; dengan wei, semua jumlah menjadi bilangan bulat yang pasti."
+            }
+          ]
+        },
+        {
+          id: "cd-sol-2",
+          title: "Siapa yang Memanggil? msg.sender, require & Pemilik",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Fungsi <b>public</b> bisa dipanggil siapa pun di dunia. Percabangan <b>if</b> memeriksa syarat, dan variabel kontrak tersimpan permanen.
+</div>
+
+<h3>msg.sender: siapa yang sedang memanggil</h3>
+<p>Setiap panggilan ke kontrak membawa alamat pengirimnya, tersedia sebagai <b>msg.sender</b>. Dengan itu kontrak bisa membedakan siapa boleh melakukan apa — tanpa akun, tanpa kata sandi, karena setiap transaksi sudah ditandatangani dengan kunci privat pengirimnya.</p>
+
+<h3>constructor: dijalankan sekali saat deploy</h3>
+<pre class="code">address public pemilik;
+
+constructor() {
+    pemilik = msg.sender;      // yang men-deploy menjadi pemilik
+}</pre>
+
+<h3>require: syarat yang membatalkan transaksi</h3>
+<pre class="code">function ubah(string memory pesanBaru) public {
+    require(msg.sender == pemilik, "Hanya pemilik");
+    pesan = pesanBaru;
+}</pre>
+<p>Kalau syarat <b>require</b> tidak terpenuhi, seluruh transaksi <b>dibatalkan</b> (<i>revert</i>) dengan pesan itu — semua perubahan di dalamnya batal, seolah tidak pernah terjadi. Bedanya dengan if: require tidak memilih jalan lain, ia menolak.</p>
+
+<h3>Coba sendiri</h3>
+<div data-demo="sol-lab">
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract Pengumuman {
+    address public pemilik;
+    string public pesan = "Belum ada pengumuman";
+
+    constructor() {
+        pemilik = msg.sender;
+    }
+
+    function ubah(string memory pesanBaru) public {
+        require(msg.sender == pemilik, "Hanya pemilik");
+        pesan = pesanBaru;
+    }
+}
+</div>
+<ol>
+  <li>Deploy, lalu tekan <b>pemilik</b>: alamat Akun 1, yang men-deploy.</li>
+  <li>Dengan Akun 1, isi <i>Rapat jam 9</i> lalu tekan <b>ubah</b>. Baca <b>pesan</b>.</li>
+  <li>Ganti ke <b>Akun 2</b> dan coba ubah. Transaksinya ditolak dengan pesan "Hanya pemilik", dan pesan lama tetap utuh.</li>
+</ol>
+
+<h3>modifier: syarat yang bisa dipakai ulang</h3>
+<p>Kalau banyak fungsi butuh syarat yang sama, tulis sekali sebagai <b>modifier</b>:</p>
+<pre class="code">modifier hanyaPemilik() {
+    require(msg.sender == pemilik, "Hanya pemilik");
+    _;                         // di sinilah isi fungsi dijalankan
+}
+
+function ubah(string memory pesanBaru) public hanyaPemilik {
+    pesan = pesanBaru;
+}</pre>
+<p>Pustaka OpenZeppelin menyediakan modifier serupa yang sudah teruji, bernama <i>onlyOwner</i>.</p>
+
+<h3>Siapa yang boleh memanggil fungsi?</h3>
+<table class="tbl">
+  <tr><th>Kata</th><th>Bisa dipanggil dari</th></tr>
+  <tr><td><b>public</b></td><td>Siapa pun, dari luar maupun dari dalam kontrak</td></tr>
+  <tr><td><b>external</b></td><td>Hanya dari luar kontrak</td></tr>
+  <tr><td><b>internal</b></td><td>Kontrak ini dan kontrak turunannya</td></tr>
+  <tr><td><b>private</b></td><td>Hanya kontrak ini</td></tr>
+</table>
+<div class="callout warn">
+<b>private bukan rahasia.</b> private hanya mencegah kontrak <i>lain</i> memanggil atau membaca lewat kode. Semua data di blockchain publik tetap bisa dilihat siapa pun lewat block explorer. Jangan menyimpan kata sandi atau rahasia di smart contract.
+</div>
+`,
+          keyPoints: [
+            "msg.sender adalah alamat yang sedang memanggil; tanda tangan transaksi membuktikannya, tanpa akun dan kata sandi.",
+            "constructor dijalankan sekali saat deploy — tempat menyimpan pemilik = msg.sender.",
+            "require(syarat, \"pesan\") membatalkan seluruh transaksi bila syaratnya gagal; semua perubahan ikut batal.",
+            "modifier membungkus syarat agar bisa dipakai ulang; _; menandai tempat isi fungsi dijalankan.",
+            "public, external, internal, private mengatur siapa yang boleh memanggil — private tidak berarti rahasia."
+          ],
+          practice: [
+            { type: "code", lang: "solidity", contract: "Pengumuman", q: "Tambahkan pemeriksaan agar hanya pemilik yang boleh mengubah pesan. Bila bukan pemilik, transaksi harus gagal dengan pesan \"Hanya pemilik\".", starter: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract Pengumuman {\n    address public pemilik;\n    string public pesan;\n\n    constructor() {\n        pemilik = msg.sender;\n    }\n\n    function ubah(string memory pesanBaru) public {\n        pesan = pesanBaru;\n    }\n}\n", tests: [["akun2 ubah(\"Iseng\")", "REVERT:Hanya pemilik"], ["ubah(\"Rapat jam 9\")", null], ["pesan()", "Rapat jam 9"], ["pemilik()", "akun1"]], hint: "Tambahkan require(msg.sender == pemilik, \"Hanya pemilik\"); di baris pertama fungsi ubah.", solution: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract Pengumuman {\n    address public pemilik;\n    string public pesan;\n\n    constructor() {\n        pemilik = msg.sender;\n    }\n\n    function ubah(string memory pesanBaru) public {\n        require(msg.sender == pemilik, \"Hanya pemilik\");\n        pesan = pesanBaru;\n    }\n}" },
+            { type: "code", lang: "solidity", contract: "Batas", q: "Fungsi setBatas hanya boleh menerima angka sampai 100. Bila lebih, gagalkan dengan pesan \"Maksimal 100\".", starter: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract Batas {\n    uint256 public batas;\n\n    function setBatas(uint256 baru) public {\n        batas = baru;\n    }\n}\n", tests: [["setBatas(50)", null], ["batas()", 50], ["setBatas(150)", "REVERT:Maksimal 100"], ["batas()", 50], ["setBatas(100)", null], ["batas()", 100]], hint: "require(baru <= 100, \"Maksimal 100\"); — perhatikan 100 sendiri masih boleh.", solution: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract Batas {\n    uint256 public batas;\n\n    function setBatas(uint256 baru) public {\n        require(baru <= 100, \"Maksimal 100\");\n        batas = baru;\n    }\n}" }
+          ],
+          quiz: [
+            {
+              q: "Apa isi msg.sender saat Akun 2 memanggil sebuah fungsi?",
+              options: [
+                "Alamat Akun 2",
+                "Alamat pemilik kontrak",
+                "Alamat kontrak itu sendiri",
+                "Alamat Akun 1 yang men-deploy"
+              ],
+              answer: 0,
+              explain: "msg.sender selalu alamat yang mengirim panggilan saat itu."
+            },
+            {
+              q: "require gagal di baris ketiga sebuah fungsi yang sudah mengubah dua variabel. Apa yang terjadi pada kedua variabel itu?",
+              options: [
+                "Ikut dibatalkan, kembali ke nilai sebelumnya",
+                "Tetap berubah karena sudah dijalankan lebih dulu",
+                "Hanya variabel pertama yang tetap berubah",
+                "Keduanya berubah menjadi nol"
+              ],
+              answer: 0,
+              explain: "Revert membatalkan seluruh transaksi, termasuk perubahan yang terjadi sebelum require."
+            },
+            {
+              q: "Variabel ditandai private. Apakah isinya rahasia?",
+              options: [
+                "Tidak — tetap bisa dibaca lewat block explorer",
+                "Ya — hanya pemilik kontrak yang bisa membacanya",
+                "Ya — isinya dienkripsi otomatis oleh compiler",
+                "Ya — isinya tidak disimpan di blockchain"
+              ],
+              answer: 0,
+              explain: "private hanya membatasi akses dari kontrak lain; data blockchain publik terbuka untuk semua."
+            }
+          ]
+        },
+        {
+          id: "cd-sol-3",
+          title: "mapping, struct, event & Uang (payable)",
+          duration: "17 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>msg.sender</b> adalah alamat pemanggil, dan <b>require</b> membatalkan transaksi yang tidak sah. Di JavaScript, objek menyimpan pasangan label-isi, dan array menyimpan daftar berurutan.
+</div>
+
+<h3>mapping: tabel pencarian</h3>
+<pre class="code">mapping(address =&gt; uint256) public setoran;</pre>
+<p>Masukkan alamat, keluar angka. Alamat yang belum pernah dicatat otomatis bernilai <b>0</b> — tidak ada error "tidak ditemukan". mapping adalah cara paling umum menyimpan saldo per alamat; token ERC-20 pun pada dasarnya sebuah mapping.</p>
+
+<h3>struct dan array: data yang bersusun</h3>
+<pre class="code">struct Tamu {
+    address dari;
+    string pesan;
+}
+Tamu[] public daftar;
+
+function tulis(string memory p) public {
+    daftar.push(Tamu(msg.sender, p));
+}</pre>
+<p><b>struct</b> mirip objek di JavaScript: satu benda dengan beberapa keterangan. <b>Tamu[]</b> adalah array berisi struct.</p>
+
+<h3>event: pengumuman yang tercatat di log</h3>
+<pre class="code">event Setor(address dari, uint256 jumlah);
+...
+emit Setor(msg.sender, msg.value);</pre>
+<p>Kontrak tidak punya console.log. Untuk memberi tahu dunia bahwa sesuatu terjadi, kontrak memancarkan <b>event</b>. Event jauh lebih murah daripada menyimpan riwayat di variabel, dan aplikasi web bisa memantaunya — misalnya untuk menampilkan riwayat setoran.</p>
+
+<h3>Uang masuk: payable dan msg.value</h3>
+<table class="tbl">
+  <tr><th>Kode</th><th>Artinya</th></tr>
+  <tr><td><b>payable</b></td><td>Fungsi boleh menerima ETH. Tanpa kata ini, transaksi yang membawa ETH ditolak</td></tr>
+  <tr><td><b>msg.value</b></td><td>Jumlah ETH yang dikirim, dalam wei</td></tr>
+  <tr><td><b>address(this).balance</b></td><td>Saldo ETH milik kontrak</td></tr>
+</table>
+
+<h3>Coba sendiri: celengan bersama</h3>
+<div data-demo="sol-lab">
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract Celengan {
+    address public pemilik;
+    mapping(address => uint256) public setoran;
+    event Setor(address dari, uint256 jumlah);
+
+    constructor() {
+        pemilik = msg.sender;
+    }
+
+    function setor() public payable {
+        require(msg.value > 0, "Setoran harus lebih dari 0");
+        setoran[msg.sender] += msg.value;
+        emit Setor(msg.sender, msg.value);
+    }
+
+    function tarik(uint256 jumlah) public {
+        require(msg.sender == pemilik, "Hanya pemilik");
+        require(jumlah &lt;= address(this).balance, "Saldo kurang");
+        (bool berhasil, ) = payable(pemilik).call{value: jumlah}("");
+        require(berhasil, "Gagal mengirim");
+    }
+
+    function saldoKas() public view returns (uint256) {
+        return address(this).balance;
+    }
+}
+</div>
+<ol>
+  <li>Deploy. Dengan Akun 1, isi VALUE <b>1</b>, pilih satuan <b>ether</b>, lalu tekan <b>setor</b> (merah). Perhatikan event Setor di terminal dan saldo Akun 1 yang berkurang.</li>
+  <li>Ganti ke Akun 2, setor 2 ether. Baca <b>setoran</b> dengan alamat <i>akun2</i>.</li>
+  <li>Dengan Akun 2, coba <b>tarik</b>. Ditolak. Ganti ke Akun 1, tarik <i>500000000000000000</i> (0,5 ETH dalam wei).</li>
+  <li>Coba kirim VALUE ke <b>saldoKas</b> atau <b>tarik</b>, yang tidak payable: transaksinya ditolak tanpa pesan.</li>
+</ol>
+<p>Di kolom alamat Lab, kamu boleh menulis <i>akun1</i>, <i>akun2</i>, atau <i>akun3</i> sebagai ganti alamat panjangnya.</p>
+`,
+          keyPoints: [
+            "mapping(address => uint256) adalah tabel pencarian; alamat yang belum dicatat bernilai 0.",
+            "struct mengelompokkan beberapa keterangan; Tipe[] adalah array; push menambah isi.",
+            "event + emit mencatat pengumuman di log — murah dan bisa dipantau aplikasi; pengganti console.log.",
+            "payable membuat fungsi bisa menerima ETH; jumlahnya di msg.value dalam wei; saldo kontrak di address(this).balance.",
+            "Mengirim ETH ke fungsi yang tidak payable membuat transaksi ditolak."
+          ],
+          practice: [
+            { type: "code", lang: "solidity", contract: "Celengan", q: "Lengkapi setor(): tolak setoran 0 dengan pesan \"Setoran harus lebih dari 0\", lalu catat setoran tiap pengirim.", starter: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract Celengan {\n    mapping(address => uint256) public setoran;\n\n    function setor() public payable {\n        // tulis kodemu di sini\n    }\n\n    function saldoKas() public view returns (uint256) {\n        return address(this).balance;\n    }\n}\n", tests: [["+1000 setor()", null], ["akun2 +500 setor()", null], ["akun2 +250 setor()", null], ["setoran(akun1)", 1000], ["setoran(akun2)", 750], ["saldoKas()", 1750], ["setor()", "REVERT:Setoran harus lebih dari 0"]], hint: "require(msg.value > 0, \"...\"); lalu setoran[msg.sender] += msg.value;", solution: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract Celengan {\n    mapping(address => uint256) public setoran;\n\n    function setor() public payable {\n        require(msg.value > 0, \"Setoran harus lebih dari 0\");\n        setoran[msg.sender] += msg.value;\n    }\n\n    function saldoKas() public view returns (uint256) {\n        return address(this).balance;\n    }\n}" },
+            { type: "code", lang: "solidity", contract: "BukuTamu", q: "Lengkapi tulis() agar menyimpan Tamu baru (alamat pengirim dan pesannya) ke daftar, dan jumlahTamu() agar mengembalikan banyaknya tamu.", starter: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract BukuTamu {\n    struct Tamu {\n        address dari;\n        string pesan;\n    }\n    Tamu[] public daftar;\n\n    function tulis(string memory p) public {\n        // tulis kodemu di sini\n    }\n\n    function jumlahTamu() public view returns (uint256) {\n        // tulis kodemu di sini\n    }\n}\n", tests: [["tulis(\"Halo\")", null], ["akun2 tulis(\"Salam kenal\")", null], ["jumlahTamu()", 2], ["daftar(1)", ["akun2", "Salam kenal"]], ["daftar(0)", ["akun1", "Halo"]]], hint: "daftar.push(Tamu(msg.sender, p)); dan return daftar.length;", solution: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract BukuTamu {\n    struct Tamu {\n        address dari;\n        string pesan;\n    }\n    Tamu[] public daftar;\n\n    function tulis(string memory p) public {\n        daftar.push(Tamu(msg.sender, p));\n    }\n\n    function jumlahTamu() public view returns (uint256) {\n        return daftar.length;\n    }\n}" }
+          ],
+          quiz: [
+            {
+              q: "Berapa nilai setoran[alamatBaru] untuk alamat yang belum pernah menyetor?",
+              options: [
+                "0",
+                "Error: alamat tidak ditemukan",
+                "undefined",
+                "null"
+              ],
+              answer: 0,
+              explain: "Setiap kunci mapping yang belum diisi bernilai bawaan, untuk uint yaitu 0."
+            },
+            {
+              q: "Kenapa kontrak memakai event, bukan console.log?",
+              options: [
+                "Event tercatat di log blockchain dan bisa dipantau aplikasi",
+                "console.log membuat kontrak tidak bisa di-deploy sama sekali",
+                "Event membuat transaksi menjadi gratis tanpa gas",
+                "Event menyimpan data yang bisa dibaca kontrak lain"
+              ],
+              answer: 0,
+              explain: "Kontrak yang berjalan tidak punya layar; event adalah catatan permanen yang murah."
+            },
+            {
+              q: "Apa yang terjadi bila ETH dikirim ke fungsi yang tidak bertanda payable?",
+              options: [
+                "Transaksinya ditolak",
+                "ETH-nya hilang selamanya",
+                "ETH-nya otomatis dikembalikan sebagian",
+                "Fungsi berjalan dan ETH menjadi milik pemilik"
+              ],
+              answer: 0,
+              explain: "Tanpa payable, kontrak menolak transaksi yang membawa ETH."
+            },
+            {
+              q: "Dalam satuan apa msg.value dihitung?",
+              options: [
+                "wei",
+                "ether",
+                "gwei",
+                "rupiah"
+              ],
+              answer: 0,
+              explain: "Semua angka di dalam kontrak memakai satuan terkecil, wei."
+            }
+          ]
+        },
+        {
+          id: "cd-sol-4",
+          title: "Membuat Token Sendiri — Mini ERC-20 & Kebiasaan Aman",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>mapping</b> menyimpan angka per alamat, <b>require</b> menolak transaksi tidak sah, dan <b>event</b> mencatat kejadian. Dari jalur Crypto: token hanyalah buku saldo di dalam sebuah kontrak (<a href="#/lesson/bc-m-3">Token, NFT &amp; Standar ERC</a>).
+</div>
+
+<h3>Token = mapping + aturan</h3>
+<p>Setelah tiga pelajaran ini, kamu sudah punya semua bahan untuk membuat token sendiri:</p>
+<div data-demo="sol-lab">
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract PoinKelas {
+    string public nama = "Poin Kelas";
+    address public pemilik;
+    uint256 public totalPasokan;
+    mapping(address => uint256) public saldo;
+
+    event Transfer(address dari, address ke, uint256 jumlah);
+
+    constructor() {
+        pemilik = msg.sender;
+        saldo[msg.sender] = 1000;
+        totalPasokan = 1000;
+    }
+
+    function transfer(address ke, uint256 jumlah) public {
+        require(saldo[msg.sender] >= jumlah, "Saldo tidak cukup");
+        saldo[msg.sender] -= jumlah;
+        saldo[ke] += jumlah;
+        emit Transfer(msg.sender, ke, jumlah);
+    }
+
+    function cetak(address ke, uint256 jumlah) public {
+        require(msg.sender == pemilik, "Hanya pemilik");
+        saldo[ke] += jumlah;
+        totalPasokan += jumlah;
+        emit Transfer(address(0), ke, jumlah);
+    }
+}
+</div>
+<ol>
+  <li>Deploy. Baca <b>saldo</b> untuk <i>akun1</i>: 1000.</li>
+  <li>Transfer 300 ke <i>akun2</i>. Baca saldo kedua akun — total tetap 1000.</li>
+  <li>Ganti ke Akun 2, coba transfer 500 ke <i>akun3</i>: ditolak, karena saldonya hanya 300.</li>
+  <li>Dengan Akun 2, coba <b>cetak</b>: ditolak. Hanya pemilik yang bisa menambah pasokan.</li>
+</ol>
+<p>Token ERC-20 sungguhan memakai bahan yang sama, ditambah fungsi standar seperti <i>approve</i> dan <i>transferFrom</i>, supaya dompet dan bursa bisa mengenalinya.</p>
+
+<h3>Kebiasaan aman sejak awal</h3>
+<table class="tbl">
+  <tr><th>Kebiasaan</th><th>Kenapa</th></tr>
+  <tr><td><b>Periksa dulu, catat, baru kirim</b></td><td>Urutan require → ubah saldo → kirim ETH mencegah serangan reentrancy (<a href="#/lesson/bc-dev-2">Keamanan Smart Contract</a>)</td></tr>
+  <tr><td><b>Setiap fungsi penting punya pemeriksaan izin</b></td><td>Fungsi cetak tanpa require pemilik = siapa pun bisa mencetak uang</td></tr>
+  <tr><td><b>Pakai pustaka teruji untuk produk sungguhan</b></td><td>OpenZeppelin menyediakan ERC-20 dan Ownable yang sudah diaudit (<a href="#/lesson/bc-dev-1">OpenZeppelin</a>)</td></tr>
+  <tr><td><b>Uji setiap kemungkinan gagal</b></td><td>Soal di jalur ini memeriksa urutan transaksi dan revert — persis seperti tes otomatis Foundry (<a href="#/lesson/bc-fdy-1">Foundry</a>)</td></tr>
+</table>
+
+<h3>Dari Lab ke dunia nyata</h3>
+<table class="tbl">
+  <tr><th>Tahap</th><th>Alat</th><th>Pelajarannya</th></tr>
+  <tr><td>Belajar &amp; mencoba</td><td>Lab di jalur ini</td><td>Modul ini</td></tr>
+  <tr><td>Menulis &amp; deploy dengan dompet</td><td>Remix IDE</td><td><a href="#/lesson/bc-remix-1">Remix IDE dari Nol</a></td></tr>
+  <tr><td>Tes otomatis &amp; proyek serius</td><td>Foundry</td><td><a href="#/lesson/bc-fdy-1">Foundry</a></td></tr>
+  <tr><td>Uang sungguhan</td><td>Audit, testnet, mainnet</td><td><a href="#/lesson/bc-pro-2">Deploy ke Sepolia</a></td></tr>
+</table>
+<div class="callout warn">
+<b>Batas Lab.</b> Lab ini menjalankan EVM sungguhan di browser, tapi hanya untuk satu kontrak, tanpa parameter constructor, dengan 3 akun mainan. Untuk kontrak yang saling memanggil, mengimpor OpenZeppelin, atau terhubung ke dompet, pindahlah ke Remix atau Foundry.
+</div>
+`,
+          keyPoints: [
+            "Token sederhana = mapping saldo + transfer yang memeriksa saldo + event Transfer.",
+            "transfer harus memeriksa saldo cukup sebelum mengurangi pengirim dan menambah penerima; total pasokan tidak berubah.",
+            "Fungsi yang menambah pasokan (cetak) wajib dibatasi untuk pemilik.",
+            "Kebiasaan aman: periksa, catat, baru kirim; izin di setiap fungsi penting; pustaka teruji; uji setiap kemungkinan gagal.",
+            "Lab untuk belajar; Remix untuk deploy dengan dompet; Foundry untuk tes otomatis; audit sebelum uang sungguhan."
+          ],
+          practice: [
+            { type: "code", lang: "solidity", contract: "PoinKelas", q: "Perbaiki transfer: tolak bila saldo pengirim kurang (pesan \"Saldo tidak cukup\"), dan kurangi saldo pengirim — sekarang fungsi ini malah menciptakan poin baru.", starter: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract PoinKelas {\n    mapping(address => uint256) public saldo;\n\n    constructor() {\n        saldo[msg.sender] = 1000;\n    }\n\n    function transfer(address ke, uint256 jumlah) public {\n        saldo[ke] += jumlah;\n    }\n}\n", tests: [["saldo(akun1)", 1000], ["transfer(akun2, 300)", null], ["saldo(akun1)", 700], ["saldo(akun2)", 300], ["akun2 transfer(akun3, 500)", "REVERT:Saldo tidak cukup"], ["akun2 transfer(akun3, 100)", null], ["saldo(akun3)", 100], ["saldo(akun2)", 200]], hint: "require(saldo[msg.sender] >= jumlah, \"Saldo tidak cukup\"); lalu saldo[msg.sender] -= jumlah; sebelum saldo[ke] += jumlah;", solution: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract PoinKelas {\n    mapping(address => uint256) public saldo;\n\n    constructor() {\n        saldo[msg.sender] = 1000;\n    }\n\n    function transfer(address ke, uint256 jumlah) public {\n        require(saldo[msg.sender] >= jumlah, \"Saldo tidak cukup\");\n        saldo[msg.sender] -= jumlah;\n        saldo[ke] += jumlah;\n    }\n}" },
+            { type: "code", lang: "solidity", contract: "PoinKelas", q: "Lengkapi cetak(): hanya pemilik (pesan \"Hanya pemilik\"), tambah saldo penerima, dan naikkan totalPasokan.", starter: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract PoinKelas {\n    address public pemilik;\n    uint256 public totalPasokan;\n    mapping(address => uint256) public saldo;\n\n    constructor() {\n        pemilik = msg.sender;\n        saldo[msg.sender] = 1000;\n        totalPasokan = 1000;\n    }\n\n    function cetak(address ke, uint256 jumlah) public {\n        // tulis kodemu di sini\n    }\n}\n", tests: [["akun2 cetak(akun2, 50)", "REVERT:Hanya pemilik"], ["cetak(akun2, 50)", null], ["saldo(akun2)", 50], ["totalPasokan()", 1050], ["saldo(akun1)", 1000]], hint: "Tiga baris: require pemilik, saldo[ke] += jumlah, totalPasokan += jumlah.", solution: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract PoinKelas {\n    address public pemilik;\n    uint256 public totalPasokan;\n    mapping(address => uint256) public saldo;\n\n    constructor() {\n        pemilik = msg.sender;\n        saldo[msg.sender] = 1000;\n        totalPasokan = 1000;\n    }\n\n    function cetak(address ke, uint256 jumlah) public {\n        require(msg.sender == pemilik, \"Hanya pemilik\");\n        saldo[ke] += jumlah;\n        totalPasokan += jumlah;\n    }\n}" }
+          ],
+          quiz: [
+            {
+              q: "Setelah transfer berhasil, apa yang terjadi pada total saldo semua akun?",
+              options: [
+                "Tetap sama — hanya berpindah dari pengirim ke penerima",
+                "Bertambah sebesar jumlah yang ditransfer",
+                "Berkurang sebesar biaya gas transfer",
+                "Menjadi dua kali lipat dari sebelumnya"
+              ],
+              answer: 0,
+              explain: "Transfer memindahkan, bukan menciptakan. Hanya cetak yang menambah pasokan."
+            },
+            {
+              q: "Fungsi cetak tidak memeriksa msg.sender. Apa akibatnya?",
+              options: [
+                "Siapa pun bisa mencetak token sebanyak yang ia mau",
+                "Tidak ada akibat karena token hanya angka",
+                "Hanya pemilik yang tetap bisa memanggilnya",
+                "Kontraknya tidak bisa di-deploy sama sekali"
+              ],
+              answer: 0,
+              explain: "Fungsi public bisa dipanggil siapa pun; tanpa pemeriksaan izin, pasokan bisa digelembungkan."
+            },
+            {
+              q: "Kenapa untuk token sungguhan sebaiknya memakai OpenZeppelin?",
+              options: [
+                "Kodenya sudah diaudit dan dipakai ribuan proyek",
+                "Token OpenZeppelin tidak membutuhkan gas",
+                "Hanya token OpenZeppelin yang bisa di-deploy",
+                "OpenZeppelin menjamin harga tokennya naik"
+              ],
+              answer: 0,
+              explain: "Kode yang memegang uang adalah sasaran serangan; pustaka teruji jauh lebih aman."
+            }
+          ]
+        },
+      ],
+    },
   ],
 };

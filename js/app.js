@@ -25,7 +25,7 @@ const MODULE_ORDER = [
   "acc-mikro", "acc-terapan", "acc-audit", "acc-matematika", "acc-lanjutan", "acc-kualitas",
   "acc-bank", "acc-prospek", "acc-proyek", "acc-founder", "acc-investasi", "acc-teknikal", "acc-makro", "acc-arah",
   // 💻 Coding
-  "cd-dasar", "cd-js", "cd-py",
+  "cd-dasar", "cd-js", "cd-py", "cd-sol",
 ];
 (function urutkanModul() {
   const pos = (id) => {
@@ -1085,8 +1085,8 @@ function itemLatihanKode(p, pi) {
   const sesuaikan = () => { ta.style.height = "auto"; ta.style.height = ta.scrollHeight + 2 + "px"; };
   ta.addEventListener("input", sesuaikan);
   requestAnimationFrame(sesuaikan);
-  const py = p.lang === "python";
-  const tab = py ? "    " : "  ";
+  const py = p.lang === "python", sol = p.lang === "solidity";
+  const tab = py || sol ? "    " : "  ";
   ta.addEventListener("keydown", (e) => {
     if (e.key !== "Tab") return;
     e.preventDefault();
@@ -1116,14 +1116,17 @@ function itemLatihanKode(p, pi) {
     const ekspr = tes.filter((t) => t[0] !== "@log").map((t) => t[0]);
     const r = py
       ? await jalankanPython(ta.value, ekspr, (tahap) => { check.textContent = tahap === "muat" ? "Memuat Python… (sekali saja)" : "Menjalankan…"; })
-      : await jalankanKode(ta.value, ekspr);
+      : sol
+        ? await jalankanSolidity(ta.value, p.contract, ekspr, (tahap) => { check.textContent = tahap === "muat" ? "Memuat compiler Solidity… (sekali saja)" : "Compile & menjalankan…"; })
+        : await jalankanKode(ta.value, ekspr);
+    if (!r.logs) r.logs = [];
     check.disabled = false;
     check.textContent = "Jalankan & periksa";
     const baris = [];
     let lulus = 0, k = 0;
     if (r.galat) {
       const saran = jelaskanGalat(r.galat);
-      const judulGalat = r.galat === "WAKTU" ? "Kode dihentikan karena berjalan terlalu lama." : /^PY-/.test(r.galat) ? "Python belum bisa dijalankan." : r.galat;
+      const judulGalat = r.galat === "WAKTU" ? "Kode dihentikan karena berjalan terlalu lama." : /^PY-/.test(r.galat) ? "Python belum bisa dijalankan." : /^SOL-/.test(r.galat) ? "Solidity belum bisa dijalankan." : r.galat;
       baris.push(`<li class="no">${esc(judulGalat)}${saran ? `<span class="pr-saran">${esc(saran)}</span>` : ""}</li>`);
     } else {
       tes.forEach(([ekspr, harap]) => {
@@ -1135,6 +1138,17 @@ function itemLatihanKode(p, pi) {
           return;
         }
         const hs = r.hasilTes ? r.hasilTes[k++] : null;
+        if (sol) {
+          // Solidity: tiap tes adalah satu transaksi/panggilan berurutan pada kontrak yang sama
+          const ok = cocokSolidity(hs, harap);
+          if (ok) lulus++;
+          const dapat = !hs ? "?" : !hs.ok ? `<span>${esc(hs.galat)}</span>`
+            : hs.revert ? `<span>revert: ${esc(hs.alasan)}</span>` : hs.nilai === null ? "berhasil" : `<code>${esc(JSON.stringify(hs.nilai))}</code>`;
+          const harapTeks = harap === null ? "berhasil tanpa revert" : typeof harap === "string" && /^REVERT/.test(harap) ? (harap.length > 7 ? `revert: ${esc(harap.slice(7))}` : "revert") : `<code>${esc(JSON.stringify(harap))}</code>`;
+          const gas = hs && hs.ok ? ` <span class="pr-gas">${hs.baca ? "baca, tanpa transaksi" : "gas " + hs.gas.toLocaleString("id-ID")}</span>` : "";
+          baris.push(`<li class="${ok ? "ok" : "no"}"><code>${esc(ekspr)}</code> → ${dapat}${gas}${ok ? "" : ` · seharusnya ${harapTeks}`}</li>`);
+          return;
+        }
         const ok = !!(hs && hs.ok && hs.teks === JSON.stringify(harap));
         if (ok) lulus++;
         const dapat = hs ? (hs.ok ? `<code>${esc(hs.tampil)}</code>` : `<span>${esc(hs.galat)}</span>`) : "?";
