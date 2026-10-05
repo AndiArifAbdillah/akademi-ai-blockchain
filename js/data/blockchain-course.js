@@ -8533,7 +8533,7 @@ Token sebuah proyek dibagi ke tim, investor, publik, dan <b>komunitas</b>; jatah
 </table>
 
 <h3>Langkah 4 — Perjalanan sebuah airdrop</h3>
-<div data-diagram="flow" data-steps="Pemakaian awal|Snapshot|Kriteria & filter|Pengumuman|Klaim|Diperdagangkan" data-caption="Dari memakai protokol sampai token bisa dijual"></div>
+<div data-diagram="flow" data-steps="Pemakaian awal|Snapshot|Kriteria & filter|Diumumkan|Klaim|Dijual" data-caption="Dari memakai protokol sampai token bisa dijual"></div>
 <table class="tbl">
   <tr><th>Tahap</th><th>Yang terjadi</th></tr>
   <tr><td><b>Snapshot</b></td><td>Proyek mencatat keadaan semua alamat pada satu blok tertentu — aktivitas sesudahnya tidak dihitung</td></tr>

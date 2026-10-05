@@ -148,7 +148,7 @@ const DIAGRAMS = {
     let x = (W - (boxW * n + gap * (n - 1))) / 2;
     let body = "";
     steps.forEach((s, i) => {
-      const lines = vWrap(s, Math.max(8, Math.floor(boxW / 5.4)));
+      const lines = vWrap(s, Math.max(8, Math.floor(boxW / 6.6)));
       const startY = 42 + boxH / 2 - (lines.length - 1) * 7 - 2;
       body += `<rect x="${x}" y="42" width="${boxW}" height="${boxH}" rx="10" class="vbox accent"/>`;
       lines.forEach((ln, li) => {
@@ -189,7 +189,8 @@ const DIAGRAMS = {
       const x = (520 - w) / 2;
       const y = 18 + i * 44;
       body += `<rect x="${x}" y="${y}" width="${w}" height="36" rx="8" class="vbox ${i === 0 ? "ok" : "accent"}"/>`;
-      body += `<text x="260" y="${y + 23}" text-anchor="middle" class="vt-sm">${vEsc(t)}</text>`;
+      const bl = vWrap(t, Math.floor((w - 14) / 6)).slice(0, 2);
+      bl.forEach((ln, li) => { body += `<text x="260" y="${y + (bl.length > 1 ? 16 : 23) + li * 13}" text-anchor="middle" class="vt-sm">${vEsc(ln)}</text>`; });
     });
     return vFigure(ds.caption, `<svg viewBox="0 0 520 ${H}" class="viz-svg" role="img" aria-label="Diagram lapisan">${body}</svg>`);
   },
@@ -298,7 +299,9 @@ const DIAGRAMS = {
       const deg = (am * 180) / Math.PI + 90;
       body += `<path d="M -7 -6 L 7 0 L -7 6 Z" class="varrow" transform="translate(${ax.toFixed(1)},${ay.toFixed(1)}) rotate(${deg.toFixed(1)})"/>`;
     });
-    if (ds.center) body += `<text x="${cx}" y="${cy + 4}" text-anchor="middle" class="vt-bold" style="font-size:12px">${vEsc(ds.center)}</text>`;
+    if (ds.center) vWrap(ds.center, 13).forEach((ln, li, arr) => {
+      body += `<text x="${cx}" y="${cy + 4 - (arr.length - 1) * 7 + li * 14}" text-anchor="middle" class="vt-bold" style="font-size:12px">${vEsc(ln)}</text>`;
+    });
     return vFigure(ds.caption, `<svg viewBox="0 0 520 270" class="viz-svg" role="img" aria-label="Diagram siklus">${body}</svg>`);
   },
 
@@ -306,7 +309,7 @@ const DIAGRAMS = {
   timeline: (ds) => {
     const ev = (ds.events || "").split("|").map((s) => s.split("::").map((t) => t.trim())).filter((a) => a[0]);
     const n = Math.max(1, ev.length);
-    const pad = 46, W = 520;
+    const pad = 56, W = 520;
     const step = n > 1 ? (W - pad * 2) / (n - 1) : 0;
     let body = `<line x1="${pad - 20}" y1="86" x2="${W - pad + 20}" y2="86" class="vaxis"/>`;
     ev.forEach((e, i) => {
@@ -314,8 +317,9 @@ const DIAGRAMS = {
       const atas = i % 2 === 0;
       body += `<circle cx="${x}" cy="86" r="7" class="vdot"/>`;
       body += `<text x="${x}" y="${atas ? 74 : 106}" text-anchor="middle" class="vt-bold" style="font-size:12px">${vEsc(e[0])}</text>`;
-      vWrap(e[1] || "", 16).forEach((ln, li) => {
-        body += `<text x="${x}" y="${(atas ? 40 : 122) + li * 12}" text-anchor="middle" class="vt-xs">${vEsc(ln)}</text>`;
+      const kl = vWrap(e[1] || "", 14);
+      kl.forEach((ln, li) => {
+        body += `<text x="${x}" y="${(atas ? 58 - (kl.length - 1) * 12 : 124) + li * 12}" text-anchor="middle" class="vt-xs">${vEsc(ln)}</text>`;
       });
     });
     return vFigure(ds.caption, `<svg viewBox="0 0 ${W} 160" class="viz-svg" role="img" aria-label="Garis waktu">${body}</svg>`);
@@ -383,8 +387,11 @@ const DIAGRAMS = {
           lines += `<line x1="${pos[i][0].toFixed(1)}" y1="${pos[i][1].toFixed(1)}" x2="${pos[j][0].toFixed(1)}" y2="${pos[j][1].toFixed(1)}" class="vline dim"/>`;
     }
     pos.forEach((p, i) => {
-      boxes += `<rect x="${(p[0] - 52).toFixed(1)}" y="${(p[1] - 17).toFixed(1)}" width="104" height="34" rx="17" class="vbox accent"/>`;
-      boxes += `<text x="${p[0].toFixed(1)}" y="${(p[1] + 4).toFixed(1)}" text-anchor="middle" class="vt-xs">${vEsc(nodes[i])}</text>`;
+      const lw = Math.max(104, Math.min(132, nodes[i].length * 6.2 + 16));
+      const bl = vWrap(nodes[i], Math.floor((lw - 12) / 6.2)).slice(0, 2);
+      const lh = bl.length > 1 ? 44 : 34;
+      boxes += `<rect x="${(p[0] - lw / 2).toFixed(1)}" y="${(p[1] - lh / 2).toFixed(1)}" width="${lw.toFixed(1)}" height="${lh}" rx="17" class="vbox accent"/>`;
+      bl.forEach((ln, li) => { boxes += `<text x="${p[0].toFixed(1)}" y="${(p[1] + 4 - (bl.length - 1) * 6.5 + li * 13).toFixed(1)}" text-anchor="middle" class="vt-xs">${vEsc(ln)}</text>`; });
     });
     let center = "";
     if (punyaPusat) {
@@ -427,7 +434,10 @@ const DIAGRAMS = {
     let x = 10;
     st.forEach((s, i) => {
       body += `<rect x="${x.toFixed(1)}" y="22" width="${bw.toFixed(1)}" height="46" rx="9" class="vbox accent"/>`;
-      body += `<text x="${(x + bw / 2).toFixed(1)}" y="50" text-anchor="middle" class="vt-bold" style="font-size:12px">${vEsc(s[0])}</text>`;
+      const jl = vWrap(s[0], Math.max(6, Math.floor((bw - 8) / 7.6))).slice(0, 2);
+      const kataPanjang = Math.max(...s[0].split(" ").map((k) => k.length));
+      const fz = Math.min(12, (bw - 8) / (kataPanjang * 0.68)).toFixed(1);
+      jl.forEach((ln, li) => { body += `<text x="${(x + bw / 2).toFixed(1)}" y="${(jl.length > 1 ? 42 : 50) + li * 14}" text-anchor="middle" class="vt-bold" style="font-size:${fz}px">${vEsc(ln)}</text>`; });
       vWrap(s[1] || "", Math.max(10, Math.floor(bw / 5))).forEach((ln, li) => {
         body += `<text x="${(x + bw / 2).toFixed(1)}" y="${86 + li * 13}" text-anchor="middle" class="vt-xs">${vEsc(ln)}</text>`;
       });
@@ -608,8 +618,8 @@ Object.assign(DIAGRAMS, {
       body += `<text x="${x + lebar / 2}" y="222" text-anchor="middle" class="vt-xs">${selisih === 0 ? "pas" : (selisih > 0 ? "+" : "−") + Math.abs(selisih).toLocaleString("id-ID")}</text>`;
     });
     body += `<line x1="${x0 - 20}" y1="${Y(rata)}" x2="${520 - x0 + 20}" y2="${Y(rata)}" class="vline" style="stroke:var(--s1);stroke-dasharray:6 4"/>`;
-    body += `<text x="${x0 - 28}" y="${Y(rata) - 4}" text-anchor="end" class="vt-xs">rata-rata</text>`;
-    body += `<text x="${x0 - 28}" y="${Y(rata) + 16}" text-anchor="end" class="vt-xs vt-tegas">${rata.toLocaleString("id-ID")}</text>`;
+    body += `<text x="${x0 - 28}" y="${Y(rata) - 6}" text-anchor="end" class="vt-xs">rata-rata</text>`;
+    body += `<text x="${x0 - 28}" y="${Y(rata) + 20}" text-anchor="end" class="vt-xs vt-tegas">${rata.toLocaleString("id-ID")}</text>`;
     return vFigure(ds.caption, `<svg viewBox="0 0 520 232" class="viz-svg peluang-svg" role="img" aria-label="Batang nilai dengan garis rata-rata">${body}</svg>`,
       `<span>(${nilai.map((v) => v.toLocaleString("id-ID")).join(" + ")}) ÷ ${nilai.length} = <b>${rata.toLocaleString("id-ID")}</b></span> · <span>baris paling bawah = selisih dari rata-rata</span>`);
   },
@@ -752,6 +762,271 @@ Object.assign(DIAGRAMS, {
     return vFigure(ds.caption, `<svg viewBox="0 0 520 ${H}" class="viz-svg viz-besar" role="img" aria-label="Rantai jujur dan rantai rahasia penyerang">${body}</svg>`,
       `<span>Rantai jujur: transaksimu + <b>${z}</b> konfirmasi.</span> <span>Penyerang diam-diam sudah punya <b>${s}</b> blok.</span><br><span>Tx' = transaksi tandingan yang mengirim uang yang sama ke dompet penyerang.</span> <span>Penyerang menang kalau rantai rahasianya menjadi lebih panjang.</span>`);
   },
+});
+
+/* ============================================================
+   TATA LETAK HP untuk diagram generik
+   Di layar selebar 520 unit, teks 11px menyusut jadi ~7px di HP.
+   Di layar sempit, diagram generik digambar ulang di kanvas 340 unit
+   (hampir 1:1 dengan lebar layar HP) dan disusun ke bawah, sehingga
+   hurufnya tetap ~13px dan teks panjang dibungkus, bukan dipotong.
+   ============================================================ */
+const layarHP = () => typeof window !== "undefined" && !!window.matchMedia && window.matchMedia("(max-width: 560px)").matches;
+const pisahHP = (s, sep) => String(s || "").split(sep).map((t) => t.trim()).filter(Boolean);
+function bungkusHP(teks, n) {
+  const baris = [];
+  let cur = "";
+  String(teks).split(/\s+/).filter(Boolean).forEach((w) => {
+    if (cur && (cur + " " + w).length > n) { baris.push(cur); cur = w; } else cur = cur ? cur + " " + w : w;
+  });
+  if (cur) baris.push(cur);
+  return baris.length ? baris : [""];
+}
+const svgHP = (H, body, label) => `<svg viewBox="0 0 340 ${Math.ceil(H)}" class="viz-svg hp-svg" role="img" aria-label="${label}">${body}</svg>`;
+const BARIS_HP = 17; // tinggi satu baris teks 13px
+// Kotak berisi beberapa baris teks di tengah; mengembalikan [svg, tinggi]
+function kotakHP(x, y, w, baris, cls, opsi) {
+  opsi = opsi || {};
+  const judul = opsi.judul ? [opsi.judul] : [];
+  const h = 14 + (judul.length + baris.length) * BARIS_HP + (judul.length && baris.length ? 4 : 0);
+  let s = `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" class="vbox ${cls || "accent"}"/>`;
+  let by = y + 21;
+  judul.forEach((t) => { s += `<text x="${x + w / 2}" y="${by}" text-anchor="middle" class="vt-bold">${vEsc(t)}</text>`; by += BARIS_HP + 4; });
+  baris.forEach((t) => {
+    s += opsi.kiri
+      ? `<text x="${x + 14}" y="${by}" class="vt-xs ${opsi.redup ? "vt-redup" : ""}">${vEsc(t)}</text>`
+      : `<text x="${x + w / 2}" y="${by}" text-anchor="middle" class="vt-xs ${opsi.redup ? "vt-redup" : ""}">${vEsc(t)}</text>`;
+    by += BARIS_HP;
+  });
+  return [s, h];
+}
+const panahHP = (y) => `<text x="170" y="${y + 17}" text-anchor="middle" class="vt">↓</text>`;
+
+const DIAGRAMS_HP = {
+  flow: (ds) => {
+    let y = 4, body = "";
+    const st = pisahHP(ds.steps, "|");
+    st.forEach((s, i) => {
+      const [k, h] = kotakHP(20, y, 300, bungkusHP(s, 36), "accent");
+      body += k; y += h;
+      if (i < st.length - 1) { body += panahHP(y); y += 24; }
+    });
+    return vFigure(ds.caption, svgHP(y + 4, body, "Diagram alur"));
+  },
+
+  pipeline: (ds) => {
+    let y = 4, body = "";
+    const st = pisahHP(ds.stages, "|").map((s) => s.split("::").map((t) => t.trim()));
+    st.forEach((s, i) => {
+      const [k, h] = kotakHP(20, y, 300, s[1] ? bungkusHP(s[1], 36) : [], "accent", { judul: s[0], redup: true });
+      body += k; y += h;
+      if (i < st.length - 1) { body += panahHP(y); y += 24; }
+    });
+    return vFigure(ds.caption, svgHP(y + 4, body, "Diagram tahapan"));
+  },
+
+  compare3: (ds) => {
+    const cls = ["accent", "accent2", "ok"];
+    let y = 4, body = "";
+    pisahHP(ds.cols, "|").forEach((c, i) => {
+      const t = c.split("::").map((s) => s.trim()).filter(Boolean);
+      const baris = [];
+      t.slice(1).forEach((s) => bungkusHP(s, 34).forEach((ln, li) => baris.push((li ? "   " : "•  ") + ln)));
+      const [k, h] = kotakHP(10, y, 320, baris, cls[i % 3], { judul: t[0], kiri: true });
+      body += k; y += h + 10;
+    });
+    return vFigure(ds.caption, svgHP(y, body, "Diagram perbandingan"));
+  },
+
+  vs: (ds) => {
+    let y = 4, body = "";
+    [ds.left, ds.right].forEach((sisi, i) => {
+      const t = String(sisi || "").split("::").map((s) => s.trim()).filter(Boolean);
+      const baris = [];
+      t.slice(1).forEach((s) => bungkusHP(s, 36).forEach((ln) => baris.push(ln)));
+      const [k, h] = kotakHP(10, y, 320, baris, i ? "accent2" : "accent", { judul: t[0] });
+      body += k; y += h;
+      if (!i) { body += `<text x="170" y="${y + 22}" text-anchor="middle" class="vt-bold">vs</text>`; y += 32; }
+    });
+    return vFigure(ds.caption, svgHP(y + 4, body, "Diagram perbandingan"));
+  },
+
+  cycle: (ds) => {
+    const st = pisahHP(ds.steps, "|"), n = st.length;
+    if (n > 5) {
+      // terlalu banyak untuk lingkaran selebar HP: susun ke bawah dengan tanda kembali
+      let y = 4, body = "";
+      if (ds.center) { body += `<text x="170" y="${y + 14}" text-anchor="middle" class="vt-bold">${vEsc(ds.center)}</text>`; y += 24; }
+      st.forEach((s, i) => {
+        const [k, h] = kotakHP(20, y, 300, bungkusHP((i + 1) + ". " + s, 36), "accent");
+        body += k; y += h;
+        body += panahHP(y); y += 24;
+      });
+      body += `<text x="170" y="${y + 12}" text-anchor="middle" class="vt-xs vt-tegas">↺ kembali ke langkah 1</text>`;
+      return vFigure(ds.caption, svgHP(y + 22, body, "Diagram siklus"));
+    }
+    const R = 110, w = 112, kotak = st.map((s) => bungkusHP(s, 14).slice(0, 4));
+    const hs = kotak.map((b) => 14 + b.length * BARIS_HP);
+    const pos = st.map((_, i) => { const a = (-90 + (i * 360) / n) * (Math.PI / 180); return [Math.cos(a) * R, Math.sin(a) * R]; });
+    const atas = Math.min(...pos.map((p, i) => p[1] - hs[i] / 2)), bawah = Math.max(...pos.map((p, i) => p[1] + hs[i] / 2));
+    const cx = 170, cy = 6 - atas;
+    let body = `<ellipse cx="${cx}" cy="${cy}" rx="${R}" ry="${R}" class="vring"/>`;
+    for (let i = 0; i < n; i++) {
+      const am = (-90 + ((i + 0.5) * 360) / n) * (Math.PI / 180);
+      body += `<path d="M -7 -6 L 7 0 L -7 6 Z" class="varrow" transform="translate(${(cx + R * Math.cos(am)).toFixed(1)},${(cy + R * Math.sin(am)).toFixed(1)}) rotate(${((am * 180) / Math.PI + 90).toFixed(1)})"/>`;
+    }
+    st.forEach((s, i) => {
+      const [k] = kotakHP(cx + pos[i][0] - w / 2, cy + pos[i][1] - hs[i] / 2, w, kotak[i], "accent");
+      body += k;
+    });
+    if (ds.center) bungkusHP(ds.center, 14).forEach((ln, li, arr) => {
+      body += `<text x="${cx}" y="${cy + 5 - (arr.length - 1) * 8 + li * 16}" text-anchor="middle" class="vt-xs vt-tegas">${vEsc(ln)}</text>`;
+    });
+    return vFigure(ds.caption, svgHP(cy + bawah + 8, body, "Diagram siklus"));
+  },
+
+  layers: (ds) => {
+    const it = pisahHP(ds.items, "|"), n = it.length;
+    let y = 4, body = "";
+    it.forEach((t, i) => {
+      const w = n > 1 ? 180 + (i * 140) / (n - 1) : 300;
+      const [k, h] = kotakHP(170 - w / 2, y, w, bungkusHP(t, Math.floor((w - 16) / 7.2)), i === 0 ? "ok" : "accent");
+      body += k; y += h + 8;
+    });
+    return vFigure(ds.caption, svgHP(y, body, "Diagram lapisan"));
+  },
+
+  timeline: (ds) => {
+    const ev = pisahHP(ds.events, "|").map((s) => s.split("::").map((t) => t.trim()));
+    let y = 6, body = "", titik = "";
+    ev.forEach((e) => {
+      titik += `<circle cx="24" cy="${y + 10}" r="7" class="vdot"/>`;
+      body += `<text x="44" y="${y + 15}" class="vt-bold">${vEsc(e[0])}</text>`;
+      const b = e[1] ? bungkusHP(e[1], 38) : [];
+      b.forEach((ln, li) => { body += `<text x="44" y="${y + 36 + li * BARIS_HP}" class="vt-xs">${vEsc(ln)}</text>`; });
+      y += 26 + b.length * BARIS_HP + 12;
+    });
+    const garis = `<line x1="24" y1="16" x2="24" y2="${Math.max(16, y - 30)}" class="vaxis"/>`;
+    return vFigure(ds.caption, svgHP(y, garis + titik + body, "Garis waktu"));
+  },
+
+  bar: (ds) => {
+    const items = pisahHP(ds.bars, "|").map((s) => { const i = s.lastIndexOf(":"); return { label: s.slice(0, i).trim(), val: parseFloat(s.slice(i + 1)) || 0 }; }).filter((d) => d.label);
+    const unit = ds.unit || "", max = Math.max(1, ...items.map((d) => Math.abs(d.val)));
+    let y = 4, body = "";
+    items.forEach((d) => {
+      const lb = bungkusHP(d.label, 44);
+      lb.forEach((ln, li) => { body += `<text x="10" y="${y + 13 + li * BARIS_HP}" class="vt-xs">${vEsc(ln)}</text>`; });
+      y += lb.length * BARIS_HP;
+      const w = Math.max(2, (Math.abs(d.val) / max) * 240);
+      body += `<rect x="10" y="${y}" width="${w.toFixed(1)}" height="20" rx="5" class="vfill ${d.val < 0 ? "neg" : ""}"/>`;
+      body += `<text x="${(16 + w).toFixed(1)}" y="${y + 15}" class="vt-xs vt-tegas">${vEsc(String(d.val).replace(".", ",") + unit)}</text>`;
+      y += 32;
+    });
+    return vFigure(ds.caption, svgHP(y, body, "Grafik batang"));
+  },
+
+  network: (ds) => {
+    const nodes = pisahHP(ds.nodes, "|");
+    let body = "", garis = "", y = 4;
+    let atasNode = 0;
+    if (ds.center) {
+      const [k, h] = kotakHP(60, y, 220, bungkusHP(ds.center, 28), "accent2");
+      body += k; y += h; atasNode = y;
+      y += 34;
+    }
+    for (let i = 0; i < nodes.length; i += 2) {
+      const pasang = nodes.slice(i, i + 2), hs = [];
+      pasang.forEach((t, j) => {
+        const x = pasang.length === 1 ? 95 : j ? 175 : 15;
+        const [k, h] = kotakHP(x, y, 150, bungkusHP(t, 18), "accent");
+        body += k; hs.push(h);
+        if (ds.center) garis += `<line x1="170" y1="${atasNode}" x2="${x + 75}" y2="${y}" class="vline dim"/>`;
+      });
+      y += Math.max(...hs) + 10;
+    }
+    return vFigure(ds.caption, svgHP(y, garis + body, "Diagram jaringan"));
+  },
+
+  matrix: (ds) => {
+    const c = String(ds.cells || "").split("|").map((s) => s.trim()), cls = ["accent", "ok", "bad", "accent2"];
+    const isi = c.map((t) => bungkusHP(t, 18));
+    // label sumbu tegak diganti teks mendatar di atas kotak, agar tidak terpotong di HP
+    const yl = ds.ylabel ? bungkusHP("↑ " + ds.ylabel, 44) : [];
+    const y0 = 4 + yl.length * BARIS_HP + (yl.length ? 6 : 0);
+    const h1 = Math.max(80, 14 + Math.max(isi[0].length, isi[1] ? isi[1].length : 0) * BARIS_HP);
+    const h2 = Math.max(80, 14 + Math.max(isi[2] ? isi[2].length : 0, isi[3] ? isi[3].length : 0) * BARIS_HP);
+    let body = "";
+    yl.forEach((ln, li) => { body += `<text x="10" y="${16 + li * BARIS_HP}" class="vt-xs vt-redup">${vEsc(ln)}</text>`; });
+    for (let i = 0; i < 4; i++) {
+      const x = i % 2 ? 174 : 10, y = i < 2 ? y0 : y0 + h1 + 8, h = i < 2 ? h1 : h2;
+      body += `<rect x="${x}" y="${y}" width="156" height="${h}" rx="10" class="vbox ${cls[i]}"/>`;
+      const b = isi[i] || [];
+      b.forEach((ln, li) => { body += `<text x="${x + 78}" y="${y + h / 2 + 5 - ((b.length - 1) * BARIS_HP) / 2 + li * BARIS_HP}" text-anchor="middle" class="vt-xs">${vEsc(ln)}</text>`; });
+    }
+    let H = y0 + h1 + h2 + 8;
+    if (ds.xlabel) bungkusHP(ds.xlabel + " →", 44).forEach((ln) => { body += `<text x="330" y="${H + 18}" text-anchor="end" class="vt-xs vt-redup">${vEsc(ln)}</text>`; H += BARIS_HP; });
+    return vFigure(ds.caption, svgHP(H + 8, body, "Diagram kuadran"));
+  },
+
+  stack: (ds) => {
+    const parts = pisahHP(ds.parts, "|").map((s) => { const i = s.lastIndexOf(":"); return { label: s.slice(0, i).trim(), val: parseFloat(s.slice(i + 1)) || 0 }; }).filter((d) => d.label);
+    const total = parts.reduce((a, d) => a + d.val, 0) || 1;
+    let x = 20, bar = "", legend = "", y = 70;
+    parts.forEach((d, i) => {
+      const w = (d.val / total) * 300, pct = ((d.val / total) * 100).toFixed(0) + "%";
+      bar += `<rect x="${x.toFixed(1)}" y="8" width="${w.toFixed(1)}" height="44" class="vfill s${i % 5}"/>`;
+      if (w > 36) bar += `<text x="${(x + w / 2).toFixed(1)}" y="35" text-anchor="middle" class="vt-xs vt-tegas" style="fill:#fff">${pct}</text>`;
+      const b = bungkusHP(d.label + " — " + pct, 38);
+      legend += `<rect x="20" y="${y - 11}" width="13" height="13" rx="3" class="vfill s${i % 5}"/>`;
+      b.forEach((ln, li) => { legend += `<text x="42" y="${y + li * BARIS_HP}" class="vt-xs">${vEsc(ln)}</text>`; });
+      y += b.length * BARIS_HP + 8;
+      x += w;
+    });
+    return vFigure(ds.caption, svgHP(y - 4, bar + legend, "Diagram proporsi"));
+  },
+
+  scale: (ds) => {
+    const zones = pisahHP(ds.zones, "|"), marks = pisahHP(ds.marks, "|"), n = Math.max(1, zones.length);
+    const segW = 320 / n, cls = ["bad", "accent", "ok"];
+    const isi = zones.map((z) => bungkusHP(z, Math.max(6, Math.floor((segW - 10) / 7.2))));
+    const h = 14 + Math.max(...isi.map((b) => b.length)) * BARIS_HP;
+    let body = "";
+    zones.forEach((z, i) => {
+      const x = 10 + i * segW;
+      body += `<rect x="${x}" y="6" width="${segW}" height="${h}" rx="6" class="vbox ${cls[i] || "accent"}"/>`;
+      isi[i].forEach((ln, li) => { body += `<text x="${x + segW / 2}" y="${6 + h / 2 + 5 - ((isi[i].length - 1) * BARIS_HP) / 2 + li * BARIS_HP}" text-anchor="middle" class="vt-xs">${vEsc(ln)}</text>`; });
+      if (i !== n - 1 && marks[i]) body += `<text x="${x + segW}" y="${h + 26}" text-anchor="middle" class="vt-xs vt-tegas">${vEsc(marks[i])}</text>`;
+    });
+    return vFigure(ds.caption, svgHP(h + (marks.length ? 34 : 12), body, "Diagram rentang"));
+  },
+
+  tree: (ds) => {
+    const q = String(ds.nodes || "").split("::").map((s) => s.trim()).filter(Boolean);
+    const leaves = pisahHP(ds.leaves, "|").slice(0, 4), yes = ds.yes || "Ya", no = ds.no || "Tidak";
+    const lc = (i) => 42 + i * 85.3, midC = [(lc(0) + lc(1)) / 2, (lc(2) + lc(3)) / 2], rootC = 170;
+    const daun = leaves.map((t) => bungkusHP(t, 9));
+    const hd = 14 + Math.max(1, ...daun.map((b) => b.length)) * BARIS_HP;
+    const akar = bungkusHP(q[0] || "Pertanyaan", 24), simpul = [q[1], q[2]].map((t) => bungkusHP(t || "", 18));
+    const ha = 14 + akar.length * BARIS_HP, hs = 14 + Math.max(simpul[0].length, simpul[1].length) * BARIS_HP;
+    const y1 = 4, y2 = y1 + ha + 34, y3 = y2 + hs + 34;
+    let body = "";
+    [0, 1].forEach((i) => {
+      body += `<line x1="${rootC}" y1="${y1 + ha}" x2="${midC[i]}" y2="${y2}" class="vline"/>`;
+      body += `<line x1="${midC[i]}" y1="${y2 + hs}" x2="${lc(i * 2)}" y2="${y3}" class="vline"/><line x1="${midC[i]}" y1="${y2 + hs}" x2="${lc(i * 2 + 1)}" y2="${y3}" class="vline"/>`;
+      body += `<text x="${midC[i] - 22}" y="${y3 - 10}" text-anchor="middle" class="vt-xs vt-redup">${vEsc(yes)}</text><text x="${midC[i] + 22}" y="${y3 - 10}" text-anchor="middle" class="vt-xs vt-redup">${vEsc(no)}</text>`;
+    });
+    body += `<text x="${(rootC + midC[0]) / 2 - 14}" y="${y2 - 12}" text-anchor="middle" class="vt-xs vt-redup">${vEsc(yes)}</text><text x="${(rootC + midC[1]) / 2 + 14}" y="${y2 - 12}" text-anchor="middle" class="vt-xs vt-redup">${vEsc(no)}</text>`;
+    body += kotakHP(rootC - 95, y1, 190, akar, "accent2")[0];
+    [0, 1].forEach((i) => { if (q[i + 1]) body += kotakHP(midC[i] - 76, y2, 152, simpul[i], "accent")[0]; });
+    daun.forEach((b, i) => { body += kotakHP(lc(i) - 39, y3, 78, b, "ok")[0]; });
+    return vFigure(ds.caption, svgHP(y3 + hd + 4, body, "Diagram pohon keputusan"));
+  },
+};
+// Pilih tata letak saat diagram digambar: HP → versi tersusun ke bawah, layar lebar → versi asli
+Object.keys(DIAGRAMS_HP).forEach((k) => {
+  const asli = DIAGRAMS[k];
+  DIAGRAMS[k] = (ds) => (layarHP() ? DIAGRAMS_HP[k](ds) : asli(ds));
 });
 
 /* ============================================================
