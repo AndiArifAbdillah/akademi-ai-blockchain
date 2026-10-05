@@ -5922,11 +5922,103 @@ function jalankanKode(kode, tes, batasMs) {
     w.postMessage({ kode: kode, tes: tes || [] });
   });
 }
-/* Penjelasan ramah untuk pesan error yang paling sering ditemui pemula */
+/* ---------- Python di browser (Pyodide), diunduh hanya saat pertama kali dipakai ---------- */
+const PYODIDE_URL = "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/";
+/* Penguji Python: menjalankan kode pengguna, menangkap print(), lalu mengevaluasi ekspresi tes.
+   Teks yang sama dipakai verify.js (lewat Python lokal) untuk menguji contoh jawaban. */
+const PENGUJI_PY = [
+  "import sys, io, json, traceback",
+  "def _normal(v):",
+  "    if isinstance(v, bool) or v is None: return v",
+  "    if isinstance(v, float) and v.is_integer(): return int(v)",
+  "    if isinstance(v, (list, tuple)): return [_normal(x) for x in v]",
+  "    if isinstance(v, dict): return {str(k): _normal(x) for k, x in v.items()}",
+  "    return v",
+  "def _jalankan(kode, tes):",
+  "    keluar = io.StringIO()",
+  "    asli = sys.stdout",
+  "    sys.stdout = keluar",
+  "    ruang = {'__name__': '__main__'}",
+  "    galat = None",
+  "    hasil = None",
+  "    try:",
+  "        try:",
+  "            exec(compile(kode, 'kodemu.py', 'exec'), ruang)",
+  "            hasil = []",
+  "            for t in tes:",
+  "                try:",
+  "                    v = eval(t, ruang)",
+  "                    try:",
+  "                        teks = json.dumps(_normal(v), separators=(',', ':'), ensure_ascii=False)",
+  "                    except Exception:",
+  "                        teks = repr(v)",
+  "                    hasil.append({'ok': True, 'teks': teks, 'tampil': repr(v)})",
+  "                except Exception as e:",
+  "                    hasil.append({'ok': False, 'galat': type(e).__name__ + ': ' + str(e)})",
+  "        except SyntaxError as e:",
+  "            galat = type(e).__name__ + ': ' + str(e.msg) + (' (baris ' + str(e.lineno) + ')' if e.lineno else '')",
+  "        except Exception as e:",
+  "            baris = [f.lineno for f in traceback.extract_tb(e.__traceback__) if f.filename == 'kodemu.py']",
+  "            galat = type(e).__name__ + ': ' + str(e) + (' (baris ' + str(baris[-1]) + ')' if baris else '')",
+  "    finally:",
+  "        sys.stdout = asli",
+  "    teks = keluar.getvalue()",
+  "    if teks.endswith('\\n'): teks = teks[:-1]",
+  "    return json.dumps({'logs': teks.split('\\n') if teks else [], 'galat': galat, 'hasilTes': hasil}, ensure_ascii=False)",
+].join("\n");
+let pekerjaPy = null, pySiap = false;
+function buatPekerjaPython() {
+  // Pyodide versi baru wajib berjalan di module worker
+  const sumber =
+    'import { loadPyodide } from "' + PYODIDE_URL + 'pyodide.mjs";\n' +
+    "const siap = loadPyodide({ indexURL: " + JSON.stringify(PYODIDE_URL) + " }).then((py) => { py.runPython(" + JSON.stringify(PENGUJI_PY) + "); self.postMessage({ jenis: 'siap' }); return py; })" +
+    ".catch((e) => { self.postMessage({ jenis: 'gagal-muat', pesan: String(e) }); });\n" +
+    "self.onmessage = async (e) => { const py = await siap; if (!py) return; const f = py.globals.get('_jalankan');" +
+    " const tes = py.toPy(e.data.tes); const hasil = f(e.data.kode, tes); tes.destroy(); f.destroy();" +
+    " self.postMessage({ jenis: 'hasil', id: e.data.id, data: JSON.parse(hasil) }); };";
+  pySiap = false;
+  return new Worker(URL.createObjectURL(new Blob([sumber], { type: "text/javascript" })), { type: "module" });
+}
+/* status(tahap): "muat" saat mesin Python sedang diunduh, "jalan" saat kode mulai dijalankan */
+function jalankanPython(kode, tes, status) {
+  return new Promise((selesai) => {
+    let w;
+    try { if (!pekerjaPy) pekerjaPy = buatPekerjaPython(); w = pekerjaPy; }
+    catch (e) { selesai({ logs: [], galat: "PY-TIDAK-DIDUKUNG", hasilTes: null }); return; }
+    const id = Math.random();
+    let jam = null;
+    const akhiri = (hasil) => { clearTimeout(jam); clearTimeout(jamMuat); w.removeEventListener("message", dengar); selesai(hasil); };
+    const mulaiJam = () => {
+      if (status) status("jalan");
+      jam = setTimeout(() => { w.terminate(); if (pekerjaPy === w) pekerjaPy = null; akhiri({ logs: [], galat: "WAKTU", hasilTes: null }); }, 5000);
+    };
+    const jamMuat = setTimeout(() => { w.terminate(); if (pekerjaPy === w) pekerjaPy = null; akhiri({ logs: [], galat: "PY-GAGAL-MUAT", hasilTes: null }); }, 120000);
+    const dengar = (e) => {
+      const m = e.data;
+      if (m.jenis === "siap") { pySiap = true; clearTimeout(jamMuat); if (!jam) mulaiJam(); }
+      else if (m.jenis === "gagal-muat") { if (pekerjaPy === w) pekerjaPy = null; akhiri({ logs: [], galat: "PY-GAGAL-MUAT", hasilTes: null }); }
+      else if (m.jenis === "hasil" && m.id === id) akhiri(m.data);
+    };
+    w.addEventListener("message", dengar);
+    w.addEventListener("error", () => { if (pekerjaPy === w) pekerjaPy = null; akhiri({ logs: [], galat: "PY-GAGAL-MUAT", hasilTes: null }); }, { once: true });
+    if (pySiap) { clearTimeout(jamMuat); mulaiJam(); } else if (status) status("muat");
+    w.postMessage({ id: id, kode: kode, tes: tes || [] });
+  });
+}
+
+/* Penjelasan ramah untuk pesan error yang paling sering ditemui pemula (JavaScript & Python) */
 function jelaskanGalat(g) {
   if (!g) return "";
-  if (g === "WAKTU") return "Kode berjalan lebih dari 3 detik lalu dihentikan. Mungkin ada perulangan yang tidak pernah berhenti — periksa apakah penghitungnya benar-benar bertambah.";
+  if (g === "WAKTU") return "Kode berjalan terlalu lama lalu dihentikan. Mungkin ada perulangan yang tidak pernah berhenti — periksa apakah penghitungnya benar-benar bertambah.";
+  if (g === "PY-GAGAL-MUAT") return "Mesin Python gagal diunduh. Periksa koneksi internet, lalu coba lagi.";
+  if (g === "PY-TIDAK-DIDUKUNG") return "Browser ini belum bisa menjalankan Python. Coba Chrome, Edge, Firefox, atau Safari versi terbaru.";
   let m;
+  if ((m = /NameError: name '([^']+)' is not defined/.exec(g))) return "Nama \"" + m[1] + "\" belum dikenal. Salah ketik (huruf besar-kecil dihitung), atau belum dibuat?";
+  if (/IndentationError/.test(g)) return "Masalah indentasi: baris di dalam def, if, for, atau while harus menjorok ke dalam (biasanya 4 spasi) dan rata satu sama lain.";
+  if (/unsupported operand type\(s\) for \+: 'int' and 'str'|can only concatenate str/.test(g)) return "Angka dan teks tidak bisa langsung dijumlahkan. Ubah dulu dengan int(...) atau str(...).";
+  if (/ZeroDivisionError/.test(g)) return "Ada pembagian dengan nol.";
+  if (/IndexError: list index out of range/.test(g)) return "Nomor urut melewati isi list. Ingat, nomor urut dimulai dari 0 dan yang terakhir adalah len(list) - 1.";
+  if ((m = /KeyError: (.+)/.exec(g))) return "Kunci " + m[1] + " tidak ada di dictionary itu. Periksa ejaannya.";
   if ((m = /ReferenceError: (\S+) is not defined/.exec(g))) return "Nama \"" + m[1] + "\" belum dikenal. Salah ketik (huruf besar-kecil juga dihitung), atau lupa membuatnya dengan let/const/function?";
   if (/Assignment to constant variable/.test(g)) return "Nilai variabel const tidak boleh diganti. Pakai let bila nilainya memang akan berubah.";
   if ((m = /TypeError: (\S+) is not a function/.exec(g))) return "\"" + m[1] + "\" bukan fungsi, jadi tidak bisa dipanggil dengan tanda kurung. Periksa ejaan namanya.";
@@ -5946,26 +6038,43 @@ function pgRun(code, outEl) {
     outEl.textContent = baris.length ? baris.join("\n") : "(Tidak ada output. Gunakan console.log(...) untuk menampilkan hasil.)";
   });
 }
-function buildPlayground(host, initialCode) {
-  const ta = h("textarea", { class: "pg-code", spellcheck: "false" });
+function pgRunPython(code, outEl, runBtn) {
+  return jalankanPython(code, [], (tahap) => {
+    outEl.textContent = tahap === "muat" ? "Memuat Python… (sekali saja, sekitar 10 MB — berikutnya langsung)" : "Menjalankan…";
+    if (runBtn) runBtn.disabled = true;
+  }).then((r) => {
+    if (runBtn) runBtn.disabled = false;
+    const baris = r.logs.slice();
+    if (r.galat) {
+      if (!/^PY-/.test(r.galat)) baris.push(r.galat === "WAKTU" ? "Dihentikan." : "Error — " + r.galat);
+      const saran = jelaskanGalat(r.galat);
+      if (saran) baris.push("Petunjuk: " + saran);
+    }
+    outEl.textContent = baris.length ? baris.join("\n") : "(Tidak ada output. Gunakan print(...) untuk menampilkan hasil.)";
+  });
+}
+function buildPlayground(host, initialCode, bahasa) {
+  const py = bahasa === "python";
+  const ta = h("textarea", { class: "pg-code", spellcheck: "false", autocapitalize: "off" });
   ta.value = initialCode || "";
   const out = h("pre", { class: "pg-output", text: "(Klik ▶ Jalankan untuk melihat hasil)" });
   const runBtn = h("button", { class: "btn primary", text: "▶ Jalankan" });
   const resetBtn = h("button", { class: "btn ghost", text: "↺ Reset" });
-  runBtn.onclick = function () { pgRun(ta.value, out); };
+  runBtn.onclick = function () { if (py) pgRunPython(ta.value, out, runBtn); else pgRun(ta.value, out); };
   resetBtn.onclick = function () { ta.value = initialCode || ""; out.textContent = "(Klik ▶ Jalankan untuk melihat hasil)"; };
-  // Tombol Tab menyisipkan spasi, bukan pindah fokus
+  // Tombol Tab menyisipkan spasi, bukan pindah fokus (Python: 4 spasi)
+  const tab = py ? "    " : "  ";
   ta.addEventListener("keydown", function (e) {
     if (e.key === "Tab") {
       e.preventDefault();
       const s = ta.selectionStart;
-      ta.value = ta.value.slice(0, s) + "  " + ta.value.slice(ta.selectionEnd);
-      ta.selectionStart = ta.selectionEnd = s + 2;
+      ta.value = ta.value.slice(0, s) + tab + ta.value.slice(ta.selectionEnd);
+      ta.selectionStart = ta.selectionEnd = s + tab.length;
     }
   });
-  const box = h("div", { class: "demo pg" }, [
-    h("div", { class: "demo-head", html: "<b>Coba kode ini — jalankan langsung di browser</b>" }),
-    h("p", { class: "demo-hint", text: "Ubah kodenya sesukamu, lalu klik Jalankan. Semua berjalan offline & aman di perangkatmu." }),
+  const box = h("div", { class: "demo pg" + (py ? " pg-python" : "") }, [
+    h("div", { class: "demo-head", html: py ? "<b>Coba kode Python ini — jalankan langsung di browser</b>" : "<b>Coba kode ini — jalankan langsung di browser</b>" }),
+    h("p", { class: "demo-hint", text: py ? "Ubah kodenya sesukamu, lalu klik Jalankan. Mesin Python diunduh sekali saat pertama dijalankan." : "Ubah kodenya sesukamu, lalu klik Jalankan. Semua berjalan offline & aman di perangkatmu." }),
     ta,
     h("div", { class: "demo-controls" }, [runBtn, resetBtn]),
     h("span", { class: "pg-out-label", text: "Output:" }),
@@ -5978,4 +6087,10 @@ DEMOS["js-playground"] = function (root) {
   const init = (root.textContent || "").trim();
   root.textContent = "";
   buildPlayground(root, init || 'console.log("Halo dari playground!");');
+};
+DEMOS["py-playground"] = function (root) {
+  // Hanya baris kosong di awal/akhir yang dibuang — indentasi Python harus utuh
+  const init = (root.textContent || "").replace(/^\s*\n/, "").replace(/\s+$/, "");
+  root.textContent = "";
+  buildPlayground(root, init || 'print("Halo dari Python!")', "python");
 };

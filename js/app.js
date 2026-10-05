@@ -25,7 +25,7 @@ const MODULE_ORDER = [
   "acc-mikro", "acc-terapan", "acc-audit", "acc-matematika", "acc-lanjutan", "acc-kualitas",
   "acc-bank", "acc-prospek", "acc-proyek", "acc-founder", "acc-investasi", "acc-teknikal", "acc-makro", "acc-arah",
   // 💻 Coding
-  "cd-dasar", "cd-js",
+  "cd-dasar", "cd-js", "cd-py",
 ];
 (function urutkanModul() {
   const pos = (id) => {
@@ -1085,12 +1085,14 @@ function itemLatihanKode(p, pi) {
   const sesuaikan = () => { ta.style.height = "auto"; ta.style.height = ta.scrollHeight + 2 + "px"; };
   ta.addEventListener("input", sesuaikan);
   requestAnimationFrame(sesuaikan);
+  const py = p.lang === "python";
+  const tab = py ? "    " : "  ";
   ta.addEventListener("keydown", (e) => {
     if (e.key !== "Tab") return;
     e.preventDefault();
     const s = ta.selectionStart;
-    ta.value = ta.value.slice(0, s) + "  " + ta.value.slice(ta.selectionEnd);
-    ta.selectionStart = ta.selectionEnd = s + 2;
+    ta.value = ta.value.slice(0, s) + tab + ta.value.slice(ta.selectionEnd);
+    ta.selectionStart = ta.selectionEnd = s + tab.length;
   });
   item.appendChild(ta);
 
@@ -1111,14 +1113,18 @@ function itemLatihanKode(p, pi) {
     const tes = p.tests || [];
     check.disabled = true;
     check.textContent = "Menjalankan…";
-    const r = await jalankanKode(ta.value, tes.filter((t) => t[0] !== "@log").map((t) => t[0]));
+    const ekspr = tes.filter((t) => t[0] !== "@log").map((t) => t[0]);
+    const r = py
+      ? await jalankanPython(ta.value, ekspr, (tahap) => { check.textContent = tahap === "muat" ? "Memuat Python… (sekali saja)" : "Menjalankan…"; })
+      : await jalankanKode(ta.value, ekspr);
     check.disabled = false;
     check.textContent = "Jalankan & periksa";
     const baris = [];
     let lulus = 0, k = 0;
     if (r.galat) {
       const saran = jelaskanGalat(r.galat);
-      baris.push(`<li class="no">${esc(r.galat === "WAKTU" ? "Kode dihentikan setelah 3 detik." : r.galat)}${saran ? `<span class="pr-saran">${esc(saran)}</span>` : ""}</li>`);
+      const judulGalat = r.galat === "WAKTU" ? "Kode dihentikan karena berjalan terlalu lama." : /^PY-/.test(r.galat) ? "Python belum bisa dijalankan." : r.galat;
+      baris.push(`<li class="no">${esc(judulGalat)}${saran ? `<span class="pr-saran">${esc(saran)}</span>` : ""}</li>`);
     } else {
       tes.forEach(([ekspr, harap]) => {
         if (ekspr === "@log") {
@@ -1137,7 +1143,7 @@ function itemLatihanKode(p, pi) {
     }
     const benar = !r.galat && lulus === tes.length;
     const log = r.logs.length && !tes.some((t) => t[0] === "@log")
-      ? `<div class="pr-log"><span>Keluaran console.log:</span><pre>${esc(r.logs.join("\n"))}</pre></div>` : "";
+      ? `<div class="pr-log"><span>Keluaran ${py ? "print" : "console.log"}:</span><pre>${esc(r.logs.join("\n"))}</pre></div>` : "";
     fb.hidden = false;
     fb.className = "pr-fb " + (benar ? "ok" : "no");
     fb.innerHTML = `<b>${benar ? "Benar! Semua tes lulus." : `Belum tepat — ${lulus} dari ${tes.length} tes lulus.`}</b><ul class="pr-uji">${baris.join("")}</ul>${log}`;

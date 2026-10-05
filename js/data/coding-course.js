@@ -129,7 +129,7 @@ Program adalah daftar perintah yang dijalankan komputer persis seperti tertulis,
 <table class="tbl">
   <tr><th>Bahasa</th><th>Paling sering dipakai untuk</th><th>Di platform ini</th></tr>
   <tr><td><b>JavaScript</b></td><td>Website, aplikasi web, server (Node.js)</td><td>Jalur ini; frontend DApp di jalur Crypto</td></tr>
-  <tr><td><b>Python</b></td><td>AI, analisis data, otomasi</td><td>Contoh kode di jalur AI</td></tr>
+  <tr><td><b>Python</b></td><td>AI, analisis data, otomasi</td><td>Modul Python di jalur ini; contoh kode di jalur AI</td></tr>
   <tr><td><b>Solidity</b></td><td>Smart contract di Ethereum</td><td>Modul Remix &amp; Foundry di jalur Crypto</td></tr>
   <tr><td><b>SQL</b></td><td>Bertanya pada database</td><td>Analisis on-chain di jalur Crypto</td></tr>
   <tr><td>Java, Kotlin, Swift</td><td>Aplikasi Android dan iPhone</td><td>—</td></tr>
@@ -1060,6 +1060,482 @@ console.log("Total: " + total);
               ],
               answer: 0,
               explain: "Properti objek diakses dengan titik diikuti nama labelnya."
+            }
+          ]
+        },
+      ],
+    },
+    /* ---------------- MODUL 3: PYTHON: BAHASA AI & DATA ---------------- */
+    {
+      id: "cd-py",
+      level: "Python",
+      title: "Python: Bahasa AI & Data",
+      summary: "Konsep yang sama dalam ejaan Python — print, f-string, indentasi, if/elif, for dengan range, def, list, dictionary, list comprehension, dan pustaka — dijalankan dengan Python sungguhan di browser.",
+      lessons: [
+        {
+          id: "cd-py-1",
+          title: "Python dari Nol — Bahasa yang Sama, Ejaan Berbeda",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Di JavaScript kamu sudah memakai <b>variabel</b>, <b>operator</b>, <b>fungsi</b>, <b>if</b>, <b>perulangan</b>, serta <b>array</b> dan <b>objek</b>. Hampir semua bahasa punya bahan yang sama — hanya ejaannya yang berbeda (pelajaran Peta Bahasa Pemrograman).
+</div>
+
+<h3>Kenapa Python?</h3>
+<p><b>Python</b> adalah bahasa paling populer untuk AI, analisis data, dan otomasi. Kodenya ringkas dan mudah dibaca, dan pustakanya untuk data sangat lengkap — itulah bahasa yang dipakai contoh-contoh kode di jalur AI. Di platform ini, Python sungguhan berjalan langsung di browser: mesinnya diunduh sekali saat pertama kali kamu menekan Jalankan.</p>
+
+<h3>Perintah pertama</h3>
+<div data-demo="py-playground">
+print("Halo dari Python!")
+harga = 28000
+jumlah = 3
+total = harga * jumlah
+print("Total:", total)
+print(f"Total belanja: Rp{total}")
+</div>
+<ul>
+  <li><b>print(...)</b> setara dengan console.log(...).</li>
+  <li><b>Tidak ada let atau const</b> dan <b>tidak ada titik koma</b>: cukup tulis <i>nama = isi</i>.</li>
+  <li><b>f-string</b>: huruf <b>f</b> sebelum tanda kutip, lalu nilai disisipkan dengan kurung kurawal <b>{ }</b>.</li>
+  <li>Komentar diawali tanda <b>#</b>, bukan //.</li>
+</ul>
+
+<h3>JavaScript vs Python</h3>
+<table class="tbl">
+  <tr><th></th><th>JavaScript</th><th>Python</th></tr>
+  <tr><td>Menampilkan</td><td>console.log("Hai")</td><td>print("Hai")</td></tr>
+  <tr><td>Variabel</td><td>let stok = 20;</td><td>stok = 20</td></tr>
+  <tr><td>Benar / salah</td><td>true / false</td><td><b>True / False</b> (huruf besar)</td></tr>
+  <tr><td>Kosong</td><td>null</td><td>None</td></tr>
+  <tr><td>Komentar</td><td>// catatan</td><td># catatan</td></tr>
+  <tr><td>Penanda blok</td><td>Kurung kurawal { }</td><td><b>Indentasi</b> (spasi di awal baris)</td></tr>
+  <tr><td>Gaya nama</td><td>totalBelanja</td><td>total_belanja</td></tr>
+</table>
+
+<h3>Jenis data dan pembagian</h3>
+<div data-demo="py-playground">
+print(type(28000))      # int: bilangan bulat
+print(type(3.5))        # float: bilangan desimal
+print(type("Kopi"))     # str: teks
+print(type(True))       # bool: True atau False
+
+print(7 / 2)            # pembagian biasa selalu menghasilkan float
+print(7 // 2)           # pembagian bulat (dibulatkan ke bawah)
+print(7 % 2)            # sisa bagi
+print(2 ** 10)          # pangkat
+</div>
+<p>Perhatikan: di Python, <b>/</b> selalu menghasilkan bilangan desimal, bahkan <i>6 / 2</i> menjadi <i>3.0</i>. Kalau butuh hasil bulat, pakai <b>//</b>.</p>
+
+<h3>Teks dan angka tidak bisa langsung dijumlah</h3>
+<div data-demo="py-playground">
+umur = 20
+print("Umur: " + str(umur))   # ubah angka menjadi teks dengan str()
+print(int("5") + 3)           # ubah teks menjadi angka dengan int()
+print("Umur: " + umur)        # baris ini error — coba baca pesannya
+</div>
+<p>Python lebih tegas daripada JavaScript: <i>"5" + 3</i> tidak diam-diam menjadi "53", melainkan langsung error. Ini justru membantu, karena kesalahan ketahuan lebih awal.</p>
+`,
+          keyPoints: [
+            "Python populer untuk AI, data, dan otomasi; di platform ini Python sungguhan berjalan di browser.",
+            "print(...) untuk menampilkan; variabel cukup nama = isi, tanpa let/const dan tanpa titik koma.",
+            "f-string menyisipkan nilai ke teks: f\"Total: Rp{total}\"; komentar memakai #.",
+            "True/False berhuruf besar, None untuk kosong; nama memakai gaya snake_case.",
+            "/ selalu menghasilkan float, // pembagian bulat; teks dan angka harus diubah dulu dengan str() atau int()."
+          ],
+          practice: [
+            { type: "code", lang: "python", q: "Buat variabel harga berisi 28000, jumlah berisi 3, dan total yang dihitung dari keduanya.", starter: "# tulis kodemu di sini\n", tests: [["harga", 28000], ["jumlah", 3], ["total", 84000]], hint: "Di Python cukup: nama = isi. Total = harga * jumlah.", solution: "harga = 28000\njumlah = 3\ntotal = harga * jumlah" },
+            { type: "code", lang: "python", q: "Tampilkan tulisan Total: Rp84000 memakai f-string dan variabel total.", starter: "total = 84000\n", tests: [["@log", "Total: Rp84000"]], hint: "print(f\"... {total}\")", solution: "total = 84000\nprint(f\"Total: Rp{total}\")" },
+            { type: "code", lang: "python", q: "Isian pembeli berupa teks \"2\" dan \"3\". Buat variabel jumlah berisi penjumlahan keduanya sebagai angka (5).", starter: "isian_a = \"2\"\nisian_b = \"3\"\n", tests: [["jumlah", 5]], hint: "Ubah dengan int(...) sebelum dijumlahkan.", solution: "isian_a = \"2\"\nisian_b = \"3\"\njumlah = int(isian_a) + int(isian_b)" }
+          ],
+          quiz: [
+            {
+              q: "Mana penulisan nilai benar yang tepat di Python?",
+              options: [
+                "True",
+                "true",
+                "TRUE",
+                "\"true\""
+              ],
+              answer: 0,
+              explain: "Python memakai True dan False dengan huruf awal kapital."
+            },
+            {
+              q: "Apa hasil 7 // 2 di Python?",
+              options: [
+                "3",
+                "3.5",
+                "1",
+                "4"
+              ],
+              answer: 0,
+              explain: "// adalah pembagian bulat yang dibulatkan ke bawah; 7 / 2 menghasilkan 3.5."
+            },
+            {
+              q: "Apa yang terjadi bila menjalankan \"Umur: \" + 20 di Python?",
+              options: [
+                "Error, karena teks dan angka tidak bisa langsung disambung",
+                "Menghasilkan \"Umur: 20\" seperti di JavaScript",
+                "Menghasilkan angka 20 tanpa teks di depannya",
+                "Python mengabaikan baris itu tanpa pesan apa pun"
+              ],
+              answer: 0,
+              explain: "Ubah angkanya dulu dengan str(20). Python tidak diam-diam mengubah jenis data."
+            }
+          ]
+        },
+        {
+          id: "cd-py-2",
+          title: "Indentasi, if & Perulangan di Python",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Di JavaScript, langkah-langkah di dalam if atau for dibungkus kurung kurawal <b>{ }</b>. Python tidak memakai kurung kurawal untuk itu — sebagai gantinya, ia membaca <b>indentasi</b>: spasi di awal baris.
+</div>
+
+<h3>Indentasi bukan hiasan</h3>
+<pre class="code">total = 120000
+if total &gt;= 100000:
+    print("Dapat diskon")      # menjorok: bagian dari if
+    print("Selamat!")          # masih bagian dari if
+print("Terima kasih")          # tidak menjorok: selalu dijalankan</pre>
+<ul>
+  <li>Baris yang membuka blok diakhiri <b>titik dua (:)</b>.</li>
+  <li>Isi blok <b>menjorok</b> ke dalam — kebiasaannya <b>4 spasi</b>.</li>
+  <li>Blok berakhir saat baris kembali ke posisi semula.</li>
+</ul>
+<p>Kalau indentasinya tidak rata, Python berhenti dengan <b>IndentationError</b>. Di kolom kode platform ini, tombol <b>Tab</b> menyisipkan 4 spasi.</p>
+
+<h3>if, elif, else</h3>
+<div data-demo="py-playground">
+def predikat(nilai):
+    if nilai >= 85:
+        return "A"
+    elif nilai >= 70:
+        return "B"
+    elif nilai >= 55:
+        return "C"
+    else:
+        return "D"
+
+print(predikat(92))
+print(predikat(70))
+print(predikat(40))
+</div>
+<table class="tbl">
+  <tr><th></th><th>JavaScript</th><th>Python</th></tr>
+  <tr><td>Selain itu, jika</td><td>else if</td><td><b>elif</b></td></tr>
+  <tr><td>Dan / atau / bukan</td><td>&amp;&amp; / || / !</td><td><b>and / or / not</b></td></tr>
+  <tr><td>Sama dengan</td><td>===</td><td><b>==</b> (Python tidak diam-diam mengubah jenis data, jadi "5" == 5 bernilai False)</td></tr>
+</table>
+
+<h3>for dengan range</h3>
+<div data-demo="py-playground">
+for i in range(1, 6):
+    print("Putaran ke-", i)
+
+jumlah = 0
+for i in range(1, 101):
+    jumlah = jumlah + i
+print("1 + 2 + ... + 100 =", jumlah)
+</div>
+<div class="callout warn">
+<b>range(1, 6) berhenti sebelum 6.</b> Angka akhir <i>tidak</i> ikut: hasilnya 1, 2, 3, 4, 5. Untuk menjumlah 1 sampai 100, tulis <i>range(1, 101)</i>. Ini jebakan "meleset satu" yang paling sering di Python.
+</div>
+
+<h3>while</h3>
+<div data-demo="py-playground">
+saldo = 1000000
+tahun = 0
+while saldo &lt; 2000000:
+    saldo = saldo * 1.1
+    tahun += 1          # singkatan dari tahun = tahun + 1
+print("Butuh", tahun, "tahun")
+</div>
+`,
+          keyPoints: [
+            "Python menandai blok dengan indentasi (biasanya 4 spasi) setelah baris yang diakhiri titik dua.",
+            "if / elif / else; gabungkan syarat dengan and, or, not.",
+            "Python memakai == untuk membandingkan dan tidak mengubah jenis data diam-diam: \"5\" == 5 bernilai False.",
+            "range(a, b) berhenti sebelum b: range(1, 101) menghasilkan 1 sampai 100.",
+            "while mengulang selama syarat True; x += 1 adalah singkatan dari x = x + 1."
+          ],
+          practice: [
+            { type: "code", lang: "python", q: "Buat fungsi diskon(total): 10% dari total bila total 100000 atau lebih, selain itu 0.", starter: "def diskon(total):\n    # tulis kodemu di sini\n    pass\n", tests: [["diskon(120000)", 12000], ["diskon(99000)", 0], ["diskon(100000)", 10000]], hint: "if total >= 100000: return total // 10 — lalu return 0 di luar if.", solution: "def diskon(total):\n    if total >= 100000:\n        return total // 10\n    return 0" },
+            { type: "code", lang: "python", q: "Buat fungsi jumlah_sampai(n) yang mengembalikan 1 + 2 + ... + n memakai for dan range.", starter: "def jumlah_sampai(n):\n    jumlah = 0\n    # tulis perulangannya di sini\n\n    return jumlah\n", tests: [["jumlah_sampai(5)", 15], ["jumlah_sampai(100)", 5050], ["jumlah_sampai(1)", 1]], hint: "range(1, n + 1) — ingat angka akhirnya tidak ikut.", solution: "def jumlah_sampai(n):\n    jumlah = 0\n    for i in range(1, n + 1):\n        jumlah = jumlah + i\n    return jumlah" },
+            { type: "code", lang: "python", q: "Buat fungsi ongkir(jarak): sampai 5 km gratis (0), lebih dari 5 sampai 10 km 10000, lebih dari 10 km 20000.", starter: "def ongkir(jarak):\n    pass\n", tests: [["ongkir(3)", 0], ["ongkir(5)", 0], ["ongkir(8)", 10000], ["ongkir(10)", 10000], ["ongkir(15)", 20000]], hint: "if ... elif ... else, dengan <= untuk 'sampai'.", solution: "def ongkir(jarak):\n    if jarak <= 5:\n        return 0\n    elif jarak <= 10:\n        return 10000\n    else:\n        return 20000" }
+          ],
+          quiz: [
+            {
+              q: "Bagaimana Python mengetahui baris mana yang termasuk di dalam sebuah if?",
+              options: [
+                "Dari indentasinya: baris yang menjorok ke dalam",
+                "Dari kurung kurawal yang membungkus barisnya",
+                "Dari titik koma di akhir setiap baris",
+                "Dari kata end yang menutup blok if"
+              ],
+              answer: 0,
+              explain: "Indentasi adalah bagian dari tata bahasa Python, bukan hiasan."
+            },
+            {
+              q: "Angka apa saja yang dihasilkan range(1, 4)?",
+              options: [
+                "1, 2, 3",
+                "1, 2, 3, 4",
+                "0, 1, 2, 3",
+                "2, 3, 4"
+              ],
+              answer: 0,
+              explain: "Angka akhir tidak ikut: range berhenti sebelum 4."
+            },
+            {
+              q: "Apa padanan else if dan && dari JavaScript di Python?",
+              options: [
+                "elif dan and",
+                "elseif dan &&",
+                "else if dan &",
+                "elif dan &&"
+              ],
+              answer: 0,
+              explain: "Python memakai kata: elif, and, or, not."
+            }
+          ]
+        },
+        {
+          id: "cd-py-3",
+          title: "Fungsi, List & Dictionary di Python",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Fungsi membungkus langkah dan mengembalikan hasil dengan <b>return</b>. Array menyimpan daftar berurutan (nomor urut mulai 0), dan objek menyimpan keterangan dengan label. Python punya padanan untuk ketiganya.
+</div>
+
+<h3>Fungsi: def</h3>
+<pre class="code">def total_harga(harga, jumlah):
+    return harga * jumlah
+
+print(total_harga(28000, 3))   # 84000</pre>
+<p><b>def</b> menggantikan <i>function</i>, diikuti titik dua dan isi yang menjorok. Nama fungsi dan variabel di Python biasanya memakai <b>snake_case</b>: kata dipisah garis bawah.</p>
+
+<h3>List (padanan array)</h3>
+<div data-demo="py-playground">
+menu = ["Kopi Susu", "Teh Manis", "Roti Bakar"]
+print(menu[0])          # nomor urut mulai dari 0
+print(menu[-1])         # -1 = isi terakhir
+print(len(menu))        # banyaknya isi
+
+menu.append("Es Jeruk") # tambah di akhir
+for m in menu:
+    print("-", m)
+</div>
+<p>Python punya kemudahan: nomor urut <b>negatif</b> menghitung dari belakang, jadi <i>menu[-1]</i> adalah isi terakhir.</p>
+
+<h3>Dictionary (padanan objek)</h3>
+<div data-demo="py-playground">
+pesanan = {"menu": "Kopi Susu", "harga": 28000, "jumlah": 2}
+print(pesanan["menu"])
+print(pesanan["harga"] * pesanan["jumlah"])
+
+pesanan["jumlah"] = 3
+for kunci, nilai in pesanan.items():
+    print(kunci, "=", nilai)
+</div>
+<p>Isi dictionary diambil dengan kurung siku dan nama kuncinya dalam tanda kutip: <i>pesanan["harga"]</i>.</p>
+
+<h3>Daftar berisi dictionary</h3>
+<div data-demo="py-playground">
+nota = [
+    {"menu": "Kopi Susu", "harga": 28000, "jumlah": 2},
+    {"menu": "Roti Bakar", "harga": 22000, "jumlah": 1},
+    {"menu": "Teh Manis", "harga": 8000, "jumlah": 3},
+]
+
+total = 0
+for p in nota:
+    total += p["harga"] * p["jumlah"]
+print("Total:", total)
+</div>
+
+<h3>Fungsi bawaan yang sangat berguna</h3>
+<table class="tbl">
+  <tr><th>Fungsi</th><th>Contoh</th><th>Hasil</th></tr>
+  <tr><td><b>len</b></td><td>len([5, 8, 2])</td><td>3</td></tr>
+  <tr><td><b>sum</b></td><td>sum([5, 8, 2])</td><td>15</td></tr>
+  <tr><td><b>max / min</b></td><td>max([5, 8, 2])</td><td>8</td></tr>
+  <tr><td><b>sorted</b></td><td>sorted([5, 8, 2])</td><td>[2, 5, 8]</td></tr>
+  <tr><td><b>round</b></td><td>round(2.567, 1)</td><td>2.6</td></tr>
+</table>
+<p>Hal yang di JavaScript butuh perulangan dan penampung, di Python sering cukup satu fungsi bawaan. Tapi memahami cara menulisnya sendiri tetap penting — fungsi bawaan pun bekerja dengan perulangan di dalamnya.</p>
+`,
+          keyPoints: [
+            "Fungsi dibuat dengan def nama(parameter): lalu isi yang menjorok; hasil dikembalikan dengan return.",
+            "List = padanan array: nomor urut mulai 0, menu[-1] adalah isi terakhir, append menambah di akhir.",
+            "Dictionary = padanan objek: diakses dengan d[\"kunci\"], dijelajahi dengan for k, v in d.items().",
+            "Data nyata sering berupa list berisi dictionary, seperti nota belanja.",
+            "Fungsi bawaan len, sum, max, min, sorted, dan round mempersingkat banyak pekerjaan."
+          ],
+          practice: [
+            { type: "code", lang: "python", q: "Buat fungsi total_belanja(nota) untuk list berisi dictionary dengan kunci \"harga\" dan \"jumlah\".", starter: "def total_belanja(nota):\n    pass\n", tests: [["total_belanja([{\"harga\": 28000, \"jumlah\": 2}, {\"harga\": 15000, \"jumlah\": 1}])", 71000], ["total_belanja([{\"harga\": 8000, \"jumlah\": 3}])", 24000], ["total_belanja([])", 0]], hint: "total = 0, lalu for p in nota: total += p[\"harga\"] * p[\"jumlah\"].", solution: "def total_belanja(nota):\n    total = 0\n    for p in nota:\n        total += p[\"harga\"] * p[\"jumlah\"]\n    return total" },
+            { type: "code", lang: "python", q: "Buat fungsi menu_terakhir(menu) yang mengembalikan isi terakhir sebuah list.", starter: "def menu_terakhir(menu):\n    pass\n", tests: [["menu_terakhir([\"Kopi\", \"Teh\", \"Roti\"])", "Roti"], ["menu_terakhir([\"Es Jeruk\"])", "Es Jeruk"]], hint: "Nomor urut negatif menghitung dari belakang.", solution: "def menu_terakhir(menu):\n    return menu[-1]" },
+            { type: "code", lang: "python", q: "Buat fungsi rata_rata(nilai) yang mengembalikan rata-rata isi list angka, dibulatkan 1 angka di belakang koma.", starter: "def rata_rata(nilai):\n    pass\n", tests: [["rata_rata([80, 90, 100])", 90], ["rata_rata([70, 75])", 72.5], ["rata_rata([1, 2, 2])", 1.7]], hint: "sum(...) / len(...), lalu round(..., 1).", solution: "def rata_rata(nilai):\n    return round(sum(nilai) / len(nilai), 1)" }
+          ],
+          quiz: [
+            {
+              q: "Apa isi menu[-1] bila menu = [\"Kopi\", \"Teh\", \"Roti\"]?",
+              options: [
+                "\"Roti\"",
+                "\"Kopi\"",
+                "\"Teh\"",
+                "Error"
+              ],
+              answer: 0,
+              explain: "Nomor urut negatif menghitung dari belakang; -1 adalah isi terakhir."
+            },
+            {
+              q: "Bagaimana mengambil harga dari pesanan = {\"menu\": \"Kopi\", \"harga\": 28000}?",
+              options: [
+                "pesanan[\"harga\"]",
+                "pesanan.harga",
+                "pesanan(harga)",
+                "harga[pesanan]"
+              ],
+              answer: 0,
+              explain: "Isi dictionary diambil dengan kurung siku dan nama kunci dalam tanda kutip."
+            },
+            {
+              q: "Kata apa yang dipakai Python untuk membuat fungsi?",
+              options: [
+                "def",
+                "function",
+                "func",
+                "fn"
+              ],
+              answer: 0,
+              explain: "def nama(parameter): lalu isi fungsi yang menjorok."
+            },
+            {
+              q: "Apa hasil sum([5, 8, 2])?",
+              options: [
+                "15",
+                "8",
+                "3",
+                "582"
+              ],
+              answer: 0,
+              explain: "sum menjumlahkan semua isi list."
+            }
+          ]
+        },
+        {
+          id: "cd-py-4",
+          title: "Kenapa Python Disukai untuk Data — List Comprehension & Pustaka",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+List menyimpan daftar data, <b>for</b> menjelajahinya, dan fungsi bawaan seperti <b>sum</b>, <b>len</b>, dan <b>max</b> merangkumnya. Di jalur AI, contoh kode memakai pustaka Python seperti NumPy, pandas, dan scikit-learn.
+</div>
+
+<h3>List comprehension: membuat list dalam satu baris</h3>
+<p>Misalnya semua harga naik 10%. Cara biasa:</p>
+<pre class="code">harga = [28000, 15000, 22000]
+baru = []
+for h in harga:
+    baru.append(h * 110 // 100)</pre>
+<p>Dengan <b>list comprehension</b>, cukup satu baris — dan dibaca hampir seperti kalimat: "h × 1,1 untuk setiap h di harga".</p>
+<div data-demo="py-playground">
+harga = [28000, 15000, 22000, 9000]
+
+naik = [h * 110 // 100 for h in harga]
+print(naik)
+
+mahal = [h for h in harga if h >= 20000]   # pakai if untuk menyaring
+print(mahal)
+</div>
+
+<h3>Contoh analisis kecil</h3>
+<p>Penjualan Warung Kopi Sari selama seminggu (cangkir per hari). Hari apa saja yang di atas rata-rata?</p>
+<div data-demo="py-playground">
+import statistics
+
+hari = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"]
+penjualan = [42, 38, 45, 40, 61, 78, 70]
+
+rata = statistics.mean(penjualan)
+print("Rata-rata:", round(rata, 1))
+print("Median   :", statistics.median(penjualan))
+print("Tertinggi:", max(penjualan), "pada hari", hari[penjualan.index(max(penjualan))])
+
+ramai = [hari[i] for i in range(len(hari)) if penjualan[i] > rata]
+print("Di atas rata-rata:", ramai)
+</div>
+<p>Baris <b>import statistics</b> memuat <b>pustaka</b> — kumpulan fungsi siap pakai yang ditulis orang lain. Python sudah membawa banyak pustaka bawaan seperti <i>math</i>, <i>statistics</i>, <i>random</i>, dan <i>json</i>.</p>
+
+<h3>Ekosistem yang membuat Python unggul di data dan AI</h3>
+<table class="tbl">
+  <tr><th>Pustaka</th><th>Gunanya</th><th>Dibahas di</th></tr>
+  <tr><td><b>NumPy</b></td><td>Hitungan angka dalam jumlah sangat besar</td><td><a href="#/lesson/ai-tl-2">Pustaka Wajib</a> (jalur AI)</td></tr>
+  <tr><td><b>pandas</b></td><td>Tabel data seperti spreadsheet, tapi diprogram</td><td>Jalur AI</td></tr>
+  <tr><td><b>matplotlib</b></td><td>Membuat grafik</td><td>Jalur AI</td></tr>
+  <tr><td><b>scikit-learn</b></td><td>Machine learning klasik</td><td>Jalur AI</td></tr>
+  <tr><td><b>PyTorch</b></td><td>Deep learning dan model AI besar</td><td>Jalur AI</td></tr>
+</table>
+<p>Kolom Python di platform ini hanya memuat pustaka bawaan. Untuk memakai pustaka data di atas, gunakan Python di komputermu sendiri atau layanan notebook gratis di browser seperti <b>Google Colab</b>, yang sudah menyediakan semuanya.</p>
+
+<h3>Langkah berikutnya</h3>
+<ol>
+  <li>Pasang Python dari <b>python.org</b> dan editor <b>VS Code</b> — atau mulai langsung di Google Colab.</li>
+  <li>Kerjakan ulang soal-soal jalur ini di sana, lalu coba contoh kode di jalur AI.</li>
+  <li>Pilih satu data yang kamu kenal — pengeluaran bulanan, nilai kuliah, penjualan usaha keluarga — dan analisis dengan Python.</li>
+</ol>
+`,
+          keyPoints: [
+            "List comprehension membuat list dalam satu baris: [ekspresi for x in data if syarat].",
+            "import memuat pustaka; Python membawa pustaka bawaan seperti math, statistics, random, dan json.",
+            "statistics.mean dan median merangkum data; list.index mencari posisi sebuah nilai.",
+            "NumPy, pandas, matplotlib, scikit-learn, dan PyTorch membuat Python unggul untuk data dan AI.",
+            "Kolom Python di sini hanya berisi pustaka bawaan; untuk pustaka data pakai Python di komputer atau Google Colab."
+          ],
+          practice: [
+            { type: "code", lang: "python", q: "Buat fungsi harga_diskon(daftar) yang mengembalikan list baru: setiap harga dikurangi 10% (pakai // agar hasilnya bulat).", starter: "def harga_diskon(daftar):\n    pass\n", tests: [["harga_diskon([28000, 15000])", [25200, 13500]], ["harga_diskon([])", []]], hint: "[h - h // 10 for h in daftar]", solution: "def harga_diskon(daftar):\n    return [h - h // 10 for h in daftar]" },
+            { type: "code", lang: "python", q: "Buat fungsi hari_ramai(penjualan) yang mengembalikan BANYAKNYA hari dengan penjualan di atas rata-rata.", starter: "def hari_ramai(penjualan):\n    pass\n", tests: [["hari_ramai([42, 38, 45, 40, 61, 78, 70])", 3], ["hari_ramai([10, 10, 10])", 0], ["hari_ramai([1, 9])", 1]], hint: "Hitung rata = sum / len, lalu len([p for p in penjualan if p > rata]).", solution: "def hari_ramai(penjualan):\n    rata = sum(penjualan) / len(penjualan)\n    return len([p for p in penjualan if p > rata])" },
+            { type: "code", lang: "python", q: "Buat fungsi kuadrat_genap(n) yang mengembalikan list kuadrat dari bilangan genap 1 sampai n.", starter: "def kuadrat_genap(n):\n    pass\n", tests: [["kuadrat_genap(6)", [4, 16, 36]], ["kuadrat_genap(1)", []], ["kuadrat_genap(4)", [4, 16]]], hint: "[i ** 2 for i in range(1, n + 1) if i % 2 == 0]", solution: "def kuadrat_genap(n):\n    return [i ** 2 for i in range(1, n + 1) if i % 2 == 0]" }
+          ],
+          quiz: [
+            {
+              q: "Apa hasil [h * 2 for h in [1, 2, 3]]?",
+              options: [
+                "[2, 4, 6]",
+                "[1, 2, 3, 1, 2, 3]",
+                "12",
+                "[1, 4, 9]"
+              ],
+              answer: 0,
+              explain: "Setiap h dikalikan 2, hasilnya dikumpulkan menjadi list baru."
+            },
+            {
+              q: "Untuk apa baris import statistics?",
+              options: [
+                "Memuat pustaka berisi fungsi statistik siap pakai",
+                "Mengunduh data statistik terbaru dari internet",
+                "Membuat variabel baru bernama statistics",
+                "Menampilkan statistik kode yang sedang berjalan"
+              ],
+              answer: 0,
+              explain: "import memuat pustaka; statistics menyediakan mean, median, dan lainnya."
+            },
+            {
+              q: "Di mana sebaiknya memakai pandas dan scikit-learn?",
+              options: [
+                "Python di komputer sendiri atau notebook seperti Google Colab",
+                "Kolom Python di platform ini, karena semua pustaka tersedia",
+                "Konsol browser lewat tombol F12 dan tab Console",
+                "Remix IDE, karena Remix mendukung semua bahasa"
+              ],
+              answer: 0,
+              explain: "Kolom Python di sini hanya berisi pustaka bawaan; Colab sudah menyediakan pustaka data."
             }
           ]
         },
