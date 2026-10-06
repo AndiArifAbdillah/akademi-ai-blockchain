@@ -443,6 +443,7 @@ function router() {
   const root = document.getElementById("app");
   window.scrollTo(0, 0);
   Speech.stop(); // hentikan narasi saat pindah halaman
+  document.querySelectorAll(".aksi-bawah").forEach((b) => b.remove()); // bilah aksi milik halaman pelajaran sebelumnya
 
   if (hash.startsWith("/course/")) {
     const course = COURSES.find((c) => c.id === id);
@@ -789,21 +790,24 @@ function renderLesson({ course, module, lesson }) {
       <a href="#/">Beranda</a> / <a href="#/course/${course.id}">${esc(course.title)}</a> / <span>${esc(lesson.title)}</span>
     </div>
     <header class="lesson-head jalur-${course.id}">
-      <p class="kicker">${tandaJalur(course, "kecil")} ${esc(course.title)} · Modul ${mi + 1} · ${esc(module.level)}</p>
+      <p class="kicker">${tandaJalur(course, "kecil")} <span><a href="#/course/${course.id}">${esc(course.title)}</a> · Modul ${mi + 1} · ${esc(module.level)}</span></p>
       <h1>${esc(lesson.title)}</h1>
-      <p class="lesson-meta"><span>${ikon("jam")} ${esc(lesson.duration)}</span><span class="lesson-pos">Pelajaran ${li + 1} dari ${module.lessons.length} · ${esc(module.title)}</span>${done ? `<span class="ok">${ikon("cek")} Selesai</span>` : ""}</p>
+      <p class="lesson-meta"><span>${ikon("jam")} ${esc(lesson.duration)}</span><span class="lesson-pos">Pelajaran ${li + 1} dari ${module.lessons.length}<span class="lesson-modul"> · ${esc(module.title)}</span></span>${done ? `<span class="ok">${ikon("cek")} Selesai</span>` : ""}</p>
     </header>
   `));
+
+  // Di layar lebar ruang cukup, jadi kotak pengantar langsung terbuka; di HP dilipat
+  // supaya isi pelajaran tidak terdorong jauh ke bawah.
+  const layarLebar = !(window.matchMedia && window.matchMedia("(max-width: 860px)").matches);
 
   // Jembatan di awal modul: apa isi modul ini & dari mana kita datang
   if (li === 0) {
     wrap.appendChild(el(`
-      <aside class="modul-jembatan masuk">
-        <p class="kicker">Awal modul ${mi + 1} dari ${course.modules.length}</p>
-        <b>${esc(module.title)}</b>
+      <details class="modul-jembatan masuk"${layarLebar ? " open" : ""}>
+        <summary><span class="mj-judul"><span class="kicker">Awal modul ${mi + 1} dari ${course.modules.length}</span><b>${esc(module.title)}</b></span></summary>
         <p>${esc(module.summary)}</p>
         ${modulSebelum ? `<small>Sebelumnya kamu menuntaskan Modul ${mi}: ${esc(modulSebelum.title)}.</small>` : ""}
-      </aside>
+      </details>
     `));
   }
 
@@ -830,7 +834,8 @@ function renderLesson({ course, module, lesson }) {
 
   // Peta singkat SEBELUM materi: pembaca tahu dulu apa yang akan dipelajari
   if (lesson.keyPoints && lesson.keyPoints.length) {
-    const pre = el(`<aside class="lesson-preview"><p class="kicker">Yang akan kamu pelajari</p><ul></ul></aside>`);
+    const jumlahPoin = Math.min(4, lesson.keyPoints.length);
+    const pre = el(`<details class="lesson-preview"${layarLebar ? " open" : ""}><summary><span class="kicker">Yang akan kamu pelajari</span><span class="lp-jumlah">${jumlahPoin} poin</span></summary><ul></ul></details>`);
     const ulp = pre.querySelector("ul");
     lesson.keyPoints.slice(0, 4).forEach((k) => ulp.appendChild(el(`<li>${esc(k)}</li>`)));
     wrap.appendChild(pre);
@@ -942,9 +947,53 @@ function renderLesson({ course, module, lesson }) {
       }
     });
   }
-  bukaKunci = () => kunciNav(false);
   wrap.appendChild(gembok);
   wrap.appendChild(nav);
+
+  // Bilah aksi tetap di bawah layar HP (disembunyikan CSS di layar lebar):
+  // ke kuis selama belum lulus, setelah itu ke pelajaran berikutnya.
+  document.querySelectorAll(".aksi-bawah").forEach((b) => b.remove());
+  const adaKuis = !!(lesson.quiz && lesson.quiz.length);
+  const bar = el(`<div class="aksi-bawah" role="region" aria-label="Aksi pelajaran"><span class="ab-info"></span><span class="ab-tombol"></span></div>`);
+  function isiBar() {
+    const lulus = !adaKuis || Progress.kuisLulus(lesson.id) || Progress.isDone(lesson.id);
+    const info = bar.querySelector(".ab-info"), tempat = bar.querySelector(".ab-tombol");
+    if (!lulus) {
+      info.innerHTML = `<small>Pelajaran ${li + 1} dari ${module.lessons.length}</small><b>Kuis · ${lesson.quiz.length} soal</b>`;
+      tempat.innerHTML = `<button type="button" class="btn primary">Kerjakan kuis</button>`;
+      tempat.firstChild.onclick = () => {
+        const k = wrap.querySelector(".quiz");
+        if (k) k.scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+    } else if (nextLesson) {
+      info.innerHTML = `<small>Berikutnya</small><b>${esc(nextLesson.title)}</b>`;
+      tempat.innerHTML = `<a class="btn primary" href="#/lesson/${nextLesson.id}">Lanjut ${ikon("kanan")}</a>`;
+    } else {
+      info.innerHTML = `<small>Akhir jalur</small><b>${esc(course.title)}</b>`;
+      tempat.innerHTML = `<a class="btn primary" href="#/course/${course.id}">Ke jalur</a>`;
+    }
+  }
+  // Muncul setelah mulai membaca; hilang saat kuis/navigasi bawah terlihat atau saat mengetik jawaban
+  let ujungTerlihat = false, sedangMengetik = false;
+  const aturBar = () => bar.classList.toggle("tampil", window.scrollY > 240 && !ujungTerlihat && !sedangMengetik);
+  if ("IntersectionObserver" in window) {
+    const terlihat = new Set();
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => (e.isIntersecting ? terlihat.add(e.target) : terlihat.delete(e.target)));
+      ujungTerlihat = terlihat.size > 0;
+      aturBar();
+    });
+    [".quiz", ".lesson-nav"].forEach((s) => { const t = wrap.querySelector(s); if (t) io.observe(t); });
+  }
+  wrap.addEventListener("focusin", (e) => { if (e.target.matches("input, textarea, select")) { sedangMengetik = true; aturBar(); } });
+  wrap.addEventListener("focusout", () => { sedangMengetik = false; aturBar(); });
+  if (window.__aturBarAksi) window.removeEventListener("scroll", window.__aturBarAksi);
+  window.__aturBarAksi = aturBar;
+  window.addEventListener("scroll", aturBar, { passive: true });
+  isiBar();
+  document.body.appendChild(bar);
+
+  bukaKunci = () => { kunciNav(false); isiBar(); };
 
   return wrap;
 }
@@ -956,7 +1005,12 @@ function renderQuiz(lesson, onLulus) {
       <p class="kicker">Kuis · ${lesson.quiz.length} soal</p>
       <h3>Uji pemahamanmu</h3>
       <p class="quiz-sub">Pelajaran ini dihitung selesai setelah semua soal dijawab benar.</p>
+      <div class="ql-info" hidden><span class="ql-pos"></span><span class="ql-titik">${lesson.quiz.map(() => "<i></i>").join("")}</span></div>
       <div class="quiz-questions"></div>
+      <div class="ql-kendali" hidden>
+        <button type="button" class="btn ghost ql-mundur">${ikon("kiri")} Sebelumnya</button>
+        <button type="button" class="btn primary ql-maju" disabled>Berikutnya ${ikon("kanan")}</button>
+      </div>
       <button class="btn primary quiz-submit">Periksa Jawaban</button>
       <div class="quiz-result" hidden></div>
     </section>
@@ -981,17 +1035,60 @@ function renderQuiz(lesson, onLulus) {
         chosen[qi] = oi;
         opts.querySelectorAll(".opt").forEach((b) => b.classList.remove("sel"));
         o.classList.add("sel");
+        if (langkah) tampilkanSoal(aktif);
       };
       opts.appendChild(o);
     });
     qWrap.appendChild(qEl);
   });
 
+  // Mode langkah: satu soal per layar (lebih ringan dibaca di HP). Setelah diperiksa,
+  // semua soal ditampilkan bersama penjelasannya untuk ditinjau ulang.
+  const N = lesson.quiz.length;
+  const langkah = N > 1;
+  let aktif = 0;
+  const semuaSoal = qWrap.querySelectorAll(".q");
+  const tombolMaju = box.querySelector(".ql-maju"), tombolMundur = box.querySelector(".ql-mundur");
+  const tombolPeriksa = box.querySelector(".quiz-submit");
+  function tampilkanSoal(i) {
+    aktif = i;
+    semuaSoal.forEach((q, k) => q.classList.toggle("aktif", k === i));
+    box.querySelector(".ql-pos").textContent = `Soal ${i + 1} dari ${N}`;
+    box.querySelectorAll(".ql-titik i").forEach((t, k) => {
+      t.classList.toggle("isi", chosen[k] !== null);
+      t.classList.toggle("kini", k === i);
+    });
+    tombolMundur.disabled = i === 0;
+    const terakhir = i === N - 1;
+    tombolMaju.hidden = terakhir;
+    tombolMaju.disabled = chosen[i] === null;
+    tombolPeriksa.hidden = !terakhir;
+    tombolPeriksa.disabled = chosen.includes(null);
+  }
+  function pindahSoal(i) {
+    tampilkanSoal(i);
+    // bila awal kuis sudah tergulir ke atas layar, bawa kembali supaya soal baru terbaca dari atas
+    if (box.getBoundingClientRect().top < 0) box.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  if (langkah) {
+    box.classList.add("langkah");
+    box.querySelector(".ql-info").hidden = false;
+    box.querySelector(".ql-kendali").hidden = false;
+    box.querySelector(".ql-kendali").appendChild(tombolPeriksa); // di soal terakhir, sejajar dengan "Sebelumnya"
+    tombolMaju.onclick = () => pindahSoal(aktif + 1);
+    tombolMundur.onclick = () => pindahSoal(aktif - 1);
+    tampilkanSoal(0);
+  }
+
   box.querySelector(".quiz-submit").onclick = () => {
     if (chosen.includes(null)) {
       alert("Jawab semua pertanyaan dulu, ya.");
       return;
     }
+    // keluar dari mode langkah: tampilkan semua soal beserta penjelasannya
+    box.classList.remove("langkah");
+    box.querySelector(".ql-info").hidden = true;
+    box.querySelector(".ql-kendali").hidden = true;
     box.classList.add("locked");
     let correct = 0;
     const qEls = qWrap.querySelectorAll(".q");
@@ -1032,7 +1129,10 @@ function renderQuiz(lesson, onLulus) {
       const found = findLesson(lesson.id);
       const fresh = renderLesson(found);
       box.closest(".page").replaceWith(fresh);
-      window.scrollTo(0, 0);
+      // langsung ke kuis yang baru, bukan ke awal pelajaran
+      const kuisBaru = fresh.querySelector(".quiz");
+      if (kuisBaru) kuisBaru.scrollIntoView({ block: "start" });
+      else window.scrollTo(0, 0);
     };
     box.querySelector(".quiz-submit").hidden = true;
     res.scrollIntoView({ behavior: "smooth", block: "center" });

@@ -1655,3 +1655,70 @@ a.resume-card:hover .resume-btn { gap: 12px; }
 .sol-lab .rx-panel { margin-top: 6px; }
 .sol-lab .rx-fn-baris .pc-input.lebar { width: auto; flex: 1 1 140px; min-width: 120px; }
 .pr-gas { color: var(--muted); font-size: .78rem; margin-left: 4px; white-space: nowrap; }
+
+/* ---------- Halaman pelajaran: atas ringkas, kuis per soal, bilah aksi HP ---------- */
+/* Kotak pengantar yang bisa dilipat (terbuka di layar lebar, terlipat di HP) */
+details.lesson-preview > summary,
+details.modul-jembatan > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 12px; }
+details.lesson-preview > summary::-webkit-details-marker,
+details.modul-jembatan > summary::-webkit-details-marker { display: none; }
+details.lesson-preview > summary::after,
+details.modul-jembatan > summary::after {
+  content: ""; flex-shrink: 0; width: 8px; height: 8px; margin: -4px 4px 0 auto;
+  border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg); transition: transform .15s;
+}
+details.lesson-preview[open] > summary::after,
+details.modul-jembatan[open] > summary::after { transform: rotate(-135deg); margin-top: 4px; }
+details.lesson-preview > summary .kicker { margin: 0; }
+details.lesson-preview:not([open]) { padding-bottom: 16px; }
+details.lesson-preview[open] > summary { margin-bottom: 6px; }
+.lp-jumlah { font-size: .78rem; color: var(--faint); white-space: nowrap; }
+.mj-judul { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.mj-judul .kicker { margin: 0; font-size: .7rem; }
+details.modul-jembatan > summary b { margin: 0; }
+details.modul-jembatan:not([open]) { padding-bottom: 12px; }
+.lesson-head .kicker a { color: inherit; }
+.lesson-head .kicker a:hover { color: var(--text); }
+
+/* Kuis satu soal per layar */
+.quiz { scroll-margin-top: calc(var(--topbar-h) + 12px); }
+.ql-info { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 16px 0 0; font-size: .82rem; font-weight: 700; color: var(--muted); }
+.ql-titik { display: flex; gap: 7px; }
+.ql-titik i { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background .15s, transform .15s; }
+.ql-titik i.isi { background: var(--muted); }
+.ql-titik i.kini { background: var(--accent); transform: scale(1.35); }
+.quiz.langkah .q { display: none; }
+.quiz.langkah .q.aktif { display: block; margin-top: 6px; padding-top: 8px; border-top: none; animation: fade .2s ease; }
+.ql-kendali { display: flex; gap: 10px; margin-top: 18px; }
+.ql-kendali .btn { flex: 1 1 0; min-width: 0; }
+.ql-kendali .btn:disabled, .quiz-submit:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Bilah aksi tetap di bawah layar HP */
+.aksi-bawah { display: none; }
+@media (max-width: 860px) {
+  .aksi-bawah {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border-top: 1px solid var(--rule);
+    transform: translateY(110%); transition: transform .22s ease;
+  }
+  .aksi-bawah.tampil { transform: none; }
+  .ab-info { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.3; }
+  .ab-info small { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); }
+  .ab-info b { font-size: .9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ab-tombol .btn { white-space: nowrap; }
+}
+@media (max-width: 560px) {
+  .lesson-page > .crumb { display: none; } /* jalur sudah bisa diklik di label atas judul */
+  .lesson-modul { display: none; }
+  .lesson-head { padding-bottom: 16px; margin-bottom: 18px; }
+  .lesson-head h1 { margin-bottom: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aksi-bawah { transition: none; }
+  .quiz.langkah .q.aktif { animation: none; }
+}
