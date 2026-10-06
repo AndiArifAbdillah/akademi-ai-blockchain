@@ -1721,6 +1721,8 @@ const GLOSSARY = [
   ["Proyek Garuda", "Payung pengembangan Rupiah Digital oleh Bank Indonesia sejak 2022, dimulai dari sisi wholesale."],
   ["Stablecoin Rupiah", "Token swasta di blockchain yang dipatok 1 token = Rp1 dan dijamin cadangan rupiah di bank; bukan alat pembayaran sah dan berbeda dengan Rupiah Digital."],
   ["Regulatory Sandbox", "Uji coba produk baru di bawah pengawasan regulator (di Indonesia, OJK) dengan izin terbatas sebelum izin penuh."],
+  ["IASC", "Indonesia Anti-Scam Centre — pusat laporan penipuan keuangan bentukan OJK (sejak November 2024) yang menelusuri dan memblokir rekening penipu bersama bank; lapor di iasc.ojk.go.id."],
+  ["Pig butchering", "Penipuan yang membangun kepercayaan korban berminggu-minggu (kenalan, pacar, mentor), lalu mengajak investasi di aplikasi palsu yang menampilkan untung buatan."],
 ];
 
 function renderGlossary() {

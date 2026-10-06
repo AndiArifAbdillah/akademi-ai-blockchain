@@ -600,6 +600,9 @@ const BLOCKCHAIN_COURSE = {
 <p>Modus yang paling merugikan disebut <b>pig butchering</b> ("menggemukkan babi sebelum disembelih"):</p>
 <div data-diagram="flow" data-steps="Kenalan online|Bangun kepercayaan|Ajak investasi|Untung palsu di layar|Dana tidak bisa ditarik" data-caption="Pola pig butchering: angka untung di layar hanyalah tampilan buatan penipu"></div>
 <p>Kenapa penipu suka memakai crypto? Transfernya <b>tidak bisa dibatalkan</b>, bisa lintas negara dalam hitungan menit, dan banyak korbannya belum paham cara kerjanya.</p>
+<div class="callout">
+<b>Kalau sudah terlanjur:</b> berhenti transfer, segera hubungi bank, lalu lapor ke <b>IASC OJK</b> (iasc.ojk.go.id atau Kontak OJK 157). Langkah lengkapnya ada di <a href="#/lesson/bc-a-4">Keamanan &amp; Penipuan yang Sering Terjadi</a>.
+</div>
 
 <h3>3. Bursa dan perantara bisa runtuh atau dibobol</h3>
 <table class="tbl">
@@ -4957,7 +4960,7 @@ Pada <b>Proof of Stake</b>, validator mengunci koin sebagai jaminan dan ikut mem
         {
           id: "bc-a-4",
           title: "Keamanan & Penipuan yang Sering Terjadi",
-          duration: "10 menit",
+          duration: "14 menit",
           content: `
 <p>Dunia crypto penuh peluang sekaligus jebakan. Keamanan adalah tanggung jawabmu sendiri — tidak ada bank yang membatalkan transaksi.</p>
 
@@ -4970,6 +4973,7 @@ Pada <b>Proof of Stake</b>, validator mengunci koin sebagai jaminan dan ikut mem
   <li><b>Rug pull</b> — pembuat proyek kabur membawa dana setelah mengumpulkan investor.</li>
   <li><b>Giveaway palsu</b> — "kirim 1 ETH, dapat 2 ETH kembali". Selalu hoaks.</li>
   <li><b>Token palsu</b> — meniru proyek terkenal.</li>
+  <li><b>Pig butchering</b> — penipu membangun kepercayaan berminggu-minggu (kenalan online, "pacar", "mentor"), lalu mengajak investasi di aplikasi palsu yang menampilkan untung buatan. Uangnya tidak pernah bisa ditarik (<a href="#/lesson/bc-skep-1">lihat polanya</a>).</li>
 </ul>
 
 <h3>Kebiasaan aman</h3>
@@ -4981,14 +4985,43 @@ Pada <b>Proof of Stake</b>, validator mengunci koin sebagai jaminan dan ikut mem
   <li>DYOR — Do Your Own Research.</li>
 </ol>
 
+<h3>Kalau sudah terlanjur tertipu: lapor ke IASC</h3>
+<p><b>IASC (Indonesia Anti-Scam Centre)</b> adalah pusat penanganan laporan penipuan keuangan yang dibentuk <b>OJK</b> bersama Satgas PASTI dan industri jasa keuangan, dan beroperasi sejak <b>22 November 2024</b>. IASC menghubungkan bank, dompet digital, dan lembaga keuangan lain sekaligus untuk:</p>
+<ol>
+  <li><b>Menelusuri</b> ke rekening mana saja uangmu mengalir, termasuk bila sudah dipecah ke banyak rekening.</li>
+  <li><b>Memblokir</b> rekening penipu sebelum uangnya habis ditarik.</li>
+  <li><b>Mengembalikan</b> dana yang berhasil diselamatkan kepada korban.</li>
+</ol>
+<p>Sebelum ada IASC, korban harus melapor ke tiap bank satu per satu, padahal penipu memindahkan uangnya dalam hitungan menit. Sampai 31 Juli 2026, IASC menerima <b>636.014 laporan</b>, memblokir <b>604.923 rekening</b>, menahan dana korban <b>Rp723,7 miliar</b>, dan sudah mengembalikan <b>Rp204,3 miliar</b>.</p>
+
+<div data-diagram="stack" data-parts="Berhasil diblokir:437|Keburu dipindahkan penipu:8663" data-caption="Per 14 Januari 2026: dari Rp9,1 triliun kerugian yang dilaporkan ke IASC, baru sekitar Rp437 miliar yang berhasil diblokir"></div>
+<div class="callout warn">
+<b>Kecepatan menentukan.</b> Sebagian besar kerugian tidak bisa diselamatkan karena uangnya sudah dipindahkan sebelum korban melapor. Makin cepat kamu lapor, makin besar peluang uangmu masih tertahan di rekening penipu.
+</div>
+
+<div data-diagram="pipeline" data-stages="Berhenti::jangan transfer lagi, termasuk biaya penarikan|Hubungi bank::minta rekening tujuan diblokir|Lapor IASC::iasc.ojk.go.id atau Kontak OJK 157|Lapor polisi::untuk proses hukumnya|Waspada::penipu yang menawarkan jasa pemulihan dana" data-caption="Urutan langkah begitu sadar tertipu"></div>
+<p><b>Siapkan sebelum melapor:</b> identitas diri, kronologi singkat, bukti transfer, nomor rekening atau akun tujuan, dan tangkapan layar percakapan dengan penipu.</p>
+<div class="callout">
+<b>Dua hal yang perlu diingat:</b>
+<ul>
+  <li>Melapor ke IASC <b>gratis</b>. Orang yang menawarkan "jasa mengembalikan dana" dengan bayaran di depan hampir pasti penipu lanjutan.</li>
+  <li>IASC bekerja lewat lembaga keuangan di Indonesia. Kalau uangmu sudah dibelikan crypto lalu dikirim ke dompet di luar negeri, pemblokirannya jauh lebih sulit — itulah sebabnya penipu sering meminta korban membeli crypto dulu.</li>
+</ul>
+</div>
+
 <div class="callout warn">
 <b>Pengingat:</b> Seluruh materi ini bersifat edukasi, bukan saran finansial/investasi. Crypto sangat berisiko.
 </div>
 `,
           keyPoints: [
             "Keamanan crypto adalah tanggung jawab pribadi; transaksi tak bisa dibatalkan.",
-            "Waspadai phishing, rug pull, giveaway palsu, dan token tiruan.",
+            "Waspadai phishing, rug pull, giveaway palsu, token tiruan, dan pig butchering (kepercayaan dibangun dulu, lalu untung palsu di aplikasi).",
             "Simpan seed phrase offline, pakai cold wallet, dan selalu DYOR.",
+            "Kalau tertipu: berhenti transfer, hubungi bank, lalu lapor ke IASC OJK (iasc.ojk.go.id atau 157) secepatnya — per Januari 2026 baru sekitar 5% kerugian yang dilaporkan berhasil diblokir.",
+            "Melapor ke IASC gratis; tawaran \"jasa pemulihan dana\" berbayar hampir pasti penipuan lanjutan.",
+          ],
+          practice: [
+            { type: "choice", q: "Kamu sadar 20 menit lalu mentransfer Rp5 juta ke \"mentor investasi\" yang ternyata penipu. Ia kini meminta Rp1 juta lagi sebagai \"biaya penarikan\". Apa langkah yang paling tepat?", options: ["Berhenti transfer, hubungi bank, lalu lapor ke IASC sekarang", "Bayar Rp1 juta itu supaya Rp5 juta bisa ditarik kembali", "Tunggu beberapa hari, siapa tahu dananya cair sendiri", "Bayar jasa pemulihan dana yang menghubungimu di media sosial"], answer: 0, hint: "Ingat: kecepatan menentukan, dan biaya penarikan adalah tanda penipuan.", solution: "Biaya penarikan hanyalah cara memeras lebih banyak uang. Selama uangmu belum dipindahkan penipu, bank dan IASC masih bisa memblokirnya — jadi lapor secepatnya." },
           ],
           quiz: [
             {
@@ -5014,6 +5047,30 @@ Pada <b>Proof of Stake</b>, validator mengunci koin sebagai jaminan dan ikut mem
               answer: 0,
               explain:
                 "Itu pola giveaway palsu klasik — selalu penipuan.",
+            },
+            {
+              q: "Apa yang dilakukan IASC OJK untuk korban penipuan?",
+              options: [
+                "Menelusuri dan memblokir rekening penipu",
+                "Menjamin semua kerugian diganti penuh",
+                "Menjual jasa pemulihan dana crypto",
+                "Memberi izin platform investasi baru",
+              ],
+              answer: 0,
+              explain:
+                "IASC menghubungkan bank dan lembaga keuangan untuk menelusuri aliran dana, memblokir rekening penipu, dan mengembalikan dana yang berhasil diselamatkan — tapi tidak ada jaminan uang kembali penuh.",
+            },
+            {
+              q: "Kenapa korban penipuan harus melapor secepat mungkin?",
+              options: [
+                "Penipu cepat memindahkan uang ke rekening lain",
+                "Laporan setelah satu hari dikenai biaya",
+                "Bank hanya menerima laporan di jam kerja",
+                "IASC hanya menerima laporan di hari pertama",
+              ],
+              answer: 0,
+              explain:
+                "Dana yang masih tertahan di rekening penipu bisa diblokir; begitu dipindahkan, peluangnya mengecil. Per Januari 2026 baru sekitar 5% kerugian yang dilaporkan berhasil diblokir.",
             },
           ],
         },
