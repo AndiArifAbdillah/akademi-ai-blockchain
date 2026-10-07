@@ -349,13 +349,15 @@ const DIAGRAMS = {
     const items = (ds.bars || "").split("|").map((s) => {
       const i = s.lastIndexOf(":");
       let label = s.slice(0, i).trim();
-      // jaga agar label tidak meluber keluar bingkai (ruang label ~130px @11px)
-      if (label.length > 24) label = label.slice(0, 23).trimEnd() + "…";
+      // label sangat panjang dipotong; sisanya diberi ruang sesuai panjangnya (lihat labW)
+      if (label.length > 34) label = label.slice(0, 33).trimEnd() + "…";
       return { label: label, val: parseFloat(s.slice(i + 1)) || 0 };
     }).filter((d) => d.label);
     const unit = ds.unit || "";
     const max = Math.max(1, ...items.map((d) => Math.abs(d.val)));
-    const labW = 130, barX = labW + 10, barMax = 300;
+    // lebar kolom label mengikuti label terpanjang (perkiraan 6,4px per huruf @11px)
+    const labW = Math.min(220, Math.max(130, Math.max(...items.map((d) => d.label.length)) * 6.4 + 8)), barX = labW + 10;
+    const valW = Math.max(...items.map((d) => (String(d.val) + unit).length)) * 7.2 + 16, barMax = 520 - barX - valW;
     const H = 16 + items.length * 34;
     let body = "";
     items.forEach((d, i) => {
@@ -363,7 +365,7 @@ const DIAGRAMS = {
       const w = Math.max(2, (Math.abs(d.val) / max) * barMax);
       body += `<text x="${labW}" y="${y + 17}" text-anchor="end" class="vt-xs">${vEsc(d.label)}</text>`;
       body += `<rect x="${barX}" y="${y}" width="${w.toFixed(1)}" height="24" rx="5" class="vfill ${d.val < 0 ? "neg" : ""}"/>`;
-      body += `<text x="${barX + w + 8}" y="${y + 17}" class="vt-xs">${vEsc(d.val + unit)}</text>`;
+      body += `<text x="${barX + w + 8}" y="${y + 17}" class="vt-xs">${vEsc(String(d.val).replace(".", ",") + unit)}</text>`;
     });
     return vFigure(ds.caption, `<svg viewBox="0 0 520 ${H}" class="viz-svg" role="img" aria-label="Grafik batang">${body}</svg>`);
   },
@@ -764,6 +766,167 @@ Object.assign(DIAGRAMS, {
   },
 });
 
+/* ---------- Grafik fungsi matematika ----------
+   <div data-diagram="grafik-fungsi" data-f="loss" data-x="-1,7" data-singgung="5"></div>
+   data-f: satu atau beberapa nama (dipisah koma) dari daftar FUNGSI_GRAFIK di bawah.
+   data-singgung: gambar garis singgung pada fungsi pertama di x tersebut. */
+const FUNGSI_GRAFIK = {
+  kuadrat: { f: (x) => x * x, d: (x) => 2 * x, nama: "f(x) = x²" },
+  loss: { f: (x) => (x - 3) * (x - 3), d: (x) => 2 * (x - 3), nama: "loss = (w − 3)²" },
+  sigmoid: { f: (x) => 1 / (1 + Math.exp(-x)), d: (x) => { const s = 1 / (1 + Math.exp(-x)); return s * (1 - s); }, nama: "sigmoid" },
+  tanh: { f: (x) => Math.tanh(x), d: (x) => 1 - Math.tanh(x) ** 2, nama: "tanh" },
+  relu: { f: (x) => Math.max(0, x), d: (x) => (x > 0 ? 1 : 0), nama: "ReLU" },
+  garis: { f: (x) => 2 * x + 1, d: () => 2, nama: "garis lurus" },
+};
+Object.assign(DIAGRAMS, {
+  "grafik-fungsi": (ds) => {
+    const daftar = String(ds.f || "kuadrat").split(",").map((s) => s.trim()).filter((s) => FUNGSI_GRAFIK[s]);
+    const [xa, xb] = String(ds.x || "-3,3").split(",").map(Number);
+    let ya, yb;
+    if (ds.y) [ya, yb] = String(ds.y).split(",").map(Number);
+    else {
+      const ys = [];
+      daftar.forEach((k) => { for (let i = 0; i <= 100; i++) ys.push(FUNGSI_GRAFIK[k].f(xa + ((xb - xa) * i) / 100)); });
+      ya = Math.min(0, ...ys); yb = Math.max(...ys); const pad = (yb - ya) * 0.08; ya -= ya < 0 ? pad : 0; yb += pad;
+    }
+    const L = 54, W = 436, T = 14, H = 200;
+    const sx = (x) => L + ((x - xa) / (xb - xa)) * W, sy = (y) => T + ((yb - y) / (yb - ya)) * H;
+    const fmt = (v) => (Math.round(v * 100) / 100).toLocaleString("id-ID");
+    let body = `<rect x="${L}" y="${T}" width="${W}" height="${H}" rx="6" class="vbox" style="fill:none"/>`;
+    if (ya < 0 && yb > 0) body += `<line x1="${L}" y1="${sy(0)}" x2="${L + W}" y2="${sy(0)}" class="vline dim"/>`;
+    if (xa < 0 && xb > 0) body += `<line x1="${sx(0)}" y1="${T}" x2="${sx(0)}" y2="${T + H}" class="vline dim"/>`;
+    body += `<text x="${L}" y="${T + H + 24}" text-anchor="start" class="vt-xs">${fmt(xa)}</text><text x="${L + W}" y="${T + H + 24}" text-anchor="end" class="vt-xs">${fmt(xb)}</text>`;
+    if (xa < 0 && xb > 0) body += `<text x="${sx(0)}" y="${T + H + 24}" text-anchor="middle" class="vt-xs">0</text>`;
+    body += `<text x="${L - 8}" y="${T + 10}" text-anchor="end" class="vt-xs">${fmt(yb)}</text><text x="${L - 8}" y="${T + H - 3}" text-anchor="end" class="vt-xs">${fmt(ya)}</text>`;
+    const warna = ["var(--primary)", "var(--s0)", "var(--s1)", "var(--s3)"];
+    daftar.forEach((k, j) => {
+      let d = "";
+      for (let i = 0; i <= 160; i++) { const x = xa + ((xb - xa) * i) / 160; d += (i ? "L" : "M") + sx(x).toFixed(1) + " " + sy(FUNGSI_GRAFIK[k].f(x)).toFixed(1); }
+      body += `<path d="${d}" class="vline" style="stroke:${warna[j % 4]};stroke-width:3"/>`;
+    });
+    let cat = daftar.length > 1 ? daftar.map((k, j) => `<span><b style="color:${warna[j % 4]}">━</b> ${FUNGSI_GRAFIK[k].nama}</span>`).join(" &nbsp; ") : "";
+    if (ds.singgung != null && daftar.length) {
+      const F = FUNGSI_GRAFIK[daftar[0]], x0 = +ds.singgung, y0 = F.f(x0), m = F.d(x0), r = (xb - xa) / 4.5;
+      body += `<line clip-path="url(#kotak-grafik)" x1="${sx(x0 - r)}" y1="${sy(y0 - m * r)}" x2="${sx(x0 + r)}" y2="${sy(y0 + m * r)}" class="vline" style="stroke:var(--s0);stroke-width:3;stroke-dasharray:9 5"/>`;
+      body += `<circle cx="${sx(x0)}" cy="${sy(y0)}" r="6" class="vdot"/>`;
+      body += `<text x="${sx(x0) + (x0 > (xa + xb) / 2 ? -12 : 12)}" y="${sy(y0) - 12}" text-anchor="${x0 > (xa + xb) / 2 ? "end" : "start"}" class="vt-xs vt-tegas">kemiringan ${fmt(m)}</text>`;
+      cat += (cat ? "<br>" : "") + `<span>Titik di x = ${fmt(x0)}: tinggi ${fmt(y0)},</span> <span>kemiringan (turunan) <b>${fmt(m)}</b></span>`;
+    }
+    body = `<defs><clipPath id="kotak-grafik"><rect x="${L}" y="${T}" width="${W}" height="${H}"/></clipPath></defs>` + body.replace(/<path /g, '<path clip-path="url(#kotak-grafik)" ');
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 ${T + H + 34}" class="viz-svg viz-besar" role="img" aria-label="Grafik fungsi">${body}</svg>`, cat);
+  },
+});
+
+/* ---------- Grafik garis ----------
+   <div data-diagram="garis" data-seri="Harga:100,102,101|SMA 3:,,101" data-x="1,2,3"
+        data-acuan="70:Jenuh beli|30:Jenuh jual" data-y="0,100" data-nilai="ya"></div>
+   Nilai kosong (",,") berarti titik itu tidak digambar. data-acuan = garis datar pembanding.
+   data-nilai = tulis angka di atas tiap titik seri pertama. */
+Object.assign(DIAGRAMS, {
+  garis: (ds) => {
+    const fmt = (v) => v.toLocaleString("id-ID", { maximumFractionDigits: 2 });
+    const seri = String(ds.seri || "").split("|").map((s) => {
+      const i = s.indexOf(":");
+      return { nama: s.slice(0, i).trim(), v: s.slice(i + 1).split(",").map((t) => (t.trim() === "" ? null : Number(t))) };
+    }).filter((s) => s.nama);
+    const lx = String(ds.x || "").split(",").map((t) => t.trim()).filter((t) => t !== "");
+    const n = Math.max(...seri.map((s) => s.v.length));
+    const acuan = String(ds.acuan || "").split("|").map((s) => { const i = s.indexOf(":"); return { v: Number(s.slice(0, i)), t: s.slice(i + 1).trim() }; }).filter((a) => !isNaN(a.v) && a.t);
+    let ya, yb;
+    if (ds.y) [ya, yb] = String(ds.y).split(",").map(Number);
+    else {
+      const semua = seri.flatMap((s) => s.v.filter((v) => v !== null)).concat(acuan.map((a) => a.v));
+      const mn = Math.min(...semua), mx = Math.max(...semua), pad = (mx - mn || 1) * 0.12;
+      ya = mn >= 0 && mn <= mx * 0.25 ? 0 : mn - pad; yb = mx + pad;
+      const r = yb - ya; let step = Math.pow(10, Math.floor(Math.log10(r)));
+      if (r / step < 2) step /= 5; else if (r / step < 5) step /= 2;
+      ya = Math.floor(ya / step) * step; yb = Math.ceil(yb / step) * step;
+    }
+    const L = 62, W = 428, T = 18, H = 186;
+    const sx = (i) => L + (n > 1 ? (i * W) / (n - 1) : W / 2), sy = (v) => T + ((yb - v) / (yb - ya)) * H;
+    let body = `<rect x="${L}" y="${T}" width="${W}" height="${H}" rx="6" class="vbox" style="fill:none"/>`;
+    if (ya < 0 && yb > 0) body += `<line x1="${L}" y1="${sy(0)}" x2="${L + W}" y2="${sy(0)}" class="vline" style="stroke-width:1.5"/><text x="${L - 8}" y="${sy(0) + 5}" text-anchor="end" class="vt-xs">0</text>`;
+    body += `<text x="${L - 8}" y="${T + 12}" text-anchor="end" class="vt-xs">${fmt(Math.round(yb * 100) / 100)}</text>`;
+    body += `<text x="${L - 8}" y="${T + H - 3}" text-anchor="end" class="vt-xs">${fmt(Math.round(ya * 100) / 100)}</text>`;
+    // label sumbu datar: semua bila sedikit, kalau banyak cukup awal–tengah–akhir
+    const tampil = lx.length <= 8 ? lx.map((_, i) => i) : [0, Math.floor((lx.length - 1) / 2), lx.length - 1];
+    tampil.forEach((i) => {
+      const anchor = i === 0 ? "start" : i === lx.length - 1 ? "end" : "middle";
+      body += `<text x="${sx(i) + (i === 0 ? -4 : i === lx.length - 1 ? 4 : 0)}" y="${T + H + 24}" text-anchor="${anchor}" class="vt-xs">${vEsc(lx[i])}</text>`;
+    });
+    // titik-titik sampel garis data, dipakai untuk mencari tempat label acuan yang tidak tertimpa
+    const sampel = [];
+    seri.forEach((sr) => sr.v.forEach((v, i) => {
+      const w = sr.v[i + 1];
+      if (v === null) return;
+      if (w === null || w === undefined) { sampel.push([sx(i), sy(v)]); return; }
+      for (let k = 0; k <= 12; k++) sampel.push([sx(i) + ((sx(i + 1) - sx(i)) * k) / 12, sy(v) + ((sy(w) - sy(v)) * k) / 12]);
+    }));
+    acuan.forEach((a) => {
+      const yy = sy(a.v), lebar = a.t.length * 10 + 8; // perkiraan lebar label @19px (ukuran HP, yang paling besar)
+      const calon = [[L + W - 6, "end", -7], [L + W - 6, "end", 21], [L + 6, "start", -7], [L + 6, "start", 21]];
+      const kosong = calon.find(([x, anc, dy]) => {
+        const x0 = anc === "end" ? x - lebar : x, y0 = yy + dy - 17, y1 = yy + dy + 4;
+        return y0 > T - 2 && y1 < T + H + 2 && !sampel.some(([px, py]) => px >= x0 - 4 && px <= x0 + lebar + 4 && py >= y0 - 4 && py <= y1 + 4);
+      }) || calon[0];
+      body += `<line x1="${L}" y1="${yy}" x2="${L + W}" y2="${yy}" class="vline" style="stroke:var(--s3);stroke-width:2;stroke-dasharray:7 5"/>`;
+      body += `<text x="${kosong[0]}" y="${yy + kosong[2]}" text-anchor="${kosong[1]}" class="vt-xs vt-tegas" style="fill:var(--s3)">${vEsc(a.t)}</text>`;
+    });
+    const warna = ["var(--primary)", "var(--s0)", "var(--s1)", "var(--s3)"];
+    seri.forEach((s, j) => {
+      let d = "", mulai = true;
+      s.v.forEach((v, i) => { if (v === null) { mulai = true; return; } d += (mulai ? "M" : "L") + sx(i).toFixed(1) + " " + sy(v).toFixed(1); mulai = false; });
+      body += `<path d="${d}" class="vline" style="stroke:${warna[j % 4]};stroke-width:3"/>`;
+      s.v.forEach((v, i) => { if (v !== null) body += `<circle cx="${sx(i).toFixed(1)}" cy="${sy(v).toFixed(1)}" r="4" style="fill:${warna[j % 4]}"/>`; });
+      if (j === 0 && ds.nilai) s.v.forEach((v, i) => {
+        if (v === null) return;
+        const anchor = i === 0 ? "start" : i === s.v.length - 1 ? "end" : "middle";
+        body += `<text x="${sx(i)}" y="${sy(v) - 10}" text-anchor="${anchor}" class="vt-xs vt-tegas">${fmt(v)}</text>`;
+      });
+    });
+    const cat = seri.length > 1 ? seri.map((s, j) => `<span><b style="color:${warna[j % 4]}">━</b> ${vEsc(s.nama)}</span>`).join(" &nbsp; ") : "";
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 ${T + H + 34}" class="viz-svg viz-besar" role="img" aria-label="Grafik garis">${body}</svg>`, cat);
+  },
+});
+
+/* ---------- Deret kotak (array / list) ----------
+   <div data-diagram="deret" data-nama="menu" data-isi="Kopi Susu|Teh Manis|Roti Bakar"
+        data-negatif="ya" data-lewat="6" data-indeks="tidak"></div>
+   data-negatif: tampilkan juga nomor urut dari belakang (Python). data-lewat: satu kotak
+   putus-putus di ujung yang TIDAK ikut (mis. batas akhir range). data-indeks="tidak": tanpa nomor urut. */
+Object.assign(DIAGRAMS, {
+  deret: (ds) => {
+    const isi = String(ds.isi || "").split("|").map((s) => s.trim()).filter(Boolean);
+    const lewat = ds.lewat ? String(ds.lewat) : null;
+    const n = isi.length + (lewat ? 1 : 0), nama = ds.nama || "";
+    const gap = 10, bw = Math.min(120, (480 - (n - 1) * gap) / n), x0 = (520 - (n * bw + (n - 1) * gap)) / 2;
+    const y = nama ? 34 : 10, bh = 58, pakaiIndeks = ds.indeks !== "tidak";
+    let body = nama ? `<text x="${x0}" y="22" class="vt-xs vt-tegas">${vEsc(nama)}</text>` : "";
+    const tulis = (x, teks, kelas) => {
+      const b = vWrap(teks, Math.max(4, Math.floor(bw / 10))).slice(0, 2);
+      b.forEach((ln, li) => { body += `<text x="${x + bw / 2}" y="${y + bh / 2 + 6 - (b.length - 1) * 10 + li * 20}" text-anchor="middle" class="${kelas}">${vEsc(ln)}</text>`; });
+    };
+    isi.forEach((t, i) => {
+      const x = x0 + i * (bw + gap);
+      body += `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="9" class="vbox accent"/>`;
+      tulis(x, t, "vt-xs vt-tegas");
+      if (pakaiIndeks) {
+        body += `<text x="${x + bw / 2}" y="${y + bh + 22}" text-anchor="middle" class="vt-xs">[${i}]</text>`;
+        if (ds.negatif) body += `<text x="${x + bw / 2}" y="${y + bh + 46}" text-anchor="middle" class="vt-xs vt-redup" style="fill:var(--muted)">[${i - isi.length}]</text>`;
+      }
+    });
+    if (lewat) {
+      const x = x0 + isi.length * (bw + gap);
+      body += `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="9" class="vbox" style="stroke-dasharray:6 5;fill:none"/>`;
+      tulis(x, lewat, "vt-xs");
+      body += `<line x1="${x + 10}" y1="${y + 10}" x2="${x + bw - 10}" y2="${y + bh - 10}" class="vline" style="stroke:var(--bad)"/>`;
+      body += `<text x="${x + bw / 2}" y="${y + bh + 22}" text-anchor="middle" class="vt-xs" style="fill:var(--bad)">tidak ikut</text>`;
+    }
+    const H = y + bh + (pakaiIndeks || lewat ? (ds.negatif ? 56 : 32) : 10);
+    return vFigure(ds.caption, `<svg viewBox="0 0 520 ${H}" class="viz-svg viz-besar" role="img" aria-label="Deret kotak">${body}</svg>`);
+  },
+});
+
 /* ============================================================
    TATA LETAK HP untuk diagram generik
    Di layar selebar 520 unit, teks 11px menyusut jadi ~7px di HP.
@@ -913,12 +1076,14 @@ const DIAGRAMS_HP = {
   bar: (ds) => {
     const items = pisahHP(ds.bars, "|").map((s) => { const i = s.lastIndexOf(":"); return { label: s.slice(0, i).trim(), val: parseFloat(s.slice(i + 1)) || 0 }; }).filter((d) => d.label);
     const unit = ds.unit || "", max = Math.max(1, ...items.map((d) => Math.abs(d.val)));
+    // sisakan ruang untuk label nilai terpanjang di kanan batang (±7,4 unit per huruf @13px)
+    const maksBatang = Math.min(240, 320 - Math.max(...items.map((d) => (String(d.val) + unit).length)) * 7.4 - 16);
     let y = 4, body = "";
     items.forEach((d) => {
       const lb = bungkusHP(d.label, 44);
       lb.forEach((ln, li) => { body += `<text x="10" y="${y + 13 + li * BARIS_HP}" class="vt-xs">${vEsc(ln)}</text>`; });
       y += lb.length * BARIS_HP;
-      const w = Math.max(2, (Math.abs(d.val) / max) * 240);
+      const w = Math.max(2, (Math.abs(d.val) / max) * maksBatang);
       body += `<rect x="10" y="${y}" width="${w.toFixed(1)}" height="20" rx="5" class="vfill ${d.val < 0 ? "neg" : ""}"/>`;
       body += `<text x="${(16 + w).toFixed(1)}" y="${y + 15}" class="vt-xs vt-tegas">${vEsc(String(d.val).replace(".", ",") + unit)}</text>`;
       y += 32;

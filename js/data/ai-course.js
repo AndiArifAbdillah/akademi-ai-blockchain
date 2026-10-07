@@ -1144,6 +1144,8 @@ Penyebutnya (TP + FP) adalah <b>semua orang yang dituduh sakit</b> oleh model. A
 
 <div data-demo="matriks-kebingungan"></div>
 
+<div data-diagram="vs" data-left="Recall::Dari yang benar-benar sakit,::berapa yang tertangkap?::8 ÷ 10 = 80%" data-right="Precision::Dari yang dituduh sakit,::berapa yang benar sakit?::8 ÷ 17 = 47%" data-caption="Pembilangnya sama (TP = 8), penyebutnya berbeda — itulah seluruh bedanya"></div>
+
 <h3>Langkah 6 — Tarik-menarik yang tidak bisa dihindari</h3>
 <p>Model sebenarnya tidak langsung bilang "sakit". Ia memberi <b>skor risiko</b>, lalu skor itu dibandingkan dengan sebuah <b>ambang</b>. Menggeser ambang sama seperti mengganti ukuran jaring:</p>
 <table class="tbl">
@@ -1238,6 +1240,8 @@ Untuk dua angka ada jalan pintas: <b>2 × a × b ÷ (a + b)</b>. Karena itu F1 =
 </table>
 <p>Tiga sifatnya: selalu <b>sama atau lebih kecil</b> daripada rata-rata biasa, <b>sama persis</b> bila kedua angkanya sama, dan <b>hanya tinggi bila semua angkanya tinggi</b>. Satu sisi yang ambruk tidak bisa ditutupi oleh sisi yang sempurna.</p>
 
+<div data-diagram="bar" data-bars="Precision:100|Recall:1|Rata-rata biasa:50.5|F1 (rata-rata harmonik):2" data-unit="%" data-caption="Model yang hanya berani menuduh satu orang: rata-rata biasa tampak lumayan, F1 langsung ketahuan jelek"></div>
+
 <h3>Langkah 3 — Rahasia yang jarang dibahas: precision bergantung pada seberapa umum kasusnya</h3>
 <p>Pakai lagi demo 100 orang di bawah ini. Ganti jumlah orang sakit dari 10 menjadi 30, lalu 50 — dengan <b>model dan ambang yang sama persis</b> — dan perhatikan angka mana yang ikut berubah:</p>
 
@@ -1254,6 +1258,8 @@ Untuk dua angka ada jalan pintas: <b>2 × a × b ÷ (a + b)</b>. Karena itu F1 =
 <div class="callout warn">
 <b>Akibatnya dalam kehidupan nyata:</b> tes yang sangat bagus pun menghasilkan banyak alarm palsu bila dipakai untuk penyakit langka. Dan jangan pernah membandingkan precision dua model yang diuji pada data dengan proporsi berbeda — perbandingannya tidak adil. Penjelasan matematisnya (Teorema Bayes) ada di modul Matematika.
 </div>
+
+<div data-diagram="bar" data-bars="10 sakit per 100 orang:47|30 sakit per 100 orang:77|50 sakit per 100 orang:89" data-unit="%" data-caption="Precision naik saat kasusnya makin umum — padahal model, recall (80%), dan spesifisitas (90%) sama persis"></div>
 
 <h3>Kamus: satu angka, banyak nama</h3>
 <table class="tbl">
@@ -1311,6 +1317,8 @@ print(classification_report(y_uji, tebakan))  # precision, recall, F1 per kelas<
 Model klasifikasi tidak langsung berkata "ini penipuan". Ia memberi <b>skor</b> atau peluang, misalnya 0,82. Keputusan baru muncul setelah skor itu dibandingkan dengan sebuah <b>ambang</b>.<br><br>
 Artinya, satu model yang sama bisa berperilaku galak atau longgar hanya dengan menggeser ambang. Maka pertanyaan "seberapa bagus model ini?" sebaiknya dijawab <b>tanpa mengunci satu ambang</b>.
 </div>
+
+<div data-diagram="flow" data-steps="Model memberi skor, mis. 0,82|Bandingkan dengan ambang|Keputusan: positif atau negatif|Hitung TPR dan FPR|Satu titik di kurva ROC" data-caption="Setiap ambang menghasilkan satu titik; semua ambang bersama-sama membentuk kurva ROC"></div>
 
 <h3>Dua angka yang dipakai kurva ROC</h3>
 <table class="tbl">
@@ -1526,6 +1534,8 @@ fpr, tpr, ambang = roc_curve(y_uji, peluang)   # bahan untuk menggambar kurva</p
 Jadi: TPR bertanya kepada <b>orang sakit</b>, FPR bertanya kepada <b>orang sehat</b>, precision bertanya kepada <b>model</b>.
 </div>
 
+<div data-diagram="vs" data-left="Dibagi kenyataan::TPR = TP ÷ semua yang sakit::FPR = FP ÷ semua yang sehat::sifat model itu sendiri" data-right="Dibagi tebakan::Precision = TP ÷ yang dituduh::ikut berubah saat kasusnya::makin langka atau makin umum" data-caption="Kunci anti-tertukar: lihat penyebutnya — kenyataan atau tebakan?"></div>
+
 <h3>Kenapa ROC memakai TPR dan FPR, bukan precision?</h3>
 <p>Ini bagian yang jarang dijelaskan, padahal menjawab banyak kebingungan:</p>
 <table class="tbl">
@@ -1627,7 +1637,7 @@ Jadi: TPR bertanya kepada <b>orang sakit</b>, FPR bertanya kepada <b>orang sehat
           content: `
 <div class="callout ingat">
 <b>Ingat dulu</b><br>
-Di pelajaran "Bagaimana AI Belajar", AI kos memutar empat langkah: <b>tebak → bandingkan → hitung kesalahan → perbaiki kenop</b>. Waktu itu kenopnya kita geser dengan perasaan. Pelajaran ini menjawab dua hal yang tertinggal: <b>bagaimana kesalahan diubah jadi satu angka</b> (loss), dan <b>bagaimana komputer tahu ke mana harus menggeser kenop</b> (gradient descent).
+Di pelajaran <a href="#/lesson/ai-p-4">Bagaimana AI 'Belajar'?</a>, AI kos — AI sederhana yang menebak harga sewa kamar kos dari luasnya — memutar empat langkah: <b>tebak → bandingkan → hitung kesalahan → perbaiki kenop</b>. Waktu itu kenopnya kita geser dengan perasaan. Pelajaran ini menjawab dua hal yang tertinggal: <b>bagaimana kesalahan diubah jadi satu angka</b> (loss), dan <b>bagaimana komputer tahu ke mana harus menggeser kenop</b> (gradient descent).
 </div>
 
 <div data-diagram="cycle" data-steps="Model menebak|Hitung selisih (loss)|Cari arah menurun (gradient)|Geser bobot sedikit" data-caption="Belajar = mengulang empat langkah ini sampai selisihnya cukup kecil"></div>
@@ -1777,8 +1787,10 @@ console.log("=> w mendekati 3 dan loss mendekati 0. Itulah 'belajar'.");</div>
           content: `
 <div class="callout ingat">
 <b>Ingat dulu</b><br>
-<b>Parameter</b> adalah kenop angka di dalam model yang digeser oleh gradient descent. AI kos punya satu kenop. Pelajaran ini membahas empat "ukuran" yang selalu muncul saat orang membicarakan model besar seperti ChatGPT atau Claude — dan kenapa keempatnya menentukan <b>kemampuan sekaligus biaya</b>.
+<b>Parameter</b> adalah kenop angka di dalam model yang digeser oleh gradient descent. AI kos — contoh penebak harga sewa kamar kos di pelajaran <a href="#/lesson/ai-p-4">Bagaimana AI 'Belajar'?</a> — punya satu kenop. Pelajaran ini membahas empat "ukuran" yang selalu muncul saat orang membicarakan model besar seperti ChatGPT atau Claude — dan kenapa keempatnya menentukan <b>kemampuan sekaligus biaya</b>.
 </div>
+
+<div data-diagram="network" data-center="Model bahasa" data-nodes="Parameter: banyaknya kenop|Token: satuan yang dibaca|Context: luas meja kerja|Compute: banyaknya hitungan" data-caption="Empat ukuran yang selalu muncul saat membicarakan model besar"></div>
 
 <h3>1. Parameter — berapa banyak kenopnya</h3>
 <p>Makin banyak kenop, makin rumit pola yang bisa ditampung model. Bandingkan skalanya:</p>
@@ -2039,6 +2051,8 @@ Laptop yang sanggup sekitar 1 triliun operasi per detik butuh kira-kira <b>10.00
 <pre class="code">f(3) = 2×3 + 1 = 7
 f(10) = 2×10 + 1 = 21</pre>
 
+<div data-diagram="flow" data-steps="Masukan: x = 3|Mesin f: kalikan 2, lalu tambah 1|Hasil: f(3) = 7" data-caption="Fungsi adalah mesin: f nama mesinnya, x bahannya, f(x) hasilnya"></div>
+
 <h3>Coba sendiri — lihat "mesin" bekerja</h3>
 <div data-demo="js-playground">// Fungsi itu mesin: masukkan x, keluar f(x)
 function f(x) {
@@ -2208,6 +2222,8 @@ Dot product dibagi dengan kedua panjangnya, sehingga "angka yang besar-besar" ti
 </table>
 <p>Sekarang Budi menang, persis seperti tebakan mata kita. Nilai cosine berkisar dari <b>−1</b> (arah berlawanan) sampai <b>1</b> (searah sempurna). Karena nilai film kita tidak ada yang negatif, hasilnya di sini selalu antara 0 dan 1.</p>
 
+<div data-diagram="bar" data-bars="Andi–Budi:0.965|Andi–Dedi:0.679|Andi–Citra:0.038" data-caption="Cosine similarity dengan selera Andi: Budi paling mirip, bukan Dedi yang angkanya besar-besar"></div>
+
 <h3>Coba sendiri — hitung langkah demi langkah</h3>
 <p>Ganti angka selera siapa pun, lalu jalankan lagi. Coba buat seseorang yang seleranya lebih mirip Andi daripada Budi:</p>
 <div data-demo="js-playground">// Selera film: [aksi, komedi, horor]
@@ -2322,6 +2338,8 @@ Di modul Fundamental, lembah loss <b>(w − 3)²</b> dituruni dengan rumus <b>w 
 </table>
 <p>Polanya kelihatan: kemiringan selalu <b>2 × x</b>. Jadi turunan dari x² adalah <b>2x</b>. Kamu baru saja menemukan aturan kalkulus pertama dengan tanganmu sendiri.</p>
 
+<div data-diagram="grafik-fungsi" data-f="kuadrat" data-x="0,5" data-singgung="3" data-caption="Turunan adalah kemiringan garis yang hanya menyentuh kurva di satu titik: di x = 3, kurva x² naik 6 per langkah"></div>
+
 <h3>Langkah 4 — Cara menulisnya, dan aturan-aturan lain</h3>
 <p>Turunan dari f(x) ditulis <b>f'(x)</b> ("f aksen x") atau <b>df/dx</b>. Jadi: kalau f(x) = x², maka f'(x) = 2x.</p>
 <table class="tbl">
@@ -2353,6 +2371,8 @@ Langkah 2: turunan = 2(0,6 − 3) = −4,8
            w = 0,6 − 0,1 × (−4,8) = 1,08
 ... terus mendekati w = 3 (dasar lembah)</pre>
 <p>Model sungguhan punya banyak kenop. Turunan dihitung <b>untuk tiap kenop</b>, dan kumpulan semua turunan itu — sebuah <b>vektor</b>, seperti di pelajaran sebelumnya — disebut <b>gradien</b>.</p>
+
+<div data-diagram="grafik-fungsi" data-f="loss" data-x="-1,7" data-singgung="5" data-caption="Di w = 5 kemiringannya +4: tanah menanjak ke kanan, jadi gradient descent melangkah ke kiri menuju dasar lembah (w = 3)"></div>
 
 <h3>Langkah 6 — Aturan rantai: kemiringan yang bersambung</h3>
 <div class="callout">
@@ -2456,6 +2476,7 @@ y = 3 × (2x + 1) + 4
 <b>ReLU(z) = max(0, z)</b> — kalau z negatif, jadikan 0; kalau positif, biarkan.<br>
 ReLU(5) = 5 &nbsp;•&nbsp; ReLU(0) = 0 &nbsp;•&nbsp; ReLU(−3) = 0
 </div>
+<div data-diagram="grafik-fungsi" data-f="relu" data-x="-3,3" data-caption="ReLU: nilai negatif dijadikan 0, nilai positif dibiarkan — satu tikungan sederhana yang membuat jaringan bisa berbelok"></div>
 <p>Sepele? Lihat apa yang terjadi bila dua neuron ReLU digabung: <b>y = ReLU(x) − 2 × ReLU(x − 2)</b></p>
 <table class="tbl">
   <tr><th>x</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
@@ -2574,6 +2595,8 @@ Perhatikan angka tadi: turunan sigmoid <b>paling besar pun hanya 0,25</b>. Saat 
 Sinyal yang sampai ke lapisan pertama tinggal <b>sepersejuta</b>. Lapisan awal praktis berhenti belajar. Inilah <b>vanishing gradient</b> — alasan jaringan dalam sangat sulit dilatih sampai awal 2010-an.
 </div>
 
+<div data-diagram="bar" data-bars="Setelah 1 lapisan:25|Setelah 2 lapisan:6.25|Setelah 3 lapisan:1.56|Setelah 4 lapisan:0.39" data-unit="%" data-caption="Sisa sinyal belajar bila tiap lapisan mengalikannya dengan 0,25 (turunan terbesar sigmoid)"></div>
+
 <h3>2. Tanh — sigmoid yang digeser</h3>
 <p>Bentuknya sama-sama S, tapi keluarannya <b>−1 sampai 1</b> dan berpusat di nol, sehingga pelatihan biasanya lebih stabil. Turunan terbesarnya 1, lebih baik daripada 0,25. Tapi kedua ujungnya <b>tetap jenuh</b>, sehingga masalah dasarnya belum hilang. Tanh masih dipakai di dalam gerbang LSTM.</p>
 
@@ -2597,6 +2620,8 @@ Sinyal yang sampai ke lapisan pertama tinggal <b>sepersejuta</b>. Lapisan awal p
   <tr><td><b>Leaky ReLU</b></td><td>Sisi negatif tidak benar-benar nol, tapi dikalikan 0,01 — sehingga neuron mati bisa hidup kembali</td><td>Pengganti ReLU saat banyak neuron mati</td></tr>
   <tr><td><b>GELU</b> / SiLU</td><td>Melengkung halus di sekitar nol; sebagian kecil nilai negatif dibiarkan lewat</td><td>Hampir semua Transformer modern (GPT, BERT)</td></tr>
 </table>
+
+<div data-diagram="grafik-fungsi" data-f="sigmoid,tanh,relu" data-x="-4,4" data-y="-1.2,2.2" data-caption="Tiga bentuk keran: sigmoid (0 sampai 1), tanh (−1 sampai 1), dan ReLU (nol, lalu lurus naik)"></div>
 
 <h3>Cara memilih — tabel yang bisa kamu pakai langsung</h3>
 <table class="tbl">
@@ -2722,6 +2747,8 @@ Kalau tanda minusnya hanya dibuang lalu dirata-rata, hasilnya (10 + 10 + 30) ÷ 
   <tr><td>3. Bagi masing-masing dengan jumlahnya</td><td class="ok-cell"><b>65,9%</b></td><td>24,2%</td><td>9,9%</td></tr>
 </table>
 <p>Huruf <b>e</b> adalah angka tetap ≈ 2,718 (dikenal di pelajaran Membaca Simbol). Memangkatkannya punya dua manfaat: hasilnya <b>selalu positif</b> (skor negatif pun jadi angka kecil yang positif), dan <b>selisih skor diperbesar</b> sehingga kategori terkuat makin menonjol. Langkah terakhir — membagi dengan jumlah — menjamin totalnya <b>tepat 100%</b>.</p>
+
+<div data-diagram="bar" data-bars="Kucing (skor 2,0):65.9|Anjing (skor 1,0):24.2|Burung (skor 0,1):9.9" data-unit="%" data-caption="Softmax mengubah skor mentah menjadi peluang yang totalnya 100%"></div>
 
 <h3>Bagian C — Menghukum tebakan kategori: cross-entropy</h3>
 <p>Misalkan foto itu memang <b>kucing</b>. Model memberi peluang 65,9% pada jawaban yang benar. Bagaimana mengubahnya menjadi angka hukuman? Rumusnya:</p>
@@ -2891,6 +2918,8 @@ Peluang benar sakit = 1 / 11 = sekitar 9%</pre>
 <div class="callout warn">
 <b>Hanya ~9%</b> — padahal tesnya "99% akurat"! Ini disebut <b>base rate fallacy</b>: saat kejadiannya <b>langka</b>, hasil positif lebih sering berasal dari alarm palsu. Ini persis gejala yang kamu lihat di modul Fundamental: <b>precision</b> anjlok ketika kasusnya jarang, walau model dan ambangnya sama persis.
 </div>
+
+<div data-diagram="stack" data-parts="Benar-benar sakit:99|Sehat, tapi tes keliru:999" data-caption="Di antara orang yang dites positif, yang sehat jauh lebih banyak — karena penyakitnya langka (1 dari 1.000)"></div>
 
 <h3>Langkah 6 — Temperature: kenop kreativitas chatbot</h3>
 <p>Saat memilih kata berikutnya, LLM memberi <b>skor</b> untuk tiap kandidat, lalu mengubahnya menjadi peluang dengan <b>softmax</b> (dihitung di pelajaran sebelumnya). Sebelum masuk softmax, skornya dibagi dulu dengan angka bernama <b>temperature (T)</b>. Dengan skor 2,0 / 1,0 / 0,1 untuk tiga kandidat kata:</p>
@@ -3107,6 +3136,8 @@ console.log(hasil);     // hasil: 32</pre>
           content: `
 <p>Python sendirian tidak bisa apa-apa untuk AI. Kekuatannya datang dari <b>pustaka</b>. Ini tiga yang paling wajib — dan urutannya bukan kebetulan.</p>
 
+<div data-diagram="layers" data-items="scikit-learn — melatih model|pandas — mengolah tabel data|NumPy — menghitung banyak angka sekaligus" data-caption="Tiga pustaka yang saling menumpuk: pandas dan scikit-learn sama-sama dibangun di atas NumPy"></div>
+
 <h3>1. NumPy — fondasi semua perhitungan</h3>
 <p><b>NumPy</b> memberi Python kemampuan menghitung <b>banyak angka sekaligus</b>. Ini disebut <i>vectorization</i>.</p>
 
@@ -3321,6 +3352,8 @@ Proyek A butuh pustaka versi 1.0, proyek B butuh versi 2.0. Kalau semua dipasang
 </ul>
 
 <h3>Rencana 30 hari pertama</h3>
+
+<div data-diagram="timeline" data-events="Minggu 1::Python dasar di Colab|Minggu 2::pandas|Minggu 3::grafik dan statistik|Minggu 4::model pertama" data-caption="Empat minggu, empat bukti kemajuan"></div>
 <table class="tbl">
   <tr><th>Minggu</th><th>Fokus</th><th>Bukti berhasil</th></tr>
   <tr><td>1</td><td>Python dasar di Colab</td><td>Bisa menulis fungsi &amp; perulangan sendiri</td></tr>
@@ -3539,6 +3572,8 @@ Tiga grafik ini sering menemukan masalah data lebih cepat daripada berjam-jam me
           content: `
 <p>Ada pepatah di kalangan praktisi: <b>"80% pekerjaan machine learning adalah menyiapkan data."</b> Bagian inilah yang paling menentukan hasil — tapi paling jarang dibahas.</p>
 
+<div data-diagram="pipeline" data-stages="Data mentah::tanggal lahir, alamat, transaksi|Bersihkan::isi yang kosong, buang duplikat|Buat fitur::umur, jarak, rata-rata belanja|Samakan skala::semua di rentang serupa|Latih model::baru di tahap ini" data-caption="Sebagian besar pekerjaan machine learning terjadi sebelum model dilatih"></div>
+
 <h3>Fundamental: apa itu "fitur"?</h3>
 <div class="callout">
 <b>Fitur (feature)</b> = <b>satu kolom informasi</b> yang dipakai model untuk menebak. Kalau data adalah tabel, tiap <b>kolom</b> adalah satu fitur.
@@ -3649,6 +3684,8 @@ console.log("Model jadi menilai keduanya adil, bukan karena angkanya besar.");</
 <p>Kamu sudah tahu soal <b>overfitting</b> (model menghafal). Sekarang kita bahas <b>cara kerja yang benar</b> agar hasilnya bisa dipercaya.</p>
 
 <h3>Tiga bagian data (bukan dua!)</h3>
+
+<div data-diagram="stack" data-parts="Training — tempat model belajar:70|Validation — untuk menyetel:15|Test — ujian terakhir, sekali saja:15" data-caption="Pembagian yang umum: data test baru dibuka sekali, di akhir"></div>
 <table class="tbl">
   <tr><th>Bagian</th><th>Porsi umum</th><th>Fungsinya</th></tr>
   <tr><td><b>Training</b></td><td>~60–70%</td><td>Model <b>belajar</b> dari sini</td></tr>
@@ -4793,6 +4830,8 @@ print(hasil.importances_mean)</pre>
   <li>Ulangi puluhan hingga ratusan kali → kesalahan makin mengecil.</li>
 </ol>
 
+<div data-diagram="pipeline" data-stages="Pohon 1::tebakan kasar, masih banyak salah|Sisa salah::selisih tebakan dan jawaban|Pohon 2::belajar menebak sisa salah itu|Tambahkan::sedikit saja, diatur learning rate|Ulangi::puluhan sampai ribuan kali" data-caption="Boosting: setiap pohon baru memperbaiki kesalahan gabungan pohon-pohon sebelumnya"></div>
+
 <h3>Kenapa XGBoost begitu populer?</h3>
 <ul>
   <li>Sangat <b>akurat</b> untuk data tabel/spreadsheet — sering jadi juara di kompetisi data.</li>
@@ -5575,6 +5614,8 @@ Di sinilah model sungguhan menang: ia belajar <b>konteks</b>, bukan sekadar meng
 <p>Untuk model terbesar (Claude, GPT), kamu tidak mengunduhnya. Kamu <b>mengirim pertanyaan lewat internet</b> dan menerima jawaban. Ini yang dipakai mayoritas aplikasi AI hari ini.</p>
 
 <h3>Memilih di antara tiga jalur</h3>
+
+<div data-diagram="compare3" data-cols="Panggil API::biaya awal nyaris nol::siap dalam menit::tanpa GPU|Hugging Face::biaya rendah::siap dalam jam::data tetap di servermu|Latih sendiri::biaya sangat tinggi::minggu sampai bulan::wajib GPU" data-caption="Mulailah dari kiri; geser ke kanan hanya bila benar-benar perlu"></div>
 <table class="tbl">
   <tr><th></th><th>Panggil API</th><th>Hugging Face</th><th>Latih sendiri (PyTorch)</th></tr>
   <tr><td><b>Biaya awal</b></td><td>Nyaris nol</td><td>Rendah</td><td>Sangat tinggi</td></tr>
@@ -6658,6 +6699,8 @@ Cara belajarnya tetap sama persis dengan pelajaran sebelumnya: hitung target, uk
   <tr><td><b>GAN</b></td><td><b>Dua model beradu</b>: pemalsu vs pendeteksi</td><td>Gambar (lebih tua, kini banyak digantikan diffusion)</td></tr>
 </table>
 
+<div data-diagram="flow" data-steps="Noise acak|Sedikit lebih jelas|Bentuk mulai tampak|Detail muncul|Gambar jadi" data-caption="Diffusion: gambar muncul dengan menghapus noise selangkah demi selangkah"></div>
+
 <h3>GAN — kucing-kucingan pemalsu &amp; polisi</h3>
 <div class="callout">
 <b>GAN</b> (Generative Adversarial Network) melatih <b>dua model sekaligus</b> yang saling bermusuhan:
@@ -6668,6 +6711,8 @@ Cara belajarnya tetap sama persis dengan pelajaran sebelumnya: hitung target, uk
 Keduanya berlatih bersamaan: pemalsu makin pintar memalsukan, polisi makin jeli mendeteksi. Setelah ribuan putaran, <b>hasil pemalsu jadi sangat meyakinkan</b>.
 </div>
 <p><b>Kelemahannya:</b> pelatihannya <b>tidak stabil</b> (sering gagal menyatu), sehingga untuk gambar kini banyak digantikan <b>diffusion</b> yang lebih stabil &amp; berkualitas.</p>
+
+<div data-diagram="cycle" data-steps="Pemalsu membuat gambar|Polisi menebak asli atau palsu|Keduanya belajar dari hasilnya|Pemalsu makin lihai" data-center="GAN" data-caption="Dua model saling mengasah: pemalsu (generator) dan polisi (discriminator)"></div>
 
 <h3>Mengendalikan keluaran LLM</h3>
 <table class="tbl">
@@ -6680,6 +6725,8 @@ Keduanya berlatih bersamaan: pemalsu makin pintar memalsukan, polisi makin jeli 
 <div class="callout">
 <b>Top-p dengan angka.</b> Misalkan kandidat kata berikutnya punya peluang: "biru" 60%, "cerah" 25%, "kelabu" 10%, "ungu" 5%. Dengan <b>top-p = 0,9</b>, model mengambil kandidat teratas sampai jumlahnya mencapai 90%: biru + cerah + kelabu = 95%. Kata "ungu" dibuang dari undian. Hasilnya: jawaban tetap bervariasi, tapi kandidat yang aneh tidak pernah terpilih.
 </div>
+
+<div data-diagram="bar" data-bars="biru:60|cerah:25|kelabu:10|ungu:5" data-unit="%" data-caption="Top-p = 0,9: ambil kandidat teratas sampai jumlahnya mencapai 90% (biru + cerah + kelabu = 95%); ungu dibuang"></div>
 
 <h3>Trik agar model raksasa bisa dijalankan</h3>
 <ul>
@@ -6802,6 +6849,8 @@ Keduanya berlatih bersamaan: pemalsu makin pintar memalsukan, polisi makin jeli 
 Suara adalah <b>getaran udara</b>. Mikrofon mengubahnya jadi gelombang, lalu komputer mencatatnya sebagai <b>deretan angka</b> (ribuan sampel per detik). Sering diubah lagi jadi <b>spektrogram</b> — semacam "foto" suara yang menunjukkan frekuensi dari waktu ke waktu. Setelah jadi gambar, AI bisa memprosesnya seperti memproses gambar biasa.
 </div>
 
+<div data-diagram="pipeline" data-stages="Suara::getaran udara|Mikrofon::jadi gelombang listrik|Sampel::ribuan angka per detik|Spektrogram::foto frekuensi suara|Model AI::membaca polanya" data-caption="Seperti gambar, suara harus diubah menjadi angka sebelum bisa dibaca AI"></div>
+
 <h3>Tiga kemampuan utama</h3>
 <table class="tbl">
   <tr><th>Kemampuan</th><th>Fungsi</th><th>Contoh pemakaian</th></tr>
@@ -6873,6 +6922,8 @@ LLM memotong teks menjadi <b>token</b>, menghitung <b>peluang</b> setiap kandida
   <tr><td>Kenapa begitu?</td><td>Dirancang agar siapa pun tak perlu percaya</td><td>Kemampuannya muncul dari miliaran angka yang dilatih, bukan dari aturan yang ditulis manusia</td></tr>
 </table>
 <p>Kita mengintip AI lapis demi lapis, dari yang paling mudah sampai yang paling sulit.</p>
+
+<div data-diagram="layers" data-items="Lapis 5 — arti angka-angka (paling sulit)|Lapis 4 — neuron yang belajar|Lapis 3 — arsitektur dan parameter|Lapis 2 — peluang kata berikutnya|Lapis 1 — token (paling mudah)" data-caption="Lima lapis yang diintip di pelajaran ini, dari yang paling mudah (bawah) sampai paling sulit (atas)"></div>
 
 <h3>Lapis 1 — Token: bagaimana teksmu dipotong</h3>
 <p>Beberapa penyedia model menyediakan halaman <b>tokenizer</b> — misalnya halaman Tokenizer di situs platform OpenAI — tempat kamu mengetik kalimat dan melihat potongan tokennya diwarnai satu per satu.</p>
@@ -7272,6 +7323,8 @@ LLM bekerja dengan menebak token berikutnya dari pola yang dipelajarinya saat di
   <tr><td><b>Alat</b> (<i>tools</i>)</td><td>"Tangan": fungsi yang boleh dipanggil — mencari di web, kalkulator, database, API, bahkan dompet</td></tr>
   <tr><td><b>Putaran</b> (<i>loop</i>)</td><td>Kode yang terus bertanya ke model, menjalankan alat yang dipilihnya, dan mengembalikan hasilnya — sampai model menyatakan selesai</td></tr>
 </table>
+
+<div data-diagram="cycle" data-steps="Model memilih langkah|Kode menjalankan alat|Hasil dikirim ke model|Ulangi sampai selesai" data-center="putaran agen" data-caption="Agen = model + alat + putaran yang terus berjalan sampai tujuan tercapai"></div>
 
 <h3>Bagaimana model "memakai" alat</h3>
 <p>Model tidak pernah menjalankan alat sendiri. Developer memberi tahu model <b>alat apa saja yang tersedia</b>, masing-masing dengan nama, deskripsi, dan bentuk masukannya:</p>
@@ -7716,6 +7769,8 @@ Workflow = rangkaian <b>node</b>, dimulai dari <b>trigger</b>; data mengalir lew
 <b>Aturan penting:</b> kebanyakan node menjalankan pekerjaannya <b>sekali untuk setiap item</b>. Kalau node "Kirim email" menerima 3 item, ia mengirim 3 email — tanpa kamu perlu membuat perulangan sendiri.
 </div>
 
+<div data-diagram="flow" data-steps="3 pesanan masuk|Menjadi 3 item JSON|Node bekerja 3 kali|3 hasil keluar" data-caption="Kebanyakan node menjalankan tugasnya sekali untuk setiap item"></div>
+
 <h3>Langkah 3 — Ekspresi: mengambil isi item</h3>
 <p>Di kolom pengaturan sebuah node, kamu bisa menulis <b>ekspresi</b> di antara dua pasang kurung kurawal. Ekspresi dihitung ulang untuk setiap item.</p>
 <table class="tbl">
@@ -8066,6 +8121,8 @@ console.log("Masuk 3 item, keluar 3 item — node berikutnya menerima hasil ini.
 <b>Aturan keamanan #1:</b> JANGAN pernah menaruh <b>API key</b> di kode frontend (browser). Siapa pun bisa melihatnya. API key harus berada di <b>backend</b> (server) milikmu. Alurnya: <b>Browser → Backend-mu → API Claude → kembali</b>.
 </div>
 
+<div data-diagram="flow" data-steps="Browser pengguna|Server milikmu (API key aman di sini)|API Claude|Jawaban kembali ke pengguna" data-caption="API key hanya tinggal di server; browser tidak pernah melihatnya"></div>
+
 <h3>Sebelum mulai — kamus kecil</h3>
 <p>Kode di pelajaran ini memakai beberapa istilah pemrograman web. Ini artinya dalam bahasa sehari-hari:</p>
 <table class="tbl">
@@ -8134,6 +8191,8 @@ const res = await client.messages.create({
 <div class="callout">
 <b>Tiga bagian penting:</b> <b>system</b> = kepribadian/aturan bot, <b>messages</b> = riwayat percakapan (role "user" & "assistant" bergantian), <b>max_tokens</b> = batas panjang jawaban.
 </div>
+
+<div data-diagram="pipeline" data-stages="Panggilan 1::kirim 1 pesan|Panggilan 2::kirim ulang riwayat + 1 pesan baru|Panggilan 3::riwayat makin panjang|Akibatnya::token dan biaya ikut bertambah" data-caption="API tidak mengingat apa pun: setiap panggilan membawa seluruh riwayat percakapan"></div>
 `,
           keyPoints: [
             "Bangun chatbot dengan memanggil API Claude — tidak perlu melatih model.",
@@ -8269,6 +8328,8 @@ const res = await client.messages.create({
 <div class="callout">
 <b>Cosine similarity</b> mengukur "seberapa searah" dua vektor: nilai mendekati <b>1</b> = sangat mirip maknanya, mendekati <b>0</b> = beda. RAG memilih dokumen dengan skor tertinggi untuk diselipkan ke prompt.
 </div>
+
+<div data-diagram="pipeline" data-stages="Pertanyaan::diubah jadi vektor q|Dokumen::masing-masing punya vektor|Hitung kemiripan::q dibandingkan tiap dokumen|Pilih tertinggi::dokumen kucing menang|Kirim ke model::jadi bahan jawaban" data-caption="Inti RAG: cari dokumen yang vektornya paling searah dengan vektor pertanyaan"></div>
 
 <h3>Coba sendiri — jalankan kodenya</h3>
 <p>Ubah angka vektor <code>q</code> (pertanyaan) dan lihat dokumen mana yang menang skornya:</p>
@@ -8414,6 +8475,8 @@ console.log(hasil.content);</pre>
           duration: "12 menit",
           content: `
 <p>Mari gabungkan semuanya menjadi <b>AI Tutor</b> — persis seperti yang bisa ditambahkan ke platform ini. Tiga bahan utamanya:</p>
+
+<div data-diagram="network" data-center="AI Tutor" data-nodes="System prompt: kepribadian dan aturan|RAG: materi pelajaran|Memori: riwayat percakapan" data-caption="Tiga bahan sebuah AI Tutor"></div>
 
 <h3>1. Kepribadian & aturan (system prompt)</h3>
 <pre class="code">const SYSTEM_TUTOR = [
@@ -8698,6 +8761,8 @@ console.log(hasil.content);</pre>
   <tr><td><b>Risiko minimal</b></td><td>Filter spam, AI di game</td><td>Bebas</td></tr>
 </table>
 
+<div data-diagram="layers" data-items="Dilarang|Risiko tinggi — aturan ketat|Risiko terbatas — wajib transparan|Risiko minimal — bebas" data-caption="Piramida risiko ala EU AI Act: makin berbahaya, makin sedikit jenisnya dan makin ketat aturannya"></div>
+
 <h3>Isu utama yang diatur</h3>
 <ul>
   <li><b>Transparansi</b> — pengguna berhak tahu sedang berinteraksi dengan AI; konten buatan AI sebaiknya ditandai.</li>
@@ -8763,6 +8828,8 @@ console.log(hasil.content);</pre>
   <tr><td>Vector database</td><td>Pinecone, Chroma, Weaviate, Qdrant</td></tr>
   <tr><td>Penyedia model</td><td>Anthropic (Claude), OpenAI, Google, model open (Llama, Mistral)</td></tr>
 </table>
+
+<div data-diagram="network" data-center="Aplikasi AI" data-nodes="Penyedia model|Framework aplikasi LLM|Vector database|Hugging Face" data-caption="Empat bagian ekosistem yang sering dirakit bersama"></div>
 
 <h3>Tren yang perlu diketahui</h3>
 <ul>
@@ -9176,6 +9243,8 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
 <div class="callout">
 <b>Uji sederhana (dari pelajaran Moat):</b> <i>"Kalau pesaing bermodal raksasa meniru produkku bulan depan, apa yang tetap tidak bisa mereka salin?"</i> Kalau jawabannya <b>tidak ada</b> — kamu tidak punya parit, hanya fitur.
 </div>
+
+<div data-diagram="vs" data-left="Thin wrapper::antarmuka tipis di atas API::mudah ditiru dalam minggu::bisa dimakan penyedia model" data-right="Punya parit::data eksklusif::tertanam di alur kerja::distribusi dan network effect" data-caption="Uji: kalau pesaing raksasa meniru bulan depan, apa yang tidak bisa mereka salin?"></div>
 `,
           keyPoints: [
             "Model itu sendiri jarang menjadi moat kuat — keunggulan model cepat disusul.",
@@ -9229,6 +9298,8 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
 <div class="callout">
 <b>Ingat konsep penyusutan:</b> mesin pabrik disusutkan 5–10 tahun. Tapi model AI yang dilatih mahal-mahal bisa <b>tertinggal dalam hitungan bulan</b>. Artinya "masa manfaat"-nya sangat pendek — investasi besar di model bisa cepat kehilangan nilai.
 </div>
+
+<div data-diagram="bar" data-bars="Gedung kantor:20|Mesin pabrik:10|Laptop kantor:4|Model AI papan atas:0.5" data-unit=" tahun" data-caption="Perkiraan kasar masa manfaat: model AI unggulan bisa tertinggal dalam hitungan bulan"></div>
 
 <h3>Dampaknya pada keputusan modal</h3>
 <ul>
@@ -9506,6 +9577,8 @@ Sepanjang jalur ini kamu sudah bertemu banyak pekerjaan yang berbeda: menyiapkan
   <tr><td><b>Research Scientist</b></td><td>Menemukan metode baru</td><td>Matematika mendalam, publikasi; sering butuh S2/S3</td></tr>
 </table>
 <p>Tidak semua pekerjaan AI berarti melatih model sendiri. Banyak lowongan baru justru untuk orang yang bisa <b>merakit</b> model yang sudah ada menjadi produk yang berguna dan bisa diandalkan.</p>
+
+<div data-diagram="compare3" data-cols="Dekat dengan data::Data Analyst::Data / MLOps Engineer|Dekat dengan model::Data Scientist::ML Engineer::Research Scientist|Dekat dengan produk::AI Engineer::AI Product Manager" data-caption="Tujuh peran, tiga kelompok besar — tidak semuanya melatih model sendiri"></div>
 
 <h3>Portofolio mengalahkan sertifikat</h3>
 <p>Perekrut ingin bukti bahwa kamu bisa menyelesaikan masalah nyata. Tiga proyek yang selesai dan bisa dicoba lebih meyakinkan daripada sepuluh sertifikat kursus.</p>

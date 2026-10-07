@@ -144,6 +144,8 @@ const ACCOUNTING_COURSE = {
   <li>Tidak tahu produk mana yang menguntungkan.</li>
 </ul>
 
+<div data-diagram="vs" data-left="Tanpa catatan::tidak tahu untung atau rugi::uang pribadi dan bisnis campur::tidak tahu produk terlaris" data-right="Dengan catatan::untung atau rugi terlihat jelas::uang bisnis terpisah::keputusan berdasarkan angka" data-caption="Uang di dompet belum tentu untung — catatanlah yang memberi tahu"></div>
+
 <h3>Manfaat mencatat</h3>
 <table class="tbl">
   <tr><th>Untuk apa</th><th>Manfaat</th></tr>
@@ -473,6 +475,8 @@ Belum terpakai → <b>aset</b> (sewa dibayar di muka, asuransi dibayar di muka, 
 Sudah terpakai → <b>beban</b>.<br><br>
 Pertanyaan "sudah bayar atau belum" tidak menentukan jenis akunnya — ia hanya menentukan apakah lawannya Kas atau Utang.
 </div>
+
+<div data-diagram="flow" data-steps="Bayar sewa 12 bulan di muka|Dicatat sebagai aset: Sewa Dibayar di Muka|Tiap akhir bulan, 1/12 jadi beban|Setelah 12 bulan, asetnya habis" data-caption="Kuncinya selalu sama: manfaatnya sudah terpakai atau belum?"></div>
 
 <h3>Latih dengan transaksi nyata</h3>
 
@@ -1246,6 +1250,8 @@ Di laporan laba rugi Warung Kopi Sari ada baris <b>penyusutan peralatan 20 juta<
 </table>
 <p><b>Akumulasi penyusutan</b> = jumlah penyusutan sejak aset dibeli. <b>Nilai buku</b> = harga beli − akumulasi penyusutan. Kalau peralatan bisa dijual Rp10 juta di akhir tahun kelima, penyusutannya menjadi (100 − 10) ÷ 5 = <b>18 juta</b> per tahun.</p>
 
+<div data-diagram="garis" data-seri="Nilai buku:100,80,60,40,20,0" data-x="Beli,2024,2025,2026,2027,2028" data-nilai="ya" data-caption="Nilai buku peralatan Warung Sari (juta rupiah) turun 20 setiap tahun sampai habis"></div>
+
 <h3>Langkah 3 — Penyusutan bukan uang keluar</h3>
 <div class="callout warn">
 Uangnya keluar <b>sekali</b>, saat membeli di 2024 (tercatat di arus kas <i>investasi</i>). Beban penyusutan 20 juta per tahun sesudahnya hanya <b>catatan</b> — tidak ada uang yang dibayarkan ke siapa pun. Karena itu, saat menghitung kas dari operasi, penyusutan <b>ditambahkan kembali</b> ke laba.
@@ -1984,6 +1990,8 @@ Perhatikan: ini sama persis dengan perubahan persen. "Lama" adalah uang yang dik
 </div>
 
 <div data-demo="roi-calc"></div>
+
+<div data-diagram="bar" data-bars="Investasi A (1 tahun):50|Investasi B (5 tahun):8.4|Deposito tanpa risiko:5" data-unit="% per tahun" data-caption="ROI total sama-sama 50%, tapi per tahunnya sangat berbeda"></div>
 `,
           keyPoints: [
             "ROI = (Hasil yang kembali − Biaya) ÷ Biaya × 100% — sama dengan rumus perubahan persen.",
@@ -2151,6 +2159,8 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
   <tr><td>Break-even</td><td>Beban tetap setahun (gaji, sewa, listrik, penyusutan) = 130; tiap Rp100 penjualan menyisakan Rp60 setelah bahan → 130 ÷ 60%</td><td>penjualan ≈ 217 setahun</td></tr>
 </table>
 <p>Artinya: di bawah penjualan sekitar 217 juta setahun, warung rugi; di atasnya, mulai untung. Untuk sederhananya, semua beban operasional dianggap tetap dan bunga diabaikan. <b>Burn rate</b> tidak relevan untuk Warung Sari karena ia sudah untung; metrik ini dipakai perusahaan rintisan yang masih rugi, misalnya "kas berkurang Rp200 juta per bulan".</p>
+
+<div data-diagram="garis" data-seri="Pendapatan:0,100,200,300|Total biaya:130,170,210,250" data-x="Rp0,Rp100 jt,Rp200 jt,Rp300 jt" data-caption="Titik impas Warung Sari: dua garis bertemu di sekitar Rp217 juta penjualan setahun — di kirinya rugi, di kanannya untung"></div>
 
 <h3>Soal "ROTI"</h3>
 <div class="callout">
@@ -2369,6 +2379,8 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
 </table>
 <p>Kalau kamu mendengar "harga naik", jangan langsung menyimpulkan penyebabnya. <b>Lihat juga jumlah yang terjual</b>: naik bersama berarti permintaan yang menarik; bergerak berlawanan berarti pasokan yang tersendat.</p>
 
+<div data-diagram="matrix" data-ylabel="Harga naik" data-xlabel="Jumlah terjual naik" data-cells="Harga naik, jumlah turun: penawaran turun|Harga naik, jumlah naik: permintaan naik|Harga turun, jumlah turun: permintaan turun|Harga turun, jumlah naik: penawaran naik" data-caption="Lihat arah harga DAN jumlah terjual untuk menebak penyebabnya"></div>
+
 <h3>Saat harga diatur: batas atas dan batas bawah</h3>
 <table class="tbl">
   <tr><th></th><th>Harga maksimum (mis. HET)</th><th>Harga minimum (mis. harga dasar)</th></tr>
@@ -2471,6 +2483,8 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
 </table>
 
 <div data-demo="elastisitas-harga"></div>
+
+<div data-diagram="bar" data-bars="Elastis (elastisitas 2):-20|Uniter (elastisitas 1):-10|Inelastis (elastisitas 0,2):-2" data-unit="%" data-caption="Harga sama-sama naik 10%: seberapa jauh jumlah terjual turun?"></div>
 
 <h3>Aturan emas pendapatan</h3>
 <table class="tbl">
@@ -2812,6 +2826,8 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
 <div class="callout warn">
 <b>Harganya:</b> ABC lebih <b>akurat</b> tapi lebih <b>rumit &amp; mahal</b> diterapkan. Untuk usaha kecil dengan produk sejenis, metode sederhana sudah memadai. Pakai ABC saat produkmu beragam &amp; overhead-nya besar.
 </div>
+
+<div data-diagram="pipeline" data-stages="Aktivitas::penyetelan, inspeksi, pengiriman|Pemicu biaya::jumlah penyetelan, inspeksi|Tarif::biaya aktivitas ÷ jumlah pemicu|Bebankan::sesuai pemakaian tiap produk" data-caption="Activity-Based Costing: overhead dibagi menurut aktivitas yang benar-benar dipakai"></div>
 `,
           keyPoints: [
             "Biaya langsung mudah dilacak; overhead (dipakai bersama) sulit dibagi — di situlah letak masalahnya.",
@@ -2943,6 +2959,8 @@ Jadi ROE tinggi bisa datang dari margin yang bagus, aset yang berputar cepat, AT
   <tr><td>Biaya listrik</td><td>50</td><td>45</td><td>−5</td><td class="ok-cell">Menguntungkan</td></tr>
 </table>
 <p>Perhatikan: varians <b>+30</b> pada biaya justru <b>merugikan</b>, sedangkan <b>+40</b> pada penjualan menguntungkan. Selalu lihat <b>jenis posnya</b> dulu.</p>
+
+<div data-diagram="vs" data-left="Menguntungkan::penjualan 540 vs anggaran 500 (+40)::listrik 45 vs anggaran 50 (−5)" data-right="Merugikan::biaya bahan 230 vs anggaran 200 (+30)" data-caption="Tanda plus atau minus saja tidak cukup — lihat dulu jenis posnya"></div>
 
 <h3>Membongkar penyebab: harga vs jumlah</h3>
 <p>Varians biaya bahan naik Rp30 juta — tapi <b>kenapa</b>? Ada dua kemungkinan yang harus dipisahkan:</p>
@@ -3246,6 +3264,8 @@ Semua PPN itu pada akhirnya dibayar <b>pembeli terakhir</b> (konsumen). Toko han
   <tr><td><b>Fraud</b></td><td>Angka fiktif, transaksi palsu</td><td><b>Ilegal</b></td></tr>
 </table>
 
+<div data-diagram="pipeline" data-stages="Earnings management::legal tapi menyesatkan|Agresif::zona abu-abu|Fraud::angka fiktif, ilegal" data-caption="Manipulasi berjenjang, dari yang memanfaatkan celah aturan sampai yang pidana"></div>
+
 <h3>Tanda bahaya utama</h3>
 <div class="callout warn">
 <b>#1 — Laba naik tapi arus kas operasi tidak.</b> Ini <b>sinyal paling kuat</b>. Laba bisa "diatur" lewat pencatatan; <b>kas jauh lebih sulit dipalsukan</b>. Bila keduanya berpisah jalan bertahun-tahun, selidiki.
@@ -3265,6 +3285,8 @@ Semua PPN itu pada akhirnya dibayar <b>pembeli terakhir</b> (konsumen). Toko han
 Pada banyak kumpulan angka alami (nilai transaksi, populasi, tagihan), <b>angka pertama tidak muncul merata</b>. Angka <b>1</b> muncul jauh lebih sering daripada <b>9</b>.
 <br><br>Angka <b>buatan manusia</b> cenderung tersebar terlalu rata — sehingga <b>penyimpangan dari pola Benford</b> bisa menjadi tanda untuk diperiksa lebih dalam.
 </div>
+
+<div data-diagram="bar" data-bars="Angka 1:30.1|Angka 2:17.6|Angka 3:12.5|Angka 4:9.7|Angka 5:7.9|Angka 6:6.7|Angka 7:5.8|Angka 8:5.1|Angka 9:4.6" data-unit="%" data-caption="Hukum Benford: seberapa sering tiap angka muncul sebagai digit pertama pada data alami"></div>
 
 <h3>Coba sendiri — lihat pola Benford</h3>
 <div data-demo="js-playground">// Hukum Benford: seberapa sering tiap angka muncul sebagai DIGIT PERTAMA
@@ -3370,7 +3392,11 @@ Laporan keuangan dibuat oleh <b>manajemen</b> — pihak yang justru <b>berkepent
 <b>Kebiasaan yang berharga:</b> saat membaca laporan tahunan, <b>cari halaman opini auditor</b> — biasanya di depan laporan keuangan. Kalau opininya <b>bukan</b> "wajar tanpa pengecualian", baca alasannya dengan teliti. Banyak investor melewatkan halaman ini padahal isinya krusial.
 </div>
 
+<div data-diagram="pipeline" data-stages="Wajar tanpa pengecualian::bersih, normal|Wajar dengan pengecualian::baca pengecualiannya|Tidak wajar::laporan menyesatkan|Tidak menyatakan pendapat::sangat mencurigakan" data-caption="Empat opini auditor, dari yang paling melegakan sampai yang paling mengkhawatirkan"></div>
+
 <h3>Audit internal vs eksternal</h3>
+
+<div data-diagram="vs" data-left="Audit internal::karyawan perusahaan sendiri::untuk manajemen dan komisaris::memperbaiki proses" data-right="Audit eksternal::kantor akuntan independen::untuk investor, bank, publik::menilai kewajaran laporan" data-caption="Dua jenis audit dengan tujuan berbeda"></div>
 <table class="tbl">
   <tr><th></th><th>Audit Internal</th><th>Audit Eksternal</th></tr>
   <tr><td>Siapa</td><td>Karyawan perusahaan sendiri</td><td>Kantor akuntan publik independen</td></tr>
@@ -3598,6 +3624,8 @@ Jadi kalau melihat CFₜ, bacalah: <i>"arus kas pada tahun ke-berapa pun yang se
 Artinya uangmu menjadi <b>1,331 kali lipat</b> setelah 3 tahun.
 </div>
 
+<div data-diagram="bar" data-bars="Setelah 1 tahun:1.1|Setelah 2 tahun:1.21|Setelah 3 tahun:1.331|Setelah 10 tahun:2.594" data-unit="×" data-caption="(1 + 10%)ⁿ: uang tumbuh berlipat karena bunganya ikut berbunga"></div>
+
 <h3>Coba sendiri — lihat arti tiap simbol</h3>
 <div data-demo="js-playground">// Membongkar rumus FV = PV x (1 + r)^n
 const PV = 1000000;  // Present Value  = nilai SEKARANG (Rp1 juta)
@@ -3799,6 +3827,8 @@ Bunga 9% → 72 ÷ 9 = <b>8 tahun</b>. Bunga 6% → 12 tahun.
 </table>
 <p>Keuntungan "sebenarnya", setelah memperhitungkan nilai waktu uang, adalah 18,39 juta — bukan 50 juta.</p>
 
+<div data-diagram="bar" data-bars="Tahun 1 (kas 30):27.27|Tahun 2 (kas 40):33.06|Tahun 3 (kas 50):37.57|Tahun 4 (kas 30):20.49" data-unit=" jt" data-caption="Nilai hari ini dari kas tiap tahun (diskon 10%): jumlahnya 118,39 − investasi 100 = NPV +18,39"></div>
+
 <h3>NPV (Net Present Value)</h3>
 <div class="callout">
 <b>NPV</b> = jumlah dari semua arus kas masa depan yang sudah <b>didiskon</b>, dikurangi <b>investasi awal</b>.<br><br>
@@ -3854,6 +3884,8 @@ Aturannya: <b>IRR lebih tinggi dari biaya modal → layak.</b>
 <div class="callout warn">
 <b>Kelemahan IRR:</b> bisa menyesatkan saat membandingkan proyek berukuran sangat berbeda. Proyek kecil ber-IRR 50% (untung Rp5 juta) kalah bermanfaat dibanding proyek besar ber-IRR 20% (untung Rp500 juta). <b>Untuk memilih, NPV lebih dapat diandalkan.</b>
 </div>
+
+<div data-diagram="garis" data-seri="NPV:18.39,6.36,0.06,-3.82" data-x="10%,15%,18%,20%" data-nilai="ya" data-caption="IRR adalah tingkat diskon saat NPV menyentuh nol — untuk proyek ini sekitar 18%"></div>
 `,
           keyPoints: [
             "NPV = Σ [CFt ÷ (1+r)^t] − investasi awal; NPV positif = layak.",
@@ -3925,6 +3957,8 @@ Terlihat mengejutkan: arus kas <b>tak terbatas</b> ternyata punya nilai <b>terba
 <pre class="code">Contoh: Rp10 juta per tahun selamanya, diskon 10%
         PV = 10.000.000 ÷ 0,10 = Rp100.000.000</pre>
 
+<div data-diagram="bar" data-bars="Tahun ke-1:9.09|Tahun ke-10:3.86|Tahun ke-20:1.49|Tahun ke-50:0.09" data-unit=" jt" data-caption="Nilai hari ini dari Rp10 juta yang diterima di tahun ke-n (diskon 10%): makin jauh, makin mendekati nol"></div>
+
 <h3>Gordon Growth — perpetuitas yang bertumbuh</h3>
 <div class="callout">
 Kalau arus kasnya <b>tumbuh</b> sebesar <b>g</b> per tahun:<br><br>
@@ -3936,6 +3970,8 @@ Inilah rumus <b>Terminal Value</b> pada DCF — cara menghitung nilai bisnis <b>
 <b>Bahaya terbesar dalam valuasi:</b> perhatikan penyebut <b>(r − g)</b>. Kalau <b>g</b> mendekati <b>r</b>, penyebutnya mendekati nol dan nilainya <b>meledak jadi tak masuk akal</b>. Dan kalau g lebih besar dari r, rumusnya rusak total.
 <br><br><b>Aturan disiplin:</b> pertumbuhan abadi (<b>g</b>) tidak boleh melebihi pertumbuhan ekonomi jangka panjang — tak ada perusahaan yang bisa tumbuh lebih cepat dari dunia <b>selamanya</b>. Banyak valuasi terlalu optimistis lahir dari kesalahan di titik ini.
 </div>
+
+<div data-diagram="bar" data-bars="r − g = 7%:147|r − g = 5%:206|r − g = 3%:343" data-unit=" jt" data-caption="Gordon Growth untuk kas Rp10 juta yang tumbuh 3%: penyebut (r − g) mengecil sedikit, nilainya melonjak"></div>
 `,
           keyPoints: [
             "PV Anuitas = PMT × [1 − (1+r)^−n] ÷ r — dipakai menghitung cicilan KPR/kredit.",
@@ -4104,6 +4140,8 @@ Hasilnya sama bila dihitung untuk seluruh perusahaan: kapitalisasi pasar ÷ laba
 </div>
 <p><b>Cara termudah membacanya:</b> kalau laba tidak naik dan tidak turun, butuh <b>15 tahun laba</b> untuk "menebus" harga yang kamu bayar hari ini. PER 15 sering juga ditulis "15 kali" atau 15×.</p>
 
+<div data-diagram="flow" data-steps="Harga Rp600 per lembar|EPS Rp40 per lembar|PER = 600 ÷ 40 = 15|Sekitar 15 tahun laba untuk menebus harga" data-caption="PER membaca harga dalam satuan tahun laba"></div>
+
 <h3>Langkah 5 — Dibalik: earnings yield</h3>
 <p>Balik PER-nya: 1 ÷ 15 = <b>6,7%</b>. Artinya: setiap Rp100 yang kamu bayar untuk saham ini "menghasilkan" laba Rp6,7 setahun. Angka ini disebut <b>earnings yield</b>, dan berguna untuk dibandingkan dengan bunga deposito atau obligasi.</p>
 <table class="tbl">
@@ -4112,6 +4150,8 @@ Hasilnya sama bila dihitung untuk seluruh perusahaan: kapitalisasi pasar ÷ laba
   <tr><td>15</td><td>6,7%</td><td>Sedang</td></tr>
   <tr><td>40</td><td>2,5%</td><td>Mahal — kecuali labanya diharapkan tumbuh sangat cepat</td></tr>
 </table>
+
+<div data-diagram="bar" data-bars="PER 5:20|PER 15:6.7|PER 40:2.5" data-unit="%" data-caption="Earnings yield = 1 ÷ PER: makin mahal sahamnya, makin kecil laba per Rp100 yang kamu bayar"></div>
 
 <h3>Langkah 6 — Kapan PER tidak bisa dipakai?</h3>
 <table class="tbl">
@@ -4416,6 +4456,8 @@ Yang berubah dari satu jenis ke jenis lain hanyalah <b>apa yang dihitung sebagai
   <tr><td>Staking yield (crypto)</td><td>Token imbalan setahun</td><td>5 token ÷ 100 token = 5%</td></tr>
 </table>
 
+<div data-diagram="bar" data-bars="Bunga deposito:4|Dividend yield:4|Earnings yield:6.7|FCF yield:5|Yield obligasi:6.7|Rental yield:3|Staking yield:5" data-unit="%" data-caption="Contoh di pelajaran ini — semuanya satu rumus: penghasilan per tahun ÷ harga yang dibayar"></div>
+
 <h3>1. Dividend yield &amp; payout ratio</h3>
 <p>PT Kopi Sari mencetak EPS <b>Rp40</b>. Misalkan perusahaan membagikan <b>Rp24</b> per lembar sebagai dividen tunai dan menahan sisanya, Rp16, untuk membuka kedai baru.</p>
 <table class="tbl">
@@ -4437,6 +4479,8 @@ Yang berubah dari satu jenis ke jenis lain hanyalah <b>apa yang dihitung sebagai
 </table>
 <p>Karena kuponnya tetap, <b>harga turun → yield naik</b>, dan <b>harga naik → yield turun</b>. Kalau suku bunga di pasar naik menjadi 8%, tidak ada yang mau membayar penuh untuk obligasi berkupon 6%, sehingga harganya turun sampai yield-nya kembali menarik. Jadi berita <i>"yield obligasi pemerintah naik"</i> sebenarnya berarti <b>harga obligasinya sedang turun</b>.</p>
 <p>Pembeli di harga Rp900.000 juga akan menerima pokok penuh Rp1.000.000 saat jatuh tempo — untung tambahan Rp100.000. Yield yang ikut menghitung keuntungan itu disebut <b>yield to maturity</b>, dan angkanya lebih tinggi lagi.</p>
+
+<div data-diagram="garis" data-seri="Yield:5.45,6,6.67" data-x="Harga Rp1.100 rb,Rp1.000 rb,Rp900 rb" data-nilai="ya" data-caption="Kupon tetap Rp60.000: harga obligasi turun, yield-nya naik"></div>
 
 <h3>3. Rental yield: kotor vs bersih</h3>
 <p>Rumah seharga Rp1 miliar disewakan Rp40 juta setahun → <b>yield kotor 4%</b>. Tapi pemilik masih membayar PBB, perbaikan, dan menanggung bulan-bulan kosong tanpa penyewa — misalnya Rp10 juta setahun. <b>Yield bersihnya</b> (40 − 10) ÷ 1.000 = <b>3%</b>. Iklan properti hampir selalu menyebut angka kotornya.</p>
@@ -5128,6 +5172,8 @@ Perusahaan berspread negatif yang terus berekspansi sedang <b>menggali lubangnya
 <b>Pendapatan = Harga × Volume.</b> Titik. Semua pertumbuhan pada akhirnya datang dari menaikkan harga, menaikkan volume, atau keduanya.
 </div>
 
+<div data-diagram="pipeline" data-stages="Harga::naik bila punya pricing power|Volume::lebih banyak pelanggan|Pendapatan::harga × volume" data-caption="Semua pertumbuhan pendapatan datang dari dua tuas ini"></div>
+
 <h3>Sumber pertumbuhan yang sehat</h3>
 <ul>
   <li><b>Ekspansi geografis</b> — mereplikasi model yang <b>sudah terbukti</b> ke wilayah baru. Risikonya lebih rendah karena resepnya sudah teruji.</li>
@@ -5146,6 +5192,8 @@ Perusahaan berspread negatif yang terus berekspansi sedang <b>menggali lubangnya
 <div class="callout warn">
 <b>Yang berbahaya: terjebak di tengah.</b> Tidak cukup istimewa untuk memasang harga premium, tapi juga tidak cukup efisien untuk bersaing harga. Posisi ini paling sering kalah.
 </div>
+
+<div data-diagram="vs" data-left="Premium / diferensiasi::harga tinggi, margin tebal::volume lebih kecil::menang lewat merek" data-right="Kepemimpinan biaya::harga rendah, margin tipis::volume raksasa::menang lewat efisiensi" data-caption="Dua jalan menang — yang kalah biasanya terjebak di tengah"></div>
 
 <h3>Coba sendiri — bandingkan dua strategi</h3>
 <div data-demo="js-playground">// Pendapatan = Harga x Volume. Ubah angkanya & jalankan lagi.
@@ -6783,12 +6831,16 @@ Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kala
   <tr><td><b>= Laba Bersih</b></td><td><b>60</b> (margin 12%)</td></tr>
 </table>
 
+<div data-diagram="bar" data-bars="Pendapatan:500|HPP:-200|Laba kotor:300|Beban:-240|Laba bersih:60" data-unit=" jt" data-caption="Dari pendapatan ke laba bersih Warung Kopi Sejahtera"></div>
+
 <h3>Neraca (per 31 Des)</h3>
 <table class="tbl">
   <tr><td>Aset (kas, peralatan, persediaan)</td><td>250</td></tr>
   <tr><td>Kewajiban (utang bank)</td><td>100</td></tr>
   <tr><td><b>Ekuitas (modal pemilik)</b></td><td><b>150</b></td></tr>
 </table>
+
+<div data-diagram="stack" data-parts="Kewajiban (utang bank):100|Ekuitas (modal pemilik):150" data-caption="Aset 250 dibiayai utang 100 dan modal pemilik 150"></div>
 
 <h3>Yang dilihat seorang analis</h3>
 <ul>
@@ -6856,6 +6908,8 @@ Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kala
 <div class="callout warn">
 <b>Penting:</b> rasio hanya bermakna saat <b>dibandingkan</b> (antar waktu, pesaing, industri) dan dipadukan dengan kualitas bisnis. Ini edukasi, <b>bukan saran investasi</b>. Saham berisiko.
 </div>
+
+<div data-diagram="pipeline" data-stages="Laporan tahunan::situs BEI atau perusahaan|Ambil angka::laba, ekuitas, utang, harga|Hitung rasio::P/E, PBV, ROE, DER|Bandingkan::dengan sejenis dan tahun lalu" data-caption="Rasio hanya bermakna bila dibandingkan"></div>
 `,
           keyPoints: [
             "Saham dinilai lewat rasio: EPS, P/E, PBV, ROE, DER, dividend yield.",
@@ -7108,6 +7162,8 @@ Contoh: nilai wajar Rp1.000, harga Rp700 → margin of safety = <b>30%</b>. Kala
   <li>Piutang (penjualan kredit belum dibayar): <b>Rp40 juta</b></li>
 </ul>
 
+<div data-diagram="bar" data-bars="Laba di kertas:15|Kas tersedia:30|Pengeluaran per bulan:25|Piutang belum tertagih:40" data-unit=" jt" data-caption="Laba Rp15 juta, tapi kas hanya cukup 1,2 bulan karena Rp40 juta masih di tangan pelanggan"></div>
+
 <h3>Coba sendiri — hitung "napas" (runway) tokonya</h3>
 <div data-demo="js-playground">const kas = 30;                // juta
 const pengeluaranBulanan = 25; // juta
@@ -7303,6 +7359,8 @@ Ide adalah <b>tebakan</b> yang harus diuji, dan yang diukur adalah apa yang <b>d
 </table>
 <p>Dikalikan, bukan dijumlahkan, karena satu nilai rendah saja sudah cukup mematikan ide: masalah yang sangat sering terjadi tapi tidak ada yang mau membayar tetap sulit menjadi usaha.</p>
 
+<div data-diagram="bar" data-bars="Patungan biaya kos:24|Sertifikat lomba:18|Tiket anti-palsu dan anti-calo:60" data-caption="Skor = seberapa sering × seberapa sakit × mau membayar (masing-masing 1–5)"></div>
+
 <h3>Wawancara: kenapa orang suka membohongimu</h3>
 <p>Kalau kamu bertanya "Menurutmu ideku bagus?", hampir semua orang menjawab "bagus" — karena sopan, bukan karena butuh. Buku <b><i>The Mom Test</i></b> (Rob Fitzpatrick, 2013) memberi tiga aturan supaya jawaban tetap jujur, bahkan bila yang ditanya ibumu sendiri:</p>
 <ol>
@@ -7327,6 +7385,8 @@ Ide adalah <b>tebakan</b> yang harus diuji, dan yang diukur adalah apa yang <b>d
   <tr><td><b>Uang</b></td><td>Mau membayar uang muka, pre-order, atau memakai versi berbayar</td></tr>
 </table>
 <p>Wawancarai orang dari satu kelompok yang sama sampai jawaban mereka mulai berulang. Dalam praktik, itu sering terjadi setelah sekitar 10–20 orang.</p>
+
+<div data-diagram="layers" data-items="Uang — komitmen paling kuat|Reputasi — mau mengenalkanmu|Waktu — mau dijadwalkan|Pujian — bukan data sama sekali" data-caption="Makin besar yang dikorbankan calon pengguna, makin jujur sinyalnya"></div>
 
 <h3>Eksperimen murah sebelum membangun</h3>
 <table class="tbl">
@@ -7427,6 +7487,8 @@ Ide adalah <b>tebakan</b> yang harus diuji, dan yang diukur adalah apa yang <b>d
 </table>
 <p>Biaya tetap misalkan Rp25 juta per bulan. <b>Titik impas</b> = 25.000.000 ÷ 2.500 = <b>10.000 tiket per bulan</b> — kira-kira 10 acara berisi 1.000 penonton setiap bulan. Pertanyaan berikutnya: apakah ada cukup acara di segmen yang dipilih? Kalau tidak, segmennya harus diperluas atau harganya diubah. Hitungan sederhana ini sering membunuh ide lebih cepat — dan lebih murah — daripada membangun produknya.</p>
 
+<div data-diagram="bar" data-bars="Biaya layanan:4|Gas L2 dan server:-0.5|Biaya pembayaran:-1|Margin kontribusi:2.5" data-unit=" rb" data-caption="Per tiket TiketAman; titik impas = Rp25 juta ÷ Rp2.500 = 10.000 tiket per bulan"></div>
+
 <h3>Rencana eksekusi: uji asumsi paling berisiko lebih dulu</h3>
 <p>Setiap kotak kanvas berisi asumsi. Jangan mulai dari yang paling mudah dibangun; mulailah dari yang <b>kalau salah, seluruh ide runtuh</b>.</p>
 <table class="tbl">
@@ -7445,6 +7507,8 @@ Ide adalah <b>tebakan</b> yang harus diuji, dan yang diukur adalah apa yang <b>d
 <div class="callout">
 <b>Kapan perlu rencana bisnis lengkap?</b> Saat mengajukan pinjaman bank, hibah, atau pendanaan yang meminta dokumen terperinci. Lean Canvas tidak menggantikannya — ia membantumu tahu isi yang benar sebelum menulis dokumen panjang.
 </div>
+
+<div data-diagram="timeline" data-events="Minggu 1–2::wawancara 15 penyelenggara|Minggu 3–4::prototipe dan acara uji|Minggu 5–8::3 acara berbayar|Minggu 9–12::ukur lalu putuskan" data-caption="Uji asumsi paling berisiko lebih dulu"></div>
 `,
           keyPoints: [
             "Lean Canvas merangkum ide dalam 9 kotak: masalah, segmen, proposisi nilai, solusi, saluran, pendapatan, biaya, metrik, keunggulan.",
@@ -7522,6 +7586,8 @@ Siklus <b>Build–Measure–Learn</b>: bangun versi terkecil, ukur apa yang dila
   <tr><td><b>Won't</b> (untuk sekarang)</td><td>Sengaja ditunda</td><td>Token milik platform, aplikasi seluler sendiri</td></tr>
 </table>
 
+<div data-diagram="layers" data-items="Must — tanpa ini tidak berguna|Should — penting, bisa menyusul|Could — menyenangkan bila ada|Won't — sengaja ditunda" data-caption="MoSCoW: MVP hanya berisi lapisan teratas"></div>
+
 <h3>Produk "sungguhan" butuh lebih dari fitur</h3>
 <ul>
   <li><b>Jalan masuk yang mulus</b> — pengguna baru sampai ke manfaat utamanya secepat mungkin (sering disebut <i>aha moment</i>).</li>
@@ -7539,6 +7605,8 @@ Siklus <b>Build–Measure–Learn</b>: bangun versi terkecil, ukur apa yang dila
   <tr><td>Produk B</td><td>50%</td><td>28%</td><td>12%</td><td class="bad-cell">3%</td></tr>
 </table>
 <p>Produk B awalnya tampak lebih baik, tapi kurvanya terus turun hampir ke nol: orang mencoba lalu pergi. Kurva Produk A <b>mendatar</b> di sekitar 24% — ada sekelompok orang yang terus memakainya. Kurva yang mendatar adalah salah satu tanda paling kuat bahwa produkmu benar-benar dibutuhkan.</p>
+
+<div data-diagram="garis" data-seri="Produk A:45,32,25,24|Produk B:50,28,12,3" data-x="Minggu 1,Minggu 2,Minggu 4,Minggu 8" data-y="0,60" data-caption="Persen pengguna yang masih aktif: kurva A mendatar (tanda product-market fit), kurva B terus turun ke nol"></div>
 
 <h3>Product-market fit</h3>
 <p><b>Product-market fit</b> (PMF) adalah keadaan ketika produkmu memuaskan pasar yang cukup besar — pengguna datang dan bertahan bahkan sebelum kamu mendorongnya keras-keras. Selain kurva retensi yang mendatar, ada uji sederhana dari Sean Ellis: tanyakan kepada pengguna aktif, <i>"Bagaimana perasaanmu kalau produk ini tidak bisa dipakai lagi?"</i> Bila <b>40% atau lebih</b> menjawab <b>"sangat kecewa"</b>, itu pertanda kuat sudah ada PMF.</p>
@@ -7610,6 +7678,8 @@ Siklus <b>Build–Measure–Learn</b>: bangun versi terkecil, ukur apa yang dila
 </div>
 
 <h3>UI dan UX itu berbeda</h3>
+
+<div data-diagram="vs" data-left="UI (tampilan)::seperti apa tampilannya?::warna, huruf, jarak, ikon" data-right="UX (pengalaman)::bagaimana rasanya memakai?::langkah sampai tujuan tercapai" data-caption="Tampilan yang cantik tidak menolong bila orang bingung harus menekan apa"></div>
 <table class="tbl">
   <tr><th></th><th>UI (User Interface)</th><th>UX (User Experience)</th></tr>
   <tr><td>Menjawab</td><td>Seperti apa tampilannya?</td><td>Bagaimana rasanya memakai produk ini dari awal sampai tujuan tercapai?</td></tr>
@@ -7651,6 +7721,8 @@ Siklus <b>Build–Measure–Learn</b>: bangun versi terkecil, ukur apa yang dila
 <div class="callout">
 <b>Ukuran sederhana:</b> berapa langkah dan berapa detik yang dibutuhkan orang baru untuk mencapai manfaat utama produkmu? Setiap langkah yang dihapus biasanya menaikkan jumlah orang yang sampai ke tujuan.
 </div>
+
+<div data-diagram="flow" data-steps="Menunggu tanda tangan|Transaksi dikirim|Menunggu masuk blok|Berhasil, atau gagal beserta alasannya" data-caption="Tampilkan tahapan transaksi — jangan biarkan pengguna menebak-nebak"></div>
 `,
           keyPoints: [
             "UI = tampilan; UX = pengalaman memakai produk dari awal sampai tujuan tercapai.",
@@ -7735,6 +7807,8 @@ Lean Canvas merangkum masalah, segmen, solusi, dan angka dalam satu halaman. Ret
   <tr><td><b>SOM</b></td><td>Bagian yang realistis direbut dalam beberapa tahun</td><td>Misalkan 5% dari SAM = Rp400 juta/tahun</td></tr>
 </table>
 <p>Juri lebih percaya pada hitungan dari bawah ke atas (jumlah acara × penonton × harga) daripada angka "pasar triliunan" yang dikutip dari laporan.</p>
+
+<div data-diagram="layers" data-items="SOM — Rp400 juta/tahun (5% dari SAM)|SAM — Rp8 miliar/tahun|TAM — semua tiket acara di Indonesia" data-caption="TAM, SAM, SOM untuk TiketAman (angka misalkan)"></div>
 
 <h3>Demo yang tidak mengkhianatimu</h3>
 <ul>
@@ -7982,6 +8056,8 @@ Lean Canvas merangkum masalah, segmen, solusi, dan angka dalam satu halaman. Ret
 <div class="callout">
 <b>Realitas akses:</b> hedge fund umumnya <b>tertutup</b> bagi masyarakat umum karena ada syarat minimum investasi & kualifikasi investor. Jadi bagi kebanyakan orang, ini pengetahuan untuk <b>memahami</b> — bukan produk yang bisa dibeli.
 </div>
+
+<div data-diagram="stack" data-parts="Untuk investor:6|Management fee (2% dana):2|Performance fee (20% untung):2" data-caption="Hitungan kasar dana Rp100 miliar yang untung Rp10 miliar setahun: manajer mengambil sekitar Rp4 miliar"></div>
 `,
           keyPoints: [
             "Hedge fund = dana kelolaan dengan kebebasan strategi luas (leverage, short selling, derivatif), hanya untuk investor terkualifikasi.",
@@ -8037,11 +8113,15 @@ Lean Canvas merangkum masalah, segmen, solusi, dan angka dalam satu halaman. Ret
 <b>Sisi gelap LBO:</b> karena pembelian dibiayai utang, <b>utangnya ditanggung perusahaan yang dibeli</b>. Kalau perbaikannya gagal, perusahaan bisa terjerat beban utang berat. Ini alasan LBO sering menjadi kontroversi.
 </div>
 
+<div data-diagram="pipeline" data-stages="Beli::perusahaan mapan, sering pakai utang|Perbaiki::efisiensi, manajemen baru|Jual::ke perusahaan lain atau bursa" data-caption="Cara kerja private equity"></div>
+
 <h3>Venture Capital (VC)</h3>
 <p>VC mendanai <b>startup tahap awal</b> yang berisiko sangat tinggi. Model bisnisnya unik:</p>
 <div class="callout">
 <b>Power law:</b> dari 10 startup yang didanai, mungkin <b>7 gagal total</b>, 2 sekadar balik modal, dan <b>1 tumbuh raksasa</b> — dan yang satu itu menutupi semua kerugian lainnya. Jadi VC tidak mencari "aman", tapi mencari <b>kemungkinan besar sekali</b>.
 </div>
+
+<div data-diagram="stack" data-parts="Gagal total:7|Sekadar balik modal:2|Tumbuh raksasa:1" data-caption="Power law VC: dari 10 startup, satu pemenang menutupi semua kerugian"></div>
 
 <h3>Ciri khas PE & VC</h3>
 <table class="tbl">
@@ -8196,6 +8276,8 @@ Riset jangka panjang (mis. laporan <b>SPIVA</b> dari S&amp;P) secara konsisten m
   <tr><td>Performance fee tanpa <b>high-water mark</b></td><td>Manajer bisa dibayar dua kali atas pemulihan kerugian yang sama</td></tr>
   <tr><td>Kinerja ditampilkan sejak <b>tanggal pilihan</b></td><td>Periode dipilih agar terlihat paling bagus (<i>cherry picking</i>)</td></tr>
 </table>
+
+<div data-diagram="network" data-center="Dibayar dari mana?" data-nodes="Manajer: % dana kelolaan|Penjual: komisi produk|Fee tanpa high-water mark|Kinerja dari tanggal pilihan" data-caption="Insentif menjelaskan hampir semua perilaku pihak yang menawarkan produk keuangan"></div>
 
 <h3>Tanda bahaya saat ditawari produk keuangan</h3>
 <ul>
@@ -8461,6 +8543,8 @@ Harga saham terbentuk dari tawar-menawar pembeli dan penjual di bursa setiap har
   <tr><td><b>Mendatar</b> (sideways)</td><td>Harga bolak-balik di antara dua batas tanpa arah jelas</td></tr>
 </table>
 <p>Tren juga bergantung pada <b>rentang waktu</b> yang dilihat. Saham yang sedang turun dalam grafik harian bisa saja masih naik dalam grafik mingguan. Karena itu, sebutkan selalu rentang waktunya: "tren naik di grafik mingguan".</p>
+
+<div data-diagram="garis" data-seri="Harga:100,108,104,114,109,121,115,128" data-x="1,2,3,4,5,6,7,8" data-caption="Tren naik: puncak makin tinggi dan lembah makin tinggi (ilustrasi)"></div>
 `,
           keyPoints: [
             "Analisis fundamental menilai bisnis dari laporan keuangan; analisis teknikal membaca pola harga dan volume.",
@@ -8536,6 +8620,8 @@ Harga saham terbentuk dari tawar-menawar pembeli dan penjual di bursa setiap har
   <tr><td>6</td><td>106</td><td>106,00</td><td>105,50</td></tr>
   <tr><td>7</td><td>110</td><td>107,67</td><td>107,75</td></tr>
 </table>
+
+<div data-diagram="garis" data-seri="Harga:100,102,101,105,107,106,110|SMA 3:,,101,102.67,104.33,106,107.67|EMA 3:,,101,103,105,105.5,107.75" data-x="1,2,3,4,5,6,7" data-caption="Angka dari tabel di atas: rata-rata bergerak lebih halus, tapi sedikit tertinggal dari harga"></div>
 
 <h3>EMA: memberi suara lebih besar pada hari terbaru</h3>
 <p>SMA memperlakukan semua hari sama penting. <b>EMA</b> (Exponential Moving Average) memberi bobot lebih besar pada harga terbaru, sehingga lebih cepat bereaksi.</p>
@@ -8635,6 +8721,8 @@ Hari ke-5: 107 × 0,5 + 103 × 0,5 = <b>105</b>
   <tr><td><b>Histogram</b></td><td>Garis MACD − garis sinyal</td><td>Apakah tenaga itu sedang bertambah atau berkurang</td></tr>
 </table>
 <p>Contoh satu hari: EMA 12 = 1.105 dan EMA 26 = 1.090 → MACD = <b>15</b>. Garis sinyalnya 12 → histogram = 15 − 12 = <b>+3</b>.</p>
+
+<div data-diagram="flow" data-steps="EMA 12 = 1.105|EMA 26 = 1.090|MACD = 15|Garis sinyal = 12|Histogram = +3" data-caption="Contoh satu hari: dari dua EMA sampai satu batang histogram"></div>
 
 <h3>Mengikuti histogram dari hari ke hari</h3>
 <p>Garis sinyal adalah EMA 9 dari MACD, jadi k = 2 ÷ 10 = 0,2. Perhatikan lima hari berikut:</p>
@@ -8771,10 +8859,14 @@ RS = 2 ÷ 1 = 2 → RSI = 100 − 100 ÷ 3 = <b>66,7</b>
 <b>Jenuh beli bukan berarti pasti turun.</b> Dalam tren naik yang kuat, RSI bisa bertahan di atas 70 selama berminggu-minggu. Orang yang menjual hanya karena RSI 70 bisa tertinggal jauh dari kenaikan berikutnya.
 </div>
 
+<div data-diagram="garis" data-seri="RSI:45,58,66,74,72,63,48,35,27,33" data-x="1,2,3,4,5,6,7,8,9,10" data-y="0,100" data-acuan="70:Jenuh beli|30:Jenuh jual" data-caption="RSI bergerak di skala 0–100 yang sama untuk semua saham (ilustrasi)"></div>
+
 <h3>Support &amp; resistance: lantai dan langit-langit harga</h3>
 <p><b>Support</b> adalah level harga yang berkali-kali menahan penurunan — seolah ada lantai. <b>Resistance</b> adalah level yang berkali-kali menahan kenaikan — seolah ada langit-langit.</p>
 <p>Kenapa bisa terjadi? Karena ingatan manusia. Misalnya banyak orang membeli di Rp1.000, lalu harga turun ke Rp800. Saat harga kembali ke Rp1.000, banyak dari mereka yang lega "balik modal" dan menjual — resistance terbentuk. Angka bulat seperti Rp1.000 atau Rp5.000 juga sering menjadi patokan banyak orang.</p>
 <p>Saat resistance <b>ditembus</b> dengan volume besar, level itu sering berubah menjadi support. Penjual yang tadinya menunggu di sana sudah habis, sementara orang yang menyesal tidak membeli menunggu harga kembali ke level itu untuk masuk.</p>
+
+<div data-diagram="garis" data-seri="Harga:1060,1010,1050,1095,1040,1003,1070,1098,1030,1008" data-x="1,2,3,4,5,6,7,8,9,10" data-y="960,1140" data-acuan="1100:Resistance|1000:Support" data-caption="Harga berkali-kali tertahan di lantai Rp1.000 dan langit-langit Rp1.100 (ilustrasi)"></div>
 
 <h3>Bollinger Bands, sekilas</h3>
 <p><b>Bollinger Bands</b> adalah tiga garis: MA 20 hari di tengah, lalu dua pita di atas dan di bawahnya sejauh dua kali <b>simpangan baku</b> (ukuran seberapa liar harga bergerak — dibahas di pelajaran berikutnya). Pita yang menyempit menandakan pasar sedang tenang; pita yang melebar menandakan harga sedang bergerak liar.</p>
@@ -8861,6 +8953,8 @@ Volatilitas harian 1% → sekitar <b>16% setahun</b>. Volatilitas harian 3% → 
 </table>
 <p>Kenapa? Karena turun 20% lalu naik 20% tidak kembali ke titik awal: 100 × 0,8 × 1,2 = 96. Makin liar perjalanannya, makin besar yang tergerus.</p>
 
+<div data-diagram="garis" data-seri="Tenang:100,108,121,133,145,161|Liar:100,140,112,151,129,141" data-x="Awal,Th 1,Th 2,Th 3,Th 4,Th 5" data-caption="Rp100 juta di dua investasi dari tabel di atas: yang liar terasa lebih seru, hasil akhirnya justru lebih kecil"></div>
+
 <h3>Drawdown: dalamnya jurang dari puncak</h3>
 <p><b>Drawdown</b> adalah penurunan dari puncak tertinggi sebelumnya ke titik terendah sesudahnya. <b>Maximum drawdown</b> adalah yang terdalam selama periode yang dilihat.</p>
 <p>Contoh harga: 100 → 120 → <b>150</b> → <b>90</b> → 110 → 160. Puncaknya 150, lalu jatuh ke 90: drawdown = 90 ÷ 150 − 1 = <b>−40%</b>. Walau akhirnya harga naik ke 160, pemiliknya sempat melihat 40% nilainya lenyap.</p>
@@ -8874,6 +8968,8 @@ Volatilitas harian 1% → sekitar <b>16% setahun</b>. Volatilitas harian 3% → 
   <tr><td>−80%</td><td class="bad-cell">+400%</td></tr>
 </table>
 <p>Drawdown besar bukan teori. IHSG kehilangan lebih dari separuh nilainya sepanjang 2008. Bitcoin turun lebih dari 75% dari puncaknya pada 2018 dan sekali lagi pada 2022. Sebelum membeli apa pun, tanyakan: "Kalau nilainya turun separuh, apakah aku sanggup menahannya — secara keuangan dan secara mental?"</p>
+
+<div data-diagram="bar" data-bars="Turun 10%:11.1|Turun 20%:25|Turun 40%:66.7|Turun 50%:100|Turun 80%:400" data-unit="%" data-caption="Kenaikan yang dibutuhkan untuk kembali ke puncak setelah turun sekian persen"></div>
 
 <h3>Batas analisis teknikal — dibahas jujur</h3>
 <table class="tbl">
@@ -8966,6 +9062,8 @@ Sepanjang jalur ini kamu sudah bertemu puluhan singkatan: CAGR, margin, ROI, ROE
 
 <h3>Kelompokkan menurut pertanyaannya</h3>
 <p>Cara termudah mengingat metrik bukan menghafal rumusnya, tapi mengingat <b>pertanyaan</b> yang dijawabnya.</p>
+
+<div data-diagram="network" data-center="Metrik" data-nodes="Seberapa cepat tumbuh?|Seberapa untung?|Pintar memakai modal?|Seberapa sehat?|Mahal atau murah?|Seberapa berat jalannya?|Ke mana arah harga?" data-caption="Tujuh pertanyaan — setiap metrik menjawab salah satunya"></div>
 
 <h3>1. Seberapa cepat tumbuh?</h3>
 <table class="tbl">
@@ -9113,6 +9211,8 @@ Sepanjang jalur ini kamu sudah bertemu puluhan singkatan: CAGR, margin, ROI, ROE
 <p>Sejauh ini kita melihat <b>satu perusahaan</b>. Sekarang kita zoom out ke <b>seluruh negara</b> — karena sehebat apa pun bisnismu, ia hidup di dalam ekonomi yang lebih besar.</p>
 
 <h3>Fundamental: mikro vs makro</h3>
+
+<div data-diagram="vs" data-left="Ekonomi mikro::satu perusahaan, satu pasar::kenapa harga kopi di warung ini naik?" data-right="Ekonomi makro::satu negara, bahkan dunia::kenapa harga semua barang naik?" data-caption="Dari satu bisnis ke seluruh negara"></div>
 <table class="tbl">
   <tr><th>Ekonomi Mikro</th><th>Ekonomi Makro</th></tr>
   <tr><td>Melihat <b>bagian kecil</b>: satu perusahaan, satu pasar, satu pembeli</td><td>Melihat <b>keseluruhan</b>: satu negara, bahkan dunia</td></tr>
@@ -9136,6 +9236,8 @@ Sepanjang jalur ini kamu sudah bertemu puluhan singkatan: CAGR, margin, ROI, ROE
 <div class="callout warn">
 <b>Ini penting:</b> kalau ada berita "ekonomi tumbuh 8%", tanyakan dulu: <b>nominal atau riil?</b> Kalau inflasinya 6% dan PDB nominal naik 8%, pertumbuhan <b>sesungguhnya hanya sekitar 2%</b>. Persis seperti pelajaran laba vs kas — angka mentah bisa menipu.
 </div>
+
+<div data-diagram="bar" data-bars="PDB nominal naik:8|Inflasi:6|Pertumbuhan riil (kira-kira):2" data-unit="%" data-caption="Berita &quot;ekonomi tumbuh 8%&quot; bisa berarti hanya sekitar 2% bila inflasinya 6%"></div>
 
 <h3>Kaitannya langsung ke bisnismu</h3>
 <ul>
@@ -9203,6 +9305,7 @@ Sepanjang jalur ini kamu sudah bertemu puluhan singkatan: CAGR, margin, ROI, ROE
   <li>"Harga bakso naik dari Rp10.000 jadi Rp12.000"</li>
   <li>"Rp10.000-mu <b>tak lagi cukup</b> membeli satu bakso"</li>
 </ul>
+<div data-diagram="bar" data-bars="Hari ini:100|5 tahun lagi:82|10 tahun lagi:68|20 tahun lagi:46" data-unit=" rb" data-caption="Daya beli uang Rp100 ribu bila inflasi 4% per tahun"></div>
 
 <h3>Coba sendiri — lihat uangmu menyusut</h3>
 <div data-demo="js-playground">// Bagaimana inflasi menggerus daya beli uang yang menganggur
@@ -9244,6 +9347,8 @@ console.log("Ubah angka inflasi jadi 0.08 lalu jalankan lagi - lihat bedanya.");
 <div class="callout">
 <b>Bunga riil</b> = bunga nominal − inflasi. Kalau tabunganmu berbunga 4% tapi inflasi 5%, bunga riilmu <b>−1%</b>: secara angka uangmu bertambah, tapi <b>daya belinya berkurang</b>. Ini konsep yang wajib dipahami sebelum menabung/berinvestasi.
 </div>
+
+<div data-diagram="compare3" data-cols="Deflasi::harga turun terus::orang menunda belanja|Rendah dan stabil::sekitar 2,5% ± 1%::sehat bagi ekonomi|Inflasi tinggi::daya beli anjlok::usaha sulit berencana" data-caption="Yang sehat bukan nol, melainkan rendah dan stabil"></div>
 `,
           keyPoints: [
             "Inflasi = kenaikan harga barang & jasa secara umum, bukan gejolak satu komoditas.",
@@ -9506,6 +9611,8 @@ console.log("Ubah angka inflasi jadi 0.08 lalu jalankan lagi - lihat bedanya.");
 </table>
 <p>Kalau belanja <b>lebih besar</b> dari penerimaan → terjadi <b>defisit</b>, dan selisihnya ditutup dengan <b>utang</b>. Di Indonesia, undang-undang membatasi defisit maksimal <b>3% dari PDB</b> (batas ini sempat dilonggarkan sementara saat pandemi, lalu diberlakukan kembali).</p>
 
+<div data-diagram="vs" data-left="Penerimaan::pajak — porsi terbesar::PNBP: SDA, dividen BUMN::hibah" data-right="Belanja::infrastruktur, pendidikan, kesehatan::gaji, subsidi, bansos::bunga utang dan transfer daerah" data-caption="Belanja lebih besar dari penerimaan = defisit, ditutup dengan utang"></div>
+
 <h3>Dua arah kebijakan fiskal</h3>
 <table class="tbl">
   <tr><th>Fiskal <b>Ekspansif</b></th><th>Fiskal <b>Kontraktif</b></th></tr>
@@ -9547,6 +9654,8 @@ console.log("Itu artinya B punya jauh lebih banyak dana untuk membangun.");</div
 <div class="callout warn">
 <b>Catatan kejujuran:</b> angka pastinya <b>berubah tiap tahun</b> dan berbeda tergantung definisi (hanya pajak pusat, atau termasuk PNBP &amp; pajak daerah). Untuk data resmi, rujuk <b>Kementerian Keuangan</b> atau <b>BPS</b>.
 </div>
+
+<div data-diagram="bar" data-bars="Indonesia (sekitar 10–12%):11|Rata-rata negara OECD:34" data-unit="%" data-caption="Tax ratio: berapa persen kegiatan ekonomi yang berhasil dipungut menjadi pajak"></div>
 
 <h3>Kenapa tax ratio rendah jadi masalah?</h3>
 <ul>
@@ -9757,6 +9866,8 @@ console.log("Itu artinya B punya jauh lebih banyak dana untuk membangun.");</div
 <b>Bahaya terbesar: utang dolar dengan pendapatan rupiah.</b> Bayangkan perusahaan berutang <b>US$1 juta</b> saat kurs Rp15.000 → nilainya Rp15 miliar. Bila rupiah melemah ke Rp16.000, utang yang sama tiba-tiba bernilai <b>Rp16 miliar</b> — bertambah Rp1 miliar <b>tanpa meminjam sepeser pun</b>. Ini disebut <b>currency mismatch</b>, dan sudah menjatuhkan banyak perusahaan.
 </div>
 
+<div data-diagram="vs" data-left="Diuntungkan::eksportir::penerima pemasukan dolar::pariwisata" data-right="Dirugikan::importir bahan baku::perusahaan berutang dolar::konsumen barang impor" data-caption="Saat rupiah melemah, tidak semua pihak rugi"></div>
+
 <h3>Cara mengelola risikonya</h3>
 <ul>
   <li><b>Natural hedging</b> — usahakan pemasukan &amp; utang dalam <b>mata uang yang sama</b>. Kalau berpendapatan rupiah, berutanglah dalam rupiah.</li>
@@ -9832,6 +9943,8 @@ Contoh deposito berbunga 4,5% yang dipotong pajak bunga 20% → bersih 3,6%. Den
   <tr><td>6%</td><td>sekitar 12 tahun</td></tr>
   <tr><td>12%</td><td>sekitar 6 tahun</td></tr>
 </table>
+
+<div data-diagram="bar" data-bars="Inflasi 3%:24|Inflasi 6%:12|Inflasi 12%:6" data-unit=" tahun" data-caption="Waktu sampai daya beli uang tunai tinggal separuh (kira-kira 72 ÷ inflasi)"></div>
 
 <h3>Aset dan inflasi — tanpa janji manis</h3>
 <table class="tbl">

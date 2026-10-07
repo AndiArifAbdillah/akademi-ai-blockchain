@@ -1823,6 +1823,7 @@ const GLOSSARY = [
   ["Regulatory Sandbox", "Uji coba produk baru di bawah pengawasan regulator (di Indonesia, OJK) dengan izin terbatas sebelum izin penuh."],
   ["IASC", "Indonesia Anti-Scam Centre — pusat laporan penipuan keuangan bentukan OJK (sejak November 2024) yang menelusuri dan memblokir rekening penipu bersama bank; lapor di iasc.ojk.go.id."],
   ["Pig butchering", "Penipuan yang membangun kepercayaan korban berminggu-minggu (kenalan, pacar, mentor), lalu mengajak investasi di aplikasi palsu yang menampilkan untung buatan."],
+  ["Kenop", "Tombol putar, seperti pengatur volume radio. Di materi AI dipakai sebagai perumpamaan parameter: angka di dalam model yang diputar sedikit demi sedikit saat model belajar."],
 ];
 
 function renderGlossary() {

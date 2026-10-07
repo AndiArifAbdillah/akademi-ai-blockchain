@@ -40,6 +40,8 @@ const CODING_COURSE = {
 <b>Komputer itu sangat patuh, tapi tidak pintar.</b> Ia bisa mengerjakan miliaran perintah per detik tanpa lelah, tapi tidak bisa menebak apa yang <i>kamu maksud</i>. Tugas programmer adalah menulis perintah yang jelas dan lengkap.
 </div>
 
+<div data-diagram="vs" data-left="Koki manusia::bisa menebak maksudmu::memaafkan resep yang kurang jelas" data-right="Komputer::tidak pernah menebak::mengerjakan persis yang tertulis" data-caption="Komputer sangat patuh, tapi tidak pintar menebak"></div>
+
 <h3>Perintah pertamamu</h3>
 <p>Kita memakai bahasa <b>JavaScript</b>, karena bisa langsung dijalankan di browser — termasuk di ponsel — tanpa memasang apa pun. Perintah paling sederhana adalah menampilkan tulisan:</p>
 <pre class="code">console.log("Halo, dunia!");</pre>
@@ -125,6 +127,8 @@ Program adalah daftar perintah yang dijalankan komputer persis seperti tertulis,
 </div>
 
 <h3>Banyak bahasa, banyak kegunaan</h3>
+
+<div data-diagram="network" data-center="Bahasa pemrograman" data-nodes="JavaScript: web dan aplikasi|Python: AI dan data|Solidity: smart contract|SQL: bertanya ke database|Kotlin, Swift: aplikasi HP|Rust, Go, C++: sistem cepat" data-caption="Setiap bahasa populer di bidangnya masing-masing"></div>
 <p>Seperti bahasa manusia, ada ratusan bahasa pemrograman. Masing-masing populer di bidang tertentu:</p>
 <table class="tbl">
   <tr><th>Bahasa</th><th>Paling sering dipakai untuk</th><th>Di platform ini</th></tr>
@@ -259,6 +263,8 @@ console.log("Total: " + 28000 * 2;
   <li><b>Masih buntu?</b> Salin pesan errornya ke mesin pencari atau tanyakan ke asisten AI — bersama potongan kodenya. Lalu pastikan kamu <b>paham</b> kenapa perbaikannya benar, bukan sekadar menyalin.</li>
 </ol>
 
+<div data-diagram="flow" data-steps="Baca kalimat utamanya|Cari nama yang disebut|Periksa baris itu dan sebelumnya|Ubah satu hal, jalankan lagi|Masih buntu? cari atau tanya AI" data-caption="Lima langkah tenang saat bertemu pesan error"></div>
+
 <h3>Kesalahan logika: yang tidak berteriak</h3>
 <p>Rata-rata dari nilai 80 dan 90 seharusnya 85. Tapi coba jalankan ini:</p>
 <div data-demo="js-playground">
@@ -335,6 +341,8 @@ console.log((80 + 90) / 2);
 
 <h3>Variabel = kotak berlabel</h3>
 <p>Program butuh tempat untuk mengingat sesuatu: harga kopi, nama pembeli, jumlah stok. Tempat itu disebut <b>variabel</b> — bayangkan kotak yang diberi label.</p>
+
+<div data-diagram="compare3" data-cols="harga::isi: 28000::jenis: number|nama::isi: &quot;Sari&quot;::jenis: string|buka::isi: true::jenis: boolean" data-caption="Tiga kotak berlabel: nama kotaknya, isinya, dan jenis isinya"></div>
 <pre class="code">let harga = 28000;
 console.log(harga);      // 28000</pre>
 <table class="tbl">
@@ -487,6 +495,8 @@ console.log(Number("5") + 3);
 <pre class="code">const total = 84000;
 console.log(&#96;Total belanja: Rp$&#123;total&#125;&#96;);   // Total belanja: Rp84000</pre>
 
+<div data-diagram="vs" data-left="Angka + angka::5 + 3::hasilnya 8" data-right="Teks + angka::&quot;5&quot; + 3::hasilnya &quot;53&quot;" data-caption="Jebakan pemula: kalau salah satu sisi berupa teks, tanda + menyambung, bukan menjumlah"></div>
+
 <h3>Membandingkan</h3>
 <p>Perbandingan menghasilkan <b>true</b> atau <b>false</b>:</p>
 <table class="tbl">
@@ -588,6 +598,8 @@ Variabel menyimpan nilai, dan operator menghitungnya: <i>const total = harga * j
 
 <h3>Fungsi = mesin kecil</h3>
 <p>Bayangkan mesin kopi: kamu memasukkan bahan (<b>masukan</b>), mesin mengolahnya, lalu keluar segelas kopi (<b>keluaran</b>). Fungsi bekerja persis seperti itu — langkah-langkah yang dibungkus dan diberi nama, supaya bisa dipakai berulang kali dengan masukan berbeda.</p>
+
+<div data-diagram="flow" data-steps="Masukan: harga 28000, jumlah 3|Fungsi totalHarga: harga × jumlah|Keluaran (return): 84000" data-caption="Fungsi = mesin kecil: masukan berbeda, langkah sama, keluaran berbeda"></div>
 <pre class="code">function totalHarga(harga, jumlah) {
   return harga * jumlah;
 }
@@ -855,6 +867,8 @@ console.log(jumlah);
 </div>
 <p>Polanya selalu sama: siapkan <b>penampung</b> sebelum perulangan, ubah isinya di setiap putaran, lalu pakai hasilnya setelah perulangan selesai. Pola ini dipakai untuk menjumlah belanjaan, menghitung rata-rata, mencari harga termahal, dan banyak lagi.</p>
 
+<div data-diagram="cycle" data-steps="Siapkan total = 0|Ambil angka berikutnya|Tambahkan ke total|Ulangi sampai 100" data-center="hasil: 5.050" data-caption="Pola penampung: siapkan sebelum perulangan, ubah di setiap putaran, pakai sesudahnya"></div>
+
 <h3>while: mengulang selama syaratnya benar</h3>
 <p>Kadang kita tidak tahu berapa kali harus mengulang, hanya tahu kapan berhenti. Misalnya: tabungan Rp1.000.000 berbunga 10% per tahun — berapa tahun sampai menjadi Rp2.000.000?</p>
 <div data-demo="js-playground">
@@ -953,6 +967,8 @@ console.log(menu);
 <b>Nomor urut dimulai dari 0.</b> Isi pertama ada di <i>menu[0]</i>, dan isi terakhir di <i>menu[menu.length - 1]</i>. Ini sumber kesalahan "meleset satu" yang sangat umum.
 </div>
 
+<div data-diagram="deret" data-nama="menu" data-isi="Kopi Susu|Teh Manis|Roti Bakar" data-caption="Array menyimpan banyak nilai dalam satu daftar — nomor urutnya mulai dari 0"></div>
+
 <h3>Menjelajahi isi array</h3>
 <p><b>for...of</b> mengambil isi array satu per satu, tanpa perlu mengurus nomor urut:</p>
 <div data-demo="js-playground">
@@ -985,6 +1001,8 @@ console.log(pesanan);
   <tr><td>Diakses dengan</td><td>Nomor urut: menu[0]</td><td>Nama label: pesanan.harga</td></tr>
   <tr><td>Cocok untuk</td><td>Daftar benda sejenis</td><td>Keterangan tentang satu benda</td></tr>
 </table>
+
+<div data-diagram="network" data-center="pesanan" data-nodes="menu: &quot;Kopi Susu&quot;|harga: 28000|jumlah: 2" data-caption="Objek: satu benda dengan beberapa keterangan berlabel (properti)"></div>
 
 <h3>Gabungan: daftar objek</h3>
 <p>Data sungguhan hampir selalu berbentuk <b>array berisi objek</b> — satu nota belanja, daftar transaksi, daftar pengguna:</p>
@@ -1102,6 +1120,8 @@ print(f"Total belanja: Rp{total}")
 </ul>
 
 <h3>JavaScript vs Python</h3>
+
+<div data-diagram="vs" data-left="JavaScript::console.log(...)::let atau const::blok pakai { }" data-right="Python::print(...)::cukup nama = isi::blok pakai indentasi" data-caption="Bahasa berbeda, idenya sama — hanya ejaannya yang berubah"></div>
 <table class="tbl">
   <tr><th></th><th>JavaScript</th><th>Python</th></tr>
   <tr><td>Menampilkan</td><td>console.log("Hai")</td><td>print("Hai")</td></tr>
@@ -1244,6 +1264,8 @@ print("1 + 2 + ... + 100 =", jumlah)
 <b>range(1, 6) berhenti sebelum 6.</b> Angka akhir <i>tidak</i> ikut: hasilnya 1, 2, 3, 4, 5. Untuk menjumlah 1 sampai 100, tulis <i>range(1, 101)</i>. Ini jebakan "meleset satu" yang paling sering di Python.
 </div>
 
+<div data-diagram="deret" data-nama="range(1, 6)" data-isi="1|2|3|4|5" data-indeks="tidak" data-lewat="6" data-caption="range(1, 6) berhenti SEBELUM 6 — jebakan &quot;meleset satu&quot; yang paling sering"></div>
+
 <h3>while</h3>
 <div data-demo="py-playground">
 saldo = 1000000
@@ -1331,6 +1353,8 @@ for m in menu:
     print("-", m)
 </div>
 <p>Python punya kemudahan: nomor urut <b>negatif</b> menghitung dari belakang, jadi <i>menu[-1]</i> adalah isi terakhir.</p>
+
+<div data-diagram="deret" data-nama="menu" data-isi="Kopi Susu|Teh Manis|Roti Bakar" data-negatif="ya" data-caption="Nomor urut biasa (atas) dan nomor urut dari belakang (bawah): menu[-1] adalah isi terakhir"></div>
 
 <h3>Dictionary (padanan objek)</h3>
 <div data-demo="py-playground">
@@ -1455,6 +1479,8 @@ mahal = [h for h in harga if h >= 20000]   # pakai if untuk menyaring
 print(mahal)
 </div>
 
+<div data-diagram="flow" data-steps="harga = [28000, 15000, 22000]|[h * 110 // 100 for h in harga]|[30800, 16500, 24200]" data-caption="List comprehension: &quot;h × 1,1 untuk setiap h di harga&quot; dalam satu baris"></div>
+
 <h3>Contoh analisis kecil</h3>
 <p>Penjualan Warung Kopi Sari selama seminggu (cangkir per hari). Hari apa saja yang di atas rata-rata?</p>
 <div data-demo="py-playground">
@@ -1559,6 +1585,8 @@ Kamu sudah memakai variabel, fungsi, dan return di JavaScript dan Python. Dari j
 </div>
 
 <h3>Apa yang berbeda dari program biasa?</h3>
+
+<div data-diagram="vs" data-left="Program JavaScript/Python::tinggal di komputer pemiliknya::gratis dijalankan::bug diperbaiki lalu jalan ulang" data-right="Smart contract Solidity::disalin di ribuan komputer::mengubah data bayar gas::kode tak bisa diubah" data-caption="Kenapa programmer Solidity sangat berhati-hati"></div>
 <table class="tbl">
   <tr><th></th><th>Program JavaScript/Python</th><th>Smart contract Solidity</th></tr>
   <tr><td>Tinggal di</td><td>Komputer atau server pemiliknya</td><td>Sebuah <b>alamat</b> di blockchain, disalin di ribuan komputer</td></tr>
@@ -1713,6 +1741,8 @@ constructor() {
 }</pre>
 <p>Kalau syarat <b>require</b> tidak terpenuhi, seluruh transaksi <b>dibatalkan</b> (<i>revert</i>) dengan pesan itu — semua perubahan di dalamnya batal, seolah tidak pernah terjadi. Bedanya dengan if: require tidak memilih jalan lain, ia menolak.</p>
 
+<div data-diagram="flow" data-steps="Akun 2 memanggil ubah()|require: pengirim harus pemilik|Syarat tidak terpenuhi|Transaksi dibatalkan (revert)|Pesan lama tetap" data-caption="require menolak seluruh transaksi bila syaratnya tidak terpenuhi"></div>
+
 <h3>Coba sendiri</h3>
 <div data-demo="sol-lab">
 // SPDX-License-Identifier: MIT
@@ -1822,6 +1852,8 @@ function ubah(string memory pesanBaru) public hanyaPemilik {
 <h3>mapping: tabel pencarian</h3>
 <pre class="code">mapping(address =&gt; uint256) public setoran;</pre>
 <p>Masukkan alamat, keluar angka. Alamat yang belum pernah dicatat otomatis bernilai <b>0</b> — tidak ada error "tidak ditemukan". mapping adalah cara paling umum menyimpan saldo per alamat; token ERC-20 pun pada dasarnya sebuah mapping.</p>
+
+<div data-diagram="pipeline" data-stages="Alamat Akun 1::saldo 1 ether|Alamat Akun 2::saldo 2 ether|Alamat lain::otomatis 0" data-caption="mapping(address =&gt; uint): masukkan alamat, keluar angka — tidak ada error &quot;tidak ditemukan&quot;"></div>
 
 <h3>struct dan array: data yang bersusun</h3>
 <pre class="code">struct Tamu {
@@ -1999,6 +2031,8 @@ contract PoinKelas {
   <li>Dengan Akun 2, coba <b>cetak</b>: ditolak. Hanya pemilik yang bisa menambah pasokan.</li>
 </ol>
 <p>Token ERC-20 sungguhan memakai bahan yang sama, ditambah fungsi standar seperti <i>approve</i> dan <i>transferFrom</i>, supaya dompet dan bursa bisa mengenalinya.</p>
+
+<div data-diagram="flow" data-steps="Awal: akun1 = 1000|transfer(akun2, 300)|akun1 = 700, akun2 = 300|Total tetap 1000" data-caption="Token hanyalah buku saldo: transfer memindahkan angka, jumlah totalnya tidak berubah"></div>
 
 <h3>Kebiasaan aman sejak awal</h3>
 <table class="tbl">

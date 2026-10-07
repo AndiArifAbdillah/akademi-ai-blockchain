@@ -1710,6 +1710,8 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
 3. Diulang naik sampai tersisa satu hash di puncak: <b>Merkle root</b>
 </div>
 
+<div data-diagram="pipeline" data-stages="8 transaksi::di-hash masing-masing|4 hash::digabung berpasangan|2 hash::digabung lagi|1 Merkle root::masuk header blok" data-caption="Seperti bagan turnamen: hash naik berpasangan sampai tersisa satu di puncak"></div>
+
 <div data-demo="pohon-merkle"></div>
 
 <h3>Kenapa tidak di-hash sekaligus saja?</h3>
@@ -1723,6 +1725,8 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
   <tr><td>1.000.000.000</td><td>30</td></tr>
 </table>
 <p>Setiap kali jumlah transaksi menjadi dua kali lipat, bukti hanya bertambah <b>satu</b> hash.</p>
+
+<div data-diagram="bar" data-bars="Tanpa Merkle tree:2000|Dengan Merkle tree:11" data-unit=" hash" data-caption="Data yang dibutuhkan untuk membuktikan satu transaksi ada di blok berisi 2.000 transaksi"></div>
 
 <h3>Isi sebuah blok</h3>
 <table class="tbl">
@@ -2293,6 +2297,8 @@ Ubah satu kata di surat → cap tidak lagi cocok. Pindahkan cap ke surat lain �
 Di kriptografi kamu akan sering melihat pangkat <b>sangat besar</b> seperti 2²⁵⁶ — dan itu justru intinya: angkanya luar biasa besar sehingga mustahil dicoba satu per satu.
 </div>
 
+<div data-diagram="bar" data-bars="2³:8|2⁵:32|2⁸:256|2¹⁰:1024" data-caption="Pangkat tumbuh sangat cepat — dan 2²⁵⁶ sudah punya 78 digit"></div>
+
 <h3>2. Modulo: tanda "mod"</h3>
 <div class="callout">
 <b>a mod n</b> = <b>sisa</b> pembagian a oleh n. Dibaca "a modulo n".
@@ -2335,6 +2341,8 @@ Ternyata cuma kalimat biasa: kalau satu sisi berkurang, sisi lain <b>harus</b> b
 <div class="callout warn">
 <b>Tidak perlu menghafal.</b> Halaman ini adalah <b>kamus</b> — kembalilah ke sini kapan pun kamu lupa arti sebuah simbol di pelajaran berikutnya.
 </div>
+
+<div data-diagram="pipeline" data-stages="Pecah::x × y = k|Terjemahkan::jumlah token A kali jumlah token B|Susun jadi kalimat::hasil kalinya selalu sama" data-caption="Rumus hanyalah kalimat yang ditulis dengan simbol"></div>
 `,
           keyPoints: [
             "aⁿ = a dikali dirinya n kali; di kriptografi pangkatnya sangat besar (mis. 2²⁵⁶) sehingga mustahil dicoba satu per satu.",
@@ -2387,6 +2395,8 @@ Sekarang pukul 10, ditambah 5 jam → bukan 15, tapi <b>3</b>. Itulah <b>15 mod 
 Contoh lain: <b>17 mod 5 = 2</b> (karena 17 = 3×5 + 2).
 </div>
 
+<div data-diagram="flow" data-steps="Sekarang pukul 10|Tambah 5 jam|15 mod 12 = 3|Jarum menunjuk angka 3" data-caption="Modulo adalah matematika jam: angkanya berputar dalam rentang tetap"></div>
+
 <h3>Kenapa modulo penting?</h3>
 <p>Modulo membuat angka <b>"melingkar"</b> dalam rentang terbatas. Akibatnya, dari hasilnya <b>sulit menebak</b> angka asalnya — karena banyak angka berbeda bisa menghasilkan sisa yang sama.</p>
 
@@ -2400,6 +2410,8 @@ Contoh lain: <b>17 mod 5 = 2</b> (karena 17 = 3×5 + 2).
 </ul>
 Menghitung <b>maju</b> (dari x ke hasil): sangat cepat. Menebak <b>mundur</b> (dari hasil ke x): harus dicoba satu per satu. Ini disebut masalah <b>logaritma diskret</b> — dengan angka sebesar yang dipakai crypto nyata, mencobanya butuh waktu lebih lama dari umur alam semesta.
 </div>
+
+<div data-diagram="vs" data-left="Maju: x → hasil::hitung gˣ mod p::selesai dalam sekejap" data-right="Mundur: hasil → x::coba x satu per satu::praktis mustahil bila p besar" data-caption="Fungsi satu arah: mudah dihitung maju, sangat sulit dibalik"></div>
 
 <h3>Coba sendiri — buktikan satu arahnya</h3>
 <div data-demo="js-playground">// Fungsi satu arah: mudah maju, sangat sulit mundur
@@ -4134,6 +4146,8 @@ Setiap blok menyimpan <b>hash blok sebelumnya</b> sehingga terbentuk rantai; <b>
 </table>
 <p>Kolom <b>konfirmasi</b> menunjukkan berapa blok sudah ditumpuk di atas blok yang memuat transaksi itu. Makin banyak, makin mustahil dibatalkan.</p>
 
+<div data-diagram="pipeline" data-stages="Masukan::koin yang dibelanjakan|Keluaran 1::ke penerima|Keluaran 2::kembalian ke pengirim|Selisihnya::biaya untuk penambang" data-caption="Biaya transaksi Bitcoin tidak ditulis terpisah: ia adalah masukan dikurangi semua keluaran"></div>
+
 <h3>Langkah 4 — Membaca transaksi dan kontrak di Etherscan</h3>
 <table class="tbl">
   <tr><th>Kolom</th><th>Artinya</th></tr>
@@ -4306,6 +4320,8 @@ Setiap blok menyimpan <b>hash blok sebelumnya</b> sehingga terbentuk rantai; <b>
 </div>
 
 <h3>Langkah 1 — Dua jenis bursa crypto</h3>
+
+<div data-diagram="vs" data-left="CEX (bursa terpusat)::bursa memegang asetmu::daftar akun dan KYC::bisa setor dan tarik rupiah::risiko: bursa bangkrut/dibobol" data-right="DEX (terdesentralisasi)::aset tetap di dompetmu::cukup hubungkan dompet::hanya token ditukar token::risiko: token palsu, bug" data-caption="Perbedaan terpenting: siapa yang memegang asetmu"></div>
 <table class="tbl">
   <tr><th></th><th>CEX (bursa terpusat)</th><th>DEX (bursa terdesentralisasi)</th></tr>
   <tr><td>Contoh</td><td>Bursa berizin di Indonesia, Binance, Coinbase</td><td>Uniswap, PancakeSwap, Curve, Jupiter</td></tr>
@@ -4332,6 +4348,8 @@ Setiap blok menyimpan <b>hash blok sebelumnya</b> sehingga terbentuk rantai; <b>
   <tr><td>5</td><td>Status "berhasil"</td><td>Dalam satu transaksi, kontrak menarik USDC-mu, menyerahkan ETH dari kolam, dan memperbarui harga</td></tr>
 </table>
 <p>Biayanya dua: <b>fee kolam</b> (umumnya 0,05%–1% dari nilai tukar, dibagikan ke penyedia likuiditas) dan <b>gas</b> jaringan. Di Layer 2 atau rantai murah, gasnya bisa hanya beberapa ratus rupiah; di Ethereum saat ramai bisa ratusan ribu.</p>
+
+<div data-diagram="pipeline" data-stages="Connect::situs membaca alamatmu|Pilih token::perkiraan hasil dihitung|Approve::izin pertama, sekali per token|Swap::tanda tangan kedua|Selesai::kolam memperbarui harga" data-caption="Dua tanda tangan dalam satu penukaran: izin, lalu perintah tukar"></div>
 
 <h3>Langkah 4 — Slippage tolerance: batas rugi yang kamu izinkan</h3>
 <p>Harga di DEX bisa bergeser antara saat kamu menekan Swap dan saat transaksinya masuk blok. Pengaturan <b>slippage tolerance</b> menentukan seberapa jauh pergeseran yang masih kamu terima.</p>
@@ -4520,6 +4538,8 @@ Slippage      = (2.000 − 1.818) ÷ 2.000 = 9,1%</pre>
 <b>Rumus:</b> IL = [ 2 × akar(r) ÷ (1 + r) ] − 1<br><br>
 Keterangan: <b>r</b> = rasio perubahan harga (r = 2 berarti harga menjadi 2 kali lipat).
 </div>
+
+<div data-diagram="bar" data-bars="Harga berubah 1,5×:-2|Harga berubah 2×:-5.7|Harga berubah 3×:-13.4|Harga berubah 4×:-20|Harga berubah 5×:-25.5" data-unit="%" data-caption="Impermanent loss dibanding hanya memegang kedua token, menurut rumus IL = 2√r ÷ (1 + r) − 1"></div>
 
 <h3>Coba sendiri — hitung impermanent loss</h3>
 <div data-demo="js-playground">// Impermanent loss pada berbagai perubahan harga
@@ -4721,6 +4741,8 @@ console.log("Catatan: fee yang diterima LP bisa menutupi sebagian kerugian ini."
 Di atas 1 = aman. <b>Di bawah 1 = jaminanmu boleh dilikuidasi</b> oleh siapa pun. Untuk Andi, health factor jatuh ke 1 ketika 0,8 × harga = 30, yaitu saat harga ETH turun ke <b>Rp37,5 juta</b> — cukup turun 25%.
 </div>
 
+<div data-diagram="bar" data-bars="ETH Rp50 juta:1.33|ETH Rp45 juta:1.2|ETH Rp40 juta:1.07|ETH Rp37,5 juta:1|ETH Rp35 juta:0.93" data-caption="Health factor Andi (pinjaman Rp30 juta, batas likuidasi 80%) turun mengikuti harga ETH; di bawah 1 jaminannya boleh dilikuidasi"></div>
+
 <h3>Coba sendiri</h3>
 <div data-demo="defi-likuidasi"></div>
 
@@ -4832,12 +4854,16 @@ Pada <b>Proof of Stake</b>, validator mengunci koin sebagai jaminan dan ikut mem
 
 <h3>Langkah 4 — Pertanyaan yang menentukan: imbal hasil riil</h3>
 <p>Misalkan staking memberi <b>4% per tahun</b> dalam bentuk koin baru, sementara jumlah koin yang beredar juga bertambah <b>3% per tahun</b>. Porsi kepemilikanmu atas jaringan hanya bertambah sekitar <b>1%</b>. Selebihnya hanyalah kue yang dipotong lebih kecil — persis konsep dilusi di modul Ekonomi.</p>
+
+<div data-diagram="bar" data-bars="Imbal hasil staking:4|Pertambahan koin beredar:3|Imbal hasil riil:1" data-unit="%" data-caption="Kalau koin beredar bertambah 3% setahun, imbal hasil 4% hanya menambah porsi kepemilikanmu sekitar 1%"></div>
 <table class="tbl">
   <tr><th>Sumber imbal hasil</th><th>Penilaian</th></tr>
   <tr><td class="ok-cell">Biaya yang dibayar pengguna sungguhan (gas, fee swap, bunga pinjaman)</td><td>Bisa berkelanjutan selama penggunanya ada</td></tr>
   <tr><td>Koin atau token yang baru dicetak</td><td>Hanya menarik bila pemakaian jaringan tumbuh lebih cepat dari pencetakan</td></tr>
   <tr><td class="bad-cell">Uang dari penyetor baru</td><td>Skema Ponzi — runtuh begitu penyetor baru berhenti datang</td></tr>
 </table>
+
+<div data-diagram="compare3" data-cols="Fee pengguna nyata::gas, swap, bunga pinjaman::bisa berkelanjutan|Token baru dicetak::hadiah dari protokol::sehat bila pemakaian tumbuh|Uang penyetor baru::dibayar dari orang berikutnya::Ponzi, pasti runtuh" data-caption="Tiga sumber imbal hasil, dari yang paling sehat sampai yang paling berbahaya"></div>
 
 <h3>Langkah 5 — Daftar periksa sebelum mengunci aset</h3>
 <table class="tbl">
@@ -5112,6 +5138,8 @@ Setiap <b>node</b> menyimpan salinan buku besar dan memeriksa setiap transaksi; 
 
 <h3>Langkah 3 — Trilema: pilih dua, korbankan satu</h3>
 <p>Istilah yang dipopulerkan Vitalik Buterin ini menyebut tiga sifat yang sulit dicapai sekaligus:</p>
+
+<div data-diagram="network" data-nodes="Desentralisasi|Keamanan|Skalabilitas" data-caption="Trilema blockchain: sulit mendapatkan ketiganya sekaligus — setiap L1 memilih apa yang dikorbankan"></div>
 <table class="tbl">
   <tr><th>Sifat</th><th>Artinya</th></tr>
   <tr><td><b>Desentralisasi</b></td><td>Banyak pihak biasa bisa ikut menjalankan node dengan komputer sederhana</td></tr>
@@ -5204,12 +5232,16 @@ Setiap <b>node</b> menyimpan salinan buku besar dan memeriksa setiap transaksi; 
 
 <h3>Langkah 1 — Idenya: kerjakan di luar, setor ringkasannya</h3>
 <p><b>Layer 2 (L2)</b> adalah jaringan yang memproses transaksi <b>di luar</b> L1, lalu menyetor <b>ringkasan</b> dan <b>buktinya</b> ke L1. L1 tidak perlu mengerjakan ulang setiap transaksi; ia cukup menjadi hakim terakhir yang menyimpan ringkasan itu.</p>
+
+<div data-diagram="flow" data-steps="Ribuan transaksi di L2|Diringkas jadi satu batch|Ringkasan dan bukti disetor ke L1|L1 menjadi hakim terakhir" data-caption="Layer 2: kerjakan di luar, setor ringkasannya"></div>
 <div class="callout">
 <b>Analogi bus wisata.</b> Seratus orang yang menyetir mobil masing-masing membayar tol seratus kali. Seratus orang dalam satu bus membayar tol <b>sekali</b>, lalu biayanya dibagi rata. L2 adalah busnya; biaya menyetor ke L1 adalah tolnya.
 </div>
 <div data-demo="l2-batch"></div>
 
 <h3>Langkah 2 — Tiga cara utama</h3>
+
+<div data-diagram="compare3" data-cols="Optimistic rollup::dianggap benar dulu::bisa disanggah ±7 hari::Arbitrum, Optimism, Base|ZK rollup::disertai bukti matematis::penarikan lebih cepat::zkSync, Starknet|Payment channel::rekening bersama 2 pihak::hanya saldo akhir dicatat::Lightning di Bitcoin" data-caption="Tiga cara memastikan Layer 2 tidak curang"></div>
 <table class="tbl">
   <tr><th>Jenis</th><th>Cara memastikan L2 tidak curang</th><th>Contoh</th></tr>
   <tr><td><b>Optimistic rollup</b></td><td>Ringkasan <b>dianggap benar</b>, tapi siapa pun boleh menyanggah dengan bukti kecurangan selama masa sanggah — biasanya sekitar <b>7 hari</b></td><td>Arbitrum, Optimism, Base</td></tr>
@@ -5484,6 +5516,8 @@ contract Penyimpanan {
 <div class="callout">
 <b>Coba sendiri:</b> di pelajaran berikutnya kamu menjalankan kontrak ini di <b>Remix IDE</b> (remix.ethereum.org) — langsung di browser, tanpa dompet dan tanpa uang.
 </div>
+
+<div data-diagram="vs" data-left="Membaca data (view)::tidak perlu transaksi::gratis, langsung dijawab" data-right="Mengubah data::harus lewat transaksi::bayar gas, tunggu masuk blok" data-caption="Dua jenis fungsi di smart contract"></div>
 `,
           keyPoints: [
             "Solidity = bahasa utama smart contract Ethereum (mirip JS/C++).",
@@ -5703,6 +5737,8 @@ contract Celengan {
 </table>
 <p>Kolom VALUE di Remix punya pilihan satuan. Mengetik <b>1</b> dengan satuan Ether sama dengan mengetik <b>1000000000000000000</b> dengan satuan Wei. Salah memilih satuan adalah kesalahan pemula yang paling sering.</p>
 
+<div data-diagram="pipeline" data-stages="1 wei::satuan terkecil|1 gwei::1 miliar wei|1 ether::1 miliar gwei = 10¹⁸ wei" data-caption="Blockchain tidak mengenal pecahan, jadi ETH dihitung dalam wei"></div>
+
 <h3>Coba sendiri</h3>
 <div data-demo="remix-sim"></div>
 <p>Lakukan berurutan, dan perhatikan terminal setiap kali:</p>
@@ -5719,6 +5755,8 @@ contract Celengan {
 <div class="callout warn">
 <b>Kenapa tidak memakai .transfer()?</b> Banyak tutorial lama memakai <i>payable(x).transfer(jumlah)</i>. Cara itu hanya meneruskan sedikit sekali gas, sehingga bisa gagal saat penerimanya dompet berbentuk smart contract. Cara yang dianjurkan sekarang adalah <i>.call</i> lalu memeriksa hasilnya — seperti di kontrak di atas. Mengirim uang ke luar juga sebaiknya dilakukan <b>setelah</b> semua pemeriksaan dan pencatatan selesai; urutan yang salah membuka celah serangan <i>reentrancy</i> (dibahas di pelajaran keamanan).
 </div>
+
+<div data-diagram="flow" data-steps="require gagal|Semua perubahan dibatalkan|Gas yang terpakai tetap dibayar" data-caption="Revert membatalkan isi transaksi, bukan biayanya"></div>
 `,
           keyPoints: [
             "constructor berjalan sekali saat deploy; pemilik = msg.sender saat itu.",
@@ -5863,6 +5901,8 @@ Kontrak <b>Celengan</b> sudah kamu coba di Remix VM — hanya kamu yang bisa mel
 <b>Remix men-deploy ke jaringan apa pun yang sedang aktif di MetaMask.</b> Kalau dompetmu sedang di mainnet, kontrak ter-deploy ke mainnet dengan ETH sungguhan. Biasakan memakai <b>dompet khusus developer</b> yang terpisah dari dompet simpanan, dan selalu baca nama jaringan di jendela konfirmasi.
 </div>
 
+<div data-diagram="pipeline" data-stages="MetaMask::Sepolia, ada ETH uji|Hubungkan::Remix → Browser Extension|Deploy::konfirmasi di dompet|Explorer::sepolia.etherscan.io|Verifikasi::kode sumber dibuka" data-caption="Dari Remix ke jaringan uji yang bisa dilihat siapa pun"></div>
+
 <h3>Melihat kontrakmu di block explorer</h3>
 <p>Buka <b>sepolia.etherscan.io</b> dan tempel alamat kontrakmu. Kamu akan melihat transaksi <i>Contract Creation</i>, saldo kontrak, dan setiap transaksi setor atau tarik berikutnya — persis yang kamu pelajari di pelajaran Mengintip Isi Blockchain.</p>
 <p>Tapi tab <b>Contract</b> masih menampilkan deretan bytecode yang tidak bisa dibaca. Orang lain tidak tahu apa isi kontrakmu — dan tidak punya alasan untuk memercayainya.</p>
@@ -5973,6 +6013,8 @@ Di Remix kamu menguji Celengan dengan menekan tombol satu per satu: setor, ganti
   <tr><td>Bahasa tes</td><td>Klik manual</td><td>Solidity</td><td>JavaScript/TypeScript</td></tr>
   <tr><td>Cocok untuk</td><td>Belajar, coba cepat</td><td>Tes cepat, fuzzing, proyek serius</td><td>Tim yang sudah memakai JavaScript</td></tr>
 </table>
+
+<div data-diagram="cycle" data-steps="Tulis atau ubah kode|Jalankan forge test|Lihat tes yang gagal|Perbaiki" data-center="hitungan detik" data-caption="Tes otomatis membuat setiap perubahan kode langsung diperiksa ulang"></div>
 
 <h3>Memasang Foundry</h3>
 <p>Di Windows, Foundry dipasang lewat <b>Git Bash</b> atau <b>WSL</b> — PowerShell dan Command Prompt tidak didukung. Di macOS/Linux cukup terminal biasa.</p>
@@ -6400,6 +6442,8 @@ console.log("Setoran masuk!");</pre>
 <div class="callout">
 <b>Itulah sebuah DApp!</b> Frontend web biasa + <b>ethers.js</b> + <b>smart contract</b> sebagai backend. <b>ABI</b> memberi tahu kode cara memanggil fungsi; <b>signer</b> menandatangani transaksi tulis.
 </div>
+
+<div data-diagram="pipeline" data-stages="Hubungkan::minta izin akun dompet|Signer::dompet yang menandatangani|Kontrak::alamat + ABI|Baca::langsung, gratis|Tulis::transaksi, bayar gas" data-caption="Alur ethers.js dari halaman web sampai smart contract"></div>
 `,
           keyPoints: [
             "ethers.js menjembatani website dengan smart contract di blockchain.",
@@ -6621,6 +6665,8 @@ Di Celengan, uang dikirim dengan <b>.call</b> setelah semua pemeriksaan selesai,
 
 <h3>Reentrancy: masuk lagi sebelum pintu dikunci</h3>
 <p>Saat kontrak mengirim ETH ke kontrak lain, penerima boleh menjalankan kodenya sendiri (fungsi <i>receive</i>). Kalau pengirim belum mencatat bahwa uangnya sudah dikirim, penerima bisa memanggil fungsi penarikan <b>lagi</b> — berulang-ulang — sebelum saldonya dinolkan. Itulah yang terjadi pada <b>The DAO</b> tahun 2016: sekitar 3,6 juta ETH terkuras, dan komunitas Ethereum akhirnya memutuskan <i>hard fork</i> untuk mengembalikannya — asal mula pemisahan Ethereum dan Ethereum Classic.</p>
+
+<div data-diagram="flow" data-steps="Kontrak mengirim ETH|Penerima menjalankan kodenya|Ia memanggil tarik() lagi|Saldo belum dicatat nol|Uang terkuras berulang" data-caption="Reentrancy: masuk lagi sebelum pintu dikunci"></div>
 <div data-demo="reentrancy-sim"></div>
 <p>Perbaikannya disebut pola <b>Checks–Effects–Interactions</b>: periksa syarat dulu, <b>catat perubahan</b>, baru <b>berinteraksi</b> dengan pihak luar. Sebagai lapisan tambahan, OpenZeppelin menyediakan pengaman <b>ReentrancyGuard</b> (modifier <i>nonReentrant</i>) yang menolak pemanggilan ulang di tengah jalan.</p>
 
@@ -6710,6 +6756,8 @@ Di Celengan, uang dikirim dengan <b>.call</b> setelah semua pemeriksaan selesai,
 
 <h3>Idenya</h3>
 <p>Tiap blok menyimpan <b>hash</b> (sidik jari) dari isinya, plus hash blok sebelumnya. Validasi mengecek dua hal untuk setiap blok: (1) apakah <i>prev</i>-nya cocok dengan hash blok sebelumnya, dan (2) apakah hash-nya masih cocok dengan datanya. Ubah satu data → hash berubah → validasi gagal.</p>
+
+<div data-diagram="flow" data-steps="Blok 1 punya hash A|Blok 2 menyimpan hash A|Isi Blok 1 diubah|Hash Blok 1 berubah|Blok 2 dan seterusnya tidak cocok" data-caption="Mengubah satu blok merusak seluruh rantai sesudahnya"></div>
 
 <h3>Coba sendiri — jalankan, lalu lihat rantai rusak</h3>
 <div data-demo="js-playground">// Hash sederhana (untuk demo, bukan kriptografi nyata)
@@ -7012,6 +7060,8 @@ Alasannya sederhana: setiap masukan harus ditandatangani secara terpisah. Tak mu
 <p>Ini bukan tebakan — ini konsekuensi langsung dari cara kerja tanda tangan digital yang sudah kamu pelajari. Dan efeknya besar sekali:</p>
 
 <div data-demo="klaster-alamat"></div>
+
+<div data-diagram="flow" data-steps="Satu transaksi|Masukan dari alamat A, B, C|Semuanya harus ditandatangani|A, B, C kemungkinan satu pemilik" data-caption="Common Input Ownership Heuristic: satu transaksi, banyak masukan, satu pemilik"></div>
 
 <h3>Kenapa ini disebut "heuristik", bukan "bukti"</h3>
 <div class="callout warn">
@@ -7651,6 +7701,8 @@ Bitcoin bersifat <b>pseudonim</b>, bukan anonim: nama tidak tercatat, tapi semua
 </table>
 
 <h3>Bagian 1 — Blockchain publik vs privat</h3>
+
+<div data-diagram="vs" data-left="Publik::siapa saja membaca dan memvalidasi::tidak perlu memercayai siapa pun::lambat, semua data terbuka" data-right="Privat / konsorsium::hanya anggota undangan::cepat, data bisnis rahasia::percaya pada segelintir operator" data-caption="Blockchain publik dan privat menukar kepercayaan dengan kecepatan dan kerahasiaan"></div>
 <table class="tbl">
   <tr><th></th><th>Publik (permissionless)</th><th>Privat / konsorsium (permissioned)</th></tr>
   <tr><td>Siapa boleh membaca</td><td>Siapa saja</td><td>Hanya anggota</td></tr>
@@ -8085,6 +8137,8 @@ Sampai di sini kamu sudah bertemu Layer 1 dan Layer 2, DEX, pinjaman DeFi, staki
 </div>
 
 <h3>Peta besarnya</h3>
+
+<div data-diagram="network" data-center="Crypto" data-nodes="Layer 1 &amp; Layer 2|DeFi|Stablecoin|GameFi &amp; NFT|Meme coin|RWA &amp; DePIN" data-caption="Kategori besar yang dipakai situs data crypto — rinciannya ada di tabel"></div>
 <table class="tbl">
   <tr><th>Kategori</th><th>Isinya</th><th>Contoh</th><th>Dari mana nilainya diharapkan datang</th></tr>
   <tr><td><b>Layer 1</b></td><td>Blockchain dasar</td><td>BTC, ETH, SOL</td><td>Permintaan untuk membayar gas, staking, menyimpan nilai</td></tr>
@@ -8306,6 +8360,8 @@ Kalau <b>tidak</b> → yang selama ini dijual bukan layanan, melainkan <b>insent
 <div class="callout warn">
 <b>Jebakan yang sama dengan buyback saham:</b> <i>buyback &amp; burn</i> hanya menambah nilai kalau didanai <b>pendapatan nyata</b>. Kalau dilakukan dengan menjual aset treasury atau saat token kemahalan, efeknya sama seperti buyback saham yang kemahalan — <b>menghancurkan nilai</b>.
 </div>
+
+<div data-diagram="vs" data-left="Treasury rapuh::isinya token sendiri::harga jatuh, kas ikut menguap" data-right="Treasury tangguh::isinya stablecoin dan aset lain::tetap bernilai saat token jatuh" data-caption="Isi treasury menentukan berapa lama sebuah protokol bisa bertahan"></div>
 `,
           keyPoints: [
             "Treasury DAO menghadapi 4 pilihan alokasi modal yang sama: pengembangan, grants/insentif, akuisisi, buyback-burn/bagi hasil.",
@@ -8453,6 +8509,8 @@ console.log("Coba ubah emisi jadi 20000000000, lalu jalankan lagi.");</div>
 </table>
 <p>Di harga listing, investor seed sudah <b>untung 40 kali lipat</b> dan investor private sale <b>13 kali lipat</b>. Mereka punya alasan kuat untuk menjual begitu diizinkan — dan pembeli di bursa adalah orang yang membeli dari mereka.</p>
 
+<div data-diagram="bar" data-bars="Investor seed ($0,01):40|Investor private ($0,03):13|Pembeli public ($0,08):5|Pembeli saat listing:1" data-unit="×" data-caption="Kelipatan keuntungan bila menjual di harga listing $0,40"></div>
+
 <h3>Langkah 2 — Pembagian token (alokasi)</h3>
 <table class="tbl">
   <tr><th>Kelompok</th><th>Porsi (ilustrasi)</th></tr>
@@ -8463,6 +8521,8 @@ console.log("Coba ubah emisi jadi 20000000000, lalu jalankan lagi.");</div>
   <tr><td>Treasury yayasan</td><td>17%</td></tr>
 </table>
 
+<div data-diagram="stack" data-parts="Ekosistem &amp; komunitas:40|Tim &amp; penasihat:20|Investor seed &amp; private:18|Treasury yayasan:17|Public sale:5" data-caption="Contoh pembagian token (ilustrasi)"></div>
+
 <h3>Langkah 3 — Market cap vs FDV</h3>
 <p>Misalkan pasokan maksimal <b>1 miliar token</b>, tapi saat listing baru <b>120 juta</b> yang beredar. Harga $0,40.</p>
 <table class="tbl">
@@ -8471,6 +8531,8 @@ console.log("Coba ubah emisi jadi 20000000000, lalu jalankan lagi.");</div>
   <tr><td><b>FDV</b> (fully diluted value — seandainya semua token sudah beredar)</td><td>1 miliar × $0,40</td><td class="bad-cell">$400 juta</td></tr>
 </table>
 <p>Hanya 12% token yang beredar. Sisanya — 880 juta token — akan masuk ke pasar perlahan. Kalau permintaan tidak tumbuh secepat pasokan, harga harus turun. Token dengan sedikit beredar tapi FDV raksasa disebut <b>low float, high FDV</b>.</p>
+
+<div data-diagram="kotak100" data-isi="12" data-label="Hanya 12% token yang beredar saat listing; 88% sisanya masuk pasar perlahan" data-caption="Market cap $48 juta vs FDV $400 juta"></div>
 
 <h3>Langkah 4 — Vesting &amp; unlock</h3>
 <p><b>Vesting</b> = jadwal pelepasan token secara bertahap. Pola umum: <b>cliff 12 bulan</b> (terkunci sama sekali), lalu dilepas <b>rata selama 24 bulan</b>. Saat jatah sebuah kelompok mulai terbuka disebut <b>unlock</b>.</p>
@@ -8671,6 +8733,8 @@ Menekan <b>Konfirmasi</b> di dompet = membuat tanda tangan; izin <b>Approve</b> 
 </div>
 
 <h3>Langkah 1 — Siapkan dua dompet</h3>
+
+<div data-diagram="vs" data-left="Dompet simpanan::aset yang benar-benar disimpan::tidak pernah ke situs baru::sebaiknya hardware wallet" data-right="Dompet berburu::dana kecil untuk gas::boleh ke situs berburu::kalau bocor, rugi terbatas" data-caption="Pisahkan dompet: tabungan tetap di rumah, uang jajan dibawa ke pasar malam"></div>
 <table class="tbl">
   <tr><th></th><th>Dompet simpanan</th><th>Dompet berburu</th></tr>
   <tr><td>Isinya</td><td>Aset yang benar-benar kamu simpan</td><td>Dana kecil secukupnya untuk gas dan tugas</td></tr>
@@ -8873,6 +8937,8 @@ Pelajaran sebelumnya menyebut cacat utama banyak GameFi: <b>pemain lama dibayar 
 </table>
 <p>Ada satu lingkaran tertutup: pemain baru membeli karakter, karakter baru dibuat dengan membakar token, token hadiah dijual oleh pemain lama untuk mendapat uang. <b>Uang yang dicairkan pemain lama hanya bisa datang dari pembeli</b> — dan pembeli terbesarnya adalah pemain baru.</p>
 
+<div data-diagram="cycle" data-steps="Pemain baru beli karakter|Token dibakar untuk karakter baru|Pemain lama dapat token hadiah|Token hadiah dijual ke pasar" data-center="butuh pemain baru" data-caption="Lingkaran tertutup play-to-earn: uang yang dicairkan pemain lama datang dari pemain baru"></div>
+
 <h3>Langkah 2 — Hitung sendiri</h3>
 <p>Setiap pemain baru membayar biaya masuk untuk membeli karakter, dan setiap pemain mencairkan hadiah tiap minggu. Lihat apa yang terjadi saat arus pemain baru melambat:</p>
 <div data-demo="js-playground">// Uang masuk = pemain baru x biaya masuk; uang keluar = semua pemain x hadiah yang dicairkan
@@ -8911,6 +8977,8 @@ console.log("Saat pemain baru melambat, kekurangannya ditanggung lewat harga tok
   <tr><td>Harus terus tumbuh agar tidak runtuh</td><td>Tetap jalan walau jumlah pemain stabil</td></tr>
 </table>
 <div class="callout warn">Edukasi, bukan saran investasi. "Penghasilan" dari game yang hidup dari pemain baru adalah pemindahan uang dari pemain terakhir ke pemain pertama.</div>
+
+<div data-diagram="vs" data-left="Rapuh (play-to-earn)::datang untuk cari uang::hadiah dari cetak token::harus terus tumbuh" data-right="Lebih sehat (play-and-own)::datang karena gamenya seru::uang dari pembeli item::tetap jalan saat pemain stabil" data-caption="Game yang sehat tidak bergantung pada pemain baru"></div>
 `,
           keyPoints: [
             "Game play-to-earn biasanya punya NFT karakter (tiket masuk), token hadiah, token tata kelola, keran, dan penyerap token.",
@@ -8983,6 +9051,8 @@ console.log("Saat pemain baru melambat, kekurangannya ditanggung lewat harga tok
 <div class="callout warn">
 <b>Bedakan dengan hati-hati:</b> pengguna yang datang karena <b>insentif token</b> (<i>mercenary capital</i>) akan <b>pergi</b> begitu insentif berhenti — itu <b>bukan</b> parit. Parit sejati bertahan tanpa disubsidi.
 </div>
+
+<div data-diagram="vs" data-left="Parit sejati::likuiditas menarik trader::biaya pindah yang mahal::rekam jejak tanpa diretas" data-right="Bukan parit::pengguna datang karena insentif::TVL yang disubsidi token::pergi saat hadiah berhenti" data-caption="Parit sejati bertahan tanpa disubsidi"></div>
 
 <h3>Red flag khas crypto</h3>
 <ul>
@@ -9166,6 +9236,8 @@ console.log("Saat pemain baru melambat, kekurangannya ditanggung lewat harga tok
 <b>Perhatikan:</b> tiga dari empat pertanyaan itu <b>bukan pertanyaan teknis</b>. Jawabannya ditentukan regulasi, politik, dan kebiasaan manusia. Ini pelajaran penting: nasib sebuah teknologi sering ditentukan di luar teknologinya.
 </div>
 
+<div data-diagram="network" data-center="Belum terjawab" data-nodes="Bitcoin jadi penyimpan nilai?|CBDC atau stablecoin swasta?|DeFi di bawah regulasi?|Kapan kuantum mengancam?" data-caption="Tiga dari empat pertanyaan ini ditentukan regulasi, politik, dan kebiasaan manusia — bukan teknologi"></div>
+
 <h3>Dua skenario yang sama masuk akalnya</h3>
 <table class="tbl">
   <tr><th>Skenario "menyatu"</th><th>Skenario "menyempit"</th></tr>
@@ -9173,6 +9245,8 @@ console.log("Saat pemain baru melambat, kekurangannya ditanggung lewat harga tok
   <tr><td>Ditandai oleh: makin banyak lembaga mapan memakainya diam-diam</td><td>Ditandai oleh: jumlah proyek berkurang, tapi yang bertahan makin dalam pemakaiannya</td></tr>
 </table>
 <p>Keduanya bisa terjadi bersamaan. Yang <b>tidak</b> didukung bukti adalah skenario "semua akan berjalan di blockchain" — yang sudah lebih dari satu dekade dijanjikan tanpa terwujud.</p>
+
+<div data-diagram="vs" data-left="Menyatu::infrastruktur di balik layar::dipakai bank tanpa terasa" data-right="Menyempit::stablecoin, tokenisasi, simpan nilai::proyek sedikit, pemakaian dalam" data-caption="Dua masa depan yang sama masuk akalnya — dan bisa terjadi bersamaan"></div>
 
 <h3>Cara menyikapinya</h3>
 <div class="callout">
