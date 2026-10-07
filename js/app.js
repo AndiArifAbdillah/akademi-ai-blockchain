@@ -1735,7 +1735,7 @@ const GLOSSARY = [
   ["APR", "Imbal hasil per tahun tanpa bunga berbunga."],
   ["APY", "Imbal hasil per tahun termasuk efek majemuk bila hasilnya ditanam ulang."],
   ["Private Sale", "Penjualan token ke investor tertentu dengan harga diskon sebelum dijual ke publik."],
-  ["Vesting", "Jadwal pelepasan token secara bertahap kepada tim atau investor."],
+  ["Vesting", "Jadwal pelepasan bertahap: saham pendiri atau token tim baru menjadi hak penuh seiring waktu (pola umum 4 tahun, cliff 1 tahun)."],
   ["Cliff", "Masa awal vesting ketika token terkunci sama sekali, mis. 12 bulan."],
   ["Token Unlock", "Saat jatah token sebuah kelompok mulai boleh dijual; sering menekan harga."],
   ["Airdrop", "Token yang dibagikan gratis, biasanya kepada pengguna awal sebuah protokol."],
@@ -1823,6 +1823,11 @@ const GLOSSARY = [
   ["Regulatory Sandbox", "Uji coba produk baru di bawah pengawasan regulator (di Indonesia, OJK) dengan izin terbatas sebelum izin penuh."],
   ["IASC", "Indonesia Anti-Scam Centre — pusat laporan penipuan keuangan bentukan OJK (sejak November 2024) yang menelusuri dan memblokir rekening penipu bersama bank; lapor di iasc.ojk.go.id."],
   ["Pig butchering", "Penipuan yang membangun kepercayaan korban berminggu-minggu (kenalan, pacar, mentor), lalu mengajak investasi di aplikasi palsu yang menampilkan untung buatan."],
+  ["Equity", "Ekuitas — bagian yang benar-benar milikmu setelah semua utang dilunasi (aset − utang); juga dipakai untuk kepemilikan saham."],
+  ["Dilusi", "Mengecilnya persentase kepemilikan pemegang lama saat saham atau token baru diterbitkan."],
+  ["Cap table", "Tabel kapitalisasi: daftar siapa memiliki berapa persen saham sebuah perusahaan dari putaran ke putaran."],
+  ["Post-money", "Valuasi perusahaan sesudah uang investor masuk = valuasi pre-money + setoran; porsi investor = setoran ÷ post-money."],
+  ["Urun dana", "Securities crowdfunding: usaha kecil menawarkan saham, obligasi, atau sukuk kepada masyarakat lewat platform berizin OJK."],
   ["Kenop", "Tombol putar, seperti pengatur volume radio. Di materi AI dipakai sebagai perumpamaan parameter: angka di dalam model yang diputar sedikit demi sedikit saat model belajar."],
 ];
 

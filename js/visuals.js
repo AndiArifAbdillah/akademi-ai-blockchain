@@ -798,7 +798,7 @@ Object.assign(DIAGRAMS, {
     body += `<text x="${L}" y="${T + H + 24}" text-anchor="start" class="vt-xs">${fmt(xa)}</text><text x="${L + W}" y="${T + H + 24}" text-anchor="end" class="vt-xs">${fmt(xb)}</text>`;
     if (xa < 0 && xb > 0) body += `<text x="${sx(0)}" y="${T + H + 24}" text-anchor="middle" class="vt-xs">0</text>`;
     body += `<text x="${L - 8}" y="${T + 10}" text-anchor="end" class="vt-xs">${fmt(yb)}</text><text x="${L - 8}" y="${T + H - 3}" text-anchor="end" class="vt-xs">${fmt(ya)}</text>`;
-    const warna = ["var(--primary)", "var(--s0)", "var(--s1)", "var(--s3)"];
+    const warna = ["var(--primary)", "var(--s0)", "var(--s2)", "var(--s4)"];
     daftar.forEach((k, j) => {
       let d = "";
       for (let i = 0; i <= 160; i++) { const x = xa + ((xb - xa) * i) / 160; d += (i ? "L" : "M") + sx(x).toFixed(1) + " " + sy(FUNGSI_GRAFIK[k].f(x)).toFixed(1); }
@@ -872,7 +872,7 @@ Object.assign(DIAGRAMS, {
       body += `<line x1="${L}" y1="${yy}" x2="${L + W}" y2="${yy}" class="vline" style="stroke:var(--s3);stroke-width:2;stroke-dasharray:7 5"/>`;
       body += `<text x="${kosong[0]}" y="${yy + kosong[2]}" text-anchor="${kosong[1]}" class="vt-xs vt-tegas" style="fill:var(--s3)">${vEsc(a.t)}</text>`;
     });
-    const warna = ["var(--primary)", "var(--s0)", "var(--s1)", "var(--s3)"];
+    const warna = ["var(--primary)", "var(--s0)", "var(--s2)", "var(--s4)"];
     seri.forEach((s, j) => {
       let d = "", mulai = true;
       s.v.forEach((v, i) => { if (v === null) { mulai = true; return; } d += (mulai ? "M" : "L") + sx(i).toFixed(1) + " " + sy(v).toFixed(1); mulai = false; });

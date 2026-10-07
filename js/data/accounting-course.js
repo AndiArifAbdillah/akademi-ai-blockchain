@@ -4102,7 +4102,7 @@ Tanpa FCF, DCF tidak punya bahan. Tanpa DCF, FCF hanya angka tahunan tanpa kesim
       id: "acc-lanjutan",
       level: "Lanjutan",
       title: "Valuasi Relatif & Multiples",
-      summary: "Menilai harga lewat perbandingan, mulai dari nol: apa itu saham, EPS & PER, lalu PEG, PBV & nilai buku, EV/EBITDA, berbagai jenis yield, dan jebakan valuasi relatif.",
+      summary: "Menilai harga lewat perbandingan, mulai dari nol: apa itu saham, EPS & PER, arti equity, lalu PEG, PBV & nilai buku, EV/EBITDA, berbagai jenis yield, dan jebakan valuasi relatif.",
       lessons: [
         {
           id: "acc-adv-0",
@@ -4211,6 +4211,132 @@ Hasilnya sama bila dihitung untuk seluruh perusahaan: kapitalisasi pasar ÷ laba
               ],
               answer: 0,
               explain: "Laba negatif membuat PER negatif — tidak bisa dibaca sebagai 'berapa tahun laba menebus harga'."
+            }
+          ]
+        },
+        {
+          id: "acc-eq-1",
+          title: "Equity — Satu Kata, Banyak Arti",
+          duration: "13 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Neraca selalu seimbang: <b>Aset = Kewajiban + Ekuitas</b> (<a href="#/lesson/acc-p-3">Lima Jenis Akun</a>). Saham adalah potongan kepemilikan sebuah perusahaan (<a href="#/lesson/acc-adv-0">Saham, EPS &amp; PER dari Nol</a>).
+</div>
+
+<p>Kata <b>equity</b> (bahasa Indonesianya <b>ekuitas</b>) muncul di neraca, berita saham, pendanaan startup, sampai urusan KPR. Kedengarannya seperti banyak hal berbeda, padahal idenya satu:</p>
+<div class="callout">
+<b>Equity = bagian yang benar-benar milikmu setelah semua utang dilunasi.</b><br>
+Equity = Aset − Utang
+</div>
+
+<div data-diagram="stack" data-parts="Sisa utang KPR:600|Equity (milikmu):400" data-caption="Rumah seharga Rp1 miliar dengan sisa KPR Rp600 juta: yang benar-benar milikmu Rp400 juta"></div>
+
+<h3>1. Ekuitas di neraca</h3>
+<p>Di laporan keuangan, ekuitas adalah sisi pemilik. Contoh Warung Kopi Sejahtera (dalam juta rupiah): aset <b>250</b>, utang bank <b>100</b>, jadi ekuitasnya <b>250 − 100 = 150</b>.</p>
+<p>Ekuitas biasanya terdiri dari dua bagian besar:</p>
+<ul>
+  <li><b>Modal disetor</b> — uang yang dimasukkan pemilik atau pemegang saham.</li>
+  <li><b>Laba ditahan</b> — laba tahun-tahun sebelumnya yang tidak dibagikan sebagai dividen.</li>
+</ul>
+<p>Total ekuitas inilah yang disebut <b>nilai buku</b>, dan menjadi penyebut dalam <b>ROE</b> serta <b>PBV</b>.</p>
+
+<h3>2. Ekuitas negatif: utang lebih besar dari aset</h3>
+<p>Kalau sebuah usaha punya aset Rp200 juta tapi utangnya Rp260 juta, ekuitasnya <b>−Rp60 juta</b>. Artinya, seandainya semua aset dijual hari ini, uangnya pun tidak cukup untuk melunasi utang — pemiliknya tidak memiliki apa-apa, bahkan minus.</p>
+<div class="callout warn">
+Ekuitas negatif adalah <b>tanda bahaya besar</b>. Biasanya muncul setelah rugi bertahun-tahun, atau karena utang menumpuk untuk membayar dividen atau membeli kembali saham. Periksa dulu penyebabnya sebelum menilai perusahaan seperti itu (<a href="#/lesson/acc-prosp-2">Altman Z-Score</a>).
+</div>
+
+<h3>3. Equity sebagai saham — dan bedanya dengan utang</h3>
+<p>Saat perusahaan butuh uang, pilihannya pada dasarnya dua: <b>meminjam</b> atau <b>menjual sebagian kepemilikan</b>. Menjual saham disebut <b>pendanaan ekuitas</b> (<i>equity financing</i>).</p>
+<div data-diagram="vs" data-left="Pendanaan utang::wajib dicicil plus bunga::kepemilikan tetap utuh::rugi pun tetap harus bayar" data-right="Pendanaan ekuitas::tidak ada cicilan::kepemilikan ikut dibagi::investor ikut menanggung rugi" data-caption="Utang membebani kas, ekuitas membagi kepemilikan"></div>
+<p>Karena itu pemegang saham disebut pemilik <b>klaim sisa</b> (<i>residual claim</i>). Kalau perusahaan dibubarkan, urutan pembayarannya kira-kira begini:</p>
+<div data-diagram="flow" data-steps="Semua aset dijual|Bayar utang berjaminan|Bayar utang lainnya|Sisanya untuk pemegang saham" data-caption="Pemegang saham dibayar paling akhir — itulah kenapa imbal hasil yang diharapkannya lebih tinggi"></div>
+<table class="tbl">
+  <tr><th>Istilah</th><th>Artinya</th></tr>
+  <tr><td><b>Public equity</b></td><td>Saham perusahaan yang diperdagangkan di bursa, misalnya di Bursa Efek Indonesia</td></tr>
+  <tr><td><b>Private equity</b></td><td>Kepemilikan di perusahaan yang tidak tercatat di bursa (<a href="#/lesson/acc-inv-4">Private Equity &amp; Venture Capital</a>)</td></tr>
+  <tr><td><b>Reksa dana saham</b></td><td>Kumpulan saham yang dikelola manajer investasi — di luar negeri sering disebut <i>equity fund</i></td></tr>
+</table>
+
+<h3>4. Home equity: rumahmu yang benar-benar milikmu</h3>
+<p>Rumah Rp1 miliar yang KPR-nya masih Rp600 juta memberimu equity Rp400 juta. Equity itu bertambah dari dua arah: <b>cicilan pokok</b> yang mengurangi utang, dan <b>kenaikan harga</b> rumah.</p>
+<p>Tapi arahnya bisa berbalik. Kalau harga rumah itu turun menjadi Rp550 juta sementara sisa KPR masih Rp600 juta, equity-nya menjadi <b>−Rp50 juta</b> — dijual pun tidak cukup untuk melunasi KPR.</p>
+<div data-diagram="bar" data-bars="Harga rumah Rp1 miliar:400|Harga rumah Rp800 juta:200|Harga rumah Rp550 juta:-50" data-unit=" jt" data-caption="Equity rumah dengan sisa KPR Rp600 juta, pada tiga harga yang berbeda"></div>
+
+<h3>5. Arti lain yang tidak berhubungan dengan uang</h3>
+<ul>
+  <li><b>Brand equity</b> — nilai sebuah merek di mata pembeli: kenapa orang mau membayar lebih untuk merek tertentu (<i>pricing power</i>).</li>
+  <li><b>Equity sebagai keadilan</b> — dalam kebijakan publik, <i>equity</i> berarti setiap orang diberi dukungan sesuai kebutuhannya, berbeda dengan <i>equality</i> yang memberi semua orang hal yang sama persis.</li>
+</ul>
+
+<h3>Ringkasan</h3>
+<table class="tbl">
+  <tr><th>Konteks</th><th>Artinya</th><th>Contoh</th></tr>
+  <tr><td>Neraca</td><td>Aset − kewajiban</td><td>250 − 100 = 150</td></tr>
+  <tr><td>Pendanaan</td><td>Menjual sebagian kepemilikan</td><td>Startup menjual 20% saham</td></tr>
+  <tr><td>Investasi</td><td>Saham (public / private)</td><td>Saham di bursa, private equity</td></tr>
+  <tr><td>Rumah</td><td>Harga rumah − sisa KPR</td><td>1.000 − 600 = 400 juta</td></tr>
+  <tr><td>Merek</td><td>Nilai merek</td><td>Mau membayar lebih untuk merek</td></tr>
+</table>
+<p>Kalau bertemu kata <i>equity</i>, tanyakan: <b>milik siapa, setelah utang apa dilunasi?</b> Jawabannya hampir selalu menjelaskan maksudnya. Untuk equity di startup — pembagian saham pendiri, dilusi, dan vesting — lihat <a href="#/lesson/acc-fdr-eq">Equity Startup</a>.</p>
+`,
+          keyPoints: [
+            "Equity (ekuitas) = bagian yang benar-benar milikmu setelah semua utang dilunasi: aset − utang.",
+            "Di neraca, ekuitas = modal disetor + laba ditahan; inilah nilai buku, penyebut ROE dan PBV.",
+            "Ekuitas negatif (utang lebih besar dari aset) adalah tanda bahaya besar.",
+            "Pendanaan ekuitas = menjual sebagian kepemilikan; tanpa cicilan, tapi pemegang saham dibayar paling akhir saat bubar.",
+            "Home equity = harga rumah − sisa KPR, bisa negatif bila harga rumah turun; brand equity dan equity sebagai keadilan adalah arti lain."
+          ],
+          practice: [
+            { type: "number", q: "Sebuah usaha punya aset Rp450 juta dan utang Rp180 juta. Berapa juta ekuitasnya?", answer: 270, tol: 0.5, unit: "juta", hint: "Ekuitas = aset − utang.", solution: "450 − 180 = Rp270 juta." },
+            { type: "number", q: "Rumah seharga Rp750 juta dengan sisa KPR Rp500 juta. Berapa persen equity pemiliknya dari harga rumah?", answer: 33.3, tol: 0.2, unit: "%", hint: "Equity = 750 − 500, lalu bagi dengan 750.", solution: "Equity Rp250 juta; 250 ÷ 750 ≈ 33,3%." },
+            { type: "number", q: "Aset Rp200 juta, utang Rp260 juta. Berapa juta ekuitasnya? (tulis tanda minus bila negatif)", answer: -60, tol: 0.5, unit: "juta", hint: "Aset − utang, hasilnya boleh negatif.", solution: "200 − 260 = −Rp60 juta: ekuitas negatif, tanda bahaya." }
+          ],
+          quiz: [
+            {
+              q: "Apa ide yang sama di balik semua arti equity yang berhubungan dengan uang?",
+              options: [
+                "Bagian milikmu setelah semua utang dilunasi",
+                "Seluruh aset tanpa memperhitungkan utang",
+                "Jumlah uang tunai yang ada di rekening",
+                "Laba bersih perusahaan dalam setahun"
+              ],
+              answer: 0,
+              explain: "Equity = aset − utang, baik di neraca perusahaan, kepemilikan saham, maupun rumah ber-KPR."
+            },
+            {
+              q: "Apa kelebihan pendanaan ekuitas dibanding utang bagi perusahaan?",
+              options: [
+                "Tidak ada cicilan wajib",
+                "Kepemilikan tetap utuh",
+                "Bunganya lebih murah",
+                "Investor tidak ikut rugi"
+              ],
+              answer: 0,
+              explain: "Pendanaan ekuitas tidak menuntut cicilan; harganya adalah kepemilikan yang ikut dibagi."
+            },
+            {
+              q: "Saat perusahaan dibubarkan, siapa yang dibayar paling akhir?",
+              options: [
+                "Pemegang saham",
+                "Bank pemberi utang",
+                "Kreditur berjaminan",
+                "Pemasok barang"
+              ],
+              answer: 0,
+              explain: "Pemegang saham memegang klaim sisa: mereka menerima yang tersisa setelah semua utang dilunasi."
+            },
+            {
+              q: "Rumah Rp550 juta, sisa KPR Rp600 juta. Bagaimana keadaan equity-nya?",
+              options: [
+                "Negatif Rp50 juta",
+                "Positif Rp550 juta",
+                "Positif Rp50 juta",
+                "Nol, karena masih KPR"
+              ],
+              answer: 0,
+              explain: "550 − 600 = −50: dijual pun tidak cukup untuk melunasi KPR."
             }
           ]
         },
@@ -7232,7 +7358,7 @@ console.log("Pelajaran: kejar penagihan piutang agar tidak krisis kas!");</div>
       id: "acc-founder",
       level: "Founder",
       title: "Dari Ide ke Demo Day: Membangun Usaha Sendiri",
-      summary: "Untuk yang ingin membangun usaha atau produk sendiri: pola pikir founder, menguji ide lewat wawancara yang jujur, merangkum rencana dalam Lean Canvas beserta angka titik impasnya, membangun MVP dan mengukur product-market fit, UI/UX produk digital, sampai pitch di Demo Day.",
+      summary: "Untuk yang ingin membangun usaha atau produk sendiri: pola pikir founder, menguji ide lewat wawancara yang jujur, merangkum rencana dalam Lean Canvas beserta angka titik impasnya, membangun MVP dan mengukur product-market fit, UI/UX produk digital, pembagian saham dan pendanaan (equity, dilusi, vesting, urun dana), sampai pitch di Demo Day.",
       lessons: [
         {
           id: "acc-fdr-1",
@@ -7768,6 +7894,134 @@ Siklus <b>Build–Measure–Learn</b>: bangun versi terkecil, ukur apa yang dila
               ],
               answer: 0,
               explain: "Pengguna perlu tahu apa yang sedang terjadi; transaksi blockchain tidak selesai seketika."
+            }
+          ]
+        },
+        {
+          id: "acc-fdr-eq",
+          title: "Equity Startup — Pembagian Saham, Dilusi, Vesting & Urun Dana",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Equity</b> = bagian kepemilikan setelah utang dilunasi; <b>pendanaan ekuitas</b> berarti menjual sebagian kepemilikan, bukan meminjam (<a href="#/lesson/acc-eq-1">Equity — Satu Kata, Banyak Arti</a>). Investor ventura membiayai banyak startup karena satu pemenang bisa menutupi banyak kegagalan (<a href="#/lesson/acc-inv-4">Private Equity &amp; Venture Capital</a>).
+</div>
+
+<p>Saat membangun startup bersama teman, cepat atau lambat muncul pertanyaan yang sering dihindari: <b>siapa memiliki berapa?</b> Pelajaran ini membahas cara membagi saham pendiri, apa yang terjadi saat investor masuk, dan pilihan pendanaan dari masyarakat lewat urun dana.</p>
+
+<h3>1. Membagi saham pendiri</h3>
+<p>Tidak ada rumus pasti. Yang penting, pembagiannya <b>dibicarakan terbuka di awal dan ditulis</b> dalam perjanjian pendiri. Pertanyaan yang membantu:</p>
+<ul>
+  <li>Siapa yang bekerja penuh waktu, dan siapa yang sambil kuliah atau bekerja?</li>
+  <li>Peran apa yang dibutuhkan ke depan — bukan hanya siapa yang punya ide pertama?</li>
+  <li>Siapa yang menyetor uang atau aset penting sejak awal?</li>
+</ul>
+<div class="callout warn">
+<b>Jebakan umum:</b> membagi rata hanya karena tidak enak hati, memberi saham besar kepada "penasihat" yang jarang membantu, atau menjual porsi sangat besar ke investor pertama. Kepemilikan yang terlanjur tersebar tidak mudah diperbaiki.
+</div>
+
+<h3>2. Vesting: saham yang "matang" seiring waktu</h3>
+<p>Bayangkan tiga pendiri masing-masing memegang sepertiga, lalu satu orang berhenti setelah empat bulan sambil tetap membawa sepertiga perusahaan. Untuk mencegahnya, saham pendiri biasanya diberi <b>vesting</b>: haknya menjadi penuh sedikit demi sedikit.</p>
+<p>Pola yang umum: <b>4 tahun dengan cliff 1 tahun</b>. Keluar sebelum 12 bulan, tidak mendapat apa pun; tepat 12 bulan, 25% jatahnya menjadi hak penuh; sisanya bertambah rata setiap bulan sampai bulan ke-48.</p>
+<div data-diagram="bar" data-bars="Keluar di bulan ke-6:0|Keluar di bulan ke-12:25|Keluar di bulan ke-24:50|Keluar di bulan ke-36:75|Bertahan 48 bulan:100" data-unit="%" data-caption="Bagian jatah saham yang sudah menjadi hak penuh (vesting 4 tahun, cliff 1 tahun)"></div>
+<p>Contoh: pendiri dengan jatah 30% yang keluar di bulan ke-24 membawa 50% × 30% = <b>15%</b>. Sisanya kembali ke perusahaan dan bisa diberikan kepada pengganti.</p>
+
+<h3>3. Valuasi pre-money dan post-money</h3>
+<p>Saat investor masuk, yang dirundingkan adalah <b>valuasi</b> — harga seluruh perusahaan.</p>
+<div data-diagram="flow" data-steps="Valuasi sebelum uang masuk (pre-money): Rp8 miliar|Investor menyetor Rp2 miliar|Valuasi sesudahnya (post-money): Rp10 miliar|Porsi investor: 2 ÷ 10 = 20%" data-caption="Porsi investor = setoran ÷ valuasi post-money"></div>
+<p>Perhatikan: angka valuasi baru bermakna bila jelas <i>pre</i> atau <i>post</i>. Setoran Rp2 miliar pada valuasi Rp8 miliar "post-money" berarti investor mendapat 25%, bukan 20%.</p>
+
+<h3>4. Dilusi: persentase mengecil, kue membesar</h3>
+<p>Setiap kali saham baru diterbitkan untuk investor, persentase semua pemegang lama mengecil. Inilah <b>dilusi</b>. Contoh dua pendiri, A (60%) dan B (40%):</p>
+<table class="tbl">
+  <tr><th>Pemegang</th><th>Awal</th><th>Setelah seed</th><th>Setelah Seri A</th></tr>
+  <tr><td>Pendiri A</td><td>60%</td><td>48%</td><td>36%</td></tr>
+  <tr><td>Pendiri B</td><td>40%</td><td>32%</td><td>24%</td></tr>
+  <tr><td>Investor seed</td><td>—</td><td>20%</td><td>15%</td></tr>
+  <tr><td>Investor Seri A</td><td>—</td><td>—</td><td>25%</td></tr>
+  <tr><td><b>Valuasi post-money</b></td><td>—</td><td>Rp10 miliar</td><td>Rp40 miliar</td></tr>
+</table>
+<div data-diagram="garis" data-seri="Pendiri A:60,48,36|Pendiri B:40,32,24|Investor seed:0,20,15|Investor Seri A:0,0,25" data-x="Awal,Setelah seed,Setelah Seri A" data-y="0,70" data-caption="Persentase kepemilikan dari putaran ke putaran"></div>
+<p>Persentase Pendiri A turun dari 48% menjadi 36%. Tapi nilainya naik: 48% × Rp10 miliar = <b>Rp4,8 miliar</b> menjadi 36% × Rp40 miliar = <b>Rp14,4 miliar</b>. Dilusi tidak otomatis buruk — yang penting, uang yang masuk membuat perusahaan tumbuh lebih cepat daripada porsimu menyusut. Tabel seperti di atas disebut <b>cap table</b> (tabel kapitalisasi), dan investor hampir selalu memintanya.</p>
+<p>Dua istilah lain yang akan sering kamu temui:</p>
+<ul>
+  <li><b>ESOP</b> (<i>employee stock option plan</i>) — cadangan saham, sering sekitar 10%, untuk menarik karyawan penting. Cadangan ini ikut mendilusi pendiri.</li>
+  <li><b>SAFE</b> atau <b>convertible note</b> — uang masuk sekarang, baru berubah menjadi saham pada putaran berikutnya. Sering dipakai di tahap sangat awal karena tidak perlu menyepakati valuasi dulu.</li>
+</ul>
+
+<h3>5. Urun dana: menjual saham kepada masyarakat</h3>
+<p>Di Indonesia, usaha kecil dan menengah bisa menawarkan saham, obligasi, atau sukuk kepada masyarakat lewat <b>securities crowdfunding</b> (urun dana) di platform yang <b>berizin OJK</b>. Aturannya ada di POJK 57/POJK.04/2020, yang diubah dengan POJK 16/POJK.04/2021:</p>
+<table class="tbl">
+  <tr><th>Ketentuan</th><th>Isinya</th></tr>
+  <tr><td>Batas dana per penerbit</td><td>Paling banyak Rp10 miliar dalam 12 bulan</td></tr>
+  <tr><td>Pemodal berpenghasilan sampai Rp500 juta/tahun</td><td>Investasi paling banyak 5% penghasilan per tahun</td></tr>
+  <tr><td>Pemodal berpenghasilan di atas Rp500 juta/tahun</td><td>Paling banyak 10% penghasilan per tahun</td></tr>
+</table>
+<p>Sampai 31 Juli 2026, urun dana di Indonesia sudah menghimpun sekitar <b>Rp2,01 triliun</b> dari <b>623 penerbit</b> lewat <b>18 penyelenggara</b>. Aturan dan angkanya bisa berubah; selalu periksa langsung ke OJK.</p>
+<div class="callout warn">
+<b>Risiko bagi pemodal:</b> usaha kecil lebih sering gagal daripada perusahaan besar, dan saham urun dana <b>sulit dijual kembali</b> karena pasarnya kecil. Anggap uangnya terkunci lama dan siap hilang.
+</div>
+
+<h3>6. Equity bukan token</h3>
+<p>Banyak proyek crypto menjual <b>token</b>, bukan saham. Pemegang token tidak otomatis berhak atas laba, aset, atau suara di perusahaan pembuatnya — hak itu milik pemegang saham. Jadi "investasi di proyek" lewat token belum tentu berarti memiliki perusahaannya (<a href="#/lesson/bc-tok-1">Siklus Hidup Token</a>).</p>
+`,
+          keyPoints: [
+            "Bagi saham pendiri secara terbuka di awal dan tulis di perjanjian; pertimbangkan peran ke depan, waktu penuh, dan setoran awal.",
+            "Vesting 4 tahun dengan cliff 1 tahun: keluar sebelum 12 bulan tidak mendapat apa pun, lalu hak bertambah sampai bulan ke-48.",
+            "Porsi investor = setoran ÷ valuasi post-money (post = pre + setoran).",
+            "Dilusi mengecilkan persentase tapi nilainya bisa naik bila valuasi tumbuh; cap table mencatat siapa memiliki berapa.",
+            "Urun dana (SCF) berizin OJK: penerbit maks Rp10 miliar per 12 bulan; pemodal maks 5% atau 10% penghasilan per tahun; sahamnya sulit dijual kembali.",
+            "Token bukan saham: tidak otomatis memberi hak atas laba atau aset perusahaan."
+          ],
+          practice: [
+            { type: "number", q: "Valuasi pre-money Rp12 miliar, investor menyetor Rp3 miliar. Berapa persen porsi investor?", answer: 20, tol: 0.1, unit: "%", hint: "Post-money = 12 + 3. Porsi = setoran ÷ post-money.", solution: "Post-money Rp15 miliar; 3 ÷ 15 = 20%." },
+            { type: "number", q: "Pendiri memegang 50%. Perusahaan menerbitkan saham baru untuk investor sebesar 25% dari perusahaan setelah putaran. Berapa persen porsi pendiri sekarang?", answer: 37.5, tol: 0.1, unit: "%", hint: "Pemegang lama tinggal memiliki 75% dari perusahaan baru.", solution: "50% × 75% = 37,5%." },
+            { type: "number", q: "Pendiri dengan jatah 40% (vesting 4 tahun, cliff 1 tahun) keluar tepat di bulan ke-36. Berapa persen perusahaan yang ia bawa?", answer: 30, tol: 0.1, unit: "%", hint: "Di bulan ke-36, 36 ÷ 48 = 75% jatahnya sudah menjadi hak penuh.", solution: "75% × 40% = 30% dari perusahaan." }
+          ],
+          quiz: [
+            {
+              q: "Untuk apa saham pendiri diberi vesting?",
+              options: [
+                "Agar pendiri yang cepat keluar tidak membawa jatah penuh",
+                "Agar saham pendiri bisa dijual di bursa lebih cepat",
+                "Agar perusahaan tidak perlu membuat cap table",
+                "Agar investor tidak bisa membeli saham baru"
+              ],
+              answer: 0,
+              explain: "Vesting membuat hak atas saham bertambah seiring waktu bekerja, sehingga yang keluar lebih awal hanya membawa sebagian."
+            },
+            {
+              q: "Investor menyetor Rp2 miliar pada valuasi pre-money Rp8 miliar. Berapa porsinya?",
+              options: [
+                "20%",
+                "25%",
+                "16%",
+                "10%"
+              ],
+              answer: 0,
+              explain: "Post-money = 8 + 2 = Rp10 miliar; 2 ÷ 10 = 20%."
+            },
+            {
+              q: "Persentase pendiri turun dari 48% ke 36% setelah Seri A. Apakah ia pasti rugi?",
+              options: [
+                "Tidak, nilainya bisa naik bila valuasi tumbuh",
+                "Ya, persentase turun selalu berarti rugi",
+                "Ya, karena sahamnya ditarik investor baru",
+                "Tidak, karena dilusi hanya terjadi di crypto"
+              ],
+              answer: 0,
+              explain: "36% × Rp40 miliar = Rp14,4 miliar, lebih besar dari 48% × Rp10 miliar = Rp4,8 miliar."
+            },
+            {
+              q: "Apa risiko utama membeli saham lewat urun dana?",
+              options: [
+                "Usaha bisa gagal dan sahamnya sulit dijual",
+                "Dananya dijamin LPS sehingga bunganya kecil",
+                "Penerbit wajib membeli kembali sahamnya",
+                "Pemodal harus menyetor minimal Rp10 miliar"
+              ],
+              answer: 0,
+              explain: "Usaha kecil lebih rentan gagal, dan pasar untuk menjual kembali saham urun dana masih kecil."
             }
           ]
         },
