@@ -1083,7 +1083,678 @@ console.log("Total: " + total);
         },
       ],
     },
-    /* ---------------- MODUL 3: PYTHON: BAHASA AI & DATA ---------------- */
+    /* ---------------- MODUL 3: WEB2 DULU: CARA KERJA APLIKASI WEB ---------------- */
+    {
+      id: "cd-web",
+      level: "Web2",
+      title: "Web2 Dulu: Cara Kerja Aplikasi Web",
+      summary: "Jembatan menuju Web3: bagaimana browser berbicara dengan server (URL, HTTP, kode status), tiga lapis aplikasi (frontend, backend, database) dengan playground HTML, API dan JSON termasuk RPC blockchain, login akun versus dompet, sampai peta lengkap sebuah DApp.",
+      lessons: [
+        {
+          id: "cd-web-1",
+          title: "Bagaimana Browser Berbicara dengan Server — Client, Server & HTTP",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Program dijalankan baris demi baris, dan <b>objek</b> menyimpan beberapa keterangan berlabel, misalnya <i>pesanan.menu</i> dan <i>pesanan.harga</i> (<a href="#/lesson/cd-js-6">Array &amp; Objek</a>).
+</div>
+
+<p>Setiap kali kamu membuka sebuah situs, terjadi percakapan singkat antara HP-mu dan sebuah komputer lain di internet. Percakapan inilah dasar semua aplikasi <b>Web2</b> — dan <b>Web3</b> dibangun tepat di atasnya. Pelajaran ini membongkar percakapan itu.</p>
+
+<h3>Client dan server</h3>
+<p>Bayangkan restoran. Kamu, sebagai pelanggan, <b>meminta</b> makanan; dapur <b>melayani</b> permintaanmu. Di internet:</p>
+<div data-diagram="vs" data-left="Client::HP, laptop, browser, aplikasi::yang meminta" data-right="Server::komputer di pusat data::menyala terus, yang melayani" data-caption="Hampir semua aplikasi bekerja dengan pola meminta dan melayani"></div>
+<p><b>Server</b> sebenarnya hanyalah komputer biasa yang menyala terus dan menunggu permintaan. Satu server bisa melayani ribuan client sekaligus.</p>
+
+<h3>Apa yang terjadi saat kamu mengetik sebuah alamat</h3>
+<div data-diagram="flow" data-steps="Kamu mengetik alamat situs|DNS mencari alamat server|Browser mengirim request|Server mengirim response|Browser menggambar halaman" data-caption="Lima langkah yang terjadi dalam waktu kurang dari sedetik"></div>
+<ol>
+  <li><b>Kamu mengetik alamat</b>, misalnya <i>toko.contoh.id</i>.</li>
+  <li><b>DNS</b> — buku telepon internet — menerjemahkan nama itu menjadi nomor alamat server (<b>alamat IP</b>), misalnya 203.0.113.10. Manusia lebih mudah mengingat nama, komputer butuh nomor.</li>
+  <li>Browser mengirim <b>request</b> (permintaan) ke server itu.</li>
+  <li>Server mengirim <b>response</b> (jawaban), biasanya berisi halaman HTML.</li>
+  <li>Browser <b>menggambar</b> halaman dari jawaban itu — lalu meminta lagi gambar, gaya tampilan, dan skrip yang dibutuhkan halaman tersebut.</li>
+</ol>
+
+<h3>Membaca sebuah URL</h3>
+<p>Alamat lengkap sebuah halaman disebut <b>URL</b>. Contoh: <i>https://toko.contoh.id/produk/kopi?ukuran=besar&amp;jumlah=2</i></p>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Isinya</th><th>Artinya</th></tr>
+  <tr><td>Protokol</td><td>https</td><td>Bahasa percakapannya: HTTP yang diamankan</td></tr>
+  <tr><td>Domain</td><td>toko.contoh.id</td><td>Nama server yang dituju</td></tr>
+  <tr><td>Path</td><td>/produk/kopi</td><td>Halaman atau data mana yang diminta</td></tr>
+  <tr><td>Query</td><td>?ukuran=besar&amp;jumlah=2</td><td>Keterangan tambahan, berpasangan nama=isi, dipisah &amp;</td></tr>
+</table>
+<p>JavaScript bisa membongkar URL untukmu:</p>
+<div data-demo="js-playground">
+const alamat = new URL("https://toko.contoh.id/produk/kopi?ukuran=besar&amp;jumlah=2");
+
+console.log("Protokol :", alamat.protocol);
+console.log("Domain   :", alamat.hostname);
+console.log("Path     :", alamat.pathname);
+console.log("Ukuran   :", alamat.searchParams.get("ukuran"));
+console.log("Jumlah   :", alamat.searchParams.get("jumlah"));
+</div>
+
+<h3>Isi sebuah request dan response</h3>
+<p>Percakapannya memakai bahasa bernama <b>HTTP</b>. Kalau "diintip", bentuknya kira-kira seperti ini:</p>
+<pre class="code">REQUEST (dari browser)
+GET /produk/kopi?ukuran=besar HTTP/1.1
+Host: toko.contoh.id
+
+RESPONSE (dari server)
+HTTP/1.1 200 OK
+Content-Type: text/html
+
+&lt;h1&gt;Kopi Susu&lt;/h1&gt;
+&lt;p&gt;Rp18.000&lt;/p&gt;</pre>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Artinya</th></tr>
+  <tr><td><b>Metode</b> (GET)</td><td>Apa yang ingin dilakukan</td></tr>
+  <tr><td><b>Header</b> (Host, Content-Type)</td><td>Keterangan tambahan: untuk siapa, jenis isinya apa</td></tr>
+  <tr><td><b>Kode status</b> (200 OK)</td><td>Hasil singkat: berhasil atau tidak</td></tr>
+  <tr><td><b>Body</b></td><td>Isi utamanya: halaman HTML, data, atau gambar</td></tr>
+</table>
+
+<h3>Empat metode yang paling sering</h3>
+<table class="tbl">
+  <tr><th>Metode</th><th>Artinya</th><th>Di restoran</th></tr>
+  <tr><td>GET</td><td>Meminta atau membaca data</td><td>Melihat menu</td></tr>
+  <tr><td>POST</td><td>Mengirim data baru</td><td>Memesan makanan</td></tr>
+  <tr><td>PUT / PATCH</td><td>Mengubah data yang sudah ada</td><td>Mengganti pesanan</td></tr>
+  <tr><td>DELETE</td><td>Menghapus data</td><td>Membatalkan pesanan</td></tr>
+</table>
+
+<h3>Kode status: jawaban singkat server</h3>
+<div data-diagram="compare3" data-cols="2xx — berhasil::200 OK::201 data dibuat|4xx — salah di peminta::404 tidak ditemukan::401 belum login|5xx — salah di server::500 server error::503 sedang sibuk" data-caption="Angka pertamanya sudah memberi tahu siapa yang salah"></div>
+<p>Dua yang paling sering kamu temui: <b>404</b> (halaman tidak ada — salah ketik alamat atau halamannya sudah dihapus) dan <b>500</b> (ada masalah di server; bukan salahmu). Ada juga <b>429</b>: kamu mengirim terlalu banyak permintaan dalam waktu singkat.</p>
+
+<h3>HTTPS dan gembok di browser</h3>
+<p><b>HTTPS</b> adalah HTTP yang isinya <b>dienkripsi</b>, sehingga orang di jaringan yang sama — misalnya di Wi-Fi kafe — tidak bisa membaca atau mengubah percakapanmu dengan server.</p>
+<div class="callout warn">
+<b>Gembok bukan jaminan situsnya jujur.</b> Gembok hanya berarti percakapanmu dengan <i>situs itu</i> aman dari penyadap. Situs palsu pun bisa memasang gembok. Di dunia crypto ini penting: selalu periksa <b>nama domainnya</b>, bukan hanya gemboknya.
+</div>
+
+<h3>Hubungannya dengan Web3</h3>
+<p>Saat dompet crypto menampilkan saldomu, ia juga mengirim request lewat internet ke sebuah server yang terhubung ke blockchain, lalu menerima response berisi angka saldo. Pola meminta-melayani ini tetap sama; yang berbeda hanyalah siapa yang menjawab dan dari mana datanya. Kita akan sampai ke sana di pelajaran API &amp; JSON.</p>
+`,
+          keyPoints: [
+            "Client meminta, server melayani; server hanyalah komputer yang menyala terus dan menunggu permintaan.",
+            "Saat membuka situs: DNS mengubah nama menjadi alamat IP, browser mengirim request, server mengirim response, browser menggambar halaman.",
+            "URL terdiri dari protokol, domain, path, dan query (nama=isi dipisah &).",
+            "Request punya metode (GET, POST, PUT/PATCH, DELETE); response punya kode status (2xx berhasil, 4xx salah peminta, 5xx salah server) dan body.",
+            "HTTPS mengenkripsi percakapan, tapi gembok bukan jaminan situsnya jujur — periksa nama domainnya."
+          ],
+          practice: [
+            { type: "number", q: "Pada URL https://a.contoh.id/cari?q=kopi&hal=3, berapa nilai hal?", answer: 3, tol: 0.5, hint: "Lihat bagian query setelah tanda tanya; pasangannya dipisah &.", solution: "Query-nya q=kopi dan hal=3, jadi hal bernilai 3." },
+            {
+              type: "choice",
+              q: "Kamu membuka toko.contoh.id/promo-lama dan muncul kode 404. Apa artinya?",
+              options: ["Halaman itu tidak ditemukan di server", "Server sedang rusak dan perlu diperbaiki", "Kamu harus login dulu", "Koneksi internetmu terputus"],
+              answer: 0,
+              hint: "Kode 4xx berarti masalahnya ada di permintaan, bukan di server.",
+              solution: "404 = tidak ditemukan: alamatnya salah atau halamannya sudah dihapus. Server sendiri baik-baik saja."
+            }
+          ],
+          quiz: [
+            {
+              q: "Apa tugas DNS?",
+              options: [
+                "Menerjemahkan nama situs menjadi alamat IP",
+                "Mengenkripsi percakapan dengan server",
+                "Menggambar halaman di layar browser",
+                "Menyimpan password semua pengguna"
+              ],
+              answer: 0,
+              explain: "DNS adalah buku telepon internet: nama yang mudah diingat manusia diubah menjadi nomor alamat server."
+            },
+            {
+              q: "Metode HTTP apa yang dipakai untuk mengirim pesanan baru?",
+              options: ["POST", "GET", "DELETE", "HEAD"],
+              answer: 0,
+              explain: "GET untuk membaca, POST untuk mengirim data baru, DELETE untuk menghapus."
+            },
+            {
+              q: "Kode status 500 berarti…",
+              options: [
+                "Ada masalah di server",
+                "Halamannya tidak ada",
+                "Kamu belum login",
+                "Permintaan berhasil"
+              ],
+              answer: 0,
+              explain: "Kode 5xx berarti kesalahan ada di pihak server, bukan di permintaanmu."
+            },
+            {
+              q: "Sebuah situs \"airdrop\" memakai HTTPS dengan gembok. Apa kesimpulan yang benar?",
+              options: [
+                "Percakapan terenkripsi, tapi situsnya belum tentu asli",
+                "Situs itu pasti resmi dan aman dipakai",
+                "Situs itu sudah diperiksa oleh OJK",
+                "Dompetmu otomatis terlindungi dari penipuan"
+              ],
+              answer: 0,
+              explain: "Gembok hanya melindungi dari penyadap. Situs palsu pun bisa memasangnya — periksa nama domainnya."
+            }
+          ]
+        },
+        {
+          id: "cd-web-2",
+          title: "Frontend, Backend & Database — Tiga Lapis Sebuah Aplikasi",
+          duration: "17 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Client mengirim <b>request</b>, server mengirim <b>response</b>; metode POST dipakai untuk mengirim data baru (<a href="#/lesson/cd-web-1">pelajaran sebelumnya</a>).
+</div>
+
+<p>Hampir setiap aplikasi — toko online, aplikasi ojek, media sosial — terdiri dari tiga lapis. Kita kembali ke analogi restoran:</p>
+<div data-diagram="pipeline" data-stages="Frontend::ruang makan — yang kamu lihat|Backend::dapur — aturan dan rahasia|Database::gudang — ingatan aplikasi" data-caption="Tiga lapis sebuah aplikasi web"></div>
+
+<h3>1. Frontend: yang kamu lihat dan sentuh</h3>
+<p>Frontend berjalan <b>di browser atau HP-mu</b>. Ia dibuat dari tiga bahan:</p>
+<table class="tbl">
+  <tr><th>Bahan</th><th>Tugasnya</th><th>Seperti di rumah</th></tr>
+  <tr><td><b>HTML</b></td><td>Isi dan kerangka: judul, paragraf, tombol</td><td>Dinding dan ruangan</td></tr>
+  <tr><td><b>CSS</b></td><td>Tampilan: warna, ukuran, jarak</td><td>Cat dan dekorasi</td></tr>
+  <tr><td><b>JavaScript</b></td><td>Perilaku: apa yang terjadi saat tombol ditekan</td><td>Listrik dan saklar</td></tr>
+</table>
+<p>Coba sendiri — ini halaman web sungguhan. Ubah harga, warna, atau tulisan tombolnya, lalu tekan tombol <b>Pesan</b> di hasilnya:</p>
+<div data-demo="html-playground">
+&lt;h2&gt;Kopi Susu&lt;/h2&gt;
+&lt;p class="harga"&gt;Rp18.000&lt;/p&gt;
+&lt;button id="tombol"&gt;Pesan&lt;/button&gt;
+&lt;p id="status"&gt;Belum ada pesanan&lt;/p&gt;
+
+&lt;style&gt;
+  body { font-family: sans-serif; padding: 12px; }
+  .harga { color: #b5532b; font-weight: bold; font-size: 20px; }
+  button { padding: 8px 16px; border-radius: 8px; }
+&lt;/style&gt;
+
+&lt;script&gt;
+  let jumlah = 0;
+  document.getElementById("tombol").onclick = function () {
+    jumlah = jumlah + 1;
+    document.getElementById("status").textContent = "Sudah dipesan " + jumlah + " gelas";
+  };
+&lt;/script&gt;
+</div>
+<p>Baris <i>document.getElementById("status")</i> mencari bagian halaman yang diberi nama <i>status</i>, lalu mengganti tulisannya. Browser menyimpan halaman sebagai susunan bagian-bagian seperti ini, yang disebut <b>DOM</b>; JavaScript mengubah halaman dengan mengubah DOM.</p>
+
+<h3>2. Backend: aturan dan rahasia</h3>
+<p>Frontend punya satu kelemahan besar: <b>semua isinya bisa dilihat dan diubah pengguna</b>. Di laptop, cukup tekan F12. Bayangkan harga dihitung di frontend — orang iseng bisa mengubah Rp18.000 menjadi Rp1 sebelum mengirim pesanan.</p>
+<div data-diagram="vs" data-left="Frontend::di browser pengguna::bisa dilihat dan diubah::untuk tampilan" data-right="Backend::di server milikmu::tersembunyi dari pengguna::untuk aturan dan rahasia" data-caption="Aturan penting dan rahasia selalu tinggal di backend"></div>
+<p>Karena itu <b>backend</b> — program di server — mengerjakan hal-hal yang tidak boleh dipercayakan ke pengguna:</p>
+<ul>
+  <li><b>Memeriksa ulang</b> setiap data yang masuk: harga diambil dari daftar harga di server, bukan dari kiriman pengguna.</li>
+  <li><b>Menyimpan rahasia</b> seperti API key dan kata sandi database (<a href="#/lesson/ai-pro-1">Membangun Chatbot dengan API Claude</a>).</li>
+  <li><b>Menjalankan aturan bisnis</b>: stok cukup? voucher masih berlaku? pengguna sudah login?</li>
+</ul>
+<div class="callout warn">
+<b>Aturan emas pengembang web:</b> jangan pernah memercayai apa pun yang datang dari frontend. Periksa semuanya lagi di backend.
+</div>
+
+<h3>3. Database: ingatan aplikasi</h3>
+<p>Kalau server dimatikan lalu dinyalakan lagi, variabel di programnya hilang. Data yang harus bertahan — akun, pesanan, saldo — disimpan di <b>database</b>, biasanya berbentuk tabel seperti spreadsheet:</p>
+<table class="tbl">
+  <tr><th>id</th><th>pelanggan</th><th>menu</th><th>jumlah</th></tr>
+  <tr><td>1</td><td>Sari</td><td>Kopi Susu</td><td>2</td></tr>
+  <tr><td>2</td><td>Budi</td><td>Teh Manis</td><td>1</td></tr>
+  <tr><td>3</td><td>Sari</td><td>Roti Bakar</td><td>1</td></tr>
+</table>
+<p>Backend "bertanya" ke database dengan bahasa bernama <b>SQL</b>. Kalimatnya hampir seperti bahasa Inggris:</p>
+<pre class="code">SELECT menu, jumlah FROM pesanan WHERE pelanggan = 'Sari';</pre>
+<p>Artinya: "ambil kolom menu dan jumlah dari tabel pesanan, yang pelanggannya Sari" — hasilnya dua baris: Kopi Susu (2) dan Roti Bakar (1).</p>
+
+<h3>Satu pesanan, dari awal sampai akhir</h3>
+<div data-diagram="pipeline" data-stages="Frontend::tombol Pesan ditekan|Request::POST /pesanan berisi data pesanan|Backend::cek stok, hitung harga|Database::simpan pesanan|Response::Pesanan diterima" data-caption="Ketiga lapis bekerja sama dalam satu tekan tombol"></div>
+
+<h3>Di mana Web3 masuk?</h3>
+<p>Di aplikasi Web3 (DApp), <b>frontend-nya tetap HTML, CSS, dan JavaScript biasa</b>. Yang berubah adalah sebagian backend dan database: aturan penting dan data penting dipindahkan ke <b>smart contract</b> — program yang dijalankan ribuan komputer sekaligus dan bisa diperiksa siapa pun (<a href="#/lesson/bc-m-2">Smart Contract</a>). Peta lengkapnya ada di pelajaran terakhir modul ini.</p>
+`,
+          keyPoints: [
+            "Aplikasi web punya tiga lapis: frontend (yang dilihat), backend (aturan dan rahasia), database (ingatan).",
+            "Frontend dibuat dari HTML (isi), CSS (tampilan), dan JavaScript (perilaku); JavaScript mengubah halaman lewat DOM.",
+            "Semua isi frontend bisa dilihat dan diubah pengguna, jadi harga, aturan, dan rahasia harus diperiksa dan disimpan di backend.",
+            "Database menyimpan data yang harus bertahan, biasanya berbentuk tabel; backend bertanya kepadanya dengan SQL.",
+            "Di DApp, frontend tetap sama; sebagian backend dan database pindah ke smart contract."
+          ],
+          practice: [
+            {
+              type: "choice",
+              q: "Di sebuah toko online, frontend mengirim pesanan berisi {menu: \"Kopi Susu\", harga: 1}. Apa yang seharusnya dilakukan backend?",
+              options: [
+                "Mengambil harga dari daftar harga di server, mengabaikan harga kiriman",
+                "Menerima harga Rp1 karena itu yang dikirim pembeli",
+                "Menolak semua pesanan yang dikirim dari HP",
+                "Meminta pembeli mengetik ulang harganya"
+              ],
+              answer: 0,
+              hint: "Ingat aturan emas: jangan percaya apa pun dari frontend.",
+              solution: "Harga yang sah ada di server. Kiriman dari frontend bisa diubah siapa saja, jadi backend memakai datanya sendiri."
+            },
+            { type: "number", q: "Dari tabel pesanan di pelajaran ini, berapa total jumlah item yang dipesan Sari?", answer: 3, tol: 0.5, hint: "Jumlahkan kolom jumlah pada baris yang pelanggannya Sari.", solution: "Kopi Susu 2 + Roti Bakar 1 = 3." }
+          ],
+          quiz: [
+            {
+              q: "Bahan frontend mana yang mengatur warna dan ukuran tulisan?",
+              options: ["CSS", "HTML", "SQL", "JSON"],
+              answer: 0,
+              explain: "HTML untuk isi, CSS untuk tampilan, JavaScript untuk perilaku."
+            },
+            {
+              q: "Kenapa API key tidak boleh disimpan di frontend?",
+              options: [
+                "Isi frontend bisa dilihat siapa pun",
+                "Frontend tidak bisa menyimpan teks",
+                "API key hanya berlaku di database",
+                "Browser menghapusnya setiap hari"
+              ],
+              answer: 0,
+              explain: "Siapa pun bisa membuka kode frontend dan mengambil kuncinya, lalu memakainya atas tagihanmu."
+            },
+            {
+              q: "Apa tugas database?",
+              options: [
+                "Menyimpan data agar tetap ada walau server dimatikan",
+                "Menggambar halaman di layar pengguna",
+                "Mengenkripsi percakapan browser dan server",
+                "Menerjemahkan nama situs menjadi alamat IP"
+              ],
+              answer: 0,
+              explain: "Database adalah ingatan aplikasi: akun, pesanan, saldo."
+            },
+            {
+              q: "Di DApp, bagian mana yang biasanya TETAP sama seperti aplikasi Web2?",
+              options: [
+                "Frontend: HTML, CSS, dan JavaScript",
+                "Database pusat milik satu perusahaan",
+                "Login dengan email dan password",
+                "Aturan penting yang tersimpan di server"
+              ],
+              answer: 0,
+              explain: "Tampilannya tetap halaman web biasa; yang berpindah ke smart contract adalah aturan dan data penting."
+            }
+          ]
+        },
+        {
+          id: "cd-web-3",
+          title: "API & JSON — Cara Aplikasi Saling Bertukar Data",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Request dan response adalah percakapan client dengan server (<a href="#/lesson/cd-web-1">Client, Server &amp; HTTP</a>). Objek JavaScript menyimpan data berlabel seperti <i>{ menu: "Kopi Susu", harga: 28000 }</i> (<a href="#/lesson/cd-js-6">Array &amp; Objek</a>).
+</div>
+
+<p>Tidak semua response berisi halaman untuk dibaca manusia. Sering kali yang diminta hanyalah <b>data</b> — harga koin, cuaca, saldo — untuk diolah program lain. Jalur percakapan antar-program ini disebut <b>API</b>.</p>
+
+<h3>API = menu untuk program</h3>
+<p>Menu restoran memberi tahu apa saja yang bisa dipesan dan cara memesannya. <b>API</b> (<i>Application Programming Interface</i>) melakukan hal yang sama untuk program: apa saja yang boleh diminta, ke alamat mana, dan bentuk jawabannya seperti apa. Satu "item menu" disebut <b>endpoint</b>, misalnya:</p>
+<pre class="code">GET https://api.contoh.id/harga?koin=bitcoin</pre>
+<div data-diagram="flow" data-steps="Aplikasimu|Request ke endpoint: GET /harga?koin=bitcoin|Server API|Response berisi data JSON" data-caption="Aplikasi meminta data, bukan halaman"></div>
+
+<h3>JSON: bahasa data yang dipahami semua aplikasi</h3>
+<p>Jawabannya biasanya dalam format <b>JSON</b>, yang bentuknya hampir sama dengan objek JavaScript:</p>
+<pre class="code">{
+  "koin": "bitcoin",
+  "harga_idr": 1050000000,
+  "naik_24jam": -2.4,
+  "aktif": true,
+  "bursa": ["Indodax", "Tokocrypto"]
+}</pre>
+<table class="tbl">
+  <tr><th>Aturan JSON</th><th>Contoh</th></tr>
+  <tr><td>Nama kunci selalu dalam tanda petik ganda</td><td>"koin"</td></tr>
+  <tr><td>Teks dalam tanda petik ganda</td><td>"bitcoin"</td></tr>
+  <tr><td>Angka tanpa tanda petik dan tanpa titik ribuan; desimal memakai titik</td><td>1050000000, -2.4</td></tr>
+  <tr><td>true / false tanpa tanda petik</td><td>true</td></tr>
+  <tr><td>Daftar memakai kurung siku</td><td>["Indodax", "Tokocrypto"]</td></tr>
+</table>
+<p>JSON yang kamu terima hanyalah <b>teks</b>. Supaya bisa dipakai, ia diubah menjadi objek dengan <i>JSON.parse</i>; sebaliknya, objek diubah menjadi teks JSON dengan <i>JSON.stringify</i> sebelum dikirim:</p>
+<div data-demo="js-playground">
+// Pura-pura ini jawaban sebuah API harga (angkanya ilustrasi)
+const jawaban = '{"koin": "bitcoin", "harga_idr": 1050000000, "naik_24jam": -2.4}';
+
+const data = JSON.parse(jawaban);          // teks -> objek
+console.log(data.koin);
+console.log("Harga: Rp" + data.harga_idr.toLocaleString("id-ID"));
+if (data.naik_24jam &lt; 0) {
+  console.log("Turun " + Math.abs(data.naik_24jam) + "% dalam 24 jam");
+}
+
+const pesanan = { koin: "ethereum", jumlah: 2 };
+console.log("Dikirim ke API:", JSON.stringify(pesanan));   // objek -> teks
+</div>
+
+<h3>Memanggil API dari JavaScript</h3>
+<p>Di aplikasi sungguhan, request dikirim dengan <i>fetch</i>. Karena jawaban dari internet butuh waktu, dipakai kata <i>await</i> — "tunggu dulu sampai jawabannya datang":</p>
+<pre class="code">const res = await fetch("https://api.contoh.id/harga?koin=bitcoin");
+if (!res.ok) throw new Error("Gagal, kode status " + res.status);
+const data = await res.json();      // ubah body JSON menjadi objek
+console.log(data.harga_idr);</pre>
+<p>Kode di atas hanya contoh bacaan — alamat <i>api.contoh.id</i> tidak sungguhan.</p>
+
+<h3>API key, batas, dan biaya</h3>
+<ul>
+  <li><b>API key</b> — kata sandi untuk memakai API berbayar atau terbatas. Simpan di backend, jangan di frontend.</li>
+  <li><b>Batas permintaan</b> (<i>rate limit</i>) — terlalu banyak request dalam waktu singkat dijawab kode <b>429</b>.</li>
+  <li><b>Biaya</b> — banyak API menagih per panggilan, termasuk API model AI yang menagih per token.</li>
+</ul>
+
+<h3>API-nya blockchain: RPC</h3>
+<p>Dompet dan DApp membaca blockchain dengan cara yang sama persis: mengirim request JSON ke sebuah <b>node</b> — komputer yang menyimpan salinan blockchain. Jalurnya disebut <b>RPC</b>. Contoh menanyakan saldo sebuah alamat di Ethereum:</p>
+<pre class="code">REQUEST
+{"jsonrpc": "2.0", "method": "eth_getBalance",
+ "params": ["0x5B38Da6a701c568545dCfcB03FcB875f56beddC4", "latest"], "id": 1}
+
+RESPONSE
+{"jsonrpc": "2.0", "id": 1, "result": "0x56bc75e2d63100000"}</pre>
+<p>Hasilnya ditulis dalam heksadesimal dan satuan wei: 0x56bc75e2d63100000 = 100.000.000.000.000.000.000 wei = <b>100 ETH</b> (<a href="#/lesson/bc-hash-3">heksadesimal</a>, <a href="#/lesson/bc-remix-2">wei</a>). Banyak DApp tidak menjalankan node sendiri, melainkan memakai penyedia RPC — sebuah API berbayar seperti yang lain.</p>
+<div data-diagram="flow" data-steps="Dompet atau DApp|Request JSON: eth_getBalance|Node membaca blockchain|Response JSON: saldo dalam wei" data-caption="Membaca blockchain = memanggil API bernama RPC"></div>
+`,
+          keyPoints: [
+            "API adalah menu untuk program: apa yang boleh diminta, ke endpoint mana, dan bentuk jawabannya.",
+            "JSON adalah format data antar-aplikasi: kunci dan teks dalam petik ganda, angka tanpa titik ribuan, daftar dengan kurung siku.",
+            "JSON.parse mengubah teks menjadi objek; JSON.stringify mengubah objek menjadi teks; fetch + await memanggil API.",
+            "API key disimpan di backend; terlalu banyak request dijawab 429; banyak API berbayar per panggilan.",
+            "Blockchain dibaca lewat RPC: request JSON ke node, misalnya eth_getBalance, dijawab dalam heksadesimal dan wei."
+          ],
+          practice: [
+            { type: "number", q: "Sebuah API menjawab {\"harga\": 18000, \"jumlah\": 3}. Berapa harga × jumlah?", answer: 54000, tol: 0.5, hint: "18.000 × 3.", solution: "18.000 × 3 = 54.000." },
+            {
+              type: "choice",
+              q: "Mana penulisan JSON yang benar?",
+              options: ['{"harga": 18000}', "{harga: 18000}", '{"harga": 18.000}', "{'harga': 18000}"],
+              answer: 0,
+              hint: "Kunci memakai petik ganda; angka tanpa titik ribuan.",
+              solution: "Di JSON, kunci wajib dalam petik ganda dan angka ditulis tanpa titik ribuan."
+            }
+          ],
+          quiz: [
+            {
+              q: "Apa itu endpoint pada sebuah API?",
+              options: [
+                "Satu alamat permintaan, seperti satu item di menu",
+                "Komputer milik pengguna yang mengirim request",
+                "Kata sandi untuk memakai API berbayar",
+                "Bagian akhir file JSON yang wajib ada"
+              ],
+              answer: 0,
+              explain: "Misalnya GET /harga?koin=bitcoin adalah satu endpoint."
+            },
+            {
+              q: "Apa fungsi JSON.parse?",
+              options: [
+                "Mengubah teks JSON menjadi objek",
+                "Mengubah objek menjadi teks JSON",
+                "Mengirim request ke server API",
+                "Mengenkripsi data sebelum dikirim"
+              ],
+              answer: 0,
+              explain: "Jawaban API berupa teks; JSON.parse mengubahnya menjadi objek yang bisa dibaca dengan data.koin, data.harga, dan seterusnya."
+            },
+            {
+              q: "Aplikasimu mendapat kode 429 dari sebuah API. Apa artinya?",
+              options: [
+                "Terlalu banyak permintaan dalam waktu singkat",
+                "Datanya tidak ditemukan di server API",
+                "Server API sedang rusak total",
+                "Permintaanmu berhasil diproses"
+              ],
+              answer: 0,
+              explain: "429 = rate limit: tunggu sebentar atau kurangi frekuensi request."
+            },
+            {
+              q: "Bagaimana dompet crypto mengetahui saldomu?",
+              options: [
+                "Mengirim request JSON (RPC) ke node blockchain",
+                "Menghitung sendiri tanpa internet sama sekali",
+                "Membaca saldo yang tersimpan di seed phrase",
+                "Bertanya ke bank tempat rekeningmu berada"
+              ],
+              answer: 0,
+              explain: "Dompet memanggil node lewat RPC, misalnya eth_getBalance, persis seperti memanggil API biasa."
+            }
+          ]
+        },
+        {
+          id: "cd-web-4",
+          title: "Login: Akun & Password vs Dompet — Jembatan dari Web2 ke Web3",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Situs yang baik menyimpan <b>hash</b> password, bukan password aslinya (<a href="#/lesson/bc-fund-1">Hash dari Nol</a>). <b>Tanda tangan digital</b> dibuat dengan kunci privat dan bisa diperiksa siapa pun dengan kunci publik atau alamat (<a href="#/lesson/bc-fund-2">Tanda Tangan Digital dari Nol</a>).
+</div>
+
+<p>Perbedaan Web2 dan Web3 paling terasa saat <b>login</b>. Di Web2 kamu punya <b>akun</b> yang dipegang perusahaan; di Web3 kamu memegang <b>kunci</b> sendiri. Mari bandingkan langkah demi langkah.</p>
+
+<h3>Login Web2, langkah demi langkah</h3>
+<div data-diagram="pipeline" data-stages="Daftar::email dan password|Simpan::server menyimpan hash password|Login::password di-hash lalu dicocokkan|Tiket::server memberi tanda masuk|Pakai::setiap request membawa tiket" data-caption="Login Web2: server yang memegang akunmu"></div>
+<p>Setelah login berhasil, server memberi <b>tiket</b> berupa <i>session</i>, <i>cookie</i>, atau <i>token</i>. Seperti gelang konser: identitasmu dicek sekali di pintu, lalu kamu cukup menunjukkan gelang. Setiap request berikutnya membawa tiket itu, sehingga server tahu siapa yang meminta.</p>
+<p><b>Lupa password?</b> Tidak masalah — server yang memegang akunmu, jadi ia bisa mengirim tautan pengaturan ulang ke email. Kemudahan itu ada harganya: pemilik situs juga bisa <b>memblokir</b> akunmu, dan kalau database-nya <b>bocor</b>, datamu ikut bocor.</p>
+<p><b>Login dengan Google</b> bekerja dengan ide serupa: situs meminta Google menjamin bahwa kamu memang pemilik akun itu, sehingga kamu tidak perlu membuat password baru.</p>
+
+<h3>Login Web3: membuktikan kamu memegang kunci</h3>
+<p>Di Web3, tidak ada akun yang dipegang situs. Identitasmu adalah <b>alamat dompet</b>, dan buktinya adalah <b>tanda tangan</b>. Cara bakunya disebut <i>Sign-In with Ethereum</i>:</p>
+<div data-diagram="flow" data-steps="Situs memberi pesan berisi kode acak|Dompetmu menandatangani pesan itu|Situs memeriksa tanda tangan cocok dengan alamatmu|Kamu masuk, tanpa password" data-caption="Login Web3: tidak ada password yang disimpan siapa pun"></div>
+<p>Kode acak itu penting: tanda tangan lama tidak bisa dipakai ulang oleh penipu, karena setiap login meminta kode yang baru.</p>
+
+<h3>Perbandingan</h3>
+<table class="tbl">
+  <tr><th></th><th>Web2: akun &amp; password</th><th>Web3: dompet</th></tr>
+  <tr><td>Identitas</td><td>Email atau nomor HP</td><td>Alamat dompet</td></tr>
+  <tr><td>Yang disimpan situs</td><td>Hash password dan datamu</td><td>Tidak ada rahasia sama sekali</td></tr>
+  <tr><td>Lupa atau hilang</td><td>Atur ulang lewat email</td><td>Seed phrase hilang = aset hilang selamanya</td></tr>
+  <tr><td>Bisa diblokir?</td><td>Ya, oleh pemilik situs</td><td>Dompetnya tidak, tapi situs bisa menolak melayani</td></tr>
+  <tr><td>Risiko utama</td><td>Database situs bocor</td><td>Seed phrase dicuri, menandatangani pesan jebakan</td></tr>
+</table>
+<div data-diagram="vs" data-left="Web2::perusahaan memegang akunmu::mudah dipulihkan::bisa diblokir" data-right="Web3::kamu memegang kuncimu::tidak bisa dipulihkan::tidak bisa diblokir" data-caption="Kebebasan dan tanggung jawab datang bersamaan"></div>
+
+<h3>Jebakan yang perlu diwaspadai</h3>
+<ul>
+  <li><b>Pesan login seharusnya bisa dibaca.</b> Isinya biasanya nama situs, alamatmu, dan kode acak. Kalau yang muncul adalah izin <i>Approve</i>, <i>Permit</i>, atau deretan kode yang tidak bisa dibaca, itu bukan login — tolak (<a href="#/lesson/bc-air-2">Cara Aman Berburu Airdrop</a>).</li>
+  <li><b>Phishing berlaku di keduanya.</b> Situs palsu bisa meminta password Web2-mu atau tanda tangan dompetmu. Selalu periksa nama domainnya.</li>
+  <li><b>Tidak ada layanan pelanggan untuk seed phrase.</b> Siapa pun yang meminta seed phrase-mu — termasuk yang mengaku "admin" — adalah penipu.</li>
+</ul>
+`,
+          keyPoints: [
+            "Login Web2: daftar, server menyimpan hash password, login dicocokkan, server memberi tiket (session, cookie, atau token) yang dibawa setiap request.",
+            "Di Web2 akun dipegang perusahaan: mudah dipulihkan lewat email, tapi bisa diblokir dan bisa bocor.",
+            "Login Web3 (Sign-In with Ethereum): situs memberi pesan berkode acak, dompet menandatangani, situs memeriksa tanda tangan dengan alamat.",
+            "Di Web3 tidak ada password yang disimpan siapa pun, tapi seed phrase yang hilang tidak bisa dipulihkan.",
+            "Pesan login harus bisa dibaca; Approve, Permit, atau kode tak terbaca bukan login."
+          ],
+          practice: [
+            {
+              type: "choice",
+              q: "Saat menekan \"Login dengan dompet\", dompetmu menampilkan permintaan Approve untuk semua token USDT-mu. Apa yang sebaiknya dilakukan?",
+              options: [
+                "Tolak, karena login hanya butuh menandatangani pesan yang bisa dibaca",
+                "Setujui, karena semua situs Web3 memintanya saat login",
+                "Setujui, asal situsnya memakai HTTPS",
+                "Kirim seed phrase agar login lebih cepat"
+              ],
+              answer: 0,
+              hint: "Ingat bentuk pesan login yang wajar.",
+              solution: "Login cukup dengan tanda tangan atas pesan berisi nama situs dan kode acak. Approve memberi izin memindahkan tokenmu — itu jebakan."
+            }
+          ],
+          quiz: [
+            {
+              q: "Untuk apa server memberi session atau cookie setelah login?",
+              options: [
+                "Agar request berikutnya dikenali tanpa login ulang",
+                "Agar password bisa dibaca kembali oleh server",
+                "Agar situs berjalan tanpa koneksi internet",
+                "Agar data pengguna terhapus otomatis"
+              ],
+              answer: 0,
+              explain: "Seperti gelang konser: dicek sekali, lalu cukup ditunjukkan."
+            },
+            {
+              q: "Apa yang dibuktikan saat login dengan dompet?",
+              options: [
+                "Kamu memegang kunci privat alamat itu",
+                "Kamu punya saldo minimal di dompet",
+                "Kamu sudah mendaftar dengan email",
+                "Kamu tinggal di negara tertentu"
+              ],
+              answer: 0,
+              explain: "Tanda tangan yang cocok dengan alamat hanya bisa dibuat pemegang kunci privatnya."
+            },
+            {
+              q: "Kenapa pesan login Web3 berisi kode acak yang baru setiap kali?",
+              options: [
+                "Agar tanda tangan lama tidak bisa dipakai ulang",
+                "Agar biaya gas login menjadi lebih murah",
+                "Agar alamat dompetmu berubah setiap hari",
+                "Agar situs bisa membaca seed phrase-mu"
+              ],
+              answer: 0,
+              explain: "Kalau pesannya selalu sama, penipu yang pernah mendapat satu tanda tanganmu bisa memakainya lagi."
+            },
+            {
+              q: "Seed phrase dompetmu hilang. Siapa yang bisa memulihkannya?",
+              options: [
+                "Tidak ada siapa pun",
+                "Layanan pelanggan situs",
+                "Admin grup Telegram",
+                "Pengembang blockchain"
+              ],
+              answer: 0,
+              explain: "Tidak ada server yang memegang kuncimu. Itulah harga dari tidak bisa diblokir siapa pun."
+            }
+          ]
+        },
+        {
+          id: "cd-web-5",
+          title: "Dari Web2 ke DApp — Peta Lengkap Aplikasi Web3",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Aplikasi Web2 punya frontend, backend, dan database (<a href="#/lesson/cd-web-2">Tiga Lapis Sebuah Aplikasi</a>); data dibaca lewat API dalam bentuk JSON, dan blockchain dibaca lewat RPC (<a href="#/lesson/cd-web-3">API &amp; JSON</a>); di Web3 login berarti menandatangani dengan dompet (<a href="#/lesson/cd-web-4">Login</a>).
+</div>
+
+<p>Sekarang semua kepingan bisa disusun. Sebuah <b>DApp</b> — aplikasi terdesentralisasi — ternyata sebagian besar adalah aplikasi web biasa, ditambah beberapa bagian baru.</p>
+
+<h3>Anatomi sebuah DApp</h3>
+<div data-diagram="network" data-center="DApp" data-nodes="Frontend: HTML, CSS, JS|Dompet: login dan tanda tangan|RPC node: API ke blockchain|Smart contract: aturan dan data|Indexer: membaca data cepat|Penyimpanan file: IPFS atau server" data-caption="Enam bagian sebuah aplikasi Web3"></div>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Di Web2</th><th>Di Web3</th></tr>
+  <tr><td>Tampilan</td><td>HTML, CSS, JavaScript</td><td>Sama persis</td></tr>
+  <tr><td>Login</td><td>Email dan password</td><td>Dompet dan tanda tangan</td></tr>
+  <tr><td>Aturan penting</td><td>Backend di server perusahaan</td><td>Smart contract di blockchain</td></tr>
+  <tr><td>Data penting</td><td>Database perusahaan</td><td>Penyimpanan smart contract, terbuka untuk umum</td></tr>
+  <tr><td>Membaca data</td><td>API ke backend</td><td>RPC ke node, sering ditambah indexer</td></tr>
+  <tr><td>Mengubah data</td><td>Request POST, langsung</td><td>Transaksi: tanda tangan, gas, tunggu blok</td></tr>
+</table>
+<p><b>Indexer</b> perlu karena membaca blockchain langsung itu lambat — misalnya untuk menampilkan "semua transaksimu bulan ini". Indexer membaca blok-blok, menyusunnya ke database biasa, lalu menyediakannya lewat API. Jadi di balik banyak DApp tetap ada backend dan database Web2.</p>
+
+<h3>Yang tetap sama — keterampilan Web2-mu terpakai penuh</h3>
+<ul>
+  <li>Membuat tampilan yang jelas dan nyaman (UI/UX).</li>
+  <li>Memanggil API dan mengolah JSON.</li>
+  <li>Memahami HTTP, kode status, dan keamanan dasar web.</li>
+</ul>
+
+<h3>Yang berubah — dan harus dipikirkan sejak awal</h3>
+<ul>
+  <li><b>Setiap perubahan data adalah transaksi</b>: pengguna harus menandatangani, membayar gas, dan menunggu blok. Desain tampilan harus menjelaskan tahapan itu.</li>
+  <li><b>Kode smart contract tidak bisa diperbaiki</b> setelah di-deploy, jadi pengujian jauh lebih penting (<a href="#/lesson/bc-fdy-1">Foundry</a>).</li>
+  <li><b>Semua data di blockchain publik terbuka</b> — jangan menyimpan rahasia di sana.</li>
+  <li><b>Pengguna memegang kuncinya sendiri</b> — tidak ada tombol "lupa password".</li>
+</ul>
+
+<h3>Di mana serangan sering terjadi</h3>
+<div data-diagram="layers" data-items="Smart contract — bug kode|Tampilan web — disusupi atau dipalsukan|Server dan kunci — bocor atau dicuri|Pengguna — tertipu tanda tangan dan seed phrase" data-caption="Banyak kerugian Web3 justru terjadi di lapisan Web2 dan pengguna"></div>
+<p>Pencurian Bybit sebesar sekitar US$1,5 miliar pada 2025 terjadi lewat komputer pengembang dan tampilan web layanan dompet yang disusupi — bukan karena smart contract-nya jebol. Itulah alasan nyata kenapa pengembang Web3 perlu paham Web2.</p>
+
+<h3>Jalur belajarmu dari sini</h3>
+<div data-diagram="pipeline" data-stages="JavaScript::dasar logika|Web2::modul ini|Solidity::smart contract|Remix::coba di browser|ethers.js::sambungkan web ke kontrak|DApp::rangkai semuanya" data-caption="Dari dasar sampai aplikasi Web3 utuh"></div>
+<ol>
+  <li>Dasar JavaScript: <a href="#/lesson/cd-js-1">Variabel</a> sampai <a href="#/lesson/cd-js-6">Array &amp; Objek</a></li>
+  <li>Smart contract: <a href="#/lesson/cd-sol-1">Solidity dari Nol</a> lalu <a href="#/lesson/bc-remix-1">Remix IDE</a></li>
+  <li>Menyambungkan web ke kontrak: <a href="#/lesson/bc-pro-3">ethers.js</a></li>
+  <li>Merangkai semuanya: <a href="#/lesson/bc-dev-3">DApp Fullstack + AI</a></li>
+</ol>
+`,
+          keyPoints: [
+            "DApp = aplikasi web biasa + dompet + RPC node + smart contract, sering ditambah indexer dan penyimpanan file.",
+            "Tampilan, API, JSON, HTTP, dan UX tetap sama — keterampilan Web2 terpakai penuh.",
+            "Yang berubah: setiap perubahan data adalah transaksi bergas, kode kontrak tidak bisa diperbaiki, data blockchain terbuka, dan pengguna memegang kuncinya sendiri.",
+            "Indexer menyusun data blockchain ke database biasa supaya cepat dibaca — di balik banyak DApp tetap ada backend Web2.",
+            "Banyak kerugian Web3 terjadi di lapisan Web2 dan pengguna, seperti kasus Bybit 2025."
+          ],
+          practice: [
+            {
+              type: "choice",
+              q: "DApp-mu perlu menampilkan riwayat semua setoran pengguna selama setahun dengan cepat. Bagian apa yang paling membantu?",
+              options: [
+                "Indexer yang menyusun data blok ke database biasa",
+                "Menyimpan riwayat di frontend tiap pengguna",
+                "Memperbesar biaya gas setiap setoran",
+                "Meminta pengguna mengetik ulang riwayatnya"
+              ],
+              answer: 0,
+              hint: "Membaca blockchain langsung, blok demi blok, itu lambat.",
+              solution: "Indexer membaca blok-blok sekali, menyimpannya di database, lalu menyajikannya lewat API yang cepat."
+            }
+          ],
+          quiz: [
+            {
+              q: "Bagian DApp mana yang paling mirip aplikasi Web2 biasa?",
+              options: [
+                "Frontend: HTML, CSS, JavaScript",
+                "Smart contract di blockchain",
+                "Tanda tangan dari dompet",
+                "Biaya gas setiap transaksi"
+              ],
+              answer: 0,
+              explain: "Tampilan DApp dibuat dengan alat yang sama persis seperti situs web biasa."
+            },
+            {
+              q: "Kenapa mengubah data di DApp tidak secepat di aplikasi Web2?",
+              options: [
+                "Setiap perubahan adalah transaksi yang menunggu blok",
+                "Browser membatasi kecepatan semua situs Web3",
+                "Data harus dicetak ke kertas lebih dulu",
+                "Server DApp hanya buka pada jam kerja"
+              ],
+              answer: 0,
+              explain: "Pengguna menandatangani, membayar gas, lalu menunggu transaksi masuk blok."
+            },
+            {
+              q: "Apa tugas indexer pada DApp?",
+              options: [
+                "Menyusun data blockchain agar cepat dibaca",
+                "Menyimpan seed phrase semua pengguna",
+                "Mengganti smart contract yang ada bug",
+                "Menurunkan biaya gas setiap transaksi"
+              ],
+              answer: 0,
+              explain: "Indexer membaca blok-blok dan menyusunnya ke database biasa yang bisa ditanya lewat API."
+            },
+            {
+              q: "Pelajaran dari kasus Bybit 2025 bagi pengembang Web3 adalah…",
+              options: [
+                "Lapisan Web2 seperti tampilan dan server juga harus aman",
+                "Smart contract tidak perlu diuji karena jarang jebol",
+                "Dompet multi-tanda-tangan pasti aman dari apa pun",
+                "Bursa besar tidak mungkin kehilangan dana"
+              ],
+              answer: 0,
+              explain: "Serangannya lewat komputer pengembang dan tampilan web yang disusupi, bukan bug smart contract."
+            }
+          ]
+        },
+      ],
+    },
+    /* ---------------- MODUL 4: PYTHON: BAHASA AI & DATA ---------------- */
     {
       id: "cd-py",
       level: "Python",
@@ -1567,7 +2238,7 @@ print("Di atas rata-rata:", ramai)
         },
       ],
     },
-    /* ---------------- MODUL 4: SOLIDITY: BAHASA SMART CONTRACT ---------------- */
+    /* ---------------- MODUL 5: SOLIDITY: BAHASA SMART CONTRACT ---------------- */
     {
       id: "cd-sol",
       level: "Solidity",

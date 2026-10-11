@@ -4190,6 +4190,10 @@ console.log("Asimetris       : algoritmanya HARUS diganti.");</div>
           content: `
 <p><b>Web3</b> adalah visi internet generasi baru yang terdesentralisasi, di mana pengguna memiliki data & asetnya sendiri.</p>
 
+<div class="callout">
+<b>Bekal Web2.</b> Belum tahu bagaimana aplikasi web biasa bekerja — client dan server, frontend dan backend, login dengan akun? Modul <a href="#/lesson/cd-web-1">Web2 Dulu</a> di jalur Coding menjelaskannya dari nol, lengkap dengan perbandingan <a href="#/lesson/cd-web-4">login akun dan login dompet</a>.
+</div>
+
 <div data-diagram="pipeline" data-stages="Buka situs::antarmuka biasa|Hubungkan dompet::dompet jadi identitasmu|Tanda tangani::menyetujui aksi|Blockchain mencatat::tanpa akun &amp; kata sandi" data-caption="Di Web3, dompet menggantikan email dan kata sandi"></div>
 
 
@@ -6536,6 +6540,10 @@ function tarik(uint256 jumlah) public {
 <div class="callout ingat">
 <b>Ingat dulu</b><br>
 Kontrak <b>Celengan</b> yang sudah kamu deploy ke Sepolia punya fungsi <b>setor()</b> (payable → transaksi bertanda tangan yang membawa ETH dan memakai gas) dan <b>saldoKas()</b> (view → gratis). Tanda tangan dibuat oleh kunci privat di dompet — kode website tidak pernah boleh melihat kunci itu.
+</div>
+
+<div class="callout">
+<b>Bekal coding.</b> Pelajaran ini memakai JavaScript, API, dan JSON. Kalau terasa asing, mulai dari <a href="#/lesson/cd-js-1">Dasar JavaScript</a> dan <a href="#/lesson/cd-web-3">API &amp; JSON</a> di jalur Coding — termasuk cara dompet membaca saldo lewat RPC.
 </div>
 
 <h3>Kamus kecil sebelum membaca kode</h3>

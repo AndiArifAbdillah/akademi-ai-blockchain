@@ -7024,6 +7024,39 @@ DEMOS["js-playground"] = function (root) {
   root.textContent = "";
   buildPlayground(root, init || 'console.log("Halo dari playground!");');
 };
+/* Playground HTML: tulis HTML, CSS & JavaScript, lihat halamannya langsung di bawah.
+   Pratinjau berjalan di iframe sandbox (allow-scripts saja, tanpa allow-same-origin),
+   jadi kodenya tidak bisa menyentuh halaman Akademi maupun data penyimpanannya. */
+DEMOS["html-playground"] = function (root) {
+  const awal = (root.textContent || "").replace(/^\s*\n/, "").replace(/\s+$/, "");
+  root.textContent = "";
+  const ta = h("textarea", { class: "pg-code", spellcheck: "false", autocapitalize: "off", "aria-label": "Kode HTML" });
+  ta.value = awal;
+  ta.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab") return;
+    e.preventDefault();
+    const p = ta.selectionStart;
+    ta.value = ta.value.slice(0, p) + "  " + ta.value.slice(ta.selectionEnd);
+    ta.selectionStart = ta.selectionEnd = p + 2;
+  });
+  const bingkai = h("iframe", { class: "html-pratinjau", sandbox: "allow-scripts", title: "Pratinjau halaman", loading: "lazy" });
+  const tampilkan = () => { bingkai.srcdoc = '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' + ta.value; };
+  let jeda = null;
+  ta.addEventListener("input", () => { clearTimeout(jeda); jeda = setTimeout(tampilkan, 500); });
+  const jalan = h("button", { class: "btn primary", type: "button", text: "▶ Tampilkan ulang" });
+  const ulang = h("button", { class: "btn ghost", type: "button", text: "↺ Kode awal" });
+  jalan.onclick = tampilkan;
+  ulang.onclick = () => { ta.value = awal; tampilkan(); };
+  root.appendChild(h("div", { class: "demo pg" }, [
+    h("div", { class: "demo-head", html: "<b>Playground HTML — halaman web buatanmu sendiri</b>" }),
+    h("p", { class: "demo-hint", text: "Ubah kodenya; hasilnya langsung tampil di kotak putih di bawah — seperti browser mini. Coba ganti tulisan, warna, atau angka harga." }),
+    ta,
+    h("div", { class: "demo-controls" }, [jalan, ulang]),
+    h("span", { class: "pg-out-label", text: "Hasil:" }),
+    bingkai,
+  ]));
+  tampilkan();
+};
 /* Lab Solidity: Remix mini — compile & deploy kontrak sungguhan ke EVM di browser, lalu panggil fungsinya */
 DEMOS["sol-lab"] = function (root) {
   const awal = (root.textContent || "").replace(/^\s*\n/, "").replace(/\s+$/, "");

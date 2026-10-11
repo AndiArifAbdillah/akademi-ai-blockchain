@@ -25,7 +25,7 @@ const MODULE_ORDER = [
   "acc-mikro", "acc-terapan", "acc-audit", "acc-matematika", "acc-lanjutan", "acc-kualitas",
   "acc-bank", "acc-prospek", "acc-proyek", "acc-founder", "acc-investasi", "acc-teknikal", "acc-makro", "acc-arah",
   // 💻 Coding
-  "cd-dasar", "cd-js", "cd-py", "cd-sol",
+  "cd-dasar", "cd-js", "cd-web", "cd-py", "cd-sol",
 ];
 (function urutkanModul() {
   const pos = (id) => {
@@ -1828,7 +1828,20 @@ const GLOSSARY = [
   ["Cap table", "Tabel kapitalisasi: daftar siapa memiliki berapa persen saham sebuah perusahaan dari putaran ke putaran."],
   ["Post-money", "Valuasi perusahaan sesudah uang investor masuk = valuasi pre-money + setoran; porsi investor = setoran ÷ post-money."],
   ["Urun dana", "Securities crowdfunding: usaha kecil menawarkan saham, obligasi, atau sukuk kepada masyarakat lewat platform berizin OJK."],
-  ["Kenop", "Tombol putar, seperti pengatur volume radio. Di materi AI dipakai sebagai perumpamaan parameter: angka di dalam model yang diputar sedikit demi sedikit saat model belajar."],
+  ["Client", "Pihak yang meminta di internet — browser, aplikasi, atau HP-mu."],
+  ["Server", "Komputer yang menyala terus dan melayani permintaan dari banyak client."],
+  ["HTTP", "Bahasa percakapan antara browser dan server: request berisi metode (GET, POST…), response berisi kode status dan isi."],
+  ["HTTPS", "HTTP yang dienkripsi; melindungi dari penyadap, tapi bukan jaminan situsnya jujur."],
+  ["DNS", "Buku telepon internet: menerjemahkan nama situs menjadi alamat IP server."],
+  ["URL", "Alamat lengkap sebuah halaman atau data: protokol, domain, path, dan query."],
+  ["Frontend", "Bagian aplikasi yang berjalan di browser atau HP pengguna: HTML, CSS, dan JavaScript; isinya bisa dilihat siapa pun."],
+  ["Database", "Tempat aplikasi menyimpan data yang harus bertahan, biasanya berbentuk tabel; ditanya dengan bahasa SQL."],
+  ["Endpoint", "Satu alamat permintaan pada sebuah API, seperti satu item di menu."],
+  ["Cookie", "Tiket kecil yang disimpan browser setelah login, dibawa di setiap request agar server mengenalimu."],
+  ["RPC", "Jalur dompet dan DApp untuk bertanya ke node blockchain dengan request JSON, misalnya eth_getBalance."],
+  ["Indexer", "Layanan yang membaca blok-blok blockchain dan menyusunnya ke database biasa agar datanya cepat dicari."],
+  ["DOM", "Susunan bagian-bagian halaman web di memori browser; JavaScript mengubah halaman dengan mengubah DOM."],
+  ["Kenop","Tombol putar, seperti pengatur volume radio. Di materi AI dipakai sebagai perumpamaan parameter: angka di dalam model yang diputar sedikit demi sedikit saat model belajar."],
 ];
 
 function renderGlossary() {
