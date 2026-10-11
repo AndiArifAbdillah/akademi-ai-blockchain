@@ -182,6 +182,7 @@ Peluang = <b>1 ÷ 2 = 0,5 = 50%</b>. Dari situlah angka 50% berasal.
 <div data-diagram="konvergensi" data-caption="Satu percobaan 1.000 lemparan: awalnya melompat-lompat, lama-lama mendekati 50%"></div>
 
 <h3>Coba sendiri — buktikan dengan simulasi</h3>
+<p>Kotak di bawah berisi kode <b>JavaScript</b>. Tidak perlu paham semuanya: tekan <b>▶ Jalankan</b>, lalu ubah angkanya dan lihat hasilnya. Penasaran cara membaca kode? Ada <a href="#/lesson/cd-nol-1">Apa itu Program?</a> di jalur Coding (10 menit).</p>
 <div data-demo="js-playground">// Simulasi lempar koin - lihat sendiri apa arti "50%"
 function lempar(berapaKali) {
   let gambar = 0;
@@ -3078,7 +3079,7 @@ console.log(hasil);     // hasil: 32</pre>
 </ol>
 
 <div class="callout">
-<b>Kabar baik:</b> playground di platform ini memakai <b>JavaScript</b>, jadi kamu sudah berlatih logika pemrograman sejak pelajaran pertama — perulangan, kondisi, fungsi. Konsepnya <b>sama persis</b> di Python, hanya cara menulisnya sedikit berbeda. Kamu tidak mulai dari nol.
+<b>Bekal coding.</b> Langkah 1 bisa kamu mulai hari ini tanpa memasang apa pun: modul <a href="#/lesson/cd-py-1">Python dari Nol</a> di jalur Coding (4 pelajaran) punya playground Python yang berjalan langsung di browser. Kamu juga tidak mulai dari nol: playground di jalur AI memakai <b>JavaScript</b>, dan logikanya (perulangan, kondisi, fungsi) <b>sama persis</b> di Python, hanya ejaannya berbeda. Belum pernah menulis kode sama sekali? Mulai dari <a href="#/lesson/cd-nol-1">Apa itu Program?</a> (10 menit).
 </div>
 `,
           keyPoints: [
@@ -3137,6 +3138,10 @@ console.log(hasil);     // hasil: 32</pre>
 <p>Python sendirian tidak bisa apa-apa untuk AI. Kekuatannya datang dari <b>pustaka</b>. Ini tiga yang paling wajib — dan urutannya bukan kebetulan.</p>
 
 <div data-diagram="layers" data-items="scikit-learn — melatih model|pandas — mengolah tabel data|NumPy — menghitung banyak angka sekaligus" data-caption="Tiga pustaka yang saling menumpuk: pandas dan scikit-learn sama-sama dibangun di atas NumPy"></div>
+
+<div class="callout">
+<b>Bekal coding.</b> Kode di pelajaran ini ditulis dengan Python: variabel, daftar angka dalam kurung siku, <i>import</i>, dan <i>print</i>. Kalau belum pernah membaca Python, dua pelajaran ini cukup sebagai bekal: <a href="#/lesson/cd-py-1">Python dari Nol</a> dan <a href="#/lesson/cd-py-3">Fungsi, List &amp; Dictionary</a>. Pelajaran terakhir modul itu, <a href="#/lesson/cd-py-4">List Comprehension &amp; Pustaka</a>, ditutup dengan peta pustaka yang dibahas di sini.
+</div>
 
 <h3>1. NumPy — fondasi semua perhitungan</h3>
 <p><b>NumPy</b> memberi Python kemampuan menghitung <b>banyak angka sekaligus</b>. Ini disebut <i>vectorization</i>.</p>
@@ -3353,10 +3358,10 @@ Proyek A butuh pustaka versi 1.0, proyek B butuh versi 2.0. Kalau semua dipasang
 
 <h3>Rencana 30 hari pertama</h3>
 
-<div data-diagram="timeline" data-events="Minggu 1::Python dasar di Colab|Minggu 2::pandas|Minggu 3::grafik dan statistik|Minggu 4::model pertama" data-caption="Empat minggu, empat bukti kemajuan"></div>
+<div data-diagram="timeline" data-events="Minggu 1::Python dasar|Minggu 2::pandas|Minggu 3::grafik dan statistik|Minggu 4::model pertama" data-caption="Empat minggu, empat bukti kemajuan"></div>
 <table class="tbl">
   <tr><th>Minggu</th><th>Fokus</th><th>Bukti berhasil</th></tr>
-  <tr><td>1</td><td>Python dasar di Colab</td><td>Bisa menulis fungsi &amp; perulangan sendiri</td></tr>
+  <tr><td>1</td><td>Python dasar: modul <a href="#/lesson/cd-py-1">Python dari Nol</a> di jalur Coding, lalu coba ulang di Colab</td><td>Bisa menulis fungsi &amp; perulangan sendiri</td></tr>
   <tr><td>2</td><td>pandas</td><td>Bisa membaca CSV dan meringkasnya per kategori</td></tr>
   <tr><td>3</td><td>matplotlib + statistik dasar</td><td>Bisa membuat grafik dari data sendiri</td></tr>
   <tr><td>4</td><td>scikit-learn</td><td>Satu model prediksi sederhana yang jalan</td></tr>
@@ -7782,6 +7787,10 @@ Workflow = rangkaian <b>node</b>, dimulai dari <b>trigger</b>; data mengalir lew
 </table>
 <p>Kata <b>$json</b> berarti "isi item yang sedang diproses". Kamu tidak perlu menghafalnya: di n8n, kolom data dari node sebelumnya bisa <b>diseret</b> ke kolom isian, dan ekspresinya ditulis otomatis.</p>
 
+<div class="callout">
+<b>Bekal coding.</b> Ekspresi n8n sebenarnya potongan kecil <b>JavaScript</b>, dan <i>$json.nama</i> adalah cara JavaScript mengambil isi sebuah objek. Kamu tidak wajib bisa coding untuk memakai n8n, tapi kalau ingin lebih leluasa, baca <a href="#/lesson/cd-js-6">Array &amp; Objek</a> dan <a href="#/lesson/cd-web-3">API &amp; JSON</a> di jalur Coding.
+</div>
+
 <h3>Lihat sendiri</h3>
 <div data-demo="n8n-alur"></div>
 
@@ -8135,6 +8144,10 @@ console.log("Masuk 3 item, keluar 3 item — node berikutnya menerima hasil ini.
   <tr><td><b>Environment variable</b></td><td>Pengaturan rahasia yang disimpan di server, di luar kode — tempat aman untuk API key</td></tr>
   <tr><td><b>await</b></td><td>"Tunggu dulu sampai jawabannya datang" — dipakai karena jawaban dari internet butuh waktu</td></tr>
 </table>
+
+<div class="callout">
+<b>Bekal coding.</b> Kamus di atas hanya ringkasan. Penjelasan lengkapnya ada di jalur Coding: <a href="#/lesson/cd-web-2">Frontend, Backend &amp; Database</a> (kenapa API key wajib tinggal di server) dan <a href="#/lesson/cd-web-3">API &amp; JSON</a> (request, API key, <i>fetch</i>, dan <i>await</i>). Kode di bawah memakai JavaScript; dasarnya ada di modul <a href="#/lesson/cd-js-1">Dasar JavaScript</a>.
+</div>
 
 <h3>1. Pasang SDK resmi</h3>
 <pre class="code">npm install @anthropic-ai/sdk</pre>
