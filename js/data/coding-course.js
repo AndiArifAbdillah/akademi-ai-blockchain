@@ -1083,7 +1083,365 @@ console.log("Total: " + total);
         },
       ],
     },
-    /* ---------------- MODUL 3: WEB2 DULU: CARA KERJA APLIKASI WEB ---------------- */
+    /* ---------------- MODUL 3: NGODING BARENG AI: ASISTEN CEPAT, KAMU PILOTNYA ---------------- */
+    {
+      id: "cd-ai",
+      level: "Bareng AI",
+      title: "Ngoding Bareng AI: Asisten Cepat, Kamu Pilotnya",
+      summary: "Cara bekerja bersama AI tanpa kehilangan kemampuan berpikir: resep meminta kode, siklus minta-baca-uji-pahami, membongkar kode AI yang terlihat benar tapi meleset, lalu lima jebakan mahal — fungsi karangan, versi usang, paket palsu, kunci rahasia bocor, dan kode yang menyentuh uang.",
+      lessons: [
+        {
+          id: "cd-ai-1",
+          title: "Ngoding Bareng AI — Cara Meminta, Membaca & Menguji Kode",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Fungsi</b> menerima masukan dan mengembalikan hasil dengan <i>return</i> (<a href="#/lesson/cd-js-3">Fungsi</a>), <b>perulangan for</b> mengulang langkah sebanyak yang diminta (<a href="#/lesson/cd-js-5">Perulangan</a>), dan <b>array</b> menyimpan banyak data berurutan (<a href="#/lesson/cd-js-6">Array &amp; Objek</a>).
+</div>
+
+<p>Sekarang kamu bisa meminta AI seperti Claude atau ChatGPT, "buatkan fungsi untuk menghitung ongkir", dan beberapa detik kemudian kodenya jadi. Lalu kenapa tadi repot-repot belajar variabel, if, dan perulangan?</p>
+<p>Karena AI menulis kode dengan <b>sangat cepat</b>, tapi kadang <b>salah dengan sangat yakin</b>. Yang bisa menangkap kesalahannya hanyalah orang yang bisa membaca kode. Pelajaran ini mengajarkan cara bekerja bersama AI: kamu yang memegang kemudi, AI yang mempercepat.</p>
+
+<h3>Pilot dan autopilot</h3>
+<p>Pesawat modern punya autopilot yang bisa terbang sendiri berjam-jam. Tapi pilot tetap wajib bisa menerbangkan pesawat, karena saat autopilot keliru atau cuaca berubah, pilotlah yang harus sadar lalu mengambil alih.</p>
+<div data-diagram="vs" data-left="AI = autopilot::mengetik cepat, tidak pernah lelah::bisa salah dengan yakin" data-right="Kamu = pilot::tahu tujuan dan aturannya::memeriksa dan bertanggung jawab" data-caption="Pembagian kerja yang sehat saat ngoding bareng AI"></div>
+<p>Gaya membuat aplikasi hanya dengan menyuruh AI tanpa pernah membaca kodenya dijuluki <b>vibe coding</b>. Untuk mencoba ide dalam satu sore, itu menyenangkan. Untuk aplikasi yang menyimpan data orang lain atau menyentuh uang, itu berbahaya.</p>
+
+<h3>Yang dikerjakan AI dengan baik, dan yang sering meleset</h3>
+<table class="tbl">
+  <tr><th>AI biasanya bagus untuk</th><th>AI sering meleset di</th></tr>
+  <tr><td>Menulis kerangka awal yang membosankan</td><td>Kasus pinggir: angka 0, daftar kosong, pembulatan</td></tr>
+  <tr><td>Menjelaskan kode baris demi baris</td><td>Mengarang fungsi atau pustaka yang tidak ada</td></tr>
+  <tr><td>Menerjemahkan JavaScript ke Python dan sebaliknya</td><td>Memakai cara lama dari pustaka yang sudah berubah</td></tr>
+  <tr><td>Menebak arti pesan error</td><td>Keamanan: kunci rahasia, izin akses, uang</td></tr>
+  <tr><td>Membuat contoh data dan soal latihan</td><td>Hal yang hanya kamu tahu: aturan usahamu, datamu</td></tr>
+</table>
+
+<h3>Resep meminta kode: lima bahan</h3>
+<p>Permintaan yang samar menghasilkan kode yang asal jadi. Bandingkan dua permintaan ini.</p>
+<p><b>Permintaan samar:</b></p>
+<pre class="code">buatkan kode diskon</pre>
+<p><b>Permintaan jelas:</b></p>
+<pre class="code">Saya sedang belajar JavaScript dasar.
+Buat fungsi diskon(total) untuk kedai kopi:
+- total 100000 atau lebih dapat diskon 10%
+- di bawah itu diskonnya 0
+Contoh: diskon(120000) menghasilkan 12000,
+diskon(99000) menghasilkan 0.
+Pakai if biasa, tanpa pustaka tambahan.
+Lalu jelaskan tiap baris dengan bahasa sederhana.</pre>
+<table class="tbl">
+  <tr><th>Bahan</th><th>Contohnya di permintaan jelas</th></tr>
+  <tr><td><b>1. Konteks</b>: siapa kamu, untuk apa</td><td>"Saya sedang belajar JavaScript dasar", "untuk kedai kopi"</td></tr>
+  <tr><td><b>2. Tugas</b> yang jelas</td><td>"Buat fungsi diskon(total)"</td></tr>
+  <tr><td><b>3. Aturan dan contoh</b> input-output</td><td>"100000 atau lebih dapat 10%", "diskon(99000) menghasilkan 0"</td></tr>
+  <tr><td><b>4. Batasan</b></td><td>"Pakai if biasa, tanpa pustaka tambahan"</td></tr>
+  <tr><td><b>5. Minta penjelasan</b></td><td>"Jelaskan tiap baris"</td></tr>
+</table>
+<p>Bahan ketiga paling sering dilupakan, padahal paling berguna: contoh input-output sekaligus menjadi <b>alat uji</b> untuk memeriksa jawaban AI.</p>
+
+<h3>Siklus kerja: minta, baca, uji, pahami</h3>
+<div data-diagram="cycle" data-steps="Minta dengan jelas|Baca kodenya|Uji dengan contoh|Pahami tiap baris" data-center="kamu pilotnya" data-caption="Kalau ujinya gagal atau ada baris yang belum dipahami, putar lagi dari awal. Baru dipakai setelah keempatnya beres."></div>
+<p>Langkah yang paling sering dilewati adalah <b>uji</b>. Kode yang terlihat rapi belum tentu benar. Mari buktikan.</p>
+
+<h3>Contoh nyata: kode AI yang terlihat benar</h3>
+<p>Seseorang meminta AI "buat fungsi untuk membagi tagihan makan rata ke beberapa orang". Jawaban AI-nya rapi: ada pembagian, pembulatan, dan perulangan. Di bawahnya kita tambahkan uji sederhana. Jalankan, lalu lihat baris terakhir.</p>
+<div data-demo="js-playground">// Permintaan: "buat fungsi untuk membagi tagihan rata"
+// Jawaban dari AI:
+function bagiTagihan(total, jumlahOrang) {
+  const bagian = Math.round(total / jumlahOrang);
+  const hasil = [];
+  for (let i = 0; i &lt; jumlahOrang; i++) {
+    hasil.push(bagian);
+  }
+  return hasil;
+}
+
+// Uji: apakah semua bagian dijumlah kembali menjadi total?
+const total = 100000;
+const tagihan = bagiTagihan(total, 3);
+let jumlah = 0;
+for (let i = 0; i &lt; tagihan.length; i++) {
+  jumlah = jumlah + tagihan[i];
+}
+console.log("Bagian tiap orang:", tagihan);
+console.log("Jumlah semua bagian:", jumlah, "dari", total);</div>
+<p>Hasilnya 99.999, bukan 100.000: <b>Rp1 hilang</b>. Sekarang ganti total menjadi 200000. Jumlahnya jadi 200.001: <b>kelebihan Rp1</b>.</p>
+<p>Kelihatannya sepele. Tapi bayangkan fungsi ini dipakai aplikasi patungan yang memproses ribuan tagihan setiap hari, atau smart contract yang membagi hasil penjualan. Selisih kecil yang berulang menjadi masalah besar, dan di blockchain transaksi yang sudah terjadi tidak bisa dibatalkan.</p>
+<div class="callout">
+<b>Kenapa AI bisa meleset di sini?</b> AI menulis jawaban yang <b>paling mirip</b> dengan contoh-contoh yang pernah ia pelajari, dan "bagi lalu bulatkan" memang cara yang paling sering ditulis orang. Pola yang umum belum tentu benar untuk kasusmu. AI di jendela chat juga biasanya tidak menjalankan kode yang ia tulis, jadi ia tidak melihat selisih Rp1 itu.
+</div>
+<p>Perbaikannya ada di latihan di bawah: orang terakhir menanggung sisa pembulatan, sehingga jumlahnya selalu tepat.</p>
+
+<h3>Empat pertanyaan sebelum memakai kode dari AI</h3>
+<ol>
+  <li><b>Apa masukan dan keluarannya?</b> Kalau kamu belum bisa menjawab ini, jangan dipakai dulu.</li>
+  <li><b>Ada nama yang asing?</b> Fungsi atau pustaka yang belum pernah kamu dengar bisa saja karangan AI. Cek di dokumentasi resminya.</li>
+  <li><b>Bagaimana di kasus pinggir?</b> Coba angka 0, daftar kosong, angka negatif, angka yang tidak habis dibagi, atau teks kosong.</li>
+  <li><b>Apa yang disentuh kode ini?</b> Kalau ia menghapus berkas, mengirim data ke internet, atau menyentuh uang dan kunci rahasia, bacalah dua kali.</li>
+</ol>
+<p><b>Kasus pinggir</b> (<i>edge case</i>) adalah masukan di ujung batas yang jarang terpikir, tapi justru paling sering membuat program salah. Pembagian 100000 untuk 3 orang adalah salah satunya, karena hasilnya tidak bulat.</p>
+
+<h3>Belajar bersama AI tanpa jadi malas berpikir</h3>
+<p>AI bisa menjadi guru privat yang paling sabar, atau tempat menyalin jawaban yang membuatmu tidak pernah benar-benar bisa. Bedanya ada di cara memakainya.</p>
+<table class="tbl">
+  <tr><th>Membuatmu makin pintar</th><th>Membuatmu bergantung</th></tr>
+  <tr><td>Menulis versimu dulu, lalu minta AI mengoreksinya</td><td>Langsung minta jawaban lengkap</td></tr>
+  <tr><td>Minta satu petunjuk saat buntu</td><td>Menyalin kode tanpa membacanya</td></tr>
+  <tr><td>Minta AI menjelaskan baris yang belum kamu pahami</td><td>Melewati baris yang membingungkan</td></tr>
+  <tr><td>Menjelaskan ulang dengan kata-katamu sendiri</td><td>Menganggap "sudah jalan" berarti "sudah paham"</td></tr>
+  <tr><td>Minta AI membuatkan soal latihan</td><td>Minta AI mengerjakan semua latihan</td></tr>
+</table>
+<p>Saat belajar, coba awali percakapan dengan perintah ini. AI akan bersikap seperti guru, bukan tukang ketik.</p>
+<pre class="code">Saya sedang belajar JavaScript dasar.
+Jangan beri jawaban lengkap.
+Beri satu petunjuk kecil saja, lalu tunggu saya mencoba.
+Kalau kode saya salah, tunjukkan barisnya dan tanyakan
+kenapa menurut saya baris itu salah.</pre>
+<div class="callout">
+<b>Ukuran sederhana:</b> kalau AI dimatikan besok, apakah kamu masih bisa menjelaskan kode yang kemarin kamu pakai? Kalau bisa, AI sedang membuatmu lebih cepat. Kalau tidak, AI sedang menggantikanmu belajar.
+</div>
+`,
+          keyPoints: [
+            "AI menulis kode dengan cepat tapi bisa salah dengan sangat yakin; yang bisa menangkap kesalahannya adalah orang yang bisa membaca kode.",
+            "Permintaan yang baik punya lima bahan: konteks, tugas, aturan dan contoh input-output, batasan, dan permintaan penjelasan.",
+            "Siklus kerja: minta, baca, uji, pahami. Baru dipakai setelah keempatnya beres.",
+            "Kode yang rapi belum tentu benar: fungsi bagi tagihan dari AI bisa kehilangan atau kelebihan Rp1 karena pembulatan.",
+            "Kasus pinggir (0, daftar kosong, negatif, hasil bagi yang tidak bulat) adalah tempat kesalahan paling sering bersembunyi.",
+            "Pakai AI sebagai guru: tulis versimu dulu, minta petunjuk, dan minta penjelasan baris demi baris."
+          ],
+          practice: [
+            { type: "code", q: "Kode dari AI di atas membuat jumlah tagihan meleset. Perbaiki fungsi bagiTagihan supaya jumlah semua bagian selalu sama dengan total: semua orang membayar hasil bagi yang dibulatkan ke bawah, dan orang terakhir menanggung sisanya.", starter: "function bagiTagihan(total, jumlahOrang) {\n  const bagian = Math.round(total / jumlahOrang);\n  const hasil = [];\n  for (let i = 0; i < jumlahOrang; i++) {\n    hasil.push(bagian);\n  }\n  return hasil;\n}", tests: [["bagiTagihan(100000, 3)", [33333, 33333, 33334]], ["bagiTagihan(200000, 3)", [66666, 66666, 66668]], ["bagiTagihan(90000, 3)", [30000, 30000, 30000]], ["bagiTagihan(10, 4)", [2, 2, 2, 4]]], hint: "Ganti Math.round dengan Math.floor (bulatkan ke bawah). Isi bagian itu untuk jumlahOrang - 1 orang pertama, lalu orang terakhir membayar total dikurangi semua yang sudah dibayar.", solution: "function bagiTagihan(total, jumlahOrang) {\n  const bagian = Math.floor(total / jumlahOrang);\n  const hasil = [];\n  for (let i = 0; i < jumlahOrang - 1; i++) {\n    hasil.push(bagian);\n  }\n  hasil.push(total - bagian * (jumlahOrang - 1));\n  return hasil;\n}" },
+            {
+              type: "choice",
+              q: "Kamu meminta AI membuat fungsi rataRata(daftar). Masukan mana yang paling perlu dicoba sebagai kasus pinggir?",
+              options: ["rataRata([]) — daftar kosong", "rataRata([80, 90, 100])", "rataRata([70, 75, 80])", "rataRata([60, 70])"],
+              answer: 0,
+              hint: "Kasus pinggir ada di ujung batas: masukan yang jarang terpikir oleh penulis kode.",
+              solution: "Daftar kosong membuat pembagian 0 dibagi 0, dan JavaScript menghasilkan NaN (bukan angka). Tiga pilihan lain adalah kasus biasa yang hampir pasti sudah benar."
+            },
+            {
+              type: "choice",
+              q: "Bahan permintaan mana yang paling membantumu MEMERIKSA jawaban AI?",
+              options: ["Contoh input dan output yang diharapkan", "Kata sopan seperti tolong dan terima kasih", "Permintaan agar kodenya sependek mungkin", "Nama bahasa pemrograman yang dipakai"],
+              answer: 0,
+              hint: "Bahan mana yang bisa langsung kamu jalankan untuk mengecek hasilnya?",
+              solution: "Contoh seperti diskon(99000) menghasilkan 0 bisa langsung diuji. Kalau kode AI memberi hasil lain, kamu tahu ada yang salah."
+            }
+          ],
+          quiz: [
+            {
+              q: "Kenapa tetap perlu bisa membaca kode walau AI bisa menulisnya?",
+              options: [
+                "Agar bisa menangkap kesalahan yang ditulis AI dengan yakin",
+                "Karena AI hanya bisa menulis kode dalam bahasa Inggris",
+                "Karena kode dari AI selalu lebih lambat saat dijalankan",
+                "Karena AI tidak bisa menulis kode lebih dari sepuluh baris"
+              ],
+              answer: 0,
+              explain: "AI cepat tapi bisa keliru tanpa ragu. Hanya orang yang bisa membaca kode yang bisa menangkap kesalahannya sebelum merugikan."
+            },
+            {
+              q: "Fungsi bagi tagihan dari AI memberi 33333 untuk tiap orang dari total 100000. Apa masalahnya?",
+              options: [
+                "Jumlah semua bagian 99999, Rp1 hilang",
+                "Fungsinya error karena memakai Math.round",
+                "Hasilnya bukan array sehingga tak bisa dipakai",
+                "Perulangannya berjalan tanpa pernah berhenti"
+              ],
+              answer: 0,
+              explain: "33333 × 3 = 99999. Pembulatan membuat jumlahnya tidak kembali ke total. Kesalahan ini hanya ketahuan kalau kodenya diuji."
+            },
+            {
+              q: "Dalam siklus kerja bersama AI, langkah apa yang paling sering dilewati?",
+              options: [
+                "Menguji kode dengan contoh, termasuk kasus pinggir",
+                "Menulis permintaan kepada AI dalam bahasa Indonesia",
+                "Menyalin kode dari jendela chat ke dalam editor",
+                "Memberi nama berkas sebelum kodenya disimpan"
+              ],
+              answer: 0,
+              explain: "Kode yang terlihat rapi sering langsung dipakai. Padahal uji dengan contoh dan kasus pinggir adalah cara tercepat menemukan kesalahan."
+            },
+            {
+              q: "Cara memakai AI yang membuatmu makin pintar adalah…",
+              options: [
+                "Menulis versimu dulu, lalu meminta AI mengoreksinya",
+                "Meminta jawaban lengkap supaya cepat selesai",
+                "Menyalin kode yang sudah jalan tanpa membacanya",
+                "Meminta AI mengerjakan semua soal latihan"
+              ],
+              answer: 0,
+              explain: "Mencoba sendiri lebih dulu memaksa otakmu berpikir. Koreksi dari AI lalu menunjukkan bagian mana yang belum kamu pahami."
+            }
+          ]
+        },
+        {
+          id: "cd-ai-2",
+          title: "Jebakan Ngoding dengan AI — Kode Karangan, Paket Palsu & Kunci Rahasia",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Siklus kerja bersama AI: <b>minta, baca, uji, pahami</b>, baru dipakai (<a href="#/lesson/cd-ai-1">pelajaran sebelumnya</a>). Pesan error dibaca dari jenis dan letak kesalahannya (<a href="#/lesson/cd-nol-3">Membaca Pesan Error Tanpa Panik</a>).
+</div>
+
+<p>Salah hitung Rp1 masih bisa diperbaiki. Pelajaran ini membahas jebakan yang lebih mahal: kode yang membuat datamu bocor atau uangmu hilang. Ada lima jebakan yang paling sering terjadi, dan sebagian besar bisa dihindari hanya dengan berhenti sejenak sebelum menekan Enter.</p>
+<div data-diagram="matrix" data-cells="Salah hitung Rp1 — lolos kalau tidak diuji|Fungsi karangan, versi usang — langsung error|Kunci bocor, paket palsu, celah kontrak|Perintah hapus dari agen AI — terasa, tapi terlambat" data-xlabel="Makin cepat ketahuan" data-ylabel="Makin kecil kerugiannya" data-caption="Jebakan paling berbahaya ada di kiri bawah: diam-diam, tapi mahal"></div>
+
+<h3>Jebakan 1 — Fungsi karangan</h3>
+<p>AI menebak kode yang terdengar masuk akal. Kadang tebakannya adalah fungsi yang <b>tidak pernah ada</b>. Jalankan contoh ini.</p>
+<div data-demo="js-playground">// Permintaan: "jumlahkan semua harga di array"
+// Jawaban AI yang terdengar masuk akal:
+const harga = [18000, 25000, 12000];
+const total = harga.sum();
+console.log("Total:", total);</div>
+<p>Pesannya kurang lebih <i>harga.sum is not a function</i>: array di JavaScript memang tidak punya fungsi bernama <i>sum</i>. Python punya <i>sum()</i>, dan AI mencampur keduanya. Kabar baiknya, kesalahan seperti ini langsung ketahuan begitu kodenya dijalankan, asalkan kamu bisa membaca pesan errornya. Perbaikannya cukup dengan perulangan <i>for</i> yang sudah kamu kenal, dan itu jadi latihan di bawah.</p>
+
+<h3>Jebakan 2 — Resep dari versi lama</h3>
+<p>AI belajar dari tulisan bertahun-tahun di internet, sehingga sering memakai cara lama dari pustaka yang sudah berubah. Contoh yang sangat sering terjadi di Web3 adalah pustaka <b>ethers.js</b>:</p>
+<pre class="code">// Versi 5 (lama), masih sering ditulis AI
+const wei = ethers.utils.parseEther("1.0");
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+// Versi 6 (sekarang)
+const wei = ethers.parseEther("1.0");
+const provider = new ethers.BrowserProvider(window.ethereum);</pre>
+<p>Kalau proyekmu memakai versi 6, kode versi lama gagal dengan error seperti <i>Cannot read properties of undefined</i>. Obatnya: sebutkan versinya di permintaanmu ("pakai ethers versi 6"), lalu cocokkan dengan <b>dokumentasi resmi</b>, bukan ingatan AI. Pelajaran <a href="#/lesson/bc-pro-3">Hubungkan Web ke Smart Contract</a> sudah memakai versi 6.</p>
+
+<h3>Jebakan 3 — Paket palsu</h3>
+<p>Kode sering dimulai dengan perintah memasang pustaka, seperti <i>npm install nama-paket</i> di JavaScript atau <i>pip install nama-paket</i> di Python. Masalahnya, AI kadang menyarankan <b>nama paket yang tidak ada</b>. Penjahat memanfaatkan ini: mereka mendaftarkan nama-nama karangan AI itu lalu mengisinya dengan program pencuri. Serangan ini dijuluki <b>slopsquatting</b>.</p>
+<p>Sebelum memasang paket yang disarankan AI, buka halamannya di <b>npmjs.com</b> (JavaScript) atau <b>pypi.org</b> (Python) dan periksa:</p>
+<ul>
+  <li><b>Namanya persis sama?</b> Paket palsu sering hanya beda satu huruf dari paket asli.</li>
+  <li><b>Berapa unduhannya per minggu?</b> Pustaka populer yang asli diunduh ribuan sampai jutaan kali.</li>
+  <li><b>Kapan terakhir diperbarui</b>, dan apakah ada tautan ke kode sumbernya?</li>
+  <li><b>Disebut di dokumentasi resmi</b> proyek yang sedang kamu pakai?</li>
+</ul>
+
+<h3>Jebakan 4 — Kunci rahasia bocor</h3>
+<p>Beberapa hal tidak boleh ditempel ke jendela chat AI mana pun, dan tidak boleh ditulis langsung di dalam kode.</p>
+<table class="tbl">
+  <tr><th>Rahasia</th><th>Kalau bocor</th></tr>
+  <tr><td><b>Seed phrase</b> (12–24 kata) dan <b>private key</b> dompet</td><td>Isi dompet bisa dikuras, dan transaksinya tidak bisa dibatalkan</td></tr>
+  <tr><td><b>API key</b>, misalnya kunci layanan AI</td><td>Orang lain memakai layanan itu, kamu yang membayar tagihannya</td></tr>
+  <tr><td>Kata sandi dan kunci database</td><td>Data pengguna bisa dicuri</td></tr>
+</table>
+<p>Kenapa jendela chat juga berbahaya? Isi percakapan tersimpan di server penyedia, bisa terbaca orang lain kalau akunmu dibobol, dan kebiasaan menempel rahasia lama-lama terbawa ke tempat yang lebih berbahaya. Kalau butuh bantuan AI, ganti dulu rahasianya dengan teks palsu seperti <i>KUNCI_RAHASIA_DI_SINI</i>.</p>
+<p>Di dalam proyek, rahasia disimpan di berkas <b>.env</b> yang <b>tidak ikut diunggah</b> ke GitHub, caranya dengan mendaftarkannya di berkas <i>.gitignore</i>. Ada bot yang terus memindai GitHub mencari kunci yang tak sengaja terunggah, dan bot itu menemukannya dengan cepat. Contoh penerapannya ada di <a href="#/lesson/bc-fdy-2">Anvil, Cast &amp; Script</a>.</p>
+<div class="callout warn">
+<b>Kalau terlanjur bocor:</b> untuk API key, segera cabut dan buat kunci baru di dasbor penyedianya. Untuk seed phrase atau private key, anggap dompet itu sudah dipegang orang lain: pindahkan isinya ke dompet baru secepatnya. Menghapus percakapan atau commit <b>tidak</b> menarik kembali rahasia yang sudah terlihat.
+</div>
+
+<h3>Jebakan 5 — Kode yang menyentuh uang</h3>
+<p>Smart contract adalah tempat paling berbahaya untuk kode yang tidak dipahami: kontrak yang sudah dipasang di blockchain sulit diubah, dan transaksinya tidak bisa dibatalkan. AI bisa menulis kontrak yang lolos compile dan tampak berjalan, tapi menyimpan celah. Sebelum memakai kontrak buatan AI, tanyakan:</p>
+<ul>
+  <li><b>Siapa yang boleh memanggil fungsi ini?</b> Fungsi penarikan dana tanpa pemeriksaan <i>msg.sender</i> berarti siapa pun boleh menarik (<a href="#/lesson/cd-sol-2">Siapa yang Memanggil?</a>).</li>
+  <li><b>Apa jadinya kalau fungsi dipanggil berulang-ulang, bahkan sebelum panggilan pertama selesai?</b> Ini pintu serangan <i>reentrancy</i> (<a href="#/lesson/bc-dev-2">Keamanan Smart Contract</a>).</li>
+  <li><b>Sudah diuji di testnet</b> dengan uang mainan, termasuk kasus pinggirnya?</li>
+</ul>
+<div class="callout warn">
+<b>Penipuan yang memakai nama AI:</b> "bot trading AI", "skrip klaim airdrop otomatis", atau "kode dari AI untuk memulihkan dompet" yang memintamu memasukkan private key atau seed phrase. Program yang sah tidak pernah meminta seed phrase-mu. Pola lainnya ada di <a href="#/lesson/bc-a-4">Keamanan &amp; Penipuan</a>.
+</div>
+
+<h3>Bonus: agen AI yang bisa menjalankan perintah</h3>
+<p>Alat seperti Claude Code, Cursor, atau GitHub Copilot dalam mode agen tidak hanya menulis kode. Mereka bisa <b>menjalankan perintah</b> di komputermu: memasang paket, mengubah berkas, bahkan menghapusnya. Ini sangat menghemat waktu, asalkan memegang dua aturan:</p>
+<ol>
+  <li><b>Baca setiap perintah sebelum menyetujuinya</b>, terutama yang menghapus, memasang, atau mengirim sesuatu.</li>
+  <li>Waspadai <b>prompt injection</b>: instruksi tersembunyi di halaman web atau berkas yang dibaca agen bisa membelokkan kerjanya. Jangan jalankan agen di folder yang berisi kunci dompet atau rahasia lain.</li>
+</ol>
+
+<h3>Daftar periksa sebelum memakai kode dari AI</h3>
+<table class="tbl">
+  <tr><th>Pertanyaan</th><th>Kalau jawabannya "belum"</th></tr>
+  <tr><td>Bisakah aku menjelaskan apa yang dilakukan tiap baris?</td><td>Minta AI menjelaskan sampai paham, atau jangan dipakai</td></tr>
+  <tr><td>Sudah diuji, termasuk kasus pinggirnya?</td><td>Uji dulu dengan contoh input-output</td></tr>
+  <tr><td>Semua fungsi dan paket benar-benar ada di dokumentasi resmi?</td><td>Cek dokumentasi, npmjs.com, atau pypi.org</td></tr>
+  <tr><td>Tidak ada rahasia di kode maupun di chat?</td><td>Pindahkan ke .env; ganti kunci yang sempat terlihat</td></tr>
+  <tr><td>Kalau menyentuh uang: sudah diuji di testnet?</td><td>Jangan dipasang di jaringan utama dulu</td></tr>
+</table>
+<div class="callout">
+<b>Saat presentasi proyek atau Demo Day,</b> juri dan rekan kerja akan bertanya "bagian ini cara kerjanya bagaimana?". Memakai AI itu wajar dan cerdas. Yang berbahaya adalah memamerkan kode yang tidak bisa kamu jelaskan.
+</div>
+`,
+          keyPoints: [
+            "AI bisa mengarang fungsi yang tidak ada, misalnya harga.sum() di JavaScript; menjalankan kodenya langsung membongkar kesalahan ini.",
+            "AI sering memakai cara dari versi pustaka yang sudah usang. Sebutkan versinya dan cocokkan dengan dokumentasi resmi.",
+            "Slopsquatting: penjahat mendaftarkan nama paket karangan AI. Periksa nama, jumlah unduhan, dan sumbernya sebelum memasang.",
+            "Seed phrase, private key, API key, dan kata sandi tidak boleh ditempel ke chat AI atau ditulis di kode; simpan di .env yang tidak diunggah.",
+            "Kontrak buatan AI wajib dicek: siapa yang boleh memanggil, apa jadinya bila dipanggil berulang, dan sudah diuji di testnet.",
+            "Baca setiap perintah agen AI sebelum menyetujuinya."
+          ],
+          practice: [
+            { type: "code", q: "Kode dari AI memakai harga.sum() yang tidak ada di JavaScript. Perbaiki fungsi totalHarga(harga) supaya menjumlahkan semua angka di array dengan perulangan for.", starter: "function totalHarga(harga) {\n  return harga.sum();\n}", tests: [["totalHarga([18000, 25000, 12000])", 55000], ["totalHarga([5000])", 5000], ["totalHarga([])", 0]], hint: "Siapkan let jumlah = 0, lalu for (let i = 0; i < harga.length; i++) tambahkan harga[i] ke jumlah. Kembalikan jumlah.", solution: "function totalHarga(harga) {\n  let jumlah = 0;\n  for (let i = 0; i < harga.length; i++) {\n    jumlah = jumlah + harga[i];\n  }\n  return jumlah;\n}" },
+            {
+              type: "choice",
+              q: "AI menyarankan perintah npm install ethers-wallet-helperz. Apa langkah pertamamu?",
+              options: ["Cek halamannya di npmjs.com: nama, unduhan, sumber", "Langsung pasang karena disarankan AI", "Pasang dulu, hapus kalau ternyata error", "Minta AI memastikan paket itu aman"],
+              answer: 0,
+              hint: "Siapa yang bisa memastikan paket itu benar-benar ada dan dipakai banyak orang?",
+              solution: "Periksa sendiri di npmjs.com. Bertanya ke AI yang sama tidak cukup karena ia bisa mengarang lagi, dan memasang dulu berarti program jahatnya sudah sempat berjalan."
+            },
+            {
+              type: "choice",
+              q: "Kamu butuh bantuan AI memperbaiki skrip yang memakai private key. Apa yang aman ditempel ke chat?",
+              options: ["Kodenya, dengan kunci diganti teks palsu", "Kode lengkap beserta private key aslinya", "Private key saja, supaya AI bisa mengecek", "Seed phrase-nya, karena lebih pendek"],
+              answer: 0,
+              hint: "AI tidak butuh kunci asli untuk memahami kodenya.",
+              solution: "Ganti kunci dengan teks seperti KUNCI_RAHASIA_DI_SINI. Logika kodenya tetap bisa dibantu tanpa rahasia ikut terkirim."
+            }
+          ],
+          quiz: [
+            {
+              q: "Kode dari AI memunculkan error 'harga.sum is not a function'. Artinya…",
+              options: [
+                "Fungsi sum tidak ada pada array JavaScript",
+                "Array harga kosong sehingga tidak bisa dijumlah",
+                "Komputermu perlu memasang pustaka matematika",
+                "Angka di dalam array terlalu besar untuk dijumlah"
+              ],
+              answer: 0,
+              explain: "AI mengarang fungsi yang terdengar wajar. Array JavaScript tidak punya sum; penjumlahan ditulis dengan perulangan."
+            },
+            {
+              q: "Apa itu slopsquatting?",
+              options: [
+                "Nama paket karangan AI didaftarkan berisi program jahat",
+                "Teknik AI untuk menulis kode lebih cepat dan ringkas",
+                "Cara memperbarui semua pustaka ke versi terbaru",
+                "Kesalahan pembulatan angka pada kode buatan AI"
+              ],
+              answer: 0,
+              explain: "Penjahat memanfaatkan nama paket yang sering dikarang AI. Korban memasangnya karena percaya pada saran AI."
+            },
+            {
+              q: "Seed phrase dompetmu tak sengaja tertempel di chat AI. Langkah yang tepat?",
+              options: [
+                "Pindahkan isi dompet ke dompet baru secepatnya",
+                "Hapus percakapannya, maka seed phrase aman lagi",
+                "Ganti kata sandi akun AI-mu saja sudah cukup",
+                "Tidak perlu apa-apa karena AI tidak menyimpan chat"
+              ],
+              answer: 0,
+              explain: "Rahasia yang sudah terlihat tidak bisa ditarik kembali. Satu-satunya jalan aman adalah memindahkan dana ke dompet baru."
+            },
+            {
+              q: "Sebelum memasang smart contract buatan AI, pertanyaan terpenting adalah…",
+              options: [
+                "Siapa yang boleh memanggil fungsi penarikan dana",
+                "Apakah nama kontraknya sudah terdengar menarik",
+                "Apakah kodenya cukup pendek agar hemat gas",
+                "Apakah AI menulisnya dengan komentar yang rapi"
+              ],
+              answer: 0,
+              explain: "Fungsi penarikan tanpa pemeriksaan msg.sender bisa dipanggil siapa pun. Di blockchain, dana yang terkuras tidak bisa ditarik kembali."
+            }
+          ]
+        },
+      ],
+    },
+    /* ---------------- MODUL 4: WEB2 DULU: CARA KERJA APLIKASI WEB ---------------- */
     {
       id: "cd-web",
       level: "Web2",
@@ -1754,7 +2112,7 @@ Aplikasi Web2 punya frontend, backend, dan database (<a href="#/lesson/cd-web-2"
         },
       ],
     },
-    /* ---------------- MODUL 4: PYTHON: BAHASA AI & DATA ---------------- */
+    /* ---------------- MODUL 5: PYTHON: BAHASA AI & DATA ---------------- */
     {
       id: "cd-py",
       level: "Python",
@@ -2238,7 +2596,7 @@ print("Di atas rata-rata:", ramai)
         },
       ],
     },
-    /* ---------------- MODUL 5: SOLIDITY: BAHASA SMART CONTRACT ---------------- */
+    /* ---------------- MODUL 6: SOLIDITY: BAHASA SMART CONTRACT ---------------- */
     {
       id: "cd-sol",
       level: "Solidity",

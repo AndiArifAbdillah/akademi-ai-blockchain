@@ -25,7 +25,7 @@ const MODULE_ORDER = [
   "acc-mikro", "acc-terapan", "acc-audit", "acc-matematika", "acc-lanjutan", "acc-kualitas",
   "acc-bank", "acc-prospek", "acc-proyek", "acc-founder", "acc-investasi", "acc-teknikal", "acc-makro", "acc-arah",
   // 💻 Coding
-  "cd-dasar", "cd-js", "cd-web", "cd-py", "cd-sol",
+  "cd-dasar", "cd-js", "cd-ai", "cd-web", "cd-py", "cd-sol",
 ];
 (function urutkanModul() {
   const pos = (id) => {
@@ -325,11 +325,15 @@ const GLOSS_SKIP_TAGS = {
   PRE: 1, CODE: 1, A: 1, TEXTAREA: 1, BUTTON: 1, SELECT: 1, OPTION: 1,
   H1: 1, H2: 1, H3: 1, H4: 1, TH: 1,
 };
-function applyGlossary(root, maxTerms) {
+function applyGlossary(root, maxTerms, courseId) {
   if (typeof GLOSSARY === "undefined" || !root) return 0;
   const limit = maxTerms || 12;
-  // Istilah terpanjang didahulukan agar "Free Cash Flow" menang atas "Cash Flow"
-  const terms = GLOSSARY.slice().sort((a, b) => b[0].length - a[0].length);
+  // Istilah terpanjang didahulukan agar "Free Cash Flow" menang atas "Cash Flow".
+  // Elemen ke-3 (opsional) membatasi istilah ke jalur tertentu: "Permintaan" di ekonomi
+  // berarti demand, sedangkan di jalur Coding/AI berarti request.
+  const terms = GLOSSARY
+    .filter((t) => !t[2] || !courseId || t[2].includes(courseId))
+    .sort((a, b) => b[0].length - a[0].length);
   const used = new Set();
   let count = 0;
 
@@ -866,7 +870,7 @@ function renderLesson({ course, module, lesson }) {
   });
 
   // Tandai istilah sulit agar bisa diklik untuk melihat artinya
-  applyGlossary(body, 12);
+  applyGlossary(body, 12, course.id);
   body.addEventListener("click", (e) => {
     const t = e.target.closest ? e.target.closest(".gloss-term") : null;
     body.querySelectorAll(".gloss-pop").forEach((p) => p.remove());
@@ -1665,8 +1669,8 @@ const GLOSSARY = [
   ["Brain Wallet", "Dompet yang kuncinya dibuat dari kalimat pilihan sendiri — mudah ditebak dan sering dikuras."],
   ["Keccak-256", "Fungsi hash yang dipakai Ethereum, antara lain untuk membuat alamat dari kunci publik."],
   ["UTXO", "Cara Bitcoin mencatat dana sebagai koin-koin terpisah yang dibelanjakan utuh; sisanya menjadi kembalian."],
-  ["Permintaan", "Banyaknya barang yang ingin dan mampu dibeli pada setiap tingkat harga."],
-  ["Penawaran", "Banyaknya barang yang ingin dijual penjual pada setiap tingkat harga."],
+  ["Permintaan", "Banyaknya barang yang ingin dan mampu dibeli pada setiap tingkat harga.", ["accounting"]],
+  ["Penawaran", "Banyaknya barang yang ingin dijual penjual pada setiap tingkat harga.", ["accounting"]],
   ["Harga Keseimbangan", "Harga ketika jumlah yang diminta sama dengan jumlah yang ditawarkan."],
   ["Ceteris Paribus", "Syarat \"hal lain dianggap tetap\" — hanya satu faktor yang diubah saat menganalisis."],
   ["Surplus", "Kelebihan pasokan: pada harga tertentu barang yang ditawarkan melebihi yang diminta."],
@@ -1841,6 +1845,9 @@ const GLOSSARY = [
   ["RPC", "Jalur dompet dan DApp untuk bertanya ke node blockchain dengan request JSON, misalnya eth_getBalance."],
   ["Indexer", "Layanan yang membaca blok-blok blockchain dan menyusunnya ke database biasa agar datanya cepat dicari."],
   ["DOM", "Susunan bagian-bagian halaman web di memori browser; JavaScript mengubah halaman dengan mengubah DOM."],
+  ["Vibe coding", "Membuat aplikasi hanya dengan menyuruh AI tanpa membaca kodenya. Cukup untuk mencoba ide cepat, berbahaya untuk aplikasi yang menyimpan data orang atau menyentuh uang."],
+  ["Kasus pinggir", "Edge case: masukan di ujung batas yang jarang terpikir (angka 0, daftar kosong, angka negatif, hasil bagi yang tidak bulat) dan justru paling sering membuat program salah."],
+  ["Slopsquatting", "Serangan dengan mendaftarkan nama paket yang sering dikarang AI lalu mengisinya dengan program jahat; korban memasangnya karena disarankan AI."],
   ["Kenop","Tombol putar, seperti pengatur volume radio. Di materi AI dipakai sebagai perumpamaan parameter: angka di dalam model yang diputar sedikit demi sedikit saat model belajar."],
 ];
 
