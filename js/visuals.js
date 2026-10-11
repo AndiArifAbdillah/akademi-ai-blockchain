@@ -892,6 +892,7 @@ Object.assign(DIAGRAMS, {
 /* ---------- Deret kotak (array / list) ----------
    <div data-diagram="deret" data-nama="menu" data-isi="Kopi Susu|Teh Manis|Roti Bakar"
         data-negatif="ya" data-lewat="6" data-indeks="tidak"></div>
+   data-bawah="128|64|…": label bebas di bawah kotak.
    data-negatif: tampilkan juga nomor urut dari belakang (Python). data-lewat: satu kotak
    putus-putus di ujung yang TIDAK ikut (mis. batas akhir range). data-indeks="tidak": tanpa nomor urut. */
 Object.assign(DIAGRAMS, {
@@ -901,6 +902,8 @@ Object.assign(DIAGRAMS, {
     const n = isi.length + (lewat ? 1 : 0), nama = ds.nama || "";
     const gap = 10, bw = Math.min(120, (480 - (n - 1) * gap) / n), x0 = (520 - (n * bw + (n - 1) * gap)) / 2;
     const y = nama ? 34 : 10, bh = 58, pakaiIndeks = ds.indeks !== "tidak";
+    // data-bawah: label bebas di bawah tiap kotak (mis. nilai tempat bit 128|64|…), menggantikan nomor urut
+    const bawah = ds.bawah ? String(ds.bawah).split("|").map((t) => t.trim()) : null;
     let body = nama ? `<text x="${x0}" y="22" class="vt-xs vt-tegas">${vEsc(nama)}</text>` : "";
     const tulis = (x, teks, kelas) => {
       const b = vWrap(teks, Math.max(4, Math.floor(bw / 10))).slice(0, 2);
@@ -908,9 +911,11 @@ Object.assign(DIAGRAMS, {
     };
     isi.forEach((t, i) => {
       const x = x0 + i * (bw + gap);
-      body += `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="9" class="vbox accent"/>`;
+      // data-sorot: kotak yang isinya sama dengan nilai ini diwarnai (mis. bit bernilai 1)
+      body += `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="9" class="vbox accent ${ds.sorot && t === ds.sorot ? "aktif" : ""}"/>`;
       tulis(x, t, "vt-xs vt-tegas");
-      if (pakaiIndeks) {
+      if (bawah) body += `<text x="${x + bw / 2}" y="${y + bh + 22}" text-anchor="middle" class="vt-xs">${vEsc(bawah[i] || "")}</text>`;
+      else if (pakaiIndeks) {
         body += `<text x="${x + bw / 2}" y="${y + bh + 22}" text-anchor="middle" class="vt-xs">[${i}]</text>`;
         if (ds.negatif) body += `<text x="${x + bw / 2}" y="${y + bh + 46}" text-anchor="middle" class="vt-xs vt-redup" style="fill:var(--muted)">[${i - isi.length}]</text>`;
       }
@@ -922,7 +927,7 @@ Object.assign(DIAGRAMS, {
       body += `<line x1="${x + 10}" y1="${y + 10}" x2="${x + bw - 10}" y2="${y + bh - 10}" class="vline" style="stroke:var(--bad)"/>`;
       body += `<text x="${x + bw / 2}" y="${y + bh + 22}" text-anchor="middle" class="vt-xs" style="fill:var(--bad)">tidak ikut</text>`;
     }
-    const H = y + bh + (pakaiIndeks || lewat ? (ds.negatif ? 56 : 32) : 10);
+    const H = y + bh + (bawah || pakaiIndeks || lewat ? (ds.negatif && !bawah ? 56 : 32) : 10);
     return vFigure(ds.caption, `<svg viewBox="0 0 520 ${H}" class="viz-svg viz-besar" role="img" aria-label="Deret kotak">${body}</svg>`);
   },
 });
@@ -3505,12 +3510,49 @@ DEMOS["hash-sungguhan"] = function (root) {
     h("label", { class: "krip-label", text: "Teks A" }), a,
     h("label", { class: "krip-label", text: "Teks B" }), b,
     h("div", { class: "demo-controls" }, [
-      tombol("🟰 Samakan B dengan A", () => { b.value = a.value; }),
-      tombol("✏️ Tambah titik di B", () => { b.value = a.value + "."; }),
-      tombol("📚 Coba teks panjang", () => {
+      tombol("Samakan B dengan A", () => { b.value = a.value; }),
+      tombol("Tambah titik di B", () => { b.value = a.value + "."; }),
+      tombol("Coba teks panjang", () => {
         a.value = "Blockchain adalah buku catatan bersama yang salinannya dipegang ribuan komputer. Setiap halaman berisi sidik jari halaman sebelumnya, sehingga mengubah satu catatan lama akan merusak semua halaman sesudahnya dan langsung ketahuan oleh semua pemegang salinan.";
         b.value = a.value.replace("ribuan", "ratusan");
       }),
+    ]),
+    out,
+  ]));
+  draw();
+};
+
+/* ---------- Demo: memakai hash untuk memeriksa kiriman (penipu di tengah jalan) ---------- */
+DEMOS["hash-cek-kiriman"] = function (root) {
+  const ASLI = "Transfer Rp500.000 ke rekening 1234567890 a.n. Budi";
+  const kirim = h("textarea", { class: "krip-teks", rows: "2", "aria-label": "Pesan yang dikirim Andi" });
+  const terima = h("textarea", { class: "krip-teks", rows: "2", "aria-label": "Pesan yang diterima Budi" });
+  kirim.value = ASLI;
+  terima.value = ASLI;
+  const out = h("div", { class: "dm-out" });
+  const sidik = (hx) => '<div class="krip-hasil sidik">' + hx + "</div>";
+  function draw() {
+    const ha = KriptoMini.sha256(kirim.value), hb = KriptoMini.sha256(terima.value);
+    const cocok = ha === hb;
+    out.innerHTML =
+      '<div class="krip-judul">LANGKAH 1 · ANDI MENGHITUNG SIDIK JARI PESANNYA</div>' + sidik(ha) +
+      '<div class="krip-judul">LANGKAH 3 · BUDI MENGHITUNG SIDIK JARI PESAN YANG IA TERIMA</div>' + sidik(hb) +
+      (cocok
+        ? '<div class="pr-fb ok"><b>COCOK.</b> Sidik jarinya sama persis, jadi pesan yang diterima Budi sama persis dengan yang dikirim Andi — tidak ada satu huruf pun yang berubah.</div>'
+        : '<div class="pr-fb no"><b>TIDAK COCOK.</b> Sidik jarinya berbeda, jadi pasti ada yang mengubah pesan di tengah jalan. Budi tidak perlu tahu bagian mana yang diubah — cukup tahu bahwa pesan ini tidak boleh dipercaya.</div>');
+  }
+  kirim.addEventListener("input", draw);
+  terima.addEventListener("input", draw);
+  const tombol = (teks, aksi) => { const t = h("button", { class: "btn ghost", type: "button", text: teks }); t.onclick = () => { aksi(); draw(); }; return t; };
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Memeriksa kiriman dengan sidik jari</b>" }),
+    h("p", { class: "demo-hint", text: "Jadilah penipu: ubah pesan yang sampai ke Budi — ganti satu angka rekening, tambah satu spasi, apa saja — lalu lihat apakah Budi bisa mengetahuinya." }),
+    h("label", { class: "krip-label", text: "Pesan yang dikirim Andi" }), kirim,
+    h("label", { class: "krip-label", text: "Langkah 2 · Pesan yang sampai ke Budi (bisa diubah penipu di tengah jalan)" }), terima,
+    h("div", { class: "demo-controls" }, [
+      tombol("Penipu ganti 1 angka rekening", () => { terima.value = kirim.value.replace("1234567890", "1234567899"); }),
+      tombol("Penipu ganti nominal", () => { terima.value = kirim.value.replace("Rp500.000", "Rp5.000.000"); }),
+      tombol("Kembalikan pesan asli", () => { terima.value = kirim.value; }),
     ]),
     out,
   ]));

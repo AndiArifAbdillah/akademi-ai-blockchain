@@ -994,204 +994,192 @@ Ini edukasi, bukan saran investasi.
       id: "bc-fundamental",
       level: "Fundamental",
       title: "Fondasi Kriptografi: Hash, Kunci & Tanda Tangan",
-      summary: "Dari nol dan dengan demo sungguhan: hash sebagai sidik jari data, kenapa hash tak bisa dibalik, kunci privat–publik–alamat, tanda tangan digital, perjalanan satu transaksi, dan Merkle tree.",
+      summary: "Dari nol dan dengan demo sungguhan: hash sebagai sidik jari data, kenapa hash tak bisa dibalik, isi SHA-256 dari bit dan heksadesimal, kunci privat–publik–alamat, tanda tangan digital, perjalanan satu transaksi, dan Merkle tree.",
       lessons: [
         {
           id: "bc-fund-1",
           title: "Hash dari Nol — Sidik Jari untuk Data",
-          duration: "15 menit",
+          duration: "18 menit",
           content: `
-<p><b>Hash</b> adalah kata yang paling sering muncul di dunia crypto — dan paling jarang dijelaskan dengan baik. Pelajaran ini mulai benar-benar dari nol: apa itu, cara membuatnya dengan tangan, lalu mencoba yang sungguhan.</p>
-
-<div data-diagram="pipeline" data-stages="Data apa saja::teks, foto, file 1 GB|Fungsi hash::diaduk dengan rumus tetap|Sidik jari::selalu 64 karakter|Dipakai untuk::memeriksa &amp; mengunci" data-caption="Hash mengubah data sebesar apa pun menjadi sidik jari berukuran tetap"></div>
-
-<h3>Fundamental: sidik jari untuk data</h3>
-<div class="callout">
-<b>Sidik jarimu</b> punya tiga sifat penting:<br>
-• <b>Kecil, tapi mewakili yang besar</b> — satu ujung jari cukup mewakili seluruh dirimu.<br>
-• <b>Unik</b> — dua orang praktis tidak pernah punya sidik jari yang sama.<br>
-• <b>Tidak bisa dibalik</b> — dari sidik jari, polisi bisa mencocokkan pemiliknya, tapi tidak bisa menggambar wajah atau tinggi badanmu.<br><br>
-<b>Hash adalah sidik jari untuk data.</b> Sebuah kalimat, foto, atau file satu gigabyte diubah menjadi deretan pendek berukuran tetap. Dari deretan itu data aslinya tidak bisa dibangun kembali, tapi siapa pun bisa memastikan apakah dua data <b>persis sama</b>.
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Blockchain</b> adalah buku catatan bersama yang salinannya dipegang ribuan komputer (<a href="#/lesson/bc-p-1">Apa itu Blockchain?</a>). Pertanyaannya: kalau ribuan orang memegang salinan, bagaimana mereka yakin isinya tidak diubah diam-diam? Jawabannya dimulai dari satu alat kecil bernama <b>hash</b>.
 </div>
 
+<h3>Masalahnya dulu: bagaimana tahu pesan tidak diubah?</h3>
+<p>Andi mengirim pesan ke Budi: <i>"Transfer Rp500.000 ke rekening 1234567890 a.n. Budi"</i>. Pesan itu lewat internet, dan di tengah jalan bisa saja ada penipu yang mengganti satu angka rekening. Bagaimana Budi bisa tahu pesannya masih asli?</p>
+<ul>
+  <li><b>Mencocokkan dengan aslinya?</b> Budi tidak punya aslinya — justru itulah yang sedang dikirim.</li>
+  <li><b>Mengirim pesannya dua kali?</b> Penipu tinggal mengubah keduanya.</li>
+  <li><b>Kalau yang dikirim film 2 GB?</b> Mencocokkan miliaran angka satu per satu sangat lama.</li>
+</ul>
+<p>Yang dibutuhkan adalah <b>ringkasan pendek</b> dari sebuah data, yang <b>pasti berubah</b> kalau datanya berubah walau sedikit saja. Ringkasan seperti itulah yang disebut <b>hash</b>.</p>
+
+<h3>Hash = sidik jari untuk data</h3>
+<p>Sidik jarimu kecil, tapi mewakili seluruh dirimu: dua orang praktis tidak pernah punya sidik jari yang sama, dan dari sidik jari orang tidak bisa menggambar wajahmu. Hash sama persis, tapi untuk data. Kalimat, foto, atau film diubah oleh sebuah <b>"mesin hash"</b> menjadi deretan pendek:</p>
+<div data-diagram="flow" data-steps="Masukan: kata halo|Mesin hash SHA-256 mengaduknya|Keluaran: a4e63bca…bf16d777 (64 karakter)" data-caption="Data apa pun masuk, sidik jari pendek berukuran tetap keluar"></div>
+<div class="callout">
+<b>Satu benda, banyak nama.</b> Hasil mesin itu bisa disebut <b>hash</b>, <b>nilai hash</b>, <b>sidik jari digital</b>, <i>digest</i>, atau <i>checksum</i>. Semuanya menunjuk hal yang sama: deretan pendek yang mewakili sebuah data.
+</div>
 <div class="callout warn">
 <b>Analogi blender.</b> Memasukkan pisang, susu, dan madu lalu memblendernya itu mudah — dan resep yang sama selalu menghasilkan jus yang sama. Tapi mengembalikan jus menjadi pisang utuh? Mustahil. Hash bekerja seperti blender itu: <b>mudah ke depan, mustahil ke belakang</b>.
 </div>
 
 <h3>Coba buat hash sendiri — dengan tangan</h3>
-<p>Mari buat <b>hash mainan</b>: ganti setiap huruf dengan nomor urutnya (A = 1, B = 2, … Z = 26), jumlahkan, lalu ambil <b>dua digit terakhir</b>.</p>
+<p>Supaya terasa, kita buat <b>hash mainan</b> dengan tiga langkah:</p>
+<ol>
+  <li>Ganti setiap huruf dengan nomor urutnya: A = 1, B = 2, C = 3, … Z = 26.</li>
+  <li>Jumlahkan semua nomornya.</li>
+  <li>Ambil <b>dua digit terakhir</b> saja, supaya hasilnya selalu 2 angka berapa pun panjang katanya.</li>
+</ol>
 <table class="tbl">
-  <tr><th>Kata</th><th>Hitungan</th><th>Hash mainan</th></tr>
+  <tr><th>Kata</th><th>Langkah 1–2</th><th>Langkah 3: hash mainan</th></tr>
   <tr><td>BUDI</td><td>2 + 21 + 4 + 9 = 36</td><td><b>36</b></td></tr>
   <tr><td>ANDI</td><td>1 + 14 + 4 + 9 = 28</td><td><b>28</b></td></tr>
   <tr><td>DIBU</td><td>4 + 9 + 2 + 21 = 36</td><td class="bad-cell"><b>36</b> — sama dengan BUDI!</td></tr>
   <tr><td>BUDJ</td><td>2 + 21 + 4 + 10 = 37</td><td class="bad-cell"><b>37</b> — hanya beda 1 dari BUDI</td></tr>
 </table>
+<div data-diagram="vs" data-left="BUDI::2 + 21 + 4 + 9::hash mainan: 36" data-right="DIBU::4 + 9 + 2 + 21::hash mainan: 36 juga!" data-caption="Dua kata berbeda, sidik jari sama — ini disebut tabrakan"></div>
+<p>Hash mainan kita punya dua kelemahan besar. Pertama, <b>mudah bertabrakan</b>: cukup tukar urutan huruf, hasilnya sama. Kedua, <b>perubahan kecil hanya mengubah hasil sedikit</b>: BUDI menjadi BUDJ hanya menaikkan 36 ke 37, sehingga penipu bisa mengakalinya. Mesin hash sungguhan dirancang supaya kedua kelemahan itu tidak terjadi.</p>
 
-<p>Sekarang nilai hash mainan kita:</p>
-<table class="tbl">
-  <tr><th>Ujian</th><th>Hash mainan</th></tr>
-  <tr><td>Kata yang sama selalu menghasilkan angka yang sama?</td><td class="ok-cell">✅ Lulus</td></tr>
-  <tr><td>Ukuran hasilnya selalu tetap?</td><td class="ok-cell">✅ Lulus — selalu 2 digit</td></tr>
-  <tr><td>Tidak bisa dibalik?</td><td class="ok-cell">✅ Lulus — angka 36 bisa berasal dari ribuan kata</td></tr>
-  <tr><td>Sulit menemukan dua data dengan hash sama?</td><td class="bad-cell">❌ Gagal — cukup tukar urutan huruf</td></tr>
-  <tr><td>Perubahan kecil mengubah hasil secara total?</td><td class="bad-cell">❌ Gagal — BUDI → BUDJ hanya naik 1</td></tr>
-</table>
-
-<p>Hash mainan gagal dua ujian terakhir, sehingga penipu bisa mengakalinya. Fungsi hash sungguhan seperti <b>SHA-256</b> — yang dipakai Bitcoin — dirancang lulus <b>kelima-limanya</b>. Coba sendiri:</p>
-
+<h3>Hash sungguhan: SHA-256</h3>
+<p>Bitcoin memakai mesin hash bernama <b>SHA-256</b>. Untuk sekarang cukup tahu tiga hal: rumusnya <b>terbuka</b> untuk semua orang, hasilnya <b>selalu 64 karakter</b>, dan sudah diuji para ahli lebih dari 20 tahun tanpa pernah "jebol". Apa arti namanya dan bagaimana ia mengaduk data dibahas pelan-pelan di <a href="#/lesson/bc-hash-3">Apa Itu SHA-256?</a></p>
+<p>Coba sendiri — ketik apa saja dan lihat sidik jarinya:</p>
 <div data-demo="hash-sungguhan"></div>
 
-<h3>Contoh hasil SHA-256 sungguhan</h3>
-<p>Semua sidik jari di bawah ini dihitung dengan SHA-256 asli — sama persis dengan yang akan kamu dapat di demo atau di komputer mana pun. Agar muat di layar, hanya awal dan akhirnya yang ditampilkan; aslinya selalu 64 karakter.</p>
-<table class="tbl">
-  <tr><th>Data</th><th>Sidik jarinya (hash SHA-256)</th></tr>
-  <tr><td>kirim 0,5 koin ke Budi</td><td><code>9920abe318a7984c…9d2d3c0b</code></td></tr>
-  <tr><td>kirim <b>50</b> koin ke Budi</td><td class="bad-cell"><code>da2b4cc7ecd34094…bdfdbadd</code> — berubah total</td></tr>
-  <tr><td><b>K</b>irim 0,5 koin ke Budi</td><td class="bad-cell"><code>8f175beb0f4fa1cb…d9091dc9</code> — hanya huruf besar, tetap berubah total</td></tr>
-  <tr><td>halo</td><td><code>a4e63bcacf6c172a…bf16d777</code></td></tr>
-  <tr><td>buku berisi 500.000 huruf</td><td><code>0071c4a7e7200b57…d2ce99f8</code> — tetap 64 karakter</td></tr>
-</table>
-<p>Tiga hal langsung terlihat: mengubah <b>0,5 menjadi 50</b> mengubah seluruh sidik jari, bukan hanya sebagian; bahkan mengganti <b>satu huruf kecil menjadi huruf besar</b> pun begitu; dan kata "halo" maupun buku setebal 500 ribu huruf sama-sama menghasilkan <b>64 karakter</b>.</p>
+<h3>Lima sifat hash, satu per satu</h3>
+<h4>1. Masukan sama, hasil sama</h4>
+<p>Kata "halo" selalu menghasilkan <code>a4e63bca…bf16d777</code> — di HP-mu, di laptop temanmu, atau di komputer di Jepang. Seperti resep yang sama dengan takaran yang sama selalu menghasilkan kue yang sama. Istilah teknisnya <b>deterministik</b>. Karena sifat ini, ribuan komputer di jaringan blockchain bisa saling memeriksa tanpa perlu saling percaya.</p>
 
-<h3>Lima sifat hash — dan kenapa blockchain membutuhkannya</h3>
+<h4>2. Ukuran hasilnya selalu sama</h4>
+<p>Kata "halo" yang 4 huruf dan buku setebal 500.000 huruf sama-sama menghasilkan <b>64 karakter</b>. Seperti nomor resi paket yang panjangnya selalu sama, berapa pun isi paketnya. Karena itu sebuah blok bisa "menunjuk" data sebesar apa pun dengan ringkas.</p>
+
+<h4>3. Tidak bisa dibalik</h4>
+<p>Dari <code>a4e63bca…bf16d777</code>, tidak ada yang bisa menghitung mundur bahwa masukannya adalah "halo" — seperti jus yang tidak bisa dikembalikan menjadi pisang. Istilahnya <b>satu arah</b>. Karena itu sidik jari boleh diumumkan tanpa membocorkan isi aslinya. Kenapa ia tidak bisa dibalik dibahas di <a href="#/lesson/bc-hash-2">pelajaran berikutnya</a>.</p>
+
+<h4>4. Berubah sedikit, berubah total</h4>
+<p>Bandingkan "halo" dan "Halo" — bedanya hanya satu huruf besar:</p>
+<pre class="code">halo → a4e63bcacf6c172a d84f9f4523c8f1ac
+       af33676fa76d3258 c67b7e7bbf16d777
+
+Halo → 4e86512d9a0af8a7 43d42a1a0f3eaee0
+       945790ddb79c8db1 4309337c1235b2e4</pre>
+<p><b>61 dari 64 karakter</b> berubah, dan tidak ada pola yang bisa ditebak. Istilahnya <b>efek longsor</b> (<i>avalanche</i>): perubahan sekecil butir salju di puncak menjadi longsoran besar di bawah. Inilah yang membuat perubahan satu angka saja di sebuah transaksi langsung ketahuan.</p>
+
+<h4>5. Hampir mustahil ada dua data dengan hash sama</h4>
+<p>Hash mainan kita gagal di sini: BUDI dan DIBU sama-sama 36. Untuk SHA-256, sampai hari ini belum pernah ada yang menemukan dua data berbeda dengan hash yang sama, walaupun banyak ahli sudah mencarinya. Istilahnya <b>tahan tabrakan</b>. Artinya satu sidik jari benar-benar mewakili satu data saja.</p>
+
+<div data-diagram="network" data-center="Hash yang baik" data-nodes="Sama masuk, sama keluar|Ukuran selalu tetap|Tidak bisa dibalik|Beda sedikit, beda total|Tak ada kembaran" data-caption="Lima sifat yang membuat hash bisa dipercaya"></div>
+
+<h3>Cara memakai hash: memeriksa kiriman</h3>
+<p>Kembali ke Andi dan Budi. Dengan hash, caranya menjadi sederhana:</p>
+<div data-diagram="pipeline" data-stages="Andi::hitung sidik jari pesannya|Kirim::pesan berangkat lewat internet|Budi::hitung sidik jari pesan yang diterima|Bandingkan::sama berarti asli, beda berarti diubah" data-caption="Budi tidak perlu tahu isi aslinya — cukup membandingkan dua sidik jari"></div>
+<div data-demo="hash-cek-kiriman"></div>
+<div class="callout warn">
+<b>Satu syarat penting:</b> sidik jari dari Andi harus sampai lewat jalur yang <b>tidak bisa diubah penipu</b>. Kalau penipu bisa mengganti pesan sekaligus sidik jarinya, pemeriksaan ini ikut tertipu. Karena itu sidik jari biasanya diumumkan di tempat resmi, atau dikunci dengan <b>tanda tangan digital</b> (<a href="#/lesson/bc-fund-2">Tanda Tangan Digital dari Nol</a>).
+</div>
+
+<h3>Hash ada di sekitarmu</h3>
 <table class="tbl">
-  <tr><th>Sifat</th><th>Artinya</th><th>Kenapa penting di blockchain</th></tr>
-  <tr><td><b>Deterministik</b></td><td>Data sama → hash sama, di komputer mana pun</td><td>Ribuan node bisa memeriksa hal yang sama tanpa saling percaya</td></tr>
-  <tr><td><b>Ukuran tetap</b></td><td>Satu huruf atau satu film tetap 64 karakter</td><td>Blok bisa merujuk data sebesar apa pun secara ringkas</td></tr>
-  <tr><td><b>Satu arah</b></td><td>Dari hash tidak bisa kembali ke datanya</td><td>Sidik jari boleh dipublikasikan tanpa membocorkan isi aslinya</td></tr>
-  <tr><td><b>Efek longsor</b> (avalanche)</td><td>Ubah sedikit saja → sekitar separuh hash berubah</td><td>Perubahan sekecil apa pun pada transaksi lama langsung ketahuan</td></tr>
-  <tr><td><b>Tahan tabrakan</b></td><td>Praktis mustahil menemukan dua data berbeda dengan hash sama</td><td>Satu sidik jari benar-benar mewakili satu data saja</td></tr>
+  <tr><th>Tempat</th><th>Cara hash dipakai</th></tr>
+  <tr><td>Mengunduh aplikasi atau file</td><td>Situs resmi sering mencantumkan "SHA-256 checksum". Hitung hash file yang kamu unduh, lalu cocokkan — kalau beda, filenya rusak atau sudah dipalsukan.</td></tr>
+  <tr><td>Menyimpan password</td><td>Situs yang baik tidak menyimpan password-mu, melainkan hash-nya. Saat kamu login, password yang kamu ketik di-hash lalu dicocokkan.</td></tr>
+  <tr><td>Rantai blok</td><td>Setiap blok menyimpan hash blok sebelumnya. Mengubah blok lama mengubah hash-nya, sehingga sambungan ke blok sesudahnya putus.</td></tr>
+  <tr><td>ID transaksi</td><td>Nomor resi transaksi crypto adalah hash dari transaksi itu — bisa dicari di block explorer.</td></tr>
+  <tr><td>Penambangan</td><td>Penambang menebak-nebak angka sampai hash bloknya memenuhi syarat (<a href="#/lesson/bc-deep-2">Cara Kerja Penambangan</a>).</td></tr>
 </table>
 
-<h3>Apa sebenarnya SHA-256?</h3>
-<p><b>SHA</b> singkatan dari <i>Secure Hash Algorithm</i> — "algoritma hash yang aman". SHA-256 adalah anggota keluarga <b>SHA-2</b>, dirancang oleh NSA dan diterbitkan sebagai standar oleh NIST (lembaga standar Amerika Serikat) pada 2001. Angka <b>256</b> adalah panjang hasilnya: 256 bit. Rumusnya terbuka — siapa pun boleh memeriksa dan memakainya, dan justru karena sudah diperiksa para ahli selama puluhan tahun, ia dipercaya.</p>
+<h3>Hash bukan enkripsi</h3>
+<div data-diagram="vs" data-left="Enkripsi::seperti brankas berkunci::bisa dibuka dengan kunci::tujuannya merahasiakan" data-right="Hash::seperti segel atau sidik jari::tidak bisa dibuka siapa pun::tujuannya memeriksa keaslian" data-caption="Dua alat berbeda yang sering tertukar"></div>
+<p>Enkripsi mengunci data supaya bisa dibuka lagi oleh pemegang kunci. Hash tidak punya kunci dan tidak pernah dibuka — bahkan oleh pembuatnya. Perbedaan keduanya dibahas tuntas di <a href="#/lesson/bc-enk-1">Enkripsi, Hash &amp; Tanda Tangan</a>.</p>
 
-<h4>Cara kerjanya, tanpa rumus</h4>
-<table class="tbl">
-  <tr><th>Tahap</th><th>Yang terjadi</th></tr>
-  <tr><td>1. Ubah ke bit</td><td>Setiap huruf diubah menjadi 8 angka 0/1. "halo" menjadi 32 bit.</td></tr>
-  <tr><td>2. Ganjal & potong</td><td>Ditambah bit pengganjal dan keterangan panjang data, lalu dipotong per <b>512 bit</b> (64 huruf).</td></tr>
-  <tr><td>3. Aduk 64 putaran</td><td>Setiap potongan diaduk <b>64 kali</b> dengan operasi sederhana: menggeser bit, memutarnya, membandingkannya (XOR), dan menjumlahkannya.</td></tr>
-  <tr><td>4. Sambung-menyambung</td><td>Hasil adukan satu potongan ikut dibawa ke potongan berikutnya — karena itu huruf terakhir pun memengaruhi seluruh hasil.</td></tr>
-  <tr><td>5. Hasil akhir</td><td>Tersisa delapan angka, masing-masing 32 bit — totalnya <b>256 bit</b>, ditulis sebagai 64 karakter.</td></tr>
-</table>
 <div class="callout">
-<b>Analogi mengocok kartu.</b> Bayangkan mengocok setumpuk kartu 64 kali dengan aturan yang tetap dan diumumkan ke semua orang. Siapa pun yang memulai dari urutan kartu yang sama akan mendapat hasil akhir yang sama persis. Tapi dari hasil akhirnya, tidak ada yang bisa menebak urutan awalnya — terlalu banyak kemungkinan yang teraduk di tengah jalan.
+<b>Ringkasan dalam satu kalimat:</b> hash adalah mesin yang mengubah data apa pun menjadi sidik jari berukuran tetap — data sama menghasilkan sidik jari sama, beda sedikit menghasilkan sidik jari yang beda total, dan sidik jarinya tidak bisa dikembalikan menjadi data.
 </div>
-
-<h4>SHA-256 di dunia crypto</h4>
-<table class="tbl">
-  <tr><th>Di mana</th><th>Bagaimana dipakai</th></tr>
-  <tr><td>Bitcoin — blok & ID transaksi</td><td>SHA-256 dijalankan <b>dua kali</b> berturut-turut (<i>double SHA-256</i>)</td></tr>
-  <tr><td>Bitcoin — penambangan</td><td>Penambang mengulang SHA-256 triliunan kali per detik, mencari hash blok yang memenuhi syarat</td></tr>
-  <tr><td>Bitcoin — alamat</td><td>Kunci publik di-hash dengan SHA-256, lalu dengan hash lain bernama RIPEMD-160</td></tr>
-  <tr><td>Ethereum</td><td>Memakai saudaranya, <b>Keccak-256</b> — rumusnya berbeda, tapi hasilnya juga 64 karakter dan sifatnya sama</td></tr>
-  <tr><td>Di luar crypto</td><td>Gembok https di browser, pemeriksaan file unduhan, tanda tangan aplikasi</td></tr>
-</table>
-<div class="callout warn">
-<b>Kenapa harus SHA-256, bukan yang lebih lama?</b> Dulu dunia memakai <b>MD5</b> dan <b>SHA-1</b>. Keduanya sudah dibobol: tabrakan MD5 — dua data berbeda dengan hash sama — ditemukan tahun 2004, dan tabrakan SHA-1 dipamerkan peneliti Google dan CWI Amsterdam tahun 2017. Untuk SHA-256, sampai hari ini belum pernah ada yang menemukan satu pun tabrakan. Karena itu sifat "tahan tabrakan" bukan teori: ia menentukan apakah sebuah hash masih layak dipercaya.
-</div>
-
-<h3>64 karakter itu apa?</h3>
-<p>Hash SHA-256 ditulis dalam <b>heksadesimal</b> — sistem angka yang memakai 16 simbol: 0–9 lalu a–f. Satu karakter heksadesimal mewakili <b>4 bit</b>, jadi 64 karakter = 256 bit. Dari situlah namanya: SHA-<b>256</b>.</p>
-<p>Banyaknya kemungkinan hash adalah 2<sup>256</sup> — sekitar 1 diikuti 77 angka nol. Sebagai pembanding, jumlah butir pasir di seluruh pantai Bumi diperkirakan "hanya" sekitar 1 diikuti 19 angka nol.</p>
-
-<div class="callout warn">
-<b>Hash bukan enkripsi.</b> Enkripsi punya kunci dan memang dirancang untuk dibuka kembali. Hash tidak punya kunci dan tidak bisa "dibuka" oleh siapa pun, termasuk pembuatnya. Perbedaan keduanya dibahas tuntas di modul Kriptografi Mendalam.
-</div>
-
-<h3>Kenapa ini penting untuk pelajaran berikutnya</h3>
-<p>Hash adalah fondasi dua hal yang akan segera kamu pelajari:</p>
-<table class="tbl">
-  <tr><th>Nanti</th><th>Peran sidik jari</th></tr>
-  <tr><td><b>Tanda tangan digital</b></td><td>Dompetmu tidak menandatangani pesan lengkapnya, melainkan <b>sidik jarinya</b> (<code>9920abe318a7984c…9d2d3c0b</code>). Kalau ada yang mengubah 0,5 menjadi 50, sidik jarinya berubah dan tanda tangan lama tidak cocok lagi.</td></tr>
-  <tr><td><b>Rantai blok</b></td><td>Setiap blok menyimpan sidik jari blok sebelumnya. Mengubah satu blok lama mengubah sidik jarinya, sehingga semua blok sesudahnya ikut "putus" — itulah asal nama <i>blockchain</i>.</td></tr>
-</table>
-<p>Singkatnya: <b>hash menjaga isinya tidak berubah</b>, dan <b>tanda tangan membuktikan siapa yang menyetujuinya</b>. Keduanya selalu bekerja berpasangan.</p>
-
-<h3>Di mana hash dipakai?</h3>
-<table class="tbl">
-  <tr><th>Tempat</th><th>Perannya</th></tr>
-  <tr><td>Setiap blok</td><td>Sidik jari blok, sekaligus penyambung ke blok sebelumnya</td></tr>
-  <tr><td>ID transaksi</td><td>Nomor resi yang bisa dicari di block explorer</td></tr>
-  <tr><td>Alamat dompet</td><td>Dibuat dengan meng-hash kunci publik</td></tr>
-  <tr><td>Penambangan</td><td>Menebak angka agar hash blok memenuhi syarat tertentu</td></tr>
-  <tr><td>Di luar crypto</td><td>Memeriksa file unduhan tidak rusak, menyimpan password, mendeteksi file kembar</td></tr>
-</table>
 `,
           keyPoints: [
-            "Hash adalah sidik jari data: data sebesar apa pun diubah menjadi deretan berukuran tetap.",
+            "Hash adalah ringkasan pendek (sidik jari) dari data apa pun, yang pasti berubah bila datanya berubah sedikit saja.",
             "Seperti blender: mudah ke depan, mustahil ke belakang — data asli tidak bisa dibangun dari hash.",
             "Hash mainan (jumlah nomor huruf) gagal karena mudah bertabrakan dan perubahan kecil hanya mengubah hasil sedikit.",
-            "Lima sifat hash sungguhan: deterministik, ukuran tetap, satu arah, efek longsor, dan tahan tabrakan.",
-            "SHA-256 menghasilkan 64 karakter heksadesimal = 256 bit.",
-            "Hash bukan enkripsi: tidak ada kunci dan tidak bisa dibuka oleh siapa pun.",
-            "Hash dipakai untuk mengunci blok, ID transaksi, alamat dompet, dan penambangan.",
-            "SHA-256 = Secure Hash Algorithm keluarga SHA-2: data dipotong per 512 bit lalu diaduk 64 putaran; Bitcoin memakainya dua kali, Ethereum memakai Keccak-256.",
-            "Yang ditandatangani dompet adalah hash pesan — karena itu mengubah isi transaksi membuat tanda tangannya tidak cocok.",
+            "Lima sifat hash sungguhan: masukan sama hasil sama, ukuran tetap, tidak bisa dibalik, efek longsor, dan tahan tabrakan.",
+            "SHA-256 dipakai Bitcoin: rumusnya terbuka dan hasilnya selalu 64 karakter; \"halo\" dan \"Halo\" berbeda 61 dari 64 karakter.",
+            "Memeriksa kiriman: hitung ulang hash data yang diterima dan bandingkan — asal sidik jari aslinya sampai lewat jalur yang tidak bisa diubah penipu.",
+            "Hash bukan enkripsi: tidak ada kunci dan tidak bisa dibuka; dipakai untuk file unduhan, password, rantai blok, ID transaksi, dan penambangan."
           ],
           practice: [
-            { type: "number", q: "Dengan hash mainan (A=1, B=2, …, Z=26, jumlahkan), berapa hash kata ADA?", answer: 6, tol: 0.5, hint: "A = 1, D = 4.", solution: "1 + 4 + 1 = 6. Kata DAA juga menghasilkan 6 — contoh tabrakan pada hash mainan." },
-            { type: "number", q: "Satu karakter heksadesimal mewakili 4 bit. Berapa bit dalam 64 karakter?", answer: 256, tol: 0.5, hint: "64 × 4.", solution: "64 × 4 = 256 bit — asal nama SHA-256." },
+            { type: "number", q: "Dengan hash mainan (A = 1, B = 2, …, Z = 26, jumlahkan, ambil dua digit terakhir), berapa hash kata CICI?", answer: 24, tol: 0.5, hint: "C = 3 dan I = 9.", solution: "3 + 9 + 3 + 9 = 24. Kata ICIC juga menghasilkan 24 — tabrakan lagi." },
+            { type: "number", q: "Dengan hash mainan yang sama, berapa hash kata ADA?", answer: 6, tol: 0.5, hint: "A = 1, D = 4.", solution: "1 + 4 + 1 = 6. Kata DAA juga menghasilkan 6." },
+            {
+              type: "choice",
+              q: "Kamu mengunduh aplikasi dompet crypto. Situs resminya mencantumkan SHA-256 berawalan 9f3c…, tapi hash file di laptopmu berawalan 41ab…. Apa yang sebaiknya kamu lakukan?",
+              options: [
+                "Jangan pasang; file itu rusak atau sudah dipalsukan",
+                "Pasang saja, karena hash memang selalu berbeda tiap komputer",
+                "Pasang saja, asal ukuran filenya sama dengan di situs",
+                "Ubah nama file supaya hash-nya cocok dengan situs"
+              ],
+              answer: 0,
+              hint: "Ingat sifat pertama: data sama selalu menghasilkan hash sama di komputer mana pun.",
+              solution: "Data yang sama pasti menghasilkan hash yang sama. Hash berbeda berarti isinya berbeda — bisa rusak, bisa juga disusupi penipu."
+            }
           ],
           quiz: [
             {
-              q: "Apa itu 'efek avalanche' pada fungsi hash?",
+              q: "Budi menghitung ulang hash pesan yang ia terima. Untuk apa?",
               options: [
-                "Perubahan masukan sekecil apa pun mengubah keluarannya secara total",
-                "Keluaran hash makin panjang seiring bertambahnya ukuran masukan",
-                "Hash dari data besar dihitung bertahap agar tidak membebani komputer",
-                "Beberapa masukan berbeda sengaja dibuat menghasilkan hash yang sama",
+                "Memastikan pesannya tidak diubah di jalan",
+                "Membuka isi pesan yang dirahasiakan",
+                "Mempercepat pengiriman pesan berikutnya",
+                "Mengecilkan ukuran pesan agar muat"
               ],
               answer: 0,
-              explain: "Karena itu perubahan satu karakter pun di sebuah transaksi langsung terdeteksi.",
+              explain: "Kalau hash yang ia hitung sama dengan hash dari Andi, pesannya sama persis dengan aslinya."
             },
             {
-              q: "Mengapa sifat 'satu arah' penting?",
+              q: "Apa itu efek longsor (avalanche) pada hash?",
               options: [
-                "Agar data asli tidak bisa direkonstruksi kembali dari hash-nya",
-                "Agar hash hanya bisa dihitung oleh komputer milik penambang",
-                "Agar data yang sama menghasilkan hash yang berbeda setiap kali",
-                "Agar hash bisa dibuka kembali memakai kunci milik pemiliknya",
+                "Perubahan sekecil apa pun mengubah hasilnya secara total",
+                "Hasil hash makin panjang bila datanya makin besar",
+                "Data besar di-hash sedikit demi sedikit agar ringan",
+                "Beberapa data sengaja dibuat punya hash yang sama"
               ],
               answer: 0,
-              explain: "Sidik jari bisa dipublikasikan tanpa membocorkan data aslinya.",
+              explain: "\"halo\" dan \"Halo\" hanya beda satu huruf besar, tapi 61 dari 64 karakter hash-nya berubah."
             },
             {
-              q: "Hash mainan memberi BUDI = 36 dan DIBU = 36. Ujian apa yang gagal?",
+              q: "Hash mainan memberi BUDI = 36 dan DIBU = 36. Sifat apa yang gagal?",
               options: [
-                "Tahan tabrakan — dua data berbeda menghasilkan hash yang sama",
-                "Deterministik — kata yang sama menghasilkan hash yang berbeda",
-                "Ukuran tetap — hasilnya kadang dua digit, kadang tiga digit",
-                "Satu arah — dari angka 36 kata aslinya bisa langsung diketahui",
+                "Tahan tabrakan — dua data berbeda, hash sama",
+                "Deterministik — kata sama, hash berbeda",
+                "Ukuran tetap — hasilnya kadang tiga digit",
+                "Satu arah — kata aslinya langsung ketahuan"
               ],
               answer: 0,
-              explain: "Dua data berbeda dengan sidik jari sama membuat hash tidak bisa dipercaya sebagai pembeda.",
+              explain: "Dua data berbeda dengan sidik jari sama membuat hash tidak bisa dipercaya sebagai pembeda."
+            },
+            {
+              q: "Hash SHA-256 dari kata \"halo\" dan dari sebuah buku tebal panjangnya…",
+              options: [
+                "Sama-sama 64 karakter",
+                "Buku jauh lebih panjang",
+                "Kata halo lebih panjang",
+                "Tergantung jumlah halaman"
+              ],
+              answer: 0,
+              explain: "Ukuran hasil hash selalu tetap, berapa pun besar datanya."
             },
             {
               q: "Apa beda hash dengan enkripsi?",
               options: [
-                "Hash tidak punya kunci dan tidak bisa dibuka, enkripsi dirancang untuk dibuka dengan kunci",
-                "Hash dipakai untuk teks pendek, enkripsi hanya dipakai untuk file berukuran besar",
-                "Hash selalu bisa dibalik oleh pembuatnya, enkripsi tidak bisa dibalik oleh siapa pun",
-                "Keduanya sama saja, hanya berbeda nama di dunia crypto dan di dunia perbankan",
+                "Hash tak punya kunci dan tak bisa dibuka; enkripsi bisa dibuka dengan kunci",
+                "Hash untuk teks pendek, enkripsi hanya untuk file besar",
+                "Hash bisa dibalik pembuatnya, enkripsi tidak bisa dibalik siapa pun",
+                "Keduanya sama saja, hanya beda nama di dunia crypto dan perbankan"
               ],
               answer: 0,
-              explain: "Enkripsi menyembunyikan untuk dibuka lagi; hash menyegel dan tidak pernah dibuka.",
-            },
-            {
-              q: "Apa arti angka 256 pada nama SHA-256?",
-              options: [
-                "Panjang hasilnya 256 bit, ditulis sebagai 64 karakter",
-                "Jumlah putaran pengadukan yang dijalankan rumusnya",
-                "Batas panjang data yang boleh dimasukkan, 256 huruf",
-                "Tahun pembuatannya menurut penanggalan para perancang",
-              ],
-              answer: 0,
-              explain: "256 bit ÷ 4 bit per karakter heksadesimal = 64 karakter. Jumlah putarannya 64, dan data sepanjang apa pun boleh dimasukkan.",
-            },
-          ],
+              explain: "Enkripsi menyembunyikan untuk dibuka lagi; hash menyegel dan tidak pernah dibuka."
+            }
+          ]
         },
         {
           id: "bc-hash-2",
@@ -1307,6 +1295,159 @@ Hash bekerja dengan cara serupa, tapi jauh lebih ekstrem. SHA-256 mengaduk data 
               explain: "Sambungan hash putus, dan ribuan node memegang salinan yang asli.",
             },
           ],
+        },
+        {
+          id: "bc-hash-3",
+          title: "Apa Itu SHA-256? — Dijelaskan dari 0 dan 1",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Hash</b> adalah sidik jari data: masukan sama menghasilkan sidik jari sama, beda sedikit menghasilkan sidik jari yang beda total, dan sidik jarinya tidak bisa dikembalikan menjadi data (<a href="#/lesson/bc-fund-1">Hash dari Nol</a>). Satu-satunya cara "membaliknya" adalah menebak satu per satu (<a href="#/lesson/bc-hash-2">pelajaran sebelumnya</a>).
+</div>
+
+<p>Bitcoin memakai mesin hash bernama <b>SHA-256</b>. Pelajaran ini membuka mesin itu pelan-pelan: apa arti namanya, kenapa hasilnya selalu 64 karakter yang isinya hanya 0–9 dan a–f, dan apa yang terjadi di dalamnya — tanpa rumus yang menakutkan.</p>
+
+<h3>Arti namanya</h3>
+<table class="tbl">
+  <tr><th>Bagian nama</th><th>Artinya</th></tr>
+  <tr><td><b>S</b>ecure</td><td>Aman — sangat sulit dibobol</td></tr>
+  <tr><td><b>H</b>ash</td><td>Sidik jari data</td></tr>
+  <tr><td><b>A</b>lgorithm</td><td>Algoritma: resep langkah-langkah yang pasti, sehingga siapa pun yang mengikutinya mendapat hasil yang sama</td></tr>
+  <tr><td><b>256</b></td><td>Panjang hasilnya: 256 <b>bit</b></td></tr>
+</table>
+<p>SHA-256 dirancang oleh NSA dan diterbitkan sebagai standar oleh <b>NIST</b> (lembaga standar Amerika Serikat) pada 2001. Ia anggota keluarga <b>SHA-2</b>, yang juga punya saudara dengan panjang lain seperti SHA-384 dan SHA-512. Resepnya <b>terbuka</b>: siapa pun boleh membaca, memeriksa, dan memakainya — justru karena sudah diperiksa para ahli selama lebih dari 20 tahun, ia dipercaya.</p>
+
+<h3>Langkah 1 — Komputer hanya mengenal 0 dan 1</h3>
+<p>Di dalam komputer, semua hal — huruf, foto, lagu — disimpan sebagai deretan <b>bit</b>. Satu bit hanya bisa bernilai <b>0 atau 1</b>, seperti lampu yang mati atau menyala. Delapan bit disebut satu <b>byte</b>, cukup untuk menyimpan satu huruf.</p>
+<p>Setiap huruf punya nomor dalam tabel standar yang dipakai semua komputer: <b>A = 65</b>, <b>a = 97</b>, <b>h = 104</b>. Nomor itu lalu ditulis dalam 8 bit. Caranya memakai <b>nilai tempat</b> — mirip satuan, puluhan, ratusan, tapi setiap tempat bernilai dua kali tempat di kanannya:</p>
+<div data-diagram="deret" data-nama="huruf h = 104 = 64 + 32 + 8" data-isi="0|1|1|0|1|0|0|0" data-bawah="128|64|32|16|8|4|2|1" data-sorot="1" data-caption="Angka 1 dipasang di tempat yang nilainya dijumlahkan menjadi 104"></div>
+<p>104 = 64 + 32 + 8, jadi angka 1 dipasang di tempat 64, 32, dan 8; sisanya 0. Hasilnya <b>01101000</b>. Kata "halo" yang 4 huruf menjadi 4 × 8 = <b>32 bit</b>.</p>
+
+<h3>Langkah 2 — Heksadesimal: cara singkat menulis bit</h3>
+<p>Hasil SHA-256 adalah 256 bit. Menuliskannya sebagai 256 angka 0 dan 1 terlalu panjang, jadi bit dikelompokkan <b>4-4</b>. Empat bit punya 16 kemungkinan, dan masing-masing diberi satu simbol: angka <b>0–9</b>, lalu huruf <b>a–f</b> untuk 10 sampai 15. Inilah <b>heksadesimal</b> (sistem enam belas).</p>
+<table class="tbl">
+  <tr><th>4 bit</th><th>Simbol</th><th>4 bit</th><th>Simbol</th></tr>
+  <tr><td>0000</td><td>0</td><td>1000</td><td>8</td></tr>
+  <tr><td>0001</td><td>1</td><td>1001</td><td>9</td></tr>
+  <tr><td>0010</td><td>2</td><td>1010</td><td>a (10)</td></tr>
+  <tr><td>0011</td><td>3</td><td>1011</td><td>b (11)</td></tr>
+  <tr><td>0100</td><td>4</td><td>1100</td><td>c (12)</td></tr>
+  <tr><td>0101</td><td>5</td><td>1101</td><td>d (13)</td></tr>
+  <tr><td>0110</td><td>6</td><td>1110</td><td>e (14)</td></tr>
+  <tr><td>0111</td><td>7</td><td>1111</td><td>f (15)</td></tr>
+</table>
+<div data-diagram="flow" data-steps="Huruf h = 01101000|Potong dua: 0110 dan 1000|0110 = 6, 1000 = 8|Ditulis: 68" data-caption="Delapan bit menjadi dua karakter heksadesimal"></div>
+<p>Karena setiap karakter mewakili 4 bit, 256 bit ÷ 4 = <b>64 karakter</b>. Itulah sebabnya hash SHA-256 selalu 64 karakter, dan isinya hanya angka 0–9 serta huruf a–f.</p>
+
+<h3>Langkah 3 — Mengaduk: apa yang terjadi di dalam SHA-256</h3>
+<div data-diagram="pipeline" data-stages="Ubah ke bit::setiap huruf jadi 8 bit|Ganjal &amp; potong::potongan 512 bit|Aduk::64 putaran per potongan|Sambung::hasil dibawa ke potongan berikut|Hasil::256 bit = 64 karakter" data-caption="Lima tahap SHA-256, dari data sampai sidik jari"></div>
+<ol>
+  <li><b>Ubah ke bit.</b> Seperti Langkah 1 — "halo" menjadi 32 bit.</li>
+  <li><b>Ganjal dan potong.</b> Data ditambah bit "pengganjal" dan catatan panjang datanya, sampai panjangnya pas kelipatan <b>512 bit</b>. Seperti mengisi kardus terakhir dengan kertas supaya penuh. Lalu data dipotong per 512 bit.</li>
+  <li><b>Aduk 64 putaran.</b> Mesin punya <b>8 angka kerja</b> (masing-masing 32 bit) yang nilai awalnya sudah ditetapkan untuk semua orang. Setiap potongan data diaduk ke dalam angka-angka itu sebanyak <b>64 putaran</b>, memakai operasi yang sangat sederhana: menggeser bit, memutar bit, membandingkan bit, dan menjumlahkan.</li>
+  <li><b>Sambung-menyambung.</b> Hasil adukan satu potongan menjadi titik awal potongan berikutnya. Karena itu huruf terakhir sebuah buku pun ikut memengaruhi seluruh sidik jarinya.</li>
+  <li><b>Hasil.</b> Setelah potongan terakhir, 8 angka kerja × 32 bit = <b>256 bit</b>, ditulis sebagai 64 karakter heksadesimal.</li>
+</ol>
+<div class="callout">
+<b>Contoh operasi "membandingkan bit" (XOR).</b> Aturannya: kalau dua bit <b>sama</b>, hasilnya 0; kalau <b>berbeda</b>, hasilnya 1.<br>
+1010 XOR 0110 = <b>1100</b><br>
+Operasi sesederhana ini, diulang ribuan kali dan saling bersambung, membuat hasil akhirnya tampak sepenuhnya acak.
+</div>
+<div class="callout">
+<b>Analogi mengocok kartu.</b> Bayangkan mengocok setumpuk kartu 64 kali dengan aturan yang tetap dan diumumkan ke semua orang. Siapa pun yang memulai dari urutan yang sama akan mendapat hasil akhir yang sama persis. Tapi dari hasil akhirnya, tidak ada yang bisa menebak urutan awalnya — terlalu banyak kemungkinan yang teraduk di tengah jalan.
+</div>
+
+<h3>Seberapa banyak kemungkinan hasilnya?</h3>
+<p>256 bit berarti ada 2<sup>256</sup> kemungkinan sidik jari — angka dengan <b>78 digit</b>. Jumlah butir pasir di seluruh pantai Bumi diperkirakan "hanya" sekitar 19 digit. Seberapa mustahil menebak di ruang sebesar itu dibahas di <a href="#/lesson/bc-btcm-1">Peta Matematika Bitcoin</a>.</p>
+
+<h3>Kenapa SHA-256 dipercaya — dan nasib pendahulunya</h3>
+<div data-diagram="timeline" data-events="1992::MD5 terbit|1995::SHA-1 terbit|2001::SHA-256 terbit|2004::tabrakan MD5 ditemukan|2017::tabrakan SHA-1 dipamerkan" data-caption="Mesin hash yang lebih tua sudah jebol; SHA-256 belum"></div>
+<p>Sebelum SHA-256, dunia memakai <b>MD5</b> dan <b>SHA-1</b>. Keduanya sudah jebol: peneliti berhasil membuat dua data berbeda dengan sidik jari yang sama — untuk MD5 pada 2004, dan untuk SHA-1 dipamerkan peneliti Google dan CWI Amsterdam pada 2017. Untuk SHA-256, belum pernah ada yang menemukan satu pun tabrakan.</p>
+<div class="callout warn">
+<b>Bagaimana dengan komputer kuantum?</b> Secara teori, komputer kuantum bisa mempercepat penebakan hash, tapi hanya sampai "setara 2<sup>128</sup> tebakan" — angka yang tetap mustahil dicapai. Ancaman kuantum yang lebih serius justru ada pada kunci dompet, bukan pada hash (<a href="#/lesson/bc-kri-3">Ancaman Komputer Kuantum</a>).
+</div>
+
+<h3>SHA-256 di dunia crypto</h3>
+<table class="tbl">
+  <tr><th>Di mana</th><th>Bagaimana dipakai</th></tr>
+  <tr><td>Bitcoin — hash blok &amp; ID transaksi</td><td>SHA-256 dijalankan <b>dua kali</b> berturut-turut (<i>double SHA-256</i>)</td></tr>
+  <tr><td>Bitcoin — penambangan</td><td>Penambang menjalankan SHA-256 triliunan kali per detik, mencari hash blok yang memenuhi syarat</td></tr>
+  <tr><td>Bitcoin — alamat</td><td>Kunci publik di-hash dengan SHA-256, lalu dengan mesin hash lain bernama RIPEMD-160</td></tr>
+  <tr><td>Ethereum</td><td>Memakai saudaranya, <b>Keccak-256</b> — resepnya berbeda, tapi hasilnya juga 64 karakter dan sifatnya sama</td></tr>
+  <tr><td>Di luar crypto</td><td>Gembok https di browser, pemeriksaan file unduhan, tanda tangan aplikasi</td></tr>
+</table>
+
+<div class="callout">
+<b>SHA-256 dalam satu napas:</b> resep terbuka yang mengubah data menjadi bit, memotongnya per 512 bit, mengaduk setiap potongan 64 putaran sambil membawa hasilnya ke potongan berikutnya, lalu menghasilkan 256 bit yang ditulis sebagai 64 karakter heksadesimal.
+</div>
+`,
+          keyPoints: [
+            "SHA-256 = Secure Hash Algorithm dengan hasil 256 bit; keluarga SHA-2, diterbitkan NIST pada 2001, resepnya terbuka.",
+            "Komputer menyimpan semuanya sebagai bit (0/1); satu huruf = 8 bit, misalnya h = 104 = 01101000.",
+            "Heksadesimal menulis 4 bit sebagai satu simbol 0–9 atau a–f, sehingga 256 bit = 64 karakter.",
+            "Di dalamnya: ubah ke bit, ganjal dan potong per 512 bit, aduk 64 putaran dengan operasi sederhana (geser, putar, XOR, jumlah), sambungkan ke potongan berikutnya.",
+            "MD5 dan SHA-1 sudah jebol (tabrakan ditemukan 2004 dan 2017); SHA-256 belum.",
+            "Bitcoin memakai SHA-256 dua kali untuk blok dan transaksi; Ethereum memakai Keccak-256."
+          ],
+          practice: [
+            { type: "number", q: "Satu karakter heksadesimal mewakili 4 bit. Berapa bit dalam 64 karakter?", answer: 256, tol: 0.5, unit: "bit", hint: "64 × 4.", solution: "64 × 4 = 256 bit — asal nama SHA-256." },
+            { type: "number", q: "Huruf A bernomor 65 = 64 + 1. Kalau ditulis dalam 8 bit, ada berapa angka 1 di dalamnya?", answer: 2, tol: 0.5, hint: "Pasang angka 1 hanya di tempat bernilai 64 dan 1.", solution: "01000001 — ada dua angka 1, di tempat 64 dan 1." },
+            {
+              type: "choice",
+              q: "Empat bit 1010 ditulis dengan simbol heksadesimal apa?",
+              options: ["a", "10", "b", "f"],
+              answer: 0,
+              hint: "1010 = 8 + 2 = 10. Dalam heksadesimal, 10 ditulis dengan satu simbol huruf.",
+              solution: "1010 bernilai 10, dan 10 ditulis \"a\" dalam heksadesimal."
+            }
+          ],
+          quiz: [
+            {
+              q: "Apa arti angka 256 pada nama SHA-256?",
+              options: [
+                "Panjang hasilnya 256 bit",
+                "Jumlah putaran pengadukannya",
+                "Batas panjang data masukan",
+                "Tahun rumusnya pertama dibuat"
+              ],
+              answer: 0,
+              explain: "256 bit ÷ 4 bit per karakter = 64 karakter. Putarannya 64, dan data sepanjang apa pun boleh dimasukkan."
+            },
+            {
+              q: "Kenapa hash SHA-256 hanya berisi angka 0–9 dan huruf a–f?",
+              options: [
+                "Ditulis heksadesimal: 4 bit per karakter",
+                "Huruf g sampai z dibuang agar lebih aman",
+                "Hanya huruf itu yang ada di keyboard lama",
+                "Supaya bisa dibaca sebagai angka biasa"
+              ],
+              answer: 0,
+              explain: "Empat bit punya 16 kemungkinan, yang ditulis dengan 0–9 lalu a–f."
+            },
+            {
+              q: "Kenapa huruf terakhir sebuah file besar ikut memengaruhi seluruh hash-nya?",
+              options: [
+                "Hasil tiap potongan dibawa ke potongan berikutnya",
+                "Huruf terakhir di-hash dua kali sebagai penanda",
+                "SHA-256 hanya membaca huruf terakhir saja",
+                "Hash dihitung mundur dari akhir file"
+              ],
+              answer: 0,
+              explain: "Potongan-potongan diaduk bersambung, sehingga setiap bit ikut menentukan hasil akhir."
+            },
+            {
+              q: "Apa yang terjadi pada MD5 dan SHA-1?",
+              options: [
+                "Tabrakannya sudah ditemukan, tak layak dipakai",
+                "Diganti nama menjadi SHA-256",
+                "Masih dipakai Bitcoin untuk alamat",
+                "Rumusnya dirahasiakan pemerintah"
+              ],
+              answer: 0,
+              explain: "Tabrakan MD5 ditemukan 2004 dan SHA-1 pada 2017, jadi keduanya tidak lagi dipercaya untuk keamanan."
+            }
+          ]
         },
         {
           id: "bc-kunci-1",
