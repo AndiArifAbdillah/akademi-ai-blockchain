@@ -5403,7 +5403,7 @@ Cara kerjanya: titik yang punya cukup banyak tetangga dalam jarak tertentu diang
       id: "ai-arsitektur",
       level: "Arsitektur",
       title: "Deep Learning: dari Neuron sampai Transformer",
-      summary: "Neural network dari nol (maju, mundur, belajar), PyTorch & Keras, cara melatihnya dengan benar, proyek pengenal angka tulisan tangan dengan TensorFlow, CNN untuk gambar, dan Transformer untuk teks.",
+      summary: "Neural network dari nol (maju, mundur, belajar), PyTorch & Keras, cara melatihnya dengan benar, isi neural network (neuron, lapisan, aktivasi), cara belajarnya (loss & optimizer), proyek pengenal angka tulisan tangan dengan TensorFlow, CNN untuk gambar, dan Transformer untuk teks.",
       lessons: [
         {
           id: "ai-alg-9",
@@ -5979,20 +5979,19 @@ riwayat = model.fit(X_latih_skala, y_latih,
           ],
         },
         {
-          id: "ai-mnist-1",
-          title: "Proyek: AI Pengenal Angka Tulisan Tangan — Neural Network dengan TensorFlow",
-          duration: "18 menit",
+          id: "ai-nn-1",
+          title: "Di Dalam Neural Network — Neuron, Lapisan & Fungsi Aktivasi",
+          duration: "16 menit",
           content: `
 <div class="callout ingat">
 <b>Ingat dulu</b><br>
-Satu <b>neuron</b> mengalikan setiap masukan dengan bobotnya, menjumlahkan, lalu melewatkan hasilnya ke fungsi aktivasi; banyak neuron yang berlapis membentuk <b>neural network</b> (<a href="#/lesson/ai-alg-9">Neural Network dari Nol</a>). <b>Keras</b> membuat neural network dalam beberapa baris (<a href="#/lesson/ai-tl-7">TensorFlow &amp; Keras</a>), dan satu <b>epoch</b> berarti seluruh data latih sudah dilihat sekali (<a href="#/lesson/ai-alg-10">Melatih Neural Network dengan Benar</a>).
+AI belajar dengan memutar <b>kenop</b> (parameter) sedikit demi sedikit sampai tebakannya tepat (<a href="#/lesson/ai-p-4">Bagaimana AI 'Belajar'?</a>). Satu neuron yang berlapis-lapis membentuk <b>neural network</b> (<a href="#/lesson/ai-alg-9">Neural Network dari Nol</a>).
 </div>
 
-<p>Hampir setiap orang yang belajar deep learning memulai dari proyek yang sama: mengajari komputer <b>membaca angka tulisan tangan</b>. Di pelajaran ini kamu akan melihat seluruh perjalanannya: dari gambar menjadi angka, membangun model dengan TensorFlow, membaca hasil latihannya, sampai menulis angka sendiri dan melihat AI menebaknya.</p>
-
+<p>Pelajaran ini membongkar isi neural network: seperti apa satu neuron buatan, kenapa jaringan dibuat berlapis, dan apa tugas fungsi aktivasi. Contohnya diambil dari proyek yang akan kita bangun dua pelajaran lagi: AI yang membaca angka tulisan tangan.</p>
 <h3>Benarkah ini "otak AI"?</h3>
 <div data-diagram="vs" data-left="Neuron biologis::menerima sinyal listrik dan kimia::meneruskan ke ribuan neuron lain" data-right="Neuron buatan::menerima angka, lalu menghitung::meneruskan hasil ke lapisan berikutnya" data-caption="Mirip alurnya, sangat berbeda isinya"></div>
-<p>Otak manusia punya sekitar <b>86 miliar</b> neuron, dan masing-masing tersambung ke ribuan neuron lain. Model TensorFlow di pelajaran ini hanya punya 128 neuron tersembunyi, dan demo di bawah hanya 48. Meski begitu, keduanya sudah cukup untuk membaca angka tulisan tangan.</p>
+<p>Otak manusia punya sekitar <b>86 miliar</b> neuron, dan masing-masing tersambung ke ribuan neuron lain. Model TensorFlow di <a href="#/lesson/ai-mnist-1">proyek pengenal angka</a> nanti hanya punya 192 neuron tersembunyi (128 + 64), dan demo tulis angkanya hanya 48. Meski begitu, keduanya sudah cukup untuk membaca angka tulisan tangan.</p>
 <div class="callout">
 Neural network memang <b>terinspirasi</b> dari sel saraf otak, tapi hanya secara longgar. Satu neuron buatan cuma rumus kecil: kalikan, jumlahkan, lalu lewatkan ke fungsi aktivasi. Tidak ada kesadaran atau pikiran di dalamnya. Yang dilakukannya adalah <b>menemukan pola angka</b> dari ribuan contoh. Jadi kalau ada yang bilang AI "berpikir", kata itu sebaiknya tetap diberi tanda kutip.
 </div>
@@ -6011,10 +6010,11 @@ Neural network memang <b>terinspirasi</b> dari sel saraf otak, tapi hanya secara
 <table class="tbl">
   <tr><th>Model</th><th>Akurasi uji (kira-kira)</th></tr>
   <tr><td>Tanpa lapisan tersembunyi (batas lurus)</td><td>92%</td></tr>
-  <tr><td>Satu lapisan tersembunyi, 128 neuron (model pelajaran ini)</td><td>98%</td></tr>
+  <tr><td>Satu lapisan tersembunyi berisi 128 neuron</td><td>98%</td></tr>
+  <tr><td>Dua lapisan tersembunyi, 128 lalu 64 neuron (model proyek kita)</td><td>98%</td></tr>
   <tr><td>CNN dengan beberapa lapisan konvolusi</td><td>lebih dari 99%</td></tr>
 </table>
-<p>Setiap tambahan memang menaikkan akurasi, tapi kenaikannya makin kecil, sementara biaya latih dan risiko menghafal terus naik.</p>
+<p>Lapisan kedua hampir tidak menambah akurasi untuk soal sesederhana MNIST. Lompatan berikutnya datang dari jenis lapisan yang lebih cocok untuk gambar, yaitu CNN. Kenaikannya makin kecil, sementara biaya latih dan risiko menghafal terus naik.</p>
 <div class="callout">
 <b>Tiga catatan untuk kalimat "depth = complexity":</b>
 <ul>
@@ -6024,34 +6024,21 @@ Neural network memang <b>terinspirasi</b> dari sel saraf otak, tapi hanya secara
 </ul>
 </div>
 
-<h3>Bagi komputer, gambar adalah tabel angka</h3>
-<p>Komputer tidak melihat "angka nol". Ia melihat kotak-kotak kecil (piksel), masing-masing berisi angka yang menunjukkan seberapa gelap kotak itu. Ini angka 0 dari dataset kecil bawaan scikit-learn, berukuran 8×8 dengan nilai 0 sampai 16:</p>
-<pre class="code"> 0  0  5 13  9  1  0  0
- 0  0 13 15 10 15  5  0
- 0  3 15  2  0 11  8  0
- 0  4 12  0  0  8  8  0
- 0  5  8  0  0  9  8  0
- 0  4 11  0  1 12  7  0
- 0  2 14  5 10 12  0  0
- 0  0  6 13 10  0  0  0</pre>
-<p>Coba lihat sambil memicingkan mata: angka besar membentuk lingkaran. Dataset yang dipakai di hampir semua kelas adalah <b>MNIST</b>, berisi <b>70.000</b> gambar angka tulisan tangan berukuran <b>28×28</b> piksel, dengan nilai 0 (putih) sampai 255 (hitam). Sebanyak 60.000 gambar untuk latihan dan 10.000 untuk ujian. Tulisannya berasal dari pegawai Biro Sensus Amerika Serikat dan pelajar SMA, dikumpulkan oleh NIST lalu dirapikan oleh Yann LeCun dan rekan-rekannya pada 1998.</p>
-<div data-diagram="pipeline" data-stages="Gambar 28×28::diratakan jadi 784 angka|Lapisan 128 neuron::aktivasi ReLU|Lapisan 10 neuron::softmax|10 peluang::angka 0 sampai 9" data-caption="Model yang akan kita bangun"></div>
-
 <h3>Arsitektur: input, tersembunyi, output</h3>
-<p>Setiap neural network punya tiga bagian. Ini pemetaannya ke model TensorFlow di bawah dan ke demo tulis angka di akhir pelajaran:</p>
+<p>Setiap neural network punya tiga bagian. Ini pemetaannya ke model TensorFlow dan demo tulis angka di <a href="#/lesson/ai-mnist-1">proyek pengenal angka</a>:</p>
 <table class="tbl">
   <tr><th>Lapisan</th><th>Tugasnya</th><th>Model MNIST</th><th>Demo tulis angka</th></tr>
   <tr><td><b>Input layer</b></td><td>Tempat data masuk, misalnya piksel gambar</td><td>784 piksel</td><td>64 kotak</td></tr>
-  <tr><td><b>Hidden layer</b> (tersembunyi)</td><td>Mengolah data dan menemukan fitur: garis, lengkungan, sudut</td><td>1 lapisan, 128 neuron</td><td>1 lapisan, 48 neuron</td></tr>
+  <tr><td><b>Hidden layer</b> (tersembunyi)</td><td>Mengolah data dan menemukan fitur: garis, lengkungan, sudut</td><td>2 lapisan: 128 lalu 64 neuron</td><td>1 lapisan, 48 neuron</td></tr>
   <tr><td><b>Output layer</b></td><td>Hasil prediksi</td><td>10 neuron, satu per angka</td><td>10 neuron</td></tr>
 </table>
-<div data-diagram="jaringan-saraf" data-lapisan="784,128,10" data-nama="Input|Tersembunyi|Output" data-caption="Model MNIST kita. Lapisan berisi lebih dari 8 neuron hanya digambar sebagian"></div>
+<div data-diagram="jaringan-saraf" data-lapisan="784,128,64,10" data-nama="Input|Tersembunyi 1|Tersembunyi 2|Output" data-caption="Model pengenal angka yang akan kita bangun. Lapisan berisi lebih dari 8 neuron hanya digambar sebagian"></div>
 <p>Data mengalir satu arah: masuk lewat input, diolah di lapisan tersembunyi, lalu keluar sebagai prediksi. Aliran ini disebut <b>forward propagation</b> (perambatan maju). Saat latihan ada juga arah sebaliknya, <b>backpropagation</b>, yang menelusuri kembali bobot mana yang paling berandil pada kesalahan (<a href="#/lesson/ai-alg-9">Maju, Mundur, Belajar</a>).</p>
-<p>Model kita hanya punya satu lapisan tersembunyi. Model besar punya jauh lebih banyak: ResNet-152, pengenal gambar terkenal dari 2015, punya 152 lapisan, dan GPT-3 punya 96 lapisan Transformer.</p>
+<p>Model kita hanya punya dua lapisan tersembunyi. Model besar punya jauh lebih banyak: ResNet-152, pengenal gambar terkenal dari 2015, punya 152 lapisan, dan GPT-3 punya 96 lapisan Transformer.</p>
 
 <h3>Di dalam satu neuron</h3>
 <p>Apa yang sebenarnya dikerjakan setiap neuron di lapisan tersembunyi? Empat langkah:</p>
-<div data-diagram="flow" data-steps="Input: angka-angka masuk|Kalikan dengan bobot, jumlahkan, tambah bias|Fungsi aktivasi|Output ke lapisan berikutnya" data-caption="Satu neuron buatan. Model MNIST kita menjalankan ini 128 kali untuk setiap gambar"></div>
+<div data-diagram="flow" data-steps="Input: angka-angka masuk|Kalikan dengan bobot, jumlahkan, tambah bias|Fungsi aktivasi|Output ke lapisan berikutnya" data-caption="Satu neuron buatan. Lapisan tersembunyi model MNIST kita menjalankan ini 192 kali untuk setiap gambar"></div>
 <p>Contoh dengan tiga piksel. Jalankan, lalu ubah <i>bias</i> menjadi -1 dan jalankan lagi:</p>
 <div data-demo="js-playground">// Satu neuron buatan: kalikan, jumlahkan, tambah bias, lalu aktivasi
 const input = [0.8, 0.2, 1.0];     // misalnya kecerahan 3 piksel
@@ -6108,54 +6095,91 @@ console.log("softmax:", pangkat.map((v) => (v / total * 100).toFixed(1) + "%").j
 </table>
 <p>Jumlah parameternya bisa dihitung dari gambar. Lapisan 1: 2 × 4 bobot + 4 bias = 12. Lapisan 2: 4 × 5 + 5 = 25. Lapisan 3: 5 × 3 + 3 = 18. Totalnya <b>55</b>. Bias biasanya tidak digambar, tapi tetap ada di setiap neuron.</p>
 
-<h3>Kode lengkap dengan TensorFlow</h3>
-<p>Jalankan di <b>Google Colab</b> (<a href="#/lesson/ai-tl-4">Menyiapkan Komputermu</a>); TensorFlow dan datasetnya sudah tersedia, tidak perlu memasang apa pun.</p>
-<pre class="code">import tensorflow as tf
+`,
+          keyPoints: [
+            "Neural network hanya terinspirasi otak secara longgar: neuron buatan adalah rumus kecil yang menemukan pola dari banyak contoh, bukan pikiran.",
+            "Deep learning = banyak lapisan; pola makin utuh dari piksel ke garis, bentuk, lalu objek. Tapi lapisan lebih banyak tidak otomatis lebih baik.",
+            "Tanpa lapisan tersembunyi, jaringan hanya bisa menarik batas lurus (gagal di XOR); lapisan tersembunyi plus fungsi aktivasi membuat batasnya melengkung.",
+            "Arsitektur: input layer (piksel) → hidden layer (menemukan fitur) → output layer (prediksi); aliran maju ini disebut forward propagation.",
+            "Satu neuron: kalikan tiap input dengan bobot, jumlahkan, tambah bias, lalu lewatkan fungsi aktivasi seperti ReLU; hasilnya dikirim ke lapisan berikutnya.",
+            "ReLU dipakai di lapisan tersembunyi, sigmoid untuk keluaran ya/tidak, tanh di jaringan lama, dan softmax untuk keluaran banyak kelas yang totalnya 100%."
+          ],
+          practice: [
+            {
+              "type": "number",
+              "q": "Sebuah neuron menerima input 1 dan 0,5 dengan bobot 0,4 dan −0,2, serta bias 0,3. Berapa keluarannya setelah ReLU?",
+              "answer": 0.6,
+              "tol": 0.001,
+              "hint": "Kalikan tiap input dengan bobotnya, jumlahkan, tambah bias. ReLU hanya mengubah nilai negatif menjadi 0.",
+              "solution": "1 × 0,4 + 0,5 × (−0,2) + 0,3 = 0,4 − 0,1 + 0,3 = 0,6. Positif, jadi ReLU meneruskannya: 0,6."
+            },
+            {
+              "type": "number",
+              "q": "Sebuah jaringan punya 3 masukan, satu lapisan tersembunyi berisi 6 neuron, dan 2 keluaran. Berapa total parameternya (bobot + bias)?",
+              "answer": 38,
+              "tol": 0.5,
+              "unit": "parameter",
+              "hint": "Hitung per lapisan: masukan × neuron + neuron (bias).",
+              "solution": "Lapisan tersembunyi: 3 × 6 + 6 = 24. Lapisan keluaran: 6 × 2 + 2 = 14. Total 38."
+            }
+          ],
+          quiz: [
+            {
+              "q": "Apa tugas lapisan Dense(10, softmax) di akhir model?",
+              "options": [
+                "Memberi 10 peluang untuk angka 0 sampai 9 yang jumlahnya 100%",
+                "Memotong gambar menjadi 10 bagian yang sama besar",
+                "Mengulang latihan sebanyak 10 epoch secara otomatis",
+                "Memilih 10 piksel paling gelap dari setiap gambar"
+              ],
+              "answer": 0,
+              "explain": "Satu neuron untuk tiap angka; softmax mengubah nilainya menjadi peluang, dan peluang terbesar menjadi tebakan."
+            },
+            {
+              "q": "Benarkah 'makin banyak lapisan, makin paham'?",
+              "options": [
+                "Tidak selalu: lapisan berlebih sulit dilatih dan mudah menghafal",
+                "Benar: setiap lapisan tambahan pasti menaikkan akurasi",
+                "Benar: model terbaik selalu yang punya lapisan paling banyak",
+                "Tidak: neural network hanya boleh punya satu lapisan"
+              ],
+              "answer": 0,
+              "explain": "Kedalaman harus sesuai masalahnya. Untuk MNIST, satu lapisan tersembunyi sudah sekitar 98%; yang lebih membantu adalah jenis lapisan yang tepat seperti CNN."
+            },
+            {
+              "q": "Jaringan tanpa lapisan tersembunyi gagal mempelajari XOR karena…",
+              "options": [
+                "Ia hanya bisa memisahkan data dengan satu garis lurus",
+                "Datanya terlalu sedikit untuk dipelajari",
+                "Learning rate-nya pasti terlalu kecil",
+                "XOR hanya bisa dihitung oleh komputer kuantum"
+              ],
+              "answer": 0,
+              "explain": "Titik-titik XOR tidak bisa dipisahkan oleh satu garis lurus. Lapisan tersembunyi dengan fungsi aktivasi membuat batasnya bisa melengkung."
+            }
+          ]
+        },
+        {
+          id: "ai-nn-2",
+          title: "Cara Neural Network Belajar — Putaran Training, Loss & Optimizer",
+          duration: "12 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Setiap neuron mengalikan input dengan <b>bobot</b>, menjumlahkan, menambah bias, lalu melewatkannya ke fungsi aktivasi (<a href="#/lesson/ai-nn-1">Di Dalam Neural Network</a>). <b>Gradient descent</b> memutar bobot ke arah yang mengurangi kesalahan, dengan besar langkah yang diatur <b>learning rate</b> (<a href="#/lesson/ai-fund-2">Loss &amp; Gradient Descent</a>).
+</div>
 
-# 1. Data: 60.000 gambar latih dan 10.000 gambar uji
-(x_latih, y_latih), (x_uji, y_uji) = tf.keras.datasets.mnist.load_data()
-x_latih, x_uji = x_latih / 255.0, x_uji / 255.0   # nilai 0-255 menjadi 0-1
-
-# 2. Model: 784 masukan, 128 neuron tersembunyi, 10 keluaran
-model = tf.keras.Sequential([
-    tf.keras.Input(shape=(28, 28)),
-    tf.keras.layers.Flatten(),
-    tf.keras.layers.Dense(128, activation="relu"),
-    tf.keras.layers.Dense(10, activation="softmax"),
-])
-
-# 3. Cara belajar: pengatur langkah, ukuran salah, dan nilai rapor
-model.compile(optimizer="adam",
-              loss="sparse_categorical_crossentropy",
-              metrics=["accuracy"])
-
-# 4. Latihan: 5 epoch, 10% data latih disisihkan untuk validasi
-riwayat = model.fit(x_latih, y_latih, epochs=5, validation_split=0.1)
-
-# 5. Ujian akhir dengan data yang belum pernah dilihat
-model.evaluate(x_uji, y_uji)</pre>
-<table class="tbl">
-  <tr><th>Bagian</th><th>Artinya</th></tr>
-  <tr><td><b>/ 255.0</b></td><td>Normalisasi: semua piksel diubah ke rentang 0 sampai 1 agar latihan stabil</td></tr>
-  <tr><td><b>Flatten</b></td><td>Meratakan kotak 28×28 menjadi satu baris berisi 784 angka</td></tr>
-  <tr><td><b>Dense(128, relu)</b></td><td>Lapisan tersembunyi: 128 neuron, masing-masing tersambung ke semua 784 piksel</td></tr>
-  <tr><td><b>Dense(10, softmax)</b></td><td>Lapisan keluaran: 10 peluang untuk angka 0 sampai 9, jumlahnya selalu 100% (<a href="#/lesson/ai-mat-6">Softmax</a>)</td></tr>
-  <tr><td><b>adam</b></td><td>Versi gradient descent yang mengatur learning rate-nya sendiri</td></tr>
-  <tr><td><b>sparse_categorical_crossentropy</b></td><td>Ukuran salah untuk tebakan berupa pilihan kelas, dengan label berupa angka biasa (0–9)</td></tr>
-  <tr><td><b>validation_split=0.1</b></td><td>Menyisihkan 10% data latih untuk memeriksa apakah model menghafal</td></tr>
-</table>
-<p>Berapa banyak kenop (parameter) yang dipelajari? Lapisan tersembunyi: 784 × 128 bobot + 128 bias = <b>100.480</b>. Lapisan keluaran: 128 × 10 + 10 = <b>1.290</b>. Totalnya <b>101.770</b> parameter, semuanya diputar sedikit demi sedikit selama latihan.</p>
-
-<h3>Apa yang terjadi saat model.fit berjalan</h3>
+<p>Neural network yang baru dibuat isinya bobot acak, jadi tebakannya ngawur. Pelajaran ini menjelaskan apa yang terjadi selama latihan sampai tebakannya bagus: satu putaran belajar, cara mengukur salah (loss), dan cara memutar kenop (optimizer). Angka-angkanya diambil dari <a href="#/lesson/ai-mnist-1">proyek pengenal angka</a> di pelajaran berikutnya.</p>
+<h3>Satu putaran belajar</h3>
 <div data-diagram="cycle" data-steps="Forward pass: model menebak|Hitung loss: seberapa salah|Backpropagation: andil tiap bobot|Perbarui bobot: optimizer adam" data-center="satu batch" data-caption="Satu putaran belajar, diulang ribuan kali"></div>
 <table class="tbl">
-  <tr><th>Langkah</th><th>Di kode kita</th></tr>
+  <tr><th>Langkah</th><th>Di kode proyek MNIST</th></tr>
   <tr><td><b>Forward pass</b></td><td>Gambar masuk, model menghasilkan 10 peluang</td></tr>
   <tr><td><b>Hitung loss</b></td><td><i>sparse_categorical_crossentropy</i> membandingkan tebakan dengan label sebenarnya</td></tr>
-  <tr><td><b>Backpropagation</b></td><td>TensorFlow menghitung sendiri arah perbaikan untuk ke-101.770 bobot</td></tr>
+  <tr><td><b>Backpropagation</b></td><td>TensorFlow menghitung sendiri arah perbaikan untuk ke-109.386 bobot</td></tr>
   <tr><td><b>Perbarui bobot</b></td><td><i>adam</i> memutar setiap kenop sedikit ke arah yang mengurangi loss</td></tr>
 </table>
-<p>Putaran ini tidak terjadi sekali per epoch, melainkan sekali per <b>batch</b>. Keras memakai 32 gambar per batch secara bawaan. Dengan 54.000 gambar latih (60.000 dikurangi 10% untuk validasi), satu epoch berisi 54.000 ÷ 32 ≈ <b>1.688 putaran</b>; itulah angka "1688/1688" yang muncul di Colab. Lima epoch berarti sekitar 8.440 kali bobot diperbarui.</p>
+<p>Putaran ini tidak terjadi sekali per epoch, melainkan sekali per <b>batch</b>. Keras memakai 32 gambar per batch secara bawaan. Dengan 54.000 gambar latih (60.000 dikurangi 10% untuk validasi), satu epoch berisi 54.000 ÷ 32 ≈ <b>1.688 putaran</b>; itulah angka "1688/1688" yang akan muncul di Colab saat kamu menjalankan proyeknya. Lima epoch berarti sekitar 8.440 kali bobot diperbarui.</p>
 <div class="callout">
 <b>Diulang sampai kapan?</b> Bukan sampai akurasinya setinggi mungkin, karena akurasi latih bisa terus naik sambil model menghafal. Lebih aman berhenti saat akurasi <b>validasi</b> tidak membaik lagi. Keras menyediakan pengaturan untuk itu:
 <pre class="code">berhenti = tf.keras.callbacks.EarlyStopping(
@@ -6176,9 +6200,153 @@ Latihan berhenti sendiri bila 2 epoch berturut-turut tidak membaik, lalu bobot t
 </table>
 <p>Baris ketiga menjelaskan angka yang akan kamu lihat di Colab: model yang baru mulai belum tahu apa-apa dan memberi peluang sekitar 10% untuk tiap angka, sehingga loss awalnya sekitar <b>2,3</b>. Setelah dilatih, loss turun sampai di bawah 0,1.</p>
 <div class="callout">
-<b>Categorical atau sparse?</b> Kode kita memakai <i>sparse_categorical_crossentropy</i>, sedangkan banyak slide menyebut <i>categorical crossentropy</i>. Rumusnya sama persis; bedanya hanya bentuk label. <i>Sparse</i> menerima label berupa angka biasa, misalnya <b>7</b>. <i>Categorical</i> meminta label <b>one-hot</b>: sepuluh angka dengan satu angka 1 di posisi jawabannya, misalnya [0, 0, 0, 0, 0, 0, 0, 1, 0, 0]. Karena label MNIST berupa angka biasa, <i>sparse</i> lebih praktis.
+<b>Categorical atau sparse?</b> Kode proyek kita memakai <i>sparse_categorical_crossentropy</i>, sedangkan banyak slide menyebut <i>categorical crossentropy</i>. Rumusnya sama persis; bedanya hanya bentuk label. <i>Sparse</i> menerima label berupa angka biasa, misalnya <b>7</b>. <i>Categorical</i> meminta label <b>one-hot</b>: sepuluh angka dengan satu angka 1 di posisi jawabannya, misalnya [0, 0, 0, 0, 0, 0, 0, 1, 0, 0]. Karena label MNIST berupa angka biasa, <i>sparse</i> lebih praktis.
 </div>
 <p>"Makin kecil loss, makin bagus" benar untuk loss <b>validasi</b>. Loss latih bisa terus mengecil sementara model menghafal; tanda bahayanya adalah loss validasi yang berhenti turun lalu naik lagi. Asal-usul rumus ini ada di <a href="#/lesson/ai-mat-6">Fungsi Loss &amp; Softmax</a>.</p>
+
+<h3>Optimizer: cara memutar kenop</h3>
+<p>Backpropagation memberi tahu <i>arah</i> perbaikan setiap bobot. <b>Optimizer</b> memutuskan <i>seberapa jauh</i> dan <i>bagaimana</i> memutarnya. Bayangkan bola yang menuruni lembah loss dalam kabut:</p>
+<table class="tbl">
+  <tr><th>Optimizer</th><th>Cara kerjanya</th></tr>
+  <tr><td><b>SGD</b> (stochastic gradient descent)</td><td>Melangkah sesuai kemiringan di bawah kaki, dengan ukuran langkah yang sama untuk semua kenop. Sederhana, tapi di lembah yang sempit dan memanjang bisa zig-zag sehingga lambat</td></tr>
+  <tr><td><b>Momentum</b> (sering dipasang di SGD)</td><td>Seperti bola yang menggelinding: membawa kecepatan dari langkah sebelumnya, sehingga zig-zag teredam</td></tr>
+  <tr><td><b>RMSprop</b></td><td>Setiap kenop punya ukuran langkah sendiri: kenop yang gradiennya sering besar diberi langkah lebih kecil, dan sebaliknya. Dulu sering disarankan untuk RNN</td></tr>
+  <tr><td><b>Adam</b></td><td>Gabungan momentum dan langkah per kenop ala RMSprop. Pilihan bawaan yang aman untuk kebanyakan kasus, termasuk model kita</td></tr>
+</table>
+<p>Mengganti optimizer cukup satu baris di <i>compile</i>:</p>
+<pre class="code">optimizer=tf.keras.optimizers.SGD(learning_rate=0.01, momentum=0.9)
+optimizer=tf.keras.optimizers.RMSprop(learning_rate=0.001)
+optimizer=tf.keras.optimizers.Adam(learning_rate=0.001)   # sama dengan optimizer="adam"</pre>
+<div class="callout">
+<b>Tidak ada optimizer yang terbaik untuk semua kasus.</b> Adam adalah titik awal yang aman. SGD dengan momentum masih sering menghasilkan model gambar yang lebih bagus bila learning rate-nya diatur dengan teliti, dan varian <b>AdamW</b> banyak dipakai untuk melatih model bahasa besar. Hasil perbandingan juga sangat bergantung pada learning rate (<a href="#/lesson/ai-alg-10">Melatih Neural Network dengan Benar</a>). Tantangan: latih model MNIST dengan ketiga optimizer di atas, lalu bandingkan kurva loss validasinya.
+</div>
+
+`,
+          keyPoints: [
+            "Satu putaran latihan = forward pass, hitung loss, backpropagation, perbarui bobot; terjadi sekali per batch (1.688 kali per epoch untuk 54.000 gambar dengan batch 32).",
+            "Berhenti saat akurasi atau loss validasi tidak membaik lagi (EarlyStopping), bukan saat akurasi latih setinggi mungkin.",
+            "Cross-entropy = −ln(peluang untuk jawaban benar): 0,9 → 0,11, sedangkan 0,1 → 2,30. Model yang baru mulai menebak acak, jadi loss awalnya sekitar 2,3.",
+            "Optimizer menentukan cara memutar kenop: SGD (langkah sama), momentum (membawa kecepatan), RMSprop (langkah per kenop), Adam (gabungan keduanya, pilihan bawaan yang aman)."
+          ],
+          practice: [
+            {
+              "type": "number",
+              "q": "Data latih berisi 54.000 gambar dan ukuran batch 64. Berapa kali bobot diperbarui dalam satu epoch? (Batch terakhir yang tidak penuh tetap dihitung.)",
+              "answer": 844,
+              "tol": 0.5,
+              "unit": "kali",
+              "hint": "Bagi jumlah gambar dengan ukuran batch, lalu bulatkan ke atas.",
+              "solution": "54.000 ÷ 64 = 843,75, dibulatkan ke atas menjadi 844 kali."
+            },
+            {
+              "type": "number",
+              "q": "Model memberi peluang 0,25 untuk angka yang benar. Berapa loss cross-entropy-nya? (loss = −ln peluang, bulatkan 2 desimal)",
+              "answer": 1.39,
+              "tol": 0.01,
+              "hint": "Hitung ln 0,25 dengan kalkulator, lalu ubah tandanya.",
+              "solution": "ln 0,25 ≈ −1,386, jadi loss ≈ 1,39. Lebih besar dari 0,69 (peluang 0,5) dan lebih kecil dari 2,30 (peluang 0,1)."
+            }
+          ],
+          quiz: [
+            {
+              "q": "Satu putaran belajar (forward pass sampai perbarui bobot) terjadi setiap…",
+              "options": [
+                "Satu batch, misalnya 32 gambar",
+                "Satu epoch, setelah semua data dilihat",
+                "Satu gambar, tanpa pengecualian",
+                "Satu kali di akhir pelatihan"
+              ],
+              "answer": 0,
+              "explain": "Bobot diperbarui setiap batch. Dengan 54.000 gambar dan batch 32, satu epoch berisi sekitar 1.688 putaran."
+            },
+            {
+              "q": "Model MNIST yang baru dibuat biasanya punya loss sekitar 2,3. Kenapa?",
+              "options": [
+                "Ia menebak acak, sekitar 10% untuk tiap angka",
+                "Datanya belum dinormalisasi ke rentang 0–1",
+                "Learning rate bawaan Adam terlalu kecil",
+                "Gambar MNIST berukuran 28 kali 28 piksel"
+              ],
+              "answer": 0,
+              "explain": "Peluang 0,1 untuk jawaban yang benar memberi loss −ln 0,1 ≈ 2,3. Setelah dilatih, peluangnya naik dan loss turun."
+            },
+            {
+              "q": "Apa yang ditambahkan momentum pada SGD?",
+              "options": [
+                "Kecepatan dari langkah sebelumnya agar tidak zig-zag",
+                "Learning rate berbeda untuk setiap data latih",
+                "Lapisan tersembunyi tambahan di dalam model",
+                "Fungsi aktivasi baru untuk neuron keluaran"
+              ],
+              "answer": 0,
+              "explain": "Seperti bola yang menggelinding, langkah baru ikut membawa arah langkah sebelumnya, sehingga gerakan bolak-balik di lembah sempit teredam."
+            }
+          ]
+        },
+        {
+          id: "ai-mnist-1",
+          title: "Proyek: AI Pengenal Angka Tulisan Tangan dengan TensorFlow",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Neural network berisi lapisan input, tersembunyi, dan output, dengan ReLU di lapisan tersembunyi dan softmax di keluaran (<a href="#/lesson/ai-nn-1">Di Dalam Neural Network</a>). Latihan berjalan dalam putaran forward pass, hitung loss, backpropagation, dan perbarui bobot (<a href="#/lesson/ai-nn-2">Cara Neural Network Belajar</a>). Satu <b>neuron</b> mengalikan setiap masukan dengan bobotnya, menjumlahkan, lalu melewatkan hasilnya ke fungsi aktivasi; banyak neuron yang berlapis membentuk <b>neural network</b> (<a href="#/lesson/ai-alg-9">Neural Network dari Nol</a>). <b>Keras</b> membuat neural network dalam beberapa baris (<a href="#/lesson/ai-tl-7">TensorFlow &amp; Keras</a>), dan satu <b>epoch</b> berarti seluruh data latih sudah dilihat sekali (<a href="#/lesson/ai-alg-10">Melatih Neural Network dengan Benar</a>).
+</div>
+
+<p>Hampir setiap orang yang belajar deep learning memulai dari proyek yang sama: mengajari komputer <b>membaca angka tulisan tangan</b>. Teorinya sudah kamu pelajari di dua pelajaran sebelumnya. Sekarang saatnya membangun: dari gambar menjadi angka, menulis model dengan TensorFlow, membaca hasil latihannya, sampai menulis angka sendiri dan melihat AI menebaknya.</p>
+
+<h3>Bagi komputer, gambar adalah tabel angka</h3>
+<p>Komputer tidak melihat "angka nol". Ia melihat kotak-kotak kecil (piksel), masing-masing berisi angka yang menunjukkan seberapa gelap kotak itu. Ini angka 0 dari dataset kecil bawaan scikit-learn, berukuran 8×8 dengan nilai 0 sampai 16:</p>
+<pre class="code"> 0  0  5 13  9  1  0  0
+ 0  0 13 15 10 15  5  0
+ 0  3 15  2  0 11  8  0
+ 0  4 12  0  0  8  8  0
+ 0  5  8  0  0  9  8  0
+ 0  4 11  0  1 12  7  0
+ 0  2 14  5 10 12  0  0
+ 0  0  6 13 10  0  0  0</pre>
+<p>Coba lihat sambil memicingkan mata: angka besar membentuk lingkaran. Dataset yang dipakai di hampir semua kelas adalah <b>MNIST</b>, berisi <b>70.000</b> gambar angka tulisan tangan berukuran <b>28×28</b> piksel, dengan nilai 0 (putih) sampai 255 (hitam). Sebanyak 60.000 gambar untuk latihan dan 10.000 untuk ujian. Tulisannya berasal dari pegawai Biro Sensus Amerika Serikat dan pelajar SMA, dikumpulkan oleh NIST lalu dirapikan oleh Yann LeCun dan rekan-rekannya pada 1998.</p>
+<div data-diagram="pipeline" data-stages="Gambar 28×28::diratakan jadi 784 angka|Lapisan 128 neuron::aktivasi ReLU|Lapisan 64 neuron::aktivasi ReLU|Lapisan 10 neuron::softmax|10 peluang::angka 0 sampai 9" data-caption="Model yang akan kita bangun"></div>
+
+<h3>Kode lengkap dengan TensorFlow</h3>
+<p>Jalankan di <b>Google Colab</b> (<a href="#/lesson/ai-tl-4">Menyiapkan Komputermu</a>); TensorFlow dan datasetnya sudah tersedia, tidak perlu memasang apa pun.</p>
+<pre class="code">import tensorflow as tf
+
+# 1. Data: 60.000 gambar latih dan 10.000 gambar uji
+(x_latih, y_latih), (x_uji, y_uji) = tf.keras.datasets.mnist.load_data()
+x_latih, x_uji = x_latih / 255.0, x_uji / 255.0   # nilai 0-255 menjadi 0-1
+
+# 2. Model: 784 masukan, dua lapisan tersembunyi (128 dan 64), 10 keluaran
+model = tf.keras.Sequential([
+    tf.keras.Input(shape=(28, 28)),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(128, activation="relu"),
+    tf.keras.layers.Dense(64, activation="relu"),
+    tf.keras.layers.Dense(10, activation="softmax"),
+])
+
+# 3. Cara belajar: pengatur langkah, ukuran salah, dan nilai rapor
+model.compile(optimizer="adam",
+              loss="sparse_categorical_crossentropy",
+              metrics=["accuracy"])
+
+# 4. Latihan: 5 epoch, 10% data latih disisihkan untuk validasi
+riwayat = model.fit(x_latih, y_latih, epochs=5, validation_split=0.1)
+
+# 5. Ujian akhir dengan data yang belum pernah dilihat
+model.evaluate(x_uji, y_uji)</pre>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Artinya</th></tr>
+  <tr><td><b>/ 255.0</b></td><td>Normalisasi: semua piksel diubah ke rentang 0 sampai 1 agar latihan stabil</td></tr>
+  <tr><td><b>Flatten</b></td><td>Meratakan kotak 28×28 menjadi satu baris berisi 784 angka</td></tr>
+  <tr><td><b>Dense(128, relu)</b></td><td>Lapisan tersembunyi pertama: 128 neuron, masing-masing tersambung ke semua 784 piksel; menangkap fitur dasar</td></tr>
+  <tr><td><b>Dense(64, relu)</b></td><td>Lapisan tersembunyi kedua: 64 neuron yang menggabungkan fitur dasar menjadi fitur yang lebih kompleks</td></tr>
+  <tr><td><b>Dense(10, softmax)</b></td><td>Lapisan keluaran: 10 peluang untuk angka 0 sampai 9, jumlahnya selalu 100% (<a href="#/lesson/ai-mat-6">Softmax</a>)</td></tr>
+  <tr><td><b>adam</b></td><td>Versi gradient descent yang mengatur learning rate-nya sendiri</td></tr>
+  <tr><td><b>sparse_categorical_crossentropy</b></td><td>Ukuran salah untuk tebakan berupa pilihan kelas, dengan label berupa angka biasa (0–9)</td></tr>
+  <tr><td><b>validation_split=0.1</b></td><td>Menyisihkan 10% data latih untuk memeriksa apakah model menghafal</td></tr>
+</table>
+<p>Berapa banyak kenop (parameter) yang dipelajari? Lapisan tersembunyi pertama: 784 × 128 bobot + 128 bias = <b>100.480</b>. Lapisan kedua: 128 × 64 + 64 = <b>8.256</b>. Lapisan keluaran: 64 × 10 + 10 = <b>650</b>. Totalnya <b>109.386</b> parameter, semuanya diputar sedikit demi sedikit selama latihan. Hampir 92% di antaranya ada di lapisan pertama, karena setiap neuronnya tersambung ke 784 piksel.</p>
 
 <h3>Membaca hasil latihan</h3>
 <div data-diagram="garis" data-seri="Latih:92.5,96.6,97.6,98.2,98.6|Validasi:95.8,96.9,97.3,97.5,97.7" data-x="Epoch 1,Epoch 2,Epoch 3,Epoch 4,Epoch 5" data-caption="Contoh akurasi (%) per epoch; hasilmu bisa sedikit berbeda karena bobot awalnya acak"></div>
@@ -6232,89 +6400,78 @@ plt.show()</pre>
 </table>
 `,
           keyPoints: [
-            "Neural network hanya terinspirasi otak secara longgar: neuron buatan adalah rumus kecil yang menemukan pola dari banyak contoh, bukan pikiran.",
-            "Deep learning = banyak lapisan; pola makin utuh dari piksel ke garis, bentuk, lalu objek. Tapi lapisan lebih banyak tidak otomatis lebih baik.",
-            "Tanpa lapisan tersembunyi, jaringan hanya bisa menarik batas lurus (gagal di XOR); lapisan tersembunyi plus fungsi aktivasi membuat batasnya melengkung.",
             "Bagi komputer, gambar adalah tabel angka. MNIST: 70.000 gambar 28×28 (60.000 latih, 10.000 uji), nilai piksel 0–255.",
-            "Arsitektur: input layer (piksel) → hidden layer (menemukan fitur) → output layer (prediksi); aliran maju ini disebut forward propagation.",
-            "Satu neuron: kalikan tiap input dengan bobot, jumlahkan, tambah bias, lalu lewatkan fungsi aktivasi seperti ReLU; hasilnya dikirim ke lapisan berikutnya.",
-            "Satu putaran latihan = forward pass, hitung loss, backpropagation, perbarui bobot; terjadi sekali per batch (1.688 kali per epoch untuk 54.000 gambar dengan batch 32).",
-            "Cross-entropy = −ln(peluang untuk jawaban benar): 0,9 → 0,11, sedangkan 0,1 → 2,30. Model yang baru mulai menebak acak, jadi loss awalnya sekitar 2,3.",
-            "Model Keras sederhana: Flatten → Dense(128, relu) → Dense(10, softmax), 101.770 parameter, biasanya mencapai sekitar 97–98% di data uji.",
+            "Model Keras di kelas: Flatten → Dense(128, relu) → Dense(64, relu) → Dense(10, softmax), 109.386 parameter, biasanya mencapai sekitar 97–98% di data uji.",
             "Normalisasi (/255), validation_split, dan kurva latih vs validasi membantu melihat apakah model mulai menghafal.",
-            "Visualisasi tebakan salah dan confusion matrix menunjukkan angka mana yang tertukar; CNN dan augmentasi memperbaikinya."
+            "Visualisasi tebakan salah dan confusion matrix menunjukkan angka mana yang tertukar; CNN dan augmentasi memperbaikinya.",
+            "Akurasi tinggi di data uji belum menjamin AI bekerja untuk pengguna sungguhan: data latih harus mewakili cara orang menulis, seperti angka 7 tanpa coretan."
           ],
           practice: [
-            { type: "number", q: "Model punya lapisan Dense 64 neuron dengan masukan 784 piksel. Berapa jumlah parameter lapisan itu (bobot + bias)?", answer: 50240, tol: 0.5, unit: "parameter", hint: "Setiap neuron punya satu bobot untuk tiap masukan, ditambah satu bias.", solution: "784 × 64 + 64 = 50.176 + 64 = 50.240 parameter." },
-            { type: "number", q: "Dari 10.000 gambar uji, model salah menebak 230 gambar. Berapa persen akurasinya?", answer: 97.7, tol: 0.01, unit: "%", hint: "Yang benar = 10.000 − 230. Bagi dengan 10.000.", solution: "9.770 ÷ 10.000 = 97,7%." },
             {
-              type: "choice",
-              q: "Kenapa nilai piksel dibagi 255 sebelum dilatih?",
-              options: ["Agar semua nilai berada di rentang 0 sampai 1 dan latihan stabil", "Agar gambarnya berubah menjadi hitam putih", "Agar ukuran gambar mengecil jadi 1×1 piksel", "Agar model bisa membaca angka di atas 255"],
-              answer: 0,
-              hint: "Nilai asli piksel berkisar 0 sampai 255.",
-              solution: "Normalisasi membuat semua masukan sekecil dan sesetara mungkin, sehingga langkah gradient descent tidak liar."
+              "type": "number",
+              "q": "Model punya lapisan Dense 64 neuron dengan masukan 784 piksel. Berapa jumlah parameter lapisan itu (bobot + bias)?",
+              "answer": 50240,
+              "tol": 0.5,
+              "unit": "parameter",
+              "hint": "Setiap neuron punya satu bobot untuk tiap masukan, ditambah satu bias.",
+              "solution": "784 × 64 + 64 = 50.176 + 64 = 50.240 parameter."
             },
-            { type: "number", q: "Sebuah neuron menerima input 1 dan 0,5 dengan bobot 0,4 dan −0,2, serta bias 0,3. Berapa keluarannya setelah ReLU?", answer: 0.6, tol: 0.001, hint: "Kalikan tiap input dengan bobotnya, jumlahkan, tambah bias. ReLU hanya mengubah nilai negatif menjadi 0.", solution: "1 × 0,4 + 0,5 × (−0,2) + 0,3 = 0,4 − 0,1 + 0,3 = 0,6. Positif, jadi ReLU meneruskannya: 0,6." },
-            { type: "number", q: "Sebuah jaringan punya 3 masukan, satu lapisan tersembunyi berisi 6 neuron, dan 2 keluaran. Berapa total parameternya (bobot + bias)?", answer: 38, tol: 0.5, unit: "parameter", hint: "Hitung per lapisan: masukan × neuron + neuron (bias).", solution: "Lapisan tersembunyi: 3 × 6 + 6 = 24. Lapisan keluaran: 6 × 2 + 2 = 14. Total 38." },
-            { type: "number", q: "Data latih berisi 54.000 gambar dan ukuran batch 64. Berapa kali bobot diperbarui dalam satu epoch? (Batch terakhir yang tidak penuh tetap dihitung.)", answer: 844, tol: 0.5, unit: "kali", hint: "Bagi jumlah gambar dengan ukuran batch, lalu bulatkan ke atas.", solution: "54.000 ÷ 64 = 843,75, dibulatkan ke atas menjadi 844 kali." },
-            { type: "number", q: "Model memberi peluang 0,25 untuk angka yang benar. Berapa loss cross-entropy-nya? (loss = −ln peluang, bulatkan 2 desimal)", answer: 1.39, tol: 0.01, hint: "Hitung ln 0,25 dengan kalkulator, lalu ubah tandanya.", solution: "ln 0,25 ≈ −1,386, jadi loss ≈ 1,39. Lebih besar dari 0,69 (peluang 0,5) dan lebih kecil dari 2,30 (peluang 0,1)." }
+            {
+              "type": "number",
+              "q": "Dari 10.000 gambar uji, model salah menebak 230 gambar. Berapa persen akurasinya?",
+              "answer": 97.7,
+              "tol": 0.01,
+              "unit": "%",
+              "hint": "Yang benar = 10.000 − 230. Bagi dengan 10.000.",
+              "solution": "9.770 ÷ 10.000 = 97,7%."
+            },
+            {
+              "type": "choice",
+              "q": "Kenapa nilai piksel dibagi 255 sebelum dilatih?",
+              "options": [
+                "Agar semua nilai berada di rentang 0 sampai 1 dan latihan stabil",
+                "Agar gambarnya berubah menjadi hitam putih",
+                "Agar ukuran gambar mengecil jadi 1×1 piksel",
+                "Agar model bisa membaca angka di atas 255"
+              ],
+              "answer": 0,
+              "hint": "Nilai asli piksel berkisar 0 sampai 255.",
+              "solution": "Normalisasi membuat semua masukan sekecil dan sesetara mungkin, sehingga langkah gradient descent tidak liar."
+            }
           ],
           quiz: [
             {
-              q: "Bagaimana sebuah gambar angka masuk ke neural network?",
-              options: [
+              "q": "Bagaimana sebuah gambar angka masuk ke neural network?",
+              "options": [
                 "Sebagai tabel angka yang menunjukkan gelap terangnya tiap piksel",
                 "Sebagai berkas gambar utuh yang langsung dipahami maknanya",
                 "Sebagai teks yang menyebutkan nama angka di dalam gambar",
                 "Sebagai suara yang direkam ketika angka itu dibacakan"
               ],
-              answer: 0,
-              explain: "Komputer hanya mengolah angka. Gambar 28×28 menjadi 784 angka yang diratakan oleh lapisan Flatten."
+              "answer": 0,
+              "explain": "Komputer hanya mengolah angka. Gambar 28×28 menjadi 784 angka yang diratakan oleh lapisan Flatten."
             },
             {
-              q: "Apa tugas lapisan Dense(10, softmax) di akhir model?",
-              options: [
-                "Memberi 10 peluang untuk angka 0 sampai 9 yang jumlahnya 100%",
-                "Memotong gambar menjadi 10 bagian yang sama besar",
-                "Mengulang latihan sebanyak 10 epoch secara otomatis",
-                "Memilih 10 piksel paling gelap dari setiap gambar"
-              ],
-              answer: 0,
-              explain: "Satu neuron untuk tiap angka; softmax mengubah nilainya menjadi peluang, dan peluang terbesar menjadi tebakan."
-            },
-            {
-              q: "Akurasi latih terus naik, tapi akurasi validasi mendatar lalu turun. Artinya?",
-              options: [
+              "q": "Akurasi latih terus naik, tapi akurasi validasi mendatar lalu turun. Artinya?",
+              "options": [
                 "Model mulai menghafal data latih",
                 "Model sudah sempurna dan siap dipakai",
                 "Data ujinya pasti diberi label salah",
                 "Learning rate harus dibuat sebesar mungkin"
               ],
-              answer: 0,
-              explain: "Model makin jago pada soal yang pernah dilihat, tapi tidak makin jago pada soal baru: itulah tanda menghafal (overfitting)."
+              "answer": 0,
+              "explain": "Model makin jago pada soal yang pernah dilihat, tapi tidak makin jago pada soal baru: itulah tanda menghafal (overfitting)."
             },
             {
-              q: "Benarkah 'makin banyak lapisan, makin paham'?",
-              options: [
-                "Tidak selalu: lapisan berlebih sulit dilatih dan mudah menghafal",
-                "Benar: setiap lapisan tambahan pasti menaikkan akurasi",
-                "Benar: model terbaik selalu yang punya lapisan paling banyak",
-                "Tidak: neural network hanya boleh punya satu lapisan"
+              "q": "Kenapa versi pertama demo tulis angka salah membaca angka 7 polos?",
+              "options": [
+                "Data latihnya hampir selalu memakai 7 bercoret",
+                "Modelnya kekurangan lapisan tersembunyi",
+                "Kanvasnya terlalu kecil untuk menulis",
+                "Learning rate saat latihan terlalu besar"
               ],
-              answer: 0,
-              explain: "Kedalaman harus sesuai masalahnya. Untuk MNIST, satu lapisan tersembunyi sudah sekitar 98%; yang lebih membantu adalah jenis lapisan yang tepat seperti CNN."
-            },
-            {
-              q: "Jaringan tanpa lapisan tersembunyi gagal mempelajari XOR karena…",
-              options: [
-                "Ia hanya bisa memisahkan data dengan satu garis lurus",
-                "Datanya terlalu sedikit untuk dipelajari",
-                "Learning rate-nya pasti terlalu kecil",
-                "XOR hanya bisa dihitung oleh komputer kuantum"
-              ],
-              answer: 0,
-              explain: "Titik-titik XOR tidak bisa dipisahkan oleh satu garis lurus. Lapisan tersembunyi dengan fungsi aktivasi membuat batasnya bisa melengkung."
+              "answer": 0,
+              "explain": "Model hanya mengenal gaya tulisan yang ada di data latih. Setelah ditambah contoh 7 polos, angka itu terbaca benar."
             }
           ]
         },
