@@ -5432,6 +5432,15 @@ Machine learning klasik seperti pohon keputusan, Random Forest, dan XGBoost bela
 <b>"Deep learning lebih powerful"? Tergantung datanya.</b> Untuk data tabel seperti data penjualan atau nasabah, Random Forest dan XGBoost <b>biasanya masih menang</b> (<a href="#/lesson/ai-tl-7">TensorFlow &amp; Keras</a>). Bahkan untuk MNIST yang rapi, SVM klasik bisa mencapai sekitar 98% langsung dari piksel. Keunggulan deep learning paling terasa pada data yang besar dan berantakan: foto sungguhan, rekaman suara, dan bahasa manusia.
 </div>
 
+<h3>Contoh angka: siapa menang di MNIST?</h3>
+<div data-diagram="bar" data-bars="Regresi logistik:92|Decision tree:88|Random Forest:97|Neural network sederhana (kelas):97.4|CNN:99.2" data-unit="%" data-caption="Akurasi uji kira-kira pada MNIST (angka tulisan tangan); neural network sederhana memakai hasil notebook kelas"></div>
+<p>Untuk gambar, deep learning memang menang. Tapi perhatikan dua hal:</p>
+<ul>
+  <li><b>Random Forest hampir menyamai neural network sederhana.</b> Keunggulan besar baru datang dari jenis lapisan yang cocok untuk gambar, yaitu <a href="#/lesson/ai-ars-4">CNN</a>.</li>
+  <li><b>Lihat dari sisi salahnya.</b> Regresi logistik salah sekitar 8 dari 100 gambar, CNN kurang dari 1 dari 100: delapan kali lebih sedikit salah. Grafik yang dimulai dari 0 membuat selisih ini tampak kecil, padahal di aplikasi sungguhan bedanya sangat terasa.</li>
+</ul>
+<p>Grafik seperti ini selalu bergantung pada datanya. Untuk data tabel, urutannya sering terbalik: Random Forest dan XGBoost di depan.</p>
+
 <h3>Kapan pakai yang mana?</h3>
 <table class="tbl">
   <tr><th>Pilih machine learning klasik kalau…</th><th>Pilih deep learning kalau…</th></tr>
