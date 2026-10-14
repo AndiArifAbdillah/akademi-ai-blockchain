@@ -6003,6 +6003,20 @@ Neural network memang <b>terinspirasi</b> dari sel saraf otak, tapi hanya secara
 <b>"Makin banyak lapisan, makin paham"? Tidak selalu.</b> Jaringan yang makin dalam juga makin sulit dilatih, butuh lebih banyak data dan komputasi, dan lebih mudah <b>menghafal</b> data latih. Untuk angka tulisan tangan, satu lapisan tersembunyi saja sudah mencapai sekitar 98%. Kedalaman harus disesuaikan dengan masalahnya. Urutan garis → bentuk → objek paling jelas terlihat pada <a href="#/lesson/ai-ars-4">CNN</a>, jenis jaringan yang khusus untuk gambar.
 </div>
 
+<h3>Machine learning vs deep learning</h3>
+<p>Deep learning bukan lawan machine learning, melainkan <b>bagiannya</b>: semua deep learning adalah machine learning, tapi tidak sebaliknya. Yang membedakan adalah siapa yang menemukan <b>fitur</b>, yaitu ciri-ciri penting dari data.</p>
+<table class="tbl">
+  <tr><th></th><th>Machine learning klasik</th><th>Deep learning</th></tr>
+  <tr><td><b>Fitur</b></td><td>Dirancang manusia, misalnya "berapa lubang pada angka ini?"</td><td>Dipelajari sendiri dari data mentah, misalnya langsung dari piksel</td></tr>
+  <tr><td><b>Contoh</b></td><td>Decision tree, SVM, Random Forest, XGBoost</td><td>CNN, RNN, Transformer</td></tr>
+  <tr><td><b>Paling cocok untuk</b></td><td>Data tabel yang rapi</td><td>Gambar, suara, dan teks</td></tr>
+  <tr><td><b>Kebutuhan</b></td><td>Ratusan sampai ribuan baris; laptop biasa cukup</td><td>Puluhan ribu sampai jutaan contoh; sering butuh GPU</td></tr>
+  <tr><td><b>Mudah dijelaskan?</b></td><td>Lebih mudah, terutama pohon keputusan tunggal</td><td>Lebih sulit; sering disebut "kotak hitam"</td></tr>
+</table>
+<div class="callout">
+<b>"Deep learning lebih powerful"? Tergantung datanya.</b> Untuk data tabel seperti data penjualan atau nasabah, Random Forest dan XGBoost <b>biasanya masih menang</b> (<a href="#/lesson/ai-tl-7">TensorFlow &amp; Keras</a>). Bahkan untuk MNIST yang rapi, SVM klasik bisa mencapai sekitar 98% langsung dari piksel. Keunggulan deep learning paling terasa pada data yang besar dan berantakan: foto sungguhan, rekaman suara, dan bahasa manusia.
+</div>
+
 <h3>Kenapa harus "deep"?</h3>
 <p>Jaringan <b>tanpa lapisan tersembunyi</b>, yang masukannya langsung tersambung ke keluaran, hanya bisa memisahkan data dengan <b>garis lurus</b>. Contoh klasiknya soal XOR: titik-titiknya bersilangan sehingga tidak ada satu garis lurus pun yang bisa memisahkannya. Begitu ditambah lapisan tersembunyi dengan fungsi aktivasi, batasnya bisa <b>melengkung</b>. Buktikan sendiri di demo <a href="#/lesson/ai-alg-9">Neural Network dari Nol</a>.</p>
 <div data-diagram="vs" data-left="Tanpa lapisan tersembunyi::hanya bisa menarik garis lurus::gagal memisahkan XOR" data-right="Dengan lapisan tersembunyi::plus fungsi aktivasi, batasnya melengkung::berhasil memisahkan XOR" data-caption="Inilah alasan jaringan dibuat berlapis"></div>
@@ -6099,6 +6113,7 @@ console.log("softmax:", pangkat.map((v) => (v / total * 100).toFixed(1) + "%").j
           keyPoints: [
             "Neural network hanya terinspirasi otak secara longgar: neuron buatan adalah rumus kecil yang menemukan pola dari banyak contoh, bukan pikiran.",
             "Deep learning = banyak lapisan; pola makin utuh dari piksel ke garis, bentuk, lalu objek. Tapi lapisan lebih banyak tidak otomatis lebih baik.",
+            "Deep learning adalah bagian dari machine learning: fiturnya dipelajari sendiri dari data mentah. Machine learning klasik memakai fitur rancangan manusia dan sering lebih unggul untuk data tabel.",
             "Tanpa lapisan tersembunyi, jaringan hanya bisa menarik batas lurus (gagal di XOR); lapisan tersembunyi plus fungsi aktivasi membuat batasnya melengkung.",
             "Arsitektur: input layer (piksel) → hidden layer (menemukan fitur) → output layer (prediksi); aliran maju ini disebut forward propagation.",
             "Satu neuron: kalikan tiap input dengan bobot, jumlahkan, tambah bias, lalu lewatkan fungsi aktivasi seperti ReLU; hasilnya dikirim ke lapisan berikutnya.",
@@ -6156,6 +6171,17 @@ console.log("softmax:", pangkat.map((v) => (v / total * 100).toFixed(1) + "%").j
               ],
               "answer": 0,
               "explain": "Titik-titik XOR tidak bisa dipisahkan oleh satu garis lurus. Lapisan tersembunyi dengan fungsi aktivasi membuat batasnya bisa melengkung."
+            },
+            {
+              "q": "Bagaimana hubungan deep learning dengan machine learning?",
+              "options": [
+                "Deep learning adalah bagian dari machine learning",
+                "Deep learning adalah pengganti machine learning",
+                "Keduanya tidak berhubungan sama sekali",
+                "Machine learning adalah bagian dari deep learning"
+              ],
+              "answer": 0,
+              "explain": "Deep learning adalah machine learning yang memakai neural network berlapis banyak, sehingga fiturnya dipelajari sendiri dari data mentah."
             }
           ]
         },
