@@ -1199,6 +1199,64 @@ Object.keys(DIAGRAMS_HP).forEach((k) => {
   DIAGRAMS[k] = (ds) => (layarHP() ? DIAGRAMS_HP[k](ds) : asli(ds));
 });
 
+/* Gambar jaringan saraf berlapis.
+   <div data-diagram="jaringan-saraf" data-lapisan="2,4,5,3" data-nama="Input|Lapisan 1|Lapisan 2|Output" data-masuk="x₁|x₂"></div>
+   Lapisan dengan lebih dari 8 neuron digambar 3 + ⋮ + 3, jumlah aslinya ditulis di label.
+   Tebal garis meniru besar-kecilnya bobot (pola acak tetap, bukan bobot sungguhan). Menyesuaikan sendiri untuk HP. */
+DIAGRAMS["jaringan-saraf"] = (ds) => {
+  const hp = layarHP();
+  const W = hp ? 340 : 520, R = hp ? 9 : 10, JARAK = hp ? 26 : 30;
+  const jumlah = String(ds.lapisan || "2,3,1").split(",").map((s) => Math.max(1, parseInt(s, 10) || 1));
+  const nama = String(ds.nama || "").split("|").map((s) => s.trim());
+  const masuk = String(ds.masuk || "").split("|").map((s) => s.trim()).filter(Boolean);
+  const L = jumlah.length;
+  const tampil = jumlah.map((n) => (n > 8 ? 7 : n));
+  const atas = 28, tinggiIsi = (Math.max(...tampil) - 1) * JARAK;
+  const kiri = hp ? 36 : 64, kanan = W - (hp ? 30 : 56);
+  const xs = jumlah.map((_, i) => (L === 1 ? W / 2 : kiri + (i * (kanan - kiri)) / (L - 1)));
+  const ys = tampil.map((t, i) => {
+    const mulai = atas + (tinggiIsi - (t - 1) * JARAK) / 2;
+    return Array.from({ length: t }, (_, k) => ({ y: mulai + k * JARAK, titik: jumlah[i] > 8 && k === 3 }));
+  });
+  let acak = 7;
+  const rnd = () => (acak = (acak * 1103515245 + 12345) >>> 0) / 4294967296;
+  let garis = "", simpul = "", teks = "";
+  for (let i = 0; i < L - 1; i++) {
+    ys[i].forEach((a) => {
+      if (a.titik) return;
+      ys[i + 1].forEach((b) => {
+        if (b.titik) return;
+        const w = 0.6 + rnd() * 2.6;
+        garis += `<line x1="${xs[i].toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${xs[i + 1].toFixed(1)}" y2="${b.y.toFixed(1)}" class="vline" style="stroke-width:${w.toFixed(2)};opacity:${(0.22 + w / 5).toFixed(2)}"/>`;
+      });
+    });
+    teks += `<text x="${((xs[i] + xs[i + 1]) / 2).toFixed(1)}" y="13" text-anchor="middle" class="vt-xs">bobot</text>`;
+  }
+  ys.forEach((kol, i) => {
+    const kelas = i === 0 ? "accent2" : i === L - 1 ? "ok" : "accent";
+    kol.forEach((s, k) => {
+      if (s.titik) { teks += `<text x="${xs[i].toFixed(1)}" y="${(s.y + 5).toFixed(1)}" text-anchor="middle" class="vt-xs">⋮</text>`; return; }
+      simpul += `<circle cx="${xs[i].toFixed(1)}" cy="${s.y.toFixed(1)}" r="${R}" class="vbox ${kelas}"/>`;
+      if (i === 0 && masuk[k]) teks += `<text x="${(xs[i] - R - 5).toFixed(1)}" y="${(s.y + 4).toFixed(1)}" text-anchor="end" class="vt-xs">${vEsc(masuk[k])}</text>`;
+    });
+  });
+  let bawah = atas + tinggiIsi + R + 20, baris = 0;
+  jumlah.forEach((n, i) => {
+    const isi = vWrap(nama[i] || "Lapisan " + (i + 1), hp ? 11 : 15).concat([n.toLocaleString("id-ID") + (i === 0 ? " masukan" : " neuron")]);
+    isi.forEach((ln, li) => {
+      // label di kolom paling tepi digeser masuk agar tidak terpotong
+      const lebar = ln.length * (hp ? 7.4 : 6.4);
+      const x = Math.min(Math.max(xs[i], lebar / 2 + 3), W - lebar / 2 - 3);
+      teks += `<text x="${x.toFixed(1)}" y="${(bawah + li * 15).toFixed(1)}" text-anchor="middle" class="vt-xs">${vEsc(ln)}</text>`;
+    });
+    baris = Math.max(baris, isi.length);
+  });
+  const H = bawah + (baris - 1) * 15 + 10;
+  const isiSvg = garis + simpul + teks;
+  return vFigure(ds.caption, hp ? svgHP(H, isiSvg, "Gambar jaringan saraf")
+    : `<svg viewBox="0 0 ${W} ${Math.ceil(H)}" class="viz-svg" role="img" aria-label="Gambar jaringan saraf">${isiSvg}</svg>`);
+};
+
 /* ============================================================
    DEMO INTERAKTIF  (fungsi(container) yang membangun UI)
    ============================================================ */

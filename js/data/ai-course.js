@@ -6045,8 +6045,68 @@ Neural network memang <b>terinspirasi</b> dari sel saraf otak, tapi hanya secara
   <tr><td><b>Hidden layer</b> (tersembunyi)</td><td>Mengolah data dan menemukan fitur: garis, lengkungan, sudut</td><td>1 lapisan, 128 neuron</td><td>1 lapisan, 48 neuron</td></tr>
   <tr><td><b>Output layer</b></td><td>Hasil prediksi</td><td>10 neuron, satu per angka</td><td>10 neuron</td></tr>
 </table>
+<div data-diagram="jaringan-saraf" data-lapisan="784,128,10" data-nama="Input|Tersembunyi|Output" data-caption="Model MNIST kita. Lapisan berisi lebih dari 8 neuron hanya digambar sebagian"></div>
 <p>Data mengalir satu arah: masuk lewat input, diolah di lapisan tersembunyi, lalu keluar sebagai prediksi. Aliran ini disebut <b>forward propagation</b> (perambatan maju). Saat latihan ada juga arah sebaliknya, <b>backpropagation</b>, yang menelusuri kembali bobot mana yang paling berandil pada kesalahan (<a href="#/lesson/ai-alg-9">Maju, Mundur, Belajar</a>).</p>
 <p>Model kita hanya punya satu lapisan tersembunyi. Model besar punya jauh lebih banyak: ResNet-152, pengenal gambar terkenal dari 2015, punya 152 lapisan, dan GPT-3 punya 96 lapisan Transformer.</p>
+
+<h3>Di dalam satu neuron</h3>
+<p>Apa yang sebenarnya dikerjakan setiap neuron di lapisan tersembunyi? Empat langkah:</p>
+<div data-diagram="flow" data-steps="Input: angka-angka masuk|Kalikan dengan bobot, jumlahkan, tambah bias|Fungsi aktivasi|Output ke lapisan berikutnya" data-caption="Satu neuron buatan. Model MNIST kita menjalankan ini 128 kali untuk setiap gambar"></div>
+<p>Contoh dengan tiga piksel. Jalankan, lalu ubah <i>bias</i> menjadi -1 dan jalankan lagi:</p>
+<div data-demo="js-playground">// Satu neuron buatan: kalikan, jumlahkan, tambah bias, lalu aktivasi
+const input = [0.8, 0.2, 1.0];     // misalnya kecerahan 3 piksel
+const bobot = [0.5, -1.0, 0.3];    // bobot (kenop) untuk tiap input
+const bias = 0.1;
+
+let z = bias;
+for (let i = 0; i &lt; input.length; i++) {
+  z = z + input[i] * bobot[i];
+}
+const hasil = Math.max(0, z);      // ReLU: negatif jadi 0
+
+console.log("Jumlah berbobot + bias =", z.toFixed(2));
+console.log("Setelah ReLU =", hasil.toFixed(2), hasil > 0 ? "(neuron aktif)" : "(neuron diam)");</div>
+<p>Hitungannya: 0,8 × 0,5 + 0,2 × (−1) + 1,0 × 0,3 + 0,1 = 0,4 − 0,2 + 0,3 + 0,1 = <b>0,6</b>. Karena positif, ReLU meneruskannya apa adanya dan neuron ini "aktif". Dengan bias −1, jumlahnya −0,5, sehingga ReLU mengubahnya menjadi 0 dan neuron "diam".</p>
+<div class="callout">
+<b>"Aktif berdasarkan threshold"?</b> Itu cara neuron buatan pertama, <b>perceptron</b> (Frank Rosenblatt, 1958): lewat ambang batas hasilnya 1, di bawahnya 0. Neuron modern memakai fungsi yang lebih halus. <b>ReLU</b> meneruskan nilai positif apa adanya dan mengubah nilai negatif menjadi 0, sedangkan <b>sigmoid</b> mengubah nilai apa pun menjadi angka antara 0 dan 1. Jadi ReLU lebih mirip <b>keran</b> daripada sakelar: nilai negatif ditutup rapat, nilai positif mengalir sesuai besarnya. Nilai 0,6 dan 6 sama-sama "menyala", tapi kekuatannya berbeda. Alasan tidak dipakainya ambang tajam: dengan ambang yang tajam, kemiringannya nol hampir di mana-mana, sehingga gradient descent tidak tahu ke arah mana kenop harus diputar. Bandingkan pilihan-pilihannya di <a href="#/lesson/ai-mat-5">Sigmoid, ReLU &amp; Kawan-Kawan</a>.
+</div>
+
+<h3>Empat fungsi aktivasi yang paling sering muncul</h3>
+<table class="tbl">
+  <tr><th>Fungsi</th><th>Rumus</th><th>Hasilnya</th><th>Biasa dipakai di</th></tr>
+  <tr><td><b>ReLU</b></td><td>max(0, z)</td><td>0 sampai tak terbatas</td><td>Lapisan tersembunyi, termasuk model kita</td></tr>
+  <tr><td><b>Sigmoid</b></td><td>1 / (1 + e<sup>−z</sup>)</td><td>0 sampai 1</td><td>Keluaran ya atau tidak, misalnya "spam atau bukan"</td></tr>
+  <tr><td><b>Tanh</b></td><td>(e<sup>z</sup> − e<sup>−z</sup>) / (e<sup>z</sup> + e<sup>−z</sup>)</td><td>−1 sampai 1</td><td>Lapisan tersembunyi jaringan lama dan RNN</td></tr>
+  <tr><td><b>Softmax</b></td><td>e<sup>z<sub>i</sub></sup> / jumlah semua e<sup>z</sup></td><td>Beberapa peluang yang totalnya 100%</td><td>Keluaran banyak kelas, termasuk 10 angka di model kita</td></tr>
+</table>
+<p>Bedanya softmax: ia tidak bekerja per neuron, tapi mengolah <b>semua</b> keluaran sekaligus supaya jumlahnya pas 100%. Coba hitung keempatnya untuk nilai z yang sama:</p>
+<div data-demo="js-playground">// Empat fungsi aktivasi untuk nilai z yang sama
+const daftarZ = [-2, -0.5, 0, 0.5, 2];
+for (const z of daftarZ) {
+  const relu = Math.max(0, z);
+  const sigmoid = 1 / (1 + Math.exp(-z));
+  const tanh = Math.tanh(z);
+  console.log("z =", z, "| ReLU", relu.toFixed(2), "| sigmoid", sigmoid.toFixed(2), "| tanh", tanh.toFixed(2));
+}
+
+// Softmax mengolah semua nilai sekaligus; hasilnya selalu berjumlah 100%
+const pangkat = daftarZ.map((z) => Math.exp(z));
+const total = pangkat.reduce((a, b) => a + b, 0);
+console.log("softmax:", pangkat.map((v) => (v / total * 100).toFixed(1) + "%").join(", "));</div>
+<p>Perhatikan z = 0: ReLU memberi 0, sigmoid 0,5, dan tanh 0. Pembahasan lengkap tiap fungsi, termasuk kapan memilih yang mana, ada di <a href="#/lesson/ai-mat-5">Sigmoid, ReLU &amp; Kawan-Kawan</a> dan <a href="#/lesson/ai-mat-6">Fungsi Loss &amp; Softmax</a>.</p>
+
+<h3>Cara membaca gambar jaringan</h3>
+<p>Gambar seperti ini sering muncul di slide dan artikel. Contohnya jaringan dengan 2 masukan, dua lapisan tersembunyi berisi 4 dan 5 neuron, dan 3 keluaran:</p>
+<div data-diagram="jaringan-saraf" data-lapisan="2,4,5,3" data-nama="Input|Lapisan 1|Lapisan 2|Lapisan 3 (output)" data-masuk="x₁|x₂" data-caption="Tebal tipis garis menggambarkan besar kecilnya bobot"></div>
+<table class="tbl">
+  <tr><th>Yang terlihat di gambar</th><th>Artinya</th></tr>
+  <tr><td><b>Garis</b> (weights)</td><td>Bobot. Garis tebal berarti bobotnya besar, tipis berarti kecil</td></tr>
+  <tr><td><b>Scores</b></td><td>Hasil kalikan-jumlahkan-tambah bias di tiap neuron, sebelum aktivasi; biasa ditulis <i>z</i></td></tr>
+  <tr><td><b>Kotak bergambar kurva S</b></td><td>Fungsi aktivasi; kurva S adalah sigmoid</td></tr>
+  <tr><td><b>Hidden units</b></td><td>Keluaran neuron setelah aktivasi, yang menjadi input lapisan berikutnya</td></tr>
+  <tr><td><b>1st, 2nd, 3rd layer</b></td><td>Satu lapisan = bobot + skor + aktivasi. Lapisan input tidak dihitung karena tidak punya bobot</td></tr>
+</table>
+<p>Jumlah parameternya bisa dihitung dari gambar. Lapisan 1: 2 × 4 bobot + 4 bias = 12. Lapisan 2: 4 × 5 + 5 = 25. Lapisan 3: 5 × 3 + 3 = 18. Totalnya <b>55</b>. Bias biasanya tidak digambar, tapi tetap ada di setiap neuron.</p>
 
 <h3>Kode lengkap dengan TensorFlow</h3>
 <p>Jalankan di <b>Google Colab</b> (<a href="#/lesson/ai-tl-4">Menyiapkan Komputermu</a>); TensorFlow dan datasetnya sudah tersedia, tidak perlu memasang apa pun.</p>
@@ -6143,6 +6203,7 @@ plt.show()</pre>
             "Tanpa lapisan tersembunyi, jaringan hanya bisa menarik batas lurus (gagal di XOR); lapisan tersembunyi plus fungsi aktivasi membuat batasnya melengkung.",
             "Bagi komputer, gambar adalah tabel angka. MNIST: 70.000 gambar 28×28 (60.000 latih, 10.000 uji), nilai piksel 0–255.",
             "Arsitektur: input layer (piksel) → hidden layer (menemukan fitur) → output layer (prediksi); aliran maju ini disebut forward propagation.",
+            "Satu neuron: kalikan tiap input dengan bobot, jumlahkan, tambah bias, lalu lewatkan fungsi aktivasi seperti ReLU; hasilnya dikirim ke lapisan berikutnya.",
             "Model Keras sederhana: Flatten → Dense(128, relu) → Dense(10, softmax), 101.770 parameter, biasanya mencapai sekitar 97–98% di data uji.",
             "Normalisasi (/255), validation_split, dan kurva latih vs validasi membantu melihat apakah model mulai menghafal.",
             "Visualisasi tebakan salah dan confusion matrix menunjukkan angka mana yang tertukar; CNN dan augmentasi memperbaikinya."
@@ -6157,7 +6218,9 @@ plt.show()</pre>
               answer: 0,
               hint: "Nilai asli piksel berkisar 0 sampai 255.",
               solution: "Normalisasi membuat semua masukan sekecil dan sesetara mungkin, sehingga langkah gradient descent tidak liar."
-            }
+            },
+            { type: "number", q: "Sebuah neuron menerima input 1 dan 0,5 dengan bobot 0,4 dan −0,2, serta bias 0,3. Berapa keluarannya setelah ReLU?", answer: 0.6, tol: 0.001, hint: "Kalikan tiap input dengan bobotnya, jumlahkan, tambah bias. ReLU hanya mengubah nilai negatif menjadi 0.", solution: "1 × 0,4 + 0,5 × (−0,2) + 0,3 = 0,4 − 0,1 + 0,3 = 0,6. Positif, jadi ReLU meneruskannya: 0,6." },
+            { type: "number", q: "Sebuah jaringan punya 3 masukan, satu lapisan tersembunyi berisi 6 neuron, dan 2 keluaran. Berapa total parameternya (bobot + bias)?", answer: 38, tol: 0.5, unit: "parameter", hint: "Hitung per lapisan: masukan × neuron + neuron (bias).", solution: "Lapisan tersembunyi: 3 × 6 + 6 = 24. Lapisan keluaran: 6 × 2 + 2 = 14. Total 38." }
           ],
           quiz: [
             {
