@@ -581,6 +581,12 @@ AI menemukan <b>pola dari data</b>, dan data latihnya sering diberi <b>label</b>
 <div class="callout">
 <b>tebakan = kenop × luas kamar</b>
 </div>
+<div class="callout">
+<b>Apa itu kenop?</b> Kenop adalah <b>tombol putar</b>, seperti pengatur volume di radio, pengatur api di kompor gas, atau pengatur suhu di AC. Diputar sedikit, hasilnya berubah sedikit. Di materi AI, "kenop" dipakai sebagai perumpamaan untuk <b>angka di dalam model yang bisa diputar naik atau turun</b>. AI kos kita hanya punya satu kenop, yaitu angka "harga per m²". Diputar ke kanan, tebakannya makin mahal; diputar ke kiri, makin murah.
+</div>
+<p>Sebelum melihat cara AI memutarnya, coba putar sendiri dulu.</p>
+<div data-demo="kenop-kos"></div>
+<p>Kamu tadi memutar kenop sambil melihat seberapa jauh tebakanmu meleset. AI melakukan hal yang persis sama, hanya saja dengan aturan, bukan perasaan.</p>
 <p>Awalnya AI tidak tahu nilai kenop yang tepat, jadi ia mulai dari tebakan asal: <b>Rp50.000 per m²</b>. Lalu siklus belajarnya berjalan:</p>
 
 <table class="tbl">
@@ -1913,7 +1919,7 @@ Laptop yang sanggup sekitar 1 triliun operasi per detik butuh kira-kira <b>10.00
 <table class="tbl">
   <tr><th>Kamu ingin…</th><th>Matematika yang dibutuhkan</th><th>Tanpa itu kamu akan…</th></tr>
   <tr><td><b>Memakai alat AI</b> (ChatGPT, Claude, alat gambar)</td><td class="ok-cell">Hampir tidak ada</td><td>Baik-baik saja. Cukup paham batasnya: AI bisa salah dengan percaya diri</td></tr>
-  <tr><td><b>Melatih model sendiri</b> untuk data tempat kerjamu</td><td>Arti turunan, loss, peluang, dan vektor — <b>bukan</b> cara menghitungnya manual</td><td>Bisa menjalankan kode, tapi buntu saat hasilnya aneh dan tidak tahu kenop mana yang harus diputar</td></tr>
+  <tr><td><b>Melatih model sendiri</b> untuk data tempat kerjamu</td><td>Arti turunan, loss, peluang, dan vektor — <b>bukan</b> cara menghitungnya manual</td><td>Bisa menjalankan kode, tapi buntu saat hasilnya aneh dan tidak tahu kenop (angka pengatur di dalam model) mana yang harus diputar</td></tr>
   <tr><td><b>Merancang model baru</b> atau membaca makalah penelitian</td><td>Aljabar linear, kalkulus, statistik secara serius</td><td>Hanya bisa menyalin karya orang lain, tidak bisa memperbaikinya</td></tr>
 </table>
 

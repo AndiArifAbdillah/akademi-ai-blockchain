@@ -708,6 +708,40 @@ function renderHome() {
   return wrap;
 }
 
+/* Kartu "Bekal dulu": modul jalur Coding yang sebaiknya dipelajari sebelum modul tertentu.
+   Materinya tetap di jalur Coding; kartu ini hanya memberi tahu kapan sebaiknya mampir. */
+const BEKAL_MODUL = {
+  "ai-tools": { modul: ["cd-py"], alasan: "Mulai modul ini, kode AI ditulis dengan Python." },
+  "ai-otomasi": { modul: ["cd-js", "cd-web"], alasan: "Ekspresi n8n adalah potongan JavaScript, dan datanya mengalir sebagai JSON lewat API." },
+  "ai-proyek": { modul: ["cd-web", "cd-ai"], alasan: "Proyek di modul ini memanggil API dari server, dan kodenya banyak ditulis bersama AI." },
+  "bc-proyek": { modul: ["cd-sol"], alasan: "Di modul ini kamu menulis smart contract sendiri dengan Solidity." },
+  "bc-dapp": { modul: ["cd-js", "cd-web", "cd-ai"], alasan: "Membangun DApp berarti menulis JavaScript, memanggil node lewat RPC, dan memeriksa kode buatan AI sebelum menyentuh uang." },
+};
+function kartuBekal(moduleId) {
+  const b = BEKAL_MODUL[moduleId];
+  if (!b) return null;
+  const daftar = b.modul
+    .map((id) => { for (const c of COURSES) { const m = c.modules.find((x) => x.id === id); if (m) return m; } return null; })
+    .filter(Boolean);
+  if (!daftar.length) return null;
+  const semua = daftar.every((m) => m.lessons.every((l) => Progress.isDone(l.id)));
+  const baris = daftar.map((m) => {
+    const selesai = m.lessons.filter((l) => Progress.isDone(l.id)).length;
+    const beres = selesai === m.lessons.length;
+    const tuju = (m.lessons.find((l) => !Progress.isDone(l.id)) || m.lessons[0]).id;
+    return `<li><a class="bd-modul${beres ? " beres" : ""}" href="#/lesson/${tuju}">
+      <span class="bd-tanda">${ikon(beres ? "cek" : "kanan")}</span>
+      <span>${esc(m.title.split(":")[0])}</span>
+      <small>${beres ? "selesai" : selesai + "/" + m.lessons.length + " pelajaran"}</small>
+    </a></li>`;
+  }).join("");
+  return el(`<aside class="bekal-dulu jalur-coding${semua ? " lengkap" : ""}">
+    <p class="bd-kepala">${tandaJalur({ id: "coding" }, "kecil")} <b>Bekal dulu</b> <span class="bd-sumber">dari jalur Coding</span></p>
+    <p class="bd-alasan">${esc(b.alasan)} ${semua ? "Bekalnya sudah kamu selesaikan." : "Sudah paham? Boleh langsung lanjut."}</p>
+    <ul class="bd-daftar">${baris}</ul>
+  </aside>`);
+}
+
 /* ---------- Halaman: Detail Kursus ---------- */
 function renderCourse(course) {
   const wrap = el(`<div class="page kursus jalur-${course.id}"></div>`);
@@ -752,6 +786,8 @@ function renderCourse(course) {
         </div>
       </div>
     `));
+    const bekal = kartuBekal(m.id);
+    if (bekal) mod.appendChild(bekal);
     const list = el(`<ol class="lesson-list"></ol>`);
     m.lessons.forEach((l, li) => {
       const done = Progress.isDone(l.id);
@@ -1857,7 +1893,7 @@ const GLOSSARY = [
   ["ACP", "Agentic Commerce Protocol dari OpenAI dan Stripe (2025): standar agar agen bisa menyelesaikan belanja di toko biasa tanpa melihat nomor kartu; dipakai Instant Checkout di ChatGPT."],
   ["ERC-8004", "Usulan standar Ethereum 'Trustless Agents' (2025) dengan registry Identitas, Reputasi, dan Validasi, agar agen yang belum saling kenal bisa saling memeriksa."],
   ["Jev", "Model 'System One' dari TypeSafe AI (September 2026): tidak menulis teks, hanya menjawab pertanyaan bertipe (Choice, Score, Noul) dengan cepat beserta tingkat keyakinannya."],
-  ["Kenop","Tombol putar, seperti pengatur volume radio. Di materi AI dipakai sebagai perumpamaan parameter: angka di dalam model yang diputar sedikit demi sedikit saat model belajar."],
+  ["Kenop", "Tombol putar, seperti pengatur volume radio atau api kompor. Di materi AI dipakai sebagai perumpamaan untuk angka yang bisa diputar naik-turun: parameter yang digeser sedikit demi sedikit saat model belajar, atau pengaturan seperti learning rate dan temperature."],
 ];
 
 function renderGlossary() {

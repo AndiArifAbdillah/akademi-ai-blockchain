@@ -6339,6 +6339,61 @@ DEMOS["x402-alur"] = function (root) {
   ringkasan();
 };
 
+/* ---------- Demo: kenop AI kos — memutar parameter dengan tangan ---------- */
+DEMOS["kenop-kos"] = function (root) {
+  // Model: tebakan = kenop × luas. Data latih dari pelajaran ai-p-4: 10 m² → Rp1.000.000, 20 m² → Rp2.000.000.
+  const MIN = 50000, MAKS = 150000, LANGKAH = 5000;
+  const rp = (v) => "Rp" + v.toLocaleString("id-ID");
+  const sudut = (v) => -135 + ((v - MIN) / (MAKS - MIN)) * 270;
+  const titik = (deg, r) => [80 + r * Math.sin(deg * Math.PI / 180), 80 - r * Math.cos(deg * Math.PI / 180)];
+  const gambar = svg("svg", { viewBox: "0 0 160 168", class: "kenop-svg", role: "img", "aria-label": "Kenop harga per meter persegi" });
+  for (let v = MIN; v <= MAKS; v += 10000) {
+    const [x1, y1] = titik(sudut(v), 62), [x2, y2] = titik(sudut(v), 70);
+    gambar.appendChild(svg("line", { x1: x1, y1: y1, x2: x2, y2: y2, style: "stroke: var(--muted); stroke-width: 2" }));
+  }
+  gambar.appendChild(svg("circle", { cx: 80, cy: 80, r: 54, style: "fill: var(--surface-2); stroke: var(--border); stroke-width: 3" }));
+  const jarum = svg("line", { x1: 80, y1: 80, x2: 80, y2: 36, style: "stroke: var(--primary); stroke-width: 6; stroke-linecap: round" });
+  gambar.appendChild(jarum);
+  gambar.appendChild(svg("circle", { cx: 80, cy: 80, r: 7, style: "fill: var(--primary)" }));
+  [[MIN, "50 rb"], [MAKS, "150 rb"]].forEach(([v, t]) => {
+    const [x, y] = titik(sudut(v), 72);
+    const teks = svg("text", { x: x, y: y + 18, "text-anchor": "middle", class: "vt-xs" });
+    teks.textContent = t;
+    gambar.appendChild(teks);
+  });
+  const geser = h("input", { type: "range", min: String(MIN), max: String(MAKS), step: String(LANGKAH), value: String(MIN), class: "dm-range", "aria-label": "Putar kenop harga per meter persegi" });
+  const kurang = h("button", { class: "btn ghost", type: "button", text: "Putar ke kiri (−5 ribu)" });
+  const tambah = h("button", { class: "btn ghost", type: "button", text: "Putar ke kanan (+5 ribu)" });
+  const ringkas = h("div", { class: "dm-out" });
+  function tampil() {
+    const k = +geser.value;
+    const [x, y] = titik(sudut(k), 44);
+    jarum.setAttribute("x2", x);
+    jarum.setAttribute("y2", y);
+    const tebak = k * 10, selisih = tebak - 1000000;
+    const pesan = selisih === 0
+      ? "Tepat! Coba kamar 20 m²: " + rp(k) + " × 20 = " + rp(k * 20) + ", juga cocok."
+      : selisih < 0 ? "Kurang " + rp(-selisih) + ": putar ke kanan" : "Kelebihan " + rp(selisih) + ": putar ke kiri";
+    ringkas.innerHTML =
+      '<div class="dm-line"><span>Kenop (harga per m²)</span><b>' + rp(k) + "</b></div>" +
+      '<div class="dm-line"><span>Tebakan kamar 10 m² = kenop × 10</span><b>' + rp(tebak) + "</b></div>" +
+      '<div class="dm-line"><span>Sewa sebenarnya</span><b>Rp1.000.000</b></div>' +
+      '<div class="dm-line big teks ' + (selisih === 0 ? "good" : "bad") + '"><span>' + (selisih === 0 ? "Hasil" : "Meleset") + "</span><b>" + pesan + "</b></div>";
+  }
+  geser.addEventListener("input", tampil);
+  kurang.onclick = () => { geser.value = String(Math.max(MIN, +geser.value - LANGKAH)); tampil(); };
+  tambah.onclick = () => { geser.value = String(Math.min(MAKS, +geser.value + LANGKAH)); tampil(); };
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Putar sendiri kenop AI kos</b>" }),
+    h("p", { class: "demo-hint", text: "Geser atau tekan tombolnya sampai tebakan untuk kamar 10 m² tepat Rp1.000.000." }),
+    gambar,
+    geser,
+    h("div", { class: "demo-controls" }, [kurang, tambah]),
+    ringkas,
+  ]));
+  tampil();
+};
+
 /* ---------- Demo: agen pemesan makan siang (x402 + model penentu Sistem 1) ---------- */
 DEMOS["agen-warung"] = function (root) {
   // Mengikuti demo kelas BlockDev Week 3: normal → SETUJU, melebihi anggaran → TANYA MANUSIA,

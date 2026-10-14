@@ -1730,3 +1730,22 @@ details.modul-jembatan:not([open]) { padding-bottom: 12px; }
 .dm-li.warn { border-left-color: var(--warn); }
 .dm-line.warn { color: var(--warn); }
 .dm-line.big.warn { background: var(--warn-soft); }
+
+/* Demo kenop AI kos: gambar kenop kecil di tengah */
+.kenop-svg { display: block; width: 150px; height: auto; margin: 8px auto 4px; }
+
+/* Kartu "Bekal dulu" di halaman jalur: modul Coding yang disarankan sebelum modul tertentu */
+.bekal-dulu { margin: 0 0 12px 62px; padding: 12px 14px; border-radius: 12px; background: var(--surface-2); box-shadow: inset 3px 0 0 var(--c); }
+.bekal-dulu.lengkap { opacity: .8; }
+.bd-kepala { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 0 0 4px; font-size: .9rem; }
+.bd-sumber { color: var(--muted); font-size: .8rem; }
+.bd-alasan { margin: 0 0 10px; font-size: .88rem; color: var(--muted); }
+.bd-daftar { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.bd-modul { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: .88rem; text-decoration: none; }
+.bd-modul:hover { border-color: var(--c); text-decoration: none; }
+.bd-modul small { color: var(--faint); font-size: .76rem; font-variant-numeric: tabular-nums; }
+.bd-tanda { display: inline-flex; color: var(--c); }
+.bd-tanda .ikon { width: 14px; height: 14px; }
+.bd-modul.beres .bd-tanda { color: var(--ok); }
+@media (max-width: 860px) { .bekal-dulu { margin-left: 0; } }
+.kenop-svg + .dm-range { display: block; width: 100%; max-width: 360px; margin: 4px auto 0; }
