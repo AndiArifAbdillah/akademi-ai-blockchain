@@ -5403,7 +5403,7 @@ Cara kerjanya: titik yang punya cukup banyak tetangga dalam jarak tertentu diang
       id: "ai-arsitektur",
       level: "Arsitektur",
       title: "Deep Learning: dari Neuron sampai Transformer",
-      summary: "Kapan memakai machine learning klasik atau deep learning, neural network dari nol (maju, mundur, belajar), PyTorch & Keras, cara melatihnya dengan benar, isi neural network (neuron, lapisan, aktivasi), cara belajarnya (loss & optimizer), proyek pengenal angka tulisan tangan dengan TensorFlow, CNN untuk gambar, dan Transformer untuk teks.",
+      summary: "Kapan memakai machine learning klasik atau deep learning, neural network dari nol (maju, mundur, belajar), PyTorch & Keras, cara melatihnya dengan benar, isi neural network (neuron, lapisan, aktivasi), cara belajarnya (loss & optimizer), proyek pengenal angka tulisan tangan dengan TensorFlow, eksperimen hyperparameter dan dropout, CNN untuk gambar, dan Transformer untuk teks.",
       lessons: [
         {
           id: "ai-mldl-1",
@@ -6538,36 +6538,12 @@ plt.show()</pre>
 <pre class="code">(x_latih, y_latih), (x_uji, y_uji) = tf.keras.datasets.fashion_mnist.load_data()</pre>
 <p><b>Fashion-MNIST</b> dibuat Zalando pada 2017 dengan ukuran yang sama persis: 70.000 gambar 28×28, tapi isinya 10 jenis pakaian dan alas kaki: kaos, celana panjang, sweter, gaun, mantel, sandal, kemeja, sepatu kets, tas, dan sepatu bot. Dengan model yang sama persis, notebook kelas hanya mencapai <b>86,9%</b>, jauh di bawah 97,4% untuk angka. Lihat confusion matrix-nya: kaos, kemeja, sweter, dan mantel paling sering tertukar, karena bentuknya memang mirip pada gambar sekecil itu.</p>
 
-<h3>Mini challenge: hasil eksperimen kelas</h3>
-<p>Notebook kelas mengubah satu hal setiap kali, lalu mengukur akurasi ujinya:</p>
-<table class="tbl">
-  <tr><th>Eksperimen</th><th>Akurasi uji</th></tr>
-  <tr><td>Model dasar: 128 → 64, 5 epoch</td><td>97,41%</td></tr>
-  <tr><td>Neuron lebih banyak: 256 → 64</td><td>97,71%</td></tr>
-  <tr><td>Lapisan tambahan: 128 → 64 → 32</td><td>97,39%</td></tr>
-  <tr><td>Latihan lebih lama: 10 epoch</td><td>97,58%</td></tr>
-</table>
-<p>Semua selisihnya di bawah 0,3 poin, dan bisa berubah kalau dijalankan ulang karena bobot awalnya acak. Lapisan tambahan malah sedikit lebih rendah: bukti nyata bahwa lebih dalam tidak otomatis lebih baik.</p>
-<div class="callout warn">
-<b>Eksperimen 10 epoch menyimpan pelajaran penting.</b> Akurasi latih terus naik sampai 99,35%, tapi loss validasi justru naik dari 0,089 di epoch 4 menjadi 0,113 di epoch 10. Model mulai menghafal. EarlyStopping dengan <i>patience=2</i> akan berhenti setelah epoch 6 dan memakai bobot epoch 4 (<a href="#/lesson/ai-nn-2">Cara Neural Network Belajar</a>). Untuk lompatan akurasi yang sungguhan, yang dibutuhkan adalah <a href="#/lesson/ai-ars-4">CNN</a>, bukan sekadar menambah neuron atau epoch.
-</div>
-
-<h3>Kenapa kadang salah, dan cara memperbaikinya</h3>
-<table class="tbl">
-  <tr><th>Penyebab</th><th>Perbaikan</th></tr>
-  <tr><td>Gaya tulisanmu berbeda dari data latih, misalnya 7 yang diberi garis tengah atau 1 yang diberi topi</td><td>Data latih yang lebih banyak dan lebih beragam</td></tr>
-  <tr><td>Model hanya melihat 784 angka berjajar, tanpa tahu piksel mana yang bertetangga</td><td><a href="#/lesson/ai-ars-4">CNN</a>, yang memeriksa gambar sepotong demi sepotong; di MNIST akurasinya bisa lebih dari 99%</td></tr>
-  <tr><td>Data latih terlalu seragam: semua angka rapi di tengah</td><td>Augmentasi: memperbanyak data dengan memutar, menggeser, dan menebalkan gambar</td></tr>
-</table>
-<div class="callout">
-<b>Inti sesi ini:</b> kita tidak pernah memberi tahu AI seperti apa bentuk angka 7, kita hanya memberi contoh. <b>Loss</b> adalah skor salah yang ingin diturunkan, <b>accuracy</b> adalah banyaknya tebakan yang benar, dan neural network belajar dengan memperbarui bobotnya ribuan kali selama beberapa epoch.
-</div>
 `,
           keyPoints: [
             "Bagi komputer, gambar adalah tabel angka. MNIST: 70.000 gambar 28×28 (60.000 latih, 10.000 uji), nilai piksel 0–255.",
             "Model Keras di kelas: Flatten → Dense(128, relu) → Dense(64, relu) → Dense(10, softmax), 109.386 parameter, biasanya mencapai sekitar 97–98% di data uji.",
             "Normalisasi (/255), validation_split, dan kurva latih vs validasi membantu melihat apakah model mulai menghafal.",
-            "Hasil kelas: model 128 → 64 mencapai 97,41% (259 salah dari 10.000). Menambah neuron, lapisan, atau epoch hanya mengubah kurang dari 0,3 poin, dan 10 epoch mulai menghafal.",
+            "Hasil kelas: model 128 → 64 mencapai 97,41% di data uji, atau 259 salah dari 10.000 gambar.",
             "Visualisasi tebakan salah dan confusion matrix menunjukkan angka mana yang tertukar; CNN dan augmentasi memperbaikinya.",
             "Akurasi tinggi di data uji belum menjamin AI bekerja untuk pengguna sungguhan: data latih harus mewakili cara orang menulis, seperti angka 7 tanpa coretan."
           ],
@@ -6637,6 +6613,170 @@ plt.show()</pre>
               ],
               "answer": 0,
               "explain": "Model hanya mengenal gaya tulisan yang ada di data latih. Setelah ditambah contoh 7 polos, angka itu terbaca benar."
+            }
+          ]
+        },
+        {
+          id: "ai-mnist-2",
+          title: "Eksperimen & Tuning Model — Hyperparameter, Overfitting & Dropout",
+          duration: "12 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Model kelas 128 → 64 → 10 mencapai akurasi uji 97,41% setelah 5 epoch (<a href="#/lesson/ai-mnist-1">Proyek: AI Pengenal Angka</a>). Kalau akurasi latih terus naik sementara loss validasi berbalik naik, model mulai <b>menghafal</b> (<a href="#/lesson/ai-nn-2">Cara Neural Network Belajar</a>).
+</div>
+
+<p>Model pertamamu sudah jadi. Sekarang saatnya bereksperimen seperti arsitek AI: ubah satu hal, latih ulang, lalu lihat apa yang berubah.</p>
+
+<h3>Dua jenis kenop</h3>
+<div data-diagram="vs" data-left="Parameter::bobot dan bias, 109.386 buah::diputar AI sendiri saat latihan" data-right="Hyperparameter::lapisan, neuron, learning rate, batch, epoch::dipilih kamu sebelum latihan" data-caption="Yang satu dipelajari, yang lain ditentukan"></div>
+<p>Slide kelas menyebut hyperparameter sebagai <i>knob</i>, alias kenop. Bedakan dengan kenop di <a href="#/lesson/ai-p-4">Bagaimana AI 'Belajar'?</a>: itu <b>parameter</b>, yang diputar AI sendiri ribuan kali selama latihan. <b>Hyperparameter</b> adalah kenop di luar model, yang kamu atur sebelum latihan dimulai, lalu kamu nilai dari hasilnya.</p>
+<table class="tbl">
+  <tr><th>Hyperparameter</th><th>Di kelas</th><th>Kalau dinaikkan</th></tr>
+  <tr><td><b>Jumlah lapisan tersembunyi</b></td><td>2</td><td>Bisa menangkap pola lebih rumit, tapi lebih sulit dilatih dan lebih mudah menghafal</td></tr>
+  <tr><td><b>Neuron per lapisan</b></td><td>128 dan 64</td><td>Kapasitas lebih besar, komputasi lebih berat</td></tr>
+  <tr><td><b>Learning rate</b></td><td>0,001 (bawaan Adam)</td><td>Belajar lebih cepat, tapi bisa melompati titik terbaik; terlalu kecil membuat latihan lambat</td></tr>
+  <tr><td><b>Batch size</b></td><td>32</td><td>Lebih sedikit putaran per epoch, butuh lebih banyak memori</td></tr>
+  <tr><td><b>Epoch</b></td><td>5</td><td>Belajar lebih lama, tapi bisa mulai menghafal</td></tr>
+</table>
+
+<h3>Mini challenge: hasil eksperimen kelas</h3>
+<p>Notebook kelas mengubah satu hal setiap kali, lalu mengukur akurasi ujinya:</p>
+<table class="tbl">
+  <tr><th>Eksperimen</th><th>Akurasi uji</th></tr>
+  <tr><td>Model dasar: 128 → 64, 5 epoch</td><td>97,41%</td></tr>
+  <tr><td>Neuron lebih banyak: 256 → 64</td><td>97,71%</td></tr>
+  <tr><td>Lapisan tambahan: 128 → 64 → 32</td><td>97,39%</td></tr>
+  <tr><td>Latihan lebih lama: 10 epoch</td><td>97,58%</td></tr>
+</table>
+<p>Semua selisihnya di bawah 0,3 poin, dan bisa berubah kalau dijalankan ulang karena bobot awalnya acak. Lapisan tambahan malah sedikit lebih rendah: bukti nyata bahwa lebih dalam tidak otomatis lebih baik.</p>
+<div class="callout warn">
+<b>Eksperimen 10 epoch menyimpan pelajaran penting.</b> Akurasi latih terus naik sampai 99,35%, tapi loss validasi justru naik dari 0,089 di epoch 4 menjadi 0,113 di epoch 10. Model mulai menghafal. EarlyStopping dengan <i>patience=2</i> akan berhenti setelah epoch 6 dan memakai bobot epoch 4 (<a href="#/lesson/ai-nn-2">Cara Neural Network Belajar</a>). Untuk lompatan akurasi yang sungguhan, yang dibutuhkan adalah <a href="#/lesson/ai-ars-4">CNN</a>, bukan sekadar menambah neuron atau epoch.
+</div>
+
+<h3>Kesalahan umum dan obatnya</h3>
+<table class="tbl">
+  <tr><th>Kesalahan</th><th>Tandanya</th><th>Obatnya</th></tr>
+  <tr><td><b>Overfitting</b> (menghafal)</td><td>Akurasi latih jauh di atas akurasi validasi</td><td>Data validasi, Dropout, data latih lebih banyak</td></tr>
+  <tr><td><b>Terlalu banyak epoch</b></td><td>Loss validasi berhenti turun, lalu naik</td><td>Pantau validasi; pakai EarlyStopping</td></tr>
+  <tr><td><b>Learning rate tidak tepat</b></td><td>Loss naik-turun liar, atau turun sangat lambat</td><td>Mulai dari bawaan Adam, lalu coba 10 kali lebih besar atau lebih kecil</td></tr>
+</table>
+<div class="callout">
+<b>Adam itu "auto-adjust"? Sebagian.</b> Adam memang menyesuaikan besar langkah untuk setiap kenop, sehingga jauh lebih jarang gagal daripada SGD biasa. Tapi Adam tetap punya satu learning rate dasar, bawaannya 0,001, yang bisa saja terlalu besar atau terlalu kecil untuk masalahmu (<a href="#/lesson/ai-alg-10">Melatih Neural Network dengan Benar</a>).
+</div>
+
+<h3>Dropout: sengaja melupakan sebagian</h3>
+<p>Slide kelas menyebut <b>dropout</b> sebagai obat overfitting. Caranya: di setiap putaran latihan, sebagian neuron dipilih secara acak lalu "dimatikan". Model jadi tidak bisa bergantung pada segelintir neuron saja, sehingga lebih tahan menghadapi data baru. Saat dipakai menebak, semua neuron aktif kembali.</p>
+<pre class="code">model = tf.keras.Sequential([
+    tf.keras.Input(shape=(28, 28)),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(128, activation="relu"),
+    tf.keras.layers.Dropout(0.2),   # saat latihan, 20% neuron dimatikan acak
+    tf.keras.layers.Dense(64, activation="relu"),
+    tf.keras.layers.Dropout(0.2),
+    tf.keras.layers.Dense(10, activation="softmax"),
+])</pre>
+<p>Dropout tidak menambah parameter. Tantangan: tambahkan dua baris ini ke model kelas, latih 10 epoch, lalu bandingkan jarak antara akurasi latih dan validasinya dengan eksperimen 10 epoch tanpa dropout.</p>
+
+<h3>Dari angka ke dunia nyata</h3>
+<p>Konsep yang sama, yaitu piksel masuk, lapisan menemukan pola, lalu softmax memberi peluang, dipakai di teknologi yang jauh lebih besar. Tapi angka-angka promosinya perlu dibaca dengan teliti:</p>
+<table class="tbl">
+  <tr><th>Penerapan</th><th>Yang benar</th><th>Yang perlu diluruskan</th></tr>
+  <tr><td><b>Mobil tanpa sopir</b></td><td>Waymo menjalankan taksi tanpa sopir di beberapa kota Amerika Serikat; deep learning mengenali jalan, rambu, dan pejalan kaki</td><td>Fitur mengemudi Tesla untuk konsumen masih berlabel <i>Supervised</i>: pengemudi wajib tetap mengawasi</td></tr>
+  <tr><td><b>Face ID</b></td><td>Neural network mencocokkan peta kedalaman wajah dari kamera khusus iPhone</td><td>Apple tidak menyebut "akurasi 99,9%"; yang disebut adalah peluang orang lain bisa membuka iPhone-mu, sekitar 1 banding 1.000.000</td></tr>
+  <tr><td><b>Diagnosis medis</b></td><td>Dalam sejumlah penelitian, AI pembaca mamografi menyamai atau sedikit mengungguli dokter</td><td>Di praktik, AI dipakai sebagai pembaca kedua yang membantu dokter, bukan pengganti; mutunya juga bisa turun di rumah sakit dengan alat berbeda</td></tr>
+</table>
+<p>Bedanya dengan proyek kita bukan pada konsep, tapi pada skala: jutaan contoh, CNN atau Transformer dengan puluhan sampai ratusan lapisan, dan pengujian keselamatan yang jauh lebih ketat.</p>
+
+<h3>Kenapa kadang salah, dan cara memperbaikinya</h3>
+<table class="tbl">
+  <tr><th>Penyebab</th><th>Perbaikan</th></tr>
+  <tr><td>Gaya tulisanmu berbeda dari data latih, misalnya 7 yang diberi garis tengah atau 1 yang diberi topi</td><td>Data latih yang lebih banyak dan lebih beragam</td></tr>
+  <tr><td>Model hanya melihat 784 angka berjajar, tanpa tahu piksel mana yang bertetangga</td><td><a href="#/lesson/ai-ars-4">CNN</a>, yang memeriksa gambar sepotong demi sepotong; di MNIST akurasinya bisa lebih dari 99%</td></tr>
+  <tr><td>Data latih terlalu seragam: semua angka rapi di tengah</td><td>Augmentasi: memperbanyak data dengan memutar, menggeser, dan menebalkan gambar</td></tr>
+</table>
+<div class="callout">
+<b>Inti sesi ini:</b> kita tidak pernah memberi tahu AI seperti apa bentuk angka 7, kita hanya memberi contoh. <b>Loss</b> adalah skor salah yang ingin diturunkan, <b>accuracy</b> adalah banyaknya tebakan yang benar, dan neural network belajar dengan memperbarui bobotnya ribuan kali selama beberapa epoch.
+</div>
+`,
+          keyPoints: [
+            "Parameter (bobot dan bias) diputar AI sendiri saat latihan; hyperparameter (lapisan, neuron, learning rate, batch, epoch) dipilih manusia sebelum latihan.",
+            "Eksperimen kelas: 256 neuron 97,71%, lapisan tambahan 97,39%, 10 epoch 97,58%. Semua selisihnya di bawah 0,3 poin, dan lebih dalam tidak otomatis lebih baik.",
+            "Pada 10 epoch, loss validasi naik dari 0,089 menjadi 0,113: tanda menghafal. EarlyStopping menghentikannya lebih awal.",
+            "Kesalahan umum: overfitting, terlalu banyak epoch, learning rate tidak tepat. Adam membantu, tapi learning rate dasarnya tetap bisa salah.",
+            "Dropout mematikan neuron secara acak saat latihan agar model tidak menghafal; saat menebak semua neuron aktif kembali.",
+            "Konsep MNIST dipakai di mobil tanpa sopir, Face ID, dan diagnosis medis; bedanya ada pada skala data, arsitektur, dan pengujian keselamatan. Baca klaim akurasinya dengan teliti."
+          ],
+          practice: [
+            {
+              "type": "number",
+              "q": "Dengan 48.000 gambar latih dan batch size 64, berapa putaran (pembaruan bobot) dalam satu epoch?",
+              "answer": 750,
+              "tol": 0.5,
+              "unit": "putaran",
+              "hint": "Bagi jumlah gambar dengan ukuran batch.",
+              "solution": "48.000 ÷ 64 = 750 putaran, separuh dari 1.500 putaran saat batch size 32."
+            },
+            {
+              "type": "choice",
+              "q": "Akurasi latih 99%, akurasi validasi 92%, dan jaraknya terus melebar setiap epoch. Langkah pertama yang tepat?",
+              "options": [
+                "Tambah Dropout atau berhenti lebih awal",
+                "Tambah epoch supaya validasi menyusul",
+                "Naikkan learning rate sepuluh kali lipat",
+                "Hapus data validasi agar tidak membingungkan"
+              ],
+              "answer": 0,
+              "hint": "Jarak yang melebar antara latih dan validasi adalah tanda apa?",
+              "solution": "Itu tanda overfitting. Obatnya mengerem hafalan: Dropout, EarlyStopping, atau menambah data latih."
+            },
+            {
+              "type": "choice",
+              "q": "Mana yang termasuk hyperparameter?",
+              "options": [
+                "Ukuran batch",
+                "Bobot neuron ke-5 di lapisan pertama",
+                "Bias neuron keluaran untuk angka 7",
+                "Nilai loss di epoch ketiga"
+              ],
+              "answer": 0,
+              "hint": "Hyperparameter ditentukan manusia sebelum latihan dimulai.",
+              "solution": "Ukuran batch dipilih sebelum latihan. Bobot dan bias adalah parameter yang dipelajari model, sedangkan loss adalah hasil pengukuran."
+            }
+          ],
+          quiz: [
+            {
+              "q": "Apa beda parameter dan hyperparameter?",
+              "options": [
+                "Parameter dipelajari model; hyperparameter dipilih manusia",
+                "Parameter dipilih manusia; hyperparameter dipelajari model",
+                "Keduanya sama saja, hanya berbeda nama di Keras",
+                "Hyperparameter adalah parameter yang nilainya negatif"
+              ],
+              "answer": 0,
+              "explain": "Bobot dan bias diputar AI saat latihan. Jumlah lapisan, neuron, learning rate, batch, dan epoch ditentukan sebelum latihan."
+            },
+            {
+              "q": "Apa yang dilakukan Dropout(0.2) saat latihan?",
+              "options": [
+                "Mematikan acak 20% neuron di setiap putaran",
+                "Menghapus 20% data latih secara permanen",
+                "Menurunkan learning rate sebanyak 20%",
+                "Membuang 20% lapisan dari model"
+              ],
+              "answer": 0,
+              "explain": "Neuron yang dimatikan berganti-ganti setiap putaran, sehingga model tidak bergantung pada segelintir neuron. Saat menebak, semuanya aktif kembali."
+            },
+            {
+              "q": "Adam disebut \"auto-adjust\". Apakah learning rate jadi tidak penting?",
+              "options": [
+                "Tetap penting; Adam hanya menyesuaikan langkah per kenop",
+                "Benar, Adam tidak memakai learning rate sama sekali",
+                "Benar, Adam selalu memilih nilai terbaik sendiri",
+                "Tidak, Adam hanya bisa dipakai untuk data tabel"
+              ],
+              "answer": 0,
+              "explain": "Adam tetap punya learning rate dasar (bawaannya 0,001) yang bisa terlalu besar atau terlalu kecil."
             }
           ]
         },
