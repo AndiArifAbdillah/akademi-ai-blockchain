@@ -4726,7 +4726,7 @@ Artinya kamu membayar <b>15 kali lipat laba setahun</b>. Cara cepat membacanya: 
 <h3>2. Kenapa disebut "multiples" (jamak)?</h3>
 <p>Karena P/E hanya salah satu. Ada banyak jenis, dan masing-masing punya situasi terbaiknya:</p>
 
-<table>
+<table class="tbl">
 <tr><th>Multiple</th><th>Rumus</th><th>Paling cocok saat</th></tr>
 <tr><td><b>P/E</b> (PER)</td><td>Harga ÷ Laba per saham</td><td>Perusahaan sudah <b>untung stabil</b></td></tr>
 <tr><td><b>PBV</b> (P/B)</td><td>Harga ÷ Nilai buku per saham</td><td>Perusahaan <b>padat aset</b> (bank, properti)</td></tr>
@@ -4749,7 +4749,7 @@ Artinya kamu membayar <b>15 kali lipat laba setahun</b>. Cara cepat membacanya: 
 
 <p>Inilah yang disebut <b>valuasi relatif</b>: menilai sesuatu dengan membandingkannya ke pembanding, bukan menghitung nilainya dari nol.</p>
 
-<table>
+<table class="tbl">
 <tr><th></th><th>Multiples (relatif)</th><th>DCF (absolut)</th></tr>
 <tr><td><b>Cara kerja</b></td><td>Bandingkan dengan pasar</td><td>Hitung nilai dari arus kas, dari nol</td></tr>
 <tr><td><b>Kecepatan</b></td><td>Cepat & mudah</td><td>Rumit, butuh banyak asumsi</td></tr>

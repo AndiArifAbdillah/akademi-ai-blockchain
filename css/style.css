@@ -293,9 +293,11 @@ a:hover { text-decoration: underline; }
    VISUALISASI & DEMO INTERAKTIF
    ============================================================ */
 /* Diagram SVG */
-/* Tabel lebar digeser di dalam kotaknya sendiri, bukan menggeser seluruh halaman */
+/* Teks sel boleh turun baris agar tabel muat selebar kotaknya. Yang tetap terlalu
+   lebar (banyak kolom, kode/angka panjang) digeser di dalam kotaknya sendiri,
+   bukan menggeser seluruh halaman. */
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 18px 0; max-width: 100%; }
-.table-scroll > table { margin: 0; min-width: max-content; }
+.table-scroll > table { margin: 0; min-width: 100%; }
 
 .viz { margin: 22px 0; }
 .viz figcaption { text-align: center; color: var(--muted); font-size: .85rem; margin-bottom: 8px; }
@@ -1267,6 +1269,9 @@ a.resume-card:hover .resume-btn { gap: 12px; }
 
 /* Isi bacaan: huruf serif, baris lega */
 .lesson-body { font-family: var(--font-baca); font-size: 1.1rem; line-height: 1.75; color: var(--text); }
+/* Token yang lebih panjang dari satu baris (mis. alamat 0x… di dalam kalimat) dipotong
+   daripada menggeser halaman. Tidak mengubah lebar minimum kolom tabel. */
+.lesson-body { overflow-wrap: break-word; }
 .lesson-body p { margin: 0 0 1.05em; }
 .lesson-body h3 { font-family: var(--font-ui); font-size: 1.2rem; font-weight: 700; margin: 2.1em 0 .6em; }
 .lesson-body h4 { font-family: var(--font-ui); font-size: 1.02rem; font-weight: 700; margin: 1.7em 0 .5em; }
@@ -1298,6 +1303,12 @@ a.resume-card:hover .resume-btn { gap: 12px; }
 .tbl td.ok-cell { background: var(--ok-soft); color: var(--ok); }
 .tbl td.bad-cell { background: var(--bad-soft); color: var(--bad); }
 .table-scroll { margin: 1.4em 0; }
+/* Di layar sempit sel dibuat lebih rapat supaya lebih banyak tabel muat.
+   Sengaja tanpa min-width sel: diuji di 375px, batas lebar minimum justru membuat
+   lebih banyak tabel harus digeser tanpa mengurangi kolom yang terjepit. */
+@media (max-width: 720px) {
+  .tbl th, .tbl td { padding: 8px; }
+}
 
 .code {
   background: var(--code-bg); color: var(--code-text); border-radius: 10px; border: 1px solid var(--border);
