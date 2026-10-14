@@ -6146,6 +6146,25 @@ model.evaluate(x_uji, y_uji)</pre>
 </table>
 <p>Berapa banyak kenop (parameter) yang dipelajari? Lapisan tersembunyi: 784 × 128 bobot + 128 bias = <b>100.480</b>. Lapisan keluaran: 128 × 10 + 10 = <b>1.290</b>. Totalnya <b>101.770</b> parameter, semuanya diputar sedikit demi sedikit selama latihan.</p>
 
+<h3>Apa yang terjadi saat model.fit berjalan</h3>
+<div data-diagram="cycle" data-steps="Forward pass: model menebak|Hitung loss: seberapa salah|Backpropagation: andil tiap bobot|Perbarui bobot: optimizer adam" data-center="satu batch" data-caption="Satu putaran belajar, diulang ribuan kali"></div>
+<table class="tbl">
+  <tr><th>Langkah</th><th>Di kode kita</th></tr>
+  <tr><td><b>Forward pass</b></td><td>Gambar masuk, model menghasilkan 10 peluang</td></tr>
+  <tr><td><b>Hitung loss</b></td><td><i>sparse_categorical_crossentropy</i> membandingkan tebakan dengan label sebenarnya</td></tr>
+  <tr><td><b>Backpropagation</b></td><td>TensorFlow menghitung sendiri arah perbaikan untuk ke-101.770 bobot</td></tr>
+  <tr><td><b>Perbarui bobot</b></td><td><i>adam</i> memutar setiap kenop sedikit ke arah yang mengurangi loss</td></tr>
+</table>
+<p>Putaran ini tidak terjadi sekali per epoch, melainkan sekali per <b>batch</b>. Keras memakai 32 gambar per batch secara bawaan. Dengan 54.000 gambar latih (60.000 dikurangi 10% untuk validasi), satu epoch berisi 54.000 ÷ 32 ≈ <b>1.688 putaran</b>; itulah angka "1688/1688" yang muncul di Colab. Lima epoch berarti sekitar 8.440 kali bobot diperbarui.</p>
+<div class="callout">
+<b>Diulang sampai kapan?</b> Bukan sampai akurasinya setinggi mungkin, karena akurasi latih bisa terus naik sambil model menghafal. Lebih aman berhenti saat akurasi <b>validasi</b> tidak membaik lagi. Keras menyediakan pengaturan untuk itu:
+<pre class="code">berhenti = tf.keras.callbacks.EarlyStopping(
+    monitor="val_accuracy", patience=2, restore_best_weights=True)
+model.fit(x_latih, y_latih, epochs=30, validation_split=0.1,
+          callbacks=[berhenti])</pre>
+Latihan berhenti sendiri bila 2 epoch berturut-turut tidak membaik, lalu bobot terbaiknya dikembalikan.
+</div>
+
 <h3>Membaca hasil latihan</h3>
 <div data-diagram="garis" data-seri="Latih:92.5,96.6,97.6,98.2,98.6|Validasi:95.8,96.9,97.3,97.5,97.7" data-x="Epoch 1,Epoch 2,Epoch 3,Epoch 4,Epoch 5" data-caption="Contoh akurasi (%) per epoch; hasilmu bisa sedikit berbeda karena bobot awalnya acak"></div>
 <p>Biasanya akurasi ujian akhirnya sekitar <b>97–98%</b>: dari 10.000 angka yang belum pernah dilihat, hanya sekitar 200 sampai 300 yang salah ditebak. Perhatikan dua garis di atas. Akurasi latih terus naik, sementara akurasi validasi mulai mendatar. Kalau latihan diteruskan lama, jarak keduanya akan melebar: tanda model mulai <b>menghafal</b>.</p>
@@ -6204,6 +6223,7 @@ plt.show()</pre>
             "Bagi komputer, gambar adalah tabel angka. MNIST: 70.000 gambar 28×28 (60.000 latih, 10.000 uji), nilai piksel 0–255.",
             "Arsitektur: input layer (piksel) → hidden layer (menemukan fitur) → output layer (prediksi); aliran maju ini disebut forward propagation.",
             "Satu neuron: kalikan tiap input dengan bobot, jumlahkan, tambah bias, lalu lewatkan fungsi aktivasi seperti ReLU; hasilnya dikirim ke lapisan berikutnya.",
+            "Satu putaran latihan = forward pass, hitung loss, backpropagation, perbarui bobot; terjadi sekali per batch (1.688 kali per epoch untuk 54.000 gambar dengan batch 32).",
             "Model Keras sederhana: Flatten → Dense(128, relu) → Dense(10, softmax), 101.770 parameter, biasanya mencapai sekitar 97–98% di data uji.",
             "Normalisasi (/255), validation_split, dan kurva latih vs validasi membantu melihat apakah model mulai menghafal.",
             "Visualisasi tebakan salah dan confusion matrix menunjukkan angka mana yang tertukar; CNN dan augmentasi memperbaikinya."
@@ -6220,7 +6240,8 @@ plt.show()</pre>
               solution: "Normalisasi membuat semua masukan sekecil dan sesetara mungkin, sehingga langkah gradient descent tidak liar."
             },
             { type: "number", q: "Sebuah neuron menerima input 1 dan 0,5 dengan bobot 0,4 dan −0,2, serta bias 0,3. Berapa keluarannya setelah ReLU?", answer: 0.6, tol: 0.001, hint: "Kalikan tiap input dengan bobotnya, jumlahkan, tambah bias. ReLU hanya mengubah nilai negatif menjadi 0.", solution: "1 × 0,4 + 0,5 × (−0,2) + 0,3 = 0,4 − 0,1 + 0,3 = 0,6. Positif, jadi ReLU meneruskannya: 0,6." },
-            { type: "number", q: "Sebuah jaringan punya 3 masukan, satu lapisan tersembunyi berisi 6 neuron, dan 2 keluaran. Berapa total parameternya (bobot + bias)?", answer: 38, tol: 0.5, unit: "parameter", hint: "Hitung per lapisan: masukan × neuron + neuron (bias).", solution: "Lapisan tersembunyi: 3 × 6 + 6 = 24. Lapisan keluaran: 6 × 2 + 2 = 14. Total 38." }
+            { type: "number", q: "Sebuah jaringan punya 3 masukan, satu lapisan tersembunyi berisi 6 neuron, dan 2 keluaran. Berapa total parameternya (bobot + bias)?", answer: 38, tol: 0.5, unit: "parameter", hint: "Hitung per lapisan: masukan × neuron + neuron (bias).", solution: "Lapisan tersembunyi: 3 × 6 + 6 = 24. Lapisan keluaran: 6 × 2 + 2 = 14. Total 38." },
+            { type: "number", q: "Data latih berisi 54.000 gambar dan ukuran batch 64. Berapa kali bobot diperbarui dalam satu epoch? (Batch terakhir yang tidak penuh tetap dihitung.)", answer: 844, tol: 0.5, unit: "kali", hint: "Bagi jumlah gambar dengan ukuran batch, lalu bulatkan ke atas.", solution: "54.000 ÷ 64 = 843,75, dibulatkan ke atas menjadi 844 kali." }
           ],
           quiz: [
             {
