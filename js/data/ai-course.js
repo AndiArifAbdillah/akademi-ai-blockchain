@@ -5403,7 +5403,7 @@ Cara kerjanya: titik yang punya cukup banyak tetangga dalam jarak tertentu diang
       id: "ai-arsitektur",
       level: "Arsitektur",
       title: "Deep Learning: dari Neuron sampai Transformer",
-      summary: "Neural network dari nol (maju, mundur, belajar), PyTorch & Keras, cara melatihnya dengan benar, CNN untuk gambar, dan Transformer untuk teks.",
+      summary: "Neural network dari nol (maju, mundur, belajar), PyTorch & Keras, cara melatihnya dengan benar, proyek pengenal angka tulisan tangan dengan TensorFlow, CNN untuk gambar, dan Transformer untuk teks.",
       lessons: [
         {
           id: "ai-alg-9",
@@ -5977,6 +5977,201 @@ riwayat = model.fit(X_latih_skala, y_latih,
               explain: "Langkah yang terlalu besar atau angka input yang sangat besar membuat nilai meledak.",
             },
           ],
+        },
+        {
+          id: "ai-mnist-1",
+          title: "Proyek: AI Pengenal Angka Tulisan Tangan — Neural Network dengan TensorFlow",
+          duration: "18 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Satu <b>neuron</b> mengalikan setiap masukan dengan bobotnya, menjumlahkan, lalu melewatkan hasilnya ke fungsi aktivasi; banyak neuron yang berlapis membentuk <b>neural network</b> (<a href="#/lesson/ai-alg-9">Neural Network dari Nol</a>). <b>Keras</b> membuat neural network dalam beberapa baris (<a href="#/lesson/ai-tl-7">TensorFlow &amp; Keras</a>), dan satu <b>epoch</b> berarti seluruh data latih sudah dilihat sekali (<a href="#/lesson/ai-alg-10">Melatih Neural Network dengan Benar</a>).
+</div>
+
+<p>Hampir setiap orang yang belajar deep learning memulai dari proyek yang sama: mengajari komputer <b>membaca angka tulisan tangan</b>. Di pelajaran ini kamu akan melihat seluruh perjalanannya: dari gambar menjadi angka, membangun model dengan TensorFlow, membaca hasil latihannya, sampai menulis angka sendiri dan melihat AI menebaknya.</p>
+
+<h3>Benarkah ini "otak AI"?</h3>
+<div data-diagram="vs" data-left="Neuron biologis::menerima sinyal listrik dan kimia::meneruskan ke ribuan neuron lain" data-right="Neuron buatan::menerima angka, lalu menghitung::meneruskan hasil ke lapisan berikutnya" data-caption="Mirip alurnya, sangat berbeda isinya"></div>
+<p>Otak manusia punya sekitar <b>86 miliar</b> neuron, dan masing-masing tersambung ke ribuan neuron lain. Model TensorFlow di pelajaran ini hanya punya 128 neuron tersembunyi, dan demo di bawah hanya 48. Meski begitu, keduanya sudah cukup untuk membaca angka tulisan tangan.</p>
+<div class="callout">
+Neural network memang <b>terinspirasi</b> dari sel saraf otak, tapi hanya secara longgar. Satu neuron buatan cuma rumus kecil: kalikan, jumlahkan, lalu lewatkan ke fungsi aktivasi. Tidak ada kesadaran atau pikiran di dalamnya. Yang dilakukannya adalah <b>menemukan pola angka</b> dari ribuan contoh. Jadi kalau ada yang bilang AI "berpikir", kata itu sebaiknya tetap diberi tanda kutip.
+</div>
+
+<h3>Deep learning: banyak lapisan</h3>
+<p><b>Deep learning</b> adalah neural network dengan <b>banyak lapisan</b>. Setiap lapisan mengolah hasil dari lapisan sebelumnya, sehingga pola yang ditangkapnya makin lama makin utuh:</p>
+<div data-diagram="layers" data-items="Lapisan akhir — objek utuh: ini angka 7|Lapisan tengah — bentuk: lengkungan, sudut, lingkaran|Lapisan awal — garis dan titik|Masukan — piksel-piksel gambar" data-caption="Dibaca dari bawah ke atas: dari piksel sampai objek utuh"></div>
+<div class="callout warn">
+<b>"Makin banyak lapisan, makin paham"? Tidak selalu.</b> Jaringan yang makin dalam juga makin sulit dilatih, butuh lebih banyak data dan komputasi, dan lebih mudah <b>menghafal</b> data latih. Untuk angka tulisan tangan, satu lapisan tersembunyi saja sudah mencapai sekitar 98%. Kedalaman harus disesuaikan dengan masalahnya. Urutan garis → bentuk → objek paling jelas terlihat pada <a href="#/lesson/ai-ars-4">CNN</a>, jenis jaringan yang khusus untuk gambar.
+</div>
+
+<h3>Bagi komputer, gambar adalah tabel angka</h3>
+<p>Komputer tidak melihat "angka nol". Ia melihat kotak-kotak kecil (piksel), masing-masing berisi angka yang menunjukkan seberapa gelap kotak itu. Ini angka 0 dari dataset kecil bawaan scikit-learn, berukuran 8×8 dengan nilai 0 sampai 16:</p>
+<pre class="code"> 0  0  5 13  9  1  0  0
+ 0  0 13 15 10 15  5  0
+ 0  3 15  2  0 11  8  0
+ 0  4 12  0  0  8  8  0
+ 0  5  8  0  0  9  8  0
+ 0  4 11  0  1 12  7  0
+ 0  2 14  5 10 12  0  0
+ 0  0  6 13 10  0  0  0</pre>
+<p>Coba lihat sambil memicingkan mata: angka besar membentuk lingkaran. Dataset yang dipakai di hampir semua kelas adalah <b>MNIST</b>, berisi <b>70.000</b> gambar angka tulisan tangan berukuran <b>28×28</b> piksel, dengan nilai 0 (putih) sampai 255 (hitam). Sebanyak 60.000 gambar untuk latihan dan 10.000 untuk ujian. Tulisannya berasal dari pegawai Biro Sensus Amerika Serikat dan pelajar SMA, dikumpulkan oleh NIST lalu dirapikan oleh Yann LeCun dan rekan-rekannya pada 1998.</p>
+<div data-diagram="pipeline" data-stages="Gambar 28×28::diratakan jadi 784 angka|Lapisan 128 neuron::aktivasi ReLU|Lapisan 10 neuron::softmax|10 peluang::angka 0 sampai 9" data-caption="Model yang akan kita bangun"></div>
+
+<h3>Kode lengkap dengan TensorFlow</h3>
+<p>Jalankan di <b>Google Colab</b> (<a href="#/lesson/ai-tl-4">Menyiapkan Komputermu</a>); TensorFlow dan datasetnya sudah tersedia, tidak perlu memasang apa pun.</p>
+<pre class="code">import tensorflow as tf
+
+# 1. Data: 60.000 gambar latih dan 10.000 gambar uji
+(x_latih, y_latih), (x_uji, y_uji) = tf.keras.datasets.mnist.load_data()
+x_latih, x_uji = x_latih / 255.0, x_uji / 255.0   # nilai 0-255 menjadi 0-1
+
+# 2. Model: 784 masukan, 128 neuron tersembunyi, 10 keluaran
+model = tf.keras.Sequential([
+    tf.keras.Input(shape=(28, 28)),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(128, activation="relu"),
+    tf.keras.layers.Dense(10, activation="softmax"),
+])
+
+# 3. Cara belajar: pengatur langkah, ukuran salah, dan nilai rapor
+model.compile(optimizer="adam",
+              loss="sparse_categorical_crossentropy",
+              metrics=["accuracy"])
+
+# 4. Latihan: 5 epoch, 10% data latih disisihkan untuk validasi
+riwayat = model.fit(x_latih, y_latih, epochs=5, validation_split=0.1)
+
+# 5. Ujian akhir dengan data yang belum pernah dilihat
+model.evaluate(x_uji, y_uji)</pre>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Artinya</th></tr>
+  <tr><td><b>/ 255.0</b></td><td>Normalisasi: semua piksel diubah ke rentang 0 sampai 1 agar latihan stabil</td></tr>
+  <tr><td><b>Flatten</b></td><td>Meratakan kotak 28×28 menjadi satu baris berisi 784 angka</td></tr>
+  <tr><td><b>Dense(128, relu)</b></td><td>Lapisan tersembunyi: 128 neuron, masing-masing tersambung ke semua 784 piksel</td></tr>
+  <tr><td><b>Dense(10, softmax)</b></td><td>Lapisan keluaran: 10 peluang untuk angka 0 sampai 9, jumlahnya selalu 100% (<a href="#/lesson/ai-mat-6">Softmax</a>)</td></tr>
+  <tr><td><b>adam</b></td><td>Versi gradient descent yang mengatur learning rate-nya sendiri</td></tr>
+  <tr><td><b>sparse_categorical_crossentropy</b></td><td>Ukuran salah untuk tebakan berupa pilihan kelas, dengan label berupa angka biasa (0–9)</td></tr>
+  <tr><td><b>validation_split=0.1</b></td><td>Menyisihkan 10% data latih untuk memeriksa apakah model menghafal</td></tr>
+</table>
+<p>Berapa banyak kenop (parameter) yang dipelajari? Lapisan tersembunyi: 784 × 128 bobot + 128 bias = <b>100.480</b>. Lapisan keluaran: 128 × 10 + 10 = <b>1.290</b>. Totalnya <b>101.770</b> parameter, semuanya diputar sedikit demi sedikit selama latihan.</p>
+
+<h3>Membaca hasil latihan</h3>
+<div data-diagram="garis" data-seri="Latih:92.5,96.6,97.6,98.2,98.6|Validasi:95.8,96.9,97.3,97.5,97.7" data-x="Epoch 1,Epoch 2,Epoch 3,Epoch 4,Epoch 5" data-caption="Contoh akurasi (%) per epoch; hasilmu bisa sedikit berbeda karena bobot awalnya acak"></div>
+<p>Biasanya akurasi ujian akhirnya sekitar <b>97–98%</b>: dari 10.000 angka yang belum pernah dilihat, hanya sekitar 200 sampai 300 yang salah ditebak. Perhatikan dua garis di atas. Akurasi latih terus naik, sementara akurasi validasi mulai mendatar. Kalau latihan diteruskan lama, jarak keduanya akan melebar: tanda model mulai <b>menghafal</b>.</p>
+
+<h3>Visualisasi hasil</h3>
+<p>Angka 98% saja tidak cukup. Lihat juga <i>di mana</i> model salah. Tambahkan kode ini di Colab:</p>
+<pre class="code">import matplotlib.pyplot as plt
+from sklearn.metrics import ConfusionMatrixDisplay
+
+# Kurva akurasi latih dan validasi
+plt.plot(riwayat.history["accuracy"], label="latih")
+plt.plot(riwayat.history["val_accuracy"], label="validasi")
+plt.legend()
+plt.show()
+
+# Delapan tebakan yang salah
+prediksi = model.predict(x_uji).argmax(axis=1)
+salah = (prediksi != y_uji).nonzero()[0]
+for i, idx in enumerate(salah[:8]):
+    plt.subplot(2, 4, i + 1)
+    plt.imshow(x_uji[idx], cmap="gray")
+    plt.title(f"tebak {prediksi[idx]}, asli {y_uji[idx]}")
+    plt.axis("off")
+plt.show()
+
+# Confusion matrix: angka mana tertukar dengan angka apa
+ConfusionMatrixDisplay.from_predictions(y_uji, prediksi)
+plt.show()</pre>
+<p>Kamu akan melihat sesuatu yang menarik: banyak tebakan salah yang <b>masuk akal</b>, misalnya 4 yang mirip 9, 5 yang mirip 3, atau 7 yang mirip 1. Sebagian bahkan sulit dibaca manusia. Cara membaca confusion matrix ada di <a href="#/lesson/ai-fund-1">Mengukur Kualitas AI dari Nol</a>.</p>
+
+<h3>Momen ajaib: tulis angka sendiri</h3>
+<p>Model di bawah ini berjalan langsung di browsermu. Ukurannya lebih kecil daripada model TensorFlow di atas: gambarnya 8×8, dilatih dari 1.347 contoh angka bawaan scikit-learn, dengan satu lapisan berisi 48 neuron. Di 450 gambar uji, akurasinya 97,1%, dan kesalahan yang paling sering adalah 9 yang terbaca 5 serta 8 yang terbaca 1.</p>
+<div data-demo="tulis-angka"></div>
+<p>Perhatikan kotak kecil "yang dilihat AI": tulisanmu dipotong, diperkecil, lalu diubah menjadi 64 angka, persis seperti data latihnya. AI tidak pernah melihat goresan tanganmu, hanya 64 angka itu.</p>
+<div class="callout">
+<b>Cerita di balik demo ini.</b> Versi pertama model ini salah membaca angka 7 polos sebagai 2 atau 9, padahal akurasi ujinya 97%. Penyebabnya ketemu saat rata-rata gambar angka 7 di data latih diperiksa: hampir semuanya ditulis dengan <b>coretan di tengah</b>. Angka 1 bertopi dan 4 terbuka juga sering keliru. Perbaikannya bukan mengubah rumus, melainkan <b>menambah data yang mewakili cara orang menulis</b>: 1.000 contoh sintetis angka 1, 4, dan 7 dalam berbagai gaya. Setelah dilatih ulang, 18 dari 18 gaya tulisan yang diuji terbaca benar. Inilah pelajaran terpenting proyek AI mana pun: akurasi tinggi di data uji belum menjamin AI bekerja untuk pengguna sungguhan.
+</div>
+
+<h3>Tantangan: dari angka ke pakaian</h3>
+<p>Setelah berhasil dengan angka, ganti satu baris pertama kodenya:</p>
+<pre class="code">(x_latih, y_latih), (x_uji, y_uji) = tf.keras.datasets.fashion_mnist.load_data()</pre>
+<p><b>Fashion-MNIST</b> dibuat Zalando pada 2017 dengan ukuran yang sama persis: 70.000 gambar 28×28, tapi isinya 10 jenis pakaian dan alas kaki: kaos, celana panjang, sweter, gaun, mantel, sandal, kemeja, sepatu kets, tas, dan sepatu bot. Dengan model yang sama, akurasinya biasanya hanya sekitar 88%. Lihat confusion matrix-nya: kaos, kemeja, sweter, dan mantel paling sering tertukar, karena bentuknya memang mirip pada gambar sekecil itu.</p>
+
+<h3>Kenapa kadang salah, dan cara memperbaikinya</h3>
+<table class="tbl">
+  <tr><th>Penyebab</th><th>Perbaikan</th></tr>
+  <tr><td>Gaya tulisanmu berbeda dari data latih, misalnya 7 yang diberi garis tengah atau 1 yang diberi topi</td><td>Data latih yang lebih banyak dan lebih beragam</td></tr>
+  <tr><td>Model hanya melihat 784 angka berjajar, tanpa tahu piksel mana yang bertetangga</td><td><a href="#/lesson/ai-ars-4">CNN</a>, yang memeriksa gambar sepotong demi sepotong; di MNIST akurasinya bisa lebih dari 99%</td></tr>
+  <tr><td>Data latih terlalu seragam: semua angka rapi di tengah</td><td>Augmentasi: memperbanyak data dengan memutar, menggeser, dan menebalkan gambar</td></tr>
+</table>
+`,
+          keyPoints: [
+            "Neural network hanya terinspirasi otak secara longgar: neuron buatan adalah rumus kecil yang menemukan pola dari banyak contoh, bukan pikiran.",
+            "Deep learning = banyak lapisan; pola makin utuh dari piksel ke garis, bentuk, lalu objek. Tapi lapisan lebih banyak tidak otomatis lebih baik.",
+            "Bagi komputer, gambar adalah tabel angka. MNIST: 70.000 gambar 28×28 (60.000 latih, 10.000 uji), nilai piksel 0–255.",
+            "Model Keras sederhana: Flatten → Dense(128, relu) → Dense(10, softmax), 101.770 parameter, biasanya mencapai sekitar 97–98% di data uji.",
+            "Normalisasi (/255), validation_split, dan kurva latih vs validasi membantu melihat apakah model mulai menghafal.",
+            "Visualisasi tebakan salah dan confusion matrix menunjukkan angka mana yang tertukar; CNN dan augmentasi memperbaikinya."
+          ],
+          practice: [
+            { type: "number", q: "Model punya lapisan Dense 64 neuron dengan masukan 784 piksel. Berapa jumlah parameter lapisan itu (bobot + bias)?", answer: 50240, tol: 0.5, unit: "parameter", hint: "Setiap neuron punya satu bobot untuk tiap masukan, ditambah satu bias.", solution: "784 × 64 + 64 = 50.176 + 64 = 50.240 parameter." },
+            { type: "number", q: "Dari 10.000 gambar uji, model salah menebak 230 gambar. Berapa persen akurasinya?", answer: 97.7, tol: 0.01, unit: "%", hint: "Yang benar = 10.000 − 230. Bagi dengan 10.000.", solution: "9.770 ÷ 10.000 = 97,7%." },
+            {
+              type: "choice",
+              q: "Kenapa nilai piksel dibagi 255 sebelum dilatih?",
+              options: ["Agar semua nilai berada di rentang 0 sampai 1 dan latihan stabil", "Agar gambarnya berubah menjadi hitam putih", "Agar ukuran gambar mengecil jadi 1×1 piksel", "Agar model bisa membaca angka di atas 255"],
+              answer: 0,
+              hint: "Nilai asli piksel berkisar 0 sampai 255.",
+              solution: "Normalisasi membuat semua masukan sekecil dan sesetara mungkin, sehingga langkah gradient descent tidak liar."
+            }
+          ],
+          quiz: [
+            {
+              q: "Bagaimana sebuah gambar angka masuk ke neural network?",
+              options: [
+                "Sebagai tabel angka yang menunjukkan gelap terangnya tiap piksel",
+                "Sebagai berkas gambar utuh yang langsung dipahami maknanya",
+                "Sebagai teks yang menyebutkan nama angka di dalam gambar",
+                "Sebagai suara yang direkam ketika angka itu dibacakan"
+              ],
+              answer: 0,
+              explain: "Komputer hanya mengolah angka. Gambar 28×28 menjadi 784 angka yang diratakan oleh lapisan Flatten."
+            },
+            {
+              q: "Apa tugas lapisan Dense(10, softmax) di akhir model?",
+              options: [
+                "Memberi 10 peluang untuk angka 0 sampai 9 yang jumlahnya 100%",
+                "Memotong gambar menjadi 10 bagian yang sama besar",
+                "Mengulang latihan sebanyak 10 epoch secara otomatis",
+                "Memilih 10 piksel paling gelap dari setiap gambar"
+              ],
+              answer: 0,
+              explain: "Satu neuron untuk tiap angka; softmax mengubah nilainya menjadi peluang, dan peluang terbesar menjadi tebakan."
+            },
+            {
+              q: "Akurasi latih terus naik, tapi akurasi validasi mendatar lalu turun. Artinya?",
+              options: [
+                "Model mulai menghafal data latih",
+                "Model sudah sempurna dan siap dipakai",
+                "Data ujinya pasti diberi label salah",
+                "Learning rate harus dibuat sebesar mungkin"
+              ],
+              answer: 0,
+              explain: "Model makin jago pada soal yang pernah dilihat, tapi tidak makin jago pada soal baru: itulah tanda menghafal (overfitting)."
+            },
+            {
+              q: "Benarkah 'makin banyak lapisan, makin paham'?",
+              options: [
+                "Tidak selalu: lapisan berlebih sulit dilatih dan mudah menghafal",
+                "Benar: setiap lapisan tambahan pasti menaikkan akurasi",
+                "Benar: model terbaik selalu yang punya lapisan paling banyak",
+                "Tidak: neural network hanya boleh punya satu lapisan"
+              ],
+              answer: 0,
+              explain: "Kedalaman harus sesuai masalahnya. Untuk MNIST, satu lapisan tersembunyi sudah sekitar 98%; yang lebih membantu adalah jenis lapisan yang tepat seperti CNN."
+            }
+          ]
         },
         {
           id: "ai-ars-4",

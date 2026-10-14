@@ -1893,6 +1893,8 @@ const GLOSSARY = [
   ["ACP", "Agentic Commerce Protocol dari OpenAI dan Stripe (2025): standar agar agen bisa menyelesaikan belanja di toko biasa tanpa melihat nomor kartu; dipakai Instant Checkout di ChatGPT."],
   ["ERC-8004", "Usulan standar Ethereum 'Trustless Agents' (2025) dengan registry Identitas, Reputasi, dan Validasi, agar agen yang belum saling kenal bisa saling memeriksa."],
   ["Jev", "Model 'System One' dari TypeSafe AI (September 2026): tidak menulis teks, hanya menjawab pertanyaan bertipe (Choice, Score, Noul) dengan cepat beserta tingkat keyakinannya."],
+  ["MNIST", "Dataset 70.000 gambar angka tulisan tangan berukuran 28×28 piksel (60.000 latih, 10.000 uji); proyek pertama hampir setiap orang yang belajar deep learning."],
+  ["Flatten", "Lapisan yang meratakan gambar, misalnya kotak 28×28 piksel, menjadi satu baris angka (784) agar bisa masuk ke lapisan Dense."],
   ["Kenop", "Tombol putar, seperti pengatur volume radio atau api kompor. Di materi AI dipakai sebagai perumpamaan untuk angka yang bisa diputar naik-turun: parameter yang digeser sedikit demi sedikit saat model belajar, atau pengaturan seperti learning rate dan temperature."],
 ];
 

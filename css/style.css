@@ -1749,3 +1749,19 @@ details.modul-jembatan:not([open]) { padding-bottom: 12px; }
 .bd-modul.beres .bd-tanda { color: var(--ok); }
 @media (max-width: 860px) { .bekal-dulu { margin-left: 0; } }
 .kenop-svg + .dm-range { display: block; width: 100%; max-width: 360px; margin: 4px auto 0; }
+
+/* Demo "tulis angka, AI menebak" */
+.ta-wadah { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start; margin-top: 10px; }
+.ta-kiri { flex: 0 1 280px; min-width: 0; }
+.ta-kanvas { display: block; width: 100%; max-width: 280px; aspect-ratio: 1; background: var(--surface); border: 2px dashed var(--border); border-radius: 12px; touch-action: none; cursor: crosshair; }
+.ta-kanan { flex: 1 1 200px; min-width: 0; }
+.ta-lihat-wadah { display: flex; align-items: center; gap: 10px; }
+.ta-lihat { width: 64px; height: 64px; image-rendering: pixelated; border: 1px solid var(--border); border-radius: 4px; background: #fff; }
+.ta-tebakan { margin: 10px 0 8px; font-size: 1rem; }
+.ta-angka { font-size: 1.9rem; color: var(--primary); vertical-align: -3px; }
+.ta-baris { display: grid; grid-template-columns: 14px 1fr 38px; gap: 8px; align-items: center; margin: 3px 0; font-size: .82rem; font-variant-numeric: tabular-nums; }
+.ta-baris small { text-align: right; color: var(--muted); }
+.ta-isi { height: 8px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
+.ta-isi i { display: block; height: 100%; background: var(--muted); }
+.ta-baris.juara span { font-weight: 700; color: var(--primary); }
+.ta-baris.juara .ta-isi i { background: var(--primary); }
