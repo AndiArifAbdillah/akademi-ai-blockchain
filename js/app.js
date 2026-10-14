@@ -15,7 +15,7 @@ const MODULE_ORDER = [
   // 🤖 AI
   "ai-dasar", "ai-pemula", "ai-menengah", "ai-fundamental", "ai-matematika",
   "ai-tools", "ai-pendalaman", "ai-algoritma", "ai-ensemble", "ai-arsitektur", "ai-rl",
-  "ai-mahir", "ai-lanjutan", "ai-otomasi", "ai-proyek", "ai-terapan", "ai-ekonomi", "ai-arah",
+  "ai-mahir", "ai-lanjutan", "ai-agen", "ai-otomasi", "ai-proyek", "ai-terapan", "ai-ekonomi", "ai-arah",
   // ⛓️ Blockchain
   "bc-dasar", "bc-pemula", "bc-skeptis", "bc-fundamental", "bc-pendalaman", "bc-matematika",
   "bc-kriptografi", "bc-menengah", "bc-terapan", "bc-lanjutan", "bc-proyek", "bc-dapp",
@@ -1848,6 +1848,15 @@ const GLOSSARY = [
   ["Vibe coding", "Membuat aplikasi hanya dengan menyuruh AI tanpa membaca kodenya. Cukup untuk mencoba ide cepat, berbahaya untuk aplikasi yang menyimpan data orang atau menyentuh uang."],
   ["Kasus pinggir", "Edge case: masukan di ujung batas yang jarang terpikir (angka 0, daftar kosong, angka negatif, hasil bagi yang tidak bulat) dan justru paling sering membuat program salah."],
   ["Slopsquatting", "Serangan dengan mendaftarkan nama paket yang sering dikarang AI lalu mengisinya dengan program jahat; korban memasangnya karena disarankan AI."],
+  ["Context engineering", "Seni memilih apa saja yang dilihat model AI pada satu saat: instruksi, riwayat percakapan, dokumen, hasil alat, dan memori."],
+  ["Context rot", "Menurunnya kemampuan model memakai isi konteks dengan tepat ketika konteksnya makin panjang. Lebih banyak informasi tidak selalu lebih baik."],
+  ["Context poisoning", "Informasi salah, dari halusinasi atau sisipan jahat, yang masuk ke konteks agen lalu terus dirujuk ulang di langkah-langkah berikutnya."],
+  ["Harness engineering", "Merancang semua yang dipasang di sekitar model agar kemampuannya berguna: alat, MCP, skill, plugin, dan pagar pengaman."],
+  ["Loop engineering", "Merancang putaran kerja agen: mencoba, memeriksa hasil, mencoba lagi saat gagal, dan berhenti pada syarat yang jelas."],
+  ["Guardrails", "Pagar pengaman agen AI: batas tindakan, pemeriksaan sebelum dan sesudah bertindak, serta kapan agen wajib bertanya ke manusia."],
+  ["ACP", "Agentic Commerce Protocol dari OpenAI dan Stripe (2025): standar agar agen bisa menyelesaikan belanja di toko biasa tanpa melihat nomor kartu; dipakai Instant Checkout di ChatGPT."],
+  ["ERC-8004", "Usulan standar Ethereum 'Trustless Agents' (2025) dengan registry Identitas, Reputasi, dan Validasi, agar agen yang belum saling kenal bisa saling memeriksa."],
+  ["Jev", "Model 'System One' dari TypeSafe AI (September 2026): tidak menulis teks, hanya menjawab pertanyaan bertipe (Choice, Score, Noul) dengan cepat beserta tingkat keyakinannya."],
   ["Kenop","Tombol putar, seperti pengatur volume radio. Di materi AI dipakai sebagai perumpamaan parameter: angka di dalam model yang diputar sedikit demi sedikit saat model belajar."],
 ];
 

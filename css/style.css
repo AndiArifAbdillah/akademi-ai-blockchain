@@ -1725,3 +1725,8 @@ details.modul-jembatan:not([open]) { padding-bottom: 12px; }
 
 /* Playground HTML: pratinjau halaman seperti browser mini (selalu latar putih, seperti halaman web polos) */
 .html-pratinjau { display: block; width: 100%; min-height: 240px; border: 1px solid var(--border); border-radius: 10px; background: #fff; }
+
+/* Demo agen pemesan makan siang: keputusan "tanya manusia" berwarna kuning */
+.dm-li.warn { border-left-color: var(--warn); }
+.dm-line.warn { color: var(--warn); }
+.dm-line.big.warn { background: var(--warn-soft); }

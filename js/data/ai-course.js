@@ -7027,7 +7027,7 @@ LLM memotong teks menjadi <b>token</b>, menghitung <b>peluang</b> setiap kandida
       id: "ai-lanjutan",
       level: "Lanjutan",
       title: "Membangun Aplikasi AI",
-      summary: "Prompt engineering, API & RAG, vector database, memilih prompting/RAG/fine-tuning, agen AI dari nol, multi-agent, dan agen yang bisa membayar (x402 & AP2).",
+      summary: "Prompt engineering, API & RAG, vector database, dan memilih antara prompting, RAG, atau fine-tuning.",
       lessons: [
         {
           id: "ai-a-2",
@@ -7303,6 +7303,15 @@ tampilkan(jawaban);</pre>
             },
           ],
         },
+      ],
+    },
+    /* ---------------- MODUL 14: AGEN AI & PEMBAYARAN ANTAR-AGEN ---------------- */
+    {
+      id: "ai-agen",
+      level: "Agen",
+      title: "Agen AI & Pembayaran Antar-Agen",
+      summary: "Dari chatbot ke agen yang bertindak: putaran berpikir dan alat, empat lapis rekayasa (prompt, context, harness, loop), tim multi-agent, pembayaran antar-agen dengan x402, ACP, AP2 dan ERC-8004, sampai model penentu keputusan seperti Jev dalam agen pemesan makan siang.",
+      lessons: [
         {
           id: "ai-agen-1",
           title: "Agen AI dari Nol — Tujuan, Alat & Putaran Berpikir",
@@ -7364,7 +7373,7 @@ ulangi paling banyak 10 kali:
   <tr><td><b>MCP</b> (Model Context Protocol)</td><td>Anthropic, akhir 2024</td><td>Cara baku menyambungkan alat dan sumber data ke aplikasi AI — seperti colokan USB-C: satu alat bisa dipakai banyak aplikasi</td></tr>
   <tr><td><b>A2A</b> (Agent2Agent)</td><td>Google, April 2025</td><td>Cara baku agen dari pembuat berbeda saling berkenalan, berbagi tugas, dan bertukar hasil</td></tr>
 </table>
-<p>Begitu agen bisa bekerja sama dengan agen lain, muncul pertanyaan berikutnya: bagaimana kalau agen perlu <b>membayar</b> agen lain? Itu dibahas dua pelajaran lagi.</p>
+<p>Begitu agen bisa bekerja sama dengan agen lain, muncul pertanyaan berikutnya: bagaimana kalau agen perlu <b>membayar</b> agen lain? Itu dibahas di pelajaran <a href="#/lesson/ai-agen-2">Agen yang Bisa Membayar</a>.</p>
 
 <h3>Batas yang wajib dipasang</h3>
 <table class="tbl">
@@ -7419,6 +7428,195 @@ ulangi paling banyak 10 kali:
               ],
               answer: 0,
               explain: "Tindakan yang tidak bisa dibatalkan, seperti mengirim uang, harus melewati persetujuan manusia."
+            }
+          ]
+        },
+        {
+          id: "ai-agen-3",
+          title: "Dari Prompt ke Loop — Empat Lapis Rekayasa di Balik Agen AI",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Agen AI = <b>model</b> yang memilih langkah + <b>alat</b> yang bisa dipanggil + <b>putaran</b> yang terus berjalan sampai tujuan tercapai (<a href="#/lesson/ai-agen-1">Agen AI dari Nol</a>). <b>Prompt</b> adalah perintah yang kita berikan ke model (<a href="#/lesson/ai-a-2">Prompt Engineering</a>).
+</div>
+
+<p>Dalam empat tahun, AI berubah dari teman ngobrol menjadi pekerja yang bisa bertindak sendiri. Pelajaran ini membongkar apa saja yang membuat perubahan itu mungkin, lapis demi lapis.</p>
+<div data-diagram="timeline" data-events="2022::AI bisa bicara: tanya jawab teks|2023::AI bisa membuat: teks, gambar, kode|2024–2025::AI bisa bertindak: memakai alat dan web|2026::Agen bekerja sama dan saling membayar" data-caption="Perjalanan AI menuju era agen"></div>
+
+<h3>Chatbot, workflow, atau agen?</h3>
+<div data-diagram="compare3" data-cols="Chatbot::menjawab pertanyaanmu::kamu yang mengerjakan|Workflow::mengikuti langkah tetap rancanganmu::mudah ditebak|Agen AI::memilih langkahnya sendiri::demi tujuan" data-caption="Tiga cara memakai AI, dari yang paling sederhana"></div>
+<p><b>Workflow</b> seperti otomasi n8n (<a href="#/lesson/ai-n8n-1">n8n dari Nol</a>): langkahnya kamu tentukan, AI hanya mengisi bagian tertentu. <b>Agen</b> memutuskan sendiri urutan langkahnya. Agen lebih luwes, tapi juga lebih sulit ditebak, lebih mahal, dan lebih berisiko.</p>
+<table class="tbl">
+  <tr><th>Angka</th><th>Sumber</th></tr>
+  <tr><td>40% aplikasi perusahaan diperkirakan punya agen khusus tugas pada akhir 2026, naik dari kurang dari 5% di 2025</td><td>Gartner, Agustus 2025</td></tr>
+  <tr><td>79% eksekutif di AS mengatakan perusahaannya sudah mulai memakai agen AI</td><td>Survei PwC, Mei 2025 (308 eksekutif)</td></tr>
+  <tr><td>Lebih dari 40% proyek agen diperkirakan dibatalkan sebelum akhir 2027 karena biaya membengkak, manfaat tidak jelas, atau risiko tidak terkendali</td><td>Gartner, Juni 2025</td></tr>
+</table>
+<div class="callout">
+<b>Pelajaran dari angka ketiga:</b> semua orang ingin agen, tapi banyak proyek gagal. Pilih cara yang <b>paling sederhana yang cukup</b>. Kalau langkahnya selalu sama, workflow biasanya lebih murah dan lebih aman daripada agen.
+</div>
+
+<h3>Lima komponen sebuah agen</h3>
+<div data-diagram="network" data-center="Agen AI" data-nodes="LLM: otak yang berpikir|Loop: putaran sampai selesai|Memori: ingatan|Alat: tangan untuk bertindak|Pagar pengaman (guardrails)" data-caption="Tiga bahan dari pelajaran sebelumnya, ditambah memori dan pagar pengaman"></div>
+<table class="tbl">
+  <tr><th>Komponen</th><th>Perannya</th></tr>
+  <tr><td><b>LLM</b></td><td>Otak: memahami tujuan dan memilih langkah berikutnya</td></tr>
+  <tr><td><b>Loop</b></td><td>Putaran: tanya model, jalankan alat, kembalikan hasil, ulangi</td></tr>
+  <tr><td><b>Memori</b></td><td>Ingatan: apa yang sudah terjadi dan apa yang perlu diketahui</td></tr>
+  <tr><td><b>Alat</b></td><td>Tangan: mencari di web, membaca database, mengirim pesan, membayar</td></tr>
+  <tr><td><b>Pagar pengaman</b></td><td>Batas: apa yang tidak boleh dilakukan dan kapan harus bertanya ke manusia</td></tr>
+</table>
+
+<h3>Empat lapis rekayasa</h3>
+<p>Supaya komponen-komponen itu bekerja dengan baik, ada empat keahlian yang berkembang berurutan. Setiap lapis dibangun di atas lapis sebelumnya.</p>
+<div data-diagram="layers" data-items="Loop engineering — terus bekerja sampai tujuan tercapai|Harness engineering — alat, MCP, skill, pagar pengaman|Context engineering — informasi yang tepat pada saat yang tepat|Prompt engineering — perintah yang jelas" data-caption="Dari bawah ke atas: makin ke atas, makin banyak yang diatur di luar kalimat perintah"></div>
+
+<h3>Lapis 1 — Prompt engineering</h3>
+<p>Teknik menulis perintah supaya AI menangkap <b>maksud</b> kita. Kerangka yang diajarkan di kelas adalah <b>R.I.S.E</b>:</p>
+<table class="tbl">
+  <tr><th>Huruf</th><th>Artinya</th><th>Contoh untuk agen pemesan makan siang</th></tr>
+  <tr><td><b>R</b>ole</td><td>Peran yang dimainkan AI</td><td>Kamu asisten pemesan makan siang untuk karyawan kantor</td></tr>
+  <tr><td><b>I</b>nput</td><td>Bahan yang diberikan</td><td>Menu warung hari ini, anggaran Rp50.000, aku tidak makan pedas</td></tr>
+  <tr><td><b>S</b>teps</td><td>Langkah yang harus diikuti</td><td>Pilih menu yang cocok, hitung total dengan ongkir, tunjukkan pilihan sebelum memesan</td></tr>
+  <tr><td><b>E</b>xpectation</td><td>Bentuk hasil yang diharapkan</td><td>Paling banyak 3 pilihan, tiap baris berisi nama menu, harga, dan alasan singkat</td></tr>
+</table>
+<p>Tiga prinsipnya: <b>jelas dan spesifik</b>, <b>perbaiki berulang kali</b> sampai hasilnya pas, dan <b>konteks itu penting</b>. Prinsip ketiga inilah pintu ke lapis berikutnya.</p>
+
+<h3>Lapis 2 — Context engineering</h3>
+<p>Prompt hanyalah satu kalimat. <b>Konteks</b> adalah <i>semua</i> yang dilihat model pada satu saat: instruksi, riwayat percakapan, dokumen yang diambil (<a href="#/lesson/ai-a-3">RAG</a>), hasil alat, dan ingatan. Context engineering adalah seni memilih apa yang masuk ke sana. Agen menyimpan ingatan dalam tiga bentuk:</p>
+<table class="tbl">
+  <tr><th>Jenis memori</th><th>Isinya</th><th>Contoh</th></tr>
+  <tr><td><b>Episodik</b></td><td>Pengalaman: apa yang pernah terjadi</td><td>"Selasa lalu kamu memesan soto dan bilang terlalu asin"</td></tr>
+  <tr><td><b>Semantik</b></td><td>Fakta yang tetap berlaku</td><td>"Kamu alergi kacang; anggaran makan siang Rp50.000"</td></tr>
+  <tr><td><b>Prosedural</b></td><td>Cara melakukan sesuatu</td><td>"Memesan di Warung Bu Sri: cek menu, konfirmasi, lalu bayar"</td></tr>
+</table>
+<p>Dua penyakit yang wajib dikenali:</p>
+<ul>
+  <li><b>Context rot</b> (konteks membusuk): makin panjang isi konteks, makin sulit model memakai informasi di dalamnya dengan tepat. Penelitian Chroma (2025) menemukan kinerja model menurun seiring masukan makin panjang, bahkan untuk tugas yang sederhana. Lebih banyak tidak selalu lebih baik.</li>
+  <li><b>Context poisoning</b> (konteks teracuni): informasi yang salah masuk ke konteks, entah dari halusinasi model sendiri atau dari sisipan jahat, lalu terus dirujuk ulang di langkah-langkah berikutnya. Satu kesalahan kecil bisa menjalar ke seluruh pekerjaan.</li>
+</ul>
+<p>Obatnya: ringkas dan buang yang tidak perlu, ambil hanya dokumen yang relevan, tandai isi dari luar sebagai <i>data</i> dan bukan perintah, serta periksa ulang fakta penting sebelum disimpan sebagai memori.</p>
+
+<h3>Lapis 3 — Harness engineering</h3>
+<p><i>Harness</i> adalah abah-abah kuda: tali dan pelana yang mengarahkan tenaga kuda ke tempat yang tepat. Modelnya adalah kuda, dan harness adalah semua yang dipasang di sekelilingnya supaya tenaga itu berguna:</p>
+<table class="tbl">
+  <tr><th>Bagian harness</th><th>Gunanya</th></tr>
+  <tr><td><b>Alat</b> (tools)</td><td>Fungsi yang boleh dipanggil model</td></tr>
+  <tr><td><b>MCP</b></td><td>Colokan baku untuk menyambungkan alat dan data, seperti Gmail atau Notion</td></tr>
+  <tr><td><b>Skill</b></td><td>Paket petunjuk dan skrip untuk satu jenis pekerjaan, dimuat hanya saat dibutuhkan</td></tr>
+  <tr><td><b>Plugin</b></td><td>Kumpulan alat, skill, dan pengaturan yang bisa dipasang sekaligus</td></tr>
+  <tr><td><b>Pagar pengaman</b></td><td>Pemeriksaan sebelum dan sesudah model bertindak</td></tr>
+</table>
+<p>Itulah sebabnya model yang sama bisa terasa jauh lebih pintar di satu aplikasi daripada di aplikasi lain. Bedanya sering bukan di modelnya, tapi di harness-nya.</p>
+
+<h3>Lapis 4 — Loop engineering</h3>
+<p>Lapis teratas merancang <b>putaran</b> yang menggerakkan harness menuju tujuan: mencoba, memeriksa hasil, dan <b>mencoba lagi kalau gagal</b>. Bagian terpenting justru <b>kapan berhenti</b>. Jalankan simulasi ini, lalu ubah daftar hasilnya menjadi empat kali "warung penuh".</p>
+<div data-demo="js-playground">// Simulasi loop engineering: agen mencoba memesan makan siang
+// Ubah isi daftar ini, misalnya jadi empat kali "warung penuh"
+const hasilPercobaan = ["warung penuh", "koneksi putus", "berhasil"];
+const BATAS_PERCOBAAN = 4;
+
+let selesai = false;
+for (let i = 0; i &lt; BATAS_PERCOBAAN; i++) {
+  const hasil = hasilPercobaan[i] || "warung penuh";
+  console.log("Percobaan " + (i + 1) + ": " + hasil);
+  if (hasil === "berhasil") {
+    selesai = true;
+    break;
+  }
+  const jeda = 2 ** i; // jeda makin lama: 1, 2, 4, 8 menit
+  console.log("  gagal, coba lagi " + jeda + " menit lagi");
+}
+
+if (selesai) {
+  console.log("Tujuan tercapai: makan siang sudah dipesan.");
+} else {
+  console.log("Berhenti setelah " + BATAS_PERCOBAAN + " percobaan. Serahkan ke manusia.");
+}</div>
+<p>Loop yang baik punya <b>syarat berhenti</b>: tujuan tercapai, batas jumlah percobaan, batas biaya, atau kesalahan yang memang tidak boleh diulang. Contohnya pembayaran yang ditolak karena saldo kurang: mengulanginya seratus kali tidak akan menolong. Jeda yang makin lama antarpercobaan juga mencegah agen membanjiri layanan yang sedang sibuk.</p>
+
+<h3>Ringkasan empat lapis</h3>
+<table class="tbl">
+  <tr><th>Lapis</th><th>Pertanyaan yang dijawab</th></tr>
+  <tr><td>Prompt engineering</td><td>Apa yang aku minta?</td></tr>
+  <tr><td>Context engineering</td><td>Apa yang dilihat model saat ini?</td></tr>
+  <tr><td>Harness engineering</td><td>Apa yang bisa dilakukan model?</td></tr>
+  <tr><td>Loop engineering</td><td>Bagaimana model terus bekerja sampai tujuan tercapai, dan kapan ia harus berhenti?</td></tr>
+</table>
+`,
+          keyPoints: [
+            "Chatbot menjawab, workflow mengikuti langkah tetap, agen memilih langkahnya sendiri. Pilih yang paling sederhana yang cukup.",
+            "Gartner memperkirakan lebih dari 40% proyek agen dibatalkan sebelum akhir 2027; agen bukan jawaban untuk semua masalah.",
+            "Lima komponen agen: LLM (otak), loop, memori, alat, dan pagar pengaman.",
+            "Prompt engineering dengan kerangka R.I.S.E: Role, Input, Steps, Expectation.",
+            "Context engineering memilih apa yang dilihat model; memori agen ada tiga: episodik, semantik, prosedural. Waspadai context rot dan context poisoning.",
+            "Harness engineering memasang alat, MCP, skill, plugin, dan pagar pengaman di sekitar model.",
+            "Loop engineering membuat agen mencoba lagi saat gagal, tapi wajib punya syarat berhenti."
+          ],
+          practice: [
+            {
+              type: "choice",
+              q: "Agen terus lupa bahwa kamu alergi kacang, padahal sudah kamu sebut minggu lalu. Lapis mana yang perlu diperbaiki?",
+              options: ["Context engineering: simpan sebagai memori semantik", "Prompt engineering: tulis perintah lebih sopan", "Loop engineering: tambah jumlah percobaan", "Harness engineering: tambah alat kalkulator"],
+              answer: 0,
+              hint: "Alergi adalah fakta yang tetap berlaku. Di mana fakta seperti itu disimpan?",
+              solution: "Fakta yang terus berlaku disimpan sebagai memori semantik, lalu dimasukkan ke konteks setiap kali agen memilih makanan."
+            },
+            {
+              type: "choice",
+              q: "Dalam R.I.S.E, kalimat 'tampilkan paling banyak 3 pilihan dalam bentuk daftar' termasuk bagian apa?",
+              options: ["Expectation", "Role", "Input", "Steps"],
+              answer: 0,
+              hint: "Kalimat itu mengatur bentuk hasil akhirnya.",
+              solution: "Expectation menjelaskan bentuk hasil yang diharapkan: berapa banyak, dalam format apa, dan berisi apa."
+            },
+            { type: "number", q: "Agen mencoba ulang dengan jeda 1, 2, 4, lalu 8 menit (dua kali lipat setiap gagal). Kalau keempat jeda itu terpakai, berapa menit total waktu menunggunya?", answer: 15, tol: 0.5, unit: "menit", hint: "Jumlahkan keempat jedanya.", solution: "1 + 2 + 4 + 8 = 15 menit." }
+          ],
+          quiz: [
+            {
+              q: "Apa beda workflow dan agen AI?",
+              options: [
+                "Workflow mengikuti langkah tetap; agen memilih langkahnya sendiri",
+                "Workflow memakai AI, sedangkan agen tidak memakai AI sama sekali",
+                "Workflow hanya bisa berjalan di n8n, agen bisa di mana saja",
+                "Workflow selalu lebih mahal dijalankan daripada agen"
+              ],
+              answer: 0,
+              explain: "Langkah workflow dirancang manusia sehingga mudah ditebak. Agen memutuskan urutan langkahnya sendiri demi tujuan."
+            },
+            {
+              q: "Context rot artinya…",
+              options: [
+                "Model makin sulit memakai isi konteks saat konteks makin panjang",
+                "Konteks terhapus otomatis setelah satu jam tidak dipakai",
+                "Informasi lama di internet yang sudah tidak berlaku lagi",
+                "Kesalahan ketik di dalam perintah yang dikirim ke model"
+              ],
+              answer: 0,
+              explain: "Menjejalkan semua informasi ke konteks bisa menurunkan mutu jawaban. Pilih hanya yang relevan."
+            },
+            {
+              q: "Contoh harness engineering adalah…",
+              options: [
+                "Menambahkan alat, MCP, dan pagar pengaman di sekitar model",
+                "Melatih ulang model dari nol dengan data yang lebih banyak",
+                "Menulis perintah yang lebih panjang dan lebih sopan",
+                "Mengganti model dengan versi yang lebih besar"
+              ],
+              answer: 0,
+              explain: "Harness adalah semua yang dipasang di sekitar model supaya kemampuannya berguna: alat, colokan MCP, skill, plugin, dan batas."
+            },
+            {
+              q: "Kenapa loop engineering wajib punya syarat berhenti?",
+              options: [
+                "Tanpa batas, agen bisa mengulang terus dan menghabiskan biaya",
+                "Agar model bisa belajar dari setiap kesalahan secara permanen",
+                "Karena model hanya boleh dipanggil tiga kali setiap hari",
+                "Agar hasil akhirnya selalu sama setiap kali dijalankan"
+              ],
+              answer: 0,
+              explain: "Mencoba lagi itu berguna, tapi tanpa batas percobaan, batas biaya, dan jalan keluar ke manusia, agen bisa berputar tanpa ujung."
             }
           ]
         },
@@ -7512,7 +7710,7 @@ Agen AI bekerja dengan memanggil <b>alat</b>, dan lewat standar A2A agen bisa be
 <p>Setiap kali browser meminta halaman, server membalas dengan kode status: <b>200</b> berarti berhasil, <b>404</b> berarti tidak ditemukan. Sejak awal web, kode <b>402 Payment Required</b> sudah disiapkan "untuk dipakai nanti" — tapi selama puluhan tahun tidak pernah ada cara baku untuk memakainya.</p>
 
 <h3>x402: membayar di dalam permintaan HTTP</h3>
-<p><b>x402</b> adalah standar terbuka yang dibuat Coinbase pada Mei 2025 untuk mengisi kekosongan itu. Pada April 2026, pengelolaannya dipindahkan ke <b>x402 Foundation</b> di bawah Linux Foundation, dengan anggota pendiri antara lain Google, AWS, Microsoft, Stripe, Visa, dan Mastercard. Alurnya (versi 2):</p>
+<p><b>x402</b> adalah standar terbuka yang dibuat Coinbase pada Mei 2025 untuk mengisi kekosongan itu. Pada April 2026 diumumkan bahwa pengelolaannya pindah ke <b>x402 Foundation</b> di bawah Linux Foundation. Yayasan itu resmi berjalan pada Juli 2026 dengan sekitar 40 anggota, antara lain Google, AWS, Stripe, Visa, Mastercard, Cloudflare, dan Coinbase. Protokolnya berlisensi terbuka dan tidak memungut biaya protokol. Alurnya (versi 2):</p>
 <table class="tbl">
   <tr><th>Langkah</th><th>Yang terjadi</th></tr>
   <tr><td>1</td><td>Agen meminta data seperti biasa</td></tr>
@@ -7525,6 +7723,7 @@ Agen AI bekerja dengan memanggil <b>alat</b>, dan lewat standar A2A agen bisa be
 <p><b>Facilitator</b> adalah layanan perantara yang memeriksa dan menyelesaikan pembayaran atas nama server, sehingga pemilik API tidak perlu menjalankan node blockchain sendiri. Pembayaran biasanya memakai stablecoin di jaringan berbiaya rendah seperti Base, Solana, atau Polygon. Skema yang paling umum, <b>exact</b>, membayar harga yang pas; ada juga skema untuk membayar sampai batas tertentu, misalnya sesuai jumlah yang benar-benar dipakai.</p>
 <div data-demo="x402-alur"></div>
 <p>Hingga April 2026, x402 dilaporkan telah memproses sekitar 165 juta transaksi dengan nilai total sekitar US$50 juta — rata-rata hanya sekitar 30 sen per transaksi. Itulah jenis pembayaran kecil yang sulit dilayani kartu.</p>
+<p>Laporan Chainalysis (Juni 2026) mencatat lebih dari 100 juta transaksi x402 di jaringan Base saja. Baca angka ini dengan kritis: lonjakan awalnya banyak didorong demam memecoin, saat orang membayar lewat x402 untuk mencetak token. Setelah demam itu reda, jumlah transaksi turun lalu stabil, sementara nilainya naik. Pembayaran di atas US$1 kini menyumbang sekitar 95% nilai yang mengalir lewat x402, dari sekitar 49% pada awal 2025.</p>
 
 <h3>AP2: bukti bahwa manusia benar-benar menyuruh</h3>
 <p>x402 menjawab <i>bagaimana</i> agen membayar. Tapi saat agen berbelanja atas nama manusia, penjual dan bank juga bertanya: <i>apakah pemiliknya benar-benar menyetujui pembelian ini?</i> <b>AP2</b> (Agent Payments Protocol), diumumkan Google pada September 2025 sebagai perluasan A2A, menjawabnya dengan <b>mandat</b>: bukti persetujuan yang ditandatangani secara kriptografis.</p>
@@ -7542,9 +7741,28 @@ Agen AI bekerja dengan memanggil <b>alat</b>, dan lewat standar A2A agen bisa be
   <tr><td>Uangnya</td><td>Terutama stablecoin</td><td>Kartu, bank, stablecoin</td></tr>
 </table>
 
+<h3>Peta empat protokol pembayaran agen</h3>
+<p>Selain x402 dan AP2, ada dua nama lain yang sering muncul. Keempatnya saling melengkapi, bukan saling meniadakan.</p>
+<table class="tbl">
+  <tr><th>Protokol</th><th>Dari</th><th>Menjawab pertanyaan</th></tr>
+  <tr><td><b>x402</b></td><td>Coinbase (2025), kini x402 Foundation</td><td>Bagaimana membayar per permintaan web, langsung dari dompet?</td></tr>
+  <tr><td><b>ACP</b> (Agentic Commerce Protocol)</td><td>OpenAI dan Stripe (September 2025)</td><td>Bagaimana agen menyelesaikan belanja di toko biasa dengan kartu?</td></tr>
+  <tr><td><b>AP2</b></td><td>Google (September 2025)</td><td>Bagaimana membuktikan bahwa manusia menyetujui pembelian?</td></tr>
+  <tr><td><b>ERC-8004</b> (Trustless Agents)</td><td>Usulan standar Ethereum (Agustus 2025)</td><td>Bagaimana agen yang belum saling kenal bisa saling memeriksa?</td></tr>
+</table>
+<p><b>ACP</b> menjadi dasar fitur <i>Instant Checkout</i> di ChatGPT: pembeli menyelesaikan belanja tanpa meninggalkan percakapan. Nomor kartunya tidak pernah diperlihatkan ke agen. Stripe menerbitkan <b>token pembayaran bersama</b> (<i>Shared Payment Token</i>) yang hanya berlaku untuk satu toko dan satu total belanja, sementara toko tetap memproses pesanan seperti biasa.</p>
+<p><b>ERC-8004</b> menambahkan lapisan kepercayaan di atas A2A lewat tiga daftar (<i>registry</i>) di blockchain:</p>
+<ul>
+  <li><b>Identitas</b>: setiap agen mendapat tanda pengenal berupa NFT ERC-721 yang menunjuk ke berkas profilnya.</li>
+  <li><b>Reputasi</b>: penilaian dari pihak-pihak yang pernah memakai jasanya.</li>
+  <li><b>Validasi</b>: hasil pemeriksaan pihak ketiga atas pekerjaan agen.</li>
+</ul>
+<p>Statusnya masih <i>Draft</i>, tapi sudah dipasang di banyak jaringan. Cara mudah mengingat keempatnya: <b>ERC-8004</b> menjawab "siapa kamu", <b>AP2</b> menjawab "siapa yang mengizinkan", dan <b>x402</b> atau <b>ACP</b> menjawab "bagaimana membayarnya".</p>
+
 <h3>Pembayaran antar-agen dalam praktik</h3>
 <div data-diagram="pipeline" data-stages="Agen riset::diberi tugas &amp; dompet berbatas|Agen data::menjual data per permintaan|Bayar x402::0,01 USDC per panggilan|Hasil::laporan untuk pemilik" data-caption="Satu agen membeli layanan dari agen lain tanpa campur tangan manusia di setiap transaksi"></div>
 <p>Setiap agen yang menjual layanan cukup memasang harga di API-nya. Agen pembeli punya dompet sendiri dan aturan belanja. Tidak ada akun, langganan, atau tagihan bulanan — setiap permintaan dibayar saat itu juga.</p>
+<p>Yang bisa dibayar agen pun beragam: <b>API dan data</b>, <b>komputasi dan model AI</b>, <b>langganan</b>, <b>jasa agen lain</b>, sampai <b>makanan dan tiket</b>. Contoh agen yang memesan makan siang ada di pelajaran <a href="#/lesson/ai-agen-4">Model Penentu Keputusan</a>.</p>
 
 <h3>Pengaman wajib untuk agen yang memegang uang</h3>
 <table class="tbl">
@@ -7614,12 +7832,177 @@ Agen AI bekerja dengan memanggil <b>alat</b>, dan lewat standar A2A agen bisa be
               ],
               answer: 0,
               explain: "Seperti uang jajan: kerugian terburuk tidak bisa melebihi saldo dan batas yang dipasang."
+            },
+            {
+              q: "Protokol mana yang mencatat identitas dan reputasi agen di blockchain?",
+              options: [
+                "ERC-8004",
+                "x402",
+                "ACP",
+                "AP2"
+              ],
+              answer: 0,
+              explain: "ERC-8004 memakai registry Identitas, Reputasi, dan Validasi, sehingga agen yang belum saling kenal bisa saling memeriksa sebelum bekerja sama."
+            }
+          ]
+        },
+        {
+          id: "ai-agen-4",
+          title: "Model Penentu Keputusan — Sistem 1, Jev & Agen Pemesan Makan Siang",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Agen bekerja dalam <b>putaran</b>: berpikir, bertindak dengan alat, melihat hasil, lalu mengulang (<a href="#/lesson/ai-agen-3">Empat Lapis Rekayasa</a>). Dengan <b>x402</b>, server membalas <b>402 Payment Required</b> beserta harganya, lalu agen membayar dari dompetnya (<a href="#/lesson/ai-agen-2">Agen yang Bisa Membayar</a>).
+</div>
+
+<p>Bayangkan agen yang memesankan makan siangmu setiap hari. Dalam satu pesanan saja ia harus memutuskan banyak hal kecil:</p>
+<ul>
+  <li>Apakah tugasnya sudah selesai?</li>
+  <li>Apakah tindakan ini berisiko?</li>
+  <li>Coba lagi, tunggu, atau serahkan ke manusia?</li>
+  <li>Bayar, lewati, atau tanya pemilik dulu?</li>
+</ul>
+<p>Agen yang sibuk bisa membuat ratusan keputusan seperti ini per hari. Kalau setiap keputusan ditanyakan ke LLM besar, hasilnya <b>lambat</b>, <b>mahal</b>, dan jawabannya berupa teks bebas yang harus diurai dulu oleh kode, kadang dengan format yang meleset.</p>
+
+<h3>Sistem 1 dan Sistem 2</h3>
+<p>Psikolog Daniel Kahneman, dalam buku <i>Thinking, Fast and Slow</i>, membagi cara berpikir manusia menjadi dua. <b>Sistem 1</b> cepat dan otomatis, seperti langsung tahu bahwa wajah seseorang sedang marah. <b>Sistem 2</b> lambat dan teliti, seperti menghitung 17 × 24 di kepala. Istilah ini kini dipinjam untuk dua jenis model AI. Ini hanya perumpamaan, bukan klaim bahwa model berpikir seperti manusia.</p>
+<div data-diagram="vs" data-left="LLM = Sistem 2::lambat dan mendalam::menulis teks, kode, rencana" data-right="Model penentu = Sistem 1::cepat dan murah::memilih, memberi skor, ya atau tidak" data-caption="Bersama-sama: LLM menulis, model penentu memutuskan, kode menjalankan"></div>
+
+<h3>Jev: model yang tidak menulis, hanya memutuskan</h3>
+<p><b>Jev</b> dari TypeSafe AI, dirilis 15 September 2026, disebut sebagai model <b>System One</b> pertama. Cara kerjanya berbeda dari chatbot:</p>
+<ul>
+  <li><b>Masukannya</b> adalah sebuah <i>state</i> (keadaan) berupa teks atau JSON, misalnya isi pesanan, tagihan, dan aturan, ditambah daftar pertanyaan yang ditulis di kode.</li>
+  <li><b>Keluarannya</b> bukan kalimat, melainkan jawaban bertipe beserta peluang dan tingkat keyakinan. Semua pertanyaan dijawab sekaligus dalam satu panggilan.</li>
+  <li>Jawabannya <b>tidak bisa keluar</b> dari pilihan yang sudah ditentukan, sehingga tidak ada lagi format yang meleset. Tapi jawaban itu tetap bisa <b>salah dengan yakin</b>.</li>
+</ul>
+<table class="tbl">
+  <tr><th>Jenis pertanyaan</th><th>Menjawab</th><th>Contoh</th></tr>
+  <tr><td><b>Choice</b></td><td>Pilih satu dari daftar</td><td>SETUJU, TANYA_MANUSIA, atau TOLAK?</td></tr>
+  <tr><td><b>Score</b></td><td>Nilai pada skala tertentu</td><td>Seberapa berisiko pembayaran ini, dari 0 sampai 2?</td></tr>
+  <tr><td><b>Noul</b></td><td>Ya atau tidak, dalam bentuk peluang</td><td>Apakah tagihan hanya berisi yang dipesan? 0,97</td></tr>
+</table>
+<p>Gambaran satu panggilan (disederhanakan, bukan format persis API-nya):</p>
+<pre class="code">state = {
+  "pesanan": "nasi ayam geprek, 1 porsi, tidak pedas",
+  "anggaran": 50000,
+  "tagihan": { "total": 30000, "rincian": ["nasi ayam geprek 30000"] }
+}
+
+pertanyaan:
+  sesuai    (noul)   : apakah tagihan hanya berisi yang dipesan?
+  risiko    (score)  : seberapa berisiko membayar ini? skala 0 sampai 2
+  keputusan (choice) : SETUJU | TANYA_MANUSIA | TOLAK
+
+jawaban:
+  sesuai 0,97 · risiko 0,1 · keputusan SETUJU (keyakinan 0,95)</pre>
+<div class="callout warn">
+<b>Hati-hati dengan angka promosi.</b> TypeSafe mengklaim Jev ratusan kali lebih cepat dan lebih murah daripada LLM untuk tugas semacam ini. Satu uji ulang independen oleh Hyperstack mengukur 463 milidetik per keputusan, dibanding 848 milidetik dengan cara biasa: selisihnya kurang dari 2 kali. Hingga pertengahan September 2026, Jev juga masih tahap akses awal dengan daftar tunggu. Klaim vendor perlu diuji sendiri dengan data dan tugasmu.
+</div>
+
+<h3>Siapa mengerjakan apa</h3>
+<div data-diagram="pipeline" data-stages="LLM::memahami permintaan dan menyusun pesanan|Kode::memeriksa aturan pasti: anggaran, alamat penerima|Model penentu::menilai hal yang samar: wajar atau mencurigakan|Kode::menjalankan: bayar, tanya, atau tolak" data-caption="Aturan yang bisa ditulis persis tetap di kode; model penentu hanya untuk penilaian yang samar"></div>
+<p>Aturan "jangan bayar lebih dari Rp50.000" tidak perlu ditanyakan ke AI mana pun. Tulis saja di kode: lebih murah, lebih cepat, dan tidak pernah salah. Model penentu dipakai untuk hal yang sulit ditulis sebagai aturan pasti, misalnya menilai apakah sebuah tagihan berisi biaya aneh atau kalimat yang berusaha mengelabui agen.</p>
+
+<h3>Coba sendiri: agen pemesan makan siang</h3>
+<p>Ini versi interaktif dari demo kelas. Pilih salah satu skenario, lalu ubah anggarannya dan coba lagi.</p>
+<div data-demo="agen-warung"></div>
+<table class="tbl">
+  <tr><th>Skenario</th><th>Keputusan</th><th>Siapa yang menangkapnya</th></tr>
+  <tr><td>Pesanan normal: Rp30.000, anggaran Rp50.000</td><td class="ok-cell">SETUJU</td><td>Semua pemeriksaan lolos, agen membayar lewat x402</td></tr>
+  <tr><td>Melebihi anggaran: Rp75.000</td><td>TANYA MANUSIA</td><td>Aturan anggaran di kode. Bukan ditolak, karena mungkin kamu memang mau</td></tr>
+  <tr><td>Trik harga: ada "biaya prioritas agen" dan perintah untuk tidak bertanya ke pemilik</td><td class="bad-cell">TOLAK</td><td>Model penentu. Totalnya masih di bawah anggaran, jadi aturan kode tidak menangkapnya</td></tr>
+</table>
+
+<h3>Ambang keyakinan dan jalan keluar</h3>
+<p>Setiap jawaban model penentu disertai tingkat keyakinan. Pasang <b>ambang</b>: misalnya, kalau keyakinannya di bawah 0,80, agen tidak bertindak sendiri dan menyerahkan keputusan ke manusia atau ke LLM yang lebih teliti. Perlu diingat, keyakinan yang terkalibrasi berarti tepat <i>secara rata-rata</i> di banyak keputusan, bukan jaminan untuk satu keputusan tertentu.</p>
+
+<h3>Empat pengaman agen yang memegang uang</h3>
+<table class="tbl">
+  <tr><th>Ancaman</th><th>Pengaman</th></tr>
+  <tr><td>Belanja berlebihan</td><td>Pasang batas belanja per transaksi dan per hari</td></tr>
+  <tr><td>Tagihan yang dinaikkan diam-diam</td><td>Periksa harga sebelum membayar</td></tr>
+  <tr><td>Keputusan besar tanpa sepengetahuan pemilik</td><td>Tanya manusia untuk pembayaran besar</td></tr>
+  <tr><td>Agen penipu dan prompt injection</td><td>Hanya bayar agen yang tepercaya, misalnya yang identitas dan reputasinya tercatat lewat ERC-8004</td></tr>
+</table>
+`,
+          keyPoints: [
+            "Agen membuat ratusan keputusan kecil; menanyakan semuanya ke LLM besar itu lambat, mahal, dan formatnya bisa meleset.",
+            "Sistem 2 (LLM) lambat dan mendalam; Sistem 1 (model penentu) cepat dan murah. LLM menulis, model penentu memutuskan, kode menjalankan.",
+            "Jev (TypeSafe AI, September 2026) menerima state teks/JSON dan pertanyaan, lalu menjawab dengan jenis Choice, Score, atau Noul beserta keyakinannya.",
+            "Aturan yang bisa ditulis persis, seperti batas anggaran, tetap ditulis di kode; model penentu untuk penilaian yang samar.",
+            "Tiga skenario: pesanan normal disetujui, melebihi anggaran ditanyakan ke manusia, trik harga ditolak.",
+            "Pasang ambang keyakinan; di bawah ambang, serahkan ke manusia. Uji sendiri klaim kecepatan dan biaya dari vendor."
+          ],
+          practice: [
+            { type: "number", q: "Agen membuat 2.000 keputusan kecil per hari. Bertanya ke LLM besar biayanya Rp20 per keputusan, ke model penentu Rp0,5. Berapa rupiah dihemat per hari?", answer: 39000, tol: 1, unit: "rupiah", hint: "Selisih biaya per keputusan dikali jumlah keputusan.", solution: "(20 − 0,5) × 2.000 = 19,5 × 2.000 = Rp39.000 per hari." },
+            {
+              type: "choice",
+              q: "Pertanyaan 'seberapa berisiko pembayaran ini, dari 0 sampai 2?' memakai jenis pertanyaan apa?",
+              options: ["Score", "Choice", "Noul", "Prompt"],
+              answer: 0,
+              hint: "Jawabannya berupa angka pada sebuah skala.",
+              solution: "Score menempatkan masukan pada skala angka tertentu. Choice memilih dari daftar, Noul menjawab ya atau tidak."
+            },
+            {
+              type: "choice",
+              q: "Model penentu menjawab SETUJU dengan keyakinan 0,62, padahal ambangmu 0,80. Apa yang sebaiknya dilakukan agen?",
+              options: ["Serahkan ke manusia atau ke LLM untuk dicek", "Langsung bayar karena jawabannya SETUJU", "Tanya model yang sama berulang kali sampai yakin", "Tolak semua pesanan pada hari itu"],
+              answer: 0,
+              hint: "Untuk apa ambang keyakinan dipasang?",
+              solution: "Di bawah ambang, agen tidak bertindak sendiri. Keputusan diserahkan ke manusia atau ke model yang lebih teliti."
+            }
+          ],
+          quiz: [
+            {
+              q: "Apa yang dikerjakan model Sistem 1 seperti Jev?",
+              options: [
+                "Memilih, memberi skor, dan menjawab ya atau tidak dengan cepat",
+                "Menulis kode dan rencana panjang dengan sangat teliti",
+                "Membuat gambar dan video dari deskripsi teks",
+                "Menjalankan pembayaran langsung tanpa bantuan kode"
+              ],
+              answer: 0,
+              explain: "Model penentu tidak menulis teks. Ia menjawab pertanyaan bertipe dengan cepat dan murah, lalu kode yang bertindak."
+            },
+            {
+              q: "Aturan 'jangan bayar lebih dari anggaran Rp50.000' sebaiknya diletakkan di…",
+              options: [
+                "Kode biasa, karena aturannya pasti dan bisa ditulis persis",
+                "Model penentu, karena ia paling cepat menjawab",
+                "LLM besar, karena ia paling pandai berhitung",
+                "Catatan di dalam prompt agar model mengingatnya"
+              ],
+              answer: 0,
+              explain: "Aturan yang pasti paling aman ditulis di kode: tidak pernah salah, tidak bisa dikelabui, dan tidak memakan biaya model."
+            },
+            {
+              q: "Pada skenario trik harga, kenapa agen menolak walau totalnya masih di bawah anggaran?",
+              options: [
+                "Ada biaya yang tidak dipesan dan perintah melewati pemilik",
+                "Warungnya belum terdaftar sebagai penerima yang diizinkan",
+                "Harga nasi ayam geprek lebih mahal daripada kemarin",
+                "Saldo dompet agen tidak cukup untuk membayarnya"
+              ],
+              answer: 0,
+              explain: "Aturan anggaran lolos, tapi model penentu menilai tagihan tidak sesuai pesanan dan berisi upaya mengelabui agen."
+            },
+            {
+              q: "Vendor mengklaim modelnya ratusan kali lebih cepat, tapi uji independen menemukan selisih kurang dari 2 kali. Sikap yang tepat?",
+              options: [
+                "Uji sendiri dengan data dan tugasmu sebelum memakainya",
+                "Percaya klaim vendor karena merekalah pembuat modelnya",
+                "Abaikan model itu karena pasti tidak berguna sama sekali",
+                "Pakai di semua keputusan supaya biayanya lebih hemat"
+              ],
+              answer: 0,
+              explain: "Angka promosi dan hasil uji independen bisa jauh berbeda. Ukuran yang paling jujur adalah hasil uji pada tugasmu sendiri."
             }
           ]
         },
       ],
     },
-    /* ---------------- MODUL 14: OTOMASI TANPA BANYAK KODE: N8N ---------------- */
+    /* ---------------- MODUL 15: OTOMASI TANPA BANYAK KODE: N8N ---------------- */
     {
       id: "ai-otomasi",
       level: "Otomasi",
@@ -8112,7 +8495,7 @@ console.log("Masuk 3 item, keluar 3 item — node berikutnya menerima hasil ini.
         },
       ],
     },
-    /* ---------------- MODUL 15: PROYEK PRODUKSI AI ---------------- */
+    /* ---------------- MODUL 16: PROYEK PRODUKSI AI ---------------- */
     {
       id: "ai-proyek",
       level: "Proyek",
@@ -8620,7 +9003,7 @@ console.log(hasil.content);</pre>
         },
       ],
     },
-    /* ---------------- MODUL 16: PRODUKSI, ETIKA & EKOSISTEM AI ---------------- */
+    /* ---------------- MODUL 17: PRODUKSI, ETIKA & EKOSISTEM AI ---------------- */
     {
       id: "ai-terapan",
       level: "Terapan",
@@ -9025,7 +9408,7 @@ Daftar di atas mudah membuat kewalahan. Jangan terjebak <b>"belajar pustaka"</b>
         },
       ],
     },
-    /* ---------------- MODUL 17: EKONOMI & BISNIS AI ---------------- */
+    /* ---------------- MODUL 18: EKONOMI & BISNIS AI ---------------- */
     {
       id: "ai-ekonomi",
       level: "Ekonomi",
@@ -9366,7 +9749,7 @@ Bisnis biasa: bertahun-tahun. Produk AI tipis: <b>beberapa bulan</b>. Makin pend
         },
       ],
     },
-    /* ---------------- MODUL 18: MASA DEPAN AI ---------------- */
+    /* ---------------- MODUL 19: MASA DEPAN AI ---------------- */
     {
       id: "ai-arah",
       level: "Arah",
