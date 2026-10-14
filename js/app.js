@@ -1895,6 +1895,8 @@ const GLOSSARY = [
   ["Jev", "Model 'System One' dari TypeSafe AI (September 2026): tidak menulis teks, hanya menjawab pertanyaan bertipe (Choice, Score, Noul) dengan cepat beserta tingkat keyakinannya."],
   ["MNIST", "Dataset 70.000 gambar angka tulisan tangan berukuran 28×28 piksel (60.000 latih, 10.000 uji); proyek pertama hampir setiap orang yang belajar deep learning."],
   ["Flatten", "Lapisan yang meratakan gambar, misalnya kotak 28×28 piksel, menjadi satu baris angka (784) agar bisa masuk ke lapisan Dense."],
+  ["Forward propagation", "Perambatan maju: data mengalir dari input layer, diolah lapisan tersembunyi, lalu keluar sebagai prediksi di output layer."],
+  ["Hidden layer", "Lapisan tersembunyi di antara input dan output yang mengolah data dan menemukan fitur, misalnya garis dan lengkungan pada gambar."],
   ["Kenop", "Tombol putar, seperti pengatur volume radio atau api kompor. Di materi AI dipakai sebagai perumpamaan untuk angka yang bisa diputar naik-turun: parameter yang digeser sedikit demi sedikit saat model belajar, atau pengaturan seperti learning rate dan temperature."],
 ];
 

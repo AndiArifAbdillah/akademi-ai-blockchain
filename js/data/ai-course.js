@@ -6004,6 +6004,26 @@ Neural network memang <b>terinspirasi</b> dari sel saraf otak, tapi hanya secara
 <b>"Makin banyak lapisan, makin paham"? Tidak selalu.</b> Jaringan yang makin dalam juga makin sulit dilatih, butuh lebih banyak data dan komputasi, dan lebih mudah <b>menghafal</b> data latih. Untuk angka tulisan tangan, satu lapisan tersembunyi saja sudah mencapai sekitar 98%. Kedalaman harus disesuaikan dengan masalahnya. Urutan garis → bentuk → objek paling jelas terlihat pada <a href="#/lesson/ai-ars-4">CNN</a>, jenis jaringan yang khusus untuk gambar.
 </div>
 
+<h3>Kenapa harus "deep"?</h3>
+<p>Jaringan <b>tanpa lapisan tersembunyi</b>, yang masukannya langsung tersambung ke keluaran, hanya bisa memisahkan data dengan <b>garis lurus</b>. Contoh klasiknya soal XOR: titik-titiknya bersilangan sehingga tidak ada satu garis lurus pun yang bisa memisahkannya. Begitu ditambah lapisan tersembunyi dengan fungsi aktivasi, batasnya bisa <b>melengkung</b>. Buktikan sendiri di demo <a href="#/lesson/ai-alg-9">Neural Network dari Nol</a>.</p>
+<div data-diagram="vs" data-left="Tanpa lapisan tersembunyi::hanya bisa menarik garis lurus::gagal memisahkan XOR" data-right="Dengan lapisan tersembunyi::plus fungsi aktivasi, batasnya melengkung::berhasil memisahkan XOR" data-caption="Inilah alasan jaringan dibuat berlapis"></div>
+<p>Di MNIST, perbedaannya terlihat jelas:</p>
+<table class="tbl">
+  <tr><th>Model</th><th>Akurasi uji (kira-kira)</th></tr>
+  <tr><td>Tanpa lapisan tersembunyi (batas lurus)</td><td>92%</td></tr>
+  <tr><td>Satu lapisan tersembunyi, 128 neuron (model pelajaran ini)</td><td>98%</td></tr>
+  <tr><td>CNN dengan beberapa lapisan konvolusi</td><td>lebih dari 99%</td></tr>
+</table>
+<p>Setiap tambahan memang menaikkan akurasi, tapi kenaikannya makin kecil, sementara biaya latih dan risiko menghafal terus naik.</p>
+<div class="callout">
+<b>Tiga catatan untuk kalimat "depth = complexity":</b>
+<ul>
+  <li><b>Lapisan tanpa fungsi aktivasi tidak menambah kemampuan.</b> Seratus lapisan lurus tetap setara dengan satu garis lurus (<a href="#/lesson/ai-mat-3">Kenapa Neuron Butuh Fungsi Aktivasi?</a>).</li>
+  <li><b>Satu lapisan tersembunyi sudah sangat kuat.</b> Secara teori, satu lapisan tersembunyi yang cukup lebar bisa meniru hampir semua pola (teorema aproksimasi universal). Kedalaman membuatnya lebih hemat neuron untuk pola yang bertingkat, seperti gambar dan bahasa.</li>
+  <li><b>"Memahami emosi" perlu tanda kutip.</b> AI bisa menebak label ekspresi dari wajah atau nada kalimat, tapi raut wajah tidak selalu sama dengan perasaan sebenarnya. Di Uni Eropa, sistem pengenal emosi di tempat kerja dan sekolah bahkan dilarang oleh AI Act sejak Februari 2025 (<a href="#/lesson/ai-pl-3">Regulasi AI</a>).</li>
+</ul>
+</div>
+
 <h3>Bagi komputer, gambar adalah tabel angka</h3>
 <p>Komputer tidak melihat "angka nol". Ia melihat kotak-kotak kecil (piksel), masing-masing berisi angka yang menunjukkan seberapa gelap kotak itu. Ini angka 0 dari dataset kecil bawaan scikit-learn, berukuran 8×8 dengan nilai 0 sampai 16:</p>
 <pre class="code"> 0  0  5 13  9  1  0  0
@@ -6016,6 +6036,17 @@ Neural network memang <b>terinspirasi</b> dari sel saraf otak, tapi hanya secara
  0  0  6 13 10  0  0  0</pre>
 <p>Coba lihat sambil memicingkan mata: angka besar membentuk lingkaran. Dataset yang dipakai di hampir semua kelas adalah <b>MNIST</b>, berisi <b>70.000</b> gambar angka tulisan tangan berukuran <b>28×28</b> piksel, dengan nilai 0 (putih) sampai 255 (hitam). Sebanyak 60.000 gambar untuk latihan dan 10.000 untuk ujian. Tulisannya berasal dari pegawai Biro Sensus Amerika Serikat dan pelajar SMA, dikumpulkan oleh NIST lalu dirapikan oleh Yann LeCun dan rekan-rekannya pada 1998.</p>
 <div data-diagram="pipeline" data-stages="Gambar 28×28::diratakan jadi 784 angka|Lapisan 128 neuron::aktivasi ReLU|Lapisan 10 neuron::softmax|10 peluang::angka 0 sampai 9" data-caption="Model yang akan kita bangun"></div>
+
+<h3>Arsitektur: input, tersembunyi, output</h3>
+<p>Setiap neural network punya tiga bagian. Ini pemetaannya ke model TensorFlow di bawah dan ke demo tulis angka di akhir pelajaran:</p>
+<table class="tbl">
+  <tr><th>Lapisan</th><th>Tugasnya</th><th>Model MNIST</th><th>Demo tulis angka</th></tr>
+  <tr><td><b>Input layer</b></td><td>Tempat data masuk, misalnya piksel gambar</td><td>784 piksel</td><td>64 kotak</td></tr>
+  <tr><td><b>Hidden layer</b> (tersembunyi)</td><td>Mengolah data dan menemukan fitur: garis, lengkungan, sudut</td><td>1 lapisan, 128 neuron</td><td>1 lapisan, 48 neuron</td></tr>
+  <tr><td><b>Output layer</b></td><td>Hasil prediksi</td><td>10 neuron, satu per angka</td><td>10 neuron</td></tr>
+</table>
+<p>Data mengalir satu arah: masuk lewat input, diolah di lapisan tersembunyi, lalu keluar sebagai prediksi. Aliran ini disebut <b>forward propagation</b> (perambatan maju). Saat latihan ada juga arah sebaliknya, <b>backpropagation</b>, yang menelusuri kembali bobot mana yang paling berandil pada kesalahan (<a href="#/lesson/ai-alg-9">Maju, Mundur, Belajar</a>).</p>
+<p>Model kita hanya punya satu lapisan tersembunyi. Model besar punya jauh lebih banyak: ResNet-152, pengenal gambar terkenal dari 2015, punya 152 lapisan, dan GPT-3 punya 96 lapisan Transformer.</p>
 
 <h3>Kode lengkap dengan TensorFlow</h3>
 <p>Jalankan di <b>Google Colab</b> (<a href="#/lesson/ai-tl-4">Menyiapkan Komputermu</a>); TensorFlow dan datasetnya sudah tersedia, tidak perlu memasang apa pun.</p>
@@ -6109,7 +6140,9 @@ plt.show()</pre>
           keyPoints: [
             "Neural network hanya terinspirasi otak secara longgar: neuron buatan adalah rumus kecil yang menemukan pola dari banyak contoh, bukan pikiran.",
             "Deep learning = banyak lapisan; pola makin utuh dari piksel ke garis, bentuk, lalu objek. Tapi lapisan lebih banyak tidak otomatis lebih baik.",
+            "Tanpa lapisan tersembunyi, jaringan hanya bisa menarik batas lurus (gagal di XOR); lapisan tersembunyi plus fungsi aktivasi membuat batasnya melengkung.",
             "Bagi komputer, gambar adalah tabel angka. MNIST: 70.000 gambar 28×28 (60.000 latih, 10.000 uji), nilai piksel 0–255.",
+            "Arsitektur: input layer (piksel) → hidden layer (menemukan fitur) → output layer (prediksi); aliran maju ini disebut forward propagation.",
             "Model Keras sederhana: Flatten → Dense(128, relu) → Dense(10, softmax), 101.770 parameter, biasanya mencapai sekitar 97–98% di data uji.",
             "Normalisasi (/255), validation_split, dan kurva latih vs validasi membantu melihat apakah model mulai menghafal.",
             "Visualisasi tebakan salah dan confusion matrix menunjukkan angka mana yang tertukar; CNN dan augmentasi memperbaikinya."
@@ -6170,6 +6203,17 @@ plt.show()</pre>
               ],
               answer: 0,
               explain: "Kedalaman harus sesuai masalahnya. Untuk MNIST, satu lapisan tersembunyi sudah sekitar 98%; yang lebih membantu adalah jenis lapisan yang tepat seperti CNN."
+            },
+            {
+              q: "Jaringan tanpa lapisan tersembunyi gagal mempelajari XOR karena…",
+              options: [
+                "Ia hanya bisa memisahkan data dengan satu garis lurus",
+                "Datanya terlalu sedikit untuk dipelajari",
+                "Learning rate-nya pasti terlalu kecil",
+                "XOR hanya bisa dihitung oleh komputer kuantum"
+              ],
+              answer: 0,
+              explain: "Titik-titik XOR tidak bisa dipisahkan oleh satu garis lurus. Lapisan tersembunyi dengan fungsi aktivasi membuat batasnya bisa melengkung."
             }
           ]
         },
