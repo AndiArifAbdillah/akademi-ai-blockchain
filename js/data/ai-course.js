@@ -6165,6 +6165,21 @@ model.fit(x_latih, y_latih, epochs=30, validation_split=0.1,
 Latihan berhenti sendiri bila 2 epoch berturut-turut tidak membaik, lalu bobot terbaiknya dikembalikan.
 </div>
 
+<h3>Loss: skor salah yang ingin diperkecil</h3>
+<p>Untuk klasifikasi seperti MNIST, loss yang dipakai adalah <b>cross-entropy</b>. Rumusnya untuk satu gambar sederhana: <b>loss = −ln(peluang yang diberikan model untuk jawaban yang benar)</b>.</p>
+<table class="tbl">
+  <tr><th>Peluang untuk angka yang benar</th><th>Loss</th><th>Artinya</th></tr>
+  <tr><td class="ok-cell">0,9</td><td>0,11</td><td>Yakin dan benar: hukumannya kecil</td></tr>
+  <tr><td>0,5</td><td>0,69</td><td>Ragu-ragu</td></tr>
+  <tr><td>0,1</td><td>2,30</td><td>Sama dengan menebak acak 1 dari 10</td></tr>
+  <tr><td class="bad-cell">0,01</td><td>4,61</td><td>Yakin tapi salah: hukumannya paling berat</td></tr>
+</table>
+<p>Baris ketiga menjelaskan angka yang akan kamu lihat di Colab: model yang baru mulai belum tahu apa-apa dan memberi peluang sekitar 10% untuk tiap angka, sehingga loss awalnya sekitar <b>2,3</b>. Setelah dilatih, loss turun sampai di bawah 0,1.</p>
+<div class="callout">
+<b>Categorical atau sparse?</b> Kode kita memakai <i>sparse_categorical_crossentropy</i>, sedangkan banyak slide menyebut <i>categorical crossentropy</i>. Rumusnya sama persis; bedanya hanya bentuk label. <i>Sparse</i> menerima label berupa angka biasa, misalnya <b>7</b>. <i>Categorical</i> meminta label <b>one-hot</b>: sepuluh angka dengan satu angka 1 di posisi jawabannya, misalnya [0, 0, 0, 0, 0, 0, 0, 1, 0, 0]. Karena label MNIST berupa angka biasa, <i>sparse</i> lebih praktis.
+</div>
+<p>"Makin kecil loss, makin bagus" benar untuk loss <b>validasi</b>. Loss latih bisa terus mengecil sementara model menghafal; tanda bahayanya adalah loss validasi yang berhenti turun lalu naik lagi. Asal-usul rumus ini ada di <a href="#/lesson/ai-mat-6">Fungsi Loss &amp; Softmax</a>.</p>
+
 <h3>Membaca hasil latihan</h3>
 <div data-diagram="garis" data-seri="Latih:92.5,96.6,97.6,98.2,98.6|Validasi:95.8,96.9,97.3,97.5,97.7" data-x="Epoch 1,Epoch 2,Epoch 3,Epoch 4,Epoch 5" data-caption="Contoh akurasi (%) per epoch; hasilmu bisa sedikit berbeda karena bobot awalnya acak"></div>
 <p>Biasanya akurasi ujian akhirnya sekitar <b>97–98%</b>: dari 10.000 angka yang belum pernah dilihat, hanya sekitar 200 sampai 300 yang salah ditebak. Perhatikan dua garis di atas. Akurasi latih terus naik, sementara akurasi validasi mulai mendatar. Kalau latihan diteruskan lama, jarak keduanya akan melebar: tanda model mulai <b>menghafal</b>.</p>
@@ -6224,6 +6239,7 @@ plt.show()</pre>
             "Arsitektur: input layer (piksel) → hidden layer (menemukan fitur) → output layer (prediksi); aliran maju ini disebut forward propagation.",
             "Satu neuron: kalikan tiap input dengan bobot, jumlahkan, tambah bias, lalu lewatkan fungsi aktivasi seperti ReLU; hasilnya dikirim ke lapisan berikutnya.",
             "Satu putaran latihan = forward pass, hitung loss, backpropagation, perbarui bobot; terjadi sekali per batch (1.688 kali per epoch untuk 54.000 gambar dengan batch 32).",
+            "Cross-entropy = −ln(peluang untuk jawaban benar): 0,9 → 0,11, sedangkan 0,1 → 2,30. Model yang baru mulai menebak acak, jadi loss awalnya sekitar 2,3.",
             "Model Keras sederhana: Flatten → Dense(128, relu) → Dense(10, softmax), 101.770 parameter, biasanya mencapai sekitar 97–98% di data uji.",
             "Normalisasi (/255), validation_split, dan kurva latih vs validasi membantu melihat apakah model mulai menghafal.",
             "Visualisasi tebakan salah dan confusion matrix menunjukkan angka mana yang tertukar; CNN dan augmentasi memperbaikinya."
@@ -6241,7 +6257,8 @@ plt.show()</pre>
             },
             { type: "number", q: "Sebuah neuron menerima input 1 dan 0,5 dengan bobot 0,4 dan −0,2, serta bias 0,3. Berapa keluarannya setelah ReLU?", answer: 0.6, tol: 0.001, hint: "Kalikan tiap input dengan bobotnya, jumlahkan, tambah bias. ReLU hanya mengubah nilai negatif menjadi 0.", solution: "1 × 0,4 + 0,5 × (−0,2) + 0,3 = 0,4 − 0,1 + 0,3 = 0,6. Positif, jadi ReLU meneruskannya: 0,6." },
             { type: "number", q: "Sebuah jaringan punya 3 masukan, satu lapisan tersembunyi berisi 6 neuron, dan 2 keluaran. Berapa total parameternya (bobot + bias)?", answer: 38, tol: 0.5, unit: "parameter", hint: "Hitung per lapisan: masukan × neuron + neuron (bias).", solution: "Lapisan tersembunyi: 3 × 6 + 6 = 24. Lapisan keluaran: 6 × 2 + 2 = 14. Total 38." },
-            { type: "number", q: "Data latih berisi 54.000 gambar dan ukuran batch 64. Berapa kali bobot diperbarui dalam satu epoch? (Batch terakhir yang tidak penuh tetap dihitung.)", answer: 844, tol: 0.5, unit: "kali", hint: "Bagi jumlah gambar dengan ukuran batch, lalu bulatkan ke atas.", solution: "54.000 ÷ 64 = 843,75, dibulatkan ke atas menjadi 844 kali." }
+            { type: "number", q: "Data latih berisi 54.000 gambar dan ukuran batch 64. Berapa kali bobot diperbarui dalam satu epoch? (Batch terakhir yang tidak penuh tetap dihitung.)", answer: 844, tol: 0.5, unit: "kali", hint: "Bagi jumlah gambar dengan ukuran batch, lalu bulatkan ke atas.", solution: "54.000 ÷ 64 = 843,75, dibulatkan ke atas menjadi 844 kali." },
+            { type: "number", q: "Model memberi peluang 0,25 untuk angka yang benar. Berapa loss cross-entropy-nya? (loss = −ln peluang, bulatkan 2 desimal)", answer: 1.39, tol: 0.01, hint: "Hitung ln 0,25 dengan kalkulator, lalu ubah tandanya.", solution: "ln 0,25 ≈ −1,386, jadi loss ≈ 1,39. Lebih besar dari 0,69 (peluang 0,5) dan lebih kecil dari 2,30 (peluang 0,1)." }
           ],
           quiz: [
             {
