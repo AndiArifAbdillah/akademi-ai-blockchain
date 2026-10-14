@@ -6471,10 +6471,12 @@ model.evaluate(x_uji, y_uji)</pre>
   <tr><td><b>Dense(10, softmax)</b></td><td>Lapisan keluaran: 10 peluang untuk angka 0 sampai 9, jumlahnya selalu 100% (<a href="#/lesson/ai-mat-6">Softmax</a>)</td></tr>
   <tr><td><b>adam</b></td><td>Versi gradient descent yang mengatur learning rate-nya sendiri</td></tr>
   <tr><td><b>sparse_categorical_crossentropy</b></td><td>Ukuran salah untuk tebakan berupa pilihan kelas, dengan label berupa angka biasa (0–9)</td></tr>
+  <tr><td><b>metrics=["accuracy"]</b></td><td>Rapor untuk dibaca manusia: persentase tebakan yang benar. Model <b>tidak</b> belajar dari angka ini, melainkan dari loss</td></tr>
   <tr><td><b>batch_size=32</b></td><td>Bobot diperbarui setiap 32 gambar, jadi 1.500 kali per epoch (<a href="#/lesson/ai-nn-2">Cara Neural Network Belajar</a>)</td></tr>
   <tr><td><b>validation_split=0.2</b></td><td>Menyisihkan 20% data latih (12.000 gambar) untuk memeriksa apakah model menghafal</td></tr>
 </table>
 <p>Berapa banyak kenop (parameter) yang dipelajari? Lapisan tersembunyi pertama: 784 × 128 bobot + 128 bias = <b>100.480</b>. Lapisan kedua: 128 × 64 + 64 = <b>8.256</b>. Lapisan keluaran: 64 × 10 + 10 = <b>650</b>. Totalnya <b>109.386</b> parameter, semuanya diputar sedikit demi sedikit selama latihan. Hampir 92% di antaranya ada di lapisan pertama, karena setiap neuronnya tersambung ke 784 piksel.</p>
+<p>Bagian <i>compile</i> ibarat memberi instruksi kepada guru: <b>optimizer</b> adalah cara mengajar, <b>loss</b> adalah cara mengukur kesalahan murid, dan <b>metrics</b> adalah cara melaporkan kemajuan ke orang tua. Kenapa model belajar dari loss, bukan langsung dari akurasi? Akurasi hanya berubah saat sebuah tebakan berganti dari salah menjadi benar, jadi tidak memberi tahu ke arah mana kenop harus diputar sedikit demi sedikit. Loss berubah halus setiap kali peluang jawaban benar naik walau sedikit, sehingga gradient descent bisa memakainya (<a href="#/lesson/ai-nn-2">Cara Neural Network Belajar</a>).</p>
 <div class="callout">
 <b>Membandingkan dengan notebook kelas.</b> Notebook <i>Deep_Learning_Lite</i> memakai model yang sama, dengan nama variabel bahasa Inggris (<i>x_train</i>, <i>y_train</i>). Perintah <i>model.summary()</i> di sana menampilkan 100,480, 8,256, dan 650 parameter, totalnya 109,386: sama dengan hitungan di atas. Notebook itu menulis <i>layers.Flatten(input_shape=(28, 28))</i>, yang memunculkan peringatan kuning <b>UserWarning</b> di Keras 3. Peringatan itu tidak berbahaya; cara yang disarankan adalah <i>Input(shape=(28, 28))</i> seperti kode di atas.
 </div>
