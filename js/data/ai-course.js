@@ -5874,7 +5874,7 @@ model.fit(X_latih, y_latih, epochs=10, validation_split=0.2)</pre>
   <tr><td><b>Riset &amp; makalah baru</b></td><td class="ok-cell">Mendominasi</td><td>Makin jarang</td></tr>
   <tr><td><b>Mudah dipelajari</b></td><td>Sedang</td><td class="ok-cell">Keras paling ramah pemula</td></tr>
   <tr><td><b>Menyusun model tak lazim</b></td><td class="ok-cell">Lebih leluasa</td><td>Lebih kaku</td></tr>
-  <tr><td><b>Jalan di HP</b></td><td>Bisa (ExecuTorch)</td><td class="ok-cell"><b>TF Lite</b> — sangat matang</td></tr>
+  <tr><td><b>Jalan di HP</b></td><td>Bisa (ExecuTorch)</td><td class="ok-cell"><b>TF Lite</b> (sejak 2024 bernama LiteRT) — sangat matang</td></tr>
   <tr><td><b>Jalan di browser</b></td><td>Terbatas</td><td class="ok-cell"><b>TensorFlow.js</b></td></tr>
   <tr><td><b>Melayani di server</b></td><td>TorchServe</td><td class="ok-cell"><b>TF Serving</b> — sangat mapan</td></tr>
 </table>
