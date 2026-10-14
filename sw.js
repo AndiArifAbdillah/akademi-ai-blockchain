@@ -9,7 +9,7 @@
    Tanpa itu, pengguna lama akan tetap melihat materi versi lama.
    ============================================================ */
 
-const VERSI = "akademi-v71";
+const VERSI = "akademi-v72";
 // Huruf dari Google Fonts disimpan terpisah agar tidak terhapus setiap kali materi diperbarui.
 const HURUF = "akademi-huruf-v1";
 
@@ -30,6 +30,7 @@ const BERKAS = [
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/icon-maskable-512.png",
+  "./img/mnist-tebakan-salah.png",
 ];
 
 /* Pasang: simpan semua berkas ke cache */

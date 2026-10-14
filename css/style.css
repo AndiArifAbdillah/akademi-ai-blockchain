@@ -1776,3 +1776,6 @@ details.modul-jembatan:not([open]) { padding-bottom: 12px; }
 .ta-isi i { display: block; height: 100%; background: var(--muted); }
 .ta-baris.juara span { font-weight: 700; color: var(--primary); }
 .ta-baris.juara .ta-isi i { background: var(--primary); }
+
+/* Gambar hasil sungguhan (foto/plot) di dalam pelajaran */
+.viz.foto img { display: block; width: 100%; max-width: 935px; height: auto; margin: 0 auto; border-radius: 10px; background: #fff; }

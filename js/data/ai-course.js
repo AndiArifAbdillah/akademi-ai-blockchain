@@ -6136,8 +6136,8 @@ Neural network memang <b>terinspirasi</b> dari sel saraf otak, tapi hanya secara
 <table class="tbl">
   <tr><th>Model</th><th>Akurasi uji (kira-kira)</th></tr>
   <tr><td>Tanpa lapisan tersembunyi (batas lurus)</td><td>92%</td></tr>
-  <tr><td>Satu lapisan tersembunyi berisi 128 neuron</td><td>98%</td></tr>
-  <tr><td>Dua lapisan tersembunyi, 128 lalu 64 neuron (model proyek kita)</td><td>98%</td></tr>
+  <tr><td>Satu lapisan tersembunyi berisi 128 neuron</td><td>97–98%</td></tr>
+  <tr><td>Dua lapisan tersembunyi, 128 lalu 64 neuron (model proyek kita)</td><td>97–98%</td></tr>
   <tr><td>CNN dengan beberapa lapisan konvolusi</td><td>lebih dari 99%</td></tr>
 </table>
 <p>Lapisan kedua hampir tidak menambah akurasi untuk soal sesederhana MNIST. Lompatan berikutnya datang dari jenis lapisan yang lebih cocok untuk gambar, yaitu CNN. Kenaikannya makin kecil, sementara biaya latih dan risiko menghafal terus naik.</p>
@@ -6305,12 +6305,12 @@ Setiap neuron mengalikan input dengan <b>bobot</b>, menjumlahkan, menambah bias,
   <tr><td><b>Backpropagation</b></td><td>TensorFlow menghitung sendiri arah perbaikan untuk ke-109.386 bobot</td></tr>
   <tr><td><b>Perbarui bobot</b></td><td><i>adam</i> memutar setiap kenop sedikit ke arah yang mengurangi loss</td></tr>
 </table>
-<p>Putaran ini tidak terjadi sekali per epoch, melainkan sekali per <b>batch</b>. Keras memakai 32 gambar per batch secara bawaan. Dengan 54.000 gambar latih (60.000 dikurangi 10% untuk validasi), satu epoch berisi 54.000 ÷ 32 ≈ <b>1.688 putaran</b>; itulah angka "1688/1688" yang akan muncul di Colab saat kamu menjalankan proyeknya. Lima epoch berarti sekitar 8.440 kali bobot diperbarui.</p>
+<p>Putaran ini tidak terjadi sekali per epoch, melainkan sekali per <b>batch</b>. Keras memakai 32 gambar per batch secara bawaan. Notebook kelas menyisihkan 20% data untuk validasi, sehingga tersisa 48.000 gambar latih. Satu epoch berisi 48.000 ÷ 32 = <b>1.500 putaran</b>; itulah angka "1500/1500" yang muncul di Colab. Lima epoch berarti 7.500 kali bobot diperbarui.</p>
 <div class="callout">
 <b>Diulang sampai kapan?</b> Bukan sampai akurasinya setinggi mungkin, karena akurasi latih bisa terus naik sambil model menghafal. Lebih aman berhenti saat akurasi <b>validasi</b> tidak membaik lagi. Keras menyediakan pengaturan untuk itu:
 <pre class="code">berhenti = tf.keras.callbacks.EarlyStopping(
     monitor="val_accuracy", patience=2, restore_best_weights=True)
-model.fit(x_latih, y_latih, epochs=30, validation_split=0.1,
+model.fit(x_latih, y_latih, epochs=30, validation_split=0.2,
           callbacks=[berhenti])</pre>
 Latihan berhenti sendiri bila 2 epoch berturut-turut tidak membaik, lalu bobot terbaiknya dikembalikan.
 </div>
@@ -6324,7 +6324,7 @@ Latihan berhenti sendiri bila 2 epoch berturut-turut tidak membaik, lalu bobot t
   <tr><td>0,1</td><td>2,30</td><td>Sama dengan menebak acak 1 dari 10</td></tr>
   <tr><td class="bad-cell">0,01</td><td>4,61</td><td>Yakin tapi salah: hukumannya paling berat</td></tr>
 </table>
-<p>Baris ketiga menjelaskan angka yang akan kamu lihat di Colab: model yang baru mulai belum tahu apa-apa dan memberi peluang sekitar 10% untuk tiap angka, sehingga loss awalnya sekitar <b>2,3</b>. Setelah dilatih, loss turun sampai di bawah 0,1.</p>
+<p>Baris ketiga menjelaskan angka yang akan kamu lihat di Colab: model yang baru mulai belum tahu apa-apa dan memberi peluang sekitar 10% untuk tiap angka, sehingga loss awalnya sekitar <b>2,3</b>. Setelah dilatih, loss turun sampai di bawah 0,1. Angka loss yang tercetak di akhir epoch pertama lebih kecil, sekitar 0,49 di notebook kelas, karena itu rata-rata sepanjang epoch; angka 2,3 hanya terlihat sekilas saat batang progres baru mulai bergerak.</p>
 <div class="callout">
 <b>Categorical atau sparse?</b> Kode proyek kita memakai <i>sparse_categorical_crossentropy</i>, sedangkan banyak slide menyebut <i>categorical crossentropy</i>. Rumusnya sama persis; bedanya hanya bentuk label. <i>Sparse</i> menerima label berupa angka biasa, misalnya <b>7</b>. <i>Categorical</i> meminta label <b>one-hot</b>: sepuluh angka dengan satu angka 1 di posisi jawabannya, misalnya [0, 0, 0, 0, 0, 0, 0, 1, 0, 0]. Karena label MNIST berupa angka biasa, <i>sparse</i> lebih praktis.
 </div>
@@ -6349,7 +6349,7 @@ optimizer=tf.keras.optimizers.Adam(learning_rate=0.001)   # sama dengan optimize
 
 `,
           keyPoints: [
-            "Satu putaran latihan = forward pass, hitung loss, backpropagation, perbarui bobot; terjadi sekali per batch (1.688 kali per epoch untuk 54.000 gambar dengan batch 32).",
+            "Satu putaran latihan = forward pass, hitung loss, backpropagation, perbarui bobot; terjadi sekali per batch (1.500 kali per epoch untuk 48.000 gambar dengan batch 32).",
             "Berhenti saat akurasi atau loss validasi tidak membaik lagi (EarlyStopping), bukan saat akurasi latih setinggi mungkin.",
             "Cross-entropy = −ln(peluang untuk jawaban benar): 0,9 → 0,11, sedangkan 0,1 → 2,30. Model yang baru mulai menebak acak, jadi loss awalnya sekitar 2,3.",
             "Optimizer menentukan cara memutar kenop: SGD (langkah sama), momentum (membawa kecepatan), RMSprop (langkah per kenop), Adam (gabungan keduanya, pilihan bawaan yang aman)."
@@ -6383,7 +6383,7 @@ optimizer=tf.keras.optimizers.Adam(learning_rate=0.001)   # sama dengan optimize
                 "Satu kali di akhir pelatihan"
               ],
               "answer": 0,
-              "explain": "Bobot diperbarui setiap batch. Dengan 54.000 gambar dan batch 32, satu epoch berisi sekitar 1.688 putaran."
+              "explain": "Bobot diperbarui setiap batch. Dengan 48.000 gambar dan batch 32, satu epoch berisi 1.500 putaran."
             },
             {
               "q": "Model MNIST yang baru dibuat biasanya punya loss sekitar 2,3. Kenapa?",
@@ -6456,8 +6456,9 @@ model.compile(optimizer="adam",
               loss="sparse_categorical_crossentropy",
               metrics=["accuracy"])
 
-# 4. Latihan: 5 epoch, 10% data latih disisihkan untuk validasi
-riwayat = model.fit(x_latih, y_latih, epochs=5, validation_split=0.1)
+# 4. Latihan: 5 epoch, batch 32, 20% data latih disisihkan untuk validasi
+riwayat = model.fit(x_latih, y_latih, epochs=5, batch_size=32,
+                    validation_split=0.2)
 
 # 5. Ujian akhir dengan data yang belum pernah dilihat
 model.evaluate(x_uji, y_uji)</pre>
@@ -6470,13 +6471,20 @@ model.evaluate(x_uji, y_uji)</pre>
   <tr><td><b>Dense(10, softmax)</b></td><td>Lapisan keluaran: 10 peluang untuk angka 0 sampai 9, jumlahnya selalu 100% (<a href="#/lesson/ai-mat-6">Softmax</a>)</td></tr>
   <tr><td><b>adam</b></td><td>Versi gradient descent yang mengatur learning rate-nya sendiri</td></tr>
   <tr><td><b>sparse_categorical_crossentropy</b></td><td>Ukuran salah untuk tebakan berupa pilihan kelas, dengan label berupa angka biasa (0–9)</td></tr>
-  <tr><td><b>validation_split=0.1</b></td><td>Menyisihkan 10% data latih untuk memeriksa apakah model menghafal</td></tr>
+  <tr><td><b>batch_size=32</b></td><td>Bobot diperbarui setiap 32 gambar, jadi 1.500 kali per epoch (<a href="#/lesson/ai-nn-2">Cara Neural Network Belajar</a>)</td></tr>
+  <tr><td><b>validation_split=0.2</b></td><td>Menyisihkan 20% data latih (12.000 gambar) untuk memeriksa apakah model menghafal</td></tr>
 </table>
 <p>Berapa banyak kenop (parameter) yang dipelajari? Lapisan tersembunyi pertama: 784 × 128 bobot + 128 bias = <b>100.480</b>. Lapisan kedua: 128 × 64 + 64 = <b>8.256</b>. Lapisan keluaran: 64 × 10 + 10 = <b>650</b>. Totalnya <b>109.386</b> parameter, semuanya diputar sedikit demi sedikit selama latihan. Hampir 92% di antaranya ada di lapisan pertama, karena setiap neuronnya tersambung ke 784 piksel.</p>
+<div class="callout">
+<b>Membandingkan dengan notebook kelas.</b> Notebook <i>Deep_Learning_Lite</i> memakai model yang sama, dengan nama variabel bahasa Inggris (<i>x_train</i>, <i>y_train</i>). Perintah <i>model.summary()</i> di sana menampilkan 100,480, 8,256, dan 650 parameter, totalnya 109,386: sama dengan hitungan di atas. Notebook itu menulis <i>layers.Flatten(input_shape=(28, 28))</i>, yang memunculkan peringatan kuning <b>UserWarning</b> di Keras 3. Peringatan itu tidak berbahaya; cara yang disarankan adalah <i>Input(shape=(28, 28))</i> seperti kode di atas.
+</div>
 
 <h3>Membaca hasil latihan</h3>
-<div data-diagram="garis" data-seri="Latih:92.5,96.6,97.6,98.2,98.6|Validasi:95.8,96.9,97.3,97.5,97.7" data-x="Epoch 1,Epoch 2,Epoch 3,Epoch 4,Epoch 5" data-caption="Contoh akurasi (%) per epoch; hasilmu bisa sedikit berbeda karena bobot awalnya acak"></div>
-<p>Biasanya akurasi ujian akhirnya sekitar <b>97–98%</b>: dari 10.000 angka yang belum pernah dilihat, hanya sekitar 200 sampai 300 yang salah ditebak. Perhatikan dua garis di atas. Akurasi latih terus naik, sementara akurasi validasi mulai mendatar. Kalau latihan diteruskan lama, jarak keduanya akan melebar: tanda model mulai <b>menghafal</b>.</p>
+<div data-diagram="garis" data-seri="Latih:85.4,96.6,97.6,98.2,98.7|Validasi:95.4,96.6,97.2,97.1,97.3" data-x="Epoch 1,Epoch 2,Epoch 3,Epoch 4,Epoch 5" data-caption="Akurasi (%) per epoch dari notebook kelas di Colab. Hasilmu bisa sedikit berbeda karena bobot awalnya acak"></div>
+<p>Di notebook kelas, ujian akhirnya <b>97,41%</b>: dari 10.000 angka yang belum pernah dilihat, <b>259</b> salah ditebak. Hasilmu bisa sedikit berbeda, tapi biasanya sekitar 97–98%. Perhatikan dua garis di atas. Akurasi latih terus naik, sementara akurasi validasi mulai mendatar. Kalau latihan diteruskan lama, jarak keduanya akan melebar: tanda model mulai <b>menghafal</b>.</p>
+<div class="callout">
+<b>Kenapa akurasi latih di epoch 1 (85,4%) lebih rendah daripada validasi (95,4%)?</b> Angka latih adalah rata-rata sepanjang epoch, termasuk awal epoch saat model masih menebak acak. Akurasi validasi baru diukur di akhir epoch, saat model sudah jauh lebih pintar.
+</div>
 
 <h3>Visualisasi hasil</h3>
 <p>Angka 98% saja tidak cukup. Lihat juga <i>di mana</i> model salah. Tambahkan kode ini di Colab:</p>
@@ -6502,7 +6510,9 @@ plt.show()
 # Confusion matrix: angka mana tertukar dengan angka apa
 ConfusionMatrixDisplay.from_predictions(y_uji, prediksi)
 plt.show()</pre>
-<p>Kamu akan melihat sesuatu yang menarik: banyak tebakan salah yang <b>masuk akal</b>, misalnya 4 yang mirip 9, 5 yang mirip 3, atau 7 yang mirip 1. Sebagian bahkan sulit dibaca manusia. Cara membaca confusion matrix ada di <a href="#/lesson/ai-fund-1">Mengukur Kualitas AI dari Nol</a>.</p>
+<p>Ini 12 tebakan salah pertama dari notebook kelas, setelah model dilatih 5 epoch:</p>
+<figure class="viz foto"><figcaption>Pred = tebakan AI, True = label asli</figcaption><img src="img/mnist-tebakan-salah.png" width="935" height="390" loading="lazy" alt="Dua belas gambar angka MNIST yang salah ditebak model, masing-masing dengan tebakan AI dan label aslinya"></figure>
+<p>Banyak yang <b>masuk akal</b>: angka 2 yang ditulis seperti huruf L terbaca 6, angka 4 yang miring terbaca 9, dan angka 2 bersudut tajam terbaca 7. Sebagian bahkan sulit dibaca manusia. Cara membaca confusion matrix ada di <a href="#/lesson/ai-fund-1">Mengukur Kualitas AI dari Nol</a>.</p>
 
 <h3>Momen ajaib: tulis angka sendiri</h3>
 <p>Model di bawah ini berjalan langsung di browsermu. Ukurannya lebih kecil daripada model TensorFlow di atas: gambarnya 8×8, dilatih dari 1.347 contoh angka bawaan scikit-learn, dengan satu lapisan berisi 48 neuron. Di 450 gambar uji, akurasinya 97,1%, dan kesalahan yang paling sering adalah 9 yang terbaca 5 serta 8 yang terbaca 1.</p>
@@ -6515,7 +6525,21 @@ plt.show()</pre>
 <h3>Tantangan: dari angka ke pakaian</h3>
 <p>Setelah berhasil dengan angka, ganti satu baris pertama kodenya:</p>
 <pre class="code">(x_latih, y_latih), (x_uji, y_uji) = tf.keras.datasets.fashion_mnist.load_data()</pre>
-<p><b>Fashion-MNIST</b> dibuat Zalando pada 2017 dengan ukuran yang sama persis: 70.000 gambar 28×28, tapi isinya 10 jenis pakaian dan alas kaki: kaos, celana panjang, sweter, gaun, mantel, sandal, kemeja, sepatu kets, tas, dan sepatu bot. Dengan model yang sama, akurasinya biasanya hanya sekitar 88%. Lihat confusion matrix-nya: kaos, kemeja, sweter, dan mantel paling sering tertukar, karena bentuknya memang mirip pada gambar sekecil itu.</p>
+<p><b>Fashion-MNIST</b> dibuat Zalando pada 2017 dengan ukuran yang sama persis: 70.000 gambar 28×28, tapi isinya 10 jenis pakaian dan alas kaki: kaos, celana panjang, sweter, gaun, mantel, sandal, kemeja, sepatu kets, tas, dan sepatu bot. Dengan model yang sama persis, notebook kelas hanya mencapai <b>86,9%</b>, jauh di bawah 97,4% untuk angka. Lihat confusion matrix-nya: kaos, kemeja, sweter, dan mantel paling sering tertukar, karena bentuknya memang mirip pada gambar sekecil itu.</p>
+
+<h3>Mini challenge: hasil eksperimen kelas</h3>
+<p>Notebook kelas mengubah satu hal setiap kali, lalu mengukur akurasi ujinya:</p>
+<table class="tbl">
+  <tr><th>Eksperimen</th><th>Akurasi uji</th></tr>
+  <tr><td>Model dasar: 128 → 64, 5 epoch</td><td>97,41%</td></tr>
+  <tr><td>Neuron lebih banyak: 256 → 64</td><td>97,71%</td></tr>
+  <tr><td>Lapisan tambahan: 128 → 64 → 32</td><td>97,39%</td></tr>
+  <tr><td>Latihan lebih lama: 10 epoch</td><td>97,58%</td></tr>
+</table>
+<p>Semua selisihnya di bawah 0,3 poin, dan bisa berubah kalau dijalankan ulang karena bobot awalnya acak. Lapisan tambahan malah sedikit lebih rendah: bukti nyata bahwa lebih dalam tidak otomatis lebih baik.</p>
+<div class="callout warn">
+<b>Eksperimen 10 epoch menyimpan pelajaran penting.</b> Akurasi latih terus naik sampai 99,35%, tapi loss validasi justru naik dari 0,089 di epoch 4 menjadi 0,113 di epoch 10. Model mulai menghafal. EarlyStopping dengan <i>patience=2</i> akan berhenti setelah epoch 6 dan memakai bobot epoch 4 (<a href="#/lesson/ai-nn-2">Cara Neural Network Belajar</a>). Untuk lompatan akurasi yang sungguhan, yang dibutuhkan adalah <a href="#/lesson/ai-ars-4">CNN</a>, bukan sekadar menambah neuron atau epoch.
+</div>
 
 <h3>Kenapa kadang salah, dan cara memperbaikinya</h3>
 <table class="tbl">
@@ -6524,11 +6548,15 @@ plt.show()</pre>
   <tr><td>Model hanya melihat 784 angka berjajar, tanpa tahu piksel mana yang bertetangga</td><td><a href="#/lesson/ai-ars-4">CNN</a>, yang memeriksa gambar sepotong demi sepotong; di MNIST akurasinya bisa lebih dari 99%</td></tr>
   <tr><td>Data latih terlalu seragam: semua angka rapi di tengah</td><td>Augmentasi: memperbanyak data dengan memutar, menggeser, dan menebalkan gambar</td></tr>
 </table>
+<div class="callout">
+<b>Inti sesi ini:</b> kita tidak pernah memberi tahu AI seperti apa bentuk angka 7, kita hanya memberi contoh. <b>Loss</b> adalah skor salah yang ingin diturunkan, <b>accuracy</b> adalah banyaknya tebakan yang benar, dan neural network belajar dengan memperbarui bobotnya ribuan kali selama beberapa epoch.
+</div>
 `,
           keyPoints: [
             "Bagi komputer, gambar adalah tabel angka. MNIST: 70.000 gambar 28×28 (60.000 latih, 10.000 uji), nilai piksel 0–255.",
             "Model Keras di kelas: Flatten → Dense(128, relu) → Dense(64, relu) → Dense(10, softmax), 109.386 parameter, biasanya mencapai sekitar 97–98% di data uji.",
             "Normalisasi (/255), validation_split, dan kurva latih vs validasi membantu melihat apakah model mulai menghafal.",
+            "Hasil kelas: model 128 → 64 mencapai 97,41% (259 salah dari 10.000). Menambah neuron, lapisan, atau epoch hanya mengubah kurang dari 0,3 poin, dan 10 epoch mulai menghafal.",
             "Visualisasi tebakan salah dan confusion matrix menunjukkan angka mana yang tertukar; CNN dan augmentasi memperbaikinya.",
             "Akurasi tinggi di data uji belum menjamin AI bekerja untuk pengguna sungguhan: data latih harus mewakili cara orang menulis, seperti angka 7 tanpa coretan."
           ],
