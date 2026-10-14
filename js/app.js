@@ -1749,7 +1749,7 @@ const GLOSSARY = [
   ["Blockchain Privat", "Blockchain yang hanya boleh dibaca dan divalidasi peserta yang diundang (permissioned)."],
   ["Play-to-Earn", "Model game yang membayar pemain dengan token; rapuh bila hadiahnya dibayar dari uang pemain baru."],
   ["Snapshot", "Pencatatan keadaan semua alamat pada satu blok tertentu; dipakai menentukan siapa berhak menerima airdrop."],
-  ["Sybil", "Satu orang yang berpura-pura menjadi banyak pengguna lewat banyak dompet; biasanya dicoret dari daftar airdrop."],
+  ["Sybil", "Satu orang yang berpura-pura menjadi banyak pengguna lewat banyak dompet. Di airdrop biasanya dicoret dari daftar penerima; di sistem rating dipakai untuk memalsukan ulasan."],
   ["Hardware Wallet", "Perangkat fisik penyimpan kunci privat yang tidak terhubung ke internet; cocok untuk dompet simpanan."],
   ["Block Explorer", "Situs untuk membaca isi blockchain publik — blok, transaksi, alamat, kontrak — tanpa akun dan tanpa dompet."],
   ["Interpretabilitas", "Bidang riset yang mencoba memahami apa arti angka-angka di dalam model AI dan kenapa model menjawab begitu."],

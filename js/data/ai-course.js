@@ -7757,7 +7757,7 @@ Agen AI bekerja dengan memanggil <b>alat</b>, dan lewat standar A2A agen bisa be
   <li><b>Reputasi</b>: penilaian dari pihak-pihak yang pernah memakai jasanya.</li>
   <li><b>Validasi</b>: hasil pemeriksaan pihak ketiga atas pekerjaan agen.</li>
 </ul>
-<p>Statusnya masih <i>Draft</i>, tapi sudah dipasang di banyak jaringan. Cara mudah mengingat keempatnya: <b>ERC-8004</b> menjawab "siapa kamu", <b>AP2</b> menjawab "siapa yang mengizinkan", dan <b>x402</b> atau <b>ACP</b> menjawab "bagaimana membayarnya".</p>
+<p>Statusnya masih <i>Draft</i>, tapi sudah dipasang di banyak jaringan. Pelajaran lengkapnya, termasuk lab mendaftarkan agen dan memberi rating, ada di jalur Crypto: <a href="#/lesson/bc-agen-1">ERC-8004 — KTP, Rating &amp; Pemeriksaan untuk Agen AI</a>. Cara mudah mengingat keempatnya: <b>ERC-8004</b> menjawab "siapa kamu", <b>AP2</b> menjawab "siapa yang mengizinkan", dan <b>x402</b> atau <b>ACP</b> menjawab "bagaimana membayarnya".</p>
 
 <h3>Pembayaran antar-agen dalam praktik</h3>
 <div data-diagram="pipeline" data-stages="Agen riset::diberi tugas &amp; dompet berbatas|Agen data::menjual data per permintaan|Bayar x402::0,01 USDC per panggilan|Hasil::laporan untuk pemilik" data-caption="Satu agen membeli layanan dari agen lain tanpa campur tangan manusia di setiap transaksi"></div>
@@ -7923,7 +7923,7 @@ jawaban:
   <tr><td>Belanja berlebihan</td><td>Pasang batas belanja per transaksi dan per hari</td></tr>
   <tr><td>Tagihan yang dinaikkan diam-diam</td><td>Periksa harga sebelum membayar</td></tr>
   <tr><td>Keputusan besar tanpa sepengetahuan pemilik</td><td>Tanya manusia untuk pembayaran besar</td></tr>
-  <tr><td>Agen penipu dan prompt injection</td><td>Hanya bayar agen yang tepercaya, misalnya yang identitas dan reputasinya tercatat lewat ERC-8004</td></tr>
+  <tr><td>Agen penipu dan prompt injection</td><td>Hanya bayar agen yang tepercaya, misalnya yang identitas dan reputasinya tercatat lewat <a href="#/lesson/bc-agen-1">ERC-8004</a></td></tr>
 </table>
 `,
           keyPoints: [

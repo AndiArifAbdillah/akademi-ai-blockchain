@@ -6422,6 +6422,64 @@ DEMOS["agen-warung"] = function (root) {
   ringkas.innerHTML = '<div class="dm-line teks"><span>Keputusan akhir</span><b>pilih skenario dulu</b></div>';
 };
 
+/* ---------- Demo: serangan Sybil pada registry reputasi ERC-8004 ---------- */
+DEMOS["erc8004-sybil"] = function (root) {
+  // Ulasan asli datang dari pelanggan yang punya bukti bayar x402; akun Sybil adalah alamat baru tanpa riwayat.
+  // Rata-rata "semua" meniru rata-rata polos; rata-rata "tepercaya" meniru getSummary dengan daftar penilai pilihan.
+  const NILAI_ASLI = [40, 55, 35, 50, 45, 30];
+  let ulasan = [], ke = 0;
+  const ringkas = h("div", { class: "dm-out" });
+  const log = h("div", { class: "dm-log" });
+  const alamat = (n) => "0x" + ((n * 2654435761) >>> 0).toString(16).padStart(8, "0").slice(0, 4) + "…" + ((n * 40503) % 4096).toString(16).padStart(3, "0");
+  const rata = (xs) => xs.length ? xs.reduce((a, u) => a + u.nilai, 0) / xs.length : 0;
+  const fmt = (v) => v.toLocaleString("id-ID", { maximumFractionDigits: 1 });
+  function catat(kelas, html) {
+    log.insertBefore(h("div", { class: "dm-li " + kelas, html: html }), log.firstChild);
+    while (log.children.length > 4) log.removeChild(log.lastChild);
+  }
+  function tampil() {
+    const semua = rata(ulasan), asli = ulasan.filter((u) => u.tepercaya);
+    const beda = ulasan.length && Math.abs(semua - rata(asli)) >= 10;
+    ringkas.innerHTML =
+      '<div class="dm-line' + (beda ? " bad" : "") + '"><span>Rata-rata semua penilai <span class="dm-sub">(' + ulasan.length + " ulasan)</span></span><b>" + (ulasan.length ? fmt(semua) : "–") + "</b></div>" +
+      '<div class="dm-line good"><span>Rata-rata penilai tepercaya <span class="dm-sub">(' + asli.length + " ulasan, ada bukti bayar)</span></span><b>" + (asli.length ? fmt(rata(asli)) : "–") + "</b></div>";
+  }
+  const bAsli = h("button", { class: "btn", type: "button", text: "Pelanggan asli memberi ulasan" });
+  const bPemilik = h("button", { class: "btn", type: "button", text: "Pemilik menilai agennya sendiri" });
+  const bSybil = h("button", { class: "btn", type: "button", text: "Serangan Sybil: 50 akun palsu" });
+  const bUlang = h("button", { class: "btn ghost", type: "button", text: "Ulang" });
+  bAsli.onclick = () => {
+    const nilai = NILAI_ASLI[ke % NILAI_ASLI.length];
+    ke++;
+    ulasan.push({ nilai: nilai, tepercaya: true });
+    catat("ok", "<b>giveFeedback</b> dari pelanggan " + alamat(ke) + ": nilai <b>" + nilai + "</b> · disertai bukti pembayaran x402 → masuk daftar penilai tepercaya.");
+    tampil();
+  };
+  bPemilik.onclick = () => {
+    catat("bad", "<b>giveFeedback</b> dari alamat pemilik agen: <b>ditolak (revert)</b>. Pemilik tidak boleh menilai agennya sendiri.");
+  };
+  bSybil.onclick = () => {
+    for (let i = 0; i < 50; i++) ulasan.push({ nilai: 100, tepercaya: false });
+    catat("bad", "<b>50 alamat baru</b>, semuanya didanai dari satu sumber dan lahir hari ini, masing-masing memberi nilai <b>100</b>. Tidak ada satu pun bukti pembayaran. Registry menerimanya: aturannya hanya melarang pemilik, bukan akun samaran.");
+    tampil();
+  };
+  bUlang.onclick = () => { ulasan = []; ke = 0; log.innerHTML = ""; awal(); };
+  function awal() {
+    for (let i = 0; i < 3; i++) { const nilai = NILAI_ASLI[ke % NILAI_ASLI.length]; ke++; ulasan.push({ nilai: nilai, tepercaya: true }); }
+    catat("", "Agen Warung Murah (agentId 7) sudah punya 3 ulasan dari pelanggan asli: 40, 55, dan 35. Pelayanannya ternyata kurang memuaskan.");
+    tampil();
+  }
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Registry reputasi dan serangan Sybil</b>" }),
+    h("p", { class: "demo-hint", text: "Tekan tombol serangan Sybil, lalu bandingkan kedua rata-rata. Coba juga menilai sebagai pemilik." }),
+    ringkas,
+    h("div", { class: "demo-controls" }, [bAsli, bPemilik, bSybil, bUlang]),
+    log,
+    h("p", { class: "dm-note", text: "Simulasi. Baris kedua meniru getSummary di ERC-8004 yang meminta daftar alamat penilai: kamu yang memilih ulasan siapa yang dihitung." }),
+  ]));
+  awal();
+};
+
 /* ---------- Demo: agen analis on-chain dengan data Bitcoin sungguhan (mempool.space) ---------- */
 DEMOS["analis-onchain"] = function (root) {
   const API = "https://mempool.space/api";

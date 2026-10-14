@@ -6131,7 +6131,7 @@ Kontrak <b>Celengan</b> sudah kamu coba di Remix VM — hanya kamu yang bisa mel
       id: "bc-dapp",
       level: "DApp",
       title: "Membangun DApp: Foundry, Frontend & Keamanan",
-      summary: "Alur kerja developer profesional: tes otomatis & fuzzing dengan Foundry, jaringan lokal Anvil, deploy dengan skrip, OpenZeppelin & pola kontrak, menghubungkan web lewat ethers.js, DApp fullstack + AI, lalu keamanan smart contract & deteksi penipuan.",
+      summary: "Alur kerja developer profesional: tes otomatis & fuzzing dengan Foundry, jaringan lokal Anvil, deploy dengan skrip, OpenZeppelin & pola kontrak, menghubungkan web lewat ethers.js, DApp fullstack + AI, identitas dan reputasi agen AI dengan ERC-8004, lalu keamanan smart contract & deteksi penipuan.",
       lessons: [
         {
           id: "bc-fdy-1",
@@ -6732,6 +6732,230 @@ async function jelaskan(tx) {
               ],
               answer: 0,
               explain: "Kode frontend dan isi kontrak sama-sama bisa dibaca publik."
+            }
+          ]
+        },
+        {
+          id: "bc-agen-1",
+          title: "ERC-8004 — KTP, Rating & Pemeriksaan untuk Agen AI di Blockchain",
+          duration: "17 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>NFT ERC-721</b> adalah token unik yang masing-masing punya nomor sendiri (<a href="#/lesson/bc-m-3">Token, NFT &amp; Standar ERC</a>). Di smart contract, <b>msg.sender</b> adalah alamat yang memanggil fungsi, dan <b>require</b> menolak transaksi yang tidak memenuhi syarat (<a href="#/lesson/bc-remix-2">Solidity Praktis di Remix</a>). Agen AI bisa membayar layanan lewat <b>x402</b> (<a href="#/lesson/ai-agen-2">Agen yang Bisa Membayar</a>).
+</div>
+
+<p>Agen pemesan makan siangmu menemukan dua agen warung yang sama-sama menawarkan nasi ayam geprek. Keduanya dibuat oleh pihak yang belum pernah ia kenal. Mana yang asli? Mana yang pelayanannya bagus? Haruskah ia membayar?</p>
+<p>Protokol yang sudah kita pelajari belum menjawab pertanyaan ini. <b>MCP</b> dan <b>A2A</b> mengatur cara agen tersambung, dan <b>x402</b> mengatur cara agen membayar. Tidak satu pun mengatur soal <b>kepercayaan</b>. Celah itulah yang diisi <b>ERC-8004</b>, usulan standar Ethereum bernama <i>Trustless Agents</i>.</p>
+
+<h3>Analogi: aplikasi ojek online</h3>
+<p>Sebelum naik ojek, kamu melihat tiga hal: siapa driver-nya, berapa rating-nya, dan apakah ia sudah diverifikasi. ERC-8004 menyediakan ketiganya untuk agen AI, dalam bentuk tiga "buku daftar" (<i>registry</i>) di blockchain.</p>
+<div data-diagram="compare3" data-cols="Identitas::seperti KTP dan profil driver::siapa kamu?|Reputasi::seperti rating dari penumpang::bagaimana kerjamu?|Validasi::seperti pemeriksaan resmi::apakah hasilmu benar?" data-caption="Tiga registry ERC-8004"></div>
+
+<h3>Kenapa harus di blockchain?</h3>
+<div data-diagram="vs" data-left="Rating milik satu aplikasi::perusahaan bisa menghapus atau mengaturnya::pindah aplikasi, mulai dari nol" data-right="Registry di blockchain::siapa pun bisa membacanya::reputasi ikut ke mana pun agen pergi" data-caption="Daftar yang tidak dimiliki satu perusahaan"></div>
+<p>Rating di aplikasi biasa adalah milik aplikasinya. Registry di blockchain terbuka untuk semua orang, tidak bisa dihapus diam-diam oleh satu pihak, dan dipakai bersama oleh agen dari pembuat mana pun. Konsekuensinya: semua yang tercatat bersifat <b>permanen</b>, jadi jangan pernah menaruh data pribadi di sana.</p>
+
+<h3>Registry 1 — Identitas</h3>
+<p>Setiap agen didaftarkan sebagai <b>NFT ERC-721</b>. Nomor NFT itu menjadi nomor induk agen (<b>agentId</b>), dan NFT-nya menunjuk ke sebuah <b>berkas profil</b> lewat alamat bernama <b>agentURI</b>, misalnya di IPFS. Isinya kira-kira seperti ini (disederhanakan):</p>
+<pre class="code">{
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "name": "Agen Warung Bu Sri",
+  "description": "Menerima pesanan makan siang di Jakarta Barat",
+  "services": [
+    { "name": "A2A", "endpoint": "https://warungbusri.id/.well-known/agent-card.json" },
+    { "name": "MCP", "endpoint": "https://warungbusri.id/mcp" }
+  ],
+  "x402Support": true,
+  "active": true,
+  "supportedTrust": ["reputation"]
+}</pre>
+<p>Dua pengaman penting di registry ini:</p>
+<ul>
+  <li><b>Alamat dompet resmi</b> (<i>agentWallet</i>), tempat agen menerima bayaran, wajib dibuktikan dengan <b>tanda tangan digital</b>. Penipu tidak bisa sembarangan menuliskan dompetnya sendiri di sana.</li>
+  <li>Saat NFT agen <b>berpindah tangan</b>, alamat dompet itu <b>otomatis dikosongkan</b>, dan pemilik baru harus membuktikannya lagi. Tanpa aturan ini, bayaran bisa terus mengalir ke dompet yang tidak dikendalikan pemilik barunya.</li>
+</ul>
+<p>Agen juga bisa membuktikan bahwa ia memang pemilik situs yang ditulis di profilnya, dengan memasang berkas <i>/.well-known/agent-registration.json</i> di situs tersebut.</p>
+
+<h3>Registry 2 — Reputasi</h3>
+<p>Siapa pun yang pernah memakai jasa agen boleh memberi penilaian lewat fungsi <b>giveFeedback</b>, <b>kecuali pemilik atau operator agen itu sendiri</b>. Isi penilaiannya:</p>
+<table class="tbl">
+  <tr><th>Bagian</th><th>Contoh</th></tr>
+  <tr><td><b>value</b> + <b>valueDecimals</b></td><td>Angka bulat plus jumlah desimalnya: 9977 dengan 2 desimal berarti 99,77</td></tr>
+  <tr><td><b>tag</b></td><td>Jenis penilaian: kualitas (0–100), waktu respons, persentase <i>uptime</i></td></tr>
+  <tr><td><b>feedbackURI</b> + hash</td><td>Berkas rincian di luar rantai, misalnya bukti pembayaran x402</td></tr>
+</table>
+<p>Penilai boleh menarik kembali ulasannya sendiri, dan siapa pun boleh menambahkan tanggapan, misalnya catatan "dana sudah dikembalikan" atau tanda "ini spam".</p>
+
+<h3>Coba sendiri: registry mini di Lab Solidity</h3>
+<p>Kontrak di bawah adalah versi mini untuk belajar: registry Identitas dan Reputasi digabung jadi satu, tanpa NFT. Standar aslinya memakai tiga kontrak terpisah dan nilai bertanda dengan desimal.</p>
+<ol>
+  <li>Tekan <b>Compile &amp; Deploy</b>.</li>
+  <li>Dengan <b>Akun 1</b>, isi <i>daftar</i> dengan <i>ipfs://warung-bu-sri.json</i> lalu tekan tombolnya. Agen pertama mendapat agentId 0.</li>
+  <li>Ganti ke <b>Akun 2</b>, panggil <i>beriUlasan</i> dengan agentId 0 dan nilai 90. Lalu dengan <b>Akun 3</b>, beri nilai 70.</li>
+  <li>Panggil <i>rataRata</i> dengan 0. Hasilnya 80.</li>
+  <li>Kembali ke <b>Akun 1</b>, si pemilik, lalu coba <i>beriUlasan</i> 0 dengan nilai 100. Transaksinya ditolak.</li>
+</ol>
+<div data-demo="sol-lab" data-kontrak="RegistryAgenMini">
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+// Versi mini untuk belajar: Identitas + Reputasi ERC-8004 dalam satu kontrak.
+contract RegistryAgenMini {
+    struct Agen {
+        address pemilik;
+        string profil;   // agentURI: alamat berkas profil
+    }
+    Agen[] public agen;  // agentId = nomor urut di daftar
+    mapping(uint256 => uint256) public jumlahUlasan;
+    mapping(uint256 => uint256) public totalNilai;
+
+    event AgenTerdaftar(uint256 agentId, address pemilik, string profil);
+    event Ulasan(uint256 agentId, address dari, uint8 nilai);
+
+    function daftar(string memory profil) public returns (uint256) {
+        agen.push(Agen(msg.sender, profil));
+        uint256 id = agen.length - 1;
+        emit AgenTerdaftar(id, msg.sender, profil);
+        return id;
+    }
+
+    function beriUlasan(uint256 agentId, uint8 nilai) public {
+        require(agentId &lt; agen.length, "Agen tidak ada");
+        require(msg.sender != agen[agentId].pemilik, "Pemilik tidak boleh menilai agennya sendiri");
+        require(nilai &lt;= 100, "Nilai 0 sampai 100");
+        jumlahUlasan[agentId] += 1;
+        totalNilai[agentId] += nilai;
+        emit Ulasan(agentId, msg.sender, nilai);
+    }
+
+    function rataRata(uint256 agentId) public view returns (uint256) {
+        if (jumlahUlasan[agentId] == 0) return 0;
+        return totalNilai[agentId] / jumlahUlasan[agentId];
+    }
+}
+</div>
+
+<h3>Kelemahan terbesar: serangan Sybil</h3>
+<p>Fungsi <i>rataRata</i> di atas menghitung <b>semua</b> ulasan sama rata. Padahal membuat alamat dompet baru itu gratis dan cepat. Penipu bisa membuat 50 alamat lalu memberi agennya sendiri nilai 100 dari semuanya. Ini disebut <b>serangan Sybil</b>: satu orang menyamar menjadi banyak orang, persis seperti ulasan palsu di marketplace.</p>
+<div data-demo="erc8004-sybil"></div>
+<p>Karena itu, fungsi ringkasan reputasi di standar aslinya, <b>getSummary</b>, sengaja <b>meminta daftar alamat penilai</b>. Kamu sendiri yang memilih ulasan siapa yang dihitung. Cara menyaringnya:</p>
+<ul>
+  <li><b>Utamakan ulasan dengan bukti pembayaran</b>, misalnya bukti x402. Ulasan palsu jadi berbiaya.</li>
+  <li><b>Perhatikan umur dan riwayat alamat penilai.</b> Lima puluh alamat yang lahir di hari yang sama dan didanai dari sumber yang sama patut dicurigai. Teknik melacaknya ada di <a href="#/lesson/bc-for-3">Heuristik Klasterisasi</a>.</li>
+  <li><b>Pakai layanan pengolah reputasi</b> di luar rantai yang menyaring pola mencurigakan.</li>
+</ul>
+
+<h3>Registry 3 — Validasi</h3>
+<p>Rating menjawab "apakah pelanggan puas", tapi tidak membuktikan hasil kerja agen <b>benar</b>. Untuk itu, pemilik agen bisa meminta <b>validator</b> tertentu memeriksa sebuah pekerjaan. Hanya validator yang ditunjuk yang boleh menjawab, dengan nilai 0 sampai 100.</p>
+<table class="tbl">
+  <tr><th>Cara memvalidasi</th><th>Cara kerjanya</th></tr>
+  <tr><td><b>Jalankan ulang dengan jaminan</b></td><td>Validator mengulang pekerjaan agen dan menaruh uang jaminan (<i>stake</i>); kalau terbukti berbohong, jaminannya disita</td></tr>
+  <tr><td><b>zkML</b></td><td>Bukti matematika bahwa model tertentu benar-benar dijalankan, tanpa membuka isinya (<a href="#/lesson/bc-adv-4">Zero-Knowledge Proof</a>)</td></tr>
+  <tr><td><b>TEE</b></td><td>Chip aman di dalam prosesor yang bersaksi kode apa yang sedang berjalan</td></tr>
+  <tr><td><b>Juri tepercaya</b></td><td>Pakar atau lembaga yang sudah dikenal</td></tr>
+</table>
+<div class="callout">
+<b>Keamanan sebanding dengan nilai yang dipertaruhkan.</b> Untuk memesan makan siang Rp30.000, rating dari penilai tepercaya sudah cukup. Untuk agen yang mengelola dana Rp1 miliar, tuntut validasi yang kuat.
+</div>
+
+<h3>Alur memilih agen yang bisa dipercaya</h3>
+<div data-diagram="flow" data-steps="Temukan agen di registry Identitas|Baca profil dan cek dompet resminya|Cek reputasi dari penilai tepercaya|Cek validasi bila taruhannya besar|Baru bayar lewat x402" data-caption="ERC-8004 bekerja sebelum pembayaran, bukan menggantikannya"></div>
+
+<h3>Yang tidak dilakukan ERC-8004</h3>
+<ul>
+  <li><b>Bukan alat pembayaran.</b> Pembayaran sengaja dikeluarkan dari standar ini; itu tugas x402 atau ACP.</li>
+  <li><b>Tidak menjamin agennya baik.</b> Standar ini mencatat sinyal, tapi tidak bisa membuktikan bahwa kemampuan yang diiklankan agen benar-benar berfungsi atau aman.</li>
+  <li><b>Tidak mengatur insentif validator.</b> Jaminan dan sanksinya diurus protokol validasi masing-masing.</li>
+  <li><b>Masih Draft.</b> Diusulkan 13 Agustus 2025 oleh penulis yang terkait dengan MetaMask, Ethereum Foundation, Google, dan Coinbase. Sudah dipasang di banyak jaringan, tapi detailnya masih bisa berubah.</li>
+</ul>
+
+<h3>Posisinya di antara protokol agen</h3>
+<table class="tbl">
+  <tr><th>Protokol</th><th>Menjawab pertanyaan</th></tr>
+  <tr><td><b>MCP</b>, <b>A2A</b></td><td>Bagaimana agen tersambung ke alat dan ke agen lain?</td></tr>
+  <tr><td><b>ERC-8004</b></td><td>Siapa kamu, dan bisakah kamu dipercaya?</td></tr>
+  <tr><td><b>AP2</b></td><td>Siapa yang mengizinkan pembelian ini?</td></tr>
+  <tr><td><b>x402</b>, <b>ACP</b></td><td>Bagaimana cara membayarnya?</td></tr>
+</table>
+`,
+          keyPoints: [
+            "ERC-8004 (Trustless Agents) membantu agen yang belum saling kenal untuk saling menemukan dan memeriksa lewat tiga registry di blockchain.",
+            "Registry Identitas: setiap agen adalah NFT ERC-721 (agentId) yang menunjuk ke berkas profil berisi layanan, dukungan x402, dan model kepercayaan.",
+            "Alamat dompet agen wajib dibuktikan dengan tanda tangan dan otomatis dikosongkan saat NFT agen berpindah tangan.",
+            "Registry Reputasi: siapa pun kecuali pemilik agen boleh memberi nilai bertanda (value + decimals + tag).",
+            "Serangan Sybil membuat rata-rata semua ulasan tidak bisa dipercaya; karena itu getSummary meminta daftar penilai yang kamu pilih.",
+            "Registry Validasi: validator yang ditunjuk memberi nilai 0–100 lewat jaminan, zkML, TEE, atau juri tepercaya. Keamanan sebanding dengan nilai yang dipertaruhkan.",
+            "ERC-8004 bukan alat pembayaran dan tidak menjamin agen itu baik; statusnya masih Draft."
+          ],
+          practice: [
+            { type: "number", q: "Sebuah agen dinilai dengan tag uptime, value 9977, dan valueDecimals 2. Berapa persen uptime-nya?", answer: 99.77, tol: 0.001, unit: "%", hint: "valueDecimals 2 berarti koma digeser dua angka ke kiri.", solution: "9977 dengan 2 desimal = 99,77%." },
+            { type: "number", q: "Agen punya 3 ulasan asli: 40, 55, dan 35. Lalu 5 akun palsu masing-masing memberi 100. Berapa rata-rata semua ulasan sekarang?", answer: 78.75, tol: 0.01, hint: "Jumlahkan semua nilai, lalu bagi dengan banyaknya ulasan (3 + 5).", solution: "(40 + 55 + 35 + 5 × 100) ÷ 8 = 630 ÷ 8 = 78,75. Padahal rata-rata ulasan aslinya hanya 43,3." },
+            { type: "code", lang: "solidity", contract: "RegistryAgenMini", q: "Lengkapi beriUlasan dengan dua syarat: tolak pemilik yang menilai agennya sendiri (pesan \"Pemilik tidak boleh menilai agennya sendiri\"), dan tolak nilai di atas 100 (pesan \"Nilai 0 sampai 100\").", starter: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract RegistryAgenMini {\n    struct Agen {\n        address pemilik;\n        string profil;\n    }\n    Agen[] public agen;\n    mapping(uint256 => uint256) public jumlahUlasan;\n    mapping(uint256 => uint256) public totalNilai;\n\n    function daftar(string memory profil) public returns (uint256) {\n        agen.push(Agen(msg.sender, profil));\n        return agen.length - 1;\n    }\n\n    function beriUlasan(uint256 agentId, uint8 nilai) public {\n        require(agentId < agen.length, \"Agen tidak ada\");\n        // tulis dua require di sini\n\n        jumlahUlasan[agentId] += 1;\n        totalNilai[agentId] += nilai;\n    }\n\n    function rataRata(uint256 agentId) public view returns (uint256) {\n        if (jumlahUlasan[agentId] == 0) return 0;\n        return totalNilai[agentId] / jumlahUlasan[agentId];\n    }\n}\n", tests: [["daftar(\"ipfs://warung.json\")", null], ["akun2 beriUlasan(0, 90)", null], ["akun3 beriUlasan(0, 70)", null], ["rataRata(0)", 80], ["beriUlasan(0, 100)", "REVERT:Pemilik tidak boleh menilai agennya sendiri"], ["akun2 beriUlasan(0, 101)", "REVERT:Nilai 0 sampai 100"]], hint: "require(msg.sender != agen[agentId].pemilik, \"...\"); lalu require(nilai <= 100, \"...\");", solution: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract RegistryAgenMini {\n    struct Agen {\n        address pemilik;\n        string profil;\n    }\n    Agen[] public agen;\n    mapping(uint256 => uint256) public jumlahUlasan;\n    mapping(uint256 => uint256) public totalNilai;\n\n    function daftar(string memory profil) public returns (uint256) {\n        agen.push(Agen(msg.sender, profil));\n        return agen.length - 1;\n    }\n\n    function beriUlasan(uint256 agentId, uint8 nilai) public {\n        require(agentId < agen.length, \"Agen tidak ada\");\n        require(msg.sender != agen[agentId].pemilik, \"Pemilik tidak boleh menilai agennya sendiri\");\n        require(nilai <= 100, \"Nilai 0 sampai 100\");\n        jumlahUlasan[agentId] += 1;\n        totalNilai[agentId] += nilai;\n    }\n\n    function rataRata(uint256 agentId) public view returns (uint256) {\n        if (jumlahUlasan[agentId] == 0) return 0;\n        return totalNilai[agentId] / jumlahUlasan[agentId];\n    }\n}" },
+            {
+              type: "choice",
+              q: "Agen yang akan mengelola dana Rp1 miliar sebaiknya diperiksa dengan cara apa?",
+              options: ["Diperiksa validator, tidak cukup hanya rating", "Cukup dilihat dari rating bintangnya", "Dipilih yang jumlah ulasannya terbanyak", "Dipilih yang namanya paling terkenal"],
+              answer: 0,
+              hint: "Ingat prinsip: keamanan sebanding dengan nilai yang dipertaruhkan.",
+              solution: "Taruhan besar butuh bukti bahwa hasil kerja agen benar, misalnya validasi dengan jaminan, zkML, atau TEE. Rating saja bisa dipalsukan."
+            }
+          ],
+          quiz: [
+            {
+              q: "Masalah utama apa yang dijawab ERC-8004?",
+              options: [
+                "Agen yang belum saling kenal bisa saling memeriksa",
+                "Agen bisa membayar API per permintaan web",
+                "Agen bisa tersambung ke Gmail dan Notion",
+                "Biaya gas transaksi agen menjadi lebih murah"
+              ],
+              answer: 0,
+              explain: "MCP dan A2A mengatur sambungan, x402 mengatur pembayaran. ERC-8004 mengisi soal kepercayaan: identitas, reputasi, dan validasi."
+            },
+            {
+              q: "Identitas agen di ERC-8004 berbentuk apa?",
+              options: [
+                "NFT ERC-721 yang menunjuk ke berkas profil agen",
+                "Token ERC-20 yang bisa dibagi-bagi",
+                "Nama domain yang dibeli setiap tahun",
+                "Akun email resmi milik pembuat agen"
+              ],
+              answer: 0,
+              explain: "Nomor NFT menjadi agentId, dan agentURI-nya menunjuk ke berkas profil berisi layanan, dukungan x402, dan model kepercayaan."
+            },
+            {
+              q: "Siapa yang tidak boleh memberi ulasan untuk sebuah agen?",
+              options: [
+                "Pemilik atau operator agen itu sendiri",
+                "Pelanggan yang pernah memakai jasanya",
+                "Agen lain yang pernah bekerja sama",
+                "Alamat yang baru pertama kali bertransaksi"
+              ],
+              answer: 0,
+              explain: "Menilai agen sendiri jelas tidak jujur, jadi registry menolaknya. Alamat baru tetap boleh menilai, dan karena itu serangan Sybil masih mungkin."
+            },
+            {
+              q: "Kenapa alamat dompet agen dikosongkan saat NFT agen berpindah tangan?",
+              options: [
+                "Agar pemilik baru wajib membuktikan dompetnya lagi",
+                "Agar saldo dompet lama otomatis pindah ke pemilik baru",
+                "Karena NFT tidak bisa menyimpan alamat dompet",
+                "Agar reputasi agen ikut terhapus dan mulai dari nol"
+              ],
+              answer: 0,
+              explain: "Tanpa aturan ini, bayaran bisa terus mengalir ke dompet yang tidak dikendalikan pemilik baru."
+            },
+            {
+              q: "Cara paling tepat menghadapi serangan Sybil pada rating agen?",
+              options: [
+                "Hitung hanya ulasan dari penilai yang kamu percaya",
+                "Hitung rata-rata dari semua ulasan yang pernah masuk",
+                "Hapus semua ulasan yang nilainya terlalu rendah",
+                "Percayai agen yang jumlah ulasannya paling banyak"
+              ],
+              answer: 0,
+              explain: "Alamat palsu murah dibuat. Karena itu getSummary meminta daftar penilai: kamu yang memilih ulasan siapa yang dihitung."
             }
           ]
         },
