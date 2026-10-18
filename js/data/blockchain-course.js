@@ -5247,7 +5247,352 @@ Pada <b>Proof of Stake</b>, validator mengunci koin sebagai jaminan dan ikut mem
         },
       ],
     },
-    /* ---------------- MODUL 10: LAYER 1, LAYER 2, PRIVASI & DAO ---------------- */
+    /* ---------------- MODUL 10: TRADING KRIPTO DENGAN KEPALA DINGIN ---------------- */
+    {
+      id: "bc-trading",
+      level: "Trading",
+      title: "Trading Kripto dengan Kepala Dingin",
+      summary: "Materi Kelas Sore Indodax yang dilengkapi data dan hitungan: investor atau trader, DCA dan lump sum, money management (uang dingin, risk/reward, ukuran posisi, cut loss, alokasi), lalu membaca arah pasar lewat timeframe, market structure, dan support/resistance. Edukasi, bukan nasihat keuangan.",
+      lessons: [
+        {
+          id: "bc-trd-1",
+          title: "Investor atau Trader? — Gaya, Strategi & Cara Masuk Pasar",
+          duration: "14 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Harga kripto bisa naik-turun puluhan persen dalam hitungan hari (<a href="#/lesson/acc-tek-5">Volatilitas &amp; Drawdown</a>). Sejak Januari 2025, perdagangan aset kripto di Indonesia diawasi OJK (<a href="#/lesson/bc-app-4">Regulasi &amp; Pajak Aset Kripto</a>).
+</div>
+
+<div class="callout warn">
+<b>Materi edukasi, bukan nasihat keuangan.</b> Modul ini merangkum materi Kelas Sore Indodax dan melengkapinya dengan data serta hitungan. Aset kripto sangat berisiko, kinerja masa lalu tidak menjamin hasil di masa depan, dan keputusan beserta akibatnya sepenuhnya tanggung jawabmu. Pakai exchange yang terdaftar dan diawasi OJK, dan kenali dulu modus penipuan di <a href="#/lesson/bc-a-4">Keamanan &amp; Penipuan</a>.
+</div>
+
+<p>Sebelum menyentuh grafik, kelas mengajukan satu pertanyaan: <b>kamu mau jadi investor atau trader?</b> Jawabannya menentukan strategi, cara masuk pasar, dan jenis risiko yang kamu hadapi.</p>
+
+<h3>Dua identitas</h3>
+<div data-diagram="vs" data-left="Investor::menyimpan bertahun-tahun::fokus nilai dan teknologi proyek" data-right="Trader::masuk-keluar dalam menit sampai minggu::fokus pergerakan harga" data-caption="Tujuannya sama-sama untung, caranya sangat berbeda"></div>
+<p><b>Investor</b> membeli lalu menyimpan, biasanya lebih dari dua tahun. Yang diperiksa adalah fundamental: whitepaper, tim pengembang, roadmap, tokenomics, dan kegunaan nyata koinnya. Kelas menyebut <b>siklus empat tahunan Bitcoin</b>, kira-kira tiga tahun naik lalu setahun turun, yang mengikuti jadwal halving (<a href="#/lesson/bc-deep-1">21 Juta &amp; Halving</a>). Pola itu memang terlihat di sejarah Bitcoin, tapi baru terjadi beberapa putaran dan tidak dijamin berulang.</p>
+<p><b>Trader</b> mencari untung dari naik-turunnya harga dalam waktu singkat, dengan membeli dan menjual secara aktif.</p>
+
+<h3>Tiga gaya trader</h3>
+<table class="tbl">
+  <tr><th>Gaya</th><th>Cara kerja</th><th>Cocok untuk</th><th>Timeframe</th><th>Target di slide kelas</th></tr>
+  <tr><td><b>Scalper</b></td><td>Masuk-keluar dalam hitungan menit sampai jam, lebih dari 5 kali sehari</td><td>Yang punya banyak waktu memantau grafik</td><td>M5, M15</td><td>1–3% per transaksi</td></tr>
+  <tr><td><b>Day trader</b></td><td>Selesai dalam sehari: beli pagi, jual sore atau malam</td><td>Yang ingin tidur tanpa posisi menggantung</td><td>H1, H4</td><td>5–20% per transaksi</td></tr>
+  <tr><td><b>Swing trader</b></td><td>Menahan beberapa hari sampai bulan</td><td>Pekerja sibuk yang hanya sesekali melihat grafik</td><td>H4, D, W</td><td>20–50% per transaksi</td></tr>
+</table>
+<div class="callout warn">
+<b>Target bukan janji.</b> Penelitian Chague, De-Losso, dan Giovannetti (2019) atas trader harian di bursa Brasil menemukan bahwa dari mereka yang bertahan lebih dari 300 hari, <b>97% justru rugi</b>, dan hanya 1,1% yang penghasilannya melebihi upah minimum. Setiap transaksi juga kena biaya; makin sering bertransaksi, makin besar biaya yang menggerus modal.
+</div>
+
+<h3>Cara investor masuk pasar</h3>
+<table class="tbl">
+  <tr><th>Cara</th><th>Artinya</th></tr>
+  <tr><td><b>Lump sum &amp; hold</b></td><td>Beli sekaligus dalam jumlah besar, lalu simpan lama</td></tr>
+  <tr><td><b>DCA waktu</b></td><td>Beli rutin dengan jumlah tetap, misalnya setiap bulan, tanpa melihat harga</td></tr>
+  <tr><td><b>DCA harga</b> (buy the dip)</td><td>Beli saat harga turun tajam. Kelas menyarankan ini hanya untuk aset berfundamental kuat</td></tr>
+</table>
+<p><b>DCA</b> (<i>Dollar Cost Averaging</i>) merata-ratakan harga beli. Jalankan simulasi ini: Rp1 juta dibelikan koin setiap bulan selama enam bulan.</p>
+<div data-demo="js-playground">// Simulasi DCA: membeli Rp1.000.000 setiap bulan (harga contoh)
+const harga = [500000, 400000, 250000, 300000, 450000, 600000];
+const perBulan = 1000000;
+
+let koin = 0;
+for (let i = 0; i &lt; harga.length; i++) {
+  koin = koin + perBulan / harga[i];
+}
+const modal = perBulan * harga.length;
+console.log("Koin terkumpul:", koin.toFixed(4));
+console.log("Harga beli rata-rata:", Math.round(modal / koin));
+console.log("Rata-rata harga pasar:", Math.round(harga.reduce((a, b) => a + b, 0) / harga.length));
+console.log("Nilai DCA sekarang:", Math.round(koin * harga[harga.length - 1]));
+
+// Bandingkan: semua uang dibelikan sekaligus di bulan pertama
+const koinSekaligus = modal / harga[0];
+console.log("Nilai lump sum sekarang:", Math.round(koinSekaligus * harga[harga.length - 1]));</div>
+<p>Harga beli rata-rata DCA (Rp381.625) lebih rendah daripada rata-rata harga pasar (Rp416.667), karena saat harga murah, uang yang sama membeli lebih banyak koin. Di contoh ini DCA juga lebih untung daripada lump sum, sebab harga sempat jatuh. Tapi kalau harga terus naik sejak bulan pertama, lump sum yang menang. Kelebihan DCA yang sebenarnya adalah <b>mengurangi risiko membeli semuanya di waktu yang salah</b>, bukan menjamin untung.</p>
+
+<h3>Cara trader masuk pasar</h3>
+<p>Trader membaca momentum dan pergerakan harga, misalnya harga yang menembus resistance dengan volume besar (<a href="#/lesson/acc-tek-1">Candlestick, Volume &amp; Tren</a>). Yang paling ditekankan kelas adalah <b>trading plan</b>: rencana tertulis sebelum masuk pasar.</p>
+<ul>
+  <li>Alasan masuk dan harga masuknya</li>
+  <li>Harga <b>cut loss</b>: batas rugi yang akan dieksekusi tanpa tawar-menawar</li>
+  <li>Harga target</li>
+  <li>Ukuran posisi (<a href="#/lesson/bc-trd-2">Money Management</a>)</li>
+</ul>
+<p>Trading plan mencegah satu kebiasaan buruk yang disebut kelas <b>"investor dadakan"</b>: trader yang posisinya rugi, menolak cut loss, lalu menyebutnya "investasi jangka panjang".</p>
+
+<h3>Risiko masing-masing</h3>
+<table class="tbl">
+  <tr><th></th><th>Trader (jangka pendek)</th><th>Investor (jangka panjang)</th></tr>
+  <tr><td><b>Risiko terbesar</b></td><td>Modal habis cepat karena salah analisis, apalagi bila memakai pinjaman</td><td>Nilai aset jadi nol karena proyeknya rug pull atau penipuan</td></tr>
+  <tr><td><b>Beban pikiran</b></td><td>Stres harian, terus memantau grafik</td><td>Frustrasi melihat portofolio merah berbulan-bulan</td></tr>
+  <tr><td><b>Musuh utama</b></td><td>Serakah dan melanggar trading plan</td><td>Teknologi pesaing dan perubahan regulasi</td></tr>
+  <tr><td><b>Pelindung</b></td><td>Disiplin trading plan dan cut loss</td><td>Riset fundamental yang dalam dan diversifikasi</td></tr>
+</table>
+<p>Slide kelas menyebut risiko trader "kena likuidasi". <b>Likuidasi</b> hanya terjadi pada trading yang memakai pinjaman (<i>leverage</i>), misalnya futures: posisimu ditutup paksa saat rugi menyentuh batas jaminan (<a href="#/lesson/bc-defi-1">Meminjam di DeFi</a>). Di pasar spot, yaitu membeli koin dengan uang sendiri, harga bisa jatuh dalam, tapi posisimu tidak ditutup paksa.</p>
+`,
+          keyPoints: [
+            "Investor menyimpan aset bertahun-tahun dengan fokus fundamental; trader mencari untung dari gerak harga jangka pendek.",
+            "Gaya trader: scalper (M5–M15), day trader (H1–H4), swing trader (H4–W). Target profit di slide bukan janji: 97% trader harian yang bertahan 300+ hari di Brasil justru rugi.",
+            "DCA merata-ratakan harga beli dan mengurangi risiko salah waktu, tapi tidak menjamin untung; bila harga terus naik, lump sum lebih untung.",
+            "Trading plan berisi alasan masuk, cut loss, target, dan ukuran posisi, untuk mencegah menjadi \"investor dadakan\".",
+            "Likuidasi hanya terjadi pada trading dengan pinjaman (leverage); di pasar spot posisi tidak ditutup paksa.",
+          ],
+          practice: [
+            { type: "number", q: "Kamu membeli koin Rp1 juta saat harganya Rp500.000, lalu Rp1 juta lagi saat harganya Rp250.000. Berapa harga beli rata-ratamu (rupiah per koin)?", answer: 333333, tol: 1, unit: "rupiah", hint: "Hitung jumlah koin yang didapat setiap kali membeli, lalu bagi total uang dengan total koin.", solution: "Pembelian pertama dapat 2 koin, kedua dapat 4 koin. Rp2.000.000 ÷ 6 koin ≈ Rp333.333, lebih rendah dari rata-rata kedua harga (Rp375.000)." },
+            {
+              type: "choice",
+              q: "Kamu bekerja kantoran dan hanya sempat melihat grafik malam hari. Gaya trading yang paling cocok?",
+              options: ["Swing trader", "Scalper", "Day trader", "Tidak ada yang cocok"],
+              answer: 0,
+              hint: "Gaya mana yang tidak menuntut memantau grafik sepanjang hari?",
+              solution: "Swing trader menahan posisi berhari-hari dan memakai timeframe H4 sampai mingguan, jadi cukup dicek sesekali.",
+            },
+            {
+              type: "choice",
+              q: "Posisimu rugi 20% dan sudah menyentuh harga cut loss di trading plan, tapi kamu memutuskan \"hold saja, anggap investasi\". Kelas menyebut ini…",
+              options: ["Investor dadakan", "Strategi DCA waktu", "Lump sum & hold", "Swing trading"],
+              answer: 0,
+              hint: "Rencananya trading, tapi rencananya dilanggar.",
+              solution: "Mengubah trading yang rugi menjadi \"investasi\" tanpa riset fundamental adalah investor dadakan. Trading plan dibuat justru untuk mencegahnya.",
+            },
+          ],
+          quiz: [
+            {
+              q: "Apa perbedaan utama investor dan trader?",
+              options: ["Investor menahan lama; trader memanfaatkan gerak harga singkat", "Investor memakai uang lebih banyak daripada trader", "Trader hanya membeli Bitcoin, investor membeli altcoin", "Investor tidak pernah rugi karena menahan aset lama"],
+              answer: 0,
+              explain: "Bedanya ada pada jangka waktu dan dasar keputusan: fundamental untuk investor, pergerakan harga untuk trader.",
+            },
+            {
+              q: "Penelitian atas trader harian di Brasil menemukan bahwa…",
+              options: ["97% yang bertahan 300 hari lebih justru rugi", "Separuh trader harian untung setiap bulan", "Trader harian rata-rata untung 20% per transaksi", "Kerugian hanya dialami trader yang baru belajar"],
+              answer: 0,
+              explain: "Hanya 1,1% yang penghasilannya melebihi upah minimum. Target profit di slide adalah target, bukan gambaran hasil kebanyakan orang.",
+            },
+            {
+              q: "Apa kelebihan utama DCA?",
+              options: ["Mengurangi risiko membeli seluruhnya di waktu yang salah", "Selalu menghasilkan untung lebih besar daripada lump sum", "Membuat harga beli selalu di titik paling bawah", "Menghapus risiko kerugian sepenuhnya"],
+              answer: 0,
+              explain: "DCA merata-ratakan harga beli. Kalau harga terus naik sejak awal, lump sum justru lebih untung.",
+            },
+            {
+              q: "Kapan likuidasi bisa terjadi?",
+              options: ["Saat trading memakai pinjaman (leverage), misalnya futures", "Setiap kali harga koin turun lebih dari 10%", "Saat menyimpan koin terlalu lama di exchange", "Saat membeli koin di pasar spot tanpa pinjaman"],
+              answer: 0,
+              explain: "Likuidasi menutup paksa posisi berpinjaman saat jaminannya tidak cukup. Di pasar spot hal itu tidak terjadi.",
+            },
+          ],
+        },
+        {
+          id: "bc-trd-2",
+          title: "Money Management — Uang Dingin, Ukuran Posisi, Risk/Reward & Cut Loss",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Rugi 50% butuh naik 100% hanya untuk balik modal (<a href="#/lesson/acc-tek-5">Volatilitas &amp; Drawdown</a>). Trader wajib punya trading plan berisi harga masuk, cut loss, target, dan ukuran posisi (<a href="#/lesson/bc-trd-1">Investor atau Trader?</a>).
+</div>
+
+<p>Yang paling menentukan seorang trader bertahan atau tidak bukan seberapa jago menebak arah harga, tapi seberapa baik ia <b>mengatur uang</b>. Pelajaran ini membahas empat alatnya.</p>
+
+<h3>1. Uang dingin, bukan uang panas</h3>
+<div data-diagram="vs" data-left="Uang panas::pinjol, uang SPP, uang dapur, dana darurat::dilarang keras" data-right="Uang dingin::tabungan di luar dana darurat::siap hilang sepenuhnya" data-caption="Hanya uang di sebelah kanan yang boleh masuk pasar kripto"></div>
+<p>Kenapa? Uang panas membuat panik. Orang yang memakai uang SPP akan buru-buru menjual saat harga turun, atau menolak cut loss karena tidak sanggup kehilangan uang itu. Keduanya merusak trading plan.</p>
+
+<h3>2. Risk/reward: untung harus lebih besar dari risiko</h3>
+<p>Kelas mensyaratkan <b>risk/reward minimal 1 : 2 atau 1 : 3</b>. Contohnya, kalau batas rugimu Rp500 ribu, targetnya paling sedikit Rp1 juta sampai Rp1,5 juta. Kalau syarat ini tidak terpenuhi, jangan masuk posisi.</p>
+<p>Alasannya bisa dihitung. Dengan risk/reward 1 : R, kamu cukup benar dalam <b>1 ÷ (1 + R)</b> dari semua transaksi agar tidak rugi:</p>
+<table class="tbl">
+  <tr><th>Risk/reward</th><th>Win rate minimal agar impas</th></tr>
+  <tr><td>1 : 1</td><td>50%</td></tr>
+  <tr><td>1 : 2</td><td>33,3%</td></tr>
+  <tr><td>1 : 3</td><td>25%</td></tr>
+</table>
+<p>Makin besar targetnya, makin sering kamu boleh salah. Tapi target yang lebih jauh juga lebih jarang tercapai, dan biaya transaksi belum dihitung di tabel ini.</p>
+
+<h3>3. Ukuran posisi: yang dibatasi adalah risikonya</h3>
+<p>Slide kelas menulis "maksimal 1–2% modal per transaksi". Maksudnya adalah <b>uang yang siap hilang</b> kalau cut loss tersentuh, <b>bukan</b> besar pembeliannya. Besar pembelian dihitung dengan rumus:</p>
+<div class="callout">
+<b>ukuran posisi = (modal × risiko%) ÷ jarak cut loss%</b>
+</div>
+<p>Contoh: modal Rp10 juta dan risiko 1% berarti siap rugi Rp100 ribu. Kalau cut loss 10% di bawah harga beli, kamu boleh membeli senilai Rp100 ribu ÷ 10% = <b>Rp1 juta</b>. Kalau cut loss 15%, cukup Rp666.667. Coba sendiri:</p>
+<div data-demo="kalkulator-posisi"></div>
+
+<h3>4. Cut loss dan batas kerugian harian</h3>
+<ul>
+  <li><b>Cut loss wajib dieksekusi</b>, bukan ditawar. Kelas menyarankan di bawah level support, sekitar 10–15% di bawah harga beli. Letakkan sedikit di bawah support, bukan tepat di garisnya, karena harga sering menyentuh support sebentar lalu memantul.</li>
+  <li><b>Batas kerugian harian:</b> kalau sudah dua kali kena cut loss dalam sehari, berhenti. Trader yang mencoba "membalas" kerugian biasanya menambah kerugian.</li>
+</ul>
+
+<h3>5. Alokasi portofolio</h3>
+<p>Jangan pernah menaruh semua uang di satu aset, apalagi koin meme. Kelas memakai pembagian berikut. Koin yang disebut hanyalah contoh dari kelas, <b>bukan rekomendasi</b>:</p>
+<table class="tbl">
+  <tr><th>Kelompok</th><th>Porsi</th><th>Contoh di kelas</th><th>Risiko</th></tr>
+  <tr><td><b>Bluechip</b>: kapitalisasi besar</td><td>70–80%</td><td>BTC, ETH, SOL, XRP</td><td>Paling rendah di antara kripto</td></tr>
+  <tr><td><b>Mid-cap</b>: narasi seperti AI dan RWA</td><td>20–30%</td><td>ONDO, RENDER, NEAR</td><td>Menengah</td></tr>
+  <tr><td><b>Low-cap</b>: meme dan narasi baru</td><td>Maks. 10%</td><td>Koin meme, koin narasi baru</td><td>Sangat tinggi: bisa naik atau turun ratusan persen</td></tr>
+</table>
+<p>Pembagian ini untuk porsi kripto, bukan seluruh kekayaanmu. Dana darurat tetap di luar. Dan "risiko rendah" untuk Bitcoin tetap berarti bisa turun lebih dari 50% dari puncaknya.</p>
+`,
+          keyPoints: [
+            "Hanya uang dingin yang boleh masuk pasar kripto; uang panas (pinjol, SPP, uang dapur, dana darurat) membuat panik dan merusak trading plan.",
+            "Risk/reward minimal 1 : 2. Win rate minimal agar impas = 1 ÷ (1 + R): 33,3% untuk 1 : 2 dan 25% untuk 1 : 3.",
+            "Batas 1–2% adalah uang yang siap hilang, bukan besar pembelian. Ukuran posisi = (modal × risiko%) ÷ jarak cut loss%.",
+            "Cut loss dieksekusi tanpa tawar-menawar, sedikit di bawah support; berhenti setelah dua kali kena cut loss dalam sehari.",
+            "Alokasi kelas: bluechip 70–80%, mid-cap 20–30%, low-cap maksimal 10%; contoh koin bukan rekomendasi.",
+          ],
+          practice: [
+            { type: "number", q: "Modal Rp5 juta, risiko 2% per transaksi, harga beli Rp50.000, harga cut loss Rp45.000. Berapa rupiah ukuran posisi (besar pembelian) yang tepat?", answer: 1000000, tol: 1, unit: "rupiah", hint: "Risiko = modal × 2%. Jarak cut loss = (50.000 − 45.000) ÷ 50.000.", solution: "Risiko Rp100.000, jarak cut loss 10%. Ukuran posisi = Rp100.000 ÷ 10% = Rp1.000.000." },
+            { type: "number", q: "Kalau risk/reward-mu 1 : 4, berapa persen win rate minimal agar tidak rugi (biaya diabaikan)?", answer: 20, tol: 0.1, unit: "%", hint: "Pakai rumus 1 ÷ (1 + R).", solution: "1 ÷ (1 + 4) = 0,2 = 20%." },
+            {
+              type: "choice",
+              q: "Uang mana yang boleh dipakai untuk trading kripto?",
+              options: ["Tabungan di luar dana darurat yang siap hilang", "Pinjaman online yang akan dilunasi bulan depan", "Uang SPP yang baru dibayar akhir semester", "Dana darurat keluarga yang jarang dipakai"],
+              answer: 0,
+              hint: "Kalau uang ini hilang semua, apakah hidupmu tetap berjalan normal?",
+              solution: "Hanya uang dingin. Tiga pilihan lain adalah uang panas yang dilarang keras.",
+            },
+          ],
+          quiz: [
+            {
+              q: "\"Risiko 1% per transaksi\" dengan modal Rp10 juta artinya…",
+              options: ["Rugi maksimal Rp100 ribu kalau kena cut loss", "Hanya boleh membeli koin senilai Rp100 ribu", "Untung minimal Rp100 ribu setiap transaksi", "Biaya transaksi dibatasi Rp100 ribu"],
+              answer: 0,
+              explain: "1% adalah uang yang siap hilang. Besar pembeliannya bergantung pada jarak cut loss: dengan cut loss 10%, pembeliannya Rp1 juta.",
+            },
+            {
+              q: "Dengan risk/reward 1 : 3, win rate minimal agar tidak rugi adalah…",
+              options: ["25%", "33%", "50%", "75%"],
+              answer: 0,
+              explain: "1 ÷ (1 + 3) = 25%. Satu kali benar menutup tiga kali salah.",
+            },
+            {
+              q: "Kenapa cut loss diletakkan sedikit di bawah support?",
+              options: ["Harga sering menyentuh support sebentar lalu memantul", "Supaya kerugiannya selalu lebih kecil dari 1%", "Karena exchange melarang cut loss tepat di support", "Agar posisi otomatis berubah menjadi investasi"],
+              answer: 0,
+              explain: "Kalau tepat di garis support, sentuhan singkat bisa memicu cut loss padahal harganya lalu naik lagi.",
+            },
+            {
+              q: "Uang panas dilarang dipakai trading karena…",
+              options: ["Membuat panik dan merusak trading plan saat rugi", "Exchange menolak deposit dari uang pinjaman", "Uang panas dikenai pajak lebih tinggi", "Uang panas tidak bisa ditarik kembali"],
+              answer: 0,
+              explain: "Uang yang tidak boleh hilang membuat keputusan jadi emosional: panik menjual atau menolak cut loss.",
+            },
+          ],
+        },
+        {
+          id: "bc-trd-3",
+          title: "Membaca Arah Pasar — Timeframe, Market Structure & Support/Resistance",
+          duration: "13 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Satu candlestick merangkum harga buka, tertinggi, terendah, dan tutup dalam satu periode (<a href="#/lesson/acc-tek-1">Candlestick, Volume &amp; Tren</a>). Support adalah lantai harga, resistance adalah langit-langitnya (<a href="#/lesson/acc-tek-4">RSI, Support &amp; Resistance</a>).
+</div>
+
+<p>Bab 2 Kelas Sore Indodax membahas tiga alat untuk membaca arah pasar: timeframe, market structure, dan support/resistance.</p>
+
+<h3>Timeframe: rentang waktu satu candle</h3>
+<table class="tbl">
+  <tr><th>Timeframe</th><th>Dipakai oleh</th><th>Sifatnya</th></tr>
+  <tr><td><b>Jangka pendek</b>: M5 sampai H1</td><td>Scalper</td><td>Banyak <i>noise</i>, butuh fokus dan eksekusi cepat</td></tr>
+  <tr><td><b>Jangka menengah</b>: H1 sampai H4</td><td>Day trader dan swing trader</td><td>Lebih stabil, cocok untuk momentum harian</td></tr>
+  <tr><td><b>Jangka panjang</b>: D1, W, MN</td><td>Investor dan swing trader jangka panjang</td><td>Paling stabil, untuk membaca tren besar</td></tr>
+</table>
+<p><b>Noise</b> adalah gerak acak kecil yang tampak seperti sinyal padahal bukan. Makin kecil timeframe, makin banyak noise. Kelas bertanya "timeframe mana yang paling cocok?" Jawabannya bergantung pada gayamu. Kebiasaan yang umum dipakai: lihat timeframe besar dulu untuk tahu arah tren, baru timeframe kecil untuk mencari waktu masuk.</p>
+
+<h3>Tiga arah tren</h3>
+<div data-diagram="compare3" data-cols="Uptrend::bullish::harga naik secara keseluruhan|Downtrend::bearish::harga turun secara keseluruhan|Sideways::konsolidasi::bergerak mendatar tanpa arah jelas" data-caption="Pertanyaan pertama sebelum masuk pasar: ke mana arahnya?"></div>
+
+<h3>Market structure: apakah trennya masih valid?</h3>
+<p>Harga tidak bergerak lurus, tapi naik-turun membentuk puncak (<i>high</i>) dan lembah (<i>low</i>). Polanya menunjukkan apakah tren masih sehat:</p>
+<div data-diagram="struktur-pasar" data-titik="40:L,62:H,50:HL,74:HH,60:HL,88:HH" data-caption="Uptrend valid: puncak makin tinggi (HH, higher high) dan lembah makin tinggi (HL, higher low)"></div>
+<div data-diagram="struktur-pasar" data-titik="92:H,70:L,84:LH,58:LL,72:LH,46:LL" data-caption="Downtrend valid: puncak makin rendah (LH, lower high) dan lembah makin rendah (LL, lower low)"></div>
+<p>Tanda pertama sebuah uptrend melemah adalah saat harga <b>menembus ke bawah lembah terakhir</b> (HL terakhir). Polanya tidak lagi HH dan HL. Sebaliknya, downtrend melemah saat harga menembus ke atas puncak terakhirnya.</p>
+
+<h3>Support &amp; resistance: bertukar peran</h3>
+<p>Level yang sudah ditembus sering berganti peran:</p>
+<ul>
+  <li><b>SBR</b> (<i>Support Become Resistance</i>): lantai yang dijebol ke bawah menjadi atap baru.</li>
+  <li><b>RBS</b> (<i>Resistance Become Support</i>): atap yang dijebol ke atas menjadi lantai baru.</li>
+</ul>
+<div data-diagram="struktur-pasar" data-titik="80,61,72,60,70,48:tembus,59:uji ulang,42" data-acuan="60:Support lama" data-caption="SBR: support di 60 dua kali menahan harga, lalu ditembus. Saat harga naik lagi ke 60, level itu menjadi resistance."></div>
+<p>Cara menentukan level yang kuat:</p>
+<ul>
+  <li><b>Disentuh berkali-kali.</b> Minimal 2–3 kali memantul; hindari level yang baru tersentuh sekali.</li>
+  <li><b>Terlihat di timeframe besar.</b> Level di grafik harian lebih kuat daripada di M5.</li>
+  <li><b>Anggap sebagai area, bukan garis tipis.</b> Harga jarang berbalik tepat di angka yang sama.</li>
+</ul>
+<div class="callout warn">
+<b>Analisis teknikal adalah peluang, bukan kepastian.</b> Level yang kuat pun bisa jebol, dan pola yang sama bisa gagal. Karena itu setiap analisis tetap butuh cut loss dan ukuran posisi yang benar (<a href="#/lesson/bc-trd-2">Money Management</a>). Batasan lainnya dibahas jujur di <a href="#/lesson/acc-tek-5">Volatilitas, Drawdown &amp; Batas Analisis Teknikal</a>.
+</div>
+`,
+          keyPoints: [
+            "Timeframe pendek (M5–H1) banyak noise, menengah (H1–H4) untuk day/swing trader, panjang (D1, W, MN) untuk tren besar. Lihat timeframe besar dulu, baru yang kecil.",
+            "Tiga arah tren: uptrend (bullish), downtrend (bearish), sideways (konsolidasi).",
+            "Uptrend valid: HH dan HL. Downtrend valid: LH dan LL. Uptrend melemah saat harga menembus ke bawah HL terakhir.",
+            "SBR: support yang jebol menjadi resistance. RBS: resistance yang jebol menjadi support.",
+            "Level kuat: disentuh 2–3 kali atau lebih, terlihat di timeframe besar, dan dianggap sebagai area.",
+          ],
+          practice: [
+            {
+              type: "choice",
+              q: "Puncak-puncak harga: 100, 112, 125. Lembah-lembah di antaranya: 90, 98, 108. Arah trennya?",
+              options: ["Uptrend: puncak dan lembah makin tinggi", "Downtrend: puncak makin rendah", "Sideways: tidak ada arah", "Tidak bisa dibaca tanpa indikator"],
+              answer: 0,
+              hint: "Bandingkan setiap puncak dengan puncak sebelumnya, lalu lembah dengan lembah sebelumnya.",
+              solution: "100 → 112 → 125 adalah HH, dan 90 → 98 → 108 adalah HL. Itu uptrend yang valid.",
+            },
+            {
+              type: "choice",
+              q: "Resistance di Rp50.000 ditembus ke atas. Saat harga turun lagi ke Rp50.000, level itu kemungkinan menjadi…",
+              options: ["Support (RBS)", "Resistance yang lebih kuat", "Level yang tidak berarti lagi", "Harga cut loss wajib"],
+              answer: 0,
+              hint: "Atap yang dijebol ke atas berubah menjadi apa?",
+              solution: "RBS: resistance yang ditembus ke atas sering berubah menjadi support baru.",
+            },
+            {
+              type: "choice",
+              q: "Kamu day trader. Timeframe utama yang paling sesuai?",
+              options: ["H1 dan H4", "M5 dan M15", "Mingguan dan bulanan", "Hanya grafik harian"],
+              answer: 0,
+              hint: "Posisi day trader selesai dalam satu hari.",
+              solution: "Day trader memakai H1 sampai H4: cukup rinci untuk satu hari, tapi tidak serame M5.",
+            },
+          ],
+          quiz: [
+            {
+              q: "Tanda uptrend yang masih valid adalah…",
+              options: ["Puncak dan lembah terus lebih tinggi (HH dan HL)", "Harga naik tiga hari berturut-turut", "Volume selalu lebih kecil dari kemarin", "Puncak makin tinggi tapi lembah makin rendah"],
+              answer: 0,
+              explain: "Higher high dan higher low berarti pembeli terus menang. Begitu lembah terakhir ditembus, struktur itu rusak.",
+            },
+            {
+              q: "Kenapa timeframe kecil seperti M5 disebut banyak noise?",
+              options: ["Gerak acak kecil tampak seperti sinyal padahal bukan", "Grafiknya hanya tersedia untuk koin besar", "Harga di M5 berbeda dengan harga sebenarnya", "Exchange membatasi transaksi di timeframe kecil"],
+              answer: 0,
+              explain: "Dalam lima menit, gerak harga banyak dipengaruhi kebetulan. Timeframe besar menyaring gerak acak itu.",
+            },
+            {
+              q: "Apa arti SBR (Support Become Resistance)?",
+              options: ["Lantai yang dijebol ke bawah menjadi atap baru", "Atap yang dijebol ke atas menjadi lantai baru", "Support yang disentuh tiga kali pasti bertahan", "Resistance di timeframe kecil lebih kuat"],
+              answer: 0,
+              explain: "Pilihan kedua adalah RBS, kebalikannya. Tidak ada level yang pasti bertahan.",
+            },
+            {
+              q: "Level support mana yang biasanya paling kuat?",
+              options: ["Disentuh berkali-kali dan terlihat di timeframe besar", "Baru disentuh satu kali di timeframe M5", "Angka yang dipilih secara acak oleh trader", "Level yang paling dekat dengan harga sekarang"],
+              answer: 0,
+              explain: "Makin sering harga memantul di sana dan makin besar timeframe-nya, makin banyak pelaku pasar yang memperhatikan level itu.",
+            },
+          ],
+        },
+      ],
+    },
+    /* ---------------- MODUL 11: LAYER 1, LAYER 2, PRIVASI & DAO ---------------- */
     {
       id: "bc-lanjutan",
       level: "Lanjutan",
@@ -5601,7 +5946,7 @@ Setiap <b>node</b> menyimpan salinan buku besar dan memeriksa setiap transaksi; 
         },
       ],
     },
-    /* ---------------- MODUL 11: SMART CONTRACT PERTAMAMU: SOLIDITY & REMIX ---------------- */
+    /* ---------------- MODUL 12: SMART CONTRACT PERTAMAMU: SOLIDITY & REMIX ---------------- */
     {
       id: "bc-proyek",
       level: "Proyek",
@@ -6126,7 +6471,7 @@ Kontrak <b>Celengan</b> sudah kamu coba di Remix VM — hanya kamu yang bisa mel
         },
       ],
     },
-    /* ---------------- MODUL 12: MEMBANGUN DAPP: FOUNDRY, FRONTEND & KEAMANAN ---------------- */
+    /* ---------------- MODUL 13: MEMBANGUN DAPP: FOUNDRY, FRONTEND & KEAMANAN ---------------- */
     {
       id: "bc-dapp",
       level: "DApp",
@@ -7203,7 +7548,7 @@ console.log("Setelah blok 0 diubah, sah?", sah());</div>
         },
       ],
     },
-    /* ---------------- MODUL 13: FORENSIK BLOCKCHAIN — MELACAK ALIRAN DANA ---------------- */
+    /* ---------------- MODUL 14: FORENSIK BLOCKCHAIN — MELACAK ALIRAN DANA ---------------- */
     {
       id: "bc-forensik",
       level: "Forensik",
@@ -7989,7 +8334,7 @@ Justru kombinasi tiga jalur inilah yang langka di pasar kerja — kebanyakan ora
         },
       ],
     },
-    /* ---------------- MODUL 14: REGULASI, PRIVASI, CBDC & PETA EKOSISTEM ---------------- */
+    /* ---------------- MODUL 15: REGULASI, PRIVASI, CBDC & PETA EKOSISTEM ---------------- */
     {
       id: "bc-pelengkap",
       level: "Pelengkap",
@@ -8590,7 +8935,7 @@ Sampai di sini kamu sudah bertemu Layer 1 dan Layer 2, DEX, pinjaman DeFi, staki
         },
       ],
     },
-    /* ---------------- MODUL 15: EKONOMI PROTOKOL & MENILAI PROYEK ---------------- */
+    /* ---------------- MODUL 16: EKONOMI PROTOKOL & MENILAI PROYEK ---------------- */
     {
       id: "bc-ekonomi",
       level: "Ekonomi",
@@ -9492,7 +9837,7 @@ console.log("Saat pemain baru melambat, kekurangannya ditanggung lewat harga tok
         },
       ],
     },
-    /* ---------------- MODUL 16: MASA DEPAN CRYPTO & BLOCKCHAIN ---------------- */
+    /* ---------------- MODUL 17: MASA DEPAN CRYPTO & BLOCKCHAIN ---------------- */
     {
       id: "bc-arah",
       level: "Arah",

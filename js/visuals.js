@@ -1199,6 +1199,40 @@ Object.keys(DIAGRAMS_HP).forEach((k) => {
   DIAGRAMS[k] = (ds) => (layarHP() ? DIAGRAMS_HP[k](ds) : asli(ds));
 });
 
+/* Struktur pasar: garis harga zigzag dengan label puncak/lembah (HH, HL, LH, LL) dan garis acuan datar.
+   <div data-diagram="struktur-pasar" data-titik="40,70:HH,55:HL,85:HH,68:HL,100:HH" data-acuan="60:Support"></div>
+   Label di titik yang lebih tinggi dari kedua tetangganya ditulis di atas, selain itu di bawah. Menyesuaikan sendiri untuk HP. */
+DIAGRAMS["struktur-pasar"] = (ds) => {
+  const hp = layarHP();
+  const W = hp ? 340 : 520;
+  const titik = String(ds.titik || "").split(",").map((s) => { const [v, lab] = s.split(":"); return { v: parseFloat(v), lab: (lab || "").trim() }; }).filter((t) => !isNaN(t.v));
+  const acuan = String(ds.acuan || "").split("|").filter(Boolean).map((s) => { const i = s.indexOf(":"); return { v: parseFloat(s.slice(0, i)), lab: s.slice(i + 1).trim() }; }).filter((a) => !isNaN(a.v));
+  if (titik.length < 2) return "";
+  const semua = titik.map((t) => t.v).concat(acuan.map((a) => a.v));
+  const min = Math.min(...semua), maks = Math.max(...semua);
+  const atas = 30, bawah = hp ? 184 : 170, H = bawah + 30;
+  // ruang kanan untuk label garis acuan, menyesuaikan teks terpanjang
+  const ruangLabel = acuan.length ? Math.max(...acuan.map((a) => a.lab.length)) * (hp ? 7.6 : 6.6) + 14 : 16;
+  const kiri = 16, kanan = W - ruangLabel;
+  const y = (v) => bawah - ((v - min) / (maks - min || 1)) * (bawah - atas);
+  const x = (i) => kiri + (i * (kanan - kiri)) / (titik.length - 1);
+  let isi = "";
+  acuan.forEach((a) => {
+    isi += `<line x1="${kiri}" y1="${y(a.v).toFixed(1)}" x2="${kanan}" y2="${y(a.v).toFixed(1)}" class="vline" style="stroke-dasharray:6 5;stroke-width:1.5"/>`;
+    isi += `<text x="${kanan + 6}" y="${(y(a.v) + 4).toFixed(1)}" class="vt-xs">${vEsc(a.lab)}</text>`;
+  });
+  isi += `<polyline points="${titik.map((t, i) => x(i).toFixed(1) + "," + y(t.v).toFixed(1)).join(" ")}" style="fill:none;stroke:var(--primary);stroke-width:2.5;stroke-linejoin:round"/>`;
+  titik.forEach((t, i) => {
+    if (!t.lab) return;
+    const kiriV = i > 0 ? titik[i - 1].v : -Infinity, kananV = i < titik.length - 1 ? titik[i + 1].v : -Infinity;
+    const puncak = t.v >= kiriV && t.v >= kananV;
+    isi += `<circle cx="${x(i).toFixed(1)}" cy="${y(t.v).toFixed(1)}" r="4" style="fill:var(--primary)"/>`;
+    isi += `<text x="${x(i).toFixed(1)}" y="${(puncak ? y(t.v) - 10 : y(t.v) + 19).toFixed(1)}" text-anchor="middle" class="vt-xs" style="font-weight:700">${vEsc(t.lab)}</text>`;
+  });
+  return vFigure(ds.caption, hp ? svgHP(H, isi, "Gambar struktur pasar")
+    : `<svg viewBox="0 0 ${W} ${H}" class="viz-svg" role="img" aria-label="Gambar struktur pasar">${isi}</svg>`);
+};
+
 /* Gambar jaringan saraf berlapis.
    <div data-diagram="jaringan-saraf" data-lapisan="2,4,5,3" data-nama="Input|Lapisan 1|Lapisan 2|Output" data-masuk="x₁|x₂"></div>
    Lapisan dengan lebih dari 8 neuron digambar 3 + ⋮ + 3, jumlah aslinya ditulis di label.
@@ -6518,6 +6552,56 @@ DEMOS["tulis-angka"] = function (root) {
     h("p", { class: "dm-note", text: "Model mini 64 → 48 → 10 (3.610 parameter), dilatih dari 1.347 contoh angka 8×8 bawaan scikit-learn ditambah 1.000 contoh sintetis, bukan MNIST. Akurasinya 97,1% pada 450 gambar uji, tapi gaya tulisanmu bisa berbeda dari data latihnya. Kalau tebakannya salah, itu juga pelajaran." }),
   ]));
   kosong();
+};
+
+/* ---------- Demo: kalkulator ukuran posisi (risiko per transaksi, risk/reward, win rate impas) ---------- */
+DEMOS["kalkulator-posisi"] = function (root) {
+  // Ukuran posisi = (modal × risiko%) ÷ jarak cut loss%. Biaya transaksi sengaja tidak dihitung agar rumusnya jelas.
+  const baca = (el) => { const v = parseFloat(String(el.value).replace(/\./g, "").replace(",", ".")); return isNaN(v) ? 0 : v; };
+  const rp = (v) => "Rp" + Math.round(v).toLocaleString("id-ID");
+  const pct = (v, d) => v.toLocaleString("id-ID", { maximumFractionDigits: d == null ? 1 : d }) + "%";
+  const masuk = (label, nilai, satuan, nama) => {
+    const el = h("input", { class: "pc-input", type: "text", inputmode: "decimal", value: nilai, "aria-label": nama || label });
+    return [el, h("div", { class: "dm-row" }, [h("span", { text: label }), el, h("span", { class: "dm-sub", text: satuan })])];
+  };
+  const [modal, bModal] = masuk("Modal", "10.000.000", "rupiah");
+  const [risiko, bRisiko] = masuk("Risiko per transaksi", "1", "% dari modal");
+  const [beli, bBeli] = masuk("Harga beli", "100.000", "rupiah per koin");
+  const [cut, bCut] = masuk("Harga cut loss", "90.000", "rupiah per koin");
+  const [target, bTarget] = masuk("Harga target", "120.000", "rupiah per koin");
+  const hasil = h("div", { class: "dm-out" });
+  function hitung() {
+    const M = baca(modal), r = baca(risiko), B = baca(beli), C = baca(cut), T = baca(target);
+    if (M <= 0 || r <= 0 || B <= 0) { hasil.innerHTML = '<div class="dm-line teks"><span>Isi modal, risiko, dan harga beli</span><b>–</b></div>'; return; }
+    if (C >= B) { hasil.innerHTML = '<div class="dm-line big bad teks"><span>Periksa</span><b>Harga cut loss harus di bawah harga beli</b></div>'; return; }
+    const uangRisiko = M * r / 100, jarak = (B - C) / B;
+    let posisi = uangRisiko / jarak, kena = false;
+    if (posisi > M) { posisi = M; kena = true; }
+    const rugi = posisi * jarak, untung = T > B ? posisi * (T - B) / B : 0;
+    const rr = T > B ? (T - B) / (B - C) : 0;
+    const impas = rr > 0 ? 100 / (1 + rr) : 100;
+    const baris = (a, b, kelas) => '<div class="dm-line ' + (kelas || "") + '"><span>' + a + "</span><b>" + b + "</b></div>";
+    hasil.innerHTML =
+      baris("Uang yang siap hilang per transaksi", rp(uangRisiko)) +
+      baris("Jarak cut loss dari harga beli", pct(jarak * 100)) +
+      baris("Ukuran posisi (beli senilai)", rp(posisi) + " = " + pct(posisi / M * 100) + " modal", "big good") +
+      baris("Jumlah koin", (posisi / B).toLocaleString("id-ID", { maximumFractionDigits: 4 })) +
+      baris("Kalau kena cut loss", "rugi " + rp(rugi)) +
+      baris("Kalau kena target", T > B ? "untung " + rp(untung) : "target harus di atas harga beli") +
+      baris("Risk/reward", rr > 0 ? "1 : " + rr.toLocaleString("id-ID", { maximumFractionDigits: 1 }) : "–", rr > 0 && rr < 2 ? "bad" : "") +
+      baris("Win rate minimal agar tidak rugi", rr > 0 ? pct(impas) : "–") +
+      (kena ? baris("Catatan", "Posisi dibatasi sebesar modal: cut loss terlalu dekat atau risiko terlalu besar", "bad teks") : "") +
+      (rr > 0 && rr < 2 ? baris("Catatan", "Risk/reward di bawah 1 : 2. Aturan kelas: jangan masuk posisi", "bad teks") : "");
+  }
+  [modal, risiko, beli, cut, target].forEach((el) => el.addEventListener("input", hitung));
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Kalkulator ukuran posisi</b>" }),
+    h("p", { class: "demo-hint", text: "Ubah angkanya. Perhatikan: yang dibatasi 1% adalah uang yang siap hilang, bukan besar pembelian." }),
+    bModal, bRisiko, bBeli, bCut, bTarget,
+    hasil,
+    h("p", { class: "dm-note", text: "Untuk belajar, bukan sinyal trading. Biaya transaksi dan selip harga tidak dihitung; di dunia nyata keduanya menambah kerugian dan mengurangi keuntungan." }),
+  ]));
+  hitung();
 };
 
 /* ---------- Demo: kenop AI kos — memutar parameter dengan tangan ---------- */

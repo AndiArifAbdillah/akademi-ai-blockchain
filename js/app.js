@@ -18,7 +18,7 @@ const MODULE_ORDER = [
   "ai-mahir", "ai-lanjutan", "ai-agen", "ai-otomasi", "ai-proyek", "ai-terapan", "ai-ekonomi", "ai-arah",
   // ⛓️ Blockchain
   "bc-dasar", "bc-pemula", "bc-skeptis", "bc-fundamental", "bc-pendalaman", "bc-matematika",
-  "bc-kriptografi", "bc-menengah", "bc-terapan", "bc-lanjutan", "bc-proyek", "bc-dapp",
+  "bc-kriptografi", "bc-menengah", "bc-terapan", "bc-trading", "bc-lanjutan", "bc-proyek", "bc-dapp",
   "bc-forensik", "bc-pelengkap", "bc-ekonomi", "bc-arah",
   // 📊 Akuntansi
   "acc-dasar", "acc-pemula", "acc-menengah", "acc-pendalaman", "acc-fundamental",
@@ -1897,6 +1897,18 @@ const GLOSSARY = [
   ["Flatten", "Lapisan yang meratakan gambar, misalnya kotak 28×28 piksel, menjadi satu baris angka (784) agar bisa masuk ke lapisan Dense."],
   ["Forward propagation", "Perambatan maju: data mengalir dari input layer, diolah lapisan tersembunyi, lalu keluar sebagai prediksi di output layer."],
   ["Hidden layer", "Lapisan tersembunyi di antara input dan output yang mengolah data dan menemukan fitur, misalnya garis dan lengkungan pada gambar."],
+  ["DCA", "Dollar Cost Averaging: membeli rutin dengan jumlah tetap (DCA waktu) atau saat harga turun tajam (DCA harga) untuk merata-ratakan harga beli. Mengurangi risiko salah waktu, tapi tidak menjamin untung."],
+  ["Uang dingin", "Uang yang siap hilang sepenuhnya, misalnya tabungan di luar dana darurat. Lawannya uang panas: pinjol, uang SPP, uang dapur, dan dana darurat."],
+  ["Risk/reward", "Perbandingan antara rugi bila kena cut loss dan untung bila kena target. Dengan 1 : R, win rate minimal agar impas = 1 ÷ (1 + R)."],
+  ["Cut loss", "Menjual di harga yang sudah ditentukan untuk membatasi kerugian; disebut juga stop loss. Biasanya diletakkan sedikit di bawah support."],
+  ["Ukuran posisi", "Besar pembelian dalam satu transaksi: (modal × risiko%) ÷ jarak cut loss%. Yang dibatasi 1–2% adalah risikonya, bukan besar pembeliannya."],
+  ["Trading plan", "Rencana tertulis sebelum masuk pasar: alasan masuk, harga masuk, cut loss, target, dan ukuran posisi."],
+  ["Timeframe", "Rentang waktu satu candle di grafik, misalnya M5 (5 menit), H4 (4 jam), atau D1 (harian). Makin kecil, makin banyak noise."],
+  ["Market structure", "Pola puncak dan lembah harga. Uptrend valid bila HH (higher high) dan HL (higher low); downtrend valid bila LH (lower high) dan LL (lower low)."],
+  ["SBR", "Support Become Resistance: support yang ditembus ke bawah berubah menjadi resistance baru. Kebalikannya RBS (Resistance Become Support)."],
+  ["Support", "Level harga yang berkali-kali menahan penurunan, seperti lantai. Makin sering disentuh dan makin besar timeframe-nya, makin kuat."],
+  ["Bluechip", "Aset kripto berkapitalisasi besar dan relatif mapan, seperti Bitcoin dan Ethereum. Risikonya lebih rendah di antara kripto, tapi tetap bisa turun lebih dari 50%."],
+  ["Swing trader", "Trader yang menahan posisi beberapa hari sampai bulan, memakai timeframe H4 sampai mingguan. Lawannya scalper (menit) dan day trader (satu hari)."],
   ["Kenop", "Tombol putar, seperti pengatur volume radio atau api kompor. Di materi AI dipakai sebagai perumpamaan untuk angka yang bisa diputar naik-turun: parameter yang digeser sedikit demi sedikit saat model belajar, atau pengaturan seperti learning rate dan temperature."],
 ];
 
