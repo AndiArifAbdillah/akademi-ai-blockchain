@@ -6554,6 +6554,153 @@ DEMOS["tulis-angka"] = function (root) {
   kosong();
 };
 
+/* ---------- Demo: backtest robot trading (beli-tahan, DCA mingguan, persilangan MA) ---------- */
+DEMOS["backtest-robot"] = function (root) {
+  // Harga simulasi (jalan acak berbenih 875, bukan data koin sungguhan): 650 hari, harga awal Rp100.000.
+  // Benih dipilih lewat kalibrasi agar overfitting terlihat jelas: MA terbaik di data latih rugi di data uji.
+  // Data latih = hari 151–400, data uji = hari 401–650 (150 hari pertama untuk pemanasan moving average).
+  const MODAL = 10000000;
+  const harga = (() => {
+    let a = 875;
+    const r = () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+    const normal = () => { let u = 0, v = 0; while (u === 0) u = r(); while (v === 0) v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+    const h = [100000];
+    for (let i = 1; i < 650; i++) h.push(h[i - 1] * Math.exp(0.0008 + 0.035 * normal()));
+    return h;
+  })();
+  const PERIODE = { latih: [150, 400], uji: [400, 650] };
+  const rp = (v) => "Rp" + Math.round(v).toLocaleString("id-ID");
+  const pct = (v) => (v >= 0 ? "+" : "") + v.toLocaleString("id-ID", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + "%";
+  const ma = (n, i) => { if (i + 1 < n) return null; let s = 0; for (let k = i - n + 1; k <= i; k++) s += harga[k]; return s / n; };
+
+  // Setiap strategi mengembalikan nilai portofolio harian, jumlah transaksi, dan total biaya.
+  function belitahan(a, b, fee) {
+    const koin = MODAL * (1 - fee) / harga[a], nilai = [];
+    for (let i = a; i < b; i++) nilai.push(koin * harga[i]);
+    nilai[nilai.length - 1] *= 1 - fee;
+    return { nilai, trx: 2, biaya: MODAL * fee + koin * harga[b - 1] * fee };
+  }
+  function dca(a, b, fee) {
+    const kali = Math.ceil((b - a) / 7), per = MODAL / kali;
+    let kas = MODAL, koin = 0, trx = 0, biaya = 0;
+    const nilai = [];
+    for (let i = a; i < b; i++) {
+      if ((i - a) % 7 === 0 && kas > 1) { const x = Math.min(per, kas); biaya += x * fee; koin += x * (1 - fee) / harga[i]; kas -= x; trx++; }
+      nilai.push(kas + koin * harga[i]);
+    }
+    const akhir = koin * harga[b - 1]; biaya += akhir * fee; trx++;
+    nilai[nilai.length - 1] = kas + akhir * (1 - fee);
+    return { nilai, trx, biaya };
+  }
+  function silang(a, b, fee, cepat, lambat) {
+    let kas = MODAL, koin = 0, trx = 0, biaya = 0;
+    const nilai = [];
+    for (let i = a; i < b; i++) {
+      const f = ma(cepat, i), s = ma(lambat, i);
+      if (f != null && s != null) {
+        if (f > s && koin === 0) { biaya += kas * fee; koin = kas * (1 - fee) / harga[i]; kas = 0; trx++; }
+        else if (f < s && koin > 0) { const v = koin * harga[i]; biaya += v * fee; kas = v * (1 - fee); koin = 0; trx++; }
+      }
+      nilai.push(kas + koin * harga[i]);
+    }
+    if (koin > 0) { const v = koin * harga[b - 1]; biaya += v * fee; nilai[nilai.length - 1] = v * (1 - fee); trx++; }
+    return { nilai, trx, biaya };
+  }
+  const turunTerdalam = (nilai) => { let puncak = nilai[0], dd = 0; nilai.forEach((v) => { puncak = Math.max(puncak, v); dd = Math.min(dd, v / puncak - 1); }); return dd * 100; };
+
+  const pilihStrategi = h("select", { class: "pc-input lebar", "aria-label": "Strategi robot" }, [
+    h("option", { value: "silang", text: "Persilangan moving average (MA)" }),
+    h("option", { value: "dca", text: "DCA mingguan" }),
+    h("option", { value: "tahan", text: "Beli & tahan" }),
+  ]);
+  const pilihPeriode = h("select", { class: "pc-input lebar", "aria-label": "Periode data" }, [
+    h("option", { value: "latih", text: "Data latih (hari 151–400)" }),
+    h("option", { value: "uji", text: "Data uji (hari 401–650)" }),
+  ]);
+  const cepat = h("input", { class: "pc-input", type: "text", inputmode: "numeric", value: "10", "aria-label": "MA cepat (hari)" });
+  const lambat = h("input", { class: "pc-input", type: "text", inputmode: "numeric", value: "50", "aria-label": "MA lambat (hari)" });
+  const biaya = h("input", { class: "pc-input", type: "text", inputmode: "decimal", value: "0,3", "aria-label": "Biaya per transaksi (persen)" });
+  const barisMA = h("div", { class: "dm-row" }, [h("span", { text: "MA cepat" }), cepat, h("span", { text: "MA lambat" }), lambat, h("span", { class: "dm-sub", text: "hari" })]);
+  const jalan = h("button", { class: "btn primary", type: "button", text: "Jalankan backtest" });
+  const cari = h("button", { class: "btn ghost", type: "button", text: "Cari pengaturan MA terbaik di data latih" });
+  const uji = h("button", { class: "btn ghost", type: "button", text: "Uji pengaturan ini di data uji" });
+  const grafik = h("div", { class: "bt-grafik" });
+  const hasil = h("div", { class: "dm-out" });
+  const pesan = h("p", { class: "demo-hint bt-pesan" });
+  const angka = (el) => { const v = parseFloat(String(el.value).replace(",", ".")); return isNaN(v) ? 0 : v; };
+
+  function hitung(strategi, periode, fee, c, l) {
+    const [a, b] = PERIODE[periode];
+    if (strategi === "dca") return dca(a, b, fee);
+    if (strategi === "tahan") return belitahan(a, b, fee);
+    return silang(a, b, fee, c, l);
+  }
+  function gambar(nilaiRobot, nilaiTahan) {
+    const W = 520, H = 180, semua = nilaiRobot.concat(nilaiTahan);
+    const min = Math.min(...semua), maks = Math.max(...semua);
+    const x = (i, n) => 8 + (i * (W - 16)) / (n - 1), y = (v) => H - 12 - ((v - min) / (maks - min || 1)) * (H - 24);
+    const garis = (arr) => arr.map((v, i) => x(i, arr.length).toFixed(1) + "," + y(v).toFixed(1)).join(" ");
+    const modalY = y(MODAL).toFixed(1);
+    grafik.innerHTML = `<svg viewBox="0 0 ${W} ${H}" class="viz-svg" role="img" aria-label="Nilai portofolio robot dibanding beli dan tahan">` +
+      `<line x1="8" y1="${modalY}" x2="${W - 8}" y2="${modalY}" class="vline dim"/>` +
+      `<polyline points="${garis(nilaiTahan)}" style="fill:none;stroke:var(--muted);stroke-width:1.5;stroke-dasharray:5 4"/>` +
+      `<polyline points="${garis(nilaiRobot)}" style="fill:none;stroke:var(--primary);stroke-width:2.2"/></svg>` +
+      '<p class="dm-sub bt-legenda"><span class="bt-robot">━ robot</span> · <span>╌ beli &amp; tahan</span> · garis tipis = modal awal</p>';
+  }
+  function jalankan() {
+    const strategi = pilihStrategi.value, periode = pilihPeriode.value, fee = angka(biaya) / 100;
+    let c = Math.round(angka(cepat)), l = Math.round(angka(lambat));
+    barisMA.hidden = strategi !== "silang";
+    if (strategi === "silang" && !(c >= 2 && l > c && l <= 150)) {
+      hasil.innerHTML = '<div class="dm-line big bad teks"><span>Periksa</span><b>MA cepat minimal 2, MA lambat lebih besar dan maksimal 150</b></div>';
+      grafik.innerHTML = "";
+      return;
+    }
+    const r = hitung(strategi, periode, fee, c, l), t = hitung("tahan", periode, fee, c, l);
+    const akhir = r.nilai[r.nilai.length - 1], hasilRobot = (akhir / MODAL - 1) * 100, hasilTahan = (t.nilai[t.nilai.length - 1] / MODAL - 1) * 100;
+    const baris = (a, b, kelas) => '<div class="dm-line ' + (kelas || "") + '"><span>' + a + "</span><b>" + b + "</b></div>";
+    hasil.innerHTML =
+      baris("Modal " + rp(MODAL) + " menjadi", rp(akhir), "big " + (hasilRobot >= hasilTahan ? "good" : "bad")) +
+      baris("Imbal hasil robot", pct(hasilRobot)) +
+      baris("Imbal hasil beli &amp; tahan", pct(hasilTahan)) +
+      baris("Jumlah transaksi", String(r.trx)) +
+      baris("Total biaya transaksi", rp(r.biaya)) +
+      baris("Turun terdalam dari puncak", pct(turunTerdalam(r.nilai)));
+    gambar(r.nilai, t.nilai);
+  }
+  jalan.onclick = () => { pesan.textContent = ""; jalankan(); };
+  [pilihStrategi, pilihPeriode].forEach((el) => el.addEventListener("change", () => { pesan.textContent = ""; jalankan(); }));
+  cari.onclick = () => {
+    const fee = angka(biaya) / 100;
+    let terbaik = null;
+    for (const c of [3, 5, 8, 10, 15, 20, 25, 30]) for (const l of [20, 30, 40, 50, 60, 80, 100, 120, 150]) {
+      if (c >= l) continue;
+      const r = silang(PERIODE.latih[0], PERIODE.latih[1], fee, c, l), v = r.nilai[r.nilai.length - 1];
+      if (!terbaik || v > terbaik.v) terbaik = { c, l, v };
+    }
+    pilihStrategi.value = "silang"; pilihPeriode.value = "latih";
+    cepat.value = String(terbaik.c); lambat.value = String(terbaik.l);
+    pesan.textContent = "Dari 68 kombinasi, MA " + terbaik.c + "/" + terbaik.l + " paling untung di data latih. Sekarang tekan \"Uji pengaturan ini di data uji\".";
+    jalankan();
+  };
+  uji.onclick = () => { pilihPeriode.value = "uji"; pesan.textContent = "Pengaturan yang sama, diuji di 250 hari yang belum pernah dilihat."; jalankan(); };
+
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Backtest robot trading</b>" }),
+    h("p", { class: "demo-hint", text: "Pilih aturan robot, lalu bandingkan hasilnya dengan sekadar beli dan tahan. Modal awal Rp10 juta." }),
+    h("div", { class: "dm-row" }, [h("span", { text: "Aturan robot" }), pilihStrategi]),
+    barisMA,
+    h("div", { class: "dm-row" }, [h("span", { text: "Biaya per transaksi" }), biaya, h("span", { class: "dm-sub", text: "%" })]),
+    h("div", { class: "dm-row" }, [h("span", { text: "Periode" }), pilihPeriode]),
+    h("div", { class: "demo-controls" }, [jalan, cari, uji]),
+    pesan,
+    grafik,
+    hasil,
+    h("p", { class: "dm-note", text: "Harga simulasi yang dibuat acak, bukan data koin sungguhan. Robot membeli atau menjual seluruh dana di harga penutupan; biaya dipotong setiap transaksi. Untuk belajar, bukan sinyal trading." }),
+  ]));
+  jalankan();
+};
+
 /* ---------- Demo: kalkulator ukuran posisi (risiko per transaksi, risk/reward, win rate impas) ---------- */
 DEMOS["kalkulator-posisi"] = function (root) {
   // Ukuran posisi = (modal × risiko%) ÷ jarak cut loss%. Biaya transaksi sengaja tidak dihitung agar rumusnya jelas.

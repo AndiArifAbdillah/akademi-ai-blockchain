@@ -5252,7 +5252,7 @@ Pada <b>Proof of Stake</b>, validator mengunci koin sebagai jaminan dan ikut mem
       id: "bc-trading",
       level: "Trading",
       title: "Trading Kripto dengan Kepala Dingin",
-      summary: "Materi Kelas Sore Indodax yang dilengkapi data dan hitungan: investor atau trader, DCA dan lump sum, money management (uang dingin, risk/reward, ukuran posisi, cut loss, alokasi), lalu membaca arah pasar lewat timeframe, market structure, dan support/resistance. Edukasi, bukan nasihat keuangan.",
+      summary: "Materi Kelas Sore Indodax yang dilengkapi data dan hitungan: investor atau trader, DCA dan lump sum, money management (uang dingin, risk/reward, ukuran posisi, cut loss, alokasi), lalu membaca arah pasar lewat timeframe, market structure, dan support/resistance, sampai robot trading dari nol dengan backtest. Edukasi, bukan nasihat keuangan.",
       lessons: [
         {
           id: "bc-trd-1",
@@ -5587,6 +5587,151 @@ Satu candlestick merangkum harga buka, tertinggi, terendah, dan tutup dalam satu
               options: ["Disentuh berkali-kali dan terlihat di timeframe besar", "Baru disentuh satu kali di timeframe M5", "Angka yang dipilih secara acak oleh trader", "Level yang paling dekat dengan harga sekarang"],
               answer: 0,
               explain: "Makin sering harga memantul di sana dan makin besar timeframe-nya, makin banyak pelaku pasar yang memperhatikan level itu.",
+            },
+          ],
+        },
+        {
+          id: "bc-trd-4",
+          title: "Robot Trading dari Nol — Aturan, Backtest, Biaya & Overfitting",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Trading plan berisi alasan masuk, cut loss, target, dan ukuran posisi (<a href="#/lesson/bc-trd-1">Investor atau Trader?</a>, <a href="#/lesson/bc-trd-2">Money Management</a>). <b>Moving average</b> adalah rata-rata harga beberapa hari terakhir yang terus bergeser (<a href="#/lesson/acc-tek-2">Moving Average</a>).
+</div>
+
+<div class="callout warn">
+<b>Materi edukasi, bukan nasihat keuangan.</b> Robot tidak membuat strategi menjadi untung. Kalau strateginya rugi, robot hanya membuatmu rugi lebih cepat, lebih disiplin, dan tanpa tidur.
+</div>
+
+<h3>Robot trading = aturan + eksekusi otomatis</h3>
+<p><b>Robot trading</b> adalah program yang menjalankan jual-beli berdasarkan aturan yang kamu tulis, misalnya "beli Rp200 ribu setiap Senin" atau "jual kalau harga turun 10% dari harga beli". Robot bekerja dalam putaran:</p>
+<div data-diagram="cycle" data-steps="Ambil harga terbaru|Cek aturan|Kirim order bila aturan terpenuhi|Catat dan pantau" data-center="robot" data-caption="Putaran yang sama dengan agen AI, hanya saja keputusannya diambil dari aturan tertulis"></div>
+
+<h3>Waspadai robot trading bodong</h3>
+<p>Tahun 2022, kasus robot trading bodong seperti DNA Pro, Fahrenheit, Net89, dan ATG merugikan ribuan orang di Indonesia dengan nilai triliunan rupiah. Ciri-cirinya hampir selalu sama:</p>
+<ul>
+  <li><b>Menjanjikan untung pasti atau tetap</b>, misalnya "1% per hari". Pasar tidak pernah memberi kepastian.</li>
+  <li><b>Mengajak merekrut anggota</b> untuk mendapat bonus. Uangnya datang dari anggota baru, bukan dari trading.</li>
+  <li><b>Uang disetor ke platform mereka sendiri</b>, bukan ke exchange resmi atas namamu.</li>
+</ul>
+<p>Cek legalitas penawaran apa pun lewat kontak OJK 157 atau daftar entitas ilegal dari Satgas PASTI. Dan tanyakan satu hal: kalau robotnya benar-benar untung terus, kenapa dijual?</p>
+
+<h3>Tiga cara punya robot yang sah</h3>
+<table class="tbl">
+  <tr><th>Cara</th><th>Contoh</th><th>Risiko utama</th></tr>
+  <tr><td><b>Fitur otomatis exchange</b></td><td>Limit order, take profit, stop loss, pembelian rutin. Beberapa exchange juga punya bot grid</td><td>Paling kecil, karena tidak ada pihak lain yang memegang akses</td></tr>
+  <tr><td><b>Layanan bot pihak ketiga</b></td><td>Platform bot yang disambungkan ke exchange lewat API key</td><td>Kunci API bocor. Tahun 2022, kunci API pengguna sebuah layanan bot terkenal bocor dan dipakai peretas untuk bertransaksi dari akun korban</td></tr>
+  <tr><td><b>Bikin sendiri</b></td><td>Python dan API exchange, misalnya lewat pustaka ccxt</td><td>Bug di kode bisa langsung menghabiskan uang</td></tr>
+</table>
+<p>Sisa pelajaran ini membahas cara ketiga, karena dari sanalah kamu benar-benar paham apa yang dikerjakan robot.</p>
+
+<h3>Langkah 1 — Tulis aturannya dengan tepat</h3>
+<p>Komputer hanya mengerjakan yang tertulis, jadi aturan harus bisa diukur. "Beli kalau harganya kelihatan murah" tidak bisa dijalankan; "beli kalau rata-rata 10 hari naik melewati rata-rata 50 hari" bisa. Contoh aturan yang umum:</p>
+<table class="tbl">
+  <tr><th>Aturan</th><th>Cara kerjanya</th></tr>
+  <tr><td><b>Beli &amp; tahan</b></td><td>Beli di hari pertama, jual di hari terakhir. Ini <b>pembanding wajib</b>: robot yang tidak bisa mengalahkannya tidak ada gunanya</td></tr>
+  <tr><td><b>DCA mingguan</b></td><td>Beli dengan jumlah sama setiap tujuh hari</td></tr>
+  <tr><td><b>Persilangan MA</b></td><td>Beli saat MA cepat naik melewati MA lambat, jual saat turun di bawahnya</td></tr>
+</table>
+
+<h3>Langkah 2 — Backtest: uji di data masa lalu</h3>
+<p><b>Backtest</b> menjalankan aturan robot pada harga masa lalu, seolah-olah robot sudah hidup sejak dulu. Coba di bawah: jalankan persilangan MA 10/50 di data latih, lalu ganti ke DCA dan beli &amp; tahan.</p>
+<div data-demo="backtest-robot"></div>
+<p>Di data latih, MA 10/50 menghasilkan +34,4%, beli &amp; tahan +12,8%, sedangkan DCA justru −14,2%: harga sempat naik tinggi di tengah periode, sehingga sebagian besar pembelian DCA terjadi di harga mahal. Satu backtest saja sudah menunjukkan bahwa tidak ada aturan yang selalu menang.</p>
+
+<h3>Biaya: pembunuh yang tidak terlihat</h3>
+<p>Setiap transaksi kena biaya, dan robot yang sering bertransaksi membayar biaya itu berkali-kali. Pilih MA 3/20 di data uji: dengan biaya 0% hasilnya −31,9%, dengan biaya 0,3% menjadi −37,0%, karena 26 transaksi menghabiskan Rp613 ribu. Coba juga naikkan biaya menjadi 1%. Banyak strategi yang tampak untung di atas kertas berubah menjadi rugi setelah biaya dihitung.</p>
+
+<h3>Overfitting: juara di data lama, gagal di data baru</h3>
+<p>Tekan <b>"Cari pengaturan MA terbaik di data latih"</b>. Komputer mencoba 68 kombinasi dan menemukan MA 3/20 dengan hasil <b>+82,2%</b>, jauh di atas beli &amp; tahan. Sekarang tekan <b>"Uji pengaturan ini di data uji"</b>: pengaturan yang sama menghasilkan <b>−37,0%</b>, padahal beli &amp; tahan di periode itu +12,4%.</p>
+<p>Inilah <b>overfitting</b>: aturan yang dipilih karena paling cocok dengan data lama ternyata hanya menghafal kebetulan di dalamnya (<a href="#/lesson/ai-m-4">Overfitting &amp; Cara Menguji Model</a>). Harga di demo ini dibuat acak, jadi memang tidak ada pola yang bisa ditemukan. Pengaturan "terbaik" itu murni kebetulan, persis seperti banyak robot yang dijual dengan grafik backtest yang memukau.</p>
+<div class="callout">
+<b>Cara melawan overfitting:</b> pisahkan data latih dan data uji, lalu putuskan aturan hanya dari data latih. Pakai sesedikit mungkin pengaturan. Uji di periode panjang dengan kondisi pasar berbeda: naik, turun, dan mendatar. Kalau strategi hanya untung dengan angka yang sangat spesifik, kemungkinan besar itu kebetulan.
+</div>
+
+<h3>Langkah 3–5 — Paper trading, uang kecil, pengaman</h3>
+<ol>
+  <li><b>Paper trading:</b> jalankan robot dengan harga sungguhan tapi uang pura-pura selama beberapa minggu. Contoh kode di bawah.</li>
+  <li><b>Uang sungguhan dalam jumlah kecil</b>, hanya uang dingin.</li>
+  <li><b>Pengaman</b>, sama dengan agen AI yang memegang uang (<a href="#/lesson/ai-agen-2">Agen yang Bisa Membayar</a>):
+    <ul>
+      <li>batas belanja per transaksi dan per hari;</li>
+      <li>tombol darurat untuk mematikan robot;</li>
+      <li>API key <b>tanpa izin penarikan</b> dan dibatasi ke alamat IP tertentu, disimpan di berkas .env, bukan di kode;</li>
+      <li>catatan setiap transaksi dan notifikasi ke HP.</li>
+    </ul>
+  </li>
+</ol>
+<p>Contoh paper trading DCA dengan Python dan pustaka <b>ccxt</b>, yang bisa membaca harga dari banyak exchange termasuk Indodax. Kode ini hanya mencatat; tidak ada order sungguhan:</p>
+<pre class="code">import ccxt
+
+bursa = ccxt.indodax()      # data publik, belum perlu API key
+BIAYA = 0.003               # contoh 0,3%; cek biaya di exchange-mu
+total_modal = 0
+total_koin = 0
+
+def satu_putaran(beli=200_000):
+    global total_modal, total_koin
+    harga = bursa.fetch_ticker("BTC/IDR")["last"]
+    total_koin += beli * (1 - BIAYA) / harga
+    total_modal += beli
+    nilai = total_koin * harga
+    print(f"harga {harga:,.0f} | modal {total_modal:,} | nilai {nilai:,.0f}")
+
+satu_putaran()   # jalankan seminggu sekali, catat hasilnya</pre>
+<p>Order sungguhan membutuhkan API key dan perintah <i>create_order</i>. Jangan sampai ke tahap itu sebelum aturannya lolos backtest yang jujur dan paper trading berminggu-minggu. Bekal kodenya ada di <a href="#/lesson/cd-py-1">Python dari Nol</a> dan <a href="#/lesson/cd-web-3">API &amp; JSON</a>.</p>
+`,
+          keyPoints: [
+            "Robot trading = aturan tertulis + eksekusi otomatis. Robot tidak membuat strategi untung; strategi yang rugi hanya rugi lebih cepat.",
+            "Robot bodong (kasus 2022: DNA Pro, Fahrenheit, Net89, ATG) menjanjikan untung pasti, mengajak merekrut anggota, dan meminta setoran ke platform mereka.",
+            "Backtest menguji aturan pada data masa lalu dan wajib dibandingkan dengan beli & tahan serta memasukkan biaya transaksi.",
+            "Overfitting: di demo, MA 3/20 terbaik di data latih (+82,2%) jatuh ke −37,0% di data uji, sementara beli & tahan +12,4%. Pisahkan data latih dan uji.",
+            "Urutan aman: aturan → backtest jujur → paper trading → uang kecil dengan batas belanja, tombol darurat, dan API key tanpa izin penarikan.",
+          ],
+          practice: [
+            { type: "number", q: "Robot bertransaksi 200 kali setahun, setiap transaksi Rp1 juta, dengan biaya 0,3% per transaksi. Berapa rupiah total biaya setahun?", answer: 600000, tol: 1, unit: "rupiah", hint: "Biaya per transaksi = 0,3% × Rp1 juta.", solution: "Rp3.000 × 200 = Rp600.000 setahun, sebelum menghitung untung atau rugi apa pun." },
+            {
+              type: "choice",
+              q: "Robotmu untung 150% di backtest tahun lalu setelah kamu mencoba ratusan pengaturan, tapi rugi saat dipakai tahun ini dengan pengaturan yang sama. Penyebab paling mungkin?",
+              options: ["Overfitting: pengaturannya menghafal data lama", "Exchange sengaja membuat robot rugi", "Harga tahun ini pasti salah dicatat", "Robot perlu dipasang ulang tiap tahun"],
+              answer: 0,
+              hint: "Ingat tombol \"cari pengaturan terbaik\" di demo.",
+              solution: "Mencoba banyak pengaturan lalu memilih yang terbaik di data lama hampir pasti menemukan kebetulan. Karena itu aturan harus diuji di data yang tidak dipakai untuk memilihnya.",
+            },
+            {
+              type: "choice",
+              q: "Izin API key mana yang paling aman untuk robot buatanmu?",
+              options: ["Izin trading saja, tanpa penarikan, dibatasi IP", "Semua izin termasuk penarikan, supaya praktis", "Izin penarikan saja, tanpa izin trading", "Kunci tanpa batas IP agar bisa dipakai di mana saja"],
+              answer: 0,
+              hint: "Kalau kuncinya bocor, apa yang bisa dilakukan pencuri?",
+              solution: "Tanpa izin penarikan, pencuri tidak bisa memindahkan dana keluar. Batas IP membuat kunci tidak bisa dipakai dari komputer lain.",
+            },
+          ],
+          quiz: [
+            {
+              q: "Ciri paling jelas robot trading bodong adalah…",
+              options: ["Menjanjikan untung tetap dan mengajak merekrut anggota", "Memakai bahasa pemrograman Python di dalamnya", "Bisa dihubungkan ke exchange terdaftar OJK", "Menampilkan grafik harga secara real time"],
+              answer: 0,
+              explain: "Pasar tidak memberi kepastian, dan bonus dari merekrut anggota adalah tanda uangnya berasal dari anggota baru.",
+            },
+            {
+              q: "Kenapa backtest harus memasukkan biaya transaksi?",
+              options: ["Strategi yang sering bertransaksi bisa jadi rugi", "Supaya grafiknya terlihat lebih halus dan rapi", "Karena exchange mewajibkan laporan backtest", "Biaya membuat robot berjalan lebih cepat"],
+              answer: 0,
+              explain: "Di demo, 26 transaksi MA 3/20 menghabiskan Rp613 ribu dan menambah kerugian sekitar 5 poin persen.",
+            },
+            {
+              q: "Pengaturan terbaik di data latih ternyata rugi di data uji. Ini tanda…",
+              options: ["Overfitting: aturan terlalu pas dengan data lama", "Robotnya rusak dan perlu dipasang ulang", "Data uji pasti salah dan harus dibuang", "Biaya transaksi di data uji lebih mahal"],
+              answer: 0,
+              explain: "Aturan dipilih karena kebetulan cocok dengan data latih, bukan karena menangkap pola yang benar-benar ada.",
+            },
+            {
+              q: "Apa pembanding wajib saat menilai hasil backtest robot?",
+              options: ["Hasil beli dan tahan di periode yang sama", "Hasil robot milik teman di grup Telegram", "Janji keuntungan di iklan robot trading", "Harga tertinggi koin itu sepanjang masa"],
+              answer: 0,
+              explain: "Kalau robot tidak bisa mengalahkan sekadar membeli lalu menahan, robot itu hanya menambah biaya dan risiko.",
             },
           ],
         },

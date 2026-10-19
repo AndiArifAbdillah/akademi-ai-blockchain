@@ -1909,6 +1909,9 @@ const GLOSSARY = [
   ["Support", "Level harga yang berkali-kali menahan penurunan, seperti lantai. Makin sering disentuh dan makin besar timeframe-nya, makin kuat."],
   ["Bluechip", "Aset kripto berkapitalisasi besar dan relatif mapan, seperti Bitcoin dan Ethereum. Risikonya lebih rendah di antara kripto, tapi tetap bisa turun lebih dari 50%."],
   ["Swing trader", "Trader yang menahan posisi beberapa hari sampai bulan, memakai timeframe H4 sampai mingguan. Lawannya scalper (menit) dan day trader (satu hari)."],
+  ["Backtest", "Menguji aturan trading pada data harga masa lalu, seolah robot sudah berjalan sejak dulu. Wajib memasukkan biaya transaksi dan dibandingkan dengan beli & tahan."],
+  ["Paper trading", "Menjalankan strategi dengan harga sungguhan tapi uang pura-pura, sebelum mempertaruhkan uang asli."],
+  ["Robot trading", "Program yang menjalankan jual-beli otomatis berdasarkan aturan tertulis. Waspadai yang menjanjikan untung pasti atau mengajak merekrut anggota."],
   ["Kenop", "Tombol putar, seperti pengatur volume radio atau api kompor. Di materi AI dipakai sebagai perumpamaan untuk angka yang bisa diputar naik-turun: parameter yang digeser sedikit demi sedikit saat model belajar, atau pengaturan seperti learning rate dan temperature."],
 ];
 

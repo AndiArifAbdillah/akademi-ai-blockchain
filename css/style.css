@@ -1779,3 +1779,9 @@ details.modul-jembatan:not([open]) { padding-bottom: 12px; }
 
 /* Gambar hasil sungguhan (foto/plot) di dalam pelajaran */
 .viz.foto img { display: block; width: 100%; max-width: 935px; height: auto; margin: 0 auto; border-radius: 10px; background: #fff; }
+
+/* Demo backtest robot trading */
+.bt-grafik { margin-top: 10px; }
+.bt-legenda { text-align: center; margin: 4px 0 0; }
+.bt-robot { color: var(--primary); font-weight: 700; }
+.bt-pesan:empty { display: none; }
