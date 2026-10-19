@@ -5252,7 +5252,7 @@ Pada <b>Proof of Stake</b>, validator mengunci koin sebagai jaminan dan ikut mem
       id: "bc-trading",
       level: "Trading",
       title: "Trading Kripto dengan Kepala Dingin",
-      summary: "Materi Kelas Sore Indodax yang dilengkapi data dan hitungan: investor atau trader, DCA dan lump sum, money management (uang dingin, risk/reward, ukuran posisi, cut loss, alokasi), lalu membaca arah pasar lewat timeframe, market structure, dan support/resistance, sampai robot trading dari nol dengan backtest. Edukasi, bukan nasihat keuangan.",
+      summary: "Materi Kelas Sore Indodax yang dilengkapi data dan hitungan: investor atau trader, DCA dan lump sum, money management (uang dingin, risk/reward, ukuran posisi, cut loss, alokasi), lalu membaca arah pasar lewat timeframe, market structure, dan support/resistance, robot trading dari nol dengan backtest, sampai memecoin: siapa yang untung, jebakan di DEX, dan cara memeriksa sebelum membeli. Edukasi, bukan nasihat keuangan.",
       lessons: [
         {
           id: "bc-trd-1",
@@ -5732,6 +5732,134 @@ satu_putaran()   # jalankan seminggu sekali, catat hasilnya</pre>
               options: ["Hasil beli dan tahan di periode yang sama", "Hasil robot milik teman di grup Telegram", "Janji keuntungan di iklan robot trading", "Harga tertinggi koin itu sepanjang masa"],
               answer: 0,
               explain: "Kalau robot tidak bisa mengalahkan sekadar membeli lalu menahan, robot itu hanya menambah biaya dan risiko.",
+            },
+          ],
+        },
+        {
+          id: "bc-trd-5",
+          title: "Memecoin — Siapa yang Untung, Jebakan di DEX & Cara Memeriksa Sebelum Membeli",
+          duration: "16 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Koin meme masuk kelompok <b>low-cap</b>: maksimal 10% dari porsi kripto, dan hanya uang dingin (<a href="#/lesson/bc-trd-2">Money Management</a>). Di DEX, harga ditentukan rumus kolam x × y = k, dan rug pull serta sandwich attack sudah dibahas di <a href="#/lesson/bc-dex-1">DEX vs CEX</a>. Seed phrase tidak boleh diberikan ke siapa pun (<a href="#/lesson/bc-a-4">Keamanan &amp; Penipuan</a>).
+</div>
+
+<div class="callout warn">
+<b>Materi edukasi, bukan nasihat keuangan.</b> Koin yang disebut di sini hanyalah contoh, bukan rekomendasi. Sebagian besar memecoin berakhir hampir tidak bernilai.
+</div>
+
+<h3>Apa itu memecoin?</h3>
+<p><b>Memecoin</b> (sering juga ditulis meme coin) adalah token yang lahir dari lelucon, gambar lucu, hewan, atau tokoh internet. Tidak ada produk, tidak ada pendapatan, tidak ada laba yang dibagikan. Harganya naik hanya kalau makin banyak orang ingin membeli, jadi nilainya hampir murni berasal dari <b>perhatian</b>.</p>
+<p>Ada dua jenis yang sangat berbeda:</p>
+<table class="tbl">
+  <tr><th>Jenis</th><th>Contoh</th><th>Tempat membeli</th></tr>
+  <tr><td><b>Memecoin besar</b>, sudah bertahun-tahun</td><td>DOGE, SHIB, PEPE</td><td>Banyak yang tersedia di exchange terdaftar OJK. Cek daftar aset di aplikasinya</td></tr>
+  <tr><td><b>Memecoin baru</b>, umurnya hitungan jam atau hari</td><td>Ribuan koin baru setiap hari</td><td>Hanya di DEX, sering lewat <i>launchpad</i> seperti Pump.fun di Solana</td></tr>
+</table>
+<p>Yang besar pun tetap sangat berisiko: DOGE pernah turun lebih dari 80% dari puncaknya tahun 2021. Pelajaran ini lebih banyak membahas jenis kedua, karena di sanalah jebakan paling banyak.</p>
+
+<h3>Kenapa kebanyakan berakhir nol</h3>
+<p>Launchpad seperti Pump.fun memakai <b>bonding curve</b>: rumus harga otomatis, setiap pembelian menaikkan harga dan setiap penjualan menurunkannya. Siapa pun bisa membuat koin dalam satu menit dengan biaya sangat kecil. Akibatnya jumlah koin baru meledak, dan pembuatnya hampir tidak rugi apa-apa kalau koinnya gagal.</p>
+<p>Laporan Solidus Labs (Mei 2025) menganalisis lebih dari 7 juta token di Pump.fun sepanjang Januari 2024 sampai Maret 2025: <b>98,6%</b> menunjukkan tanda rug pull atau <b>pump and dump</b>, dan kurang dari 100 ribu token yang masih punya likuiditas di atas US$1.000.</p>
+<p>Jadi pertanyaan pentingnya bukan "koin mana yang akan naik?", melainkan <b>"kalau saya untung, uangnya datang dari siapa?"</b></p>
+<div data-diagram="flow" data-steps="Koin dibuat|Orang dalam beli murah|Promosi dan FOMO|Orang dalam menjual|Harga longsor" data-caption="Pola pump and dump: uang pembeli terakhir menjadi untung pembeli pertama"></div>
+
+<h3>Simulasi: siapa yang untung dalam satu jam?</h3>
+<p>Demo di bawah meniru pola pump and dump yang sering terjadi. Pembuat koin membeli pertama, <b>bot sniper</b> memborong di menit 1, pembeli awal masuk pelan-pelan, influencer membeli diam-diam di menit 18 lalu mempromosikan koinnya di menit 20, kemudian pembeli yang terpancing <b>FOMO</b> berdatangan.</p>
+<div data-demo="pump-dump"></div>
+<p>Dengan pilihan awal (beli di menit 22 setelah promosi, lalu ditahan), modal Rp1 juta tinggal <b>Rp256.524 (−74%)</b>. Pembuat koin untung 107%, bot sniper 211%, influencer 102%, sedangkan 20 pembeli FOMO rugi 75%. Perhatikan tiga baris terakhir: untung semua pemenang (Rp45,2 juta) ditambah biaya (Rp2,1 juta) sama persis dengan rugi semua yang kalah (Rp47,3 juta). <b>Memecoin tidak menciptakan uang baru.</b> Untung satu orang adalah rugi orang lain, dikurangi biaya.</p>
+<p>Sekarang coba pilihan lain:</p>
+<ul>
+  <li><b>Menit 12, jual saat 2×:</b> +99%. Tapi di dunia nyata kamu tidak tahu sedang berada di "menit 12". Koin yang masih sepi jauh lebih sering tetap sepi lalu mati.</li>
+  <li><b>Menit 28, saat trending:</b> −84% kalau ditahan. Cut loss 40% pun berakhir −62%, karena dalam satu menit harga sudah jatuh melewati batasmu.</li>
+  <li><b>Menit 2, lalu ditahan:</b> tetap −42%. Masuk paling awal pun tidak menolong tanpa rencana keluar.</li>
+</ul>
+<p>Pola ini nyata. Februari 2025, koin LIBRA dipromosikan Presiden Argentina, melonjak, lalu jatuh dalam hitungan jam. Menurut analisis Nansen, 86% trader yang membelinya rugi, dengan total kerugian sekitar US$251 juta, sementara dompet-dompet yang masuk paling awal meraup untung besar.</p>
+
+<h3>Jebakan khusus memecoin di DEX</h3>
+<table class="tbl">
+  <tr><th>Jebakan</th><th>Yang terjadi</th><th>Cara mengecek</th></tr>
+  <tr><td><b>Honeypot</b></td><td>Koin bisa dibeli tapi tidak bisa dijual, karena kodenya memblokir penjualan</td><td>honeypot.is (jaringan EVM), atau lihat apakah dompet lain berhasil menjual</td></tr>
+  <tr><td><b>Koin palsu</b></td><td>Nama dan logo sama dengan koin yang sedang ramai, alamat kontraknya beda</td><td>Ambil alamat kontrak hanya dari akun resmi, lalu cocokkan di DexScreener</td></tr>
+  <tr><td><b>Pajak jual</b></td><td>Kode memotong 10–99% setiap kali kamu menjual</td><td>Token Sniffer atau honeypot.is menampilkan pajak beli dan jual</td></tr>
+  <tr><td><b>Pasokan terpusat</b></td><td>Pembuat, sniper, atau puluhan dompet kembar menguasai sebagian besar koin</td><td>Daftar top holder, dan Bubblemaps untuk melihat dompet yang saling terhubung</td></tr>
+  <tr><td><b>Izin cetak masih aktif</b></td><td>Pembuat bisa mencetak koin baru atau membekukan dompetmu (di Solana: <b>mint authority</b> dan <i>freeze authority</i>)</td><td>RugCheck menampilkan apakah izin ini sudah dicabut</td></tr>
+  <tr><td><b>Bot dan situs palsu</b></td><td>"Bot trading Telegram" atau situs klaim yang meminta seed phrase, lalu menguras dompet</td><td>Tidak perlu dicek: permintaan seed phrase selalu penipuan</td></tr>
+</table>
+
+<h3>Daftar periksa sebelum membeli</h3>
+<p>Kalau tetap ingin mencoba, lakukan pemeriksaan ini setiap kali:</p>
+<ol>
+  <li><b>Alamat kontrak</b> dari sumber resmi, bukan dari kolom komentar, DM, atau grup.</li>
+  <li><b>Pemindai token:</b> RugCheck untuk Solana, Token Sniffer atau honeypot.is untuk jaringan EVM. Lihat honeypot, pajak, dan izin cetak.</li>
+  <li><b>Likuiditas:</b> berapa besar, dan apakah dikunci atau dibakar? Kolam kecil berarti selip harga besar dan mudah dikuras.</li>
+  <li><b>Kepemilikan:</b> 10 dompet teratas, selain kolam, memegang berapa persen? Makin besar, makin mudah mereka menjatuhkan harga.</li>
+  <li><b>Umur dan volume:</b> koin berumur beberapa jam dengan volume tiba-tiba sangat besar adalah tanda bahaya, bukan peluang.</li>
+</ol>
+<div class="callout">
+<b>Lolos semua pemeriksaan bukan jaminan.</b> Pemeriksaan hanya menyaring penipuan yang kasar. Pump and dump seperti di demo tetap bisa terjadi pada koin yang terlihat "bersih", karena menjual koin milik sendiri bukan pelanggaran kode.
+</div>
+
+<h3>Aturan bertahan hidup</h3>
+<ul>
+  <li><b>Hanya uang dingin, dan kecil.</b> Anggap uangnya sudah hilang saat kamu membeli. Jangan pernah <i>all in</i>.</li>
+  <li><b>Dompet terpisah</b> khusus memecoin, berisi secukupnya. Jangan sambungkan dompet utamamu ke situs baru.</li>
+  <li><b>Tulis rencana keluar sebelum membeli.</b> Misalnya: saat nilainya 2×, jual separuh untuk menarik modal awal, sisanya boleh ditahan.</li>
+  <li><b>Jangan mengejar koin yang sedang dipromosikan.</b> Saat kabarnya sampai kepadamu, kamu biasanya sudah berada di menit 22 atau 28.</li>
+  <li><b>Ingat batas perlindungan.</b> Transaksi di DEX tidak diawasi OJK, jadi tidak ada yang bisa mengembalikan dana kalau kamu tertipu (<a href="#/lesson/bc-app-4">Regulasi &amp; Pajak Aset Kripto</a>).</li>
+</ul>
+`,
+          keyPoints: [
+            "Memecoin tidak punya produk atau pendapatan. Nilainya hampir murni dari perhatian, jadi untung satu orang adalah rugi orang lain, dikurangi biaya.",
+            "Solidus Labs (2025): 98,6% dari lebih 7 juta token di Pump.fun menunjukkan tanda rug pull atau pump and dump.",
+            "Di demo, pembuat, bot sniper, dan influencer untung lebih dari 100%, sementara pembeli FOMO rugi 75%. Membeli setelah promosi lalu menahan: −74%.",
+            "Jebakan DEX: honeypot, koin palsu, pajak jual, pasokan terpusat, izin cetak yang masih aktif, serta bot atau situs yang meminta seed phrase.",
+            "Periksa alamat kontrak, pemindai token, likuiditas, dan top holder, tapi lolos pemeriksaan bukan jaminan. Pakai uang dingin kecil, dompet terpisah, dan rencana keluar.",
+          ],
+          practice: [
+            { type: "number", q: "Kamu membeli memecoin Rp500 ribu, lalu nilainya naik menjadi Rp1,5 juta. Kamu ingin menjual sebagian untuk menarik modal awal saja. Berapa persen koin yang perlu dijual? (abaikan biaya)", answer: 33.3, tol: 0.5, unit: "%", hint: "Bagi modal awal dengan nilai sekarang.", solution: "Rp500.000 ÷ Rp1.500.000 = 33,3%. Sisa 66,7% koin (senilai Rp1 juta) bisa ditahan tanpa risiko kehilangan modal awal." },
+            {
+              type: "choice",
+              q: "Kamu menemukan koin dengan nama dan logo persis seperti memecoin yang sedang viral, dan harganya masih sangat murah. Langkah pertama yang benar?",
+              options: ["Cocokkan alamat kontraknya dengan akun resmi", "Langsung beli selagi harganya masih murah", "Tanya di grup Telegram apakah koin ini asli", "Lihat apakah logonya beresolusi tinggi"],
+              answer: 0,
+              hint: "Nama dan logo bisa ditiru siapa saja. Apa yang tidak bisa ditiru?",
+              solution: "Alamat kontrak tidak bisa dipalsukan. Koin \"murah\" dengan nama sama hampir selalu tiruan yang dibuat untuk memancing pembeli.",
+            },
+            {
+              type: "choice",
+              q: "RugCheck menunjukkan mint authority sebuah koin belum dicabut. Artinya…",
+              options: ["Pembuat masih bisa mencetak koin baru kapan saja", "Koin ini sudah pasti aman untuk dibeli", "Harga koin tidak bisa turun di bawah harga awal", "Koin ini sudah terdaftar resmi di OJK"],
+              answer: 0,
+              hint: "Mint berarti mencetak.",
+              solution: "Selama izin itu aktif, pembuat bisa mencetak koin dalam jumlah besar lalu menjualnya, sehingga harga koinmu jatuh.",
+            },
+          ],
+          quiz: [
+            {
+              q: "Di simulasi, dari mana keuntungan pembuat koin, bot sniper, dan influencer berasal?",
+              options: ["Dari uang pembeli yang datang belakangan", "Dari pendapatan proyek di balik koin itu", "Dari bunga yang dibayar kolam likuiditas", "Dari subsidi yang diberikan oleh Pump.fun"],
+              answer: 0,
+              explain: "Memecoin tidak punya pendapatan. Untung para pemenang ditambah biaya sama persis dengan rugi pembeli yang kalah.",
+            },
+            {
+              q: "Token honeypot adalah token yang…",
+              options: ["Bisa dibeli tapi tidak bisa dijual kembali", "Harganya selalu naik karena likuiditasnya dikunci", "Dibagikan gratis kepada pengguna awal", "Dibuat oleh influencer terkenal"],
+              answer: 0,
+              explain: "Kodenya memblokir penjualan selain oleh pembuatnya, sehingga pembeli terjebak dan uangnya tidak bisa ditarik.",
+            },
+            {
+              q: "Kamu baru tahu sebuah memecoin dari promosi influencer, saat harganya sudah naik 5×. Menurut simulasi, posisimu paling mirip…",
+              options: ["Pembeli FOMO yang menanggung rugi orang dalam", "Bot sniper yang membeli di menit pertama", "Pembuat koin yang memegang pasokan awal", "Influencer yang membeli sebelum promosi"],
+              answer: 0,
+              explain: "Di demo, membeli setelah promosi lalu menahan berakhir −74%. Orang dalam menjual ke pembeli yang datang karena promosi.",
+            },
+            {
+              q: "Sebuah koin lolos semua pemeriksaan RugCheck. Kesimpulan yang tepat adalah…",
+              options: ["Penipuan kasar tersaring, tapi masih bisa rugi besar", "Koin ini dijamin tidak akan turun harganya", "Pembuatnya pasti tidak akan menjual koinnya", "Koin ini aman dibeli dengan uang berapa pun"],
+              answer: 0,
+              explain: "Pemeriksaan hanya menangkap jebakan di kode. Pump and dump cukup dilakukan dengan menjual koin milik sendiri.",
             },
           ],
         },

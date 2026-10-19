@@ -6751,6 +6751,128 @@ DEMOS["kalkulator-posisi"] = function (root) {
   hitung();
 };
 
+/* ---------- Demo: pump and dump memecoin di kolam AMM (x × y = k) ---------- */
+DEMOS["pump-dump"] = function (root) {
+  // Satu jam kehidupan memecoin rekaan. Harga ditentukan rumus kolam x × y = k dengan cadangan awal
+  // Rp50 juta dan 1 miliar token (harga peluncuran Rp0,05 per token). Biaya 1% per transaksi (contoh).
+  // Urutan pelaku disusun mengikuti pola pump and dump yang umum, bukan data koin sungguhan.
+  const MODAL = 1000000, AWAL = 0.05;
+  const GRUP = ["Pembuat koin", "Bot sniper", "Influencer", "Pembeli awal", "Pembeli FOMO", "Kamu"];
+  const JUMLAH = { "Bot sniper": " (3 dompet)", "Pembeli awal": " (10 orang)", "Pembeli FOMO": " (20 orang)" };
+  const PERISTIWA = [[1, "bot sniper memborong"], [20, "influencer mempromosikan"], [27, "orang dalam mulai menjual"], [36, "kepanikan, harga longsor"]];
+  const rp = (v) => "Rp" + Math.round(v).toLocaleString("id-ID");
+  const juta = (v) => "Rp" + (v / 1e6).toLocaleString("id-ID", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " jt";
+  const pct = (v) => (v >= 0 ? "+" : "−") + Math.abs(Math.round(v)).toLocaleString("id-ID") + "%";
+  const kali = (v) => v.toLocaleString("id-ID", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + "×";
+
+  function simulasi(masuk, keluar) {
+    const FEE = 0.01, k = 50e6 * 1e9;
+    let R = 50e6, T = 1e9, biaya = 0;
+    const pelaku = {}, jalur = [], kamu = { beli: masuk, jual: null };
+    const harga = () => R / T;
+    const beli = (nama, grup, uang) => {
+      const x = (pelaku[nama] = pelaku[nama] || { grup, modal: 0, kas: 0, token: 0 });
+      const Rb = R + uang * (1 - FEE), Tb = k / Rb;
+      biaya += uang * FEE; x.token += T - Tb; x.modal += uang; R = Rb; T = Tb;
+    };
+    const jual = (nama, porsi) => {
+      const x = pelaku[nama];
+      if (!x || x.token <= 0) return;
+      const Tb = T + x.token * porsi, Rb = k / Tb;
+      biaya += (R - Rb) * FEE; x.kas += (R - Rb) * (1 - FEE); x.token *= 1 - porsi; R = Rb; T = Tb;
+    };
+    for (let m = 0; m <= 60; m++) {
+      if (m === 0) beli("pembuat", "Pembuat koin", 3e6);
+      if (m === 1) for (let i = 0; i < 3; i++) beli("sniper" + i, "Bot sniper", 6e6);
+      if (m >= 5 && m <= 14) beli("awal" + m, "Pembeli awal", 2e6);
+      if (m === 18) beli("influencer", "Influencer", 4e6); // membeli diam-diam sebelum promosi
+      if (m >= 21 && m <= 30) { beli("fomoA" + m, "Pembeli FOMO", 3e6); beli("fomoB" + m, "Pembeli FOMO", 3e6); }
+      if (m === masuk) beli("kamu", "Kamu", MODAL);
+      if (m === 27) jual("influencer", 1);
+      if (m === 29) for (let i = 0; i < 3; i++) jual("sniper" + i, 1);
+      if (m === 30) for (let j = 5; j <= 9; j++) jual("awal" + j, 1); // separuh pembeli awal ambil untung
+      if (m === 31) jual("pembuat", 1);
+      if (m >= 36 && m <= 40) jual("awal" + (m - 26), 1); // separuh lainnya panik
+      if (m >= 36 && m <= 45) jual("fomoA" + (m - 15), 0.6); // sebagian pembeli FOMO panik, sisanya bertahan
+      const x = pelaku.kamu;
+      if (x && x.token > 0 && m > masuk) {
+        const nilai = x.token * harga() * 0.98; // perkiraan setelah selip harga dan biaya
+        if ((keluar === "2x" && nilai >= 2 * x.modal) || (keluar === "cut" && nilai <= 0.6 * x.modal)) { jual("kamu", 1); kamu.jual = m; }
+      }
+      jalur.push(harga() / AWAL);
+    }
+    // Koin yang tersisa dinilai seolah semua pemegang menjual bersamaan di menit 60:
+    // kolam kembali ke cadangan awal, jadi uang yang bisa ditarik hanya R − Rp50 juta, dikurangi biaya.
+    const sisa = 1e9 - T, perToken = sisa > 0 ? ((R - 50e6) * (1 - FEE)) / sisa : 0, grup = {};
+    biaya += (R - 50e6) * FEE;
+    Object.values(pelaku).forEach((x) => {
+      const g = (grup[x.grup] = grup[x.grup] || { modal: 0, hasil: 0 });
+      g.modal += x.modal; g.hasil += x.kas + x.token * perToken;
+    });
+    return { jalur, grup, kamu, biaya };
+  } // akhir simulasi
+
+  const pilihMasuk = h("select", { class: "pc-input lebar", "aria-label": "Menit kamu membeli" }, [
+    h("option", { value: "2", text: "Menit 2 (baru diluncurkan)" }),
+    h("option", { value: "12", text: "Menit 12 (masih sepi)" }),
+    h("option", { value: "22", text: "Menit 22 (setelah promosi)" }),
+    h("option", { value: "28", text: "Menit 28 (sedang trending)" }),
+  ]);
+  const pilihKeluar = h("select", { class: "pc-input lebar", "aria-label": "Aturan menjual" }, [
+    h("option", { value: "tahan", text: "Tahan sampai menit 60" }),
+    h("option", { value: "2x", text: "Jual semua saat nilainya 2×" }),
+    h("option", { value: "cut", text: "Cut loss saat turun 40%" }),
+  ]);
+  pilihMasuk.value = "22";
+  const grafik = h("div", { class: "bt-grafik" });
+  const hasil = h("div", { class: "dm-out" });
+
+  function gambar(r) {
+    const W = 520, H = 190, maks = Math.max(...r.jalur) * 1.08;
+    const x = (m) => 10 + (m * (W - 20)) / 60, y = (v) => H - 14 - (v / maks) * (H - 34);
+    const titik = r.jalur.map((v, m) => x(m).toFixed(1) + "," + y(v).toFixed(1)).join(" ");
+    const garisWaktu = PERISTIWA.map(([m], i) =>
+      `<line x1="${x(m)}" y1="20" x2="${x(m)}" y2="${H - 14}" class="vline dim"/>` +
+      `<circle cx="${x(m)}" cy="11" r="8" style="fill:var(--surface);stroke:var(--muted)"/>` +
+      `<text x="${x(m)}" y="15" text-anchor="middle" style="font-size:11px;fill:var(--muted);font-weight:700">${i + 1}</text>`).join("");
+    const tanda = (m, warna) => m == null ? "" : `<circle cx="${x(m).toFixed(1)}" cy="${y(r.jalur[m]).toFixed(1)}" r="6" style="fill:${warna};stroke:var(--surface);stroke-width:2"/>`;
+    grafik.innerHTML = `<svg viewBox="0 0 ${W} ${H}" class="viz-svg" role="img" aria-label="Harga memecoin selama 60 menit">` +
+      `<line x1="10" y1="${y(1).toFixed(1)}" x2="${W - 10}" y2="${y(1).toFixed(1)}" class="vline dim"/>` + garisWaktu +
+      `<polyline points="${titik}" style="fill:none;stroke:var(--primary);stroke-width:2.2"/>` +
+      tanda(r.kamu.beli, "var(--ok)") + tanda(r.kamu.jual, "var(--bad)") + "</svg>" +
+      '<p class="dm-sub bt-legenda">' + PERISTIWA.map(([m, t], i) => "<b>" + (i + 1) + "</b> menit " + m + ": " + t).join(" · ") +
+      '<br><span style="color:var(--ok)">●</span> kamu membeli · <span style="color:var(--bad)">●</span> kamu menjual · garis tipis = harga peluncuran</p>';
+  }
+  function jalankan() {
+    const r = simulasi(+pilihMasuk.value, pilihKeluar.value);
+    const puncak = Math.max(...r.jalur), menitPuncak = r.jalur.indexOf(puncak);
+    const baris = (a, b, kelas) => '<div class="dm-line ' + (kelas || "") + '"><span>' + a + "</span><b>" + b + "</b></div>";
+    const kamu = r.grup.Kamu, persen = (g) => (g.hasil / g.modal - 1) * 100;
+    let untung = 0, rugi = 0;
+    GRUP.forEach((n) => { const d = r.grup[n].hasil - r.grup[n].modal; if (d > 0) untung += d; else rugi -= d; });
+    hasil.innerHTML =
+      baris("Modalmu Rp1 juta menjadi", rp(kamu.hasil) + " (" + pct(persen(kamu)) + ")", "big " + (kamu.hasil >= MODAL ? "good" : "bad")) +
+      baris("Harga tertinggi, dibanding harga peluncuran", kali(puncak) + " di menit " + menitPuncak) +
+      baris("Harga di menit 60, dibanding harga peluncuran", kali(r.jalur[60])) +
+      GRUP.slice(0, 5).map((n) => baris(n + (JUMLAH[n] || "") + ", modal " + juta(r.grup[n].modal), pct(persen(r.grup[n])), persen(r.grup[n]) >= 0 ? "good" : "bad")).join("") +
+      baris("Total untung semua pemenang", juta(untung)) +
+      baris("Total rugi semua yang kalah", juta(rugi)) +
+      baris("Biaya yang dibayar semua orang", juta(r.biaya));
+    gambar(r);
+  }
+  [pilihMasuk, pilihKeluar].forEach((el) => el.addEventListener("change", jalankan));
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Satu jam kehidupan sebuah memecoin</b>" }),
+    h("p", { class: "demo-hint", text: "Kamu membeli Rp1 juta. Pilih kapan masuk dan kapan keluar, lalu lihat siapa yang untung." }),
+    h("div", { class: "dm-row" }, [h("span", { text: "Kamu beli di" }), pilihMasuk]),
+    h("div", { class: "dm-row" }, [h("span", { text: "Aturan jual" }), pilihKeluar]),
+    grafik,
+    hasil,
+    h("p", { class: "dm-note", text: "Koin dan pelakunya rekaan. Harga dihitung dengan rumus kolam x × y = k, biaya 1% per transaksi. Koin yang belum dijual dinilai seolah semua pemegangnya menjual bersamaan di menit 60, sehingga nilainya lebih rendah dari harga di grafik. Untuk belajar, bukan sinyal trading." }),
+  ]));
+  jalankan();
+};
+
 /* ---------- Demo: kenop AI kos — memutar parameter dengan tangan ---------- */
 DEMOS["kenop-kos"] = function (root) {
   // Model: tebakan = kenop × luas. Data latih dari pelajaran ai-p-4: 10 m² → Rp1.000.000, 20 m² → Rp2.000.000.

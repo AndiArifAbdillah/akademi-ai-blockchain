@@ -1912,6 +1912,12 @@ const GLOSSARY = [
   ["Backtest", "Menguji aturan trading pada data harga masa lalu, seolah robot sudah berjalan sejak dulu. Wajib memasukkan biaya transaksi dan dibandingkan dengan beli & tahan."],
   ["Paper trading", "Menjalankan strategi dengan harga sungguhan tapi uang pura-pura, sebelum mempertaruhkan uang asli."],
   ["Robot trading", "Program yang menjalankan jual-beli otomatis berdasarkan aturan tertulis. Waspadai yang menjanjikan untung pasti atau mengajak merekrut anggota."],
+  ["Pump and dump", "Harga koin sengaja dinaikkan lewat promosi atau pembelian awal, lalu orang dalam menjual ke pembeli yang datang belakangan sehingga harga jatuh."],
+  ["Bonding curve", "Rumus harga otomatis di launchpad token: setiap pembelian menaikkan harga dan setiap penjualan menurunkannya, tanpa order book."],
+  ["Bot sniper", "Program yang membeli token baru dalam hitungan detik setelah diluncurkan, lalu menjualnya ke pembeli yang datang kemudian."],
+  ["Honeypot", "Token yang bisa dibeli tapi tidak bisa dijual, karena kodenya memblokir penjualan selain oleh pembuatnya."],
+  ["FOMO", "Fear of missing out — takut ketinggalan. Membeli karena melihat harga sudah naik dan orang lain ramai membicarakannya, bukan karena rencana."],
+  ["Mint authority", "Izin di Solana untuk mencetak token baru. Kalau belum dicabut, pembuat bisa menambah pasokan kapan saja lalu menjualnya."],
   ["Kenop", "Tombol putar, seperti pengatur volume radio atau api kompor. Di materi AI dipakai sebagai perumpamaan untuk angka yang bisa diputar naik-turun: parameter yang digeser sedikit demi sedikit saat model belajar, atau pengaturan seperti learning rate dan temperature."],
 ];
 
