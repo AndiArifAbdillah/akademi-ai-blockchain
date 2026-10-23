@@ -1938,6 +1938,9 @@ const GLOSSARY = [
   ["Mixer", "Layanan yang mencampur dana banyak orang untuk menyembunyikan siapa mengirim apa."],
   ["Doxxing", "Menyebarkan informasi identitas seseorang tanpa izinnya."],
   ["Grounding", "Memberi AI data asli yang diambil alat dan memintanya menjawab hanya dari data itu, agar tidak mengarang."],
+  ["Tool poisoning", "Serangan yang menyembunyikan perintah di deskripsi alat MCP; pengguna jarang membacanya, tapi model selalu membacanya."],
+  ["Lethal trifecta", "Tiga kemampuan yang berbahaya bila ada di satu agen: akses data rahasia, membaca konten tak tepercaya, dan bisa mengirim ke luar."],
+  ["Idempotency key", "Kunci unik per pesanan yang dikirim ulang di setiap percobaan, sehingga coba-ulang tidak membuat pembayaran ganda."],
   ["Kenop", "Tombol putar, seperti pengatur volume radio atau api kompor. Di materi AI dipakai sebagai perumpamaan untuk angka yang bisa diputar naik-turun: parameter yang digeser sedikit demi sedikit saat model belajar, atau pengaturan seperti learning rate dan temperature."],
 ];
 
