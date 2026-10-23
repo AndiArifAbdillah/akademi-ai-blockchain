@@ -1785,3 +1785,24 @@ details.modul-jembatan:not([open]) { padding-bottom: 12px; }
 .bt-legenda { text-align: center; margin: 4px 0 0; }
 .bt-robot { color: var(--primary); font-weight: 700; }
 .bt-pesan:empty { display: none; }
+
+/* Demo analisis on-chain & oracle: judul bagian di dalam hasil demo */
+.bt-judul { margin: 14px 0 2px; }
+.bt-judul:first-child { margin-top: 4px; }
+
+/* Demo tebak-label: kartu profil dompet */
+.label-kartu { border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin: 10px 0; background: var(--surface); }
+.label-kartu .kicker { margin: 0 0 4px; }
+.label-data { margin: 0 0 10px; padding-left: 18px; font-size: .93rem; }
+.label-data li { margin: 2px 0; }
+
+/* Demo oracle-median: tombol node dan deret laporan terurut */
+.orc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; margin: 10px 0; }
+.orc-node { font: inherit; font-size: .9rem; font-weight: 700; text-align: left; padding: 8px 10px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
+.orc-node small { display: block; font-weight: 400; font-size: .78rem; color: var(--muted); }
+.orc-node.bohong { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
+.orc-node.bohong small { color: var(--bad); }
+.orc-urut { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px; }
+.orc-urut span { font-size: .85rem; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--border); white-space: nowrap; }
+.orc-urut span.palsu { color: var(--bad); border-color: var(--bad); }
+.orc-urut span.tengah { font-weight: 700; outline: 2px solid var(--primary); outline-offset: 1px; }
