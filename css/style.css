@@ -1806,3 +1806,7 @@ details.modul-jembatan:not([open]) { padding-bottom: 12px; }
 .orc-urut span { font-size: .85rem; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--border); white-space: nowrap; }
 .orc-urut span.palsu { color: var(--bad); border-color: var(--bad); }
 .orc-urut span.tengah { font-weight: 700; outline: 2px solid var(--primary); outline-offset: 1px; }
+
+/* Demo pola-tren: kotak centang zona & garis tren */
+.dm-centang { display: inline-flex; align-items: center; gap: 6px; margin-right: 16px; font-size: .93rem; cursor: pointer; }
+.dm-out:empty { display: none; }

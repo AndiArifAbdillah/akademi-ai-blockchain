@@ -7260,6 +7260,200 @@ DEMOS["chainlink-langsung"] = function (root) {
   status.textContent = "Salinan tersimpan 21 Okt 2026. Tekan tombol untuk membaca harga saat ini.";
 };
 
+/* ---------- Pembantu grafik candlestick untuk demo trading (data rekaan berbenih) ---------- */
+const LilinMini = {
+  // Harga penutupan dari titik-titik arah [[indeks, harga], ...], diinterpolasi lalu diberi goyangan kecil.
+  jalur(titik, benih) {
+    let a = benih;
+    const r = () => { a = (a * 16807) % 2147483647; return a / 2147483647 - 0.5; };
+    const hasil = [];
+    for (let t = 0; t + 1 !== titik.length; t++) {
+      const [i1, v1] = titik[t], [i2, v2] = titik[t + 1];
+      for (let i = i1; i !== i2; i++) hasil.push(v1 + ((v2 - v1) * (i - i1)) / (i2 - i1) + (i === i1 ? 0 : r() * 1.4));
+    }
+    hasil.push(titik[titik.length - 1][1]);
+    return hasil;
+  },
+  // Candle dari harga penutupan: buka = tutup sebelumnya; sumbu acak kecil. ubah = {indeks: {o,h,l,c}}.
+  dariJalur(jalur, benih, ubah) {
+    let a = benih + 7;
+    const r = () => { a = (a * 16807) % 2147483647; return a / 2147483647; };
+    const hasil = [];
+    jalur.forEach((c, i) => {
+      const o = i ? hasil[i - 1].c : c + 0.4;
+      const k = { o: o, c: c, h: Math.max(o, c) + 0.15 + r() * 0.9, l: Math.min(o, c) - 0.15 - r() * 0.9 };
+      hasil.push(Object.assign(k, (ubah && ubah[i]) || {}));
+    });
+    return hasil;
+  },
+  // SVG candlestick. opsi: zona [{atas, bawah, jenis}], garis [[i1, v1, i2, v2]], sampai (indeks terakhir yang tampil), sorot (indeks)
+  svg(lilin, opsi) {
+    const W = 520, H = 300, PX = 8, PY = 12, n = lilin.length; // cukup tinggi agar sumbu candle terbaca di layar HP
+    const tampil = opsi.sampai == null ? n - 1 : opsi.sampai;
+    const semua = [];
+    lilin.forEach((k) => semua.push(k.h, k.l));
+    (opsi.zona || []).forEach((z) => semua.push(z.atas, z.bawah));
+    const min = Math.min(...semua), maks = Math.max(...semua), rentang = maks - min || 1;
+    const y = (v) => PY + ((maks - v) / rentang) * (H - 2 * PY);
+    const lebar = (W - 2 * PX) / n, x = (i) => PX + lebar * (i + 0.5), badan = Math.max(3, lebar * 0.62);
+    let s = '<svg viewBox="0 0 ' + W + " " + H + '" class="viz-svg" role="img" aria-label="' + (opsi.label || "Grafik candlestick") + '">';
+    (opsi.zona || []).forEach((z) => {
+      const warna = z.jenis === "support" ? "var(--ok)" : "var(--bad)";
+      s += '<rect x="' + PX + '" y="' + y(z.atas).toFixed(1) + '" width="' + (W - 2 * PX) + '" height="' + Math.max(2, y(z.bawah) - y(z.atas)).toFixed(1) + '" style="fill:' + warna + ';opacity:.16"/>';
+    });
+    (opsi.garis || []).forEach(([i1, v1, i2, v2]) => {
+      s += '<line x1="' + x(i1).toFixed(1) + '" y1="' + y(v1).toFixed(1) + '" x2="' + x(i2).toFixed(1) + '" y2="' + y(v2).toFixed(1) + '" style="stroke:var(--primary);stroke-width:2;stroke-dasharray:6 4"/>';
+    });
+    if (opsi.sampai != null && opsi.sampai !== n - 1) {
+      const xs = (x(tampil) + x(tampil + 1)) / 2;
+      s += '<line x1="' + xs.toFixed(1) + '" y1="' + PY + '" x2="' + xs.toFixed(1) + '" y2="' + (H - PY) + '" class="vline dim"/>';
+    }
+    lilin.forEach((k, i) => {
+      if (i > tampil) return;
+      const naik = k.c >= k.o, warna = naik ? "var(--ok)" : "var(--bad)";
+      const atas = y(Math.max(k.o, k.c)), tinggi = Math.max(1.5, Math.abs(y(k.o) - y(k.c)));
+      s += '<line x1="' + x(i).toFixed(1) + '" y1="' + y(k.h).toFixed(1) + '" x2="' + x(i).toFixed(1) + '" y2="' + y(k.l).toFixed(1) + '" style="stroke:' + warna + ';stroke-width:1.4"/>';
+      s += '<rect x="' + (x(i) - badan / 2).toFixed(1) + '" y="' + atas.toFixed(1) + '" width="' + badan.toFixed(1) + '" height="' + tinggi.toFixed(1) + '" style="fill:' + warna + '"/>';
+      if (i === opsi.sorot) s += '<rect x="' + (x(i) - badan / 2 - 4).toFixed(1) + '" y="' + (y(k.h) - 4).toFixed(1) + '" width="' + (badan + 8).toFixed(1) + '" height="' + (y(k.l) - y(k.h) + 8).toFixed(1) + '" rx="4" style="fill:none;stroke:var(--primary);stroke-width:2"/>';
+    });
+    return s + "</svg>";
+  },
+};
+
+/* ---------- Demo: lima pola arah pasar — uptrend, downtrend, sideways, breakout, false break ---------- */
+DEMOS["pola-tren"] = function (root) {
+  // Harga rekaan (bukan koin sungguhan), satuan bebas. Zona support/resistance berupa area, bukan garis tipis.
+  const L = LilinMini;
+  const POLA = {
+    uptrend: {
+      nama: "Uptrend", lilin: L.dariJalur(L.jalur([[0, 100], [6, 108], [10, 104], [16, 114], [20, 109], [26, 120], [30, 115], [35, 126]], 11), 11),
+      zona: [{ atas: 116, bawah: 114, jenis: "support" }], garis: [[10, 102.3, 35, 116]],
+      teks: ["Puncak 108 → 114 → 120 → 126 dan lembah 104 → 109 → 115 makin tinggi: HH dan HL.", "Garis tren menghubungkan lembah-lembah (HL). Selama harga bertahan di atasnya, uptrend masih sehat.", "Yang biasa dilakukan trader spot: menunggu harga turun mendekati garis tren atau HL terakhir, lalu membeli dengan cut loss di bawah HL itu."],
+    },
+    downtrend: {
+      nama: "Downtrend", lilin: L.dariJalur(L.jalur([[0, 126], [6, 118], [10, 122], [16, 112], [20, 117], [26, 106], [30, 111], [35, 100]], 23), 23),
+      zona: [{ atas: 112, bawah: 110, jenis: "resistance" }], garis: [[10, 123.86, 35, 110.11]],
+      teks: ["Puncak 122 → 117 → 111 dan lembah 112 → 106 → 100 makin rendah: LH dan LL.", "Garis tren menghubungkan puncak-puncak (LH). Setiap kenaikan tertahan di bawahnya.", "Di pasar spot seperti Indodax kamu hanya untung kalau harga naik. Pilihan paling masuk akal di downtrend: menunggu di luar pasar sampai strukturnya berubah."],
+    },
+    sideways: {
+      nama: "Sideways", lilin: L.dariJalur(L.jalur([[0, 107], [4, 113], [9, 101], [14, 113], [19, 101], [24, 113], [29, 101], [35, 107]], 5), 5),
+      zona: [{ atas: 114, bawah: 112, jenis: "resistance" }, { atas: 102, bawah: 100, jenis: "support" }], garis: [],
+      teks: ["Harga memantul tiga kali di area 100–102 dan tiga kali di area 112–114. Tidak ada puncak atau lembah yang makin tinggi maupun makin rendah.", "Fase ini disebut range atau konsolidasi: pembeli dan penjual sama kuat.", "Dua cara menghadapinya: membeli dekat support dan menjual dekat resistance dengan cut loss ketat, atau menunggu breakout. Indikator tren seperti persilangan MA sering salah di fase ini."],
+    },
+    breakout: {
+      nama: "Breakout", lilin: L.dariJalur(L.jalur([[0, 107], [4, 113], [9, 101], [14, 113], [19, 101], [24, 112], [25, 113], [26, 118.5], [29, 115], [35, 124]], 7), 7, { 26: { o: 113, c: 118.5, h: 119.2, l: 112.8 }, 29: { o: 115.6, c: 115.2, h: 116.1, l: 113.6 } }),
+      zona: [{ atas: 114, bawah: 112, jenis: "resistance" }, { atas: 102, bawah: 100, jenis: "support" }], garis: [],
+      teks: ["Candle besar ditutup jauh di atas zona 112–114. Yang dihitung adalah penutupannya, bukan sumbunya.", "Beberapa candle kemudian harga turun menguji zona itu lagi, memantul, lalu naik: resistance lama menjadi support (RBS).", "Breakout yang diikuti uji ulang yang bertahan lebih bisa dipercaya daripada breakout yang langsung dikejar."],
+    },
+    falsebreak: {
+      nama: "False break", lilin: L.dariJalur(L.jalur([[0, 107], [4, 113], [9, 101], [14, 113], [19, 101], [24, 112.5], [25, 112.8], [26, 110.5], [31, 102], [35, 104]], 3), 3, { 25: { o: 112.5, c: 112.8, h: 117.6, l: 112.1 } }),
+      zona: [{ atas: 114, bawah: 112, jenis: "resistance" }, { atas: 102, bawah: 100, jenis: "support" }], garis: [], sorot: 25,
+      teks: ["Sumbu candle yang ditandai menembus sampai 117,6, tapi candle itu ditutup kembali di 112,8, masih di dalam zona.", "Pembeli yang mengejar saat sumbunya naik terjebak di harga tinggi; harga lalu turun kembali ke support.", "Aturan sederhananya: tunggu candle ditutup di luar zona. Sumbu yang menembus belum dihitung sebagai breakout."],
+    },
+  };
+  const pilih = h("select", { class: "pc-input lebar", "aria-label": "Pola pasar" }, Object.keys(POLA).map((k) => h("option", { value: k, text: POLA[k].nama })));
+  const cekZona = h("input", { type: "checkbox", checked: "", "aria-label": "Tampilkan zona support dan resistance" });
+  const cekGaris = h("input", { type: "checkbox", checked: "", "aria-label": "Tampilkan garis tren" });
+  const grafik = h("div", { class: "bt-grafik" }), uraian = h("div", { class: "dm-out" });
+  function gambar() {
+    const p = POLA[pilih.value];
+    grafik.innerHTML = LilinMini.svg(p.lilin, { zona: cekZona.checked ? p.zona : [], garis: cekGaris.checked ? p.garis : [], sorot: p.sorot, label: "Contoh pola " + p.nama }) +
+      '<p class="dm-sub bt-legenda"><span style="color:var(--ok)">■</span> pita hijau = zona support · <span style="color:var(--bad)">■</span> pita merah = zona resistance · <span class="bt-robot">╌</span> garis tren</p>';
+    uraian.innerHTML = p.teks.map((t, i) => '<div class="dm-line teks"><span>' + ["Yang terlihat", "Artinya", "Yang biasa dilakukan"][i] + "</span><b>" + t + "</b></div>").join("");
+  }
+  [pilih, cekZona, cekGaris].forEach((el) => el.addEventListener("change", gambar));
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Lima pola arah pasar</b>" }),
+    h("p", { class: "demo-hint", text: "Pilih pola, lalu nyalakan atau matikan zona dan garis tren untuk melatih mata." }),
+    h("div", { class: "dm-row" }, [h("span", { text: "Pola" }), pilih]),
+    h("div", { class: "dm-row" }, [h("label", { class: "dm-centang" }, [cekZona, document.createTextNode(" Zona S/R")]), h("label", { class: "dm-centang" }, [cekGaris, document.createTextNode(" Garis tren")])]),
+    grafik,
+    uraian,
+    h("p", { class: "dm-note", text: "Harga rekaan untuk latihan membaca pola, bukan data koin sungguhan dan bukan sinyal trading." }),
+  ]));
+  gambar();
+};
+
+/* ---------- Demo: latihan konfirmasi candlestick — beli sekarang, tunggu, atau abaikan? ---------- */
+DEMOS["konfirmasi-candle"] = function (root) {
+  // Aturan demo: konfirmasi = candle berikutnya DITUTUP di atas harga tertinggi candle sinyal.
+  // Cut loss = 0,3% di bawah harga terendah candle sinyal. Keluar di cut loss bila tersentuh, kalau tidak di penutupan terakhir.
+  const L = LilinMini;
+  const turun = L.jalur([[0, 120], [5, 113], [8, 116], [13, 105], [16, 101.5]], 31);
+  const SKENARIO = {
+    hammer: {
+      nama: "1. Hammer di support", s: 16, benar: "tunggu", zona: [{ atas: 101.5, bawah: 99, jenis: "support" }],
+      lilin: L.dariJalur(turun.concat([104.5, 106, 105.2, 108, 110, 109.5, 112]), 31, { 16: { o: 101.2, c: 101.8, h: 102.2, l: 97.8 }, 17: { o: 101.8, c: 104.5, h: 104.9, l: 101.5 } }),
+      pelajaran: "Hammer muncul tepat di zona support dan candle berikutnya ditutup di atas puncaknya: sinyal yang dikonfirmasi. Masuk lebih awal kali ini memberi untung lebih besar, tapi lihat skenario 2 untuk harga dari keberanian itu.",
+    },
+    gagal: {
+      nama: "2. Hammer di support, tapi gagal", s: 16, benar: "tunggu", zona: [{ atas: 101.5, bawah: 99, jenis: "support" }],
+      lilin: L.dariJalur(turun.concat([99.2, 96, 95, 93.5, 94, 92, 91]), 31, { 16: { o: 101.2, c: 101.8, h: 102.2, l: 97.8 }, 17: { o: 101.8, c: 99.2, h: 102, l: 98.9 }, 18: { o: 99.2, c: 96, h: 99.5, l: 95.6 } }),
+      pelajaran: "Bentuknya sama persis dengan skenario 1, tapi candle berikutnya ditutup merah. Tanpa konfirmasi, yang menunggu tidak pernah masuk; yang masuk lebih awal terkena cut loss saat support jebol.",
+    },
+    tengah: {
+      nama: "3. Hammer jauh dari support", s: 13, benar: "abaikan", zona: [{ atas: 101.5, bawah: 99, jenis: "support" }],
+      lilin: L.dariJalur(L.jalur([[0, 120], [5, 113], [8, 116], [13, 110.5]], 17).concat([111.6, 109, 106.5, 104, 103, 101.5, 102]), 17, { 13: { o: 110.2, c: 110.8, h: 111.1, l: 107.5 }, 14: { o: 110.8, c: 111.6, h: 111.9, l: 110.5 } }),
+      pelajaran: "Hammer ini muncul di tengah jalan, jauh dari level mana pun. Bahkan konfirmasinya tampak bagus, tapi harga terus turun menuju support yang sebenarnya. Lokasi lebih penting daripada bentuk candle.",
+    },
+    breakout: {
+      nama: "4. Breakout dengan sumbu panjang", s: 24, benar: "tunggu", zona: [{ atas: 114, bawah: 112, jenis: "resistance" }, { atas: 102, bawah: 100, jenis: "support" }],
+      lilin: L.dariJalur(L.jalur([[0, 107], [4, 113], [9, 101], [14, 113], [19, 101], [24, 114.6], [25, 111], [29, 107], [31, 108]], 9), 9, { 24: { o: 112.4, c: 114.6, h: 117.4, l: 112.2 }, 25: { o: 114.6, c: 111, h: 115.2, l: 110.6 } }),
+      pelajaran: "Candle ditutup sedikit di atas zona, tapi sumbu atasnya panjang: banyak yang menjual di harga tinggi. Konfirmasi tidak datang, dan harga kembali ke dalam range.",
+    },
+    engulfing: {
+      nama: "5. Bullish engulfing di support", s: 16, benar: "tunggu", zona: [{ atas: 101.5, bawah: 99, jenis: "support" }],
+      lilin: L.dariJalur(turun.concat([105.5, 106.5, 106, 108.5, 110, 109.4, 111]), 41, { 15: { o: 103, c: 100.5, h: 103.4, l: 100.1 }, 16: { o: 100.2, c: 103.6, h: 104, l: 99.6 }, 17: { o: 103.6, c: 105.5, h: 105.9, l: 103.3 } }),
+      pelajaran: "Badan hijau menelan seluruh badan merah sebelumnya di zona support, lalu candle berikutnya ditutup di atas puncaknya. Pola yang berbeda, prinsip yang sama: lokasi dulu, lalu konfirmasi.",
+    },
+  };
+  const pct = (v) => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toLocaleString("id-ID", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + "%";
+  const angka = (v) => v.toLocaleString("id-ID", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  function hasil(k, s, pilihan) {
+    const stop = k[s].l * 0.997, akhir = k[k.length - 1].c;
+    let masuk = null, mulai = null;
+    if (pilihan === "beli") { masuk = k[s].c; mulai = s + 1; }
+    if (pilihan === "tunggu" && k[s + 1].c > k[s].h) { masuk = k[s + 1].c; mulai = s + 2; }
+    if (masuk == null) return { teks: pilihan === "tunggu" ? "Konfirmasi tidak datang, tidak masuk" : "Tidak masuk", persen: 0 };
+    for (let i = mulai; i !== k.length; i++) if (k[i].l <= stop) return { teks: "Masuk di " + angka(masuk) + ", kena cut loss di " + angka(stop), persen: (stop / masuk - 1) * 100 };
+    return { teks: "Masuk di " + angka(masuk) + ", ditutup di " + angka(akhir), persen: (akhir / masuk - 1) * 100 };
+  }
+  const pilihSkenario = h("select", { class: "pc-input lebar", "aria-label": "Skenario" }, Object.keys(SKENARIO).map((k) => h("option", { value: k, text: SKENARIO[k].nama })));
+  const grafik = h("div", { class: "bt-grafik" }), keluaran = h("div", { class: "dm-out" });
+  const tanya = h("p", { class: "demo-hint" });
+  const NAMA = { beli: "Beli sekarang", tunggu: "Tunggu konfirmasi", abaikan: "Abaikan sinyal" };
+  const tombol = Object.keys(NAMA).map((kunci) => h("button", { class: "btn ghost", type: "button", text: NAMA[kunci], onclick: () => jawab(kunci) }));
+  function mulai() {
+    const sk = SKENARIO[pilihSkenario.value];
+    grafik.innerHTML = LilinMini.svg(sk.lilin, { zona: sk.zona, sampai: sk.s, sorot: sk.s, label: sk.nama });
+    tanya.textContent = "Candle yang ditandai baru saja ditutup di " + angka(sk.lilin[sk.s].c) + ". Apa keputusanmu?";
+    keluaran.innerHTML = "";
+    tombol.forEach((b) => (b.disabled = false));
+  }
+  function jawab(kunci) {
+    const sk = SKENARIO[pilihSkenario.value];
+    grafik.innerHTML = LilinMini.svg(sk.lilin, { zona: sk.zona, sorot: sk.s, label: sk.nama });
+    tombol.forEach((b) => (b.disabled = true));
+    const baris = (a, b, kelas) => '<div class="dm-line teks ' + (kelas || "") + '"><span>' + a + "</span><b>" + b + "</b></div>";
+    keluaran.innerHTML =
+      baris("Pilihanmu", NAMA[kunci] + (kunci === sk.benar ? " — sesuai aturan" : " — saran: " + NAMA[sk.benar]), "big " + (kunci === sk.benar ? "good" : "warn")) +
+      Object.keys(NAMA).map((p) => { const r = hasil(sk.lilin, sk.s, p); return baris(NAMA[p], r.teks + " → " + pct(r.persen), r.persen > 0 ? "good" : r.persen < 0 ? "bad" : ""); }).join("") +
+      baris("Pelajarannya", sk.pelajaran);
+  }
+  pilihSkenario.addEventListener("change", mulai);
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Latihan konfirmasi candlestick</b>" }),
+    h("p", { class: "demo-hint", text: "Grafik berhenti tepat setelah candle sinyal. Putuskan dulu, baru candle berikutnya dibuka." }),
+    h("div", { class: "dm-row" }, [h("span", { text: "Skenario" }), pilihSkenario]),
+    grafik,
+    tanya,
+    h("div", { class: "demo-controls" }, tombol),
+    keluaran,
+    h("p", { class: "dm-note", text: "Harga rekaan. Aturan demo: konfirmasi berarti candle berikutnya ditutup di atas harga tertinggi candle sinyal; cut loss 0,3% di bawah harga terendahnya. Biaya transaksi tidak dihitung. Untuk latihan, bukan sinyal trading." }),
+  ]));
+  mulai();
+};
+
 /* ---------- Demo: kenop AI kos — memutar parameter dengan tangan ---------- */
 DEMOS["kenop-kos"] = function (root) {
   // Model: tebakan = kenop × luas. Data latih dari pelajaran ai-p-4: 10 m² → Rp1.000.000, 20 m² → Rp2.000.000.

@@ -5366,7 +5366,7 @@ Pada <b>Proof of Stake</b>, validator mengunci koin sebagai jaminan dan ikut mem
       id: "bc-trading",
       level: "Trading",
       title: "Trading Kripto dengan Kepala Dingin",
-      summary: "Materi Kelas Sore Indodax yang dilengkapi data dan hitungan: investor atau trader, DCA dan lump sum, money management (uang dingin, risk/reward, ukuran posisi, cut loss, alokasi), lalu membaca arah pasar lewat timeframe, market structure, dan support/resistance, robot trading dari nol dengan backtest, sampai memecoin: siapa yang untung, jebakan di DEX, dan cara memeriksa sebelum membeli. Edukasi, bukan nasihat keuangan.",
+      summary: "Materi Kelas Sore Indodax yang dilengkapi data dan hitungan: investor atau trader, DCA dan lump sum, money management (uang dingin, risk/reward, ukuran posisi, cut loss, alokasi), lalu membaca arah pasar lewat timeframe, market structure, dan support/resistance, cara menggambar zona, breakout dan false break, konfirmasi candlestick, robot trading dari nol dengan backtest, sampai memecoin: siapa yang untung, jebakan di DEX, dan cara memeriksa sebelum membeli. Edukasi, bukan nasihat keuangan.",
       lessons: [
         {
           id: "bc-trd-1",
@@ -5641,7 +5641,7 @@ Satu candlestick merangkum harga buka, tertinggi, terendah, dan tutup dalam satu
   <li><b>Anggap sebagai area, bukan garis tipis.</b> Harga jarang berbalik tepat di angka yang sama.</li>
 </ul>
 <div class="callout warn">
-<b>Analisis teknikal adalah peluang, bukan kepastian.</b> Level yang kuat pun bisa jebol, dan pola yang sama bisa gagal. Karena itu setiap analisis tetap butuh cut loss dan ukuran posisi yang benar (<a href="#/lesson/bc-trd-2">Money Management</a>). Batasan lainnya dibahas jujur di <a href="#/lesson/acc-tek-5">Volatilitas, Drawdown &amp; Batas Analisis Teknikal</a>.
+<b>Analisis teknikal adalah peluang, bukan kepastian.</b> Level yang kuat pun bisa jebol, dan pola yang sama bisa gagal. Karena itu setiap analisis tetap butuh cut loss dan ukuran posisi yang benar (<a href="#/lesson/bc-trd-2">Money Management</a>). Batasan lainnya dibahas jujur di <a href="#/lesson/acc-tek-5">Volatilitas, Drawdown &amp; Batas Analisis Teknikal</a>. Cara menggambar zona sendiri, breakout dan false break, serta konfirmasi candlestick dibahas di dua pelajaran berikutnya.
 </div>
 `,
           keyPoints: [
@@ -5701,6 +5701,215 @@ Satu candlestick merangkum harga buka, tertinggi, terendah, dan tutup dalam satu
               options: ["Disentuh berkali-kali dan terlihat di timeframe besar", "Baru disentuh satu kali di timeframe M5", "Angka yang dipilih secara acak oleh trader", "Level yang paling dekat dengan harga sekarang"],
               answer: 0,
               explain: "Makin sering harga memantul di sana dan makin besar timeframe-nya, makin banyak pelaku pasar yang memperhatikan level itu.",
+            },
+          ],
+        },
+        {
+          id: "bc-trd-6",
+          title: "Uptrend, Downtrend & Sideways — Menggambar Support/Resistance, Breakout & False Break",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Uptrend yang sehat membentuk puncak dan lembah yang makin tinggi (HH dan HL), downtrend kebalikannya (LH dan LL), dan support yang jebol bisa berubah menjadi resistance (<a href="#/lesson/bc-trd-3">Membaca Arah Pasar</a>). Satu candle merangkum harga buka, tutup, tertinggi, dan terendah; garis tipis di atas dan bawah badannya disebut <b>sumbu</b> (<a href="#/lesson/acc-tek-1">Candlestick, Volume &amp; Tren</a>).
+</div>
+
+<p>Pelajaran sebelumnya memperkenalkan tiga arah tren secara singkat. Sekarang kita lihat bentuknya di grafik, apa yang biasa dilakukan trader di setiap arah, cara menggambar support dan resistance sendiri, dan cara membedakan breakout sungguhan dari yang palsu.</p>
+
+<h3>Tiga arah, tiga sikap</h3>
+<table class="tbl">
+  <tr><th>Arah</th><th>Ciri di grafik</th><th>Sikap yang umum bagi trader spot</th></tr>
+  <tr><td><b>Uptrend</b></td><td>Puncak dan lembah makin tinggi; harga bertahan di atas garis tren</td><td>Membeli saat harga turun sebentar (koreksi) mendekati support atau garis tren, dengan cut loss di bawah lembah terakhir</td></tr>
+  <tr><td><b>Downtrend</b></td><td>Puncak dan lembah makin rendah; setiap kenaikan tertahan di bawah garis tren</td><td>Menunggu di luar pasar. Membeli di tengah downtrend sering disebut "menangkap pisau jatuh"</td></tr>
+  <tr><td><b>Sideways</b></td><td>Harga memantul di antara dua zona tanpa puncak atau lembah yang makin tinggi maupun makin rendah</td><td>Membeli dekat support dan menjual dekat resistance dengan cut loss ketat, atau menunggu breakout</td></tr>
+</table>
+<div data-diagram="struktur-pasar" data-titik="107,113,101,112,102,113,101,107" data-acuan="113:Resistance|101:Support" data-caption="Sideways: harga memantul berkali-kali di antara dua zona, tanpa puncak atau lembah yang makin tinggi maupun makin rendah"></div>
+<p>Di pasar spot, kamu hanya untung kalau harga naik. Karena itu downtrend bagi trader spot bukan peluang, melainkan tanda untuk menahan diri. Fase sideways juga punya jebakan: indikator yang mengikuti tren, seperti persilangan moving average, sering memberi sinyal salah di sini. Hal ini dibuktikan dengan angka di <a href="#/lesson/bc-trd-4">Robot Trading dari Nol</a>.</p>
+
+<h3>Garis tren</h3>
+<p><b>Garis tren</b> menghubungkan minimal dua lembah dalam uptrend, atau dua puncak dalam downtrend. Makin sering harga menyentuhnya lalu memantul, makin banyak orang yang memperhatikannya. Kalau garis tren uptrend ditembus ke bawah dan candle ditutup di bawahnya, itu tanda awal tren melemah, sama seperti saat lembah terakhir (HL) ditembus.</p>
+<div data-demo="pola-tren"></div>
+<p>Coba pola <b>Uptrend</b>: garisnya menyentuh lembah-lembah di sekitar 103, 108, dan 114. Lalu pilih <b>Sideways</b>: harga memantul tiga kali di area 100–102 dan tiga kali di area 112–114, tanpa arah.</p>
+
+<h3>Menggambar support &amp; resistance sendiri</h3>
+<ol>
+  <li><b>Mulai dari timeframe besar</b>, misalnya D1 atau H4. Level di sana dilihat lebih banyak orang.</li>
+  <li><b>Cari tempat harga berbalik minimal 2–3 kali.</b> Lihat sumbu dan badan candle, lalu gambar sebagai <b>zona</b> (pita), bukan garis tipis.</li>
+  <li><b>Tandai puncak dan lembah besar terakhir</b>, serta angka bulat yang menarik perhatian, misalnya Rp1 miliar untuk BTC. Angka seperti ini disebut level psikologis.</li>
+  <li><b>Secukupnya saja.</b> Dua atau tiga zona terdekat di atas dan di bawah harga sekarang sudah cukup; terlalu banyak garis membuat grafik tidak terbaca.</li>
+</ol>
+<p>Lebar zona adalah <b>toleransi</b>: seberapa jauh harga boleh menembus sebelum level dianggap jebol. Sebagai gambaran, koin besar sering memakai zona sekitar 1–2% dari harga, sedangkan koin kecil butuh zona lebih lebar karena geraknya lebih liar. Tidak ada angka baku; yang penting konsisten dengan aturan yang kamu tulis di trading plan.</p>
+
+<h3>Breakout atau false break?</h3>
+<p><b>Breakout</b> adalah saat harga keluar dari zona dan bertahan di luarnya. <b>False break</b> (breakout palsu) adalah saat harga sempat menembus, lalu kembali ke dalam. Pilih pola <b>Breakout</b> dan <b>False break</b> di demo, lalu bandingkan:</p>
+<table class="tbl">
+  <tr><th>Tanda</th><th>Breakout yang lebih bisa dipercaya</th><th>Tanda false break</th></tr>
+  <tr><td><b>Penutupan candle</b></td><td>Ditutup di luar zona</td><td>Hanya sumbunya yang menembus; penutupannya kembali ke dalam zona</td></tr>
+  <tr><td><b>Bentuk candle</b></td><td>Badan besar, sumbu ke arah tembusan pendek</td><td>Sumbu panjang ke arah tembusan: banyak yang menjual (atau membeli) di sana</td></tr>
+  <tr><td><b>Volume</b></td><td>Naik dibanding biasanya</td><td>Biasa saja</td></tr>
+  <tr><td><b>Uji ulang</b></td><td>Harga kembali menguji zona lalu memantul (RBS atau SBR)</td><td>Harga langsung masuk lagi ke dalam range</td></tr>
+</table>
+<p>Di contoh false break, sumbu menembus sampai 117,6 tapi candle ditutup di 112,8, masih di dalam zona 112–114. Pembeli yang mengejar saat harga di atas 114 terjebak di harga tinggi. Pola ini sering disebut <i>bull trap</i>.</p>
+<div class="callout warn">
+<b>Semua tanda di atas memperbesar peluang, bukan memberi kepastian.</b> Breakout dengan penutupan, volume, dan uji ulang yang bagus pun masih bisa gagal. Karena itu cut loss tetap ditulis sebelum masuk, misalnya di bawah zona yang baru ditembus, dan ukurannya dihitung seperti di <a href="#/lesson/bc-trd-2">Money Management</a>. Kalau harga sudah bergerak terlalu jauh dari zona, jarak ke cut loss menjadi lebar; sering lebih baik menunggu uji ulang daripada mengejar.
+</div>
+`,
+          keyPoints: [
+            "Uptrend: beli saat koreksi dekat support atau garis tren, cut loss di bawah HL terakhir. Downtrend: trader spot sebaiknya menunggu. Sideways: main di range atau tunggu breakout.",
+            "Garis tren menghubungkan minimal dua lembah (uptrend) atau dua puncak (downtrend); ditutup di seberangnya adalah tanda awal tren melemah.",
+            "Gambar support dan resistance dari timeframe besar, di tempat harga berbalik 2–3 kali, sebagai zona dengan toleransi, bukan garis tipis.",
+            "Breakout lebih bisa dipercaya bila candle ditutup di luar zona, badannya besar, volume naik, dan uji ulangnya bertahan.",
+            "False break: hanya sumbu yang menembus lalu ditutup kembali ke dalam zona. Cut loss tetap wajib karena breakout yang bagus pun bisa gagal.",
+          ],
+          practice: [
+            { type: "number", q: "Support sebuah koin di Rp10.000, dan kamu memakai toleransi 1,5% di bawahnya. Di harga berapa batas bawah zona support itu?", answer: 9850, tol: 1, unit: "rupiah", hint: "1,5% dari Rp10.000 = Rp150.", solution: "Rp10.000 − Rp150 = Rp9.850. Penutupan candle di bawah Rp9.850 baru dianggap menembus support." },
+            {
+              type: "choice",
+              q: "Resistance di zona Rp112–114. Sebuah candle naik sampai Rp117,6 tapi ditutup di Rp112,8. Ini lebih mirip…",
+              options: ["False break: hanya sumbunya yang menembus", "Breakout sah karena sempat di atas 114", "Downtrend baru yang sudah terkonfirmasi", "Uji ulang support yang berhasil"],
+              answer: 0,
+              hint: "Yang dihitung penutupan atau sumbunya?",
+              solution: "Penutupannya kembali di dalam zona. Sumbu panjang ke atas menunjukkan banyak yang menjual di harga tinggi.",
+            },
+            {
+              type: "choice",
+              q: "Grafik H4 sebuah koin menunjukkan LH dan LL berturut-turut. Kamu hanya bertransaksi di pasar spot. Sikap yang paling masuk akal?",
+              options: ["Menunggu di luar pasar sampai struktur berubah", "Membeli sekarang karena harganya sudah murah", "Membeli dua kali lipat setiap harga turun 5%", "Membeli dengan semua modal di support terdekat"],
+              answer: 0,
+              hint: "Di pasar spot, kapan kamu bisa untung?",
+              solution: "Di spot kamu hanya untung kalau harga naik. Selama struktur masih LH dan LL, membeli berarti melawan arah pasar.",
+            },
+          ],
+          quiz: [
+            {
+              q: "Garis tren dalam uptrend digambar dengan menghubungkan…",
+              options: ["Minimal dua lembah yang makin tinggi", "Harga pembukaan setiap hari Senin", "Puncak tertinggi dan lembah terendah", "Semua candle hijau di grafik"],
+              answer: 0,
+              explain: "Dalam uptrend, garis tren menghubungkan lembah-lembah (HL). Dalam downtrend, ia menghubungkan puncak-puncak (LH).",
+            },
+            {
+              q: "Kenapa support dan resistance sebaiknya digambar sebagai zona?",
+              options: ["Harga jarang berbalik tepat di angka yang sama", "Agar grafiknya terlihat lebih berwarna", "Karena exchange mewajibkan bentuk zona", "Supaya cut loss tidak perlu dipasang"],
+              answer: 0,
+              explain: "Banyak orang memasang order di sekitar level yang sama, jadi harga berbalik di sebuah area. Lebar area itu adalah toleransinya.",
+            },
+            {
+              q: "Tanda breakout yang lebih bisa dipercaya adalah…",
+              options: ["Candle ditutup di luar zona lalu uji ulangnya bertahan", "Sumbu candle sempat menembus zona sebentar", "Harga mendekati zona untuk pertama kalinya", "Ada yang membicarakannya di media sosial"],
+              answer: 0,
+              explain: "Penutupan di luar zona dan uji ulang yang memantul menunjukkan level lama sudah berganti peran.",
+            },
+            {
+              q: "Fase sideways membuat indikator persilangan moving average sering salah karena…",
+              options: ["Harga bolak-balik tanpa arah, memicu sinyal silih berganti", "Moving average tidak bisa dihitung saat sideways", "Volume selalu nol saat harga mendatar", "Exchange menghentikan perdagangan saat sideways"],
+              answer: 0,
+              explain: "Setiap gerak kecil ke atas dan ke bawah memicu sinyal beli lalu jual, dan biaya transaksi menumpuk.",
+            },
+          ],
+        },
+        {
+          id: "bc-trd-7",
+          title: "Konfirmasi Candlestick — Pola Pembalikan & Kapan Boleh Masuk",
+          duration: "15 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Candle punya <b>badan</b> (jarak harga buka ke tutup) dan <b>sumbu</b> (harga tertinggi dan terendah di luar badan); hijau berarti ditutup lebih tinggi dari harga buka (<a href="#/lesson/acc-tek-1">Candlestick, Volume &amp; Tren</a>). Support dan resistance digambar sebagai zona, dan false break terjadi saat hanya sumbunya yang menembus (<a href="#/lesson/bc-trd-6">Uptrend, Downtrend &amp; Sideways</a>). Ukuran posisi dihitung dari jarak cut loss (<a href="#/lesson/bc-trd-2">Money Management</a>).
+</div>
+
+<h3>Satu candle adalah petunjuk, bukan keputusan</h3>
+<p>Setiap candle menceritakan tarik-menarik antara pembeli dan penjual selama satu periode. Sebagian bentuk candle sering muncul saat arah harga akan berbalik, sehingga disebut <b>pola pembalikan</b>. Tapi bentuk saja tidak cukup. Urutan pemeriksaannya:</p>
+<div data-diagram="flow" data-steps="Lokasi: di zona S/R?|Bentuk: pola pembalikan?|Konfirmasi: candle berikutnya setuju?|Rencana: cut loss &amp; ukuran posisi" data-caption="Lokasi lebih dulu daripada bentuk; konfirmasi lebih dulu daripada membeli"></div>
+
+<h3>Lima pola pembalikan yang paling sering diajarkan</h3>
+<table class="tbl">
+  <tr><th>Pola</th><th>Bentuknya</th><th>Bermakna bila muncul di</th></tr>
+  <tr><td><b>Hammer</b></td><td>Badan kecil di bagian atas, sumbu bawah panjang (minimal dua kali badannya). Penjual sempat menekan, lalu pembeli mengambil alih</td><td>Support, setelah harga turun</td></tr>
+  <tr><td><b>Shooting star</b></td><td>Kebalikan hammer: badan kecil di bawah, sumbu atas panjang. Pembeli sempat mendorong, lalu penjual mengambil alih</td><td>Resistance, setelah harga naik</td></tr>
+  <tr><td><b>Bullish engulfing</b></td><td>Badan hijau yang menelan seluruh badan merah sebelumnya</td><td>Support</td></tr>
+  <tr><td><b>Bearish engulfing</b></td><td>Badan merah yang menelan seluruh badan hijau sebelumnya</td><td>Resistance</td></tr>
+  <tr><td><b>Doji</b></td><td>Harga buka hampir sama dengan harga tutup: pasar ragu-ragu. Arahnya ditentukan candle berikutnya</td><td>Ujung tren, di zona S/R</td></tr>
+</table>
+<div class="callout">
+<b>Tunggu sampai candle ditutup.</b> Hammer yang terbentuk di tengah periode bisa berakhir menjadi candle merah besar. Perhatikan juga zona waktu grafik: banyak grafik kripto memakai UTC, sehingga candle harian baru ditutup pukul 07.00 WIB.
+</div>
+
+<h3>Apa itu konfirmasi?</h3>
+<p><b>Konfirmasi candlestick</b> artinya menunggu candle berikutnya membuktikan bahwa sinyal itu benar. Untuk sinyal naik seperti hammer, aturan yang umum: candle berikutnya <b>ditutup di atas harga tertinggi</b> candle sinyal. Untuk breakout, konfirmasinya adalah candle ditutup di luar zona dan uji ulangnya bertahan. Kelasmu mungkin memakai aturan yang sedikit berbeda; yang penting aturannya ditulis sebelum melihat grafik, bukan dikarang sesudahnya.</p>
+<div data-demo="konfirmasi-candle"></div>
+<p>Hasil kelima skenario:</p>
+<table class="tbl">
+  <tr><th>Skenario</th><th>Beli sekarang</th><th>Tunggu konfirmasi</th></tr>
+  <tr><td>1. Hammer di support</td><td>+10,0%</td><td>+7,2%</td></tr>
+  <tr><td>2. Hammer di support, tapi gagal</td><td>−4,2%</td><td>0% (tidak masuk)</td></tr>
+  <tr><td>3. Hammer jauh dari support</td><td>−3,3%</td><td>−4,0%</td></tr>
+  <tr><td>4. Breakout dengan sumbu panjang</td><td>−2,4%</td><td>0% (tidak masuk)</td></tr>
+  <tr><td>5. Bullish engulfing di support</td><td>+7,1%</td><td>+5,2%</td></tr>
+</table>
+<p>Tiga pelajaran dari tabel ini. Saat sinyalnya benar (1 dan 5), menunggu memberi untung <b>lebih kecil</b>. Saat sinyalnya salah (2 dan 4), menunggu membuatmu <b>tidak ikut rugi</b>. Dan di skenario 3, konfirmasi pun tidak menolong, karena hammer itu muncul di tempat yang tidak berarti: lokasinya salah sejak awal. Skenario-skenario ini dibuat untuk latihan, jadi perhatikan polanya, bukan persentasenya.</p>
+
+<h3>Harga sebuah konfirmasi</h3>
+<p>Konfirmasi membuat harga masuk lebih mahal, sehingga jarak ke cut loss lebih jauh. Dengan aturan risiko yang sama, ukuran posisi harus <b>lebih kecil</b>. Contohnya skenario 1, dengan cut loss di 97,5 dan risiko Rp100 ribu per transaksi:</p>
+<table class="tbl">
+  <tr><th></th><th>Masuk di</th><th>Jarak ke cut loss</th><th>Ukuran posisi</th></tr>
+  <tr><td>Beli sekarang</td><td>101,8</td><td>4,2%</td><td>sekitar Rp2,37 juta</td></tr>
+  <tr><td>Tunggu konfirmasi</td><td>104,5</td><td>6,7%</td><td>sekitar Rp1,49 juta</td></tr>
+</table>
+<p>Inilah pertukarannya: konfirmasi mengurangi sinyal palsu, tapi untungnya lebih kecil dan posisinya lebih kecil. Kalau jarak ke cut loss sudah terlalu jauh sehingga risk/reward di bawah 1 : 2, lebih baik melewatkan transaksi itu.</p>
+
+<h3>Seberapa bisa diandalkan?</h3>
+<p>Penelitian memberi hasil yang tidak menggembirakan. Marshall, Young, dan Rose (2006) menguji 28 sinyal candlestick pada saham-saham Dow Jones tahun 1992–2002 dan tidak menemukan bahwa pola-pola itu menguntungkan bila dipakai sendirian. Pola candlestick paling berguna sebagai <b>alat bantu waktu masuk</b> di lokasi yang sudah kamu pilih dari tren dan zona S/R, bersama cut loss dan ukuran posisi yang benar, bukan sebagai alasan utama untuk membeli.</p>
+`,
+          keyPoints: [
+            "Urutan pemeriksaan: lokasi (zona S/R) → bentuk (pola pembalikan) → konfirmasi (candle berikutnya) → rencana (cut loss & ukuran posisi).",
+            "Hammer dan bullish engulfing bermakna di support; shooting star dan bearish engulfing di resistance; doji berarti ragu-ragu.",
+            "Konfirmasi sinyal naik: candle berikutnya ditutup di atas harga tertinggi candle sinyal. Selalu tunggu candle ditutup.",
+            "Konfirmasi mengurangi sinyal palsu, tapi masuk lebih mahal, jarak cut loss lebih jauh, dan ukuran posisi harus lebih kecil.",
+            "Riset pada saham Dow Jones (Marshall dkk., 2006) tidak menemukan pola candlestick menguntungkan bila dipakai sendirian.",
+          ],
+          practice: [
+            { type: "number", q: "Risiko per transaksi Rp100.000. Kamu masuk setelah konfirmasi di Rp104.500 dengan cut loss di Rp97.500. Berapa rupiah ukuran posisi maksimal? (bulatkan ke ribuan terdekat)", answer: 1493000, tol: 1500, unit: "rupiah", hint: "Jarak cut loss = (104.500 − 97.500) ÷ 104.500. Ukuran posisi = risiko ÷ jarak.", solution: "Jarak = 7.000 ÷ 104.500 ≈ 6,70%. Ukuran posisi = Rp100.000 ÷ 0,0670 ≈ Rp1.493.000." },
+            {
+              type: "choice",
+              q: "Pukul 05.30 WIB grafik harian menunjukkan hammer yang indah di zona support. Grafikmu memakai zona waktu UTC. Apa yang sebaiknya kamu lakukan?",
+              options: ["Menunggu candle ditutup pukul 07.00 WIB dulu", "Langsung membeli selagi bentuknya masih hammer", "Membeli separuh sekarang dan separuh nanti", "Mengganti ke timeframe M5 agar lebih cepat"],
+              answer: 0,
+              hint: "Candle harian UTC ditutup jam berapa dalam WIB?",
+              solution: "Candle yang belum ditutup masih bisa berubah bentuk. Hammer pukul 05.30 bisa berakhir menjadi candle merah besar pukul 07.00.",
+            },
+            {
+              type: "choice",
+              q: "Doji muncul di zona resistance setelah harga naik beberapa hari. Apa artinya?",
+              options: ["Pasar ragu-ragu; arahnya ditentukan candle berikutnya", "Harga pasti akan berbalik turun besok", "Breakout ke atas sudah terkonfirmasi", "Volume transaksi hari itu pasti nol"],
+              answer: 0,
+              hint: "Harga buka hampir sama dengan harga tutup.",
+              solution: "Doji menunjukkan pembeli dan penjual seimbang. Di resistance itu tanda waspada, tapi baru bermakna setelah candle berikutnya memberi konfirmasi.",
+            },
+          ],
+          quiz: [
+            {
+              q: "Hammer muncul jauh dari support atau resistance mana pun. Sikap yang tepat?",
+              options: ["Abaikan, karena lokasinya tidak berarti", "Langsung beli, karena bentuknya sempurna", "Beli asal candle berikutnya hijau", "Jual semua koin yang sedang dipegang"],
+              answer: 0,
+              explain: "Di skenario 3, konfirmasi pun tidak menolong. Lokasi diperiksa sebelum bentuk.",
+            },
+            {
+              q: "Aturan konfirmasi yang umum untuk sinyal naik seperti hammer adalah…",
+              options: ["Candle berikutnya ditutup di atas puncak candle sinyal", "Candle berikutnya dibuka lebih tinggi dari kemarin", "Sumbu bawah hammer lebih dari dua kali badannya", "Harga naik 1% dalam lima menit pertama"],
+              answer: 0,
+              explain: "Penutupan di atas harga tertinggi candle sinyal menunjukkan pembeli benar-benar melanjutkan dorongannya.",
+            },
+            {
+              q: "Apa kekurangan menunggu konfirmasi?",
+              options: ["Harga masuk lebih mahal dan untungnya lebih kecil", "Cut loss tidak boleh dipasang lagi", "Sinyal palsu menjadi lebih sering", "Transaksi tidak bisa dilakukan di pasar spot"],
+              answer: 0,
+              explain: "Di skenario 1, beli sekarang +10,0% sedangkan menunggu +7,2%. Gantinya, menunggu menghindari kerugian di skenario 2 dan 4.",
+            },
+            {
+              q: "Jarak ke cut loss melebar karena menunggu konfirmasi. Dengan risiko per transaksi yang sama, ukuran posisi harus…",
+              options: ["Lebih kecil", "Lebih besar", "Tetap sama", "Dua kali lipat"],
+              answer: 0,
+              explain: "Ukuran posisi = risiko ÷ jarak cut loss. Jarak lebih jauh berarti posisi lebih kecil.",
             },
           ],
         },
