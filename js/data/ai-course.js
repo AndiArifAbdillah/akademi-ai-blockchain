@@ -3574,7 +3574,7 @@ Tiga grafik ini sering menemukan masalah data lebih cepat daripada berjam-jam me
       id: "ai-pendalaman",
       level: "Pendalaman",
       title: "Menyiapkan Data & Melatih Model",
-      summary: "Feature engineering, cara melatih & menguji model dengan jujur, alur kerja scikit-learn yang sebenarnya, sampai pipeline training lengkap dari data mentah, EDA, tuning, evaluasi, inference, hingga registrasi model dengan MLflow.",
+      summary: "Feature engineering, cara melatih & menguji model dengan jujur, alur kerja scikit-learn yang sebenarnya, sampai pipeline training lengkap dari data mentah, EDA, tuning, evaluasi, inference, hingga registrasi model dengan MLflow, serta menyiapkan data tabel: join, imputer, encoding, binning, dan scaling.",
       lessons: [
         {
           id: "ai-ars-1",
@@ -3961,25 +3961,25 @@ print(classification_report(y_uji, y_tebak))</pre>
 <b>Training</b> adalah saat model belajar, <b>inference</b> saat model dipakai menebak (<a href="#/lesson/ai-p-4">Bagaimana AI Belajar?</a>). Data dibersihkan dan fiturnya dibentuk (<a href="#/lesson/ai-ars-1">Feature Engineering</a>), dibagi menjadi data latih, validasi, dan uji (<a href="#/lesson/ai-ars-2">Melatih Model dengan Benar</a>), lalu disatukan dalam Pipeline scikit-learn agar tidak bocor (<a href="#/lesson/ai-tl-5">scikit-learn Mendalam</a>). Pelajaran ini merangkai semuanya.
 </div>
 
-<p>Di kelas, pipeline training model digambarkan dalam delapan tahap. <b>Pipeline</b> artinya rangkaian tahap yang berurutan: keluaran satu tahap menjadi masukan tahap berikutnya. Berikut tahap-tahap itu, ditambah dua tahap yang sering terlewat (ditandai ✚):</p>
+<p>Slide pipeline versi terbaru di kelas memuat sembilan tahap. <b>Pipeline</b> artinya rangkaian tahap yang berurutan: keluaran satu tahap menjadi masukan tahap berikutnya. Berikut tahap-tahap itu, ditambah satu tahap yang sering terlewat (ditandai ✚):</p>
 <table class="tbl">
   <tr><th>Tahap</th><th>Pertanyaan yang dijawab</th><th>Contoh alat</th></tr>
   <tr><td><b>1. Siapkan data</b> (cleaning, validasi)</td><td>Apakah datanya benar dan lengkap?</td><td>pandas: buang duplikat, isi atau buang data kosong, tolak nilai mustahil</td></tr>
-  <tr><td><b>2. EDA</b></td><td>Apa yang terlihat dari data?</td><td>Grafik sebaran, statistik ringkas, korelasi</td></tr>
-  <tr><td><b>✚ Bagi data</b></td><td>Mana yang disimpan untuk ujian akhir?</td><td>train_test_split</td></tr>
-  <tr><td><b>3. Preprocessing &amp; feature engineering</b></td><td>Bagaimana data dibentuk agar mudah dipelajari?</td><td>StandardScaler, membuat fitur baru, Pipeline</td></tr>
-  <tr><td><b>4. Training</b></td><td>Model belajar dari data latih</td><td>model.fit(...)</td></tr>
-  <tr><td><b>5. Tuning</b></td><td>Pengaturan mana yang terbaik?</td><td>GridSearchCV dengan cross-validation</td></tr>
-  <tr><td><b>6. Evaluation</b></td><td>Seberapa bagus di data yang belum pernah dilihat?</td><td>MAE, akurasi, precision, recall</td></tr>
-  <tr><td><b>7. Inference</b></td><td>Berapa tebakan untuk data baru?</td><td>model.predict(...) di aplikasi atau API</td></tr>
-  <tr><td><b>8. Registrasi &amp; deployment</b></td><td>Versi mana yang dipakai, dan di mana?</td><td>Model registry (mis. MLflow), API</td></tr>
+  <tr><td><b>2. Bagi data</b> (latih &amp; uji)</td><td>Mana yang disimpan untuk ujian akhir?</td><td>train_test_split</td></tr>
+  <tr><td><b>3. EDA</b> (di data latih)</td><td>Apa yang terlihat dari data?</td><td>Grafik sebaran, statistik ringkas, korelasi</td></tr>
+  <tr><td><b>4. Preprocessing &amp; feature engineering</b></td><td>Bagaimana data dibentuk agar mudah dipelajari?</td><td>StandardScaler, membuat fitur baru, Pipeline</td></tr>
+  <tr><td><b>5. Training</b></td><td>Model belajar dari data latih</td><td>model.fit(...)</td></tr>
+  <tr><td><b>6. Tuning</b></td><td>Pengaturan mana yang terbaik?</td><td>GridSearchCV dengan cross-validation</td></tr>
+  <tr><td><b>7. Evaluation</b></td><td>Seberapa bagus di data yang belum pernah dilihat?</td><td>MAE, akurasi, precision, recall</td></tr>
+  <tr><td><b>8. Inference</b></td><td>Berapa tebakan untuk data baru?</td><td>model.predict(...) di aplikasi atau API</td></tr>
+  <tr><td><b>9. Registrasi &amp; deployment</b></td><td>Versi mana yang dipakai, dan di mana?</td><td>Model registry (mis. MLflow), API</td></tr>
   <tr><td><b>✚ Pantau &amp; latih ulang</b></td><td>Apakah model masih bagus bulan depan?</td><td>Pemantauan galat dan drift</td></tr>
 </table>
-<div data-diagram="flow" data-steps="Siapkan &amp; pahami data|Bagi: latih dan uji|Bentuk fitur|Latih &amp; tuning|Ujian akhir|Pakai, catat, pantau" data-caption="Pemantauan mengembalikan data baru ke awal: pipeline sebenarnya adalah lingkaran"></div>
+<div data-diagram="flow" data-steps="Siapkan data|Bagi: latih dan uji|EDA &amp; bentuk fitur|Latih &amp; tuning|Ujian akhir|Pakai, catat, pantau" data-caption="Pemantauan mengembalikan data baru ke awal: pipeline sebenarnya adalah lingkaran"></div>
 
 <h3>Dua catatan untuk slide kelas</h3>
 <ol>
-  <li><b>Tahap "bagi data" perlu ditulis sendiri</b>, di antara EDA dan preprocessing. Kalau penskalaan atau tuning dihitung dari seluruh data, data uji ikut "diintip", dan nilai ujinya terlihat lebih bagus daripada kenyataan. Inilah <b>kebocoran data</b>.</li>
+  <li><b>Bagi data sebelum EDA dan preprocessing.</b> Slide versi pertama belum mencantumkan tahap ini; versi terbaru sudah menaruhnya di tahap 2 dan melakukan EDA di data latih saja, dan itulah urutan yang benar. Kalau penskalaan atau tuning dihitung dari seluruh data, data uji ikut "diintip", dan nilai ujinya terlihat lebih bagus daripada kenyataan. Inilah <b>kebocoran data</b>.</li>
   <li><b>Inference tidak sama dengan testing.</b> <i>Testing</i> atau <i>evaluation</i> berarti mengukur model di data uji yang jawabannya sudah kita ketahui. <i>Inference</i> berarti memakai model untuk menebak data baru yang jawabannya <b>belum</b> diketahui, misalnya calon penyewa yang bertanya harga kamar. Menguji kode di sekitar model (apakah masukan aneh ditolak, apakah hasilnya masuk akal) juga penting, tapi itu pengujian perangkat lunak, bukan inference.</li>
 </ol>
 
@@ -3991,7 +3991,7 @@ print(classification_report(y_uji, y_tebak))</pre>
 <div data-demo="pipeline-kos"></div>
 <ul>
   <li><b>Siapkan data:</b> dari 21 baris, tiga dibuang: satu kembar, satu luasnya kosong, dan satu berharga Rp15 juta per bulan, kemungkinan salah ketik dari Rp1,5 juta.</li>
-  <li><b>EDA:</b> harga paling berhubungan dengan luas (korelasi 0,87); jarak hanya sedikit (−0,21). Kamar ber-AC rata-rata Rp836 ribu lebih mahal, tapi kamar ber-AC juga lebih luas (18,1 m² vs 11,5 m²). Jadi selisih itu tidak semuanya karena AC.</li>
+  <li><b>EDA di 14 kamar latih:</b> harga paling berhubungan dengan luas (korelasi 0,87). Jarak hampir tidak berhubungan kalau dilihat sendirian (−0,07), padahal model nanti menemukan setiap km lebih jauh mengurangi sekitar Rp80 ribu: korelasi satu-satu bisa menyesatkan. Kamar ber-AC rata-rata Rp836 ribu lebih mahal, tapi kamar ber-AC juga lebih luas (18,9 m² vs 11,6 m²), jadi selisih itu tidak semuanya karena AC.</li>
   <li><b>Training:</b> model yang terpilih belajar <i>harga ≈ 556 + 40 × luas − 80 × jarak + 570 bila ada AC</i> (ribu rupiah). Setelah luas dan jarak diperhitungkan, AC "bernilai" sekitar Rp570 ribu, lebih kecil dari Rp836 ribu yang terlihat di EDA.</li>
   <li><b>Tuning:</b> model <i>Rumit</i> (8 fitur) paling jago di data latih (galat Rp51 ribu), tapi paling buruk kedua di validasi (Rp140 ribu). Model <i>Lengkap</i> (3 fitur) menang di validasi (Rp82 ribu). Itulah overfitting.</li>
   <li><b>Evaluasi:</b> galat rata-rata di 4 kamar uji Rp161 ribu, jauh lebih baik dari tebakan malas yang selalu memakai rata-rata (Rp407 ribu). Galat uji lebih besar daripada validasi, dan itu wajar.</li>
@@ -4035,7 +4035,7 @@ with mlflow.start_run():
 <p>Di MLflow 3, <i>artifact_path=</i> boleh ditulis <i>name=</i>; MLflow 2 (misalnya versi 2.19) hanya mengenal <i>artifact_path=</i>, jadi bentuk di atas jalan di keduanya. Jalankan <i>mlflow ui</i> di terminal untuk melihat semua percobaan berdampingan di browser. Percobaan terbaik lalu didaftarkan ke registry dengan tombol <i>Register Model</i> atau fungsi <i>mlflow.register_model</i>; setiap pendaftaran ulang dengan nama yang sama menjadi versi baru (1, 2, 3, dan seterusnya). Di sebagian versi, registry membutuhkan server MLflow dengan database seperti SQLite, jadi ikuti panduan resminya saat menyiapkan. Untuk proyek kecil, catatan di spreadsheet pun sudah cukup sebagai awal (<a href="#/lesson/ai-tl-8">Peta Pustaka Lain</a>).</p>
 `,
           keyPoints: [
-            "Pipeline training: siapkan data → EDA → bagi data → preprocessing & feature engineering → training → tuning → evaluasi → inference → registrasi & deployment → pantau.",
+            "Pipeline training: siapkan data → bagi data → EDA di data latih → preprocessing & feature engineering → training → tuning → evaluasi → inference → registrasi & deployment → pantau.",
             "Bagi data sebelum ada perhitungan yang belajar dari data; kalau tidak, data uji ikut terintip (kebocoran data).",
             "EDA menghasilkan pertanyaan dan dugaan, bukan kesimpulan. Contoh: selisih harga kamar AC sebagian karena kamarnya lebih luas.",
             "Tuning memilih pengaturan dari galat validasi, bukan galat latih. Model paling rumit sering menang di latih tapi kalah di validasi.",
@@ -4084,6 +4084,162 @@ with mlflow.start_run():
               options: ["Agar jelas versi mana yang dipakai dan bisa kembali", "Agar model otomatis menjadi lebih akurat", "Karena model tidak bisa dipakai tanpa internet", "Supaya data latihnya bisa dihapus setelah itu"],
               answer: 0,
               explain: "Registry mencatat model, versi data, pengaturan, dan metriknya, sehingga perubahan bisa dilacak dan dibatalkan.",
+            },
+          ],
+        },
+        {
+          id: "ai-pipa-2",
+          title: "Menyiapkan Data Tabel — Join, Imputer, Encoding, Binning & Scaling dalam Satu Pipeline",
+          duration: "17 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Urutan pipeline training: siapkan data, bagi data, EDA di data latih, preprocessing dan feature engineering, lalu training (<a href="#/lesson/ai-pipa-1">Pipeline Training Model</a>). Data kategori harus diubah menjadi angka, dan penskalaan menyamakan rentang antar-kolom (<a href="#/lesson/ai-ars-1">Feature Engineering</a>).
+</div>
+
+<p>Slide pipeline versi terbaru di kelas merinci tahap persiapan: <b>join</b> dari beberapa database, <b>imputer</b>, <b>scaling</b>, lalu feature engineering dengan <b>OHE</b>, <b>label encoder</b>, <b>transform</b>, dan <b>binning</b>. Slide itu juga sudah menaruh pembagian data latih dan uji sebelum EDA, dan EDA dilakukan di data latih saja. Urutan itu tepat.</p>
+
+<h3>Contoh kasus: pelanggan yang berhenti berlangganan</h3>
+<p>Sebuah toko daring ingin menebak pelanggan mana yang akan berhenti. Datanya tersebar di dua tempat:</p>
+<ul>
+  <li><b>Database 1, tabel transaksi:</b> satu baris per transaksi (customer_id, jumlah belanja).</li>
+  <li><b>Database 2, tabel profil:</b> satu baris per pelanggan (customer_id, umur, kota, paket, dan apakah ia berhenti).</li>
+</ul>
+<div data-diagram="pipeline" data-stages="Database 1::transaksi|Database 2::profil|Join::lewat customer_id|Split::latih dan uji|Siapkan kolom::isi, encode, skala|Model::belajar" data-caption="Dua sumber data menjadi satu tabel, dibagi, lalu disiapkan per jenis kolom"></div>
+<p>Model butuh <b>satu baris per pelanggan</b>, jadi kedua tabel harus digabung. Ikuti lima langkahnya:</p>
+<div data-demo="siapkan-tabel"></div>
+
+<h3>1. Join: menggabungkan dua tabel</h3>
+<p>Transaksi diringkas dulu per pelanggan (total belanja, jumlah transaksi), lalu digabung ke profil lewat kunci yang sama, <b>customer_id</b>. Pilih jenis join dengan sengaja. <b>Left join</b> dari profil mempertahankan semua pelanggan, termasuk yang belum pernah belanja; <b>inner join</b> diam-diam membuang mereka, padahal justru merekalah yang paling mungkin berhenti. Setelah join, periksa jumlah barisnya: kalau tiba-tiba berlipat, ada kunci yang kembar.</p>
+
+<h3>2. Imputer: mengisi yang kosong</h3>
+<p>Nilai kosong punya dua arti. Total belanja C05 kosong karena ia <b>tidak pernah belanja</b>, jadi diisi 0. Umur C03 kosong karena <b>tidak diketahui</b>, jadi diisi median umur pelanggan lain (35). Median lebih tahan terhadap angka ekstrem dibanding rata-rata. Imputer menghitung median itu dari <b>data latih saja</b>.</p>
+
+<h3>3. Encoding: kategori menjadi angka</h3>
+<table class="tbl">
+  <tr><th>Jenis kategori</th><th>Contoh</th><th>Alat yang tepat</th></tr>
+  <tr><td><b>Tanpa urutan</b> (nominal)</td><td>Kota: Jakarta, Bandung, Surabaya</td><td>One-hot encoding (OHE): satu kolom 0/1 per kategori</td></tr>
+  <tr><td><b>Punya urutan</b> (ordinal)</td><td>Paket: Basic &lt; Premium &lt; Gold</td><td>OrdinalEncoder dengan urutan yang kita tentukan</td></tr>
+  <tr><td><b>Kolom target</b></td><td>Berhenti: ya/tidak</td><td>LabelEncoder</td></tr>
+</table>
+<p>Catatan untuk slide: <i>Label Encoder</i> di scikit-learn dibuat untuk kolom <b>target</b>. Kalau dipakai untuk fitur kota, ia memberi nomor menurut abjad (Bandung 0, Jakarta 1, Surabaya 2), dan model linear akan mengira ada urutan yang sebenarnya tidak ada. Model berbasis pohon lebih tahan terhadap hal ini, tapi kebiasaan yang aman tetap OHE untuk kategori tanpa urutan.</p>
+
+<h3>4. Transform dan binning: membentuk ulang angka</h3>
+<p><b>Transform</b> mengubah bentuk sebaran. Contohnya total belanja: kebanyakan pelanggan kecil, sedikit yang sangat besar. Transformasi log merapatkan ekor panjang itu agar beberapa pelanggan besar tidak mendominasi. <b>Binning</b> mengubah angka menjadi kelompok, misalnya umur menjadi muda, dewasa, dan senior. Binning berguna kalau hubungannya tidak lurus atau hasilnya perlu mudah dijelaskan, tapi ada rincian yang hilang. Binning dengan batas tetap seperti 25 dan 45 tidak belajar dari data, jadi aman dilakukan sebelum split.</p>
+
+<h3>5. Scaling: menyamakan rentang</h3>
+<p>Slide kelas memberi contoh fitur dalam km, cm, dan liter (10; 0,1; 0,5) yang setelah scaling menjadi angka sebanding (0,05; 0,67; 0,22). Angka itu ilustrasi. Yang perlu diingat: scaling dihitung <b>per kolom, dari banyak baris</b>, bukan dengan mengubah satuan satu baris. Dua yang paling sering dipakai:</p>
+<ul>
+  <li><b>StandardScaler:</b> (nilai − rata-rata) ÷ simpangan baku. Hasilnya berpusat di 0 dan boleh negatif. Di demo, pelanggan yang belanjanya 0 menjadi −1,81.</li>
+  <li><b>MinMaxScaler</b> (normalisasi): (nilai − terkecil) ÷ (terbesar − terkecil). Hasilnya selalu 0 sampai 1.</li>
+</ul>
+<p>Model berbasis jarak dan gradien (regresi, SVM, k-NN, neural network) butuh scaling. Model pohon seperti random forest tidak terpengaruh.</p>
+
+<h3>Semuanya dalam satu pipeline</h3>
+<p>Setiap jenis kolom butuh perlakuan berbeda, dan semuanya harus belajar dari data latih saja. <b>ColumnTransformer</b> menyatukannya. Kode ini membuat 400 pelanggan rekaan supaya bisa langsung dijalankan, misalnya di Google Colab:</p>
+<pre class="code">import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, OrdinalEncoder
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+# Data rekaan: Database 2 = profil pelanggan, Database 1 = riwayat transaksi
+rng = np.random.default_rng(7)
+n = 400
+profil = pd.DataFrame({
+    "customer_id": range(1, n + 1),
+    "umur": rng.integers(18, 65, n).astype(float),
+    "kota": rng.choice(["Jakarta", "Bandung", "Surabaya"], n),
+    "paket": rng.choice(["Basic", "Premium", "Gold"], n, p=[0.5, 0.3, 0.2]),
+})
+banyak = rng.poisson(3, n)
+transaksi = pd.DataFrame({
+    "customer_id": np.repeat(profil["customer_id"], banyak),
+    "jumlah": rng.gamma(2, 50_000, banyak.sum()).round(-3),
+})
+peluang = 1 / (1 + np.exp(-(2.5 - 1.2 * banyak + 2.0 * (profil["paket"] == "Basic"))))
+profil["berhenti"] = (rng.random(n) &lt; peluang).astype(int)
+profil.loc[rng.choice(n, 30, replace=False), "umur"] = np.nan   # sebagian umur kosong
+
+# 1. JOIN: ringkas transaksi per pelanggan, lalu gabungkan ke profil
+ringkas = transaksi.groupby("customer_id").agg(
+    total_belanja=("jumlah", "sum"), jumlah_transaksi=("jumlah", "size")).reset_index()
+data = profil.merge(ringkas, on="customer_id", how="left")
+data[["total_belanja", "jumlah_transaksi"]] = data[["total_belanja", "jumlah_transaksi"]].fillna(0)
+
+# 2. SPLIT sebelum apa pun belajar dari data
+X = data.drop(columns=["customer_id", "berhenti"])
+y = data["berhenti"]
+X_latih, X_uji, y_latih, y_uji = train_test_split(X, y, test_size=0.25, stratify=y, random_state=42)
+
+# 3. PREPROCESSING per jenis kolom (semuanya belajar dari data latih saja)
+siapkan = ColumnTransformer([
+    ("angka", Pipeline([("isi", SimpleImputer(strategy="median")), ("skala", StandardScaler())]),
+     ["umur", "total_belanja", "jumlah_transaksi"]),
+    ("kota", OneHotEncoder(handle_unknown="ignore"), ["kota"]),
+    ("paket", OrdinalEncoder(categories=[["Basic", "Premium", "Gold"]]), ["paket"]),
+])
+model = Pipeline([("siapkan", siapkan), ("model", LogisticRegression(max_iter=1000))])
+
+# 4. TRAINING dan EVALUASI
+model.fit(X_latih, y_latih)
+print("akurasi uji:", round(accuracy_score(y_uji, model.predict(X_uji)), 3))</pre>
+<p>Saat dijalankan: 400 pelanggan setelah join, 30 umur kosong diisi median data latih (42), dan akurasi uji <b>0,82</b>. Sebagai pembanding, menebak kelas terbanyak terus-menerus hanya benar 0,51. Karena imputer, scaler, dan encoder ada di dalam pipeline, ketiganya otomatis belajar dari data latih saja dan dipakai dengan cara yang sama saat inference.</p>
+`,
+          keyPoints: [
+            "Join menggabungkan tabel lewat kunci yang sama (customer_id); left join mempertahankan pelanggan tanpa transaksi, inner join membuangnya.",
+            "Kosong bisa berarti nol (tidak pernah belanja) atau tidak diketahui (umur); yang kedua diisi imputer, misalnya median dari data latih.",
+            "Kategori tanpa urutan → one-hot encoding; kategori berurutan → OrdinalEncoder; LabelEncoder untuk kolom target.",
+            "Transform (mis. log) merapatkan sebaran berekor panjang; binning mengubah angka menjadi kelompok tapi rincian hilang.",
+            "StandardScaler berpusat di 0 (boleh negatif), MinMaxScaler 0–1. ColumnTransformer + Pipeline memastikan semuanya belajar dari data latih saja.",
+          ],
+          practice: [
+            { type: "number", q: "Umur lima pelanggan di data latih: 23, 41, 35, 52, dan 19. Satu pelanggan lain umurnya kosong. Kalau diisi median, berapa umurnya?", answer: 35, tol: 0, hint: "Urutkan dulu, lalu ambil yang di tengah.", solution: "Urutan: 19, 23, 35, 41, 52. Nilai tengahnya 35." },
+            {
+              type: "choice",
+              q: "Kolom 'metode bayar' berisi QRIS, transfer, dan kartu kredit. Encoding apa yang paling tepat untuk model regresi logistik?",
+              options: ["One-hot encoding, karena tidak ada urutan", "LabelEncoder, karena paling sederhana", "OrdinalEncoder dengan urutan abjad", "Dibiarkan sebagai teks apa adanya"],
+              answer: 0,
+              hint: "Apakah QRIS lebih besar atau lebih kecil dari transfer?",
+              solution: "Metode bayar tidak punya urutan. Memberi nomor 0, 1, 2 membuat model linear mengira ada urutan yang sebenarnya tidak ada.",
+            },
+            {
+              type: "choice",
+              q: "Setelah profil (1.000 pelanggan) di-inner join dengan ringkasan transaksi, hasilnya tinggal 870 baris. Apa yang terjadi?",
+              options: ["130 pelanggan tanpa transaksi ikut terbuang", "Ada 130 transaksi yang tercatat dua kali", "Inner join selalu membuang 13% data", "Kolom umur 130 pelanggan menjadi kosong"],
+              answer: 0,
+              hint: "Inner join hanya menyimpan kunci yang ada di kedua tabel.",
+              solution: "Pelanggan yang tidak punya transaksi tidak ada di tabel ringkasan, jadi ikut terbuang. Pakai left join dari profil, lalu isi kolom belanja mereka dengan 0.",
+            },
+          ],
+          quiz: [
+            {
+              q: "Kenapa LabelEncoder kurang tepat untuk fitur seperti nama kota?",
+              options: ["Nomornya membuat model mengira ada urutan", "LabelEncoder hanya menerima angka", "Hasilnya terlalu banyak kolom baru", "Nama kota tidak bisa diubah menjadi angka"],
+              answer: 0,
+              explain: "Bandung 0, Jakarta 1, Surabaya 2 hanyalah urutan abjad, bukan besaran yang bermakna. OHE tidak memberi urutan palsu.",
+            },
+            {
+              q: "Total belanja pelanggan yang belum pernah bertransaksi kosong setelah left join. Diisi apa?",
+              options: ["0, karena memang belum pernah belanja", "Median total belanja pelanggan lain", "Rata-rata total belanja seluruh data", "Dibiarkan kosong sampai training"],
+              answer: 0,
+              explain: "Kosong di sini punya arti yang jelas. Imputer median dipakai untuk nilai yang benar-benar tidak diketahui.",
+            },
+            {
+              q: "Apa beda StandardScaler dan MinMaxScaler?",
+              options: ["Standard berpusat di 0, MinMax selalu 0 sampai 1", "Standard untuk teks, MinMax untuk angka", "MinMax mengubah satuan km menjadi cm", "Keduanya sama persis, hanya beda nama"],
+              answer: 0,
+              explain: "StandardScaler memakai rata-rata dan simpangan baku; MinMaxScaler memakai nilai terkecil dan terbesar.",
+            },
+            {
+              q: "Kenapa imputer, scaler, dan encoder dimasukkan ke dalam Pipeline?",
+              options: ["Agar semuanya belajar dari data latih saja", "Agar akurasi model otomatis menjadi 100%", "Karena scikit-learn melarang memakainya terpisah", "Agar data uji tidak perlu disiapkan lagi"],
+              answer: 0,
+              explain: "Pipeline mencegah kebocoran data dan memastikan data baru disiapkan dengan cara yang persis sama.",
             },
           ],
         },

@@ -7506,16 +7506,16 @@ const PipaKos = {
       else if (b[4] > 5000 || b[4] < 300 || b[1] < 4 || b[1] > 40) dibuang.push([b[0], "tidak masuk akal (harga " + b[4].toLocaleString("id-ID") + " ribu)"]);
       else { bersih.push(b); sudah.add(kunci); }
     });
-    // 2. EDA
+    // 2. Bagi data, sebelum ada yang belajar dari data
     const kol = (rows, i) => rows.map((b) => b[i]);
-    const harga = kol(bersih, 4);
-    const eda = {
-      n: bersih.length, rataHarga: this.rata(harga), min: Math.min(...harga), maks: Math.max(...harga),
-      rLuas: this.korelasi(kol(bersih, 1), harga), rJarak: this.korelasi(kol(bersih, 2), harga),
-      rataAC: this.rata(bersih.filter((b) => b[3] === 1).map((b) => b[4])), rataNonAC: this.rata(bersih.filter((b) => b[3] === 0).map((b) => b[4])),
-    };
-    // 3. Bagi data
     const uji = bersih.filter((b) => this.UJI.includes(b[0])), latihRows = bersih.filter((b) => !this.UJI.includes(b[0]));
+    // 3. EDA di data latih saja
+    const harga = kol(latihRows, 4), denganAC = latihRows.filter((b) => b[3] === 1), tanpaAC = latihRows.filter((b) => b[3] === 0);
+    const eda = {
+      n: latihRows.length, rataHarga: this.rata(harga), min: Math.min(...harga), maks: Math.max(...harga),
+      rLuas: this.korelasi(kol(latihRows, 1), harga), rJarak: this.korelasi(kol(latihRows, 2), harga),
+      rataAC: this.rata(kol(denganAC, 4)), rataNonAC: this.rata(kol(tanpaAC, 4)), luasAC: this.rata(kol(denganAC, 1)), luasNonAC: this.rata(kol(tanpaAC, 1)),
+    };
     const yl = kol(latihRows, 4);
     // 4. Preprocessing: setiap fitur diskalakan dengan rata-rata & simpangan baku dari data LATIH saja
     const siapkan = (pilihan, rows) => {
@@ -7564,7 +7564,7 @@ DEMOS["pipeline-kos"] = function (root) {
   // Bentuk model dalam satuan asli: harga = dasar + a×luas + b×jarak + c×AC
   const dasar = r.w[0] - r.w.slice(1).reduce((s, w, k) => s + (w * r.skala.m[k]) / r.skala.s[k], 0);
   function sebar() {
-    const W = 520, H = 260, PX = 46, PY = 18, data = r.bersih;
+    const W = 520, H = 260, PX = 46, PY = 18, data = r.latihRows;
     const x = (v) => PX + ((v - 5) / 28) * (W - PX - 12), y = (v) => H - 34 - ((v - 500) / 2000) * (H - 34 - PY);
     let s = '<svg viewBox="0 0 ' + W + " " + H + '" class="viz-svg" role="img" aria-label="Sebaran luas kamar dan harga sewa">';
     s += '<line x1="' + PX + '" y1="' + (H - 34) + '" x2="' + (W - 12) + '" y2="' + (H - 34) + '" class="vline dim"/><line x1="' + PX + '" y1="' + PY + '" x2="' + PX + '" y2="' + (H - 34) + '" class="vline dim"/>';
@@ -7579,17 +7579,17 @@ DEMOS["pipeline-kos"] = function (root) {
         r.dibuang.map((d) => baris("Baris " + d[0] + " dibuang", d[1], "bad")).join("") +
         baris("Data bersih", r.bersih.length + " baris", "big good") +
         '<p class="dm-sub">Aturan validasi: harga 300–5.000 ribu, luas 4–40 m², tidak boleh ada kolom kosong, tidak boleh ada baris kembar.</p>' },
-    { nama: "2. EDA", pendek: "2 EDA", isi: () =>
-        sebar() +
-        baris("Harga sewa", "rata-rata " + rb(r.eda.rataHarga) + ", dari " + rb(r.eda.min) + " sampai " + rb(r.eda.maks)) +
-        baris("Korelasi harga dengan luas", des(r.eda.rLuas, 2) + " — kuat") +
-        baris("Korelasi harga dengan jarak", des(r.eda.rJarak, 2) + " — lemah, makin jauh sedikit lebih murah") +
-        baris("Rata-rata harga AC vs tanpa AC", rb(r.eda.rataAC) + " vs " + rb(r.eda.rataNonAC)) +
-        baris("Hati-hati", "Kamar ber-AC juga rata-rata lebih luas, jadi selisih harganya tidak semuanya karena AC. EDA memunculkan pertanyaan; model yang menjawabnya.", "warn") },
-    { nama: "3. Bagi data", pendek: "3 Bagi", isi: () =>
+    { nama: "2. Bagi data", pendek: "2 Bagi", isi: () =>
         baris("Data latih", r.latihRows.length + " baris — untuk belajar dan tuning") +
         baris("Data uji", r.uji.length + " baris (id " + r.uji.map((b) => b[0]).join(", ") + ") — dikunci sampai evaluasi akhir", "big") +
-        '<p class="dm-sub">Langkah ini sengaja ditambahkan di antara EDA dan preprocessing. Pembagian harus terjadi SEBELUM ada perhitungan yang belajar dari data, agar data uji benar-benar baru.</p>' },
+        '<p class="dm-sub">Data dibagi sebelum EDA dan sebelum ada perhitungan yang belajar dari data, agar data uji benar-benar baru saat evaluasi.</p>' },
+    { nama: "3. EDA (data latih)", pendek: "3 EDA", isi: () =>
+        '<p class="dm-sub">Dihitung dari ' + r.eda.n + ' kamar data latih saja; 4 kamar uji tidak diintip.</p>' + sebar() +
+        baris("Harga sewa", "rata-rata " + rb(r.eda.rataHarga) + ", dari " + rb(r.eda.min) + " sampai " + rb(r.eda.maks)) +
+        baris("Korelasi harga dengan luas", des(r.eda.rLuas, 2) + " — kuat") +
+        baris("Korelasi harga dengan jarak", des(r.eda.rJarak, 2) + " — hampir nol kalau dilihat sendirian; lihat lagi di langkah Training") +
+        baris("Rata-rata harga AC vs tanpa AC", rb(r.eda.rataAC) + " vs " + rb(r.eda.rataNonAC)) +
+        baris("Hati-hati", "Kamar ber-AC juga rata-rata lebih luas (" + des(r.eda.luasAC, 1) + " vs " + des(r.eda.luasNonAC, 1) + " m²), jadi selisih harganya tidak semuanya karena AC. EDA memunculkan pertanyaan; model yang menjawabnya.", "warn") },
     { nama: "4. Preprocessing", pendek: "4 Preproses", isi: () =>
         tabel(["Fitur", "Rata-rata (data latih)", "Simpangan baku"], [["Luas", des(r.skala.m[0], 2) + " m²", des(r.skala.s[0], 2)], ["Jarak", des(r.skala.m[1], 2) + " km", des(r.skala.s[1], 2)], ["AC", des(r.skala.m[2], 2), des(r.skala.s[2], 2)]]) +
         baris("Rumus penskalaan", "nilai baru = (nilai − rata-rata) ÷ simpangan baku") +
@@ -7652,6 +7652,66 @@ DEMOS["pipeline-kos"] = function (root) {
     h("p", { class: "dm-note", text: "Data rekaan untuk belajar. Semua angka dihitung langsung di browser dengan regresi linear; tuning memakai validasi leave-one-out di data latih." }),
   ]));
   tampil(0);
+};
+
+/* ---------- Demo: menyiapkan data tabel — join, imputer, encoding, binning, scaling ---------- */
+DEMOS["siapkan-tabel"] = function (root) {
+  // Enam pelanggan rekaan. Database 1 = transaksi (ribu rupiah), Database 2 = profil.
+  const PROFIL = [["C01", 23, "Jakarta", "Basic"], ["C02", 41, "Bandung", "Gold"], ["C03", null, "Surabaya", "Basic"], ["C04", 35, "Jakarta", "Premium"], ["C05", 52, "Bandung", "Basic"], ["C06", 19, "Surabaya", "Premium"]];
+  const TRANSAKSI = [["C01", 50], ["C01", 70], ["C01", 30], ["C02", 200], ["C03", 20], ["C03", 25], ["C03", 30], ["C03", 25], ["C04", 120], ["C04", 80], ["C06", 60], ["C06", 40]];
+  const des = (v, d) => Number(v).toLocaleString("id-ID", { minimumFractionDigits: d, maximumFractionDigits: d });
+  const tabel = (kepala, isi) => '<div class="table-scroll"><table class="tbl"><tr>' + kepala.map((k) => "<th>" + k + "</th>").join("") + "</tr>" + isi.map((b) => "<tr>" + b.map((s) => "<td>" + s + "</td>").join("") + "</tr>").join("") + "</table></div>";
+  const kosong = '<span style="color:var(--bad)">kosong</span>', baru = (s) => "<b>" + s + "</b>";
+  // Hasil join: profil LEFT JOIN ringkasan transaksi
+  const ringkas = {};
+  TRANSAKSI.forEach(([id, j]) => { ringkas[id] = ringkas[id] || { total: 0, n: 0 }; ringkas[id].total += j; ringkas[id].n += 1; });
+  const gabung = PROFIL.map(([id, umur, kota, paket]) => ({ id, umur, kota, paket, total: ringkas[id] ? ringkas[id].total : null, n: ringkas[id] ? ringkas[id].n : null }));
+  const ada = gabung.filter((g) => g.umur !== null).map((g) => g.umur).sort((a, b) => a - b);
+  const median = ada.length % 2 ? ada[(ada.length - 1) / 2] : (ada[ada.length / 2 - 1] + ada[ada.length / 2]) / 2;
+  const lengkap = gabung.map((g) => Object.assign({}, g, { umurIsi: g.umur === null ? median : g.umur, total: g.total === null ? 0 : g.total, n: g.n === null ? 0 : g.n }));
+  const kelompok = (u) => (u < 25 ? "muda" : u < 45 ? "dewasa" : "senior");
+  const skala = (arr) => {
+    const m = arr.reduce((s, v) => s + v, 0) / arr.length, sd = Math.sqrt(arr.reduce((s, v) => s + (v - m) ** 2, 0) / arr.length);
+    const mn = Math.min(...arr), mx = Math.max(...arr);
+    return { m, sd, z: arr.map((v) => (v - m) / sd), mm: arr.map((v) => (v - mn) / (mx - mn)), mn, mx };
+  };
+  const sTotal = skala(lengkap.map((g) => g.total)), sUmur = skala(lengkap.map((g) => g.umurIsi));
+  const KOTA = ["Bandung", "Jakarta", "Surabaya"], PAKET = ["Basic", "Premium", "Gold"];
+  const LANGKAH = {
+    join: { nama: "1. Join", isi: () =>
+        '<p class="dm-sub">Database 1 berisi ' + TRANSAKSI.length + " baris transaksi; Database 2 berisi " + PROFIL.length + " profil. Transaksi diringkas per pelanggan, lalu digabung ke profil lewat <b>customer_id</b>.</p>" +
+        tabel(["customer_id", "umur", "kota", "paket", "total belanja", "jumlah transaksi"], gabung.map((g) => [g.id, g.umur === null ? kosong : g.umur, g.kota, g.paket, g.total === null ? kosong : baru(g.total + " rb"), g.n === null ? kosong : baru(g.n)])) +
+        '<p class="dm-sub">C05 tidak punya transaksi, jadi setelah <i>left join</i> kolomnya kosong. Kosong di sini berarti "tidak pernah belanja", jadi diisi 0, bukan rata-rata.</p>' },
+    imputer: { nama: "2. Imputer", isi: () =>
+        tabel(["customer_id", "umur sebelum", "umur sesudah"], lengkap.map((g) => [g.id, g.umur === null ? kosong : g.umur, g.umur === null ? baru(g.umurIsi) : g.umurIsi])) +
+        '<p class="dm-sub">Umur C03 tidak diketahui, jadi diisi <b>median</b> umur pelanggan lain: ' + ada.join(", ") + " → " + median + ". Median dipilih karena tidak mudah tertarik oleh satu angka ekstrem. Di pipeline sungguhan, median ini dihitung dari data latih saja.</p>" },
+    encoding: { nama: "3. Encoding", isi: () =>
+        tabel(["customer_id", "kota", "OHE: Bandung", "OHE: Jakarta", "OHE: Surabaya", "label encoder"], lengkap.map((g) => [g.id, g.kota].concat(KOTA.map((k) => baru(g.kota === k ? 1 : 0)), [KOTA.indexOf(g.kota)]))) +
+        '<p class="dm-sub"><b>One-hot encoding</b> membuat satu kolom 0/1 per kategori. <b>Label encoder</b> memberi nomor 0, 1, 2 menurut abjad, sehingga model linear bisa mengira Surabaya (2) "lebih besar" dari Jakarta (1). Untuk kategori tanpa urutan seperti kota, pakai OHE.</p>' +
+        tabel(["customer_id", "paket", "ordinal encoder"], lengkap.map((g) => [g.id, g.paket, baru(PAKET.indexOf(g.paket))])) +
+        '<p class="dm-sub">Paket <b>punya urutan</b> (Basic &lt; Premium &lt; Gold), jadi angka 0, 1, 2 memang bermakna. Di scikit-learn alatnya OrdinalEncoder dengan urutan yang kita tentukan sendiri; LabelEncoder sebenarnya dibuat untuk kolom target, bukan fitur.</p>' },
+    binning: { nama: "4. Binning", isi: () =>
+        tabel(["customer_id", "umur", "kelompok umur"], lengkap.map((g) => [g.id, g.umurIsi, baru(kelompok(g.umurIsi))])) +
+        '<p class="dm-sub">Binning mengubah angka menjadi kelompok: di bawah 25 = muda, 25–44 = dewasa, 45 ke atas = senior. Berguna kalau hubungannya tidak lurus (misalnya kebiasaan anak muda dan lansia sama-sama berbeda dari usia tengah) atau agar hasil mudah dijelaskan. Harganya: rincian hilang, umur 25 dan 44 dianggap sama.</p>' },
+    scaling: { nama: "5. Scaling", isi: () =>
+        tabel(["customer_id", "total belanja", "StandardScaler", "MinMaxScaler", "umur", "StandardScaler", "MinMaxScaler"], lengkap.map((g, i) => [g.id, g.total + " rb", baru(des(sTotal.z[i], 2)), baru(des(sTotal.mm[i], 2)), g.umurIsi, baru(des(sUmur.z[i], 2)), baru(des(sUmur.mm[i], 2))])) +
+        '<p class="dm-sub"><b>StandardScaler</b>: (nilai − rata-rata) ÷ simpangan baku, hasilnya berpusat di 0 dan boleh negatif. Rata-rata belanja ' + des(sTotal.m, 1) + " rb, simpangan baku " + des(sTotal.sd, 1) + ". <b>MinMaxScaler</b> (normalisasi): (nilai − terkecil) ÷ (terbesar − terkecil), hasilnya 0 sampai 1. Setelah diskalakan, belanja (puluhan sampai ratusan ribu) dan umur (belasan sampai puluhan) berada di rentang yang sebanding.</p>" },
+  };
+  const kunci = Object.keys(LANGKAH);
+  const panel = h("div", { class: "dm-out" });
+  const tombol = kunci.map((k) => h("button", { class: "btn ghost", type: "button", text: LANGKAH[k].nama, onclick: () => tampil(k) }));
+  function tampil(k) {
+    tombol.forEach((b, i) => (b.className = "btn " + (kunci[i] === k ? "primary" : "ghost")));
+    panel.innerHTML = '<p class="kicker bt-judul">' + LANGKAH[k].nama + "</p>" + LANGKAH[k].isi();
+  }
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Menyiapkan data pelanggan: sebelum dan sesudah</b>" }),
+    h("p", { class: "demo-hint", text: "Enam pelanggan dari dua database. Klik setiap langkah untuk melihat tabelnya berubah." }),
+    h("div", { class: "demo-controls pk-tahap" }, tombol),
+    panel,
+    h("p", { class: "dm-note", text: "Data rekaan. Semua angka dihitung di browser dengan rumus yang sama seperti scikit-learn (StandardScaler memakai simpangan baku populasi)." }),
+  ]));
+  tampil("join");
 };
 
 /* ---------- Demo: kenop AI kos — memutar parameter dengan tangan ---------- */

@@ -1971,6 +1971,12 @@ const GLOSSARY = [
   ["Model registry", "Tempat menyimpan model beserta nomor versi, versi data, pengaturan, dan metriknya, sehingga jelas versi mana yang dipakai."],
   ["MLflow", "Alat sumber terbuka untuk mencatat percobaan machine learning (pengaturan, metrik, berkas model) dan menyimpan model bernomor versi di registry."],
   ["Deployment", "Memasang model atau aplikasi agar bisa dipakai pengguna, mis. sebagai API."],
+  ["One-hot encoding", "Mengubah kategori tanpa urutan (mis. kota) menjadi beberapa kolom 0/1, satu kolom per kategori.", ["ai", "coding"]],
+  ["Label encoder", "Memberi nomor 0, 1, 2 pada kategori menurut abjad. Dibuat untuk kolom target; untuk fitur tanpa urutan pakai one-hot encoding.", ["ai", "coding"]],
+  ["Imputer", "Alat yang mengisi nilai kosong, mis. dengan median kolom yang dihitung dari data latih.", ["ai", "coding"]],
+  ["Binning", "Mengubah angka menjadi kelompok, mis. umur menjadi muda, dewasa, dan senior.", ["ai", "coding"]],
+  ["ColumnTransformer", "Alat scikit-learn yang menerapkan persiapan berbeda untuk tiap jenis kolom dalam satu langkah pipeline.", ["ai", "coding"]],
+  ["Left join", "Menggabungkan dua tabel lewat kunci yang sama sambil mempertahankan semua baris tabel kiri, walau tak punya pasangan."],
   ["Kenop", "Tombol putar, seperti pengatur volume radio atau api kompor. Di materi AI dipakai sebagai perumpamaan untuk angka yang bisa diputar naik-turun: parameter yang digeser sedikit demi sedikit saat model belajar, atau pengaturan seperti learning rate dan temperature."],
 ];
 
