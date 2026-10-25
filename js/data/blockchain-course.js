@@ -7208,6 +7208,16 @@ contract HargaETH {
   <tr><td>Tidak memeriksa updatedAt</td><td>Kontrak memakai harga basi saat feed bermasalah</td></tr>
   <tr><td>Menganggap feed Sepolia seaman mainnet</td><td>Feed Sepolia hanya 4 node; cukup untuk latihan, bukan untuk uang sungguhan</td></tr>
 </table>
+
+<h3>Contoh dari kelas: DEX yang memakai harga Chainlink</h3>
+<p>Di kelas ada contoh <b>SimpleDEX</b>: harga dua token dibaca dari Chainlink, lalu jumlah token yang keluar dihitung dari nilainya dalam dolar. Idenya benar, tapi ada tiga celah yang harus ditutup sebelum kode seperti ini memegang uang sungguhan:</p>
+<table class="tbl">
+  <tr><th>Celah</th><th>Akibatnya</th><th>Perbaikan</th></tr>
+  <tr><td><i>setPriceFeed</i> bisa dipanggil siapa saja</td><td>Penyerang memasang feed palsu yang melapor harga sesukanya, lalu menukar token murah dengan token mahal sampai DEX kosong</td><td>Batasi dengan onlyOwner, idealnya pemilik multisig</td></tr>
+  <tr><td>Hasil <i>transfer</i> dan <i>transferFrom</i> tidak diperiksa</td><td>Ada token yang mengembalikan false alih-alih gagal, dan ada yang tidak mengembalikan apa pun (misalnya USDT di Ethereum)</td><td>Pakai SafeERC20 dari OpenZeppelin</td></tr>
+  <tr><td>Harga oracle tertinggal dari pasar</td><td>Feed baru diperbarui setelah bergeser 0,5% atau tiap jam. Trader bisa menukar saat harga Chainlink belum menyusul, dan selisihnya diambil dari kas DEX</td><td>Periksa updatedAt, kenakan biaya swap, dan batasi jumlah per transaksi</td></tr>
+</table>
+<p>Kalau mencoba di Foundry, cara memasang paket Chainlink dan memilih jalur impor yang benar ada di <a href="#/lesson/bc-cl-2">Chainlink VRF &amp; Automation</a>.</p>
 `,
           keyPoints: [
             "latestRoundData() mengembalikan roundId, answer, startedAt, updatedAt, answeredInRound; harga ETH/USD memakai 8 desimal.",
@@ -7262,7 +7272,7 @@ contract HargaETH {
       id: "bc-dapp",
       level: "DApp",
       title: "Membangun DApp: Foundry, Frontend & Keamanan",
-      summary: "Alur kerja developer profesional: tes otomatis & fuzzing dengan Foundry, jaringan lokal Anvil, deploy dengan skrip, OpenZeppelin & pola kontrak, menghubungkan web lewat ethers.js, DApp fullstack + AI, identitas dan reputasi agen AI dengan ERC-8004, lalu keamanan smart contract & deteksi penipuan.",
+      summary: "Alur kerja developer profesional: tes otomatis & fuzzing dengan Foundry, jaringan lokal Anvil, deploy dengan skrip, OpenZeppelin & pola kontrak, kontrak upgradeable lewat proxy, Chainlink VRF & Automation, menghubungkan web lewat ethers.js, DApp fullstack + AI, identitas dan reputasi agen AI dengan ERC-8004, lalu keamanan smart contract & deteksi penipuan.",
       lessons: [
         {
           id: "bc-fdy-1",
@@ -7359,6 +7369,8 @@ contract CelenganTest is Test {
   <tr><td><b>vm.deal(x, n)</b></td><td>Isi saldo alamat x sebanyak n</td></tr>
   <tr><td><b>vm.expectRevert("…")</b></td><td>"Panggilan berikutnya HARUS gagal dengan pesan ini"</td></tr>
   <tr><td><b>vm.assume(syarat)</b></td><td>Lewati tebakan acak yang tidak memenuhi syarat</td></tr>
+  <tr><td><b>vm.startPrank(x)</b> … <b>vm.stopPrank()</b></td><td>Semua panggilan di antaranya dikirim oleh alamat x, bukan hanya satu panggilan</td></tr>
+  <tr><td><b>vm.warp(waktu)</b></td><td>Mesin waktu: mengubah block.timestamp, mis. <i>vm.warp(block.timestamp + 7 days)</i> untuk menguji masa kunci atau tenggat</td></tr>
 </table>
 <p>Perintah <b>vm.…</b> disebut <i>cheatcode</i>: kemampuan khusus yang hanya ada saat tes, seperti menyamar menjadi alamat lain atau mencetak ETH mainan.</p>
 
@@ -7660,6 +7672,425 @@ function tarik(uint256 jumlah) public {
               explain: "Pengguna tetap memakai alamat proxy yang sama; proxy diarahkan ke kontrak logika baru."
             }
           ]
+        },
+        {
+          id: "bc-dev-up",
+          title: "Upgradeable Smart Contract — Proxy, delegatecall & Tabrakan Storage",
+          duration: "18 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Kontrak tidak bisa diubah setelah di-deploy, kecuali lewat <b>proxy</b>, dan pemegang kunci upgrade bisa mengganti logikanya menjadi apa saja (<a href="#/lesson/bc-dev-1">OpenZeppelin &amp; Pola Kontrak Profesional</a>). <b>storage</b> adalah data permanen kontrak (<a href="#/lesson/cd-sol-5">Kontrak Memakai Kontrak Lain</a>). Pelajaran ini melengkapi materi <i>Upgradeable Smart Contract</i> di kelas.
+</div>
+
+<h3>Kenapa ada kontrak yang bisa di-upgrade?</h3>
+<p>Kode kontrak bersifat permanen: bug ikut permanen, dan fitur baru tidak bisa ditambahkan. <b>Upgradeable smart contract</b> memisahkan dua hal: <b>data</b> disimpan di kontrak <b>proxy</b> yang alamatnya tidak pernah berubah, sedangkan <b>logika</b> ada di kontrak <b>implementation</b> yang bisa diganti.</p>
+<div data-diagram="flow" data-steps="Pengguna memanggil Proxy|Proxy menyimpan data|delegatecall ke Implementation|Logika berjalan memakai data Proxy" data-caption="Upgrade = Proxy menunjuk ke Implementation baru; alamat yang dipakai pengguna tetap sama"></div>
+
+<h3>delegatecall: meminjam resep, memasak di dapur sendiri</h3>
+<p>Panggilan biasa ke kontrak lain menjalankan kode kontrak itu dengan datanya sendiri. <b>delegatecall</b> berbeda: kode kontrak lain dijalankan, tapi memakai <b>penyimpanan, saldo, dan msg.sender milik pemanggil</b>. Seperti meminjam resep tetangga, tapi memasak di dapurmu sendiri dengan bahan-bahanmu sendiri.</p>
+
+<h3>Penyimpanan diatur per slot, bukan per nama</h3>
+<p>Di EVM, variabel penyimpanan disimpan berurutan di <b>slot</b> 32 byte: variabel pertama di slot 0, berikutnya di slot 1, dan seterusnya. Implementation tidak membaca "variabel bernama a"; ia membaca "slot 0". Karena itu urutan variabel setiap versi harus sama.</p>
+<p>Lab ini menjalankan proxy sungguhan dengan delegatecall di EVM mini. Urutannya:</p>
+<ol>
+  <li>Tekan <b>isiData</b> dengan 10 dan 20, lalu <b>bacaA</b> dan <b>bacaB</b>: hasilnya 10 dan 20. <b>bacaC</b> masih gagal, karena V1 belum punya c.</li>
+  <li>Tekan <b>upgradeKeV2Aman</b>: a = 10, b = 20, c = 0. Variabel baru ditambahkan di belakang, jadi data lama aman.</li>
+  <li>Tekan <b>upgradeKeV2Bahaya</b>: a terbaca <b>20</b>, b terbaca <b>0</b>, c terbaca <b>10</b>. V2Bahaya menyelipkan c di depan, sehingga setiap nama sekarang menunjuk slot yang salah.</li>
+</ol>
+<div data-demo="sol-lab" data-kontrak="LabUpgrade">
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+// Versi 1: a disimpan di slot 0, b di slot 1
+contract V1 {
+    uint256 public a;
+    uint256 public b;
+
+    function isi(uint256 _a, uint256 _b) external {
+        a = _a;
+        b = _b;
+    }
+}
+
+// Versi 2 yang aman: variabel baru ditambahkan di belakang
+contract V2Aman {
+    uint256 public a; // slot 0
+    uint256 public b; // slot 1
+    uint256 public c; // slot 2, baru
+}
+
+// Versi 2 yang berbahaya: variabel baru diselipkan di depan
+contract V2Bahaya {
+    uint256 public c; // slot 0, padahal di sana tersimpan a
+    uint256 public a; // slot 1, padahal di sana tersimpan b
+    uint256 public b; // slot 2, masih kosong
+}
+
+// Proxy mini: semua panggilan diteruskan dengan delegatecall.
+// Alamat implementation disimpan di slot EIP-1967, jauh dari slot 0, 1, 2.
+contract ProxyMini {
+    bytes32 private constant SLOT_IMPL = bytes32(uint256(keccak256("eip1967.proxy.implementation")) - 1);
+    address private immutable admin;
+
+    constructor(address impl) {
+        admin = msg.sender;
+        _simpan(impl);
+    }
+
+    function upgradeTo(address implBaru) external {
+        require(msg.sender == admin, "Hanya admin");
+        _simpan(implBaru);
+    }
+
+    function _simpan(address impl) private {
+        bytes32 slot = SLOT_IMPL;
+        assembly { sstore(slot, impl) }
+    }
+
+    fallback() external {
+        bytes32 slot = SLOT_IMPL;
+        address impl;
+        assembly { impl := sload(slot) }
+        (bool ok, bytes memory hasil) = impl.delegatecall(msg.data);
+        require(ok, "Panggilan gagal");
+        assembly { return(add(hasil, 32), mload(hasil)) }
+    }
+}
+
+// Tombol-tombol Lab memanggil proxy, seperti yang dilakukan pengguna sungguhan.
+contract LabUpgrade {
+    ProxyMini public proxy;
+    address private v2Aman;
+    address private v2Bahaya;
+
+    constructor() {
+        proxy = new ProxyMini(address(new V1()));
+        v2Aman = address(new V2Aman());
+        v2Bahaya = address(new V2Bahaya());
+    }
+
+    function isiData(uint256 _a, uint256 _b) external { V1(address(proxy)).isi(_a, _b); }
+    function upgradeKeV2Aman() external { proxy.upgradeTo(v2Aman); }
+    function upgradeKeV2Bahaya() external { proxy.upgradeTo(v2Bahaya); }
+    function bacaA() external view returns (uint256) { return V1(address(proxy)).a(); }
+    function bacaB() external view returns (uint256) { return V1(address(proxy)).b(); }
+    function bacaC() external view returns (uint256) { return V2Aman(address(proxy)).c(); }
+}
+</div>
+<p>Inilah <b>tabrakan storage</b> (storage collision). Perhatikan juga di mana proxy menyimpan alamat implementation-nya: bukan di slot 0, melainkan di slot hasil hash yang ditetapkan standar <b>EIP-1967</b>. Kalau disimpan di slot 0, alamat itu sendiri akan bertabrakan dengan variabel pertama implementation. Slot inilah yang dibaca Etherscan saat menampilkan tombol <i>Read as Proxy</i>.</p>
+
+<h3>Tiga jenis proxy</h3>
+<table class="tbl">
+  <tr><th>Jenis</th><th>Di mana fungsi upgrade-nya</th><th>Catatan</th></tr>
+  <tr><td><b>Transparent</b></td><td>Di proxy. Panggilan admin ditangani proxy, panggilan pengguna selalu diteruskan</td><td>Mencegah nama fungsi proxy dan implementation tertukar; biaya sedikit lebih mahal</td></tr>
+  <tr><td><b>UUPS</b></td><td>Di implementation (<i>upgradeToAndCall</i>)</td><td>Lebih ringan. Bahayanya: kalau V2 lupa menyertakan fungsi upgrade, kontrak tidak bisa di-upgrade lagi selamanya</td></tr>
+  <tr><td><b>Beacon</b></td><td>Di satu kontrak beacon yang ditunjuk banyak proxy</td><td>Satu kali upgrade memperbarui semua proxy sekaligus, misalnya ribuan dompet dengan logika sama</td></tr>
+</table>
+
+<h3>Aturan menulis kontrak upgradeable</h3>
+<ol>
+  <li><b>Tidak memakai constructor untuk data.</b> Constructor berjalan di implementation, bukan di proxy. Gantinya fungsi <i>initialize</i> dengan modifier <i>initializer</i> agar hanya bisa dipanggil sekali, dan constructor implementation memanggil <i>_disableInitializers()</i> supaya tidak ada orang yang menginisialisasinya.</li>
+  <li><b>Variabel baru hanya di belakang.</b> Jangan menyelipkan, menghapus, menukar urutan, atau mengubah tipe variabel lama. OpenZeppelin versi 5 menaruh variabelnya di slot bernama (ERC-7201) agar warisan antar-kontrak tidak saling menabrak.</li>
+  <li><b>Jangan ada selfdestruct atau delegatecall ke alamat sembarangan</b> di implementation.</li>
+  <li><b>Kunci upgrade dipegang multisig dengan jeda waktu</b> (timelock), bukan satu dompet.</li>
+</ol>
+<p>Dua kejadian nyata menunjukkan kenapa aturan pertama penting. November 2017, kontrak library milik dompet Parity ternyata belum diinisialisasi. Seorang pengguna menginisialisasinya, menjadi pemiliknya, lalu menghancurkannya dengan selfdestruct. Semua dompet yang bergantung padanya kehilangan logikanya, dan sekitar 513.000 ETH terkunci selamanya. September 2021, OpenZeppelin mengumumkan celah serupa pada versi UUPS-nya: implementation yang belum diinisialisasi bisa diambil alih dan dihancurkan. Celah itu ditambal sebelum dimanfaatkan.</p>
+<p>Sejak upgrade Dencun (Maret 2024), selfdestruct di Ethereum tidak lagi menghapus kode kontrak kecuali dipanggil di transaksi yang sama dengan pembuatannya. Risiko "proxy hancur" karena selfdestruct jadi jauh lebih kecil, tapi pelajaran tentang inisialisasi tetap berlaku.</p>
+
+<h3>Membuatnya dengan OpenZeppelin dan Foundry</h3>
+<p>Di kelas, paket yang dipasang adalah:</p>
+<pre class="code">forge install openzeppelin/openzeppelin-contracts-upgradeable</pre>
+<p>Contoh kerangka UUPS dengan OpenZeppelin versi 5:</p>
+<pre class="code">import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+
+contract CelenganV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
+    uint256 public totalSetoran;
+
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
+    function initialize(address pemilik) public initializer {
+        __Ownable_init(pemilik);
+    }
+
+    function setor() external payable {
+        totalSetoran += msg.value;
+    }
+
+    // Wajib dilindungi: siapa pun yang lolos di sini bisa mengganti logika
+    function _authorizeUpgrade(address) internal override onlyOwner {}
+}</pre>
+<p>Untuk men-deploy dan meng-upgrade, OpenZeppelin menyediakan plugin <i>openzeppelin-foundry-upgrades</i> dengan fungsi <i>Upgrades.deployUUPSProxy</i> dan <i>Upgrades.upgradeProxy</i>. Plugin ini memeriksa tata letak storage V1 dan V2 sebelum upgrade, sehingga kesalahan seperti V2Bahaya ditolak sebelum sampai ke blockchain. Pengaturan foundry.toml yang dibutuhkannya ada di README plugin itu.</p>
+<div class="callout warn">
+<b>Bagi pengguna, "upgradeable" berarti percaya pada pemegang kuncinya.</b> Pemegang kunci bisa mengganti logika menjadi apa saja, termasuk menguras dana. Sebelum menyetor ke sebuah kontrak, periksa apakah ia proxy (Etherscan menandainya, GoPlus melaporkannya sebagai is_proxy), siapa admin-nya, dan apakah upgrade melewati multisig dan timelock (<a href="#/lesson/bc-onc-3">Pemeriksa Keamanan Token</a>).
+</div>
+`,
+          keyPoints: [
+            "Upgradeable = data di Proxy (alamat tetap), logika di Implementation (bisa diganti); Proxy meneruskan panggilan dengan delegatecall.",
+            "delegatecall menjalankan kode kontrak lain dengan penyimpanan, saldo, dan msg.sender milik pemanggil.",
+            "Variabel disimpan per slot berurutan. Menyelipkan variabel di depan membuat setiap nama membaca slot yang salah: tabrakan storage.",
+            "Transparent (upgrade di proxy), UUPS (upgrade di implementation), Beacon (satu beacon untuk banyak proxy). Alamat implementation disimpan di slot EIP-1967.",
+            "Pakai initialize + initializer, _disableInitializers() di constructor implementation, variabel baru hanya di belakang, dan kunci upgrade di multisig + timelock.",
+          ],
+          practice: [
+            { type: "code", lang: "solidity", contract: "LabUpgrade", q: "Setelah upgrade ke V2, nilai a dan b milik V1 terbaca salah. Perbaiki urutan variabel di kontrak V2 (jangan ubah kontrak lain) agar data lama tetap benar dan c bisa diisi.", starter: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract V1 {\n    uint256 public a;\n    uint256 public b;\n\n    function isi(uint256 _a, uint256 _b) external {\n        a = _a;\n        b = _b;\n    }\n}\n\n// Perbaiki urutan variabel V2 agar data V1 tidak rusak setelah upgrade\ncontract V2 {\n    uint256 public c;\n    uint256 public a;\n    uint256 public b;\n\n    function isiC(uint256 _c) external {\n        c = _c;\n    }\n}\n\ncontract ProxyMini {\n    bytes32 private constant SLOT_IMPL = bytes32(uint256(keccak256(\"eip1967.proxy.implementation\")) - 1);\n    address private immutable admin;\n\n    constructor(address impl) {\n        admin = msg.sender;\n        _simpan(impl);\n    }\n\n    function upgradeTo(address implBaru) external {\n        require(msg.sender == admin, \"Hanya admin\");\n        _simpan(implBaru);\n    }\n\n    function _simpan(address impl) private {\n        bytes32 slot = SLOT_IMPL;\n        assembly { sstore(slot, impl) }\n    }\n\n    fallback() external {\n        bytes32 slot = SLOT_IMPL;\n        address impl;\n        assembly { impl := sload(slot) }\n        (bool ok, bytes memory hasil) = impl.delegatecall(msg.data);\n        require(ok, \"Panggilan gagal\");\n        assembly { return(add(hasil, 32), mload(hasil)) }\n    }\n}\n\ncontract LabUpgrade {\n    ProxyMini public proxy;\n    address private v2;\n\n    constructor() {\n        proxy = new ProxyMini(address(new V1()));\n        v2 = address(new V2());\n    }\n\n    function isiData(uint256 _a, uint256 _b) external { V1(address(proxy)).isi(_a, _b); }\n    function upgradeKeV2() external { proxy.upgradeTo(v2); }\n    function isiC(uint256 _c) external { V2(address(proxy)).isiC(_c); }\n    function bacaA() external view returns (uint256) { return V2(address(proxy)).a(); }\n    function bacaB() external view returns (uint256) { return V2(address(proxy)).b(); }\n    function bacaC() external view returns (uint256) { return V2(address(proxy)).c(); }\n}\n", tests: [["isiData(10, 20)", null], ["upgradeKeV2()", null], ["bacaA()", 10], ["bacaB()", 20], ["isiC(7)", null], ["bacaC()", 7], ["bacaA()", 10]], hint: "Urutan a dan b harus sama dengan V1. Variabel baru c ditaruh paling akhir.", solution: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ncontract V1 {\n    uint256 public a;\n    uint256 public b;\n\n    function isi(uint256 _a, uint256 _b) external {\n        a = _a;\n        b = _b;\n    }\n}\n\ncontract V2 {\n    uint256 public a;\n    uint256 public b;\n    uint256 public c;\n\n    function isiC(uint256 _c) external {\n        c = _c;\n    }\n}\n\ncontract ProxyMini {\n    bytes32 private constant SLOT_IMPL = bytes32(uint256(keccak256(\"eip1967.proxy.implementation\")) - 1);\n    address private immutable admin;\n\n    constructor(address impl) {\n        admin = msg.sender;\n        _simpan(impl);\n    }\n\n    function upgradeTo(address implBaru) external {\n        require(msg.sender == admin, \"Hanya admin\");\n        _simpan(implBaru);\n    }\n\n    function _simpan(address impl) private {\n        bytes32 slot = SLOT_IMPL;\n        assembly { sstore(slot, impl) }\n    }\n\n    fallback() external {\n        bytes32 slot = SLOT_IMPL;\n        address impl;\n        assembly { impl := sload(slot) }\n        (bool ok, bytes memory hasil) = impl.delegatecall(msg.data);\n        require(ok, \"Panggilan gagal\");\n        assembly { return(add(hasil, 32), mload(hasil)) }\n    }\n}\n\ncontract LabUpgrade {\n    ProxyMini public proxy;\n    address private v2;\n\n    constructor() {\n        proxy = new ProxyMini(address(new V1()));\n        v2 = address(new V2());\n    }\n\n    function isiData(uint256 _a, uint256 _b) external { V1(address(proxy)).isi(_a, _b); }\n    function upgradeKeV2() external { proxy.upgradeTo(v2); }\n    function isiC(uint256 _c) external { V2(address(proxy)).isiC(_c); }\n    function bacaA() external view returns (uint256) { return V2(address(proxy)).a(); }\n    function bacaB() external view returns (uint256) { return V2(address(proxy)).b(); }\n    function bacaC() external view returns (uint256) { return V2(address(proxy)).c(); }\n}" },
+            {
+              type: "choice",
+              q: "V1 punya variabel: uint256 harga; address pemilik. Mana V2 yang aman?",
+              options: ["uint256 harga; address pemilik; uint256 diskon;", "uint256 diskon; uint256 harga; address pemilik;", "address pemilik; uint256 harga; uint256 diskon;", "uint256 harga; uint256 diskon; address pemilik;"],
+              answer: 0,
+              hint: "Urutan lama harus utuh di depan.",
+              solution: "Hanya pilihan pertama yang mempertahankan slot 0 = harga dan slot 1 = pemilik. Variabel baru boleh ditambahkan di belakang.",
+            },
+            {
+              type: "choice",
+              q: "Kenapa kontrak upgradeable memakai fungsi initialize, bukan constructor?",
+              options: ["Constructor berjalan di implementation, bukan di proxy", "Constructor dilarang oleh compiler Solidity", "initialize lebih murah karena tanpa gas", "Constructor tidak bisa menerima parameter"],
+              answer: 0,
+              hint: "Data harus tersimpan di kontrak mana?",
+              solution: "Data harus berada di penyimpanan proxy. Constructor implementation hanya mengisi penyimpanan implementation itu sendiri, jadi proxy tetap kosong.",
+            },
+          ],
+          quiz: [
+            {
+              q: "Apa yang dilakukan delegatecall?",
+              options: ["Menjalankan kode kontrak lain dengan data pemanggil", "Menyalin seluruh kode kontrak lain ke pemanggil", "Mengirim ETH ke kontrak lain tanpa biaya gas", "Menghapus kontrak lama lalu men-deploy yang baru"],
+              answer: 0,
+              explain: "Kode dipinjam, tapi penyimpanan, saldo, dan msg.sender tetap milik kontrak pemanggil, yaitu proxy.",
+            },
+            {
+              q: "V2 menyelipkan variabel baru di posisi pertama. Apa akibatnya?",
+              options: ["Setiap variabel membaca slot milik variabel lain", "Compiler langsung menolak meng-compile kontrak V2", "Proxy otomatis menggeser data lama ke slot baru", "Tidak ada akibat apa pun"],
+              answer: 0,
+              explain: "Implementation membaca berdasarkan nomor slot. Di Lab, a terbaca 20 dan c terbaca 10.",
+            },
+            {
+              q: "Kenapa proxy menyimpan alamat implementation di slot EIP-1967, bukan di slot 0?",
+              options: ["Agar tidak menabrak variabel implementation", "Karena slot 0 dilarang dipakai oleh EVM", "Supaya alamatnya tidak bisa dibaca orang", "Agar biaya gas proxy menjadi gratis"],
+              answer: 0,
+              explain: "Slot EIP-1967 adalah hasil hash yang praktis mustahil dipakai variabel biasa.",
+            },
+            {
+              q: "Bagi pengguna, apa risiko utama menyetor ke kontrak upgradeable?",
+              options: ["Pemegang kunci bisa mengganti logikanya", "Saldo tidak bisa dilihat di Etherscan", "Biaya transaksinya pasti dua kali lipat", "Kontraknya tidak bisa menerima token"],
+              answer: 0,
+              explain: "Karena itu periksa siapa admin-nya dan apakah upgrade melewati multisig dan timelock.",
+            },
+          ],
+        },
+        {
+          id: "bc-cl-2",
+          title: "Chainlink VRF & Automation — Angka Acak yang Adil dan Fungsi yang Jalan Sendiri",
+          duration: "18 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Chainlink adalah jaringan banyak node yang membawa data ke blockchain (<a href="#/lesson/bc-orc-1">Decentralized Oracle Network</a>), dan harga dibaca lewat interface (<a href="#/lesson/bc-pro-cl">Membaca Harga ETH dari Chainlink</a>). Kontrak bisa mewarisi kontrak lain dengan <b>is</b> dan mengganti fungsinya dengan <b>override</b> (<a href="#/lesson/cd-sol-5">Kontrak Memakai Kontrak Lain</a>). Pelajaran ini melengkapi materi Chainlink di kelas: VRF dan Automation.
+</div>
+
+<h3>Persiapan di Foundry</h3>
+<pre class="code">forge install smartcontractkit/chainlink-brownie-contracts</pre>
+<p>Lalu tambahkan di <b>foundry.toml</b>:</p>
+<pre class="code">remappings = ["@chainlink/=lib/chainlink-brownie-contracts/"]</pre>
+<p>Jalur impor di dalam paket Chainlink pernah berpindah. Contoh di kelas memakai dua versi, misalnya <i>src/v0.8/shared/interfaces/AggregatorV3Interface.sol</i> dan <i>src/v0.8/interfaces/AggregatorV3Interface.sol</i>, serta <i>vrf/dev/</i> dan <i>vrf/</i>. Kalau compile gagal dengan pesan "file not found", buka folder <i>lib/chainlink-brownie-contracts/contracts/src/v0.8</i> dan pakai jalur yang benar-benar ada. Dokumentasi Chainlink saat ini memakai <i>shared/interfaces</i> dan <i>vrf/dev</i>.</p>
+
+<h3>Kenapa blockchain tidak bisa membuat angka acak sendiri?</h3>
+<p>Semua node harus mendapat hasil yang sama, jadi semua yang ada di blockchain bisa dihitung ulang siapa saja. Kalau sebuah lotre mengundi dengan <i>block.prevrandao</i> atau <i>block.timestamp</i>, penyerang cukup membuat kontrak yang menghitung angka yang sama di transaksi yang sama, lalu hanya ikut kalau dirinya pasti menang. Validator juga bisa sedikit memengaruhi nilai-nilai itu.</p>
+
+<h3>VRF: angka acak beserta buktinya</h3>
+<p><b>VRF</b> (<i>Verifiable Random Function</i>) menghasilkan angka acak di luar blockchain beserta <b>bukti kriptografis</b> bahwa angka itu tidak diatur. Alurnya:</p>
+<div data-diagram="pipeline" data-stages="Kontrakmu::meminta angka acak|Coordinator::mencatat permintaan|Node Chainlink::angka acak + bukti|Coordinator::memeriksa bukti|Kontrakmu::menerima jawaban" data-caption="Permintaan lewat requestRandomWords; jawabannya tiba di fulfillRandomWords, di transaksi terpisah beberapa blok kemudian"></div>
+<p>Biayanya dibayar dari <b>subscription</b> (subId) yang diisi LINK atau ETH. Parameter lain: <b>keyHash</b> (jalur gas yang dipilih), <b>requestConfirmations</b> (berapa blok ditunggu sebelum menjawab), <b>callbackGasLimit</b> (batas gas untuk fungsi jawaban), dan <b>numWords</b> (berapa angka yang diminta).</p>
+
+<h3>Review kode lotre dari kelas</h3>
+<p>Contoh SimpleLottery di kelas sudah memakai VRF dengan benar, tapi punya empat celah yang sering muncul di proyek sungguhan:</p>
+<table class="tbl">
+  <tr><th>Celah</th><th>Kenapa berbahaya</th><th>Perbaikan</th></tr>
+  <tr><td>Pendaftaran tetap terbuka saat menunggu angka acak</td><td>Angka acak terlihat di transaksi jawaban sebelum masuk blok. Penyerang bisa buru-buru ikut agar jumlah pemain, dan pemenangnya, berubah sesuai keinginannya</td><td>Tutup pendaftaran sejak <i>pickWinner</i> dipanggil</td></tr>
+  <tr><td>Siapa pun bisa memanggil <i>pickWinner</i> berulang kali</td><td>Setiap panggilan menghabiskan saldo subscription</td><td>Hanya pemilik, dan hanya sekali per ronde</td></tr>
+  <tr><td>Hadiah dikirim di dalam <i>fulfillRandomWords</i></td><td>Kalau pengiriman gagal, misalnya pemenangnya kontrak, fungsi jawaban gagal. Chainlink tidak mengulanginya, dan lotre macet selamanya</td><td>Catat hadiahnya; pemenang menarik sendiri</td></tr>
+  <tr><td><i>delete players</i> di dalam jawaban dengan batas gas tetap</td><td>Biaya menghapus array bertambah sesuai jumlah pemain. Saat pemain banyak, gas habis dan lotre macet</td><td>Pakai nomor ronde; tidak perlu menghapus</td></tr>
+</table>
+<p>Satu catatan lagi: <i>enter()</i> menerima berapa pun nilai ETH. Pemain yang membayar 1 wei punya peluang sama dengan yang membayar 1 ETH. Versi di bawah memakai harga tiket tetap:</p>
+<pre class="code">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import {VRFConsumerBaseV2Plus} from "@chainlink/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
+import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
+
+contract LotreAdil is VRFConsumerBaseV2Plus {
+    uint256 public constant HARGA_TIKET = 0.01 ether;
+    bytes32 public immutable keyHash;
+    uint256 public immutable subId;
+
+    uint256 public ronde;
+    mapping(uint256 => address[]) private pemainRonde;
+    bool public sedangMengundi;
+    mapping(address => uint256) public hadiah;
+
+    constructor(address coordinator, bytes32 _keyHash, uint256 _subId)
+        VRFConsumerBaseV2Plus(coordinator)
+    {
+        keyHash = _keyHash;
+        subId = _subId;
+    }
+
+    function ikut() external payable {
+        require(!sedangMengundi, "Sedang mengundi");          // perbaikan 1
+        require(msg.value == HARGA_TIKET, "Harga tiket 0.01 ETH");
+        pemainRonde[ronde].push(msg.sender);
+    }
+
+    function undi() external onlyOwner {                        // perbaikan 2
+        require(!sedangMengundi, "Sedang mengundi");
+        require(pemainRonde[ronde].length > 0, "Belum ada pemain");
+        sedangMengundi = true;
+        s_vrfCoordinator.requestRandomWords(
+            VRFV2PlusClient.RandomWordsRequest({
+                keyHash: keyHash,
+                subId: subId,
+                requestConfirmations: 3,
+                callbackGasLimit: 150000,
+                numWords: 1,
+                extraArgs: VRFV2PlusClient._argsToBytes(
+                    VRFV2PlusClient.ExtraArgsV1({nativePayment: false})
+                )
+            })
+        );
+    }
+
+    // Dipanggil coordinator. Tidak boleh gagal, jadi hanya mencatat.
+    function fulfillRandomWords(uint256, uint256[] calldata randomWords) internal override {
+        address[] storage p = pemainRonde[ronde];
+        address pemenang = p[randomWords[0] % p.length];
+        hadiah[pemenang] += p.length * HARGA_TIKET;             // perbaikan 3
+        ronde++;                                                // perbaikan 4: tanpa delete
+        sedangMengundi = false;
+    }
+
+    function tarikHadiah() external {
+        uint256 jumlah = hadiah[msg.sender];
+        require(jumlah > 0, "Tidak ada hadiah");
+        hadiah[msg.sender] = 0;
+        (bool ok, ) = msg.sender.call{value: jumlah}("");
+        require(ok, "Gagal mengirim");
+    }
+}</pre>
+<p><i>onlyOwner</i> tersedia karena VRFConsumerBaseV2Plus sudah mencatat pemilik kontrak. Pemenang dipilih dengan sisa bagi: kalau angka acaknya 987.654.321 dan ada 10 pemain, pemenangnya pemain urutan 987.654.321 mod 10 = 1 (dihitung dari 0).</p>
+
+<h3>Automation: fungsi yang dijalankan tanpa kamu</h3>
+<p>Smart contract tidak bisa bangun sendiri; ia hanya berjalan saat ada yang mengirim transaksi. <b>Chainlink Automation</b> menyediakan node yang memanggil fungsi kontrakmu sesuai jadwal atau saat syarat tertentu terpenuhi. Ada tiga jenis pemicu: <b>waktu</b> (seperti jadwal cron, tanpa perlu kode khusus), <b>logika khusus</b>, dan <b>log</b> (bereaksi pada event).</p>
+<p>Untuk logika khusus, kontrak menyediakan dua fungsi:</p>
+<ul>
+  <li><b>checkUpkeep</b>: disimulasikan node di luar blockchain setiap blok, gratis. Isinya pertanyaan "sudah perlu bertindak?".</li>
+  <li><b>performUpkeep</b>: dikirim sebagai transaksi sungguhan saat jawabannya ya. Biayanya diambil dari saldo upkeep.</li>
+</ul>
+<div class="callout warn">
+<b>performUpkeep bisa dipanggil siapa saja,</b> bukan hanya node Chainlink. Karena itu syaratnya wajib diperiksa ulang di dalamnya. Contoh SimpleAutomation dan SimpleTrigger di kelas sudah melakukan ini dengan benar.
+</div>
+<p>Contoh AutoPause dari kelas menjeda kontrak saat harga ETH turun di bawah US$1.500. Versi di bawah menambahkan tiga hal: harga basi atau tidak masuk akal tidak dipakai, pemeriksaan ulang memakai require, dan pemilik bisa melanjutkan kontrak lagi.</p>
+<pre class="code">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import {AutomationCompatibleInterface} from "@chainlink/contracts/src/v0.8/automation/interfaces/AutomationCompatibleInterface.sol";
+import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
+
+contract RemOtomatis is AutomationCompatibleInterface {
+    AggregatorV3Interface public immutable feed;
+    address public immutable pemilik;
+    int256 public constant BATAS = 1500 * 1e8; // US$1.500, 8 desimal
+    bool public dijeda;
+
+    constructor(address _feed) {
+        feed = AggregatorV3Interface(_feed);
+        pemilik = msg.sender;
+    }
+
+    function setor() external payable {
+        require(!dijeda, "Kontrak dijeda");
+        // ... logika setoran
+    }
+
+    function _hargaJatuh() internal view returns (bool) {
+        (, int256 harga, , uint256 diperbarui, ) = feed.latestRoundData();
+        return harga > 0 && block.timestamp - diperbarui &lt;= 2 hours && harga &lt; BATAS;
+    }
+
+    // Disimulasikan node Chainlink di luar blockchain, setiap blok.
+    function checkUpkeep(bytes calldata) external view override returns (bool, bytes memory) {
+        return (!dijeda && _hargaJatuh(), "");
+    }
+
+    // Siapa pun bisa memanggil fungsi ini, jadi syaratnya diperiksa ulang.
+    function performUpkeep(bytes calldata) external override {
+        require(!dijeda && _hargaJatuh(), "Belum perlu");
+        dijeda = true;
+    }
+
+    function lanjutkan() external {
+        require(msg.sender == pemilik, "Hanya pemilik");
+        dijeda = false;
+    }
+}</pre>
+<p>Setelah di-deploy ke Sepolia, daftarkan kontraknya di automation.chain.link, pilih pemicu <b>Custom logic</b>, lalu isi saldo upkeep dengan LINK uji dari faucets.chain.link. Kedua kode di pelajaran ini sudah diuji compile dengan Solidity 0.8.37, memakai tiruan library Chainlink yang antarmukanya sama.</p>
+`,
+          keyPoints: [
+            "Pasang paket dengan forge install smartcontractkit/chainlink-brownie-contracts dan remapping @chainlink/; pakai jalur impor yang benar-benar ada di folder lib.",
+            "Angka dari block.prevrandao atau block.timestamp bisa dihitung kontrak lain di transaksi yang sama; VRF memberi angka acak beserta bukti kriptografisnya.",
+            "Lotre yang aman: tutup pendaftaran saat mengundi, batasi siapa yang mengundi, jangan mengirim uang di fulfillRandomWords, dan hindari pekerjaan yang makin mahal di dalamnya.",
+            "fulfillRandomWords tidak boleh gagal, karena Chainlink tidak mengulang panggilannya.",
+            "Automation: checkUpkeep disimulasikan gratis di luar blockchain, performUpkeep dikirim sebagai transaksi dan wajib memeriksa ulang syaratnya.",
+          ],
+          practice: [
+            { type: "number", q: "Angka acak dari VRF adalah 987654321 dan ada 10 pemain. Pemenang dipilih dengan randomWords[0] % pemain.length. Pemain urutan ke berapa yang menang? (dihitung dari 0)", answer: 1, tol: 0, hint: "Sisa bagi 987654321 dengan 10 adalah angka terakhirnya.", solution: "987.654.321 mod 10 = 1, jadi pemain di indeks 1 (orang kedua yang mendaftar)." },
+            {
+              type: "choice",
+              q: "fulfillRandomWords di lotremu mengirim hadiah dengan transfer, dan pemenangnya ternyata kontrak yang menolak ETH. Apa yang terjadi?",
+              options: ["Jawaban VRF gagal dan lotre bisa macet", "Chainlink otomatis mengulang sampai berhasil", "Hadiah dikirim ke pemilik kontrak lotre", "Angka acak baru diminta secara otomatis"],
+              answer: 0,
+              hint: "Apakah Chainlink mencoba lagi?",
+              solution: "Kalau fungsi jawaban gagal, Chainlink tidak mengulanginya. Karena itu hadiah dicatat dulu, lalu ditarik sendiri oleh pemenang.",
+            },
+            {
+              type: "choice",
+              q: "Kenapa performUpkeep harus memeriksa ulang syaratnya walau checkUpkeep sudah memeriksanya?",
+              options: ["performUpkeep bisa dipanggil siapa saja", "checkUpkeep selalu memberi jawaban acak", "Node Chainlink tidak membaca checkUpkeep", "Pemeriksaan ulang membuat gas lebih murah"],
+              answer: 0,
+              hint: "Fungsi external bisa dipanggil oleh siapa?",
+              solution: "Tanpa pemeriksaan ulang, siapa pun bisa memicu aksinya kapan saja, misalnya menjeda kontrak saat harga normal.",
+            },
+          ],
+          quiz: [
+            {
+              q: "Kenapa lotre yang mengundi dengan block.prevrandao tidak aman?",
+              options: ["Kontrak lain bisa menghitung angka yang sama", "block.prevrandao selalu bernilai nol", "Nilainya hanya bisa dibaca oleh validator", "Lotre itu tidak bisa menerima ETH"],
+              answer: 0,
+              explain: "Penyerang membuat kontrak yang menghitung hasil di transaksi yang sama dan hanya ikut kalau pasti menang.",
+            },
+            {
+              q: "Apa yang membuat angka dari Chainlink VRF bisa dipercaya?",
+              options: ["Disertai bukti kriptografis yang diperiksa", "Dibuat oleh satu server milik Chainlink", "Diambil dari harga ETH saat itu", "Diumumkan lebih dulu di media sosial"],
+              answer: 0,
+              explain: "Coordinator memeriksa bukti itu sebelum memanggil kontrakmu, sehingga angkanya tidak bisa diatur.",
+            },
+            {
+              q: "Kenapa pendaftaran lotre harus ditutup sejak angka acak diminta?",
+              options: ["Penyerang bisa ikut setelah melihat angkanya", "Coordinator menolak lotre yang masih terbuka", "Biaya gas pendaftaran menjadi sangat mahal", "Angka acak hanya berlaku untuk satu pemain"],
+              answer: 0,
+              explain: "Angka acak terlihat di transaksi jawaban sebelum masuk blok; ikut di saat itu bisa mengubah siapa pemenangnya.",
+            },
+            {
+              q: "Di Chainlink Automation, fungsi mana yang disimulasikan gratis di luar blockchain?",
+              options: ["checkUpkeep", "performUpkeep", "fulfillRandomWords", "latestRoundData"],
+              answer: 0,
+              explain: "checkUpkeep hanya bertanya; performUpkeep yang dikirim sebagai transaksi dan dibayar dari saldo upkeep.",
+            },
+          ],
         },
         {
           id: "bc-pro-3",

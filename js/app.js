@@ -1954,6 +1954,17 @@ const GLOSSARY = [
   ["Doji", "Candle yang harga buka dan tutupnya hampir sama: pasar ragu-ragu; arahnya ditentukan candle berikutnya."],
   ["Konfirmasi candlestick", "Menunggu candle berikutnya membuktikan sinyal, mis. ditutup di atas harga tertinggi candle sinyal, sebelum masuk posisi."],
   ["Level psikologis", "Angka bulat yang menarik perhatian banyak orang, mis. Rp1 miliar untuk BTC, sehingga sering menjadi support atau resistance."],
+  ["delegatecall", "Panggilan yang menjalankan kode kontrak lain dengan penyimpanan, saldo, dan msg.sender milik pemanggil; dasar cara kerja proxy."],
+  ["Upgradeable", "Kontrak yang logikanya bisa diganti tanpa mengubah alamat: data di proxy, logika di implementation."],
+  ["Storage slot", "Kotak penyimpanan 32 byte di EVM; variabel disimpan berurutan mulai dari slot 0."],
+  ["Storage collision", "Tabrakan storage: setelah upgrade, variabel membaca slot milik variabel lain karena urutannya berubah."],
+  ["UUPS", "Pola proxy yang fungsi upgrade-nya berada di implementation; lebih ringan tapi wajib dilindungi dan disertakan di setiap versi."],
+  ["Initializer", "Fungsi pengganti constructor pada kontrak upgradeable yang hanya boleh dipanggil sekali."],
+  ["VRF", "Verifiable Random Function: angka acak dari Chainlink beserta bukti kriptografis bahwa angka itu tidak diatur."],
+  ["Upkeep", "Tugas yang didaftarkan di Chainlink Automation; node memanggil performUpkeep saat checkUpkeep menjawab ya."],
+  ["Inheritance", "Pewarisan: kelas atau kontrak memakai isi milik induknya lalu boleh menggantinya. Di Solidity memakai kata is, virtual, dan override."],
+  ["tx.origin", "Alamat dompet yang memulai seluruh rantai panggilan. Jangan dipakai untuk memeriksa izin; pakai msg.sender."],
+  ["Custom error", "Error bernama yang lebih hemat gas daripada pesan teks, mis. revert BukanPemilik();"],
   ["Kenop", "Tombol putar, seperti pengatur volume radio atau api kompor. Di materi AI dipakai sebagai perumpamaan untuk angka yang bisa diputar naik-turun: parameter yang digeser sedikit demi sedikit saat model belajar, atau pengaturan seperti learning rate dan temperature."],
 ];
 

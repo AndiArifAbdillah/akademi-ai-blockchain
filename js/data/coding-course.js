@@ -2601,7 +2601,7 @@ print("Di atas rata-rata:", ramai)
       id: "cd-sol",
       level: "Solidity",
       title: "Solidity: Bahasa Smart Contract",
-      summary: "Program yang hidup di blockchain: jenis data, msg.sender & require, mapping/struct/event, uang dengan payable, sampai token sendiri — di-compile dan dijalankan di EVM sungguhan lewat Lab Solidity di browser.",
+      summary: "Program yang hidup di blockchain: jenis data, msg.sender & require, mapping/struct/event, uang dengan payable, token sendiri, sampai inheritance, interface, library, dan lokasi data — di-compile dan dijalankan di EVM sungguhan lewat Lab Solidity di browser.",
       lessons: [
         {
           id: "cd-sol-1",
@@ -3130,6 +3130,203 @@ contract PoinKelas {
               explain: "Kode yang memegang uang adalah sasaran serangan; pustaka teruji jauh lebih aman."
             }
           ]
+        },
+        {
+          id: "cd-sol-5",
+          title: "Kontrak Memakai Kontrak Lain — Inheritance, Interface, Library & Lokasi Data",
+          duration: "17 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+Kamu sudah bisa menulis kontrak dengan constructor, require, dan modifier (<a href="#/lesson/cd-sol-2">Siapa yang Memanggil?</a>), menyimpan data dengan mapping dan struct (<a href="#/lesson/cd-sol-3">mapping, struct, event &amp; Uang</a>), dan membuat token mini (<a href="#/lesson/cd-sol-4">Membuat Token Sendiri</a>). Pelajaran ini melengkapi materi <i>Solidity Fundamental</i> di kelas.
+</div>
+
+<p>Kontrak sungguhan jarang berdiri sendiri. Ia mewarisi kontrak lain, memanggil kontrak orang lain, dan memakai fungsi bantu bersama. Empat alatnya: <b>inheritance</b>, <b>interface</b>, <b>library</b>, dan pemahaman tentang <b>lokasi data</b>.</p>
+
+<h3>Inheritance: mewarisi lalu mengubah</h3>
+<p>Kata <b>is</b> membuat sebuah kontrak mewarisi semua isi kontrak lain, seperti resep turunan yang memakai resep dasar lalu mengganti satu bumbu.</p>
+<ul>
+  <li><b>virtual</b> di kontrak induk: "fungsi ini boleh diganti".</li>
+  <li><b>override</b> di kontrak anak: "aku mengganti fungsi induk".</li>
+  <li><b>super.namaFungsi()</b>: tetap memanggil versi induknya.</li>
+</ul>
+<p>Token ERC-20 dari OpenZeppelin yang kamu pakai nanti bekerja persis seperti ini: <i>contract TokenKu is ERC20</i>.</p>
+
+<h3>Interface: cukup tahu menunya</h3>
+<p><b>Interface</b> hanya berisi daftar fungsi tanpa isi. Aturannya: tidak boleh punya variabel penyimpanan, tidak punya constructor, dan semua fungsinya external. Dengan interface, kontrakmu bisa memanggil kontrak lain yang sudah ada di blockchain tanpa tahu kode lengkapnya, persis seperti saat membaca harga Chainlink.</p>
+<p>Lab ini menggabungkan ketiganya: <b>Bus</b> mewarisi <b>Kendaraan</b> dan mengganti klaksonnya, sedangkan <b>GerbangTol</b> hanya mengenal interface <b>IKendaraan</b>. Tekan <b>cekSuara</b>, lalu <b>tarifDiskon</b> dengan masukan 25.</p>
+<div data-demo="sol-lab" data-kontrak="GerbangTol">
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+// Interface: daftar menu, tanpa isi
+interface IKendaraan {
+    function klakson() external view returns (string memory);
+}
+
+// Kontrak induk
+contract Kendaraan is IKendaraan {
+    function klakson() public pure virtual returns (string memory) {
+        return "Beep!";
+    }
+}
+
+// Kontrak anak: mewarisi Kendaraan, lalu mengganti klakson
+contract Bus is Kendaraan {
+    function klakson() public pure override returns (string memory) {
+        return "Telolet!";
+    }
+
+    function klaksonLama() public pure returns (string memory) {
+        return super.klakson(); // memanggil versi induk
+    }
+}
+
+// Library: fungsi bantu yang ditempelkan ke uint256
+library Hitung {
+    function persen(uint256 jumlah, uint256 p) internal pure returns (uint256) {
+        return (jumlah * p) / 100;
+    }
+}
+
+// Gerbang tol hanya tahu menu IKendaraan, bukan isi kontrak Bus
+contract GerbangTol {
+    using Hitung for uint256;
+
+    IKendaraan public kendaraan;
+    uint256 public tarif = 20000;
+
+    constructor() {
+        kendaraan = IKendaraan(address(new Bus()));
+    }
+
+    function cekSuara() public view returns (string memory) {
+        return kendaraan.klakson();
+    }
+
+    function tarifDiskon(uint256 p) public view returns (uint256) {
+        return tarif - tarif.persen(p);
+    }
+}
+</div>
+<div class="callout warn">
+<b>Contoh GerbangTol di catatan kelas tidak bisa di-compile.</b> Di sana constructor-nya berbentuk <i>constructor(address mobil) { mobil = IMobil(mobil); }</i>. Parameter <i>mobil</i> bernama sama dengan variabel penyimpanan <i>mobil</i>, sehingga di dalam fungsi nama itu menunjuk ke parameter (bertipe address), dan compiler menolak memasukkan IMobil ke dalamnya. Kebiasaan yang mencegahnya: beri parameter awalan garis bawah, misalnya <i>_mobil</i>. Coba perbaiki sendiri di latihan pertama.
+</div>
+
+<h3>Library: fungsi bantu bersama</h3>
+<p><b>Library</b> berisi fungsi bantu yang bisa dipakai banyak kontrak. Library tidak boleh punya variabel penyimpanan dan tidak bisa menerima ETH. Dengan <i>using Hitung for uint256;</i> fungsi library bisa dipanggil seperti milik angka itu sendiri: <i>tarif.persen(25)</i>, yang sama artinya dengan <i>Hitung.persen(tarif, 25)</i>. Fungsi library yang <i>internal</i> disalin langsung ke kontrak pemakainya, jadi tidak ada biaya panggilan tambahan.</p>
+
+<h3>Lokasi data: storage, memory, calldata</h3>
+<table class="tbl">
+  <tr><th>Lokasi</th><th>Artinya</th><th>Biaya</th></tr>
+  <tr><td><b>storage</b></td><td>Data permanen di blockchain. Variabel di luar fungsi selalu di sini</td><td>Paling mahal, terutama saat menulis</td></tr>
+  <tr><td><b>memory</b></td><td>Salinan sementara selama fungsi berjalan, lalu hilang</td><td>Murah</td></tr>
+  <tr><td><b>calldata</b></td><td>Masukan dari pemanggil fungsi external; hanya bisa dibaca</td><td>Paling hemat untuk parameter</td></tr>
+</table>
+<div data-diagram="vs" data-left="memory::Salinan sementara::Diubah, lalu hilang saat fungsi selesai" data-right="storage::Menunjuk data asli::Perubahan tersimpan di blockchain" data-caption="Siswa memory s = daftar[0] membuat fotokopi; Siswa storage s = daftar[0] memegang dokumen aslinya"></div>
+<p>Jebakan yang sering terjadi ada pada struct dan array. Di Lab di bawah, tekan <b>daftar</b> dengan masukan 0, lalu <b>naikkanSalinan</b>, lalu <b>daftar</b> lagi: nilai Budi tetap 70, karena yang diubah hanya salinan di memory. Sekarang tekan <b>naikkanAsli</b>: nilainya menjadi 80. Compiler bahkan memberi peringatan bahwa naikkanSalinan sebetulnya tidak mengubah apa pun.</p>
+<div data-demo="sol-lab" data-kontrak="Rapor">
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract Rapor {
+    struct Siswa {
+        string nama;
+        uint256 nilai;
+    }
+
+    Siswa[] public daftar;
+
+    constructor() {
+        daftar.push(Siswa("Budi", 70));
+    }
+
+    // memory: SALINAN sementara. Perubahan hilang setelah fungsi selesai.
+    function naikkanSalinan() public {
+        Siswa memory s = daftar[0];
+        s.nilai += 10;
+    }
+
+    // storage: menunjuk data ASLI di blockchain. Perubahan tersimpan.
+    function naikkanAsli() public {
+        Siswa storage s = daftar[0];
+        s.nilai += 10;
+    }
+
+    // calldata: masukan dari luar yang hanya bisa dibaca
+    function tambahSiswa(string calldata nama, uint256 nilai) external {
+        daftar.push(Siswa(nama, nilai));
+    }
+}
+</div>
+
+<h3>Variabel global yang selalu tersedia</h3>
+<table class="tbl">
+  <tr><th>Variabel</th><th>Isinya</th><th>Catatan</th></tr>
+  <tr><td><b>msg.sender</b></td><td>Alamat yang memanggil fungsi ini, bisa orang atau kontrak</td><td>Dipakai untuk memeriksa izin</td></tr>
+  <tr><td><b>msg.value</b></td><td>Jumlah wei yang ikut dikirim</td><td>Hanya di fungsi payable</td></tr>
+  <tr><td><b>block.timestamp</b></td><td>Waktu blok dalam detik</td><td>Bisa digeser validator beberapa detik; jangan untuk hal yang butuh ketepatan detik</td></tr>
+  <tr><td><b>block.number</b>, <b>block.chainid</b></td><td>Nomor blok dan nomor jaringan (1 = mainnet, 11155111 = Sepolia)</td><td></td></tr>
+  <tr><td><b>block.prevrandao</b></td><td>Angka dari proses acak jaringan</td><td><b>Bukan</b> sumber acak yang aman: bisa diketahui kontrak lain dan dipengaruhi validator. Pakai Chainlink VRF</td></tr>
+  <tr><td><b>tx.origin</b></td><td>Dompet yang memulai seluruh rantai panggilan</td><td><b>Jangan</b> untuk memeriksa izin: kontrak jebakan bisa membuat tx.origin tetap berisi alamat korban</td></tr>
+</table>
+<p>Solidity juga punya satuan bawaan: <i>1 minutes</i> = 60, <i>1 hours</i> = 3.600, <i>1 days</i> = 86.400, <i>1 weeks</i> = 604.800 detik, serta <i>1 gwei</i> = 10<sup>9</sup> wei dan <i>1 ether</i> = 10<sup>18</sup> wei.</p>
+<div class="callout">
+<b>Custom error dalam require.</b> Bentuk <i>require(jumlah &gt; 0, ZeroAmount());</i> seperti di catatan kelas baru didukung sejak Solidity 0.8.26 (mode via-IR) dan 0.8.27 (mode biasa). Dengan <i>pragma solidity ^0.8.20</i>, compiler yang lebih lama akan menolaknya. Pilihannya: naikkan pragma menjadi ^0.8.27, atau pakai bentuk yang berlaku sejak 0.8.4: <i>if (jumlah == 0) revert ZeroAmount();</i>
+</div>
+`,
+          keyPoints: [
+            "Inheritance: is mewarisi kontrak lain; virtual di induk, override di anak, super memanggil versi induk.",
+            "Interface hanya berisi daftar fungsi external tanpa isi; cukup itu untuk memanggil kontrak yang sudah ada.",
+            "Library berisi fungsi bantu tanpa penyimpanan; using Library for Tipe membuat fungsinya bisa dipanggil seperti milik tipe itu.",
+            "storage = data asli permanen, memory = salinan sementara, calldata = masukan yang hanya bisa dibaca. Mengubah salinan memory tidak mengubah data asli.",
+            "Jangan pakai tx.origin untuk izin dan block.prevrandao untuk angka acak; require dengan custom error butuh Solidity 0.8.26 atau lebih baru.",
+          ],
+          practice: [
+            { type: "code", lang: "solidity", contract: "GerbangTol", q: "Kode ini disalin dari catatan kelas dan tidak bisa di-compile karena nama parameter sama dengan nama variabel penyimpanan. Perbaiki fungsi _pasang agar cekSuara() mengembalikan \"Telolet!\".", starter: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ninterface IKendaraan {\n    function klakson() external view returns (string memory);\n}\n\ncontract Bus is IKendaraan {\n    function klakson() public pure returns (string memory) {\n        return \"Telolet!\";\n    }\n}\n\ncontract GerbangTol {\n    IKendaraan kendaraan;\n\n    constructor() {\n        _pasang(address(new Bus()));\n    }\n\n    // Disalin dari catatan: tidak bisa di-compile. Perbaiki nama parameternya.\n    function _pasang(address kendaraan) internal {\n        kendaraan = IKendaraan(kendaraan);\n    }\n\n    function cekSuara() public view returns (string memory) {\n        return kendaraan.klakson();\n    }\n}\n", tests: [["cekSuara()", "Telolet!"]], hint: "Ganti nama parameternya menjadi _kendaraan, lalu kendaraan = IKendaraan(_kendaraan);", solution: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ninterface IKendaraan {\n    function klakson() external view returns (string memory);\n}\n\ncontract Bus is IKendaraan {\n    function klakson() public pure returns (string memory) {\n        return \"Telolet!\";\n    }\n}\n\ncontract GerbangTol {\n    IKendaraan kendaraan;\n\n    constructor() {\n        _pasang(address(new Bus()));\n    }\n\n    function _pasang(address _kendaraan) internal {\n        kendaraan = IKendaraan(_kendaraan);\n    }\n\n    function cekSuara() public view returns (string memory) {\n        return kendaraan.klakson();\n    }\n}" },
+            {
+              type: "choice",
+              q: "Di dalam fungsi tertulis Siswa memory s = daftar[0]; s.nilai = 100; Apa yang terjadi pada daftar[0].nilai?",
+              options: ["Tidak berubah, karena s hanya salinan", "Berubah menjadi 100 secara permanen", "Transaksi pasti gagal (revert)", "Berubah sementara sampai blok berikutnya"],
+              answer: 0,
+              hint: "memory adalah salinan sementara.",
+              solution: "Untuk mengubah data asli, pakai Siswa storage s = daftar[0]; sehingga s menunjuk langsung ke penyimpanan.",
+            },
+            {
+              type: "choice",
+              q: "Sebuah dompet memeriksa izin dengan require(tx.origin == pemilik). Kenapa ini berbahaya?",
+              options: ["Kontrak jebakan bisa meneruskan panggilan dari pemilik", "tx.origin selalu berisi alamat nol", "tx.origin hanya ada di testnet", "Pemeriksaan ini membuat biaya gas sangat mahal"],
+              answer: 0,
+              hint: "Siapa yang memulai transaksi kalau pemilik tertipu memanggil kontrak jebakan?",
+              solution: "Kalau pemilik tertipu memanggil kontrak jebakan, tx.origin tetap alamat pemilik walau yang memanggil dompet adalah kontrak jebakan. Periksa msg.sender.",
+            },
+          ],
+          quiz: [
+            {
+              q: "Kata kunci apa yang menandai fungsi induk yang boleh diganti kontrak anak?",
+              options: ["virtual", "override", "external", "immutable"],
+              answer: 0,
+              explain: "virtual di induk mengizinkan penggantian; override dipakai di anak saat menggantinya.",
+            },
+            {
+              q: "Apa isi sebuah interface di Solidity?",
+              options: ["Daftar fungsi external tanpa isinya", "Variabel penyimpanan dan constructor", "Kode lengkap kontrak orang lain", "Hanya event dan modifier"],
+              answer: 0,
+              explain: "Interface hanya memberi tahu nama, masukan, dan keluaran fungsi; cukup untuk memanggil kontrak lain.",
+            },
+            {
+              q: "Lokasi data mana yang paling hemat untuk parameter fungsi external yang hanya dibaca?",
+              options: ["calldata", "storage", "memory", "stack"],
+              answer: 0,
+              explain: "calldata dibaca langsung dari masukan transaksi tanpa disalin, sehingga paling hemat.",
+            },
+            {
+              q: "Kenapa block.prevrandao tidak boleh dipakai untuk mengundi pemenang lotre?",
+              options: ["Mudah ditebak kontrak lain dan validator", "Nilainya selalu nol di semua jaringan", "Hanya bisa dibaca oleh pemilik kontrak", "Membuat kontrak tidak bisa di-deploy"],
+              answer: 0,
+              explain: "Kontrak penyerang bisa membaca nilai yang sama di transaksi yang sama, lalu hanya ikut kalau pasti menang. Pakai Chainlink VRF.",
+            },
+          ],
         },
       ],
     },
