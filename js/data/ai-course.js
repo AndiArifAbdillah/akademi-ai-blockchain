@@ -3574,7 +3574,7 @@ Tiga grafik ini sering menemukan masalah data lebih cepat daripada berjam-jam me
       id: "ai-pendalaman",
       level: "Pendalaman",
       title: "Menyiapkan Data & Melatih Model",
-      summary: "Feature engineering, cara melatih & menguji model dengan jujur, dan alur kerja scikit-learn yang sebenarnya.",
+      summary: "Feature engineering, cara melatih & menguji model dengan jujur, alur kerja scikit-learn yang sebenarnya, sampai pipeline training lengkap dari data mentah, EDA, tuning, evaluasi, inference, hingga registrasi model dengan MLflow.",
       lessons: [
         {
           id: "ai-ars-1",
@@ -3948,6 +3948,142 @@ print(classification_report(y_uji, y_tebak))</pre>
               answer: 1,
               explain:
                 "Keseragaman inilah yang membuat puluhan model bisa dipakai tanpa belajar ulang.",
+            },
+          ],
+        },
+        {
+          id: "ai-pipa-1",
+          title: "Pipeline Training Model — Dari Data Mentah sampai Model Dipakai",
+          duration: "18 menit",
+          content: `
+<div class="callout ingat">
+<b>Ingat dulu</b><br>
+<b>Training</b> adalah saat model belajar, <b>inference</b> saat model dipakai menebak (<a href="#/lesson/ai-p-4">Bagaimana AI Belajar?</a>). Data dibersihkan dan fiturnya dibentuk (<a href="#/lesson/ai-ars-1">Feature Engineering</a>), dibagi menjadi data latih, validasi, dan uji (<a href="#/lesson/ai-ars-2">Melatih Model dengan Benar</a>), lalu disatukan dalam Pipeline scikit-learn agar tidak bocor (<a href="#/lesson/ai-tl-5">scikit-learn Mendalam</a>). Pelajaran ini merangkai semuanya.
+</div>
+
+<p>Di kelas, pipeline training model digambarkan dalam delapan tahap. <b>Pipeline</b> artinya rangkaian tahap yang berurutan: keluaran satu tahap menjadi masukan tahap berikutnya. Berikut tahap-tahap itu, ditambah dua tahap yang sering terlewat (ditandai ✚):</p>
+<table class="tbl">
+  <tr><th>Tahap</th><th>Pertanyaan yang dijawab</th><th>Contoh alat</th></tr>
+  <tr><td><b>1. Siapkan data</b> (cleaning, validasi)</td><td>Apakah datanya benar dan lengkap?</td><td>pandas: buang duplikat, isi atau buang data kosong, tolak nilai mustahil</td></tr>
+  <tr><td><b>2. EDA</b></td><td>Apa yang terlihat dari data?</td><td>Grafik sebaran, statistik ringkas, korelasi</td></tr>
+  <tr><td><b>✚ Bagi data</b></td><td>Mana yang disimpan untuk ujian akhir?</td><td>train_test_split</td></tr>
+  <tr><td><b>3. Preprocessing &amp; feature engineering</b></td><td>Bagaimana data dibentuk agar mudah dipelajari?</td><td>StandardScaler, membuat fitur baru, Pipeline</td></tr>
+  <tr><td><b>4. Training</b></td><td>Model belajar dari data latih</td><td>model.fit(...)</td></tr>
+  <tr><td><b>5. Tuning</b></td><td>Pengaturan mana yang terbaik?</td><td>GridSearchCV dengan cross-validation</td></tr>
+  <tr><td><b>6. Evaluation</b></td><td>Seberapa bagus di data yang belum pernah dilihat?</td><td>MAE, akurasi, precision, recall</td></tr>
+  <tr><td><b>7. Inference</b></td><td>Berapa tebakan untuk data baru?</td><td>model.predict(...) di aplikasi atau API</td></tr>
+  <tr><td><b>8. Registrasi &amp; deployment</b></td><td>Versi mana yang dipakai, dan di mana?</td><td>Model registry (mis. MLflow), API</td></tr>
+  <tr><td><b>✚ Pantau &amp; latih ulang</b></td><td>Apakah model masih bagus bulan depan?</td><td>Pemantauan galat dan drift</td></tr>
+</table>
+<div data-diagram="flow" data-steps="Siapkan &amp; pahami data|Bagi: latih dan uji|Bentuk fitur|Latih &amp; tuning|Ujian akhir|Pakai, catat, pantau" data-caption="Pemantauan mengembalikan data baru ke awal: pipeline sebenarnya adalah lingkaran"></div>
+
+<h3>Dua catatan untuk slide kelas</h3>
+<ol>
+  <li><b>Tahap "bagi data" perlu ditulis sendiri</b>, di antara EDA dan preprocessing. Kalau penskalaan atau tuning dihitung dari seluruh data, data uji ikut "diintip", dan nilai ujinya terlihat lebih bagus daripada kenyataan. Inilah <b>kebocoran data</b>.</li>
+  <li><b>Inference tidak sama dengan testing.</b> <i>Testing</i> atau <i>evaluation</i> berarti mengukur model di data uji yang jawabannya sudah kita ketahui. <i>Inference</i> berarti memakai model untuk menebak data baru yang jawabannya <b>belum</b> diketahui, misalnya calon penyewa yang bertanya harga kamar. Menguji kode di sekitar model (apakah masukan aneh ditolak, apakah hasilnya masuk akal) juga penting, tapi itu pengujian perangkat lunak, bukan inference.</li>
+</ol>
+
+<h3>EDA: mengenal data sebelum melatih model</h3>
+<p><b>EDA</b> (<i>Exploratory Data Analysis</i>) adalah tahap melihat-lihat data: bagaimana sebaran setiap kolom, adakah pencilan, kolom mana yang berhubungan dengan target, dan apakah datanya seimbang. EDA tidak menghasilkan model; ia menghasilkan <b>pertanyaan dan dugaan</b> yang kemudian diuji oleh model. Pemeriksaan kualitas boleh dilakukan di seluruh data, tapi keputusan tentang fitur sebaiknya diambil dari data latih saja.</p>
+
+<h3>Coba sendiri: menebak harga sewa kos</h3>
+<p>Demo ini menjalankan kesembilan tahap pada 21 kamar kos rekaan. Klik setiap tahap, dan perhatikan angkanya.</p>
+<div data-demo="pipeline-kos"></div>
+<ul>
+  <li><b>Siapkan data:</b> dari 21 baris, tiga dibuang: satu kembar, satu luasnya kosong, dan satu berharga Rp15 juta per bulan, kemungkinan salah ketik dari Rp1,5 juta.</li>
+  <li><b>EDA:</b> harga paling berhubungan dengan luas (korelasi 0,87); jarak hanya sedikit (−0,21). Kamar ber-AC rata-rata Rp836 ribu lebih mahal, tapi kamar ber-AC juga lebih luas (18,1 m² vs 11,5 m²). Jadi selisih itu tidak semuanya karena AC.</li>
+  <li><b>Training:</b> model yang terpilih belajar <i>harga ≈ 556 + 40 × luas − 80 × jarak + 570 bila ada AC</i> (ribu rupiah). Setelah luas dan jarak diperhitungkan, AC "bernilai" sekitar Rp570 ribu, lebih kecil dari Rp836 ribu yang terlihat di EDA.</li>
+  <li><b>Tuning:</b> model <i>Rumit</i> (8 fitur) paling jago di data latih (galat Rp51 ribu), tapi paling buruk kedua di validasi (Rp140 ribu). Model <i>Lengkap</i> (3 fitur) menang di validasi (Rp82 ribu). Itulah overfitting.</li>
+  <li><b>Evaluasi:</b> galat rata-rata di 4 kamar uji Rp161 ribu, jauh lebih baik dari tebakan malas yang selalu memakai rata-rata (Rp407 ribu). Galat uji lebih besar daripada validasi, dan itu wajar.</li>
+  <li><b>Inference:</b> kamar 15 m², 1 km, ber-AC ditebak Rp1.652 ribu. Coba kamar 60 m²: demo memperingatkan bahwa model belum pernah melihat kamar sebesar itu.</li>
+</ul>
+
+<h3>Versi kode dengan scikit-learn</h3>
+<p>Tahap 3 sampai 6 dan penyimpanan model, memakai data angka tulisan tangan 8×8 bawaan scikit-learn (MNIST versi mini):</p>
+<pre class="code">from sklearn.datasets import load_digits
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+import joblib
+
+X, y = load_digits(return_X_y=True)
+X_latih, X_uji, y_latih, y_uji = train_test_split(       # bagi DULU
+    X, y, test_size=0.2, stratify=y, random_state=42)
+
+pipa = Pipeline([("skala", StandardScaler()),             # preprocessing
+                 ("model", LogisticRegression(max_iter=2000))])
+
+cari = GridSearchCV(pipa, {"model__C": [0.01, 0.1, 1, 10]}, cv=5)
+cari.fit(X_latih, y_latih)                                # training + tuning
+
+print(accuracy_score(y_uji, cari.predict(X_uji)))         # evaluasi: 0.972
+joblib.dump(cari.best_estimator_, "model_angka.joblib")   # simpan untuk deploy</pre>
+<p>Saat dijalankan, C terbaik = 1, akurasi cross-validation 0,970, dan akurasi uji 0,972. Yang disimpan adalah seluruh pipeline, jadi data baru otomatis diskalakan dengan cara yang sama saat inference.</p>
+
+<h3>Registrasi, deployment, dan sesudahnya</h3>
+<p><b>Registrasi</b> berarti menyimpan model bersama nomor versinya, versi data, pengaturan, dan metriknya di satu tempat (<i>model registry</i>), seperti kartu model di langkah 9 demo. Dengan begitu tim tahu versi mana yang sedang dipakai dan bisa kembali ke versi lama kalau versi baru bermasalah. <b>Deployment</b> berarti memasang model agar bisa dipakai, biasanya sebagai API. Setelah itu galatnya dipantau: kalau harga sewa naik atau kebiasaan pengguna berubah (<i>drift</i>), data baru masuk lagi ke tahap pertama. Detailnya ada di <a href="#/lesson/ai-app-4">MLOps</a>.</p>
+<p><b>MLflow</b> adalah alat sumber terbuka yang paling sering dipakai untuk dua pekerjaan ini: <b>mencatat setiap percobaan</b> (pengaturan, metrik, dan berkas modelnya) dan <b>registry</b> (menamai model dan memberi nomor versi). Contoh mencatat hasil kode di atas:</p>
+<pre class="code">import mlflow
+
+mlflow.set_experiment("tebak-angka")
+with mlflow.start_run():
+    mlflow.log_param("C", cari.best_params_["model__C"])
+    mlflow.log_metric("akurasi_uji", 0.972)
+    mlflow.sklearn.log_model(cari.best_estimator_, name="model")</pre>
+<p>Jalankan <i>mlflow ui</i> di terminal untuk melihat semua percobaan berdampingan di browser. Percobaan terbaik lalu didaftarkan ke registry dengan tombol <i>Register Model</i> atau fungsi <i>mlflow.register_model</i>; setiap pendaftaran ulang dengan nama yang sama menjadi versi baru (1, 2, 3, dan seterusnya). Di sebagian versi, registry membutuhkan server MLflow dengan database seperti SQLite, jadi ikuti panduan resminya saat menyiapkan. Untuk proyek kecil, catatan di spreadsheet pun sudah cukup sebagai awal (<a href="#/lesson/ai-tl-8">Peta Pustaka Lain</a>).</p>
+`,
+          keyPoints: [
+            "Pipeline training: siapkan data → EDA → bagi data → preprocessing & feature engineering → training → tuning → evaluasi → inference → registrasi & deployment → pantau.",
+            "Bagi data sebelum ada perhitungan yang belajar dari data; kalau tidak, data uji ikut terintip (kebocoran data).",
+            "EDA menghasilkan pertanyaan dan dugaan, bukan kesimpulan. Contoh: selisih harga kamar AC sebagian karena kamarnya lebih luas.",
+            "Tuning memilih pengaturan dari galat validasi, bukan galat latih. Model paling rumit sering menang di latih tapi kalah di validasi.",
+            "Evaluasi mengukur model di data uji yang jawabannya diketahui; inference menebak data baru yang jawabannya belum diketahui.",
+          ],
+          practice: [
+            { type: "number", q: "Model menebak 4 kamar uji. Selisih tebakan dengan harga aslinya: 168, 20, 230, dan 228 ribu rupiah. Berapa galat rata-ratanya (MAE), dalam ribu rupiah?", answer: 161.5, tol: 0.1, unit: "ribu", hint: "Jumlahkan keempat selisih, lalu bagi 4.", solution: "(168 + 20 + 230 + 228) ÷ 4 = 646 ÷ 4 = 161,5 ribu rupiah." },
+            {
+              type: "choice",
+              q: "Seorang teman menskalakan seluruh data dengan StandardScaler, baru kemudian membaginya menjadi data latih dan uji. Apa masalahnya?",
+              options: ["Rata-rata data uji ikut dipakai: kebocoran data", "StandardScaler tidak bisa dipakai pada data uji", "Hasilnya pasti lebih buruk dari tanpa penskalaan", "Tidak ada masalah, urutannya tidak berpengaruh"],
+              answer: 0,
+              hint: "Dari data mana rata-rata dan simpangan bakunya dihitung?",
+              solution: "Bagi dulu, lalu hitung penskalaan dari data latih saja. Cara termudah: masukkan StandardScaler ke dalam Pipeline.",
+            },
+            {
+              type: "choice",
+              q: "Model harga kos sudah dipasang di aplikasi. Seorang calon penyewa memasukkan data kamarnya dan mendapat tebakan harga. Tahap apa ini?",
+              options: ["Inference", "Evaluation", "Tuning", "EDA"],
+              answer: 0,
+              hint: "Apakah jawaban yang benar sudah diketahui?",
+              solution: "Harga asli kamar itu belum diketahui, jadi ini inference. Evaluation memakai data uji yang jawabannya sudah diketahui.",
+            },
+          ],
+          quiz: [
+            {
+              q: "Kapan data sebaiknya dibagi menjadi data latih dan data uji?",
+              options: ["Sebelum ada perhitungan yang belajar dari data", "Setelah model selesai dilatih dengan semua data", "Setelah tuning menemukan pengaturan terbaik", "Tepat sebelum model di-deploy ke produksi"],
+              answer: 0,
+              explain: "Penskalaan, pemilihan fitur, dan tuning hanya boleh belajar dari data latih agar data uji tetap benar-benar baru.",
+            },
+            {
+              q: "Di demo, model Rumit punya galat latih paling kecil tapi galat validasinya besar. Ini tanda…",
+              options: ["Overfitting: menghafal data latih", "Datanya kurang bersih di tahap pertama", "Model terlalu sederhana untuk data ini", "Data uji terlalu banyak dibanding latih"],
+              answer: 0,
+              explain: "Model yang menghafal tampak hebat di data yang sudah dilihat, tapi buruk saat menebak data yang disembunyikan.",
+            },
+            {
+              q: "Apa hasil utama dari tahap EDA?",
+              options: ["Pertanyaan dan dugaan tentang data", "Model yang siap dipakai di aplikasi", "Nilai akurasi akhir di data uji", "Nomor versi model di registry"],
+              answer: 0,
+              explain: "EDA membantu memahami data dan menemukan masalah. Dugaannya baru terjawab setelah diuji lewat model.",
+            },
+            {
+              q: "Kenapa model perlu didaftarkan di model registry beserta versinya?",
+              options: ["Agar jelas versi mana yang dipakai dan bisa kembali", "Agar model otomatis menjadi lebih akurat", "Karena model tidak bisa dipakai tanpa internet", "Supaya data latihnya bisa dihapus setelah itu"],
+              answer: 0,
+              explain: "Registry mencatat model, versi data, pengaturan, dan metriknya, sehingga perubahan bisa dilacak dan dibatalkan.",
             },
           ],
         },

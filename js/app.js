@@ -1965,6 +1965,12 @@ const GLOSSARY = [
   ["Inheritance", "Pewarisan: kelas atau kontrak memakai isi milik induknya lalu boleh menggantinya. Di Solidity memakai kata is, virtual, dan override."],
   ["tx.origin", "Alamat dompet yang memulai seluruh rantai panggilan. Jangan dipakai untuk memeriksa izin; pakai msg.sender."],
   ["Custom error", "Error bernama yang lebih hemat gas daripada pesan teks, mis. revert BukanPemilik();"],
+  ["Pipeline", "Rangkaian tahap berurutan: keluaran satu tahap menjadi masukan tahap berikutnya, mis. pipeline data atau pipeline training model."],
+  ["EDA", "Exploratory Data Analysis: melihat sebaran, pencilan, dan hubungan antarkolom sebelum melatih model. Hasilnya pertanyaan dan dugaan, bukan kesimpulan.", ["ai", "coding", "accounting"]],
+  ["Kebocoran data", "Data uji ikut terpakai saat melatih atau menyiapkan model (mis. penskalaan dari seluruh data), sehingga nilai uji terlihat lebih bagus dari kenyataan."],
+  ["Model registry", "Tempat menyimpan model beserta nomor versi, versi data, pengaturan, dan metriknya, sehingga jelas versi mana yang dipakai."],
+  ["MLflow", "Alat sumber terbuka untuk mencatat percobaan machine learning (pengaturan, metrik, berkas model) dan menyimpan model bernomor versi di registry."],
+  ["Deployment", "Memasang model atau aplikasi agar bisa dipakai pengguna, mis. sebagai API."],
   ["Kenop", "Tombol putar, seperti pengatur volume radio atau api kompor. Di materi AI dipakai sebagai perumpamaan untuk angka yang bisa diputar naik-turun: parameter yang digeser sedikit demi sedikit saat model belajar, atau pengaturan seperti learning rate dan temperature."],
 ];
 

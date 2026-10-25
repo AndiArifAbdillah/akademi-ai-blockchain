@@ -7454,6 +7454,206 @@ DEMOS["konfirmasi-candle"] = function (root) {
   mulai();
 };
 
+/* ---------- Perhitungan pipeline training model: data kos rekaan → model regresi ridge ---------- */
+const PipaKos = {
+  // [id, luas m², jarak ke kampus km, AC (1/0), harga sewa ribu Rp/bulan]. Tiga baris terakhir sengaja kotor.
+  MENTAH: [
+    [1, 9, 0.5, 0, 1050], [2, 12, 1.2, 0, 900], [3, 15, 0.8, 1, 1500], [4, 10, 2.5, 0, 800], [5, 18, 1.0, 1, 1650],
+    [6, 15, 0.8, 1, 1500], [7, 20, 3.0, 1, 1750], [8, 8, 0.3, 0, 750], [9, 14, 1.5, 1, 1600], [10, 25, 2.0, 1, 1950],
+    [11, 11, 4.0, 0, 700], [12, null, 1.0, 0, 900], [13, 16, 0.6, 0, 1150], [14, 13, 2.2, 1, 1500], [15, 22, 1.8, 1, 2100],
+    [16, 9, 3.5, 0, 650], [17, 17, 2.8, 0, 950], [18, 12, 0.4, 1, 1350], [19, 28, 1.0, 1, 2250], [20, 14, 3.2, 1, 1400],
+    [21, 16, 1.4, 1, 15000],
+  ],
+  UJI: [3, 11, 15, 18], // id baris yang disisihkan untuk evaluasi akhir
+  // Pilihan yang di-tuning: seberapa rumit model. Fitur mentah dari [luas, jarak, ac].
+  PILIHAN: [
+    { nama: "Sederhana", uraian: "luas saja", f: (l, j, a) => [l] },
+    { nama: "Lengkap", uraian: "luas, jarak, AC", f: (l, j, a) => [l, j, a] },
+    { nama: "Rumit", uraian: "ditambah luas², luas³, jarak², luas×jarak, luas×AC", f: (l, j, a) => [l, j, a, l * l, l * l * l, j * j, l * j, l * a] },
+  ],
+  rata(a) { return a.reduce((s, v) => s + v, 0) / a.length; },
+  sd(a) { const m = this.rata(a); return Math.sqrt(a.reduce((s, v) => s + (v - m) ** 2, 0) / (a.length - 1)); },
+  korelasi(x, y) {
+    const mx = this.rata(x), my = this.rata(y);
+    let a = 0, b = 0, c = 0;
+    x.forEach((v, i) => { a += (v - mx) * (y[i] - my); b += (v - mx) ** 2; c += (y[i] - my) ** 2; });
+    return a / Math.sqrt(b * c);
+  },
+  // Regresi ridge dengan rumus tertutup: (XᵀX + λI)w = Xᵀy; intercept tidak di-regularisasi.
+  latih(X, y, lambda) {
+    const n = X[0].length + 1, A = Array.from({ length: n }, () => new Array(n + 1).fill(0));
+    X.forEach((x, k) => {
+      const baris = [1].concat(x);
+      for (let i = 0; i !== n; i++) { for (let j = 0; j !== n; j++) A[i][j] += baris[i] * baris[j]; A[i][n] += baris[i] * y[k]; }
+    });
+    for (let i = 1; i !== n; i++) A[i][i] += lambda;
+    for (let c = 0; c !== n; c++) { // eliminasi Gauss
+      let p = c;
+      for (let r = c + 1; r !== n; r++) if (Math.abs(A[r][c]) > Math.abs(A[p][c])) p = r;
+      [A[c], A[p]] = [A[p], A[c]];
+      for (let r = 0; r !== n; r++) if (r !== c) { const f = A[r][c] / A[c][c]; for (let k = c; k !== n + 1; k++) A[r][k] -= f * A[c][k]; }
+    }
+    return A.map((b, i) => b[n] / b[i]);
+  },
+  tebak(w, x) { return w[0] + x.reduce((s, v, i) => s + v * w[i + 1], 0); },
+  jalankan() {
+    // 1. Siapkan data: buang duplikat, data kosong, dan nilai yang tidak masuk akal
+    const dibuang = [], bersih = [], sudah = new Set();
+    this.MENTAH.forEach((b) => {
+      const kunci = b.slice(1).join("|");
+      if (b.some((v) => v === null)) dibuang.push([b[0], "ada nilai kosong (luas)"]);
+      else if (sudah.has(kunci)) dibuang.push([b[0], "duplikat baris lain"]);
+      else if (b[4] > 5000 || b[4] < 300 || b[1] < 4 || b[1] > 40) dibuang.push([b[0], "tidak masuk akal (harga " + b[4].toLocaleString("id-ID") + " ribu)"]);
+      else { bersih.push(b); sudah.add(kunci); }
+    });
+    // 2. EDA
+    const kol = (rows, i) => rows.map((b) => b[i]);
+    const harga = kol(bersih, 4);
+    const eda = {
+      n: bersih.length, rataHarga: this.rata(harga), min: Math.min(...harga), maks: Math.max(...harga),
+      rLuas: this.korelasi(kol(bersih, 1), harga), rJarak: this.korelasi(kol(bersih, 2), harga),
+      rataAC: this.rata(bersih.filter((b) => b[3] === 1).map((b) => b[4])), rataNonAC: this.rata(bersih.filter((b) => b[3] === 0).map((b) => b[4])),
+    };
+    // 3. Bagi data
+    const uji = bersih.filter((b) => this.UJI.includes(b[0])), latihRows = bersih.filter((b) => !this.UJI.includes(b[0]));
+    const yl = kol(latihRows, 4);
+    // 4. Preprocessing: setiap fitur diskalakan dengan rata-rata & simpangan baku dari data LATIH saja
+    const siapkan = (pilihan, rows) => {
+      const mentah = rows.map((b) => pilihan.f(b[1], b[2], b[3]));
+      const m = mentah[0].map((_, k) => this.rata(mentah.map((x) => x[k]))), s = mentah[0].map((_, k) => this.sd(mentah.map((x) => x[k])));
+      const ubah = (x) => x.map((v, k) => (v - m[k]) / s[k]);
+      return { X: mentah.map(ubah), ubah: (b) => ubah(pilihan.f(b[1], b[2], b[3])), m, s };
+    };
+    const skala = siapkan(this.PILIHAN[1], latihRows);
+    // 5 & 6. Training setiap pilihan, lalu tuning: leave-one-out cross-validation di data latih
+    const tuning = this.PILIHAN.map((p) => {
+      const { X } = siapkan(p, latihRows), w = this.latih(X, yl, 1e-6);
+      const maeLatih = this.rata(X.map((x, i) => Math.abs(this.tebak(w, x) - yl[i])));
+      let galat = 0;
+      latihRows.forEach((b, i) => {
+        const sisa = latihRows.filter((_, j) => j !== i), s = siapkan(p, sisa);
+        const wi = this.latih(s.X, sisa.map((r) => r[4]), 1e-6);
+        galat += Math.abs(this.tebak(wi, s.ubah(b)) - yl[i]);
+      });
+      return { nama: p.nama, uraian: p.uraian, jumlahFitur: p.f(1, 1, 1).length, maeLatih, maeLoo: galat / latihRows.length };
+    });
+    const terbaik = tuning.reduce((a, b) => (b.maeLoo < a.maeLoo ? b : a));
+    const pilihan = this.PILIHAN.find((p) => p.nama === terbaik.nama), siap = siapkan(pilihan, latihRows);
+    const w = this.latih(siap.X, yl, 1e-6);
+    // 7. Evaluasi sekali di data uji, dibanding tebakan paling malas (rata-rata harga latih)
+    const rataLatih = this.rata(yl);
+    const detailUji = uji.map((b) => ({ id: b[0], luas: b[1], jarak: b[2], ac: b[3], asli: b[4], tebakan: this.tebak(w, siap.ubah(b)) }));
+    const maeUji = this.rata(detailUji.map((d) => Math.abs(d.tebakan - d.asli)));
+    const maeMalas = this.rata(uji.map((b) => Math.abs(rataLatih - b[4])));
+    // Koefisien model lengkap dalam satuan asli: ribu rupiah per m², per km, dan untuk AC
+    const perSatuan = pilihan.nama === "Lengkap" ? { luas: w[1] / siap.s[0], jarak: w[2] / siap.s[1], ac: w[3] / siap.s[2] } : null;
+    return { dibuang, bersih, eda, latihRows, uji, skala, tuning, terbaik, w, maeUji, maeMalas, rataLatih, detailUji, perSatuan,
+      rentangLuas: [Math.min(...kol(latihRows, 1)), Math.max(...kol(latihRows, 1))], rentangJarak: [Math.min(...kol(latihRows, 2)), Math.max(...kol(latihRows, 2))],
+      inferensi: (luas, jarak, ac) => this.tebak(w, siap.ubah([0, luas, jarak, ac ? 1 : 0, 0])) };
+  },
+};
+
+/* ---------- Demo: pipeline training model langkah demi langkah (data kos rekaan) ---------- */
+DEMOS["pipeline-kos"] = function (root) {
+  const r = PipaKos.jalankan();
+  const rb = (v) => "Rp" + Math.round(v).toLocaleString("id-ID") + " rb";
+  const des = (v, d) => Number(v).toLocaleString("id-ID", { minimumFractionDigits: d, maximumFractionDigits: d });
+  const baris = (a, b, kelas) => '<div class="dm-line teks ' + (kelas || "") + '"><span>' + a + "</span><b>" + b + "</b></div>";
+  const tabel = (kepala, isi) => '<div class="table-scroll"><table class="tbl"><tr>' + kepala.map((k) => "<th>" + k + "</th>").join("") + "</tr>" + isi.map((b) => "<tr>" + b.map((s) => "<td>" + s + "</td>").join("") + "</tr>").join("") + "</table></div>";
+  const ac = (v) => (v ? "ya" : "tidak");
+  // Bentuk model dalam satuan asli: harga = dasar + a×luas + b×jarak + c×AC
+  const dasar = r.w[0] - r.w.slice(1).reduce((s, w, k) => s + (w * r.skala.m[k]) / r.skala.s[k], 0);
+  function sebar() {
+    const W = 520, H = 260, PX = 46, PY = 18, data = r.bersih;
+    const x = (v) => PX + ((v - 5) / 28) * (W - PX - 12), y = (v) => H - 34 - ((v - 500) / 2000) * (H - 34 - PY);
+    let s = '<svg viewBox="0 0 ' + W + " " + H + '" class="viz-svg" role="img" aria-label="Sebaran luas kamar dan harga sewa">';
+    s += '<line x1="' + PX + '" y1="' + (H - 34) + '" x2="' + (W - 12) + '" y2="' + (H - 34) + '" class="vline dim"/><line x1="' + PX + '" y1="' + PY + '" x2="' + PX + '" y2="' + (H - 34) + '" class="vline dim"/>';
+    [10, 20, 30].forEach((v) => (s += '<text x="' + x(v) + '" y="' + (H - 16) + '" text-anchor="middle" class="vt-xs">' + v + " m²</text>"));
+    [1000, 2000].forEach((v) => (s += '<text x="' + (PX - 6) + '" y="' + (y(v) + 4) + '" text-anchor="end" class="vt-xs">' + v / 1000 + " jt</text>"));
+    data.forEach((b) => (s += '<circle cx="' + x(b[1]).toFixed(1) + '" cy="' + y(b[4]).toFixed(1) + '" r="6" style="' + (b[3] ? "fill:var(--primary)" : "fill:none;stroke:var(--muted);stroke-width:2") + '"/>'));
+    return s + '</svg><p class="dm-sub bt-legenda"><span class="bt-robot">●</span> kamar ber-AC · ○ tanpa AC</p>';
+  }
+  const LANGKAH = [
+    { nama: "1. Siapkan data", pendek: "1 Data", isi: () =>
+        baris("Data mentah", r.dibuang.length + r.bersih.length + " baris") +
+        r.dibuang.map((d) => baris("Baris " + d[0] + " dibuang", d[1], "bad")).join("") +
+        baris("Data bersih", r.bersih.length + " baris", "big good") +
+        '<p class="dm-sub">Aturan validasi: harga 300–5.000 ribu, luas 4–40 m², tidak boleh ada kolom kosong, tidak boleh ada baris kembar.</p>' },
+    { nama: "2. EDA", pendek: "2 EDA", isi: () =>
+        sebar() +
+        baris("Harga sewa", "rata-rata " + rb(r.eda.rataHarga) + ", dari " + rb(r.eda.min) + " sampai " + rb(r.eda.maks)) +
+        baris("Korelasi harga dengan luas", des(r.eda.rLuas, 2) + " — kuat") +
+        baris("Korelasi harga dengan jarak", des(r.eda.rJarak, 2) + " — lemah, makin jauh sedikit lebih murah") +
+        baris("Rata-rata harga AC vs tanpa AC", rb(r.eda.rataAC) + " vs " + rb(r.eda.rataNonAC)) +
+        baris("Hati-hati", "Kamar ber-AC juga rata-rata lebih luas, jadi selisih harganya tidak semuanya karena AC. EDA memunculkan pertanyaan; model yang menjawabnya.", "warn") },
+    { nama: "3. Bagi data", pendek: "3 Bagi", isi: () =>
+        baris("Data latih", r.latihRows.length + " baris — untuk belajar dan tuning") +
+        baris("Data uji", r.uji.length + " baris (id " + r.uji.map((b) => b[0]).join(", ") + ") — dikunci sampai evaluasi akhir", "big") +
+        '<p class="dm-sub">Langkah ini sengaja ditambahkan di antara EDA dan preprocessing. Pembagian harus terjadi SEBELUM ada perhitungan yang belajar dari data, agar data uji benar-benar baru.</p>' },
+    { nama: "4. Preprocessing", pendek: "4 Preproses", isi: () =>
+        tabel(["Fitur", "Rata-rata (data latih)", "Simpangan baku"], [["Luas", des(r.skala.m[0], 2) + " m²", des(r.skala.s[0], 2)], ["Jarak", des(r.skala.m[1], 2) + " km", des(r.skala.s[1], 2)], ["AC", des(r.skala.m[2], 2), des(r.skala.s[2], 2)]]) +
+        baris("Rumus penskalaan", "nilai baru = (nilai − rata-rata) ÷ simpangan baku") +
+        baris("Contoh", "kamar 20 m² → (20 − " + des(r.skala.m[0], 2) + ") ÷ " + des(r.skala.s[0], 2) + " = " + des((20 - r.skala.m[0]) / r.skala.s[0], 2)) +
+        '<p class="dm-sub">Rata-rata dan simpangan baku diambil dari data latih saja, lalu dipakai apa adanya untuk data uji dan data baru.</p>' },
+    { nama: "5. Training", pendek: "5 Latih", isi: () =>
+        baris("Model", "regresi linear dengan fitur luas, jarak, AC") +
+        baris("Hasil belajar (satuan asli)", "harga ≈ " + rb(dasar) + " + " + rb(r.perSatuan.luas) + " × luas − " + rb(-r.perSatuan.jarak) + " × jarak + " + rb(r.perSatuan.ac) + " bila ada AC", "big") +
+        baris("Artinya", "setiap 1 m² menambah ±" + rb(r.perSatuan.luas) + ", setiap 1 km lebih jauh mengurangi ±" + rb(-r.perSatuan.jarak) + ", AC menambah ±" + rb(r.perSatuan.ac) + " untuk luas dan jarak yang sama") },
+    { nama: "6. Tuning", pendek: "6 Tuning", isi: () =>
+        tabel(["Pilihan model", "Galat rata-rata di data latih", "Galat rata-rata validasi"], r.tuning.map((t) => [(t.nama === r.terbaik.nama ? "<b>" + t.nama + "</b>" : t.nama) + " (" + t.uraian + ")", rb(t.maeLatih), rb(t.maeLoo)])) +
+        baris("Terpilih", r.terbaik.nama + ": galat validasinya paling kecil", "big good") +
+        '<p class="dm-sub">Validasi memakai leave-one-out: setiap baris latih bergiliran disembunyikan, model dilatih tanpa baris itu, lalu diminta menebaknya. Model Rumit paling jago di data latih tapi kalah saat menebak baris yang disembunyikan: overfitting.</p>' },
+    { nama: "7. Evaluasi", pendek: "7 Evaluasi", isi: () =>
+        tabel(["Id", "Kamar", "Harga asli", "Tebakan model"], r.detailUji.map((d) => [d.id, d.luas + " m², " + des(d.jarak, 1) + " km, AC " + ac(d.ac), rb(d.asli), rb(d.tebakan)])) +
+        baris("Galat rata-rata model (MAE)", rb(r.maeUji), "big good") +
+        baris("Tebakan malas: selalu rata-rata data latih", rb(r.maeMalas)) +
+        '<p class="dm-sub">Galat di data uji lebih besar daripada di validasi. Itu wajar, dan dengan hanya ' + r.uji.length + " baris uji angka ini masih sangat goyah.</p>" },
+    { nama: "8. Inference", pendek: "8 Inference", isi: () => '<div class="pk-inferensi"></div>' },
+    { nama: "9. Registrasi & deploy", pendek: "9 Deploy", isi: () =>
+        '<pre class="code pk-kartu">' + ["nama      : tebak-sewa-kos", "versi     : 1.0.0", "data      : " + r.bersih.length + " kamar (" + r.latihRows.length + " latih, " + r.uji.length + " uji), versi data 2026-10", "fitur     : luas, jarak, AC (diskalakan dengan nilai data latih)", "model     : regresi linear, pilihan " + r.terbaik.nama, "metrik    : MAE uji " + rb(r.maeUji) + " (pembanding " + rb(r.maeMalas) + ")", "batas     : luas " + r.rentangLuas.join("–") + " m², jarak " + r.rentangJarak.map((v) => des(v, 1)).join("–") + " km"].join("\n") + "</pre>" +
+        '<p class="dm-sub">Model, cara penskalaannya, dan kartu ini disimpan bersama di registry dengan nomor versi. Setelah dipasang sebagai API, galatnya dipantau; kalau harga sewa berubah, data baru masuk lagi ke langkah 1.</p>' },
+  ];
+  let aktif = 0;
+  const tombol = LANGKAH.map((l, i) => h("button", { class: "btn ghost", type: "button", text: l.pendek, "aria-label": l.nama, onclick: () => tampil(i) }));
+  const panel = h("div", { class: "dm-out" });
+  const sebelum = h("button", { class: "btn ghost", type: "button", text: "← Sebelumnya", onclick: () => tampil(Math.max(0, aktif - 1)) });
+  const berikut = h("button", { class: "btn primary", type: "button", text: "Berikutnya →", onclick: () => tampil(Math.min(LANGKAH.length - 1, aktif + 1)) });
+  function pasangInferensi() {
+    const kotak = panel.querySelector(".pk-inferensi");
+    const isian = (label, nilai, satuan) => { const el = h("input", { class: "pc-input", type: "text", inputmode: "decimal", value: nilai, "aria-label": label }); return [el, h("div", { class: "dm-row" }, [h("span", { text: label }), el, h("span", { class: "dm-sub", text: satuan })])]; };
+    const [luas, bLuas] = isian("Luas kamar", "15", "m²"), [jarak, bJarak] = isian("Jarak ke kampus", "1", "km");
+    const cek = h("input", { type: "checkbox", checked: "", "aria-label": "Ada AC" });
+    const hasil = h("div");
+    const angka = (el) => parseFloat(String(el.value).replace(",", "."));
+    function hitung() {
+      const l = angka(luas), j = angka(jarak);
+      if (!(l > 0) || !(j >= 0)) { hasil.innerHTML = baris("Periksa isian", "luas dan jarak harus berupa angka", "bad"); return; }
+      const luar = l < r.rentangLuas[0] || l > r.rentangLuas[1] || j < r.rentangJarak[0] || j > r.rentangJarak[1];
+      hasil.innerHTML = baris("Tebakan harga sewa", rb(r.inferensi(l, j, cek.checked)) + " per bulan", "big " + (luar ? "warn" : "good")) +
+        (luar ? baris("Di luar rentang data latih", "Model hanya pernah melihat kamar " + r.rentangLuas.join("–") + " m² dan " + r.rentangJarak.map((v) => des(v, 1)).join("–") + " km. Tebakan di luar itu tidak bisa dipercaya.", "warn") : "");
+    }
+    [luas, jarak, cek].forEach((el) => el.addEventListener(el === cek ? "change" : "input", hitung));
+    kotak.append(h("p", { class: "dm-sub", text: "Inference = memakai model yang sudah jadi untuk menebak data baru. Coba kamar 60 m²." }), bLuas, bJarak, h("div", { class: "dm-row" }, [h("label", { class: "dm-centang" }, [cek, document.createTextNode(" Ada AC")])]), hasil);
+    hitung();
+  }
+  function tampil(i) {
+    aktif = i;
+    tombol.forEach((b, k) => (b.className = "btn " + (k === i ? "primary" : "ghost")));
+    panel.innerHTML = '<p class="kicker bt-judul">' + LANGKAH[i].nama + "</p>" + LANGKAH[i].isi();
+    if (i === 7) pasangInferensi();
+    sebelum.disabled = i === 0; berikut.disabled = i === LANGKAH.length - 1;
+  }
+  root.appendChild(h("div", { class: "demo" }, [
+    h("div", { class: "demo-head", html: "<b>Pipeline training model: menebak harga sewa kos</b>" }),
+    h("p", { class: "demo-hint", text: "Data 21 kamar kos rekaan. Ikuti langkahnya satu per satu, atau klik langsung tahap yang ingin dilihat." }),
+    h("div", { class: "demo-controls pk-tahap" }, tombol),
+    panel,
+    h("div", { class: "demo-controls" }, [sebelum, berikut]),
+    h("p", { class: "dm-note", text: "Data rekaan untuk belajar. Semua angka dihitung langsung di browser dengan regresi linear; tuning memakai validasi leave-one-out di data latih." }),
+  ]));
+  tampil(0);
+};
+
 /* ---------- Demo: kenop AI kos — memutar parameter dengan tangan ---------- */
 DEMOS["kenop-kos"] = function (root) {
   // Model: tebakan = kenop × luas. Data latih dari pelajaran ai-p-4: 10 m² → Rp1.000.000, 20 m² → Rp2.000.000.

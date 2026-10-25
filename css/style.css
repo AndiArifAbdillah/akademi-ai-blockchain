@@ -1810,3 +1810,8 @@ details.modul-jembatan:not([open]) { padding-bottom: 12px; }
 /* Demo pola-tren: kotak centang zona & garis tren */
 .dm-centang { display: inline-flex; align-items: center; gap: 6px; margin-right: 16px; font-size: .93rem; cursor: pointer; }
 .dm-out:empty { display: none; }
+
+/* Demo pipeline-kos: tombol tahap ringkas dan kartu model yang membungkus di HP */
+.demo .demo-controls.pk-tahap { gap: 6px; }
+.demo .demo-controls.pk-tahap .btn { padding: 5px 10px; font-size: .82rem; min-height: 0; }
+.pk-kartu { white-space: pre-wrap; overflow-wrap: anywhere; }
