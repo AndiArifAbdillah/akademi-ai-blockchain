@@ -4031,8 +4031,8 @@ mlflow.set_experiment("tebak-angka")
 with mlflow.start_run():
     mlflow.log_param("C", cari.best_params_["model__C"])
     mlflow.log_metric("akurasi_uji", 0.972)
-    mlflow.sklearn.log_model(cari.best_estimator_, name="model")</pre>
-<p>Jalankan <i>mlflow ui</i> di terminal untuk melihat semua percobaan berdampingan di browser. Percobaan terbaik lalu didaftarkan ke registry dengan tombol <i>Register Model</i> atau fungsi <i>mlflow.register_model</i>; setiap pendaftaran ulang dengan nama yang sama menjadi versi baru (1, 2, 3, dan seterusnya). Di sebagian versi, registry membutuhkan server MLflow dengan database seperti SQLite, jadi ikuti panduan resminya saat menyiapkan. Untuk proyek kecil, catatan di spreadsheet pun sudah cukup sebagai awal (<a href="#/lesson/ai-tl-8">Peta Pustaka Lain</a>).</p>
+    mlflow.sklearn.log_model(cari.best_estimator_, artifact_path="model")</pre>
+<p>Di MLflow 3, <i>artifact_path=</i> boleh ditulis <i>name=</i>; MLflow 2 (misalnya versi 2.19) hanya mengenal <i>artifact_path=</i>, jadi bentuk di atas jalan di keduanya. Jalankan <i>mlflow ui</i> di terminal untuk melihat semua percobaan berdampingan di browser. Percobaan terbaik lalu didaftarkan ke registry dengan tombol <i>Register Model</i> atau fungsi <i>mlflow.register_model</i>; setiap pendaftaran ulang dengan nama yang sama menjadi versi baru (1, 2, 3, dan seterusnya). Di sebagian versi, registry membutuhkan server MLflow dengan database seperti SQLite, jadi ikuti panduan resminya saat menyiapkan. Untuk proyek kecil, catatan di spreadsheet pun sudah cukup sebagai awal (<a href="#/lesson/ai-tl-8">Peta Pustaka Lain</a>).</p>
 `,
           keyPoints: [
             "Pipeline training: siapkan data → EDA → bagi data → preprocessing & feature engineering → training → tuning → evaluasi → inference → registrasi & deployment → pantau.",

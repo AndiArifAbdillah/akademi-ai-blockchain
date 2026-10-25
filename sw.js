@@ -9,7 +9,7 @@
    Tanpa itu, pengguna lama akan tetap melihat materi versi lama.
    ============================================================ */
 
-const VERSI = "akademi-v83";
+const VERSI = "akademi-v84";
 // Huruf dari Google Fonts disimpan terpisah agar tidak terhapus setiap kali materi diperbarui.
 const HURUF = "akademi-huruf-v1";
 
