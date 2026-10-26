@@ -1977,6 +1977,10 @@ const GLOSSARY = [
   ["Binning", "Mengubah angka menjadi kelompok, mis. umur menjadi muda, dewasa, dan senior.", ["ai", "coding"]],
   ["ColumnTransformer", "Alat scikit-learn yang menerapkan persiapan berbeda untuk tiap jenis kolom dalam satu langkah pipeline.", ["ai", "coding"]],
   ["Left join", "Menggabungkan dua tabel lewat kunci yang sama sambil mempertahankan semua baris tabel kiri, walau tak punya pasangan."],
+  ["Native currency", "Koin asli sebuah blockchain (BTC di Bitcoin, ETH di Ethereum, SOL di Solana) yang dicatat langsung oleh jaringannya dan dipakai membayar gas."],
+  ["Koin asli", "Sebutan lain native currency: koin bawaan sebuah blockchain yang dipakai membayar gas, berbeda dengan token buatan smart contract."],
+  ["Wrapped token", "Token yang mewakili aset lain 1:1, mis. WETH mewakili ETH, agar bisa dipakai di aplikasi yang hanya menerima token ERC-20."],
+  ["WETH", "Wrapped Ether: ETH yang \"dibungkus\" menjadi token ERC-20 dan selalu bisa ditukar kembali 1:1 dengan ETH."],
   ["Kenop", "Tombol putar, seperti pengatur volume radio atau api kompor. Di materi AI dipakai sebagai perumpamaan untuk angka yang bisa diputar naik-turun: parameter yang digeser sedikit demi sedikit saat model belajar, atau pengaturan seperti learning rate dan temperature."],
 ];
 

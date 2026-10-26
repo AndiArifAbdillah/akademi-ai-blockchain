@@ -414,6 +414,10 @@ const BLOCKCHAIN_COURSE = {
 <b>Biaya transaksi (gas/fee):</b> Kamu membayar sedikit biaya ke jaringan untuk memproses transaksimu. Saat jaringan ramai, biaya naik (seperti tarif ojek saat jam sibuk).
 </div>
 
+<div class="callout">
+<b>Gas dibayar dengan koin asli jaringan.</b> Setiap blockchain punya <b>native currency</b> (koin asli) bawaan: BTC di Bitcoin, ETH di Ethereum, SOL di Solana. Hanya koin inilah yang bisa dipakai membayar gas. Selain koin asli, ada <b>token</b>: aset yang dibuat lewat smart contract di atas blockchain itu, misalnya USDT dan USDC di Ethereum. Perumpamaannya, koin asli seperti rupiah dan token seperti voucher belanja: ongkos tol tidak bisa dibayar dengan voucher. Jadi, walau hanya ingin mengirim USDT di Ethereum, dompetmu tetap butuh sedikit ETH untuk gas.
+</div>
+
 <h3>Konfirmasi</h3>
 <p>Makin banyak blok ditambahkan <i>setelah</i> blok transaksimu, makin "dalam" dan aman transaksi itu. Itulah kenapa transaksi besar sering menunggu beberapa konfirmasi.</p>
 `,
@@ -446,6 +450,18 @@ const BLOCKCHAIN_COURSE = {
               answer: 0,
               explain:
                 "Saat banyak yang bertransaksi, biaya naik karena perebutan ruang blok.",
+            },
+            {
+              q: "Kamu punya 100 USDT di jaringan Ethereum, tapi 0 ETH. Apa yang terjadi saat kamu mencoba mengirim USDT itu?",
+              options: [
+                "Tidak bisa, karena tidak ada ETH untuk gas",
+                "Gas otomatis dipotong dari saldo USDT-mu",
+                "Transaksi tetap jalan karena USDT stablecoin",
+                "Bursa membayarkan gasnya secara gratis",
+              ],
+              answer: 0,
+              explain:
+                "Gas di Ethereum hanya bisa dibayar dengan koin asli jaringan itu, yaitu ETH. USDT adalah token, jadi tidak bisa dipakai membayar gas.",
             },
           ],
         },
@@ -495,7 +511,7 @@ const BLOCKCHAIN_COURSE = {
   <tr><td><b>Penambang / validator</b></td><td>Pihak yang menyusun blok baru (lewat PoW atau PoS)</td><td>Juru tulis yang bergiliran</td></tr>
   <tr><td><b>Konsensus</b></td><td>Cara jaringan sepakat blok mana yang sah</td><td>Aturan musyawarah</td></tr>
   <tr><td><b>Smart contract</b></td><td>Program yang berjalan di blockchain</td><td>Mesin penjual otomatis</td></tr>
-  <tr><td><b>Token</b></td><td>Aset yang dibuat di atas sebuah blockchain</td><td>Koin permainan di arena</td></tr>
+  <tr><td><b>Token</b></td><td>Aset yang dibuat lewat smart contract di atas sebuah blockchain. Berbeda dengan koin asli jaringan (BTC, ETH) yang dipakai membayar gas</td><td>Koin permainan di arena; koin aslinya seperti uang tunai di loket</td></tr>
 </table>
 
 <h3>Tiga salah paham yang paling sering</h3>
